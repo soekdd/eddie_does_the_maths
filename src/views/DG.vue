@@ -10,7 +10,7 @@
 
     <template #descriptionPart>
       <figure class="exampleFigure">
-          <ImageZoomer :title="`Grafik: ${example.a}k + ${example.b}s = ${example.c}`">
+          <ImageZoomer :title="`Eddie`">
              <img :src="dgImg" alt="Eddie rechnet" loading="lazy" />
           </ImageZoomer>
       </figure>

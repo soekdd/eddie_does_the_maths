@@ -14,9 +14,11 @@ const appBarHeight = computed(() => (isMobile.value ? 108 : 72))
   <div class="frame">
     <v-app-bar class="topBar" flat :height="appBarHeight">
       <v-container class="wrap">
-        <div class="brand">
-          <slot name="title" />
-        </div>
+        <router-link to="/" class="brandLink">
+          <div class="brand">
+            <slot name="title" />
+          </div>
+        </router-link>
       </v-container>
     </v-app-bar>
 
