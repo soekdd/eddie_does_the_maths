@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Entscheidungsbäume</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="math.css" />
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Entscheidungsbäume</h1>
+</header>
+<h1 id="spieltheorie-am-busbahnhof">Spieltheorie am Busbahnhof</h1>
+<blockquote>
+<p><em>„Spieltheorie, aber auf Straßenstaub und kalte Finger
+runtergebrochen.“</em></p>
+</blockquote>
+<h2 id="worums-geht-kurzfassung">Worum’s geht (Kurzfassung)</h2>
+<p>Ich entscheide nicht aus dem Bauch, sondern rechne mir die
+<strong>Chance auf Freiheit</strong> aus. Dazu zerlege ich die Flucht in
+<strong>Pfad-Entscheidungen</strong> – und jeder Pfadast kriegt eine
+Wahrscheinlichkeit. Am Ende addiere ich alle Erfolgs‑Äste, fertig ist
+mein „Kann klappen“-Prozent.</p>
+<h2 id="der-baum-ebenen-logik">Der Baum – Ebenen &amp; Logik</h2>
+<figure>
+<img src="decisiontree.svg" alt="Der Entscheidungsbaum" />
+<figcaption aria-hidden="true">Der Entscheidungsbaum</figcaption>
+</figure>
+<ol type="1">
+<li><p><strong>Buslage</strong>: Kommt überhaupt ein Bus in meiner
+Wartezeit nach <strong>Süden</strong> oder <strong>Norden</strong>? Wenn
+<strong>kein Bus</strong> kommt → <strong>Misserfolg</strong> (Tag
+gelaufen, neues Zeitfenster suchen).</p></li>
+<li><p><strong>Fahrer-Bargeld-Test</strong>: Nimmt der Fahrer meine
+<strong>D‑Mark</strong> (statt FIM/SEK/whatever)? <strong>Ja</strong> →
+ich steige ein. <strong>Nein</strong> → <strong>Misserfolg</strong> (Ast
+endet).</p></li>
+<li><p><strong>Verfolger-Risiko</strong> (<em>Mielke‑Bossfight</em>):
+<strong>Erwischt</strong> → <strong>Misserfolg</strong>.
+<strong>Verpasst</strong> → <strong>Freiheit</strong>.</p></li>
+</ol>
+<hr />
+<h2 id="notation-damits-flott-geht">Notation (damit’s flott geht)</h2>
+<ul>
+<li>(p_S): Bus nach <strong>Süden</strong> kommt (im Zeitfenster).</li>
+<li>(p_N): Bus nach <strong>Norden</strong> kommt.</li>
+<li>(a_S, a_N): Fahrer akzeptiert <strong>D‑Mark</strong>
+(Süden/Norden).</li>
+<li>(r_S, r_N): <strong>Erwischt‑Wahrscheinlichkeit</strong> im Bus
+(Süden/Norden). → ((1-r)) ist die <strong>„Er verpasst
+mich“</strong>‑Chance.</li>
+</ul>
+<hr />
+<h2 id="erfolgsformel-die-zwei-guten-äste">Erfolgsformel (die zwei guten
+Äste)</h2>
+<p>Es gibt zwei Erfolgswege (Süden, Norden). Die Gesamtchance ist die
+Summe der Pfadprodukte:</p>
+<p>[ P() = p_S a_S (1 - r_S);+; p_N a_N (1 - r_N). ]</p>
+<p>Alles andere landet automatisch in [ P() = 1 - P(). ]</p>
+<hr />
+<h2 id="minibeispiel-zahlen-nur-zum-fühlen">Mini‑Beispiel (Zahlen nur
+zum Fühlen)</h2>
+<ul>
+<li>(p_S=0{,}4), (a_S=0{,}6), (r_S=0{,}3)</li>
+<li>(p_N=0{,}3), (a_N=0{,}7), (r_N=0{,}5)</li>
+</ul>
+<p>Rechnung:</p>
+<ul>
+<li>Süden: (0{,}4 6 (1-0{,}3) = 0{,}168)</li>
+<li>Norden: (0{,}3 7 (1-0{,}5) = 0{,}105)</li>
+<li><strong>Gesamt</strong>: (0{,}168 + 0{,}105 = 0{,}273) →
+<strong>27,3 % Freiheit</strong></li>
+</ul>
+<hr />
+<h2 id="was-lerne-ich-daraus">Was lerne ich daraus?</h2>
+<ul>
+<li>Ich kann <strong>Annahmen je Ast</strong> anpassen (z. B. Süden
+fährt öfter, Fahrer aber pingeliger).</li>
+<li>Ich sehe sofort, <strong>welcher Ast mehr bringt</strong>.</li>
+<li>Wenn ich Optionen <strong>killen</strong> will (z. B. Norden
+ignoriere ich heute), setze ich die Kanten‑Wahrscheinlichkeit einfach
+auf <strong>0</strong>.</li>
+</ul>
+<hr />
+<h2 id="deine-szene-trag-hier-deine-werte-ein">Deine Szene? Trag hier
+deine Werte ein</h2>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Bedeutung</th>
+<th>Dein Wert</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(p_S)</td>
+<td>Bus nach Süden kommt</td>
+<td></td>
+</tr>
+<tr>
+<td>(p_N)</td>
+<td>Bus nach Norden kommt</td>
+<td></td>
+</tr>
+<tr>
+<td>(a_S)</td>
+<td>Fahrer (S) nimmt D‑Mark</td>
+<td></td>
+</tr>
+<tr>
+<td>(a_N)</td>
+<td>Fahrer (N) nimmt D‑Mark</td>
+<td></td>
+</tr>
+<tr>
+<td>(r_S)</td>
+<td>Erwischt‑Risiko im Süden</td>
+<td></td>
+</tr>
+<tr>
+<td>(r_N)</td>
+<td>Erwischt‑Risiko im Norden</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>Tipp: Werte zwischen <strong>0</strong> und <strong>1</strong>
+eintragen (z. B. 0,65). Dann oben in die Formel stopfen.</p>
+</blockquote>
+<h2 id="eddytonspur-zum-schluss">Eddy‑Tonspur zum Schluss</h2>
+<p>„Das ist mein <strong>taktisches Navi</strong>: Äste sind Wege,
+Kanten sind Chancen, und am Ende steht eine Zahl, mit der ich leben
+kann. Bauchgefühl bleibt – aber **Bauch</p>
+<ul>
+<li>Baum** schlägt <strong>Bauch allein</strong>.“</li>
+</ul>
+<p><span class="math display">$$
+\frac{5}{60}+\frac{56}{60}\cdot\frac{5}{60} +
+\frac{55}{60}\cdot\frac{55}{60}
++ \left( \frac{5}{60}+\frac{55}{60}\cdot\frac{5}{60} \right) \cdot
+20\%\cdot
+80\% + \frac{5}{60}\left( 1+\frac{55}{60} \right) \cdot 80\%\cdot 80\%
+$$</span></p>
+</body>
+</html>
