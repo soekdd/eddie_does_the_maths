@@ -27,17 +27,7 @@ npm run dev
 npm run build
 ```
 
-Output landet in `eddie_does_the_maths/dist/`.
-
-## Export nach `generated/math/` (ohne extra `dist/` Ordner)
-
-Von Repo-Root:
-
-```bash
-node scripts/gen_math.mjs
-```
-
-Das baut das Projekt und kopiert den Inhalt von `eddie_does_the_maths/dist/` direkt nach `generated/math/` (also `generated/math/index.html` und `generated/math/assets/...`).
+Output landet in `@/dist/`.
 
 ## Neue Themen hinzufuegen (Eddie-Checkliste)
 
