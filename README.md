@@ -29,14 +29,14 @@ npm run build
 
 Output landet in `@/dist/`.
 
-## Neue Themen hinzufuegen (Eddie-Checkliste)
+## Neue Themen hinzufuegen (Checkliste)
 
 1. Neue View unter `eddie_does_the_maths/src/views/` anlegen.
 2. Route in `eddie_does_the_maths/src/router.js` eintragen.
 3. `meta: { title, index: true, order }` setzen, dann taucht es im Index auf.
 4. Formeln ueber `<Katex ... />` reinwerfen.
 
-## Troubleshooting (aka: Mathe ist manchmal kalt)
+## Troubleshooting
 
 - Seite leer? Du bist wahrscheinlich ohne Hash gelandet. Richtig ist `/#/DG` statt `/DG`.
 - Formeln sehen aus wie 1996? Check `eddie_does_the_maths/src/main.js`: `import 'katex/dist/katex.min.css'`.
