@@ -14,84 +14,74 @@
         </style>
     </defs>
 
-    <!-- ======= Canvas frame hint ======= -->
-    <text x="40" y="42" class="hint">IMO 1985 • Problem 1 — Skizze (schematisch)</text>
+    <text x="40" y="42" class="hint">IMO 1985 • Problem 1 — Skizze (schematisch, aber L/M/N exakt
+        auf dem Kreis)</text>
 
-    <!-- ======= Outer circumcircle ======= -->
-    <!-- Center (300,250), radius 200 -->
+    <!-- Outer circumcircle: Center (300,250), radius 200 -->
     <circle cx="300" cy="250" r="200" class="outer" />
 
-    <!-- ======= Points on the circumcircle ======= -->
-    <!-- A(140.27,370.36), B(459.73,370.36), C(453.21,121.44), D(112.06,181.60) -->
+    <!-- Points on the circumcircle -->
+    <!-- A(140.273,370.363), B(459.727,370.363), C(453.209,121.442), D(112.061,181.596) -->
     <circle cx="140.273" cy="370.363" r="5.5" class="pt" />
     <circle cx="459.727" cy="370.363" r="5.5" class="pt" />
     <circle cx="453.209" cy="121.442" r="5.5" class="pt" />
     <circle cx="112.061" cy="181.596" r="5.5" class="pt" />
 
-    <!-- Labels -->
     <text x="118" y="402" class="lbl">A</text>
     <text x="470" y="402" class="lbl">B</text>
     <text x="468" y="118" class="lbl">C</text>
     <text x="86" y="180" class="lbl">D</text>
 
-    <!-- ======= Cyclic quadrilateral ABCD ======= -->
+    <!-- Cyclic quadrilateral ABCD -->
     <path d="M 140.273 370.363 L 459.727 370.363 L 453.209 121.442 L 112.061 181.596 Z" class="thin" />
 
-    <!-- ======= The “tangent” circle with center on AB ======= -->
-    <!-- O chosen on AB; circle drawn schematically. -->
+    <!-- Inner circle with center O on AB -->
     <circle cx="300" cy="370.363" r="95" class="inner" />
 
     <!-- Center O -->
     <circle cx="300" cy="370.363" r="5.5" class="pt" />
     <text x="312" y="358" class="lbl">O</text>
 
-    <!-- ======= Tangency points (schematic) ======= -->
-    <!-- On DA (touch point L) -->
-    <circle cx="196" cy="302" r="5.5" class="pt" />
-    <text x="170" y="292" class="lbl">L</text>
+    <!-- Tangency points L, M, N: NOW EXACTLY ON INNER CIRCLE (center O, r=95) -->
+    <!-- Chosen at angles 210°, 285°, 330° -->
+    <!-- L -->
+    <circle cx="217.728" cy="322.863" r="5.5" class="pt" />
+    <text x="190" y="318" class="lbl">L</text>
 
-    <!-- On CD (touch point M) -->
-    <circle cx="278" cy="176" r="5.5" class="pt" />
-    <text x="286" y="170" class="lbl">M</text>
+    <!-- M -->
+    <circle cx="324.588" cy="278.618" r="5.5" class="pt" />
+    <text x="334" y="274" class="lbl">M</text>
 
-    <!-- On BC (touch point N) -->
-    <circle cx="404" cy="300" r="5.5" class="pt" />
-    <text x="414" y="296" class="lbl">N</text>
+    <!-- N -->
+    <circle cx="382.272" cy="322.863" r="5.5" class="pt" />
+    <text x="392" y="318" class="lbl">N</text>
 
-    <!-- ======= Radii to tangency points (perpendicular to tangents) ======= -->
-    <line x1="300" y1="370.363" x2="196" y2="302" class="dash" />
-    <line x1="300" y1="370.363" x2="278" y2="176" class="dash" />
-    <line x1="300" y1="370.363" x2="404" y2="300" class="dash" />
+    <!-- Radii to tangency points -->
+    <line x1="300" y1="370.363" x2="217.728" y2="322.863" class="dash" />
+    <line x1="300" y1="370.363" x2="324.588" y2="278.618" class="dash" />
+    <line x1="300" y1="370.363" x2="382.272" y2="322.863" class="dash" />
 
-    <!-- Right-angle markers at L, M, N (small squares, schematic) -->
-    <!-- at L -->
-    <path d="M 200 298 L 214 306 L 206 320 L 192 312 Z" class="thin" />
-    <!-- at M -->
-    <path d="M 282 172 L 296 172 L 296 186 L 282 186 Z" class="thin" />
-    <!-- at N -->
-    <path d="M 408 296 L 422 304 L 414 318 L 400 310 Z" class="thin" />
+    <!-- Right-angle markers at L, M, N (schematic orientation) -->
+    <path d="M 220 316 L 234 324 L 226 338 L 212 330 Z" class="thin" />
+    <path d="M 327 272 L 341 272 L 341 286 L 327 286 Z" class="thin" />
+    <path d="M 385 316 L 399 324 L 391 338 L 377 330 Z" class="thin" />
 
-    <!-- ======= Highlight tangent sides (BC, CD, DA) ======= -->
-    <!-- Slightly thicker overlay on BC, CD, DA to signal “tangent” sides -->
+    <!-- Highlight “tangent” sides (BC, CD, DA) and AB -->
     <path d="M 459.727 370.363 L 453.209 121.442"
         style="stroke:#111; stroke-width:4; fill:none; opacity:0.55" />
     <path d="M 453.209 121.442 L 112.061 181.596"
         style="stroke:#111; stroke-width:4; fill:none; opacity:0.55" />
     <path d="M 112.061 181.596 L 140.273 370.363"
         style="stroke:#111; stroke-width:4; fill:none; opacity:0.55" />
-
-    <!-- AB (where the center lies) -->
     <path d="M 140.273 370.363 L 459.727 370.363"
         style="stroke:#111; stroke-width:4; fill:none; opacity:0.55" />
-    <text x="270" y="408" class="small">AB</text>
 
-    <!-- Side labels (optional, subtle) -->
+    <text x="270" y="408" class="small">AB</text>
     <text x="486" y="270" class="small">BC</text>
     <text x="286" y="112" class="small">CD</text>
     <text x="82" y="300" class="small">DA</text>
 
-    <!-- Tiny legend -->
-    <text x="560" y="110" class="hint">BC, CD, DA sind Tangenten an den inneren Kreis.</text>
-    <text x="560" y="135" class="hint">O liegt auf AB.</text>
-    <text x="560" y="160" class="hint">L, M, N sind Berührpunkte (Tangentialpunkte).</text>
+    <text x="560" y="110" class="hint">BC, CD, DA sind als Tangenten markiert (Skizze ist
+        schematisch).</text>
+    <text x="560" y="135" class="hint">O liegt auf AB. L/M/N liegen exakt auf dem inneren Kreis.</text>
 </svg>

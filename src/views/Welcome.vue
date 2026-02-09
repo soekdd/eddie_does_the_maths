@@ -1,5 +1,4 @@
 <script setup>
-import AppFrame from '@/App.vue'
 import ContentIndex from '@/components/ContentIndex.vue'
 import ImageZoomer from '@/components/ImageZoomer.vue'
 import welcomeImg from '@/images/welcome.webp'
@@ -25,7 +24,7 @@ import welcomeImg from '@/images/welcome.webp'
         </figure>
 
         <p>
-          Hey, ich bin Eddie – und wenn du mein Buch kennst, weißt du: Meine Flucht aus der DDR ist kein
+          Hey, ich bin Eddie und wenn du mein Buch kennst, weißt du: Meine Flucht aus der DDR ist kein
           Zufall, sondern ein Plan aus Papier, Mut und Mathe.
         </p>
         <p>

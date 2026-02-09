@@ -2,7 +2,6 @@
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 
-import AppFrame from '@/App.vue'
 import ContentIndex from '@/components/ContentIndex.vue'
 
 const route = useRoute()

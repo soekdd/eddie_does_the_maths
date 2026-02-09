@@ -1,7 +1,7 @@
 import { createApp, h } from 'vue'
 import { RouterView } from 'vue-router'
 import { VApp } from 'vuetify/components'
-
+import AppFrame from '@/App.vue'
 import 'katex/dist/katex.min.css'
 import { router } from '@/router.js'
 import { vuetify } from '@/plugins/vuetify'
@@ -52,4 +52,9 @@ const Root = {
   render: () => h(VApp, null, { default: () => h(RouterView) }),
 }
 
-createApp(Root).use(router).use(vuetify).mount('#app')
+const app = createApp(Root)
+
+// Global layout component so views don't need to import it explicitly.
+app.component('AppFrame', AppFrame)
+
+app.use(router).use(vuetify).mount('#app')

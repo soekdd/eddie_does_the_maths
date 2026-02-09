@@ -11,7 +11,7 @@
     <template #descriptionPart>
       <figure class="exampleFigure">
           <ImageZoomer :title="`Eddie`">
-             <img :src="dgImg" alt="Eddie rechnet" loading="lazy" />
+             <img :src="titleImg" alt="Eddie rechnet" loading="lazy" />
           </ImageZoomer>
       </figure>
       <h2>Teil 1 — Einfaches Beispiel</h2>
@@ -392,13 +392,11 @@
 
 <script setup>
 import { computed, reactive, ref, watch } from 'vue'
-
-import AppFrame from '@/App.vue'
 import DG_Graph from './DG_Graph.vue'
 import ImageZoomer from '@/components/ImageZoomer.vue'
 import Katex from '@/components/Katex.vue'
 import { egcdWithSteps, fmt, gcd, parseIntStrict } from '@/utils/diophantine'
-import dgImg from '@/images/DG.webp'
+import titleImg from '@/images/DG.webp'
 
 const example = { a: 17, b: 6, c: 200 }
 
