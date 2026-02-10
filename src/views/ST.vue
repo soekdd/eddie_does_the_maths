@@ -157,7 +157,7 @@
       <v-card class="panel pa-3 mt-4" variant="tonal">
         <h3>Baum zu deinen Eingaben</h3>
         <ImageZoomer :title="graphTitle">
-          <ST_Graph :p="calc.ok ? calc.pp : 0" :a="a" :r="r" />
+          <ST_Graph :standMinutes :busPerHour :a :r />
         </ImageZoomer>
         <ImageZoomer :title="graphTitle">
           <ST_Graph2 :p="calc.ok ? calc.pp : 0" :a="a" :r="r" />

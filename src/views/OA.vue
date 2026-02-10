@@ -26,7 +26,7 @@
         <div class="exampleClear"></div>
       </div>
 
-      <h2>Was man sich sofort merkt (Eddies Plan)</h2>
+      <h2>Was man sich sofort feststellt:</h2>
       <div class="eddie">
         <p>
           Die Aufgabe wirkt wie Geometrie-Zauberei, ist aber eigentlich “Buchhaltung” mit Strecken:
@@ -41,7 +41,7 @@
           verwandeln und dann <Katex tex="AB" /> als Summe zu zerlegen.
         </p>
       </div>
-           <h2>Lösung (locker, aber sauber)</h2>
+           <h2>Lösung</h2>
       <div class="eddie">
         <h3>0) Notation: Berührpunkte und Mittelpunkt</h3>
         <p>
