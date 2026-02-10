@@ -18,7 +18,7 @@
       <h2>Teil 1 — Worum’s geht (Kurzfassung)</h2>
       <div class="eddie">
         <p class="muted">
-          <i>„Spieltheorie, aber auf Straßenstaub und kalte Finger runtergebrochen.“</i>
+          <i>„Spieltheorie“</i>
         </p>
 
         <p>
@@ -37,7 +37,7 @@
         <div class="exampleClear"></div>
       </div>
 
-      <h2 class="mt-8">Teil 1b — Wie komme ich an p (Bus kommt)?</h2>
+      <h2 class="mt-8">Teil 2 — Wie komme ich an p (Bus kommt)?</h2>
       <div class="eddie">
         <p>
           Ein einfaches Bauch-zu-Zahl‑Modell: Ich betrachte eine Stunde als Zeitfenster und frage:
@@ -58,39 +58,87 @@
           </div>
         </div>
       </div>
-
-      <h2 class="mt-8">Teil 2 — Vereinfachung (damit’s flott geht)</h2>
+      <h2 class="mt-8">Teil 3 — Warum man Wahrscheinlichkeiten nicht addieren darf</h2>
+      <figure class="exampleFigure">
+      <ImageZoomer :title="`Baum`">  
+        <ST_Graph standMinutes="5" busPerHour="1" a="0.8" r="0.2" />
+      </ImageZoomer>
+      </figure>
       <div class="eddie">
-        <p class="muted">
-          Heute machen wir’s schlanker: <Katex tex="p_S=p_N=p" />, <Katex tex="a_S=a_N=a" />,
-          <Katex tex="r_S=r_N=r" />.
+        <p>
+          Hier ist der typische Denkfehler: Ich habe zwei Chancen (Sueden <Katex tex="S" /> und Norden
+          <Katex tex="N" />) und will die Wahrscheinlichkeit, dass <b>mindestens eine</b> davon eintritt:
+          <Katex tex="P(S\cup N)" />.
         </p>
 
-        <ul>
-          <li><Katex tex="f" />: Busse pro Stunde <b>pro Richtung</b></li>
-          <li><Katex tex="t" />: Standzeit (Minuten)</li>
-          <li><Katex tex="p\approx \frac{f\,t}{60}" />: daraus (pro Richtung) die Bus‑Wahrscheinlichkeit</li>
+        <p>
+          Wenn man einfach <Katex tex="p_S+p_N" /> rechnet, kann das schiefgehen, weil man den Fall
+          <i>„beide treten ein“</i> doppelt zaehlt. Im Extrem landet man sogar bei
+          <Katex tex="p>100\\%" /> (z.B. <Katex tex="0{,}7+0{,}6=1{,}3" />).
+        </p>
+
+        <p>
+          Sauber geht es ueber das <b>Komplement</b>. Statt „mindestens ein Bus“ rechne ich „kein Bus aus
+          Sueden UND kein Bus aus Norden“. Wenn wir (wie im Modell) annehmen, dass die beiden Richtungen
+          unabhaengig sind, darf man diese Komplementwahrscheinlichkeiten multiplizieren:
+        </p>
+
+        <div class="kbox">
+          <Katex
+            as="div"
+            display
+            tex="p_{\text{ges}}=P(S\cup N)=1-P(S^c\cap N^c)=1-P(S^c)\\P(N^c)=1-(1-p_S)(1-p_N)."
+          />
+        </div>
+      </div>
+
+	      <h2 class="mt-8">Teil 4 — Wann man Wahrscheinlichkeiten doch addieren darf</h2>
+	      <div class="eddie">
+	        <p class="muted">
+	          Heute machen wir’s schlanker: <Katex tex="p_S=p_N=p" />, <Katex tex="a_S=a_N=a" />,
+	          <Katex tex="r_S=r_N=r" />.
+	        </p>
+
+	        <p>
+	          Warum ist bei kleinem <Katex tex="p" /> die Summe trotzdem (naeherungsweise) erlaubt? Weil die exakte
+	          Formel aus Teil 3 beim Ausmultiplizieren fast genau zur Summe wird:
+	          <Katex tex="1-(1-p)^2 = 1-(1-2p+p^2)=2p-p^2" />.
+	          Der Unterschied zur Addition <Katex tex="2p" /> ist also genau der kleine Korrekturterm
+	          <Katex tex="p^2" />. Wenn <Katex tex="p" /> nur wenige Prozent ist, ist <Katex tex="p^2" /> noch viel
+	          kleiner und die Naeherung passt sehr gut.
+	        </p>
+
+	        <ul>
+	          <li><Katex tex="f" />: Busse pro Stunde <b>pro Richtung</b></li>
+	          <li><Katex tex="t" />: Standzeit (Minuten)</li>
+	          <li><Katex tex="p\approx \frac{f\,t}{60}" />: daraus (pro Richtung) die Bus‑Wahrscheinlichkeit</li>
           <li><Katex tex="a" />: Fahrer akzeptiert D‑Mark</li>
           <li><Katex tex="r" />: Erwischt‑Wahrscheinlichkeit</li>
         </ul>
 
+        <p>
+          Exakt (mit Teil 3 und <Katex tex="p_S=p_N=p" />) gilt:
+          <Katex tex="P(\text{kein Bus})=(1-p)^2" />
+          und damit
+          <Katex tex="P(\text{mindestens ein Bus})=1-(1-p)^2=2p-p^2" />.
+        </p>
+
         <p class="muted">
-          Dann ist <Katex tex="P(\text{kein Bus})=1-2p" />.
+          Wenn <Katex tex="p" /> klein ist, ist <Katex tex="p^2" /> noch viel kleiner. Dann darf man
+          naeherungsweise addieren:
+          <Katex tex="p_{\text{ges}}\\approx p_S+p_N" /> bzw. hier <Katex tex="p_{\text{ges}}\\approx 2p" />.
         </p>
       </div>
 
-      <h2 class="mt-8">Teil 3 — Erfolgsformel</h2>
+      <h2 class="mt-8">Teil 5 — Erfolgsformel</h2>
       <div class="eddie">
         <p>
-          Es gibt zwei Erfolgswege (Sueden und Norden), und beide sind gleich stark. Darum könnte man auf zwei
-          gleichen Pfaden schließen und einfach ein Faktor 2 ansetzen. Doch richtig korrekt ist das nicht. Denn
-          wenn wir Wahrscheinlichkeiten einfach addieren, kann es schnell passieren, dass wir eine Wahrscheinlichkeit 
-          von über 100% erhalten. Der korrekte Weg ist, die Reziproke zu Multiplizieren. Bei kleinen Wahrscheinlichkeiten 
-          komme beide Wege annähernd auf das gleiche Ergebis.
+          Erst muss ueberhaupt ein Bus kommen (Sueden oder Norden), dann muss der Fahrer meine D‑Mark annehmen,
+          und dann darf mich der Verfolger nicht erwischen. Darum ist die Erfolgswahrscheinlichkeit:
         </p>
 
         <div class="kbox">
-          <Katex as="div" display tex="P(\text{Freiheit}) = 2p\cdot a\cdot (1-r)." />
+          <Katex as="div" display tex="P(\text{Freiheit}) = \bigl(1-(1-p)^2\bigr)\cdot a\cdot (1-r) = (2p-p^2)\,a\,(1-r)." />
         </div>
 
         <p class="muted">
@@ -98,7 +146,7 @@
         </p>
       </div>
 
-      <h2 class="mt-8">Teil 4 — Mini‑Beispiel</h2>
+      <h2 class="mt-8">Teil 6 — Mini‑Beispiel</h2>
       <div class="eddie">
         <p class="muted">
           Beispielwerte: <code class="mono">f=1</code> pro Stunde, <code class="mono">t=5</code> Minuten,
@@ -110,7 +158,7 @@
             pro Richtung: p = f·t/60 = {{ fmtDec(exampleOut.p, 3) }} ({{ fmtPct(exampleOut.p) }})
           </div>
           <div class="mono">
-            Gesamt: 2·p·a·(1-r) = {{ fmtDec(exampleOut.freedom, 3) }} ({{ fmtPct(exampleOut.freedom) }})
+            Gesamt: (2p-p²)·a·(1-r) = {{ fmtDec(exampleOut.freedom, 3) }} ({{ fmtPct(exampleOut.freedom) }})
           </div>
         </div>
 
@@ -120,10 +168,10 @@
           <li>Und wenn ich “Mielke” kleiner machen will: <code class="mono">r</code> runter.</li>
         </ul>
       </div>
-    </template>
-
-    <template #interactivePart>
-      <h2>Teil 5 — Rechner</h2>
+	    </template>
+	
+	    <template #interactivePart>
+	      <h2>Teil 7 — Rechner</h2>
 
       <v-card class="panel pa-5" variant="tonal">
         <div class="formGrid">
@@ -148,8 +196,8 @@
           </span>
           <br />
           <span class="muted">
-            Weil es zwei Richtungen gibt, muss am Ende <code class="mono">p</code> <=
-            <code class="mono">0,5</code> sein, sonst wird <code class="mono">1-2p</code> negativ.
+            Mit zwei Richtungen gilt exakt: <Katex tex="P(\text{Bus})=1-(1-p)^2" /> (und fuer kleines
+            <Katex tex="p" /> gilt naeherungsweise <Katex tex="P(\text{Bus})\\approx 2p" />).
           </span>
         </p>
       </v-card>
@@ -158,9 +206,6 @@
         <h3>Baum zu deinen Eingaben</h3>
         <ImageZoomer :title="graphTitle">
           <ST_Graph :standMinutes :busPerHour :a :r />
-        </ImageZoomer>
-        <ImageZoomer :title="graphTitle">
-          <ST_Graph2 :p="calc.ok ? calc.pp : 0" :a="a" :r="r" />
         </ImageZoomer>
       </v-card>
     </template>
@@ -194,9 +239,12 @@
               <div class="mono">f (Busse/h pro Richtung) = {{ fmtDec(calc.f, 2) }}</div>
               <div class="mono">t (Standzeit in Minuten) = {{ fmtDec(calc.t, 1) }}</div>
               <div class="mono">p = f·t/60 = {{ fmtDec(calc.pp, 3) }} ({{ fmtPct(calc.pp) }})</div>
-              <div class="mono">pNone = 1 - 2p = {{ fmtDec(calc.pNone, 3) }} ({{ fmtPct(calc.pNone) }})</div>
               <div class="mono">
-                pro Richtung: p·a·(1-r) = {{ fmtDec(calc.perBranch, 3) }} ({{ fmtPct(calc.perBranch) }})
+                pBus = 1-(1-p)² = {{ fmtDec(calc.pBus, 3) }} ({{ fmtPct(calc.pBus) }})
+              </div>
+              <div class="mono">pNone = (1-p)² = {{ fmtDec(calc.pNone, 3) }} ({{ fmtPct(calc.pNone) }})</div>
+              <div class="mono">
+                P(Freiheit) = pBus·a·(1-r)
               </div>
               <div class="mono">P(Freiheit) = {{ fmtDec(calc.freedom, 3) }} ({{ fmtPct(calc.freedom) }})</div>
               <div class="mono">P(Misserfolg) = {{ fmtDec(calc.failure, 3) }} ({{ fmtPct(calc.failure) }})</div>
@@ -237,15 +285,12 @@
 
 <script setup>
 import { computed, ref } from 'vue'
-import ImageZoomer from '@/components/ImageZoomer.vue'
-import Katex from '@/components/Katex.vue'
 import ST_Graph from './ST_Graph.vue'
-import ST_Graph2 from './ST_Graph2.vue'
 import titleImg from '@/images/ST.webp'
 
 // Vereinfachtes Modell:
 // pS = pN = p, aS = aN = a, rS = rN = r.
-// Dadurch ist P(kein Bus) = 1 - 2p und P(Freiheit) = 2 p a (1-r).
+// Dadurch ist P(mindestens ein Bus) = 1-(1-p)^2 = 2p-p^2 und P(Freiheit) = (2p-p^2) a (1-r).
 //
 // p kann man sich praktisch als "Zeitanteil" denken:
 // Wenn pro Richtung f Busse pro Stunde kommen und jeder Bus t Minuten am Bahnsteig steht,
@@ -266,8 +311,8 @@ const r = ref(String(example.r))
 const exampleOut = {
   p: (example.busPerHour * example.standMinutes) / 60,
 }
-exampleOut.perBranch = exampleOut.p * example.a * (1 - example.r)
-exampleOut.freedom = 2 * exampleOut.perBranch
+exampleOut.pBus = 1 - (1 - exampleOut.p) ** 2
+exampleOut.freedom = exampleOut.pBus * example.a * (1 - example.r)
 
 function parseMaybeFloat(v) {
   if (typeof v === 'number') return Number.isFinite(v) ? v : null
@@ -304,19 +349,12 @@ function rand(min, max) {
 }
 
 function randomize() {
-  const f = rand(0.2, 3.5)
+  const f = rand(1, 3)
   const t = rand(2, 12)
-  // Ensure p<=0.5 (2p<=1) in the simplified two-direction model.
-  const p = (f * t) / 60
-  if (p > 0.5) {
-    standMinutes.value = (30 / f).toFixed(1)
-    busPerHour.value = f.toFixed(2)
-  } else {
-    busPerHour.value = f.toFixed(2)
-    standMinutes.value = t.toFixed(1)
-  }
-  a.value = rand(0.2, 0.95).toFixed(2)
-  r.value = rand(0.05, 0.85).toFixed(2)
+  busPerHour.value = f.toFixed(0)
+  standMinutes.value = t.toFixed(0)
+  a.value = rand(0.6, 0.95).toFixed(1)
+  r.value = rand(0.05, 0.15).toFixed(1)
 }
 
 const calc = computed(() => {
@@ -343,29 +381,22 @@ const calc = computed(() => {
     return { ok: false, message: 'f*t/60 ist > 1. Das waere mehr als 100% Bus-Zeit. Werte pruefen.' }
   }
 
-  // p ist "pro Richtung" (Sueden und Norden). Darum muss 2p <= 1 gelten.
-  if (pp > 0.5) {
-    return {
-      ok: false,
-      message: 'Im Modell gibt es zwei Richtungen. Darum muss p <= 0,5 sein (sonst wird 1-2p negativ).',
-    }
-  }
-
   const issues = []
-  const pNone = 1 - 2 * pp
+  const pNone = (1 - pp) ** 2
+  const pBus = 1 - pNone
 
-  const perBranch = pp * aa * (1 - rr)
-  const freedom = 2 * perBranch
-  const reject = 2 * pp * (1 - aa)
-  const caught = 2 * pp * aa * rr
+  const freedom = pBus * aa * (1 - rr)
+  const reject = pBus * (1 - aa)
+  const caught = pBus * aa * rr
   const failure = 1 - freedom
 
   const breakdown = [
     { k: 'p (pro Richtung): f·t/60', v: pp },
-    { k: 'Kein Bus: 1-2p', v: pNone },
-    { k: 'Fahrer nein: 2·p·(1-a)', v: reject },
-    { k: 'Erwischt: 2·p·a·r', v: caught },
-    { k: 'Freiheit: 2·p·a·(1-r)', v: freedom },
+    { k: 'Bus gesamt: 1-(1-p)^2', v: pBus },
+    { k: 'Kein Bus: (1-p)^2', v: pNone },
+    { k: 'Fahrer nein: pBus·(1-a)', v: reject },
+    { k: 'Erwischt: pBus·a·r', v: caught },
+    { k: 'Freiheit: pBus·a·(1-r)', v: freedom },
   ]
 
   return {
@@ -376,8 +407,8 @@ const calc = computed(() => {
     pp,
     aa,
     rr,
+    pBus,
     pNone,
-    perBranch,
     reject,
     caught,
     freedom,

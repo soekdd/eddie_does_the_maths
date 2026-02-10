@@ -2,6 +2,8 @@ import { createApp, h } from 'vue'
 import { RouterView } from 'vue-router'
 import { VApp } from 'vuetify/components'
 import AppFrame from '@/App.vue'
+import ImageZoomer from '@/components/ImageZoomer.vue'
+import Katex from '@/components/Katex.vue'
 import 'katex/dist/katex.min.css'
 import { router } from '@/router.js'
 import { vuetify } from '@/plugins/vuetify'
@@ -55,6 +57,8 @@ const Root = {
 const app = createApp(Root)
 
 // Global layout component so views don't need to import it explicitly.
-app.component('AppFrame', AppFrame)
+app.component('AppFrame', AppFrame);
+app.component('Katex', Katex);
+app.component('ImageZoomer', ImageZoomer);
 
 app.use(router).use(vuetify).mount('#app')
