@@ -1,9 +1,9 @@
 <template>
 <AppFrame>
 	<template #title>
-		<div class="badge">ST</div>
+		<div class="badge">O2</div>
 		<div>
-			<h1>Eddie rechnet: Internationale Matheolympiade 1885 Aufgabe 1</h1>
+			<h1>Eddie rechnet: IMO 1985 Aufgabe 2</h1>
 			<p class="sub">Entscheidungsbaum • Wahrscheinlichkeiten • Rechner</p>
 		</div>
 	</template>

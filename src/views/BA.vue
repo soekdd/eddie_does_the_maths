@@ -27,4 +27,5 @@
 </template>
 
 <script setup>
+import BA_Emulator from "./BA_Emulator.vue";
 </script>

@@ -285,14 +285,6 @@
 			</div>
 		</v-card>
 	</template>
-
-	<template #footer>
-		<p class="muted">
-			Eddie-Notiz: In diesem vereinfachten Modell sind Sueden und Norden absichtlich gleich. Das spart
-			Variablen und macht die Rechnung schnell. Wenn du wieder Richtungstaktik willst, muessen wir die
-			Symmetrie wieder aufbrechen.
-		</p>
-	</template>
 </AppFrame>
 </template>
 

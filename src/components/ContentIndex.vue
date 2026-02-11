@@ -50,7 +50,7 @@ const items = computed( () => {
 			:to="it.wip ? undefined : it.to"
 			variant="flat"
 		>
-			{{ it.title }} {{ it.wip ? "(in Arbeit)" : "" }}
+			{{ it.title }} <!-- {{ it.wip ? "(in Arbeit)" : "" }} -->
 		</v-btn>
 	</div>
 
