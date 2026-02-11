@@ -42,6 +42,9 @@ export const vuetify = createVuetify( {
 			rounded:   "lg",
 			elevation: 0
 		},
+		VAlert: {
+			icon: false
+		},
 		VTextField: {
 			variant:     "outlined",
 			density:     "comfortable",

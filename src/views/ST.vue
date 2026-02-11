@@ -177,7 +177,7 @@
 	<template #interactivePart>
 		<h2>Teil 7 — Rechner</h2>
 
-		<v-card class="panel pa-5" variant="tonal">
+		<v-card class="panel pa-5">
 			<div class="formGrid">
 				<v-text-field v-model="busPerHour" inputmode="decimal" label="f (Busse pro Stunde pro Richtung)" />
 				<v-text-field v-model="standMinutes" inputmode="decimal" label="t (Standzeit in Minuten)" />
@@ -210,7 +210,7 @@
 			</p>
 		</v-card>
 
-		<v-card class="panel pa-3 mt-4" variant="tonal">
+		<v-card class="panel pa-3 mt-4">
 			<h3>Baum zu deinen Eingaben</h3>
 			<ImageZoomer :title="graphTitle">
 				<ST_Graph
@@ -224,7 +224,7 @@
 	</template>
 
 	<template #calculationPart>
-		<v-card class="panel" variant="tonal">
+		<v-card class="panel">
 			<div class="resultHeader">
 				<v-chip
 					class="pill"
