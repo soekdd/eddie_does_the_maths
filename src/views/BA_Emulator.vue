@@ -115,34 +115,46 @@
 
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, ref } from "vue";
+import cbmbasicFactoryAssetUrl from "../utils/webdist/cbmbasic.mjs?url";
+import cbmbasicWasmAssetUrl from "../utils/webdist/cbmbasic.wasm?url";
 
 type DemoProgram = { id: string; name: string; source: string };
-
-const props = withDefaults(
-  defineProps<{
-    /**
-     * URL zur Emscripten-Factory (cbmbasic.js), z.B. "/cbmbasic/cbmbasic.js"
-     * Muss ein ES Module sein, das default-exported: (ModuleOverrides) => Promise<Module>
-     */
-    cbmbasicFactoryUrl?: string;
-
-    /**
-     * Basis-URL für wasm/weitere Assets, falls dein Emscripten-Build locateFile nutzt.
-     * Beispiel: "/cbmbasic/"
-     */
-    wasmBaseUrl?: string;
-
-    /**
-     * Cursor blinken lassen
-     */
-    blinkCursor?: boolean;
-  }>(),
-  {
-    cbmbasicFactoryUrl: "/cbmbasic/cbmbasic.js",
-    wasmBaseUrl: "/cbmbasic/",
-    blinkCursor: true,
-  }
+const DEFAULT_CBMBASIC_FACTORY_URL = cbmbasicFactoryAssetUrl;
+const DEFAULT_WASM_URL = cbmbasicWasmAssetUrl;
+const DEFAULT_WASM_BASE_URL = DEFAULT_WASM_URL.slice(
+  0,
+  DEFAULT_WASM_URL.lastIndexOf("/") + 1
 );
+
+const props = defineProps<{
+  /**
+   * URL zur Emscripten-Factory (cbmbasic.mjs)
+   * Muss ein ES Module sein, das default-exported: (ModuleOverrides) => Promise<Module>
+   */
+  cbmbasicFactoryUrl?: string;
+
+  /**
+   * Basis-URL für wasm/weitere Assets, falls dein Emscripten-Build locateFile nutzt.
+   * Beispiel: "https://.../cbmbasic/"
+   */
+  wasmBaseUrl?: string;
+
+  /**
+   * Cursor blinken lassen
+   */
+  blinkCursor?: boolean;
+}>();
+const emit = defineEmits<{
+  (e: "hard-restart", payload: { reason: string }): void;
+}>();
+
+const resolvedCbmbasicFactoryUrl = computed(
+  () => props.cbmbasicFactoryUrl ?? DEFAULT_CBMBASIC_FACTORY_URL
+);
+const resolvedWasmBaseUrl = computed(
+  () => props.wasmBaseUrl ?? DEFAULT_WASM_BASE_URL
+);
+const blinkCursor = computed(() => props.blinkCursor ?? true);
 
 const COLS = 40;
 const ROWS = 25;
@@ -170,10 +182,14 @@ const programs = ref<DemoProgram[]>([
     source: [
       "10 SYS 1",
       "20 PRINT CHR$(147)",
-      "30 LOCATE 2,10: PRINT \"E D D I E\"",
-      "40 LOCATE 4,6:  PRINT \"MATHE IST EIN SCHLUESSEL\"",
-      "50 LOCATE 6,6:  PRINT \"(TEXTMODE ONLY)\"",
-      "60 LOCATE 10,0: PRINT \"READY.\"",
+      "30 LOCATE 2,10",
+      "40 PRINT \"E D D I E\"",
+      "50 LOCATE 4,6",
+      "60 PRINT \"MATHE IST SCHLUESSEL\"",
+      "70 LOCATE 6,6",
+      "80 PRINT \"TEXTMODE ONLY\"",
+      "90 LOCATE 10,1",
+      "100 PRINT \"READY.\"",
     ].join("\n"),
   },
   {
@@ -182,14 +198,13 @@ const programs = ref<DemoProgram[]>([
     source: [
       "10 PRINT CHR$(147)",
       "20 FOR Y=1 TO 10",
-      "30 S$=\"\"",
-      "40 FOR X=1 TO Y",
-      "50 S$=S$+\"*\"",
-      "60 NEXT X",
-      "70 PRINT S$",
-      "80 NEXT Y",
-      "90 PRINT",
-      "100 PRINT \"READY.\"",
+      "30 FOR X=1 TO Y",
+      "40 PRINT \"*\";",
+      "50 NEXT X",
+      "60 PRINT",
+      "70 NEXT Y",
+      "80 PRINT",
+      "90 PRINT \"READY.\"",
     ].join("\n"),
   },
 ]);
@@ -202,12 +217,79 @@ const selectedId = ref(programs.value[0]?.id ?? "");
 const ready = ref(false);
 const running = ref(false);
 const lastError = ref<string>("");
+let hardRestartRequested = false;
+
+function formatError(error: unknown): string {
+  if (error instanceof Error) {
+    return error.message || error.name;
+  }
+  if (typeof error === "string") {
+    return error;
+  }
+  if (error && typeof error === "object") {
+    const maybeMessage = (error as { message?: unknown }).message;
+    if (typeof maybeMessage === "string" && maybeMessage.trim().length > 0) {
+      return maybeMessage;
+    }
+    try {
+      return JSON.stringify(error, null, 2);
+    } catch {
+      return Object.prototype.toString.call(error);
+    }
+  }
+  return String(error);
+}
+
+function isMemoryOutOfBoundsError(message: string): boolean {
+  return /\b(memory(\s+access)?\s+out\s+of\s+bounds|wasm.*out\s+of\s+bounds)\b/i.test(
+    message
+  );
+}
+
+function requestHardRestart(reason: string) {
+  if (hardRestartRequested) {
+    return;
+  }
+  hardRestartRequested = true;
+  ready.value = false;
+  running.value = false;
+  mod = null;
+  stdinQueue.value = [];
+  queueMicrotask(() => {
+    emit("hard-restart", { reason });
+  });
+}
+
+function handleRuntimeError(error: unknown): string {
+  const message = formatError(error);
+  lastError.value = message;
+  if (isMemoryOutOfBoundsError(message)) {
+    requestHardRestart(message);
+  }
+  return message;
+}
+
+function onGlobalError(event: ErrorEvent) {
+  const message = handleRuntimeError(event.error ?? event.message);
+  if (isMemoryOutOfBoundsError(message)) {
+    event.preventDefault();
+  }
+}
+
+function onUnhandledRejection(event: PromiseRejectionEvent) {
+  const message = handleRuntimeError(event.reason);
+  if (isMemoryOutOfBoundsError(message)) {
+    event.preventDefault();
+  }
+}
 
 // --- Screen state ---
 const screenText = ref("");
 const cursorX = ref(0);
 const cursorY = ref(0);
 let mem = new Uint16Array(SIZE); // 0..255 character codes; wir nutzen primär ASCII 32..126
+let ansiState: "none" | "esc" | "csi" = "none";
+let ansiCsiBuffer = "";
 
 function resetMem() {
   mem.fill(32);
@@ -239,7 +321,95 @@ function backspace() {
   mem[cursorY.value * COLS + cursorX.value] = 32;
 }
 
+function clamp(value: number, min: number, max: number): number {
+  if (value < min) return min;
+  if (value > max) return max;
+  return value;
+}
+
+function applyAnsiCursor(row1Based: number, col1Based: number) {
+  cursorY.value = clamp(row1Based - 1, 0, ROWS - 1);
+  cursorX.value = clamp(col1Based - 1, 0, COLS - 1);
+}
+
+function parseAnsiNumber(input: string | undefined): number | undefined {
+  if (input === undefined || input === "") return undefined;
+  const n = Number.parseInt(input, 10);
+  if (!Number.isFinite(n)) return undefined;
+  return n;
+}
+
+function applyAnsiCsi(finalByte: number, rawParams: string) {
+  const final = String.fromCharCode(finalByte);
+  const params = rawParams === "" ? [] : rawParams.split(";");
+
+  if (final === "J") {
+    const mode = parseAnsiNumber(params[0]) ?? 0;
+    // Wir unterstützen aktuell nur "clear screen" (CSI 2J), wie von SYS 1 / LOCATE genutzt.
+    if (mode === 2) {
+      resetMem();
+    }
+    return;
+  }
+
+  if (final === "H" || final === "f") {
+    const row = parseAnsiNumber(params[0]) ?? 1;
+    const col = parseAnsiNumber(params[1]) ?? 1;
+    applyAnsiCursor(row, col);
+  }
+}
+
+function consumeAnsiByte(b: number): boolean {
+  if (ansiState === "esc") {
+    if (b === 91) {
+      // '[' -> CSI
+      ansiState = "csi";
+      ansiCsiBuffer = "";
+      return true;
+    }
+    ansiState = "none";
+    return false;
+  }
+
+  if (ansiState === "csi") {
+    // Parameter bytes for CSI are usually 0x30..0x3F (digits + ';' etc.).
+    if (b >= 48 && b <= 63) {
+      ansiCsiBuffer += String.fromCharCode(b);
+      if (ansiCsiBuffer.length > 32) {
+        ansiState = "none";
+        ansiCsiBuffer = "";
+      }
+      return true;
+    }
+
+    // Final byte in 0x40..0x7E.
+    if (b >= 64 && b <= 126) {
+      applyAnsiCsi(b, ansiCsiBuffer);
+      ansiState = "none";
+      ansiCsiBuffer = "";
+      return true;
+    }
+
+    ansiState = "none";
+    ansiCsiBuffer = "";
+    return true;
+  }
+
+  return false;
+}
+
 function putByte(b: number) {
+  if (consumeAnsiByte(b)) {
+    return;
+  }
+
+  if (b === 27) {
+    // ESC -> start ANSI sequence parsing.
+    ansiState = "esc";
+    ansiCsiBuffer = "";
+    return;
+  }
+
   // wichtige PETSCII/Control-Codes, minimal:
   if (b === 10 || b === 13) {
     newline();
@@ -299,7 +469,7 @@ let blinkTimer: number | null = null;
 
 function startBlink() {
   stopBlink();
-  if (!props.blinkCursor) {
+  if (!blinkCursor.value) {
     cursorBlinkOn.value = true;
     return;
   }
@@ -351,27 +521,31 @@ async function loadCbmbasic() {
   lastError.value = "";
   ready.value = false;
 
-  // cbmbasic factory dynamisch laden (aus /public)
-  const factoryModule = await import(/* @vite-ignore */ props.cbmbasicFactoryUrl);
+  // cbmbasic factory dynamisch laden (aus src-Asset oder externer URL)
+  const factoryModule = await import(
+    /* @vite-ignore */ resolvedCbmbasicFactoryUrl.value
+  );
   const create = factoryModule?.default ?? factoryModule?.createCbmbasic;
   if (typeof create !== "function") {
     throw new Error(
-      `cbmbasic factory export nicht gefunden. Erwartet default-export Funktion in ${props.cbmbasicFactoryUrl}`
+      `cbmbasic factory export nicht gefunden. Erwartet default-export Funktion in ${resolvedCbmbasicFactoryUrl.value}`
     );
   }
 
   // Emscripten Module Overrides
   mod = await create({
     noInitialRun: true,
+    stdin: stdinGetChar,
+    stdout: stdoutPutChar,
+    stderr: stderrPutChar,
     // falls dein Build locateFile nutzt:
     locateFile: (path: string) => {
-      const base = props.wasmBaseUrl.endsWith("/") ? props.wasmBaseUrl : props.wasmBaseUrl + "/";
+      const base = resolvedWasmBaseUrl.value.endsWith("/")
+        ? resolvedWasmBaseUrl.value
+        : resolvedWasmBaseUrl.value + "/";
       return base + path;
     },
   });
-
-  // stdout/stderr byteweise hooken
-  mod.FS.init(stdinGetChar, stdoutPutChar, stderrPutChar);
 
   ready.value = true;
 }
@@ -395,26 +569,37 @@ function getSelectedProgram(): DemoProgram | undefined {
 
 async function runSelected() {
   const p = getSelectedProgram();
-  if (!p || !mod) return;
+  if (!p) return;
 
   running.value = true;
   lastError.value = "";
   resetMem();
 
   try {
+    // Immer mit frischer Runtime starten, damit kein alter Zustand weiterlebt.
+    await loadCbmbasic();
+    softReset();
+    if (!mod) {
+      throw new Error("cbmbasic wurde nicht initialisiert.");
+    }
+
     // Programm als Datei schreiben und cbmbasic damit starten:
     const path = "/program.bas";
-    try {
-      mod.FS.unlink(path);
-    } catch {
-      /* ignore */
-    }
-    mod.FS.writeFile(path, p.source, { encoding: "utf8" });
+    const normalizedSource = p.source.replace( /\r?\n/g, "\r" );
+		const sourceForCbmbasic = normalizedSource.endsWith( "\r" )
+			? normalizedSource
+			: normalizedSource + "\r";
+		try {
+			mod.FS.unlink(path);
+		} catch {
+			/* ignore */
+		}
+		mod.FS.writeFile(path, sourceForCbmbasic, { encoding: "utf8" });
 
     // run
     mod.callMain([path]);
-  } catch (e: any) {
-    lastError.value = e?.message ?? String(e);
+  } catch (error: unknown) {
+    handleRuntimeError(error);
   } finally {
     running.value = false;
     scheduleRender();
@@ -433,18 +618,23 @@ function sendInput() {
 }
 
 onMounted(async () => {
+  hardRestartRequested = false;
   resetMem();
   startBlink();
+  window.addEventListener("error", onGlobalError);
+  window.addEventListener("unhandledrejection", onUnhandledRejection);
 
   try {
     await loadCbmbasic();
     softReset();
-  } catch (e: any) {
-    lastError.value = e?.message ?? String(e);
+  } catch (error: unknown) {
+    handleRuntimeError(error);
   }
 });
 
 onBeforeUnmount(() => {
+  window.removeEventListener("error", onGlobalError);
+  window.removeEventListener("unhandledrejection", onUnhandledRejection);
   stopBlink();
 });
 </script>

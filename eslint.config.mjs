@@ -7,6 +7,7 @@ import vueParser from "vue-eslint-parser";
 import importPlugin from "eslint-plugin-import";
 import preferOptionalChaining from "eslint-plugin-prefer-optional-chaining";
 import pluginSVGO from "eslint-plugin-svgo";
+import tsParser from "@typescript-eslint/parser";
 
 export default [
 	...vue.configs[ "flat/essential" ],
@@ -141,6 +142,7 @@ export default [
 			parser:        vueParser,
 			parserOptions: {
 				ecmaVersion: "latest",
+				parser:      tsParser,
 				sourceType:  "module"
 			},
 			sourceType: "module"

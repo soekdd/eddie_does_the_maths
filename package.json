@@ -15,6 +15,7 @@
     "vuetify": "^3.6.0"
   },
   "devDependencies": {
+    "@typescript-eslint/parser": "latest",
     "@stylistic/eslint-plugin": "latest",
     "@vitejs/plugin-vue": "^5.0.0",
     "eslint": "^9.34.0",
@@ -25,6 +26,7 @@
     "eslint-plugin-vue": "latest",
     "eslint-plugin-vuetify": "latest",
     "sass": "^1.77.0",
+    "typescript": "latest",
     "vite": "^5.4.21",
     "vite-plugin-vuetify": "^2.0.0",
     "vue-eslint-parser": "latest"

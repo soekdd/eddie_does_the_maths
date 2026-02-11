@@ -7,6 +7,7 @@ import O1 from "@/views/O1.vue";
 import O2 from "@/views/O2.vue";
 import PG from "@/views/PG.vue";
 import AL from "@/views/AL.vue";
+import BA from "@/views/BA.vue";
 import CatchAll from "@/views/CatchAll.vue";
 import Welcome from "@/views/Welcome.vue";
 
@@ -149,9 +150,9 @@ export const router = createRouter( {
 		{
 			path:      "/BA",
 			name:      "BA",
-			component: CatchAll,
+			component: BA,
 			meta:      {
-				title: "BASIC for Runaways", index: true, order: 160, wip: true
+				title: "BASIC for Runaways", index: true, order: 160
 			}
 		},
 		{
