@@ -173,13 +173,20 @@
 		<h2>Interaktiv</h2>
 		<div class="eddie">
 			<p class="muted">
-				Klick auf <b>Neu zufällig</b>. Unten siehst du numerisch, dass <Katex tex="AB-(AD+BC)" /> (fast)
-				0 ist. Der “Zyklisch-Fehler” misst, wie gut der Punkt <Katex tex="D" /> wirklich auf dem Umkreis
-				liegt (numerisch).
+				Klick auf <b>Neu zufällig</b>. Unten siehst du numerisch, dass <Katex tex="AB = (AD+BC)" />.
 			</p>
 		</div>
+		<div class="toolbar">
+			<button class="btn mt-3" @click="regenerateGraph">Neu zufällig</button>
+			<div v-if="graphState?.ready" class="kbox px-5 mx-5">
+				<div class="mono"><b>AB</b> = {{ fmt(graphState.lenAB) }}</div>
+				<div class="mono"><b>AD</b> = {{ fmt(graphState.lenAD) }}</div>
+				<div class="mono"><b>BC</b> = {{ fmt(graphState.lenBC) }}</div>
+				<div class="mono"><b>AD + BC</b> = {{ fmt(graphState.lenAD + graphState.lenBC) }}</div>
+			</div>
+		</div>
 		<image-zoomer :title="`IMO85/1`">
-			<O1_Graph />
+			<O1_Graph ref="graphRef" />
 		</image-zoomer>
 	</template>
 
@@ -192,6 +199,51 @@
 </template>
 
 <script setup>
+import { computed, ref } from "vue";
+
 import O1_Graph from "./O1_Graph.vue";
 import titleImg from "@/images/O1.webp";
+
+const graphRef = ref( null );
+const graphState = computed( () => graphRef.value?.state ?? null );
+
+function regenerateGraph() {
+	graphRef.value?.regenerate?.();
+}
+
+function fmt( n, digits = 3 ) {
+	if ( !Number.isFinite( n ) ) {
+		return "–";
+	}
+
+	return n.toFixed( digits );
+}
 </script>
+
+<style scoped>
+.toolbar {
+  align-items: flex-start;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 10px;
+}
+
+.btn {
+  background: #fff;
+  border: 1px solid #bbb;
+  border-radius: 10px;
+  cursor: pointer;
+  padding: 10px 14px;
+}
+
+.btn:hover {
+  background: #f6f6f6;
+}
+
+.numbers {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 13px;
+  line-height: 1.35;
+}
+</style>

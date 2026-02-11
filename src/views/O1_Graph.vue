@@ -1,15 +1,5 @@
 <template>
 <div class="wrap">
-	<div class="toolbar">
-		<button class="btn" @click="regenerate">Neu zufällig</button>
-		<div v-if="state.ready" class="numbers">
-			<div><b>AB</b> = {{ fmt(state.lenAB) }}</div>
-			<div><b>AD</b> = {{ fmt(state.lenAD) }}</div>
-			<div><b>BC</b> = {{ fmt(state.lenBC) }}</div>
-			<div><b>AD + BC</b> = {{ fmt(state.lenAD + state.lenBC) }}</div>
-		</div>
-	</div>
-
 	<svg
 		v-if="state.ready"
 		aria-label="Zyklisches Viereck mit Tangentialkreis"
@@ -543,15 +533,7 @@ function regenerate() {
 }
 
 // expose regenerate for parent components if you want
-defineExpose( { regenerate } );
-
-function fmt( n, digits = 3 ) {
-	if ( !Number.isFinite( n ) ) {
-		return "–";
-	}
-
-	return n.toFixed( digits );
-}
+defineExpose( { regenerate, state } );
 
 onMounted( () => regenerate() );
 </script>
@@ -560,35 +542,6 @@ onMounted( () => regenerate() );
 .wrap {
   display: grid;
   gap: 12px;
-}
-.toolbar {
-  display: flex;
-  gap: 16px;
-  align-items: flex-start;
-  flex-wrap: wrap;
-}
-.btn {
-  border: 1px solid #bbb;
-  background: #fff;
-  padding: 10px 14px;
-  border-radius: 10px;
-  cursor: pointer;
-}
-.btn:hover {
-  background: #f6f6f6;
-}
-.numbers {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-  font-size: 13px;
-  line-height: 1.35;
-}
-.small {
-  opacity: 0.75;
-  margin-top: 4px;
-}
-.ok {
-  color: #0a7a0a;
-  font-weight: 700;
 }
 .svg {
   width: min(900px, 100%);
