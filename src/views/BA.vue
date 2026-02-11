@@ -1,5 +1,5 @@
 <template>
-<AppFrame>
+<AppFrame warning>
 	<template #title>
 		<div class="badge">BA</div>
 		<div>
@@ -246,31 +246,14 @@
                     Wenn du die Periodenlänge kennst, zerfällt das Problem wieder in mehrere kleine Cäsar-Aufgaben.
                   </div>
                   <div class="mt-2" v-html="katexBlock(String.raw`
-                    \text{Wenn die Schlüssellänge } m \text{ bekannt ist, dann: }
+                    \text{Wenn die Schlüssellänge } m \text{ bekannt ist,}`)"></div>
+                    <div class="" v-html="katexBlock(String.raw`
+                    \text{ dann: }
                     \{i \equiv 0 \pmod m\},\{i \equiv 1 \pmod m\},\dots
                   `)"></div>
                 </v-sheet>
               </v-col>
             </v-row>
-
-            <v-divider class="my-4" />
-
-            <v-expansion-panels variant="accordion">
-              <v-expansion-panel>
-                <v-expansion-panel-title>
-                  Mini-Übung: Verschlüssele <code>EDDIE</code> mit Schlüssel <code>KEY</code>
-                </v-expansion-panel-title>
-                <v-expansion-panel-text>
-                  <div class="text-body-2 mb-2">
-                    Schlüssel wiederholen: KEYKE<br />
-                    K=10, E=4, Y=24 (bei A=0). Dann positionweise addieren mod 26.
-                  </div>
-                  <div class="text-body-2">
-                    Tipp: Mach es erstmal als Tabelle „P, K, C“ wie oben.
-                  </div>
-                </v-expansion-panel-text>
-              </v-expansion-panel>
-            </v-expansion-panels>
           </v-card-text>
         </v-card>
 
@@ -297,28 +280,86 @@
                   </ul>
                 </v-sheet>
               </v-col>
-            </v-row>
-
-            <v-divider class="my-4" />
-
-            <div class="text-body-2 text-medium-emphasis">
-              Nächster Schritt (wenn du willst): Wir bauen daraus eine kleine interaktive Seite,
-              die Cäsar und Vigenère live verschlüsselt/entschlüsselt – und später hängen wir dann
-              die BASIC-Programme dran.
-            </div>
+            </v-row>            
           </v-card-text>
         </v-card>
 		    
-		</template>
-
-	<template #interactivePart>
-  		<BAEmulator
-		          :key="emulatorKey"
-		          :blink-cursor="true"
-		          @hard-restart="handleHardRestart"
-		/>
 	</template>
 
+	<template #interactivePart>
+		<v-card class="pa-4 mb-4">
+			<v-row dense align="center">
+				<v-col cols="12" md="12">
+					<v-select
+						v-model="selectedProgramId"
+						:items="programItems"
+						label="BASIC-Programm"
+						density="compact"
+						hide-details
+					/>
+				</v-col>
+			</v-row>
+			<v-row dense align="center">
+				<v-col cols="12" md="12" class="d-flex ga-2 align-center">
+					<v-btn
+						:disabled="!emulatorReady || emulatorRunning"
+						@click="runSelectedProgram"
+						color="primary"
+					>
+						RUN
+					</v-btn>
+
+					<v-btn
+						:disabled="!emulatorReady || emulatorRunning"
+						@click="clearProgramScreen"
+						variant="tonal"
+					>
+						CLEAR
+					</v-btn>
+
+					<v-btn
+						:disabled="!emulatorReady || emulatorRunning"
+						@click="resetProgramRuntime"
+						variant="tonal"
+					>
+						RESET
+					</v-btn>
+
+					<v-spacer />
+
+					<v-chip v-if="emulatorReady" color="green" variant="tonal" size="small">
+						basic ready
+					</v-chip>
+					<v-chip v-else color="grey" variant="tonal" size="small">
+						loading…
+					</v-chip>
+				</v-col>
+			</v-row>
+		</v-card>
+
+		<v-card class="pa-4 mb-4">
+			<v-textarea
+				v-model="sourceEditor"
+				label="BASIC Quelltext"
+				rows="12"
+				auto-grow
+				spellcheck="false"
+				class="basic-source-editor"
+				:disabled="emulatorRunning"
+			/>
+		</v-card>
+
+
+	</template>
+	<template #calculationPart>
+		<BAEmulator
+			:key="emulatorKey"
+			ref="emulatorRef"
+			:blink-cursor="true"
+			@hard-restart="handleHardRestart"
+			@state-change="handleEmulatorStateChange"
+		/>		
+	</template>
 
 	<template #footer>
      
@@ -327,13 +368,159 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from "vue";
+import { ref, computed, watch } from "vue";
 import BAEmulator from "./BA_Emulator.vue";
 import titleImg from "@/images/BA.webp";
-const emulatorKey = ref( 0 );
+type BasicProgram = { id: string; name: string; source: string };
+type BAEmulatorExpose = {
+	runProgram: ( source: string ) => Promise<void>;
+	clearScreen: () => void;
+	softReset: () => void;
+};
 
-function handleHardRestart( payload ) {
+const emulatorKey = ref( 0 );
+const emulatorRef = ref<BAEmulatorExpose | null>( null );
+const emulatorReady = ref( false );
+const emulatorRunning = ref( false );
+const encodedHAMMessage = "OJUTXTLJNNUTXNZGMIKN"
+const programs: BasicProgram[] = [
+	{
+		id:     "hello",
+		name:   "Hello World",
+		source: [
+			"10 PRINT CHR$(147)",
+			"20 PRINT \"**** C64 BASIC ****\"",
+			"30 PRINT",
+			"40 PRINT \"HELLO WORLD!\"",
+			"50 PRINT",
+			"60 FOR I=1 TO 5: PRINT \"I=\";I;\"  I^2=\";I*I: NEXT",
+			"70 PRINT",
+			"80 PRINT \"READY.\""
+		]
+			.join( "\n" )
+	},
+		{
+			id:     "ceasar",
+			name:   "Ceasar Decryption",
+			source: [
+				"10 PRINT CHR$(147)",
+				`20 C$="${encodedHAMMessage}"`,
+				"30 PRINT \"CAESAR BRUTEFORCE FUER:\"",
+				"40 PRINT C$",
+				"50 PRINT",
+				"60 FOR K=1 TO 25",
+				"70 O$=\"\"",
+				"80 FOR I=1 TO LEN(C$)",
+				"90 A=ASC(MID$(C$,I,1))-65",
+				"100 D=A-K",
+				"110 IF D<0 THEN D=D+26",
+				"120 O$=O$+CHR$(D+65)",
+				"130 NEXT I",
+				"140 PRINT \"SHIFT \";K;\": \";O$",
+				"150 NEXT K",
+				"160 PRINT",
+				"170 PRINT \"READY.\""
+			]
+				.join( "\n" )
+		},
+			{
+				id:     "vigenereDe",
+				name:   "Vigenère Decryption",
+				source: [
+					"10 PRINT CHR$(147)",
+					`20 C$="${encodedHAMMessage}"`,
+					"30 PRINT \"VIGENERE TEST FUER:\"",
+					"40 PRINT C$",
+					"50 PRINT",
+					"60 K$=\"29568\"",
+					"70 GOSUB 200",
+					"80 PRINT",
+					"90 K$=\"295\"",
+					"100 GOSUB 200",
+					"110 PRINT",
+					"120 PRINT \"READY.\"",
+					"130 END",
+					"200 PRINT \"KEY \";K$;\": \";",
+					"205 L=LEN(K$)",
+					"210 FOR I=1 TO LEN(C$)",
+					"220 A=ASC(MID$(C$,I,1))-65",
+					"230 J=I-INT((I-1)/L)*L",
+					"240 S=VAL(MID$(K$,J,1))",
+					"250 D=A-S",
+					"260 IF D<0 THEN D=D+26",
+					"270 PRINT CHR$(D+65);",
+					"280 NEXT I",
+					"290 RETURN"
+				]
+					.join( "\n" )
+			},
+				{
+					id:     "vigenereEn",
+					name:   "Vigenère Encryption",
+					source: [
+						"10 PRINT CHR$(147)",
+						"20 K$=\"295\"",
+						"30 P$=\"MAPROOJAILLOVEUEDDIE\": GOSUB 200",
+						"40 P$=\"ERISSAFE\": GOSUB 200",
+						"50 P$=\"ERSTILLONTOUR\": GOSUB 200",
+						"60 PRINT",
+						"70 PRINT \"READY.\"",
+						"80 END",
+						"200 PRINT P$;\" -> \";",
+						"210 L=LEN(K$)",
+						"220 FOR I=1 TO LEN(P$)",
+						"230 A=ASC(MID$(P$,I,1))-65",
+						"240 J=I-INT((I-1)/L)*L",
+						"250 S=VAL(MID$(K$,J,1))",
+						"260 E=A+S",
+						"270 IF E>25 THEN E=E-26",
+						"280 PRINT CHR$(E+65);",
+						"290 NEXT I",
+						"300 PRINT",
+						"310 RETURN"
+					]
+						.join( "\n" )
+				}	
+];
+const selectedProgramId = ref( programs[ 0 ]?.id ?? "" );
+const programItems = computed( () =>
+	programs.map( ( p ) => ({ title: p.name, value: p.id }) )
+);
+const selectedProgramSource = computed(
+	() => programs.find( ( p ) => p.id === selectedProgramId.value )?.source ?? ""
+);
+const sourceEditor = ref( selectedProgramSource.value );
+
+watch(
+	selectedProgramId,
+	() => {
+		sourceEditor.value = selectedProgramSource.value;
+	},
+	{ immediate: true }
+);
+
+async function runSelectedProgram() {
+	if ( !emulatorRef.value ) return;
+	await emulatorRef.value.runProgram( sourceEditor.value );
+}
+
+function clearProgramScreen() {
+	emulatorRef.value?.clearScreen();
+}
+
+function resetProgramRuntime() {
+	emulatorRef.value?.softReset();
+}
+
+function handleEmulatorStateChange( payload: { ready: boolean; running: boolean } ) {
+	emulatorReady.value = payload.ready;
+	emulatorRunning.value = payload.running;
+}
+
+function handleHardRestart( payload: { reason: string } ) {
 	console.error( "BA_Emulator hard restart:", payload?.reason ?? payload );
+	emulatorReady.value = false;
+	emulatorRunning.value = false;
 	emulatorKey.value += 1;
 }
 
@@ -424,5 +611,9 @@ const vigNumExample = computed(() => vigenereEncryptNumbers("MAMA AND PAPA", [2,
 code {
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Courier New", monospace;
   font-size: 0.95em;
+}
+
+.basic-source-editor :deep(textarea) {
+	font-family: "Courier New", Courier, monospace;
 }
 </style>

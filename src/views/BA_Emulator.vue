@@ -1,53 +1,6 @@
 <template>
   <v-card class="pa-4">
-    <v-row dense align="center">
-      <v-col cols="12" md="5">
-        <v-select
-          v-model="selectedId"
-          :items="programItems"
-          label="BASIC-Programm"
-          density="compact"
-          hide-details
-        />
-      </v-col>
-
-      <v-col cols="12" md="7" class="d-flex ga-2 align-center">
-        <v-btn
-          :disabled="!ready || running"
-          @click="runSelected"
-          color="primary"
-        >
-          RUN
-        </v-btn>
-
-        <v-btn
-          :disabled="!ready || running"
-          @click="clearScreen"
-          variant="tonal"
-        >
-          CLEAR
-        </v-btn>
-
-        <v-btn
-          :disabled="!ready || running"
-          @click="softReset"
-          variant="tonal"
-        >
-          RESET
-        </v-btn>
-
-        <v-spacer />
-
-        <v-chip v-if="ready" color="green" variant="tonal" size="small">
-          cbmbasic ready
-        </v-chip>
-        <v-chip v-else color="grey" variant="tonal" size="small">
-          loading…
-        </v-chip>
-      </v-col>
-    </v-row>
-
-    <div class="c64-wrap mt-4">
+    <div class="c64-wrap">
       <div class="c64-frame">
         <div class="c64-border">
           <div class="c64-screen" role="img" aria-label="C64 text screen">
@@ -65,7 +18,7 @@
       </div>
     </div>
 
-    <v-row dense class="mt-3">
+   <!--  <v-row dense class="mt-3">
       <v-col cols="12" md="8">
         <v-text-field
           v-model="inputLine"
@@ -91,7 +44,7 @@
           queue leeren
         </v-btn>
       </v-col>
-    </v-row>
+    </v-row> -->
 
     <v-alert
       v-if="lastError"
@@ -114,11 +67,10 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onBeforeUnmount, onMounted, ref } from "vue";
+import { computed, onBeforeUnmount, onMounted, ref, watch } from "vue";
 import cbmbasicFactoryAssetUrl from "../utils/webdist/cbmbasic.mjs?url";
 import cbmbasicWasmAssetUrl from "../utils/webdist/cbmbasic.wasm?url";
 
-type DemoProgram = { id: string; name: string; source: string };
 const DEFAULT_CBMBASIC_FACTORY_URL = cbmbasicFactoryAssetUrl;
 const DEFAULT_WASM_URL = cbmbasicWasmAssetUrl;
 const DEFAULT_WASM_BASE_URL = DEFAULT_WASM_URL.slice(
@@ -146,6 +98,7 @@ const props = defineProps<{
 }>();
 const emit = defineEmits<{
   (e: "hard-restart", payload: { reason: string }): void;
+  (e: "state-change", payload: { ready: boolean; running: boolean }): void;
 }>();
 
 const resolvedCbmbasicFactoryUrl = computed(
@@ -154,65 +107,21 @@ const resolvedCbmbasicFactoryUrl = computed(
 const resolvedWasmBaseUrl = computed(
   () => props.wasmBaseUrl ?? DEFAULT_WASM_BASE_URL
 );
+const resolvedWasmFileUrl = computed(() => {
+  if (!props.wasmBaseUrl) {
+    return DEFAULT_WASM_URL;
+  }
+  const base = props.wasmBaseUrl.endsWith("/")
+    ? props.wasmBaseUrl
+    : props.wasmBaseUrl + "/";
+  return base + "cbmbasic.wasm";
+});
 const blinkCursor = computed(() => props.blinkCursor ?? true);
 
+// C64 text mode: 40 columns x 25 rows.
 const COLS = 40;
 const ROWS = 25;
 const SIZE = COLS * ROWS;
-
-// Ein paar Demos (klein & text-only)
-const programs = ref<DemoProgram[]>([
-  {
-    id: "hello",
-    name: "Hello World",
-    source: [
-      "10 PRINT CHR$(147)",
-      "20 PRINT \"**** C64 BASIC (cbmbasic) ****\"",
-      "30 PRINT",
-      "40 PRINT \"HELLO WORLD!\"",
-      "50 PRINT",
-      "60 FOR I=1 TO 5: PRINT \"I=\";I;\"  I^2=\";I*I: NEXT",
-      "70 PRINT",
-      "80 PRINT \"READY.\"",
-    ].join("\n"),
-  },
-  {
-    id: "locate",
-    name: "LOCATE Demo (SYS 1)",
-    source: [
-      "10 SYS 1",
-      "20 PRINT CHR$(147)",
-      "30 LOCATE 2,10",
-      "40 PRINT \"E D D I E\"",
-      "50 LOCATE 4,6",
-      "60 PRINT \"MATHE IST SCHLUESSEL\"",
-      "70 LOCATE 6,6",
-      "80 PRINT \"TEXTMODE ONLY\"",
-      "90 LOCATE 10,1",
-      "100 PRINT \"READY.\"",
-    ].join("\n"),
-  },
-  {
-    id: "stars",
-    name: "Sternchen",
-    source: [
-      "10 PRINT CHR$(147)",
-      "20 FOR Y=1 TO 10",
-      "30 FOR X=1 TO Y",
-      "40 PRINT \"*\";",
-      "50 NEXT X",
-      "60 PRINT",
-      "70 NEXT Y",
-      "80 PRINT",
-      "90 PRINT \"READY.\"",
-    ].join("\n"),
-  },
-]);
-
-const programItems = computed(() =>
-  programs.value.map((p) => ({ title: p.name, value: p.id }))
-);
-const selectedId = ref(programs.value[0]?.id ?? "");
 
 const ready = ref(false);
 const running = ref(false);
@@ -290,11 +199,13 @@ const cursorY = ref(0);
 let mem = new Uint16Array(SIZE); // 0..255 character codes; wir nutzen primär ASCII 32..126
 let ansiState: "none" | "esc" | "csi" = "none";
 let ansiCsiBuffer = "";
+let lastWasCR = false;
 
 function resetMem() {
   mem.fill(32);
   cursorX.value = 0;
   cursorY.value = 0;
+  lastWasCR = false;
   scheduleRender();
 }
 
@@ -399,6 +310,10 @@ function consumeAnsiByte(b: number): boolean {
 }
 
 function putByte(b: number) {
+  if (b !== 10 && b !== 13) {
+    lastWasCR = false;
+  }
+
   if (consumeAnsiByte(b)) {
     return;
   }
@@ -411,7 +326,16 @@ function putByte(b: number) {
   }
 
   // wichtige PETSCII/Control-Codes, minimal:
-  if (b === 10 || b === 13) {
+  if (b === 13) {
+    newline();
+    lastWasCR = true;
+    return;
+  }
+  if (b === 10) {
+    if (lastWasCR) {
+      lastWasCR = false;
+      return;
+    }
     newline();
     return;
   }
@@ -540,6 +464,10 @@ async function loadCbmbasic() {
     stderr: stderrPutChar,
     // falls dein Build locateFile nutzt:
     locateFile: (path: string) => {
+      if (path === "cbmbasic.wasm") {
+        // In production builds Vite hashes asset filenames.
+        return resolvedWasmFileUrl.value;
+      }
       const base = resolvedWasmBaseUrl.value.endsWith("/")
         ? resolvedWasmBaseUrl.value
         : resolvedWasmBaseUrl.value + "/";
@@ -563,14 +491,8 @@ function softReset() {
   scheduleRender();
 }
 
-function getSelectedProgram(): DemoProgram | undefined {
-  return programs.value.find((p) => p.id === selectedId.value);
-}
-
-async function runSelected() {
-  const p = getSelectedProgram();
-  if (!p) return;
-
+async function runProgram(source: string) {
+  if (!source) return;
   running.value = true;
   lastError.value = "";
   resetMem();
@@ -585,16 +507,16 @@ async function runSelected() {
 
     // Programm als Datei schreiben und cbmbasic damit starten:
     const path = "/program.bas";
-    const normalizedSource = p.source.replace( /\r?\n/g, "\r" );
-		const sourceForCbmbasic = normalizedSource.endsWith( "\r" )
-			? normalizedSource
-			: normalizedSource + "\r";
-		try {
-			mod.FS.unlink(path);
-		} catch {
-			/* ignore */
-		}
-		mod.FS.writeFile(path, sourceForCbmbasic, { encoding: "utf8" });
+    const normalizedSource = source.replace(/\r?\n/g, "\r");
+    const sourceForCbmbasic = normalizedSource.endsWith("\r")
+      ? normalizedSource
+      : normalizedSource + "\r";
+    try {
+      mod.FS.unlink(path);
+    } catch {
+      /* ignore */
+    }
+    mod.FS.writeFile(path, sourceForCbmbasic, { encoding: "utf8" });
 
     // run
     mod.callMain([path]);
@@ -605,6 +527,20 @@ async function runSelected() {
     scheduleRender();
   }
 }
+
+watch(
+  [ready, running],
+  ([isReady, isRunning]) => {
+    emit("state-change", { ready: isReady, running: isRunning });
+  },
+  { immediate: true }
+);
+
+defineExpose({
+  clearScreen,
+  runProgram,
+  softReset,
+});
 
 function sendInput() {
   const line = inputLine.value;
@@ -670,7 +606,7 @@ onBeforeUnmount(() => {
 
 .c64-text {
   margin: 0;
-  padding: 0.8em 0.8ch;
+  padding: 0;
   width: 40ch;
   height: 25em;
   color: #b7b3ff; /* helles blau/lila */
