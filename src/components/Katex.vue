@@ -1,18 +1,17 @@
 <script setup>
-import { computed } from 'vue'
+import { computed } from "vue";
 
-import { katexHTML } from '@/utils/katex'
+import { katexHTML } from "@/utils/katex";
 
-const props = defineProps({
-  tex: { type: String, required: true },
-  display: { type: Boolean, default: false },
-  as: { type: String, default: 'span' },
-})
+const props = defineProps( {
+	tex:     { type: String, required: true },
+	display: { type: Boolean, default: false },
+	as:      { type: String, default: "span" }
+} );
 
-const html = computed(() => katexHTML(props.tex, props.display))
+const html = computed( () => katexHTML( props.tex, props.display ) );
 </script>
 
 <template>
-  <component :is="as" v-html="html" />
+<component :is="as" v-html="html" />
 </template>
-

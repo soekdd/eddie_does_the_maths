@@ -1,165 +1,210 @@
 <template>
-  <div class="imageZoomer">
-    <div class="zoomerActivator" role="button" tabindex="0" @click="open = true" @keydown="onKeydown">
-      <slot />
-      <span class="zoomerHint">{{ hint }}</span>
-    </div>
+<div class="imageZoomer">
+	<div class="zoomerActivator"
+		role="button"
+		tabindex="0"
+		@click="open = true"
+		@keydown="onKeydown"
+	>
+		<slot />
+		<span class="zoomerHint">{{ hint }}</span>
+	</div>
 
-    <v-dialog
-      v-model="open"
-      :fullscreen="smAndDown"
-      :width="dialogWidth"
-      :height="dialogHeight"
-      :max-width="dialogMaxWidth"
-      @after-enter="fitToViewport"
-    >
-      <v-card class="zoomerCard" :class="{ fullscreen: smAndDown }">
-        <v-card-title class="zoomerTitle">
-          <div class="zoomerTitleText">
-            {{ title || 'Zoom' }}
-          </div>
-          <v-spacer />
-          <v-btn
-            class="zoomerClose"
-            variant="tonal"
-            icon
-            rounded="circle"
-            size="large"
-            aria-label="Schließen"
-            title="Schließen"
-            @click="open = false"
-          >
-            <span class="zoomerCloseGlyph" aria-hidden="true">×</span>
-          </v-btn>
-        </v-card-title>
-        <v-divider />
-        <v-card-text class="zoomerBody">
-          <div ref="contentBoxRef" class="zoomerContent" aria-label="Zoom-Inhalt">
-            <div ref="fitBoxRef" class="zoomerFit" :style="fitStyle">
-              <slot />
-            </div>
-          </div>
-        </v-card-text>
-      </v-card>
-    </v-dialog>
-  </div>
+	<v-dialog
+		v-model="open"
+		:fullscreen="smAndDown"
+		:height="dialogHeight"
+		:max-width="dialogMaxWidth"
+		:width="dialogWidth"
+		@after-enter="fitToViewport"
+	>
+		<v-card class="zoomerCard" :class="{ fullscreen: smAndDown }">
+			<v-card-title class="zoomerTitle">
+				<div class="zoomerTitleText">
+					{{ title || 'Zoom' }}
+				</div>
+				<v-spacer />
+				<v-btn
+					aria-label="Schließen"
+					class="zoomerClose"
+					icon
+					rounded="circle"
+					size="large"
+					title="Schließen"
+					variant="tonal"
+					@click="open = false"
+				>
+					<span aria-hidden="true" class="zoomerCloseGlyph">×</span>
+				</v-btn>
+			</v-card-title>
+			<v-divider />
+			<v-card-text class="zoomerBody">
+				<div ref="contentBoxRef" aria-label="Zoom-Inhalt" class="zoomerContent">
+					<div ref="fitBoxRef" class="zoomerFit" :style="fitStyle">
+						<slot />
+					</div>
+				</div>
+			</v-card-text>
+		</v-card>
+	</v-dialog>
+</div>
 </template>
 
 <script setup>
-import { computed, nextTick, onBeforeUnmount, ref, watch } from 'vue'
-import { useDisplay } from 'vuetify'
+import {
+	computed, nextTick, onBeforeUnmount, ref, watch
+} from "vue";
+import { useDisplay } from "vuetify";
 
-const props = defineProps({
-  title: { type: String, default: '' },
-  hint: { type: String, default: 'Zum Zoomen klicken' },
-  maxWidth: { type: [Number, String], default: 1400 },
-})
+const props = defineProps( {
+	title:    { type: String, default: "" },
+	hint:     { type: String, default: "Zum Zoomen klicken" },
+	maxWidth: { type: [ Number, String ], default: 1400 }
+} );
 
-const open = ref(false)
-const { smAndDown } = useDisplay()
+const open = ref( false );
+const { smAndDown } = useDisplay();
 
-const dialogMaxWidth = computed(() => (smAndDown.value ? undefined : props.maxWidth))
-const dialogWidth = computed(() => (smAndDown.value ? undefined : 'calc(100dvw - 48px)'))
-const dialogHeight = computed(() => (smAndDown.value ? undefined : 'calc(100dvh - 48px)'))
+const dialogMaxWidth = computed( () => smAndDown.value ? undefined : props.maxWidth );
+const dialogWidth = computed( () => smAndDown.value ? undefined : "calc(100dvw - 48px)" );
+const dialogHeight = computed( () => smAndDown.value ? undefined : "calc(100dvh - 48px)" );
 
-const contentBoxRef = ref(null)
-const fitBoxRef = ref(null)
-const fitStyle = ref({})
+const contentBoxRef = ref( null );
+const fitBoxRef = ref( null );
+const fitStyle = ref( {} );
 
-let ro = null
+let ro = null;
 
-function onKeydown(e) {
-  if (e.key === 'Enter' || e.key === ' ') {
-    e.preventDefault()
-    open.value = true
-  }
+function onKeydown( e ) {
+	if ( e.key === "Enter" || e.key === " " ) {
+		e.preventDefault();
+		open.value = true;
+	}
 }
 
-function getAspectRatioFromFirstMedia(rootEl) {
-  if (!rootEl) return null
-  const el = rootEl.querySelector('svg, img, canvas')
-  if (!el) return null
+function getAspectRatioFromFirstMedia( rootEl ) {
+	if ( !rootEl ) {
+		return null;
+	}
 
-  // SVG: prefer viewBox dimensions.
-  if (el instanceof SVGSVGElement) {
-    const vb = el.viewBox?.baseVal
-    if (vb?.width > 0 && vb?.height > 0) return vb.width / vb.height
+	const el = rootEl.querySelector( "svg, img, canvas" );
 
-    const vbAttr = el.getAttribute('viewBox')
-    if (vbAttr) {
-      const parts = vbAttr.trim().split(/\s+/).map(Number)
-      if (parts.length === 4 && parts[2] > 0 && parts[3] > 0) return parts[2] / parts[3]
-    }
+	if ( !el ) {
+		return null;
+	}
 
-    const w = Number(el.getAttribute('width'))
-    const h = Number(el.getAttribute('height'))
-    if (w > 0 && h > 0) return w / h
-  }
+	// SVG: prefer viewBox dimensions.
+	if ( el instanceof SVGSVGElement ) {
+		const vb = el.viewBox?.baseVal;
 
-  // IMG
-  if (el instanceof HTMLImageElement) {
-    if (el.naturalWidth > 0 && el.naturalHeight > 0) return el.naturalWidth / el.naturalHeight
-  }
+		if ( vb?.width > 0 && vb?.height > 0 ) {
+			return vb.width / vb.height;
+		}
 
-  // CANVAS
-  if (el instanceof HTMLCanvasElement) {
-    if (el.width > 0 && el.height > 0) return el.width / el.height
-  }
+		const vbAttr = el.getAttribute( "viewBox" );
 
-  // Fallback to current box.
-  const r = el.getBoundingClientRect()
-  if (r.width > 0 && r.height > 0) return r.width / r.height
+		if ( vbAttr ) {
+			const parts = vbAttr.trim().split( /\s+/ )
+				.map( Number );
 
-  return null
+			if ( parts.length === 4 && parts[ 2 ] > 0 && parts[ 3 ] > 0 ) {
+				return parts[ 2 ] / parts[ 3 ];
+			}
+		}
+
+		const w = Number( el.getAttribute( "width" ) );
+		const h = Number( el.getAttribute( "height" ) );
+
+		if ( w > 0 && h > 0 ) {
+			return w / h;
+		}
+	}
+
+	// IMG
+	if ( el instanceof HTMLImageElement ) {
+		if ( el.naturalWidth > 0 && el.naturalHeight > 0 ) {
+			return el.naturalWidth / el.naturalHeight;
+		}
+	}
+
+	// CANVAS
+	if ( el instanceof HTMLCanvasElement ) {
+		if ( el.width > 0 && el.height > 0 ) {
+			return el.width / el.height;
+		}
+	}
+
+	// Fallback to current box.
+	const r = el.getBoundingClientRect();
+
+	if ( r.width > 0 && r.height > 0 ) {
+		return r.width / r.height;
+	}
+
+	return null;
 }
 
 function fitToViewport() {
-  if (!open.value) return
-  const box = contentBoxRef.value
-  const fit = fitBoxRef.value
-  if (!box || !fit) return
+	if ( !open.value ) {
+		return;
+	}
 
-  const cw = box.clientWidth
-  const ch = box.clientHeight
-  if (cw <= 0 || ch <= 0) return
+	const box = contentBoxRef.value;
+	const fit = fitBoxRef.value;
 
-  const ratio = getAspectRatioFromFirstMedia(fit)
-  if (!ratio || !Number.isFinite(ratio) || ratio <= 0) return
+	if ( !box || !fit ) {
+		return;
+	}
 
-  // "Contain" sizing: choose width/height that fits entirely, preserving aspect ratio.
-  let w = cw
-  let h = w / ratio
-  if (h > ch) {
-    h = ch
-    w = h * ratio
-  }
+	const cw = box.clientWidth;
+	const ch = box.clientHeight;
 
-  fitStyle.value = { width: `${w}px`, height: `${h}px` }
+	if ( cw <= 0 || ch <= 0 ) {
+		return;
+	}
+
+	const ratio = getAspectRatioFromFirstMedia( fit );
+
+	if ( !ratio || !Number.isFinite( ratio ) || ratio <= 0 ) {
+		return;
+	}
+
+	// "Contain" sizing: choose width/height that fits entirely, preserving aspect ratio.
+	let w = cw;
+	let h = w / ratio;
+
+	if ( h > ch ) {
+		h = ch;
+		w = h * ratio;
+	}
+
+	fitStyle.value = { width: `${w}px`, height: `${h}px` };
 }
 
 function stopObservers() {
-  ro?.disconnect()
-  ro = null
+	ro?.disconnect();
+	ro = null;
 }
 
-watch(open, async (v) => {
-  if (!v) {
-    stopObservers()
-    fitStyle.value = {}
-    return
-  }
+watch( open, async( v ) => {
+	if ( !v ) {
+		stopObservers();
+		fitStyle.value = {};
+		return;
+	}
 
-  await nextTick()
-  fitToViewport()
+	await nextTick();
+	fitToViewport();
 
-  stopObservers()
-  if (contentBoxRef.value) {
-    ro = new ResizeObserver(() => fitToViewport())
-    ro.observe(contentBoxRef.value)
-  }
-})
+	stopObservers();
 
-onBeforeUnmount(() => stopObservers())
+	if ( contentBoxRef.value ) {
+		ro = new ResizeObserver( () => fitToViewport() );
+		ro.observe( contentBoxRef.value );
+	}
+} );
+
+onBeforeUnmount( () => stopObservers() );
 </script>
 
 <style scoped>
