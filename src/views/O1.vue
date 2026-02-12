@@ -3,7 +3,7 @@
 	<template #title>
 		<div class="badge">O1</div>
 		<div>
-			<h1>Eddie rechnet: IMO 1985 AAufgabe 1</h1>
+			<h1>Eddie rechnet: IMO 1985 Aufgabe A1</h1>
 			<p class="sub">Geometrie • Tangenten • zyklisch • Kongruenz</p>
 		</div>
 	</template>
@@ -25,7 +25,7 @@
 
 			<p class="muted">Zu zeigen ist die simple Längenformel:</p>
 			<div class="kbox">
-				<Katex as="div" display tex="\boxed{AD + BC = AB}." />
+				<Katex as="div" display tex="\boxed{AD + BC = AB}" />
 			</div>
 
 			<div class="exampleClear"></div>
