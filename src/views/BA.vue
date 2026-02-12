@@ -350,7 +350,11 @@
 		</div>
 	</template>
 
-	<template #footer></template>
+	<template #footer>
+    <p class="muted">
+      <a href="https://github.com/mist64/cbmbasic/">Thanks to Michael Steil and James Abbatiello fro cbmbasic</a>
+    </p>
+  </template>
 </AppFrame>
 </template>
 
