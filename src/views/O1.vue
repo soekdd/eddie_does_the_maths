@@ -192,7 +192,8 @@
 
 	<template #footer>
 		<p class="muted">
-			<a href="https://prase.cz/kalva/imo/isoln/isoln851.html">Quellen (zum Nachlesen): AoPS Wiki (IMO 1985 Problem 1) und die offiziellen ISL-Solutions (prase.cz).</a>
+			Quelle der Aufgabenstellung/Lösungsskizze:
+			<a href="https://prase.cz/kalva/imo/isoln/isoln851.html">IMO 1985 A1 (ISL solutions, prase.cz)</a>
 		</p>
 	</template>
 </AppFrame>

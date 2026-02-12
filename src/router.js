@@ -5,6 +5,10 @@ import ST from "@/views/ST.vue";
 import MO from "@/views/MO.vue";
 import O1 from "@/views/O1.vue";
 import O2 from "@/views/O2.vue";
+import O3 from "@/views/O3.vue";
+import O4 from "@/views/O4.vue";
+import O5 from "@/views/O5.vue";
+import O6 from "@/views/O6.vue";
 import PG from "@/views/PG.vue";
 import AL from "@/views/AL.vue";
 import BA from "@/views/BA.vue";
@@ -62,33 +66,33 @@ export const router = createRouter( {
 		{
 			path:      "/O3",
 			name:      "O3",
-			component: CatchAll,
+			component: O3,
 			meta:      {
-				title: "IMO 1985 Aufgabe 3", index: true, order: 50, wip: true
+				title: "IMO 1985 Aufgabe 3", index: true, order: 50
 			}
 		},
 		{
 			path:      "/O4",
 			name:      "O4",
-			component: CatchAll,
+			component: O4,
 			meta:      {
-				title: "IMO 1985 Aufgabe 4", index: true, order: 60, wip: true
+				title: "IMO 1985 Aufgabe 4", index: true, order: 60
 			}
 		},
 		{
 			path:      "/O5",
 			name:      "O5",
-			component: CatchAll,
+			component: O5,
 			meta:      {
-				title: "IMO 1985 Aufgabe 5", index: true, order: 70, wip: true
+				title: "IMO 1985 Aufgabe 5", index: true, order: 70
 			}
 		},
 		{
 			path:      "/O6",
 			name:      "O6",
-			component: CatchAll,
+			component: O6,
 			meta:      {
-				title: "IMO 1985 Aufgabe 6", index: true, order: 80, wip: true
+				title: "IMO 1985 Aufgabe 6", index: true, order: 80
 			}
 		},
 		{

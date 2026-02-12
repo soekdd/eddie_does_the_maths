@@ -154,7 +154,7 @@
     <template #interactivePart>
       <h2>Teil 3 — Rechner: <Katex tex="ax + by = c" /></h2>
 
-      <v-card class="panel pa-5" variant="tonal">
+      <v-card class="panel pa-5" >
         <v-form @submit.prevent="submit" autocomplete="off">
           <div class="formGrid">
             <v-text-field v-model="a" label="a" inputmode="numeric" />
@@ -174,7 +174,7 @@
         </v-form>
       </v-card>
 
-      <v-card class="panel pa-3 mt-4" variant="tonal">
+      <v-card class="panel pa-3 mt-4" >
         <h3>Grafik zu deinen Eingaben</h3>
         <ImageZoomer :title="`Grafik: ${String(a)}x + ${String(b)}y = ${String(c)}`">
           <DG_Graph :a="a" :b="b" :c="c" />
@@ -186,7 +186,7 @@
     </template>
 
     <template #calculationPart>
-      <v-card class="panel" variant="tonal">
+      <v-card class="panel" >
         <div class="resultHeader">
           <v-chip
             class="pill"
@@ -200,7 +200,7 @@
                     ? 'warning'
                     : undefined
             "
-            variant="tonal"
+            
           >
             {{ status.text }}
           </v-chip>

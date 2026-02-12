@@ -3,367 +3,354 @@
 	<template #title>
 		<div class="badge">BA</div>
 		<div>
-			<h1>Eddie rechnet: BASIC for runaways
-
-			</h1>
+			<h1>Eddie rechnet: BASIC for runaways</h1>
 			<p class="sub">Cäsar • Vigenère • C64 Emulator</p>
 		</div>
 	</template>
 
-		<template #descriptionPart>					
-        	<figure class="exampleFigure">
+	<template #descriptionPart>
+		<figure class="exampleFigure">
 			<ImageZoomer :title="`Eddie`">
 				<img alt="Eddie rechnet" loading="lazy" :src="titleImg" />
 			</ImageZoomer>
-			</figure>
+		</figure>
 
-            <h2>Cäsar &amp; Vigenère</h2>
-            <div class="text-body-2 text-medium-emphasis">
-              Zwei Klassiker: einmal „Alphabet verschieben“, einmal „Verschieben mit rotierendem Schlüssel“.
-            </div>
-        
+		<h2>Teil 1 — Cäsar &amp; Vigenère</h2>
+		<div class="eddie">
+			<p class="text-body-2 text-medium-emphasis">
+				Zwei Klassiker: einmal „Alphabet verschieben“, einmal „Verschieben mit rotierendem Schlüssel“.
+			</p>
+		</div>
 
-        <!-- Grundlagen -->
-        <v-card class="mb-6" rounded="lg" elevation="2">
-          <v-card-title class="text-h6">Grundidee: Buchstaben als Zahlen</v-card-title>
-          <v-card-text>
-            <p class="mb-3">
-              Wir arbeiten fast immer mit dem Alphabet <strong>A–Z</strong> und machen daraus Zahlen.
-              Am beliebtesten ist:
-            </p>
+		<h2 class="mt-8">Teil 2 — Grundidee: Buchstaben als Zahlen</h2>
+		<div class="eddie">
+			<p class="mb-3">
+				Wir arbeiten fast immer mit dem Alphabet <strong>A–Z</strong> und machen daraus Zahlen.
+				Am beliebtesten ist:
+			</p>
 
-            
-                <v-sheet rounded="lg" class="pa-3" border>
-                  <div class="text-subtitle-2 mb-2">Zuordnung</div>
-                  <div class="d-flex flex-wrap ga-2">
-                    <v-chip size="small" variant="tonal">A → 0</v-chip>
-                    <v-chip size="small" variant="tonal">B → 1</v-chip>
-                    <v-chip size="small" variant="tonal">…</v-chip>
-                    <v-chip size="small" variant="tonal">Z → 25</v-chip>
-                  </div>
-                </v-sheet>
-            
-                <v-sheet rounded="lg" class="pa-3 mt-2" border>
-                  <div class="text-subtitle-2 mb-2">Rechnen „im Kreis“</div>
-                  <div class="text-body-2">
-                    Nach Z kommt wieder A. Mathematisch ist das Rechnen <em>modulo 26</em>.
-                  </div>
-                  <div class="mt-2" v-html="katexBlock(String.raw`\text{Beispiel: } 25+3=28 \equiv 2 \pmod{26}\ \Rightarrow\ Z \xrightarrow{+3} C`)"></div>
-                </v-sheet>
-            
+			<v-sheet rounded="lg" class="pa-3" border>
+				<div class="text-subtitle-2 mb-2">Zuordnung</div>
+				<div class="d-flex flex-wrap ga-2">
+					<v-chip size="small" variant="tonal">A → 0</v-chip>
+					<v-chip size="small" variant="tonal">B → 1</v-chip>
+					<v-chip size="small" variant="tonal">…</v-chip>
+					<v-chip size="small" variant="tonal">Z → 25</v-chip>
+				</div>
+			</v-sheet>
 
-            <v-divider class="my-4" />
+			<v-sheet rounded="lg" class="pa-3 mt-2" border>
+				<div class="text-subtitle-2 mb-2">Rechnen „im Kreis“</div>
+				<div class="text-body-2">
+					Nach Z kommt wieder A. Mathematisch ist das Rechnen <em>modulo 26</em>.
+				</div>
+				<div class="mt-2" v-html="katexBlock(String.raw`\text{Beispiel: } 25+3=28 \equiv 2 \pmod{26}\ \Rightarrow\ Z \xrightarrow{+3} C`)"></div>
+			</v-sheet>
 
-            <p class="mb-0">
-              Und ja: In echten Texten muss man vorher meist „aufräumen“:
-              Großbuchstaben, Umlaute ersetzen (Ä→AE, Ö→OE, Ü→UE), Satzzeichen raus –
-              oder man behandelt sie getrennt.
-            </p>
-          </v-card-text>
-        </v-card>
+			<v-divider class="my-4" />
 
-        <!-- Cäsar -->
-        <v-card class="mb-6" rounded="lg" elevation="2">
-          <v-card-title class="text-h6">1) Cäsar-Verschlüsselung</v-card-title>
-          <v-card-text>
-            <p class="mb-3">
-              Cäsar ist die Minimalversion: ein fester Shift <span class="font-weight-medium">k</span>.
-              Jeder Buchstabe wird um <span class="font-weight-medium">k</span> Stellen weitergeschoben.
-            </p>
+			<p class="mb-0">
+				Und ja: In echten Texten muss man vorher meist „aufräumen“:
+				Großbuchstaben, Umlaute ersetzen (Ä→AE, Ö→OE, Ü→UE), Satzzeichen raus –
+				oder man behandelt sie getrennt.
+			</p>
+		</div>
 
-            <div class="mb-3" v-html="katexBlock(String.raw`
-              \textbf{Verschlüsselung:}\quad C \equiv P + k \pmod{26}
-              \qquad\qquad
-              \textbf{Entschlüsselung:}\quad P \equiv C - k \pmod{26}
-            `)"></div>
+		<h2 class="mt-8">Teil 3 — Cäsar-Verschlüsselung</h2>
+		<div class="eddie">
+			<p class="mb-3">
+				Cäsar ist die Minimalversion: ein fester Shift <span class="font-weight-medium">k</span>.
+				Jeder Buchstabe wird um <span class="font-weight-medium">k</span> Stellen weitergeschoben.
+			</p>
 
-            <v-row>
-              <v-col cols="12" md="6">
-                <v-sheet rounded="lg" border class="pa-3">
-                  <div class="text-subtitle-2 mb-2">Beispiel</div>
-                  <div class="text-body-2 mb-2">
-                    Klartext: <code>{{ caesarExample.plain }}</code> &nbsp;|&nbsp; Shift: <code>k={{ caesarExample.k }}</code>
-                  </div>
+			<div class="mb-3" v-html="katexBlock(String.raw`
+				\textbf{Verschlüsselung:}\quad C \equiv P + k \pmod{26}
+				\qquad\qquad
+				\textbf{Entschlüsselung:}\quad P \equiv C - k \pmod{26}
+			`)"></div>
 
-                  <v-table density="compact">
-                    <thead>
-                      <tr>
-                        <th class="text-left">Buchstabe</th>
-                        <th class="text-left">Zahl</th>
-                        <th class="text-left">+k</th>
-                        <th class="text-left">Cipher</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr v-for="(r, i) in caesarExample.rows" :key="i">
-                        <td><code>{{ r.p }}</code></td>
-                        <td><code>{{ r.pn }}</code></td>
-                        <td><code>{{ r.cn }}</code></td>
-                        <td><code>{{ r.c }}</code></td>
-                      </tr>
-                    </tbody>
-                  </v-table>
+			<v-row>
+				<v-col cols="12" md="6">
+					<v-sheet rounded="lg" border class="pa-3">
+						<div class="text-subtitle-2 mb-2">Beispiel</div>
+						<div class="text-body-2 mb-2">
+							Klartext: <code>{{ caesarExample.plain }}</code> &nbsp;|&nbsp; Shift: <code>k={{ caesarExample.k }}</code>
+						</div>
 
-                  <div class="mt-3 text-body-2">
-                    Ergebnis: <code>{{ caesarExample.cipher }}</code>
-                  </div>
-                </v-sheet>
-              </v-col>
+						<v-table density="compact">
+							<thead>
+								<tr>
+									<th class="text-left">Buchstabe</th>
+									<th class="text-left">Zahl</th>
+									<th class="text-left">+k</th>
+									<th class="text-left">Cipher</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr v-for="(r, i) in caesarExample.rows" :key="i">
+									<td><code>{{ r.p }}</code></td>
+									<td><code>{{ r.pn }}</code></td>
+									<td><code>{{ r.cn }}</code></td>
+									<td><code>{{ r.c }}</code></td>
+								</tr>
+							</tbody>
+						</v-table>
 
-              <v-col cols="12" md="6">
-                <v-sheet rounded="lg" border class="pa-3">
-                  <div class="text-subtitle-2 mb-2">Warum Cäsar oft schnell fällt</div>
-                  <ul class="text-body-2 mb-0">
-                    <li>Es gibt nur <strong>25</strong> sinnvolle Schlüssel (k=1…25).</li>
-                    <li>Man kann einfach alles durchprobieren („Bruteforce“).</li>
-                    <li>Oder man nutzt <strong>Häufigkeiten</strong>: E, N, I, R, S… treten oft auf.</li>
-                  </ul>
-                </v-sheet>
-              </v-col>
-            </v-row>
+						<div class="mt-3 text-body-2">
+							Ergebnis: <code>{{ caesarExample.cipher }}</code>
+						</div>
+					</v-sheet>
+				</v-col>
 
-            <v-divider class="my-4" />
+				<v-col cols="12" md="6">
+					<v-sheet rounded="lg" border class="pa-3">
+						<div class="text-subtitle-2 mb-2">Warum Cäsar oft schnell fällt</div>
+						<ul class="text-body-2 mb-0">
+							<li>Es gibt nur <strong>25</strong> sinnvolle Schlüssel (k=1…25).</li>
+							<li>Man kann einfach alles durchprobieren („Bruteforce“).</li>
+							<li>Oder man nutzt <strong>Häufigkeiten</strong>: E, N, I, R, S… treten oft auf.</li>
+						</ul>
+					</v-sheet>
+				</v-col>
+			</v-row>
 
-            <v-expansion-panels variant="accordion">
-              <v-expansion-panel>
-                <v-expansion-panel-title>
-                  Mini-Übung: Entschlüssele <code>HGGLE</code> mit Shift <code>k=3</code>
-                </v-expansion-panel-title>
-                <v-expansion-panel-text>
-                  <div class="text-body-2 mb-2">
-                    Entschlüsselung ist „-3“. Also H→E, G→D, G→D, L→I, E→B.
-                  </div>
-                  <div class="text-body-2">
-                    Lösung: <code>EDDIB</code> (Achtung: Das ist nur ein Beispiel, nicht „das“ Wort.)
-                  </div>
-                </v-expansion-panel-text>
-              </v-expansion-panel>
-            </v-expansion-panels>
-          </v-card-text>
-        </v-card>
+			<v-divider class="my-4" />
 
-        <!-- Vigenère -->
-        <v-card class="mb-6" rounded="lg" elevation="2">
-          <v-card-title class="text-h6">2) Vigenère-Verschlüsselung</v-card-title>
-          <v-card-text>
-            <p class="mb-3">
-              Vigenère ist wie Cäsar – nur mit einem <strong>rotierenden Schlüssel</strong>.
-              Statt immer denselben Shift zu nehmen, hast du eine Folge von Shifts, die sich wiederholt.
-            </p>
+			<v-expansion-panels variant="accordion">
+				<v-expansion-panel>
+					<v-expansion-panel-title>
+						Mini-Übung: Entschlüssele <code>HGGLE</code> mit Shift <code>k=3</code>
+					</v-expansion-panel-title>
+					<v-expansion-panel-text>
+						<div class="text-body-2 mb-2">
+							Entschlüsselung ist „-3“. Also H→E, G→D, G→D, L→I, E→B.
+						</div>
+						<div class="text-body-2">
+							Lösung: <code>EDDIB</code> (Achtung: Das ist nur ein Beispiel, nicht „das“ Wort.)
+						</div>
+					</v-expansion-panel-text>
+				</v-expansion-panel>
+			</v-expansion-panels>
+		</div>
 
-            <div class="mb-3" v-html="katexBlock(String.raw`
-              C_i \equiv P_i + K_i \pmod{26}
-              \qquad\text{wobei } K_i \text{ zyklisch aus dem Schlüssel kommt.}
-            `)"></div>
+		<h2 class="mt-8">Teil 4 — Vigenère-Verschlüsselung</h2>
+		<div class="eddie">
+			<p class="mb-3">
+				Vigenère ist wie Cäsar – nur mit einem <strong>rotierenden Schlüssel</strong>.
+				Statt immer denselben Shift zu nehmen, hast du eine Folge von Shifts, die sich wiederholt.
+			</p>
 
-            <v-row>
-              <v-col cols="12" md="6">
-                <v-sheet rounded="lg" border class="pa-3">
-                  <div class="text-subtitle-2 mb-2">Beispiel (klassisch mit Wortschlüssel)</div>
-                  <div class="text-body-2 mb-2">
-                    Klartext: <code>{{ vigWordExample.plain }}</code><br />
-                    Schlüssel: <code>{{ vigWordExample.key }}</code> (wird wiederholt)
-                  </div>
+			<div class="mb-3" v-html="katexBlock(String.raw`
+				C_i \equiv P_i + K_i \pmod{26}
+				\qquad\text{wobei } K_i \text{ zyklisch aus dem Schlüssel kommt.}
+			`)"></div>
 
-                  <v-table density="compact">
-                    <thead>
-                      <tr>
-                        <th class="text-left">Pos</th>
-                        <th class="text-left">P</th>
-                        <th class="text-left">K</th>
-                        <th class="text-left">C</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr v-for="r in vigWordExample.rows" :key="r.i">
-                        <td><code>{{ r.i }}</code></td>
-                        <td><code>{{ r.p }}</code></td>
-                        <td><code>{{ r.k }}</code></td>
-                        <td><code>{{ r.c }}</code></td>
-                      </tr>
-                    </tbody>
-                  </v-table>
+			<v-row>
+				<v-col cols="12" md="6">
+					<v-sheet rounded="lg" border class="pa-3">
+						<div class="text-subtitle-2 mb-2">Beispiel (klassisch mit Wortschlüssel)</div>
+						<div class="text-body-2 mb-2">
+							Klartext: <code>{{ vigWordExample.plain }}</code><br />
+							Schlüssel: <code>{{ vigWordExample.key }}</code> (wird wiederholt)
+						</div>
 
-                  <div class="mt-3 text-body-2">
-                    Ergebnis: <code>{{ vigWordExample.cipher }}</code>
-                  </div>
-                </v-sheet>
-              </v-col>
+						<v-table density="compact">
+							<thead>
+								<tr>
+									<th class="text-left">Pos</th>
+									<th class="text-left">P</th>
+									<th class="text-left">K</th>
+									<th class="text-left">C</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr v-for="r in vigWordExample.rows" :key="r.i">
+									<td><code>{{ r.i }}</code></td>
+									<td><code>{{ r.p }}</code></td>
+									<td><code>{{ r.k }}</code></td>
+									<td><code>{{ r.c }}</code></td>
+								</tr>
+							</tbody>
+						</v-table>
 
-              <v-col cols="12" md="6">
-                <v-sheet rounded="lg" border class="pa-3">
-                  <div class="text-subtitle-2 mb-2">Beispiel (Zahlenschlüssel wie „2,9,5“)</div>
-                  <div class="text-body-2 mb-2">
-                    Hier ist der Schlüssel direkt eine Zahlenfolge:
-                    <code>{{ vigNumExample.key.join(",") }}</code> (wiederholt).
-                  </div>
+						<div class="mt-3 text-body-2">
+							Ergebnis: <code>{{ vigWordExample.cipher }}</code>
+						</div>
+					</v-sheet>
+				</v-col>
 
-                  <v-table density="compact">
-                    <thead>
-                      <tr>
-                        <th class="text-left">Pos</th>
-                        <th class="text-left">P</th>
-                        <th class="text-left">Shift</th>
-                        <th class="text-left">C</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr v-for="r in vigNumExample.rows" :key="r.i">
-                        <td><code>{{ r.i }}</code></td>
-                        <td><code>{{ r.p }}</code></td>
-                        <td><code>{{ r.shift }}</code></td>
-                        <td><code>{{ r.c }}</code></td>
-                      </tr>
-                    </tbody>
-                  </v-table>
+				<v-col cols="12" md="6">
+					<v-sheet rounded="lg" border class="pa-3">
+						<div class="text-subtitle-2 mb-2">Beispiel (Zahlenschlüssel wie „2,9,5“)</div>
+						<div class="text-body-2 mb-2">
+							Hier ist der Schlüssel direkt eine Zahlenfolge:
+							<code>{{ vigNumExample.key.join(",") }}</code> (wiederholt).
+						</div>
 
-                  <div class="mt-3 text-body-2">
-                    Klartext: <code>{{ vigNumExample.plain }}</code><br />
-                    Cipher: <code>{{ vigNumExample.cipher }}</code>
-                  </div>
-                </v-sheet>
-              </v-col>
-            </v-row>
+						<v-table density="compact">
+							<thead>
+								<tr>
+									<th class="text-left">Pos</th>
+									<th class="text-left">P</th>
+									<th class="text-left">Shift</th>
+									<th class="text-left">C</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr v-for="r in vigNumExample.rows" :key="r.i">
+									<td><code>{{ r.i }}</code></td>
+									<td><code>{{ r.p }}</code></td>
+									<td><code>{{ r.shift }}</code></td>
+									<td><code>{{ r.c }}</code></td>
+								</tr>
+							</tbody>
+						</v-table>
 
-            <v-divider class="my-4" />
+						<div class="mt-3 text-body-2">
+							Klartext: <code>{{ vigNumExample.plain }}</code><br />
+							Cipher: <code>{{ vigNumExample.cipher }}</code>
+						</div>
+					</v-sheet>
+				</v-col>
+			</v-row>
 
-            <v-row>
-              <v-col cols="12" md="6">
-                <v-sheet rounded="lg" border class="pa-3">
-                  <div class="text-subtitle-2 mb-2">Warum Vigenère stärker ist</div>
-                  <ul class="text-body-2 mb-0">
-                    <li>Kein einzelner Shift → Häufigkeiten „verwischen“.</li>
-                    <li>Die Sicherheit hängt stark von der <strong>Schlüssellänge</strong> ab.</li>
-                    <li>Kurze Schlüssel sind knackbar (Kasiski/Friedman), lange sind deutlich zäher.</li>
-                  </ul>
-                </v-sheet>
-              </v-col>
-              <v-col cols="12" md="6">
-                <v-sheet rounded="lg" border class="pa-3">
-                  <div class="text-subtitle-2 mb-2">Eddie-Tipp fürs Denken</div>
-                  <div class="text-body-2">
-                    Stell dir vor, du hast mehrere Cäsar-Chiffren, die sich abwechseln.
-                    Wenn du die Periodenlänge kennst, zerfällt das Problem wieder in mehrere kleine Cäsar-Aufgaben.
-                  </div>
-                  <div class="mt-2" v-html="katexBlock(String.raw`
-                    \text{Wenn die Schlüssellänge } m \text{ bekannt ist,}`)"></div>
-                    <div class="" v-html="katexBlock(String.raw`
-                    \text{ dann: }
-                    \{i \equiv 0 \pmod m\},\{i \equiv 1 \pmod m\},\dots
-                  `)"></div>
-                </v-sheet>
-              </v-col>
-            </v-row>
-          </v-card-text>
-        </v-card>
+			<v-divider class="my-4" />
 
-        <!-- Abschluss -->
-        <v-card rounded="lg" elevation="2">
-          <v-card-title class="text-h6">Merksätze</v-card-title>
-          <v-card-text>
-            <v-row>
-              <v-col cols="12" md="6">
-                <v-sheet rounded="lg" class="pa-3" border>
-                  <div class="text-subtitle-2 mb-2">Cäsar</div>
-                  <ul class="text-body-2 mb-0">
-                    <li>Ein Shift für alles.</li>
-                    <li>Schnell zu knacken (25 Versuche oder Frequenzanalyse).</li>
-                  </ul>
-                </v-sheet>
-              </v-col>
-              <v-col cols="12" md="6">
-                <v-sheet rounded="lg" class="pa-3" border>
-                  <div class="text-subtitle-2 mb-2">Vigenère</div>
-                  <ul class="text-body-2 mb-0">
-                    <li>Shift-Folge (Schlüssel) wiederholt sich.</li>
-                    <li>Schlüssellänge ist die Schwachstelle – kurze Schlüssel sind angreifbar.</li>
-                  </ul>
-                </v-sheet>
-              </v-col>
-            </v-row>            
-          </v-card-text>
-        </v-card>
-		    
+			<v-row>
+				<v-col cols="12" md="6">
+					<v-sheet rounded="lg" border class="pa-3">
+						<div class="text-subtitle-2 mb-2">Warum Vigenère stärker ist</div>
+						<ul class="text-body-2 mb-0">
+							<li>Kein einzelner Shift → Häufigkeiten „verwischen“.</li>
+							<li>Die Sicherheit hängt stark von der <strong>Schlüssellänge</strong> ab.</li>
+							<li>Kurze Schlüssel sind knackbar (Kasiski/Friedman), lange sind deutlich zäher.</li>
+						</ul>
+					</v-sheet>
+				</v-col>
+				<v-col cols="12" md="6">
+					<v-sheet rounded="lg" border class="pa-3">
+						<div class="text-subtitle-2 mb-2">Eddie-Tipp fürs Denken</div>
+						<div class="text-body-2">
+							Stell dir vor, du hast mehrere Cäsar-Chiffren, die sich abwechseln.
+							Wenn du die Periodenlänge kennst, zerfällt das Problem wieder in mehrere kleine Cäsar-Aufgaben.
+						</div>
+						<div class="mt-2" v-html="katexBlock(String.raw`
+							\text{Wenn die Schlüssellänge } m \text{ bekannt ist,}`)"></div>
+						<div v-html="katexBlock(String.raw`
+							\text{ dann: }
+							\{i \equiv 0 \pmod m\},\{i \equiv 1 \pmod m\},\dots
+						`)"></div>
+					</v-sheet>
+				</v-col>
+			</v-row>
+		</div>
+
+		<h2 class="mt-8">Teil 5 — Merksätze</h2>
+		<div class="eddie">
+			<v-row>
+				<v-col cols="12" md="6">
+					<v-sheet rounded="lg" class="pa-3" border>
+						<div class="text-subtitle-2 mb-2">Cäsar</div>
+						<ul class="text-body-2 mb-0">
+							<li>Ein Shift für alles.</li>
+							<li>Schnell zu knacken (25 Versuche oder Frequenzanalyse).</li>
+						</ul>
+					</v-sheet>
+				</v-col>
+				<v-col cols="12" md="6">
+					<v-sheet rounded="lg" class="pa-3" border>
+						<div class="text-subtitle-2 mb-2">Vigenère</div>
+						<ul class="text-body-2 mb-0">
+							<li>Shift-Folge (Schlüssel) wiederholt sich.</li>
+							<li>Schlüssellänge ist die Schwachstelle – kurze Schlüssel sind angreifbar.</li>
+						</ul>
+					</v-sheet>
+				</v-col>
+			</v-row>
+		</div>
 	</template>
 
 	<template #interactivePart>
-		<v-card class="pa-4 mb-4">
-			<v-row dense align="center">
-				<v-col cols="12" md="12">
-					<v-select
-						v-model="selectedProgramId"
-						:items="programItems"
-						label="BASIC-Programm"
-						density="compact"
-						hide-details
-					/>
-				</v-col>
-			</v-row>
-			<v-row dense align="center">
-				<v-col cols="12" md="12" class="d-flex ga-2 align-center">
-					<v-btn
-						:disabled="!emulatorReady || emulatorRunning"
-						@click="runSelectedProgram"
-						color="primary"
-					>
-						RUN
-					</v-btn>
+		<h2>BASIC-Emulator</h2>
+		<div class="eddie d-flex flex-column ga-3">
+			<v-sheet class="pa-4" rounded="lg" border>
+				<v-row dense align="center">
+					<v-col cols="12" md="12">
+						<v-select
+							v-model="selectedProgramId"
+							:items="programItems"
+							label="BASIC-Programm"
+							density="compact"
+							hide-details
+						/>
+					</v-col>
+				</v-row>
+				<v-row dense align="center">
+					<v-col cols="12" md="12" class="d-flex ga-2 align-center">
+						<v-btn
+							:disabled="!emulatorReady || emulatorRunning"
+							@click="runSelectedProgram"
+							color="primary"
+						>
+							RUN
+						</v-btn>
 
-					<v-btn
-						:disabled="!emulatorReady || emulatorRunning"
-						@click="clearProgramScreen"
-						variant="tonal"
-					>
-						CLEAR
-					</v-btn>
+						<v-btn
+							:disabled="!emulatorReady || emulatorRunning"
+							@click="clearProgramScreen"
+							variant="tonal"
+						>
+							CLEAR
+						</v-btn>
 
-					<v-btn
-						:disabled="!emulatorReady || emulatorRunning"
-						@click="resetProgramRuntime"
-						variant="tonal"
-					>
-						RESET
-					</v-btn>
+						<v-btn
+							:disabled="!emulatorReady || emulatorRunning"
+							@click="resetProgramRuntime"
+							variant="tonal"
+						>
+							RESET
+						</v-btn>
 
-					<v-spacer />
+						<v-spacer />
 
-					<v-chip v-if="emulatorReady" color="green" variant="tonal" size="small">
-						basic ready
-					</v-chip>
-					<v-chip v-else color="grey" variant="tonal" size="small">
-						loading…
-					</v-chip>
-				</v-col>
-			</v-row>
-		</v-card>
+						<v-chip v-if="emulatorReady" color="green" variant="tonal" size="small">
+							basic ready
+						</v-chip>
+						<v-chip v-else color="grey" variant="tonal" size="small">
+							loading…
+						</v-chip>
+					</v-col>
+				</v-row>
+			</v-sheet>
 
-		<v-card class="pa-4 mb-4">
-			<v-textarea
-				v-model="sourceEditor"
-				label="BASIC Quelltext"
-				rows="12"
-				auto-grow
-				spellcheck="false"
-				class="basic-source-editor"
-				:disabled="emulatorRunning"
-			/>
-		</v-card>
-
-
+			<v-sheet class="pa-4" rounded="lg" border>
+				<v-textarea
+					v-model="sourceEditor"
+					label="BASIC Quelltext"
+					rows="12"
+					auto-grow
+					spellcheck="false"
+					class="basic-source-editor"
+					:disabled="emulatorRunning"
+				/>
+			</v-sheet>
+		</div>
 	</template>
+
 	<template #calculationPart>
-		<BAEmulator
-			:key="emulatorKey"
-			ref="emulatorRef"
-			:blink-cursor="true"
-			@hard-restart="handleHardRestart"
-			@state-change="handleEmulatorStateChange"
-		/>		
+		<h2>Emulator-Ausgabe</h2>
+		<div class="eddie">
+			<BAEmulator
+				:key="emulatorKey"
+				ref="emulatorRef"
+				:blink-cursor="true"
+				@hard-restart="handleHardRestart"
+				@state-change="handleEmulatorStateChange"
+			/>
+		</div>
 	</template>
 
-	<template #footer>
-     
-	</template>
+	<template #footer></template>
 </AppFrame>
 </template>
 

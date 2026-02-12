@@ -3,8 +3,8 @@
 	<template #title>
 		<div class="badge">O1</div>
 		<div>
-			<h1>Eddie rechnet: IMO 1985 Aufgabe 1</h1>
-			<p class="sub">Geometrie • Tangenten • zyklisch • Kongruenz</p>
+			<h1>Eddie rechnet: IMO 1985 Aufgaben Übersicht</h1>
+			<p class="sub">A1 • A2 • A3 • B1 • B2 • B3</p>
 		</div>
 	</template>
 
