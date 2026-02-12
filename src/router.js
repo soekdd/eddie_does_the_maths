@@ -12,6 +12,7 @@ import O6 from "@/views/O6.vue";
 import PG from "@/views/PG.vue";
 import AL from "@/views/AL.vue";
 import BA from "@/views/BA.vue";
+import SE from "@/views/SE.vue";
 import CatchAll from "@/views/CatchAll.vue";
 import Welcome from "@/views/Welcome.vue";
 
@@ -100,7 +101,7 @@ export const router = createRouter( {
 			name:      "FI",
 			component: CatchAll,
 			meta:      {
-				title: "Landkarten in Geometrie verwandeln", index: true, order: 90, wip: true
+				title: "Landkarten Geometrie", index: true, order: 90, wip: true
 			}
 		},
 		{
@@ -125,6 +126,14 @@ export const router = createRouter( {
 			component: CatchAll,
 			meta:      {
 				title: "Navigation im Wald", index: true, order: 120, wip: true
+			}
+		},
+		{
+			path:      "/SE",
+			name:      "SE",
+			component: SE,
+			meta:      {
+				title: "Gute-Nacht-Rechenroutine", index: true, order: 125
 			}
 		},
 		{
@@ -172,7 +181,7 @@ export const router = createRouter( {
 			name:      "AL",
 			component: AL,
 			meta:      {
-				title: "Kartenspiel mit Ada Locelace", index: true, order: 180
+				title: "Kartenspiel mit Ada Lovelace", index: true, order: 180
 			}
 		},
 		{

@@ -12,6 +12,7 @@
 
 	<v-dialog
 		v-model="open"
+		:content-class="smAndDown ? 'zoomerDialogMobile' : undefined"
 		:fullscreen="smAndDown"
 		:height="dialogHeight"
 		:max-width="dialogMaxWidth"
@@ -40,7 +41,12 @@
 			<v-divider />
 			<v-card-text class="zoomerBody">
 				<div ref="contentBoxRef" aria-label="Zoom-Inhalt" class="zoomerContent">
-					<div ref="fitBoxRef" class="zoomerFit" :style="fitStyle">
+					<div
+						ref="fitBoxRef"
+						class="zoomerFit"
+						:style="fitStyle"
+						@click="open = false"
+					>
 						<slot />
 					</div>
 				</div>
@@ -254,6 +260,10 @@ onBeforeUnmount( () => stopObservers() );
   max-height: 100%;
 }
 
+.zoomerCard.fullscreen .zoomerBody {
+  padding: 0;
+}
+
 .zoomerTitle {
   position: sticky;
   top: 0;
@@ -307,5 +317,13 @@ onBeforeUnmount( () => stopObservers() );
   display: block;
   width: 100%;
   height: 100%;
+}
+
+:global(.zoomerDialogMobile.v-overlay__content) {
+  margin: 0 !important;
+  width: 100vw !important;
+  max-width: 100vw !important;
+  height: 100dvh !important;
+  max-height: 100dvh !important;
 }
 </style>

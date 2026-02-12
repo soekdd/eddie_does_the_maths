@@ -30,50 +30,67 @@
 			</div>
 		</div>
 
-		<h2 class="mt-8">Teil 2 — Idee in zwei Stufen</h2>
+		<h2 class="mt-8">Teil 2 — Mini-Crashkurs: Was muss eine vierte Potenz erfüllen?</h2>
 		<div class="eddie">
 			<p>
-				Der Trick ist, nicht direkt auf <Katex tex="4" /> modulo zu gehen, sondern erst viele
-				Quadrate zu bauen und daraus dann eine vierte Potenz.
+				Die erlaubten Primzahlen sind genau
+				<Katex tex="2,3,5,7,11,13,17,19,23" />.
+				Das entspricht <Katex tex="n=9" /> Primzahlachsen.
 			</p>
-			<ol>
-				<li>
-					<b>Stufe A:</b> Aus vielen Zahlen bilden wir viele Paare, deren Produkt ein Quadrat ist.
-				</li>
-				<li>
-					<b>Stufe B:</b> Unter diesen Quadrat-Paaren finden wir zwei Paare, die "gleich" sind,
-					sodass das Produkt aller vier Zahlen eine vierte Potenz wird.
-				</li>
-			</ol>
 			<p>
-				Das Werkzeug in beiden Stufen ist das <b>Schubfachprinzip</b>.
+				Für eine Zahl
+				<Katex tex="x=\prod_{j=1}^9 p_j^{e_j}" />
+				gilt:
+			</p>
+			<div class="kbox">
+				<Katex as="div" display tex="x\text{ ist Quadrat }\Longleftrightarrow e_j\equiv 0\pmod 2\ \forall j." />
+				<Katex as="div" display tex="x\text{ ist vierte Potenz }\Longleftrightarrow e_j\equiv 0\pmod 4\ \forall j." />
+			</div>
+			<p>
+				Der Beweis arbeitet deshalb in zwei Schichten: erst Parität modulo <Katex tex="2" />,
+				dann nochmal Parität auf der Ebene der Quadratwurzeln.
 			</p>
 		</div>
 
-		<h2 class="mt-8">Teil 3 — Warum 1985 locker reicht</h2>
+		<h2 class="mt-8">Teil 3 — Quadratfreier Kern und Paritätsvektor</h2>
 		<div class="eddie">
 			<p>
-				Die erlaubten Primzahlen sind:
-				<Katex tex="2,3,5,7,11,13,17,19,23" />,
-				also insgesamt <Katex tex="n=9" /> Stück.
+				Eine anschauliche Sicht (wie im Kapiteltext): Zerlege jede Zahl als
+				<Katex tex="x=q\cdot r^2" />, wobei <Katex tex="q" /> quadratfrei ist.
+				Gleichwertig dazu kann man den <b>Paritätsvektor</b>
+				<Katex tex="\varepsilon(x)=(e_1,\dots,e_9)\bmod 2" />
+				verwenden.
 			</p>
 			<p>
-				Für eine allgemeine Primmenge mit <Katex tex="n" /> Primzahlen reicht bereits
-				<Katex tex="3\cdot 2^n + 1" /> Zahlen.
+				Beide Sichtweisen codieren dieselbe Information:
+				Welche Primzahlen mit ungeradem Exponenten auftreten.
+				Davon gibt es höchstens
+				<Katex tex="2^9=512" /> Klassen.
+			</p>
+			<div class="kbox">
+				<Katex as="div" display tex="\varepsilon(x)=\varepsilon(y)\Longrightarrow xy\text{ ist ein Quadrat}." />
+			</div>
+		</div>
+
+		<h2 class="mt-8">Teil 4 — Warum 1985 sicher reicht</h2>
+		<div class="eddie">
+			<p>
+				Für allgemeines <Katex tex="n" /> reicht
+				<Katex tex="3\cdot 2^n + 1" />.
+				Bei <Katex tex="n=9" /> also
+				<Katex tex="3\cdot 2^9+1=1537" />.
+				Da <Katex tex="1985\ge 1537" />, sind wir über der Garantieschwelle.
 			</p>
 			<div class="kbox">
 				<Katex as="div" display tex="3\cdot 2^9 + 1 = 1537\le 1985." />
 			</div>
-			<p>
-				Damit sind wir deutlich über der Schwelle und können den Zwei-Stufen-Argumentbau anwenden.
-			</p>
 		</div>
 
-		<h2 class="mt-8">Teil 4 — Beweisskizze in Formeln</h2>
+		<h2 class="mt-8">Teil 5 — Herleitung Schritt für Schritt</h2>
 		<div class="eddie">
 			<v-expansion-panels variant="accordion">
 				<v-expansion-panel>
-					<v-expansion-panel-title>Stufe A: viele Quadrat-Paare</v-expansion-panel-title>
+					<v-expansion-panel-title>Stufe A: Aus Zahlen werden viele Quadrat-Paare</v-expansion-panel-title>
 					<v-expansion-panel-text class="d-flex flex-column ga-3">
 						<div>
 							Schreibe jede Zahl als
@@ -82,29 +99,65 @@
 							<Katex tex="(r_1,\dots,r_n)\bmod 2" />.
 						</div>
 						<div>
-							Davon gibt es <Katex tex="2^n" /> Klassen. Zwei Zahlen in derselben Klasse haben
+							Es gibt nur <Katex tex="2^n" /> Klassen. Zwei Zahlen in derselben Klasse haben
 							im Produkt überall gerade Exponenten, also ein Quadrat.
 						</div>
 						<div class="kbox">
 							<Katex as="div" display tex="x\sim y\Rightarrow xy=s^2." />
 						</div>
+						<div>
+							Sei <Katex tex="c_v" /> die Anzahl Zahlen in Klasse <Katex tex="v" />.
+							Dann entstehen insgesamt
+							<Katex tex="P=\sum_v \left\lfloor c_v/2\right\rfloor" />
+							Quadrat-Paare.
+						</div>
+						<div class="kbox">
+							<Katex as="div" display tex="\left\lfloor c_v/2\right\rfloor \ge (c_v-1)/2\Rightarrow P\ge \frac{|M|-2^n}{2}." />
+							<Katex as="div" display tex="|M|=3\cdot 2^n+1\Rightarrow P\ge 2^n+1." />
+						</div>
 					</v-expansion-panel-text>
 				</v-expansion-panel>
 
 				<v-expansion-panel>
-					<v-expansion-panel-title>Stufe B: aus Quadraten eine vierte Potenz</v-expansion-panel-title>
+					<v-expansion-panel-title>Stufe B: Aus Quadrat-Paaren entsteht eine vierte Potenz</v-expansion-panel-title>
 					<v-expansion-panel-text class="d-flex flex-column ga-3">
 						<div>
 							Nimm zwei Quadrat-Paare:
 							<Katex tex="ab=u^2" /> und <Katex tex="cd=v^2" />.
-							Wenn die Paritätsklasse von <Katex tex="u" /> und <Katex tex="v" /> gleich ist,
-							dann ist <Katex tex="uv" /> ein Quadrat.
-						</div>
-						<div class="kbox">
-							<Katex as="div" display tex="abcd=(u^2)(v^2)=(uv)^2=t^4." />
+							Kodiere nun die Parität der Exponenten von <Katex tex="u" /> und <Katex tex="v" />
+							wieder modulo <Katex tex="2" />.
 						</div>
 						<div>
-							Auch hier wieder Schubfachprinzip über <Katex tex="2^n" /> Paritätsklassen.
+							Unter den <Katex tex="P\ge 2^n+1" /> Paaren gibt es also (Schubfachprinzip) zwei Paare
+							mit gleicher Wurzel-Parität.
+							Damit ist <Katex tex="uv" /> ein Quadrat, also <Katex tex="uv=s^2" />.
+						</div>
+						<div class="kbox">
+							<Katex as="div" display tex="abcd=(u^2)(v^2)=(uv)^2=(s^2)^2=s^4." />
+						</div>
+						<div>
+							Wichtig: Zwei beliebige Quadrate ergeben nur wieder ein Quadrat.
+							Die zusätzliche Paritätsgleichheit der Wurzeln ist genau der Schritt zur vierten Potenz.
+						</div>
+					</v-expansion-panel-text>
+				</v-expansion-panel>
+
+				<v-expansion-panel>
+					<v-expansion-panel-title>Mini-Beispiel (korrigiert geprüft)</v-expansion-panel-title>
+					<v-expansion-panel-text class="d-flex flex-column ga-3">
+						<div>
+							Betrachte
+							<Katex tex="\{6,24,54,216,8,75\}" />.
+							Für die ersten vier Zahlen gilt jeweils
+							<Katex tex="x=6\cdot r^2" /> mit
+							<Katex tex="r\in\{1,2,3,6\}" />.
+						</div>
+						<div class="kbox">
+							<Katex as="div" display tex="6\cdot24\cdot54\cdot216=36^4." />
+						</div>
+						<div>
+							Das ist ein gutes Anschauungsbeispiel, aber der eigentliche IMO-Beweis läuft
+							über die zwei Schubfach-Stufen oben und nicht über eine spezielle Zahlenwahl.
 						</div>
 					</v-expansion-panel-text>
 				</v-expansion-panel>
@@ -123,17 +176,17 @@
 			<div class="d-flex flex-wrap ga-3 align-center">
 				<v-text-field
 					v-model="countInput"
-					label="Anzahl Zahlen in M"
-					type="number"
-					min="4"
-					max="5000"
-					style="max-width: 220px"
 					hide-details="auto"
+					label="Anzahl Zahlen in M"
+					max="5000"
+					min="4"
+					style="max-width: 220px"
+					type="number"
 				/>
-				<v-btn @click="runConstruction" color="primary" variant="flat">
+				<v-btn color="primary" variant="flat" @click="runConstruction">
 					Konstruieren & prüfen
 				</v-btn>
-				<v-btn @click="randomExample" variant="tonal">
+				<v-btn variant="tonal" @click="randomExample">
 					Zufallsgröße
 				</v-btn>
 			</div>
@@ -149,7 +202,7 @@
 				<span v-else>Unterhalb der Schwelle ist es ein Experiment (kann klappen, muss nicht).</span>
 			</v-alert>
 
-			<v-sheet v-if="result" class="pa-3 rounded" border>
+			<v-sheet v-if="result" border class="pa-3 rounded">
 				<div class="d-flex flex-column ga-2">
 					<div>
 						<strong>Stufe A:</strong>
@@ -172,7 +225,7 @@
 	<template #calculationPart>
 		<h2>Rechendetails</h2>
 		<div class="eddie d-flex flex-column ga-3">
-			<v-sheet v-if="result" class="pa-3 rounded" border>
+			<v-sheet v-if="result" border class="pa-3 rounded">
 				<div class="text-subtitle-1 font-weight-medium mb-2">Paritätsklassen der Zahlen (Top 12)</div>
 				<v-table density="compact">
 					<thead>
@@ -194,7 +247,7 @@
 				</v-table>
 			</v-sheet>
 
-			<v-sheet v-if="result" class="pa-3 rounded" border>
+			<v-sheet v-if="result" border class="pa-3 rounded">
 				<div class="text-subtitle-1 font-weight-medium mb-2">Paritätsklassen der Quadratwurzeln (Top 12)</div>
 				<v-table density="compact">
 					<thead>
@@ -214,7 +267,7 @@
 				</v-table>
 			</v-sheet>
 
-			<v-sheet v-if="result && result.found" class="pa-3 rounded" border>
+			<v-sheet v-if="result && result.found" border class="pa-3 rounded">
 				<div class="text-subtitle-1 font-weight-medium mb-2">Gefundene 4er-Teilmenge</div>
 				<div class="mono">a = {{ result.witness.a }}</div>
 				<div class="mono">b = {{ result.witness.b }}</div>
@@ -233,153 +286,193 @@
 import { ref } from "vue";
 import titleImg from "@/images/O4.webp";
 
-const PRIMES = [2, 3, 5, 7, 11, 13, 17, 19, 23];
-const PRIMES_BIG = PRIMES.map((p) => BigInt(p));
-const THRESHOLD = 3 * (2 ** PRIMES.length) + 1; // 1537 bei n=9
+const PRIMES = [ 2, 3, 5, 7, 11, 13, 17, 19, 23 ];
+const PRIMES_BIG = PRIMES.map( ( p ) => BigInt( p ) );
+const THRESHOLD = 3 * 2 ** PRIMES.length + 1; // 1537 bei n=9
 
-const countInput = ref("1537");
-const error = ref("");
-const result = ref(null);
+const countInput = ref( "1537" );
+const error = ref( "" );
+const result = ref( null );
 
-function parityKey(exponents) {
-	return exponents.map((e) => e % 2).join("");
+function parityKey( exponents ) {
+	return exponents.map( ( e ) => e % 2 ).join( "" );
 }
 
-function decodeBase(index, base, len) {
-	const out = Array(len).fill(0);
+function decodeBase(
+	index, base, len
+) {
+	const out = Array( len ).fill( 0 );
 	let x = index;
-	for (let i = 0; i < len; i++) {
-		out[i] = x % base;
-		x = Math.floor(x / base);
+
+	for ( let i = 0; i < len; i++ ) {
+		out[ i ] = x % base;
+		x = Math.floor( x / base );
 	}
+
 	return out;
 }
 
-function powBigInt(base, exp) {
+function powBigInt( base, exp ) {
 	let out = 1n;
-	for (let i = 0; i < exp; i++) out *= base;
+
+	for ( let i = 0; i < exp; i++ ) {
+		out *= base;
+	}
+
 	return out;
 }
 
-function numberFromExponents(exponents) {
+function numberFromExponents( exponents ) {
 	let n = 1n;
-	for (let i = 0; i < exponents.length; i++) {
-		if (exponents[i] > 0) n *= powBigInt(PRIMES_BIG[i], exponents[i]);
+
+	for ( let i = 0; i < exponents.length; i++ ) {
+		if ( exponents[ i ] > 0 ) {
+			n *= powBigInt( PRIMES_BIG[ i ], exponents[ i ] );
+		}
 	}
+
 	return n;
 }
 
-function describeKey(key) {
+function describeKey( key ) {
 	const primes = [];
-	for (let i = 0; i < key.length; i++) {
-		if (key[i] === "1") primes.push(PRIMES[i]);
+
+	for ( let i = 0; i < key.length; i++ ) {
+		if ( key[ i ] === "1" ) {
+			primes.push( PRIMES[ i ] );
+		}
 	}
-	return primes.length ? `{${primes.join(", ")}}` : "{}";
+
+	return primes.length ? `{${primes.join( ", " )}}` : "{}";
 }
 
-function generateSmoothSet(count) {
+function generateSmoothSet( count ) {
 	const maxCount = 4 ** PRIMES.length;
-	if (count > maxCount) {
-		throw new Error(`Für den Generator sind maximal ${maxCount} eindeutige Zahlen vorgesehen.`);
+
+	if ( count > maxCount ) {
+		throw new Error( `Für den Generator sind maximal ${maxCount} eindeutige Zahlen vorgesehen.` );
 	}
 
 	const items = [];
-	for (let idx = 0; idx < count; idx++) {
-		const exponents = decodeBase(idx, 4, PRIMES.length); // Exponenten 0..3
-		items.push({
-			id: idx + 1,
+
+	for ( let idx = 0; idx < count; idx++ ) {
+		const exponents = decodeBase(
+			idx, 4, PRIMES.length
+		); // Exponenten 0..3
+		items.push( {
+			id:    idx + 1,
 			exponents,
-			value: numberFromExponents(exponents),
-			key: parityKey(exponents)
-		});
+			value: numberFromExponents( exponents ),
+			key:   parityKey( exponents )
+		} );
 	}
+
 	return items;
 }
 
-function analyze(items) {
+function analyze( items ) {
 	const classMap = new Map();
-	for (const item of items) {
-		if (!classMap.has(item.key)) classMap.set(item.key, []);
-		classMap.get(item.key).push(item);
+
+	for ( const item of items ) {
+		if ( !classMap.has( item.key ) ) {
+			classMap.set( item.key, [] );
+		}
+
+		classMap.get( item.key ).push( item );
 	}
 
-	const parityClassRows = Array.from(classMap.entries())
-		.map(([key, arr]) => ({
+	const parityClassRows = Array.from( classMap.entries() )
+		.map( ( [ key, arr ] ) => ( {
 			key,
 			count: arr.length,
-			pairs: Math.floor(arr.length / 2)
-		}))
-		.sort((a, b) => b.count - a.count)
-		.slice(0, 12);
+			pairs: Math.floor( arr.length / 2 )
+		} ) )
+		.sort( ( a, b ) => b.count - a.count )
+		.slice( 0, 12 );
 
 	const squarePairs = [];
-	for (const arr of classMap.values()) {
-		for (let i = 0; i + 1 < arr.length; i += 2) {
-			const a = arr[i];
-			const b = arr[i + 1];
-			const rootParity = a.exponents.map((ea, j) => ((ea + b.exponents[j]) / 2) % 2);
-			squarePairs.push({
+
+	for ( const arr of classMap.values() ) {
+		for ( let i = 0; i + 1 < arr.length; i += 2 ) {
+			const a = arr[ i ];
+			const b = arr[ i + 1 ];
+			const rootParity = a.exponents.map( ( ea, j ) => ( ea + b.exponents[ j ] ) / 2 % 2 );
+			squarePairs.push( {
 				a,
 				b,
-				rootKey: rootParity.join(""),
+				rootKey: rootParity.join( "" ),
 				rootParity
-			});
+			} );
 		}
 	}
 
 	const rootMap = new Map();
-	for (const pair of squarePairs) {
-		if (!rootMap.has(pair.rootKey)) rootMap.set(pair.rootKey, []);
-		rootMap.get(pair.rootKey).push(pair);
-	}
 
-	const rootClassRows = Array.from(rootMap.entries())
-		.map(([key, arr]) => ({ key, count: arr.length }))
-		.sort((a, b) => b.count - a.count)
-		.slice(0, 12);
-
-	let witness = null;
-	for (const arr of rootMap.values()) {
-		if (arr.length < 2) continue;
-		const p1 = arr[0];
-		const p2 = arr[1];
-		const four = [p1.a, p1.b, p2.a, p2.b];
-
-		const sumExp = Array(PRIMES.length).fill(0);
-		for (const item of four) {
-			for (let j = 0; j < PRIMES.length; j++) sumExp[j] += item.exponents[j];
+	for ( const pair of squarePairs ) {
+		if ( !rootMap.has( pair.rootKey ) ) {
+			rootMap.set( pair.rootKey, [] );
 		}
 
-		const isFourth = sumExp.every((e) => e % 4 === 0);
-		if (!isFourth) continue;
+		rootMap.get( pair.rootKey ).push( pair );
+	}
 
-		const root4Exp = sumExp.map((e) => e / 4);
-		const t = numberFromExponents(root4Exp);
-		const product = four.reduce((acc, item) => acc * item.value, 1n);
+	const rootClassRows = Array.from( rootMap.entries() )
+		.map( ( [ key, arr ] ) => ( { key, count: arr.length } ) )
+		.sort( ( a, b ) => b.count - a.count )
+		.slice( 0, 12 );
+
+	let witness = null;
+
+	for ( const arr of rootMap.values() ) {
+		if ( arr.length < 2 ) {
+			continue;
+		}
+
+		const p1 = arr[ 0 ];
+		const p2 = arr[ 1 ];
+		const four = [ p1.a, p1.b, p2.a, p2.b ];
+
+		const sumExp = Array( PRIMES.length ).fill( 0 );
+
+		for ( const item of four ) {
+			for ( let j = 0; j < PRIMES.length; j++ ) {
+				sumExp[ j ] += item.exponents[ j ];
+			}
+		}
+
+		const isFourth = sumExp.every( ( e ) => e % 4 === 0 );
+
+		if ( !isFourth ) {
+			continue;
+		}
+
+		const root4Exp = sumExp.map( ( e ) => e / 4 );
+		const t = numberFromExponents( root4Exp );
+		const product = four.reduce( ( acc, item ) => acc * item.value, 1n );
 
 		witness = {
-			a: p1.a.value.toString(),
-			b: p1.b.value.toString(),
-			c: p2.a.value.toString(),
-			d: p2.b.value.toString(),
-			product: product.toString(),
-			t: t.toString(),
-			checkValue: (t * t * t * t).toString()
+			a:          p1.a.value.toString(),
+			b:          p1.b.value.toString(),
+			c:          p2.a.value.toString(),
+			d:          p2.b.value.toString(),
+			product:    product.toString(),
+			t:          t.toString(),
+			checkValue: ( t * t * t * t ).toString()
 		};
 		break;
 	}
 
 	return {
-		count: items.length,
-		parityClassCount: classMap.size,
-		squarePairCount: squarePairs.length,
+		count:                items.length,
+		parityClassCount:     classMap.size,
+		squarePairCount:      squarePairs.length,
 		rootParityClassCount: rootMap.size,
 		parityClassRows,
 		rootClassRows,
-		found: !!witness,
+		found:                !!witness,
 		witness,
-		threshold: THRESHOLD,
-		guaranteed: items.length >= THRESHOLD
+		threshold:            THRESHOLD,
+		guaranteed:           items.length >= THRESHOLD
 	};
 }
 
@@ -388,21 +481,30 @@ function runConstruction() {
 	result.value = null;
 
 	try {
-		const count = Number(countInput.value);
-		if (!Number.isInteger(count)) throw new Error("Bitte eine ganze Zahl eingeben.");
-		if (count < 4) throw new Error("Mindestens 4 Zahlen sind nötig.");
-		if (count > 5000) throw new Error("Bitte maximal 5000 eingeben (für flüssige Darstellung).");
+		const count = Number( countInput.value );
 
-		const items = generateSmoothSet(count);
-		result.value = analyze(items);
-	} catch (e) {
-		error.value = e?.message ? String(e.message) : String(e);
+		if ( !Number.isInteger( count ) ) {
+			throw new Error( "Bitte eine ganze Zahl eingeben." );
+		}
+
+		if ( count < 4 ) {
+			throw new Error( "Mindestens 4 Zahlen sind nötig." );
+		}
+
+		if ( count > 5000 ) {
+			throw new Error( "Bitte maximal 5000 eingeben (für flüssige Darstellung)." );
+		}
+
+		const items = generateSmoothSet( count );
+		result.value = analyze( items );
+	} catch ( e ) {
+		error.value = e?.message ? String( e.message ) : String( e );
 	}
 }
 
 function randomExample() {
-	const c = 200 + Math.floor(Math.random() * 2200); // 200..2399
-	countInput.value = String(c);
+	const c = 200 + Math.floor( Math.random() * 2200 ); // 200..2399
+	countInput.value = String( c );
 	runConstruction();
 }
 

@@ -21,7 +21,8 @@ const where = computed( () => route.fullPath || route.path || "" );
 	<template #descriptionPart>
 		<h2>Oh nein – das ist gerade eine echte <strong>404</strong>… sorry! 😅</h2>
 		<div class="eddie">
-			<p>Der Inhalt, den du suchst, ist noch nicht verfügbar, aber ich bin schon dran und baue ihn gerade zusammen, Schritt für Schritt, wie eine Rechnung, die am Ende aufgeht.</p>
+			<p>Der Inhalt, den du suchst, ist noch nicht verfügbar, aber ich bin schon dran
+				und baue ihn gerade zusammen, Schritt für Schritt, wie eine Rechnung, die am Ende aufgeht.</p>
 			<p>Komm später nochmal vorbei, okay? Dann wartet hier hoffentlich genau das, was du gesucht hast.</p>
 		</div>
 	</template>

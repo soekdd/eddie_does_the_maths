@@ -117,40 +117,19 @@
 			<text :x="state.L.x - 4" :y="-state.L.y - 4">L</text>
 			<text :x="state.M.x - 2"  :y="-state.M.y - 4">M</text>
 			<text :x="state.N.x - 0"  :y="-state.N.y - 4">N</text>
-
-			<!-- legend -->
-			<g :transform="`translate(${viewBox.x + 5}, ${viewBox.y + 80})`">
-				<rect fill="#fff"
-					height="22"
-					rx="3"
-					ry="3"
-					stroke="#bbb"
-					stroke-width="0.5"
-					width="130"
-					x="0"
-					y="0"
-				/>
-				<line stroke="#8d8d8d"
-					stroke-dasharray="7 7"
-					stroke-width="0.2"
-					x1="8"
-					x2="40"
-					y1="5"
-					y2="5"
-				/>
-				<text x="48" y="6">Umkreis durch A,B,C,D (zyklisch)</text>
-
-				<line stroke="#111"
-					stroke-width="0.4"
-					x1="8"
-					x2="40"
-					y1="15"
-					y2="15"
-				/>
-				<text x="48" y="16">Tangentialkreis: berührt AD, DC, BC</text>
-			</g>
 		</g>
 	</svg>
+
+	<div v-if="state.ready" class="legendHtml">
+		<div class="legendItem">
+			<span class="swatch circ"></span>
+			<span>Umkreis durch A,B,C,D (zyklisch)</span>
+		</div>
+		<div class="legendItem">
+			<span class="swatch tan"></span>
+			<span>Tangentialkreis: berührt AD, DC, BC</span>
+		</div>
+	</div>
 
 	<div v-else class="loading">Generiere Beispiel…</div>
 </div>
@@ -162,7 +141,7 @@ import { onMounted, reactive } from "vue";
 const FIXED_AB = 100;
 const FIXED_A_X = -50;
 const viewBox = {
-	x: -70, y: -50, w: 140, h: 105
+	x: -70, y: -50, w: 140, h: 75
 };
 
 const state = reactive( {
@@ -557,6 +536,41 @@ onMounted( () => regenerate() );
   letter-spacing: initial;
   user-select: none;
 }
+
+.legendHtml {
+  background: #ffffffdd;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  color: #0f172a;
+  display: grid;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  gap: 6px;
+  padding: 9px 12px;
+}
+
+.legendItem {
+  align-items: center;
+  display: flex;
+  gap: 8px;
+}
+
+.swatch {
+  border-radius: 2px;
+  display: inline-block;
+  flex: 0 0 26px;
+  height: 0;
+}
+
+.swatch.circ {
+  border-top: 2px dashed #8d8d8d;
+}
+
+.swatch.tan {
+  border-top: 2px solid #111;
+}
+
 .loading {
   opacity: 0.7;
 }

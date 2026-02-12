@@ -101,22 +101,22 @@
 			<div class="d-flex flex-wrap ga-3 align-center">
 				<v-text-field
 					v-model="nInput"
-					label="N (Anzahl Stufen)"
-					type="number"
-					min="2"
-					max="120"
 					hide-details="auto"
+					label="N (Anzahl Stufen)"
+					max="120"
+					min="2"
 					style="max-width: 180px"
+					type="number"
 				/>
 				<v-text-field
 					v-model="x1Input"
-					label="Testwert x1"
 					hide-details="auto"
+					label="Testwert x1"
 					style="max-width: 220px"
 				/>
-				<v-btn @click="runCheck" color="primary" variant="flat">Berechnen</v-btn>
-				<v-btn @click="setMidpoint" variant="tonal">x1 = (A_N+B_N)/2</v-btn>
-				<v-btn @click="randomAround" variant="tonal">Zufall nahe Intervall</v-btn>
+				<v-btn color="primary" variant="flat" @click="runCheck">Berechnen</v-btn>
+				<v-btn variant="tonal" @click="setMidpoint">x1 = (A_N+B_N)/2</v-btn>
+				<v-btn variant="tonal" @click="randomAround">Zufall nahe Intervall</v-btn>
 			</div>
 
 			<v-alert v-if="error" type="error" variant="tonal">
@@ -159,7 +159,7 @@
 	<template #calculationPart>
 		<h2>Tabellen</h2>
 		<div class="eddie d-flex flex-column ga-3">
-			<v-sheet v-if="result" class="pa-3 rounded" border>
+			<v-sheet v-if="result" border class="pa-3 rounded">
 				<div class="text-subtitle-1 font-weight-medium mb-2">Schrankenfolgen</div>
 				<v-table density="compact">
 					<thead>
@@ -183,7 +183,7 @@
 				</v-table>
 			</v-sheet>
 
-			<v-sheet v-if="result" class="pa-3 rounded" border>
+			<v-sheet v-if="result" border class="pa-3 rounded">
 				<div class="text-subtitle-1 font-weight-medium mb-2">Folge für den Testwert x1</div>
 				<v-table density="compact">
 					<thead>
@@ -222,49 +222,70 @@ import titleImg from "@/images/O6.webp";
 
 const EPS = 1e-13;
 
-const nInput = ref("25");
-const x1Input = ref("0.57");
+const nInput = ref( "25" );
+const x1Input = ref( "0.57" );
 
-const error = ref("");
-const result = ref(null);
+const error = ref( "" );
+const result = ref( null );
 
-function parseNumber(v, label) {
-	const s = String(v ?? "").trim().replace(",", ".");
-	if (!s) throw new Error(`${label}: leer.`);
-	const x = Number(s);
-	if (!Number.isFinite(x)) throw new Error(`${label}: ungültige Zahl.`);
+function parseNumber( v, label ) {
+	const s = String( v ?? "" ).trim()
+		.replace( ",", "." );
+
+	if ( !s ) {
+		throw new Error( `${label}: leer.` );
+	}
+
+	const x = Number( s );
+
+	if ( !Number.isFinite( x ) ) {
+		throw new Error( `${label}: ungültige Zahl.` );
+	}
+
 	return x;
 }
 
-function recurrenceStep(x, n) {
-	return x * (x + 1 / n);
+function recurrenceStep( x, n ) {
+	return x * ( x + 1 / n );
 }
 
-function Sn(x, n) {
+function Sn( x, n ) {
 	let y = x;
-	for (let k = 1; k <= n; k++) {
-		y = recurrenceStep(y, k);
+
+	for ( let k = 1; k <= n; k++ ) {
+		y = recurrenceStep( y, k );
 	}
+
 	return y;
 }
 
-function bisectionForSn(n, target) {
+function bisectionForSn( n, target ) {
 	let lo = 0;
 	let hi = 1;
-	let flo = Sn(lo, n) - target;
-	let fhi = Sn(hi, n) - target;
+	let flo = Sn( lo, n ) - target;
+	let fhi = Sn( hi, n ) - target;
 
-	if (Math.abs(flo) < EPS) return lo;
-	if (Math.abs(fhi) < EPS) return hi;
-	if (flo * fhi > 0) {
-		throw new Error(`Bisection failed for n=${n}, target=${target}.`);
+	if ( Math.abs( flo ) < EPS ) {
+		return lo;
 	}
 
-	for (let iter = 0; iter < 120; iter++) {
-		const mid = 0.5 * (lo + hi);
-		const fm = Sn(mid, n) - target;
-		if (Math.abs(fm) < EPS || hi - lo < 1e-14) return mid;
-		if (flo * fm <= 0) {
+	if ( Math.abs( fhi ) < EPS ) {
+		return hi;
+	}
+
+	if ( flo * fhi > 0 ) {
+		throw new Error( `Bisection failed for n=${n}, target=${target}.` );
+	}
+
+	for ( let iter = 0; iter < 120; iter++ ) {
+		const mid = 0.5 * ( lo + hi );
+		const fm = Sn( mid, n ) - target;
+
+		if ( Math.abs( fm ) < EPS || hi - lo < 1e-14 ) {
+			return mid;
+		}
+
+		if ( flo * fm <= 0 ) {
 			hi = mid;
 			fhi = fm;
 		} else {
@@ -273,21 +294,23 @@ function bisectionForSn(n, target) {
 		}
 	}
 
-	return 0.5 * (lo + hi);
+	return 0.5 * ( lo + hi );
 }
 
-function computeBounds(N) {
+function computeBounds( N ) {
 	const rows = [];
 	let AN = -Infinity;
 	let BN = Infinity;
 
-	for (let n = 1; n <= N; n++) {
-		const a = bisectionForSn(n, 1 - 1 / n);
-		const b = bisectionForSn(n, 1);
+	for ( let n = 1; n <= N; n++ ) {
+		const a = bisectionForSn( n, 1 - 1 / n );
+		const b = bisectionForSn( n, 1 );
 		const w = b - a;
-		AN = Math.max(AN, a);
-		BN = Math.min(BN, b);
-		rows.push({ n, a, b, w });
+		AN = Math.max( AN, a );
+		BN = Math.min( BN, b );
+		rows.push( {
+			n, a, b, w
+		} );
 	}
 
 	return {
@@ -298,21 +321,28 @@ function computeBounds(N) {
 	};
 }
 
-function computeSequenceRows(x1, N) {
-	const x = [0, x1];
-	for (let n = 1; n <= N; n++) {
-		x[n + 1] = recurrenceStep(x[n], n);
+function computeSequenceRows( x1, N ) {
+	const x = [ 0, x1 ];
+
+	for ( let n = 1; n <= N; n++ ) {
+		x[ n + 1 ] = recurrenceStep( x[ n ], n );
 	}
 
 	const rows = [];
 	let fail = null;
-	for (let n = 1; n <= N; n++) {
-		const xn = x[n];
-		const xn1 = x[n + 1];
+
+	for ( let n = 1; n <= N; n++ ) {
+		const xn = x[ n ];
+		const xn1 = x[ n + 1 ];
 		const ok = xn > 0 && xn < xn1 && xn1 < 1;
-		rows.push({ n, xn, xn1, ok });
-		if (!ok && fail === null) {
-			fail = { n, xn, xn1 };
+		rows.push( {
+			n, xn, xn1, ok
+		} );
+
+		if ( !ok && fail === null ) {
+			fail = {
+				n, xn, xn1
+			};
 		}
 	}
 
@@ -324,59 +354,77 @@ function runCheck() {
 	result.value = null;
 
 	try {
-		const N = parseNumber(nInput.value, "N");
-		const x1 = parseNumber(x1Input.value, "x1");
+		const N = parseNumber( nInput.value, "N" );
+		const x1 = parseNumber( x1Input.value, "x1" );
 
-		if (!Number.isInteger(N)) throw new Error("N muss ganzzahlig sein.");
-		if (N < 2 || N > 120) throw new Error("N bitte zwischen 2 und 120 wählen.");
+		if ( !Number.isInteger( N ) ) {
+			throw new Error( "N muss ganzzahlig sein." );
+		}
 
-		const bounds = computeBounds(N);
-		const seq = computeSequenceRows(x1, N);
+		if ( N < 2 || N > 120 ) {
+			throw new Error( "N bitte zwischen 2 und 120 wählen." );
+		}
+
+		const bounds = computeBounds( N );
+		const seq = computeSequenceRows( x1, N );
 
 		result.value = {
 			N,
 			x1,
-			AN: bounds.AN,
-			BN: bounds.BN,
-			width: bounds.width,
+			AN:         bounds.AN,
+			BN:         bounds.BN,
+			width:      bounds.width,
 			boundsRows: bounds.rows,
-			seqRows: seq.rows,
-			okAll: seq.fail === null,
-			failAt: seq.fail?.n ?? null,
-			failXn: seq.fail?.xn ?? null,
-			failXn1: seq.fail?.xn1 ?? null
+			seqRows:    seq.rows,
+			okAll:      seq.fail === null,
+			failAt:     seq.fail?.n ?? null,
+			failXn:     seq.fail?.xn ?? null,
+			failXn1:    seq.fail?.xn1 ?? null
 		};
-	} catch (e) {
-		error.value = e?.message ? String(e.message) : String(e);
+	} catch ( e ) {
+		error.value = e?.message ? String( e.message ) : String( e );
 	}
 }
 
 function setMidpoint() {
-	if (!result.value) {
+	if ( !result.value ) {
 		runCheck();
-		if (!result.value) return;
+
+		if ( !result.value ) {
+			return;
+		}
 	}
-	const m = 0.5 * (result.value.AN + result.value.BN);
-	x1Input.value = String(m);
+
+	const m = 0.5 * ( result.value.AN + result.value.BN );
+	x1Input.value = String( m );
 	runCheck();
 }
 
 function randomAround() {
-	if (!result.value) {
+	if ( !result.value ) {
 		runCheck();
-		if (!result.value) return;
+
+		if ( !result.value ) {
+			return;
+		}
 	}
-	const { AN, BN, width } = result.value;
+
+	const {
+		AN, BN, width
+	} = result.value;
 	const left = AN - 0.6 * width;
 	const right = BN + 0.6 * width;
-	const x = left + Math.random() * (right - left);
-	x1Input.value = String(x);
+	const x = left + Math.random() * ( right - left );
+	x1Input.value = String( x );
 	runCheck();
 }
 
-function fmt(v, digits = 6) {
-	if (!Number.isFinite(v)) return "–";
-	return v.toFixed(digits);
+function fmt( v, digits = 6 ) {
+	if ( !Number.isFinite( v ) ) {
+		return "–";
+	}
+
+	return v.toFixed( digits );
 }
 
 runCheck();

@@ -30,7 +30,7 @@
 				oder <em>weiß</em> ist.
 			</p>
 
-			<v-sheet class="pa-3 rounded" border>
+			<v-sheet class="pa-3 rounded">
 				<div class="d-flex flex-column ga-2">
 					<div>
 						<strong>Regel (Spiegel):</strong> Für jedes <Katex :tex="'i\\in M'" /> haben <Katex :tex="'i'" /> und
@@ -77,7 +77,7 @@
 							modulo <Katex :tex="'n'" /> einfach eine Umordnung von
 							<Katex :tex="'1,2,\\dots,n-1'" />.
 						</div>
-						<v-sheet class="pa-3 rounded" border>
+						<v-sheet class="pa-3 rounded">
 							<div class="text-subtitle-2 mb-2">Warum „alle verschieden“?</div>
 							<div>
 								Wenn <Katex :tex="'ak\\equiv bk\\pmod n'" />, dann <Katex :tex="'(a-b)k\\equiv 0\\pmod n'" />.
@@ -99,7 +99,7 @@
 							Dann gilt stets <Katex :tex="'s\\equiv r+k\\pmod n'" />.
 						</div>
 
-						<v-sheet class="pa-3 rounded" border>
+						<v-sheet class="pa-3 rounded">
 							<div class="text-subtitle-2 mb-2">Fallunterscheidung (genau wie im Original, nur mit Eddie-Lampe)</div>
 
 							<div class="d-flex flex-column ga-2">
@@ -160,27 +160,27 @@
 			<div class="d-flex flex-wrap ga-3 align-center">
 				<v-text-field
 					v-model.number="n"
+					hide-details="auto"
 					label="n"
-					type="number"
 					min="2"
 					step="1"
 					style="max-width: 160px"
-					hide-details="auto"
+					type="number"
 				/>
 				<v-text-field
 					v-model.number="k"
+					hide-details="auto"
 					label="k"
-					type="number"
-					:min="1"
 					:max="Math.max(1, n - 1)"
+					:min="1"
 					step="1"
 					style="max-width: 160px"
-					hide-details="auto"
+					type="number"
 				/>
-				<v-btn @click="runCheck" color="primary" variant="flat">
+				<v-btn color="primary" variant="flat" @click="runCheck">
 					Prüfen
 				</v-btn>
-				<v-btn @click="randomCoprime" variant="tonal">
+				<v-btn variant="tonal" @click="randomCoprime">
 					Zufällig teilerfremd
 				</v-btn>
 			</div>
@@ -189,7 +189,7 @@
 				{{ error }}
 			</v-alert>
 
-			<v-sheet v-if="result" class="pa-3 rounded" border>
+			<v-sheet v-if="result" class="pa-3 rounded">
 				<div class="d-flex flex-column ga-2">
 					<div>
 						<strong>Check:</strong>
@@ -203,12 +203,12 @@
 					</div>
 
 					<div v-if="result.components.length === 1">
-						<v-alert type="success" variant="tonal" class="mt-2">
+						<v-alert class="mt-2" type="success" variant="tonal">
 							Der Graph ist zusammenhängend ⇒ eine Farbe reicht nicht nur „wahrscheinlich“, sie ist <strong>erzwingbar</strong>.
 						</v-alert>
 					</div>
 					<div v-else>
-						<v-alert type="warning" variant="tonal" class="mt-2">
+						<v-alert class="mt-2" type="warning" variant="tonal">
 							Mehrere Komponenten ⇒ mit diesen Regeln <em>kann</em> man verschiedene Farben auf unterschiedliche Komponenten legen.
 							(Das passiert typischerweise, wenn gcd(n,k) ≠ 1 ist.)
 						</v-alert>
@@ -231,15 +231,19 @@
 				Im Beweis zeigt man: Nachbarn in dieser Liste müssen dieselbe Farbe haben.
 			</div>
 
-			<v-sheet class="pa-3 rounded" border>
+			<v-sheet class="pa-3 rounded">
 				<div class="d-flex flex-wrap ga-2">
-					<v-chip v-for="(x, idx) in chain" :key="idx" size="small" variant="tonal">
+					<v-chip v-for="(x, idx) in chain"
+						:key="idx"
+						size="small"
+						variant="tonal"
+					>
 						{{ x }}
 					</v-chip>
 				</div>
 			</v-sheet>
 
-			<v-expansion-panels variant="accordion" class="mt-2">
+			<v-expansion-panels class="mt-2" variant="accordion">
 				<v-expansion-panel>
 					<v-expansion-panel-title>Warum haben Nachbarn in der Kette dieselbe Farbe? (Details)</v-expansion-panel-title>
 					<v-expansion-panel-text class="d-flex flex-column ga-3">
@@ -248,7 +252,7 @@
 							<Katex :tex="'s=(i+1)k\\bmod n'" />. Entweder ist <Katex :tex="'s=r+k'" /> oder <Katex :tex="'s=r+k-n'" />.
 						</div>
 
-						<v-sheet v-if="transitions.length" class="pa-3 rounded" border>
+						<v-sheet v-if="transitions.length" class="pa-3 rounded">
 							<div class="text-subtitle-2 mb-2">Übergänge (i → i+1)</div>
 							<div class="d-flex flex-column ga-2">
 								<div
@@ -283,160 +287,200 @@ import { computed, ref } from "vue";
 import titleImg from "@/images/O2.webp";
 
 /** --- Interaktivteil --- */
-const n = ref(10);
-const k = ref(3);
-const error = ref("");
-const result = ref(null);
+const n = ref( 10 );
+const k = ref( 3 );
+const error = ref( "" );
+const result = ref( null );
 
-const chain = computed(() => {
-  const nn = Number(n.value);
-  const kk = Number(k.value);
-  if (!Number.isInteger(nn) || !Number.isInteger(kk) || nn < 2 || kk < 1 || kk >= nn) return [];
-  const out = [];
-  for (let i = 1; i <= nn - 1; i++) out.push(mod(i * kk, nn));
-  return out;
-});
+const chain = computed( () => {
+	const nn = Number( n.value );
+	const kk = Number( k.value );
 
-const transitions = computed(() => {
-  const nn = Number(n.value);
-  const kk = Number(k.value);
-  if (!Number.isInteger(nn) || !Number.isInteger(kk) || nn < 2 || kk < 1 || kk >= nn) return [];
-  const out = [];
-  for (let i = 1; i <= nn - 2; i++) {
-    const r = mod(i * kk, nn);
-    const s = mod((i + 1) * kk, nn);
+	if ( !Number.isInteger( nn ) || !Number.isInteger( kk ) || nn < 2 || kk < 1 || kk >= nn ) {
+		return [];
+	}
 
-    // s ≡ r + k (mod n)
-    // Case A: s = r + k (no wrap) <=> r + k < n and equals s numerically
-    // Case B: wrap: s = r + k - n
-    const noWrap = r + kk < nn && s === r + kk;
+	const out = [];
 
-    if (noWrap) {
-      out.push({
-        i,
-        r,
-        s,
-        caseLabel: "Fall A",
-        explain: `s = r + k ⇒ r = s − k = |s − k|, also zwingt die Abstand-Regel gleiche Farbe.`,
-      });
-    } else {
-      out.push({
-        i,
-        r,
-        s,
-        caseLabel: "Fall B",
-        explain:
-          `Überlauf: s = r + k − n ⇒ r = n − (k − s). Spiegel-Regel: r ~ (k − s). Abstand-Regel: s ~ |s − k| = (k − s).`,
-      });
-    }
-  }
-  return out;
-});
+	for ( let i = 1; i <= nn - 1; i++ ) {
+		out.push( mod( i * kk, nn ) );
+	}
 
-function mod(a, m) {
-  const r = a % m;
-  return r < 0 ? r + m : r;
+	return out;
+} );
+
+const transitions = computed( () => {
+	const nn = Number( n.value );
+	const kk = Number( k.value );
+
+	if ( !Number.isInteger( nn ) || !Number.isInteger( kk ) || nn < 2 || kk < 1 || kk >= nn ) {
+		return [];
+	}
+
+	const out = [];
+
+	for ( let i = 1; i <= nn - 2; i++ ) {
+		const r = mod( i * kk, nn );
+		const s = mod( ( i + 1 ) * kk, nn );
+
+		// s ≡ r + k (mod n)
+		// Case A: s = r + k (no wrap) <=> r + k < n and equals s numerically
+		// Case B: wrap: s = r + k - n
+		const noWrap = r + kk < nn && s === r + kk;
+
+		if ( noWrap ) {
+			out.push( {
+				i,
+				r,
+				s,
+				caseLabel: "Fall A",
+				explain:   "s = r + k ⇒ r = s − k = |s − k|, also zwingt die Abstand-Regel gleiche Farbe."
+			} );
+		} else {
+			out.push( {
+				i,
+				r,
+				s,
+				caseLabel: "Fall B",
+				explain:
+          "Überlauf: s = r + k − n ⇒ r = n − (k − s). Spiegel-Regel: r ~ (k − s). Abstand-Regel: s ~ |s − k| = (k − s)."
+			} );
+		}
+	}
+
+	return out;
+} );
+
+function mod( a, m ) {
+	const r = a % m;
+	return r < 0 ? r + m : r;
 }
 
-function gcd(a, b) {
-  a = Math.abs(a);
-  b = Math.abs(b);
-  while (b !== 0) {
-    const t = a % b;
-    a = b;
-    b = t;
-  }
-  return a;
+function gcd( a, b ) {
+	a = Math.abs( a );
+	b = Math.abs( b );
+
+	while ( b !== 0 ) {
+		const t = a % b;
+		a = b;
+		b = t;
+	}
+
+	return a;
 }
 
-function buildGraph(nn, kk) {
-  // Knoten: 1..n-1
-  const adj = Array.from({ length: nn }, () => []); // index 0 unused
-  const addEdge = (u, v) => {
-    if (u === v) return;
-    adj[u].push(v);
-    adj[v].push(u);
-  };
+function buildGraph( nn, kk ) {
+	// Knoten: 1..n-1
+	const adj = Array.from( { length: nn }, () => [] ); // index 0 unused
 
-  // Regel 1: i ~ n - i
-  for (let i = 1; i <= nn - 1; i++) {
-    const j = nn - i;
-    if (j >= 1 && j <= nn - 1) addEdge(i, j);
-  }
+	const addEdge = ( u, v ) => {
+		if ( u === v ) {
+			return;
+		}
 
-  // Regel 2: i ~ |i - k| für i != k
-  for (let i = 1; i <= nn - 1; i++) {
-    if (i === kk) continue;
-    const j = Math.abs(i - kk);
-    if (j >= 1 && j <= nn - 1) addEdge(i, j);
-  }
+		adj[ u ].push( v );
+		adj[ v ].push( u );
+	};
 
-  return adj;
+	// Regel 1: i ~ n - i
+	for ( let i = 1; i <= nn - 1; i++ ) {
+		const j = nn - i;
+
+		if ( j >= 1 && j <= nn - 1 ) {
+			addEdge( i, j );
+		}
+	}
+
+	// Regel 2: i ~ |i - k| für i != k
+	for ( let i = 1; i <= nn - 1; i++ ) {
+		if ( i === kk ) {
+			continue;
+		}
+
+		const j = Math.abs( i - kk );
+
+		if ( j >= 1 && j <= nn - 1 ) {
+			addEdge( i, j );
+		}
+	}
+
+	return adj;
 }
 
-function connectedComponents(adj, nn) {
-  const seen = Array(nn).fill(false);
-  const comps = [];
+function connectedComponents( adj, nn ) {
+	const seen = Array( nn ).fill( false );
+	const comps = [];
 
-  for (let start = 1; start <= nn - 1; start++) {
-    if (seen[start]) continue;
-    const q = [start];
-    seen[start] = true;
-    const comp = [start];
+	for ( let start = 1; start <= nn - 1; start++ ) {
+		if ( seen[ start ] ) {
+			continue;
+		}
 
-    for (let qi = 0; qi < q.length; qi++) {
-      const u = q[qi];
-      for (const v of adj[u]) {
-        if (!seen[v]) {
-          seen[v] = true;
-          q.push(v);
-          comp.push(v);
-        }
-      }
-    }
-    comp.sort((a, b) => a - b);
-    comps.push(comp);
-  }
+		const q = [ start ];
+		seen[ start ] = true;
+		const comp = [ start ];
 
-  comps.sort((a, b) => b.length - a.length);
-  return comps;
+		for ( let qi = 0; qi < q.length; qi++ ) {
+			const u = q[ qi ];
+
+			for ( const v of adj[ u ] ) {
+				if ( !seen[ v ] ) {
+					seen[ v ] = true;
+					q.push( v );
+					comp.push( v );
+				}
+			}
+		}
+
+		comp.sort( ( a, b ) => a - b );
+		comps.push( comp );
+	}
+
+	comps.sort( ( a, b ) => b.length - a.length );
+	return comps;
 }
 
 function runCheck() {
-  error.value = "";
-  result.value = null;
+	error.value = "";
+	result.value = null;
 
-  const nn = Number(n.value);
-  const kk = Number(k.value);
+	const nn = Number( n.value );
+	const kk = Number( k.value );
 
-  if (!Number.isInteger(nn) || !Number.isInteger(kk)) {
-    error.value = "Bitte n und k als ganze Zahlen eingeben.";
-    return;
-  }
-  if (nn < 2) {
-    error.value = "n muss mindestens 2 sein.";
-    return;
-  }
-  if (kk < 1 || kk >= nn) {
-    error.value = "Es muss gelten: 1 ≤ k < n.";
-    return;
-  }
+	if ( !Number.isInteger( nn ) || !Number.isInteger( kk ) ) {
+		error.value = "Bitte n und k als ganze Zahlen eingeben.";
+		return;
+	}
 
-  const g = gcd(nn, kk);
-  const adj = buildGraph(nn, kk);
-  const components = connectedComponents(adj, nn);
+	if ( nn < 2 ) {
+		error.value = "n muss mindestens 2 sein.";
+		return;
+	}
 
-  result.value = { g, components };
+	if ( kk < 1 || kk >= nn ) {
+		error.value = "Es muss gelten: 1 ≤ k < n.";
+		return;
+	}
+
+	const g = gcd( nn, kk );
+	const adj = buildGraph( nn, kk );
+	const components = connectedComponents( adj, nn );
+
+	result.value = { g, components };
 }
 
 function randomCoprime() {
-  error.value = "";
-  const nn = Math.max(5, Math.min(200, Math.floor(5 + Math.random() * 46))); // 5..50
-  let kk = 1 + Math.floor(Math.random() * (nn - 1));
-  while (gcd(nn, kk) !== 1) kk = 1 + Math.floor(Math.random() * (nn - 1));
-  n.value = nn;
-  k.value = kk;
-  runCheck();
+	error.value = "";
+	const nn = Math.max( 5, Math.min( 200, Math.floor( 5 + Math.random() * 46 ) ) ); // 5..50
+	let kk = 1 + Math.floor( Math.random() * ( nn - 1 ) );
+
+	while ( gcd( nn, kk ) !== 1 ) {
+		kk = 1 + Math.floor( Math.random() * ( nn - 1 ) );
+	}
+
+	n.value = nn;
+	k.value = kk;
+	runCheck();
 }
 
 // Initialer Check

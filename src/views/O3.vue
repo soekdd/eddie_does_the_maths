@@ -151,14 +151,14 @@
 			<div class="d-flex flex-wrap ga-3 align-center">
 				<v-text-field
 					v-model="inputExponents"
-					label="Exponenten i1, i2, ..., in"
 					hide-details="auto"
+					label="Exponenten i1, i2, ..., in"
 					style="max-width: 420px"
 				/>
-				<v-btn @click="runCheck" color="primary" variant="flat">
+				<v-btn color="primary" variant="flat" @click="runCheck">
 					Prüfen
 				</v-btn>
-				<v-btn @click="randomExample" variant="tonal">
+				<v-btn variant="tonal" @click="randomExample">
 					Zufallsbeispiel
 				</v-btn>
 			</div>
@@ -180,7 +180,9 @@
 				<div class="d-flex flex-column ga-1">
 					<div>
 						<Katex :tex="`o(Q_{${result.i1}})=${result.oddFirst}`" />,
-						<Katex :tex="`o(Q_{${result.exponents[0]}}+\\cdots+Q_{${result.exponents[result.exponents.length - 1]}})=${result.oddSum}`" />.
+						<Katex :tex="`o(Q_{${result.exponents[0]}}+\\cdots+Q_{${
+							result.exponents[result.exponents.length - 1]}})=${result.oddSum}`"
+						/>.
 					</div>
 					<div>
 						Ergebnis: <b>{{ result.holds ? "Ungleichung erfüllt" : "Ungleichung verletzt" }}</b>.
@@ -188,7 +190,7 @@
 				</div>
 			</v-alert>
 
-			<v-sheet v-if="result" class="pa-3 rounded" border>
+			<v-sheet v-if="result" class="pa-3 rounded">
 				<div class="d-flex flex-column ga-2">
 					<div>
 						<strong>Exponenten:</strong>
@@ -211,7 +213,7 @@
 	<template #calculationPart>
 		<h2>Paritätstabellen & Beweisspur</h2>
 		<div class="eddie d-flex flex-column ga-3">
-			<v-sheet v-if="result" class="pa-3 rounded" border>
+			<v-sheet v-if="result" class="pa-3 rounded">
 				<div class="text-subtitle-1 font-weight-medium mb-2">Paritätsdaten pro Summand</div>
 				<v-table density="compact">
 					<thead>
@@ -233,14 +235,14 @@
 				</v-table>
 			</v-sheet>
 
-			<v-sheet v-if="result" class="pa-3 rounded" border>
+			<v-sheet v-if="result" class="pa-3 rounded">
 				<div class="text-subtitle-1 font-weight-medium mb-2">Ungerade Grade in der Gesamtsumme</div>
 				<div class="mono">
 					{{ result.oddDegreesSum.length ? formatDegrees(result.oddDegreesSum, 32) : "(keine)" }}
 				</div>
 			</v-sheet>
 
-			<v-sheet v-if="result" class="pa-3 rounded" border>
+			<v-sheet v-if="result" class="pa-3 rounded">
 				<div class="text-subtitle-1 font-weight-medium mb-2">Beweisspur für dieses Beispiel</div>
 				<div v-if="result.proof.caseName === 'trivial'" class="mono">
 					Trivialfall: <code>i_n = 0</code>, also nur <code>Q_0 = 1</code>.
@@ -283,59 +285,78 @@
 import { ref } from "vue";
 import titleImg from "@/images/O3.webp";
 
-const inputExponents = ref("1, 3, 4, 7");
-const error = ref("");
-const result = ref(null);
+const inputExponents = ref( "1, 3, 4, 7" );
+const error = ref( "" );
+const result = ref( null );
 
-function popcount(n) {
+function popcount( n ) {
 	let x = n;
 	let c = 0;
-	while (x > 0) {
+
+	while ( x > 0 ) {
 		c += x & 1;
 		x >>= 1;
 	}
+
 	return c;
 }
 
-function highestPowerOf2LE(n) {
-	if (n <= 0) return 1;
+function highestPowerOf2LE( n ) {
+	if ( n <= 0 ) {
+		return 1;
+	}
+
 	let m = 1;
-	while (m * 2 <= n) m *= 2;
+
+	while ( m * 2 <= n ) {
+		m *= 2;
+	}
+
 	return m;
 }
 
-function lucasOdd(i, r) {
-	return (r & i) === r;
+function lucasOdd( i, r ) {
+	return ( r & i ) === r;
 }
 
-function oddDegreesOfQ(i) {
+function oddDegreesOfQ( i ) {
 	const out = [];
-	for (let r = 0; r <= i; r++) {
-		if (lucasOdd(i, r)) out.push(r);
+
+	for ( let r = 0; r <= i; r++ ) {
+		if ( lucasOdd( i, r ) ) {
+			out.push( r );
+		}
 	}
+
 	return out;
 }
 
-function buildParityStats(exponents) {
-	const maxI = exponents.length ? exponents[exponents.length - 1] : 0;
-	const parity = Array(maxI + 1).fill(0);
+function buildParityStats( exponents ) {
+	const maxI = exponents.length ? exponents[ exponents.length - 1 ] : 0;
+	const parity = Array( maxI + 1 ).fill( 0 );
 	const rows = [];
 
-	for (const i of exponents) {
-		const oddDegrees = oddDegreesOfQ(i);
-		for (const r of oddDegrees) parity[r] ^= 1;
+	for ( const i of exponents ) {
+		const oddDegrees = oddDegreesOfQ( i );
 
-		rows.push({
+		for ( const r of oddDegrees ) {
+			parity[ r ] ^= 1;
+		}
+
+		rows.push( {
 			i,
-			binary: i.toString(2),
+			binary:   i.toString( 2 ),
 			oddDegrees,
-			oddCount: 2 ** popcount(i)
-		});
+			oddCount: 2 ** popcount( i )
+		} );
 	}
 
 	const oddDegreesSum = [];
-	for (let r = 0; r < parity.length; r++) {
-		if (parity[r] === 1) oddDegreesSum.push(r);
+
+	for ( let r = 0; r < parity.length; r++ ) {
+		if ( parity[ r ] === 1 ) {
+			oddDegreesSum.push( r );
+		}
 	}
 
 	return {
@@ -347,65 +368,89 @@ function buildParityStats(exponents) {
 	};
 }
 
-function xorOddCount(parityA, parityB) {
-	const len = Math.max(parityA.length, parityB.length);
+function xorOddCount( parityA, parityB ) {
+	const len = Math.max( parityA.length, parityB.length );
 	let count = 0;
-	for (let i = 0; i < len; i++) {
-		const a = i < parityA.length ? parityA[i] : 0;
-		const b = i < parityB.length ? parityB[i] : 0;
-		if ((a ^ b) === 1) count++;
+
+	for ( let i = 0; i < len; i++ ) {
+		const a = i < parityA.length ? parityA[ i ] : 0;
+		const b = i < parityB.length ? parityB[ i ] : 0;
+
+		if ( ( a ^ b ) === 1 ) {
+			count++;
+		}
 	}
+
 	return count;
 }
 
-function parseExponents(raw) {
-	const tokens = String(raw ?? "")
-		.split(/[\s,;]+/)
-		.map((x) => x.trim())
-		.filter(Boolean);
+function parseExponents( raw ) {
+	const tokens = String( raw ?? "" )
+		.split( /[\s,;]+/ )
+		.map( ( x ) => x.trim() )
+		.filter( Boolean );
 
-	if (!tokens.length) throw new Error("Bitte mindestens einen Exponenten eingeben.");
+	if ( !tokens.length ) {
+		throw new Error( "Bitte mindestens einen Exponenten eingeben." );
+	}
 
 	const values = [];
-	for (const t of tokens) {
-		if (!/^\d+$/.test(t)) throw new Error(`Ungültiger Exponent: ${t}`);
-		const v = Number(t);
-		if (!Number.isInteger(v)) throw new Error(`Ungültiger Exponent: ${t}`);
-		if (v < 0 || v > 256) throw new Error(`Exponent ${v} ist außerhalb des Bereichs 0..256.`);
-		values.push(v);
+
+	for ( const t of tokens ) {
+		if ( !/^\d+$/.test( t ) ) {
+			throw new Error( `Ungültiger Exponent: ${t}` );
+		}
+
+		const v = Number( t );
+
+		if ( !Number.isInteger( v ) ) {
+			throw new Error( `Ungültiger Exponent: ${t}` );
+		}
+
+		if ( v < 0 || v > 256 ) {
+			throw new Error( `Exponent ${v} ist außerhalb des Bereichs 0..256.` );
+		}
+
+		values.push( v );
 	}
 
 	const notes = [];
-	const sorted = [...values].sort((a, b) => a - b);
-	if (sorted.some((v, idx) => v !== values[idx])) {
-		notes.push("Eingabe wurde aufsteigend sortiert.");
+	const sorted = [ ...values ].sort( ( a, b ) => a - b );
+
+	if ( sorted.some( ( v, idx ) => v !== values[ idx ] ) ) {
+		notes.push( "Eingabe wurde aufsteigend sortiert." );
 	}
 
 	const unique = [];
-	for (const v of sorted) {
-		if (!unique.length || unique[unique.length - 1] !== v) unique.push(v);
+
+	for ( const v of sorted ) {
+		if ( !unique.length || unique[ unique.length - 1 ] !== v ) {
+			unique.push( v );
+		}
 	}
-	if (unique.length !== sorted.length) {
-		notes.push("Doppelte Exponenten wurden entfernt.");
+
+	if ( unique.length !== sorted.length ) {
+		notes.push( "Doppelte Exponenten wurden entfernt." );
 	}
 
 	return { exponents: unique, notes };
 }
 
-function buildProofTrace(exponents) {
-	const maxI = exponents[exponents.length - 1];
-	if (maxI === 0) {
+function buildProofTrace( exponents ) {
+	const maxI = exponents[ exponents.length - 1 ];
+
+	if ( maxI === 0 ) {
 		return { caseName: "trivial", m: 1 };
 	}
 
-	const m = highestPowerOf2LE(maxI);
-	const i1 = exponents[0];
+	const m = highestPowerOf2LE( maxI );
+	const i1 = exponents[ 0 ];
 
-	if (i1 >= m) {
-		const reduced = exponents.map((x) => x - m);
-		const reducedStats = buildParityStats(reduced);
+	if ( i1 >= m ) {
+		const reduced = exponents.map( ( x ) => x - m );
+		const reducedStats = buildParityStats( reduced );
 		return {
-			caseName: "A",
+			caseName:   "A",
 			m,
 			reduced,
 			oddReduced: reducedStats.oddSum
@@ -413,15 +458,18 @@ function buildProofTrace(exponents) {
 	}
 
 	let r = -1;
-	for (let idx = 0; idx < exponents.length; idx++) {
-		if (exponents[idx] < m) r = idx;
+
+	for ( let idx = 0; idx < exponents.length; idx++ ) {
+		if ( exponents[ idx ] < m ) {
+			r = idx;
+		}
 	}
 
-	const A = exponents.slice(0, r + 1);
-	const B = exponents.slice(r + 1).map((x) => x - m);
+	const A = exponents.slice( 0, r + 1 );
+	const B = exponents.slice( r + 1 ).map( ( x ) => x - m );
 
-	const statsA = buildParityStats(A);
-	const statsB = buildParityStats(B);
+	const statsA = buildParityStats( A );
+	const statsB = buildParityStats( B );
 
 	return {
 		caseName: "B",
@@ -429,16 +477,22 @@ function buildProofTrace(exponents) {
 		r,
 		A,
 		B,
-		oA: statsA.oddSum,
-		oB: statsB.oddSum,
-		oAplusB: xorOddCount(statsA.parity, statsB.parity)
+		oA:       statsA.oddSum,
+		oB:       statsB.oddSum,
+		oAplusB:  xorOddCount( statsA.parity, statsB.parity )
 	};
 }
 
-function formatDegrees(arr, limit = 20) {
-	if (!arr || !arr.length) return "(keine)";
-	if (arr.length <= limit) return arr.join(", ");
-	const head = arr.slice(0, limit).join(", ");
+function formatDegrees( arr, limit = 20 ) {
+	if ( !arr || !arr.length ) {
+		return "(keine)";
+	}
+
+	if ( arr.length <= limit ) {
+		return arr.join( ", " );
+	}
+
+	const head = arr.slice( 0, limit ).join( ", " );
 	return `${head}, ... (insgesamt ${arr.length})`;
 }
 
@@ -447,35 +501,37 @@ function runCheck() {
 	result.value = null;
 
 	try {
-		const { exponents, notes } = parseExponents(inputExponents.value);
-		const stats = buildParityStats(exponents);
-		const proof = buildProofTrace(exponents);
+		const { exponents, notes } = parseExponents( inputExponents.value );
+		const stats = buildParityStats( exponents );
+		const proof = buildProofTrace( exponents );
 
 		result.value = {
 			notes,
 			exponents,
-			i1: exponents[0],
-			maxI: stats.maxI,
-			rows: stats.rows,
+			i1:            exponents[ 0 ],
+			maxI:          stats.maxI,
+			rows:          stats.rows,
 			oddDegreesSum: stats.oddDegreesSum,
-			oddFirst: stats.rows[0].oddCount,
-			oddSum: stats.oddSum,
-			holds: stats.oddSum >= stats.rows[0].oddCount,
+			oddFirst:      stats.rows[ 0 ].oddCount,
+			oddSum:        stats.oddSum,
+			holds:         stats.oddSum >= stats.rows[ 0 ].oddCount,
 			proof
 		};
-	} catch (e) {
-		error.value = e?.message ? String(e.message) : String(e);
+	} catch ( e ) {
+		error.value = e?.message ? String( e.message ) : String( e );
 	}
 }
 
 function randomExample() {
-	const size = 2 + Math.floor(Math.random() * 4); // 2..5
+	const size = 2 + Math.floor( Math.random() * 4 ); // 2..5
 	const set = new Set();
-	while (set.size < size) {
-		set.add(Math.floor(Math.random() * 21)); // 0..20
+
+	while ( set.size < size ) {
+		set.add( Math.floor( Math.random() * 21 ) ); // 0..20
 	}
-	const exponents = Array.from(set).sort((a, b) => a - b);
-	inputExponents.value = exponents.join(", ");
+
+	const exponents = Array.from( set ).sort( ( a, b ) => a - b );
+	inputExponents.value = exponents.join( ", " );
 	runCheck();
 }
 

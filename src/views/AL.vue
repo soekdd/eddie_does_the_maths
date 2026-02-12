@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/max-len -->
 <template>
 <AppFrame warning>
 	<template #title>
@@ -131,28 +132,28 @@
 			<p>
 				Im Store steht danach: <Katex inline tex="V[2]=B_2=\frac16" />.
 			</p>
-			</div>
+		</div>
 
-			<h2>Historischer Druckfehler: der erste Bug?</h2>
-			<div class="eddie">
-				<p>
-					In Adas gedruckter <i>Note G</i> gibt es eine bekannte vertauschte Division.
-					Sie wird oft als einer der frühesten dokumentierten Programmierfehler erzählt:
-					ein Quotient steht auf dem Kopf.
-				</p>
-				<div class="kbox">
-					<Katex
-						as="div"
-						display
-						tex="\text{gedruckt (Bug): }\frac{2n+1}{2n-1}\qquad\text{korrekt: }\frac{2n-1}{2n+1}"
-					/>
-				</div>
+		<h2>Historischer Druckfehler: der erste Bug?</h2>
+		<div class="eddie">
+			<p>
+				In Adas gedruckter <i>Note G</i> gibt es eine bekannte vertauschte Division.
+				Sie wird oft als einer der frühesten dokumentierten Programmierfehler erzählt:
+				ein Quotient steht auf dem Kopf.
+			</p>
+			<div class="kbox">
+				<Katex
+					as="div"
+					display
+					tex="\text{gedruckt (Bug): }\frac{2n+1}{2n-1}\qquad\text{korrekt: }\frac{2n-1}{2n+1}"
+				/>
 			</div>
+		</div>
 
-			<h2>Warum das mehr ist als Zahlenspielerei</h2>
-			<div class="eddie">
-				<p>
-					Bernoulli-Zahlen stecken in Summenformeln wie
+		<h2>Warum das mehr ist als Zahlenspielerei</h2>
+		<div class="eddie">
+			<p>
+				Bernoulli-Zahlen stecken in Summenformeln wie
 				<Katex inline tex="1+2+\dots+n" /> oder
 				<Katex inline tex="1^2+2^2+\dots+n^2" />.
 			</p>
@@ -249,12 +250,12 @@
 		<v-card class="pa-2">
 			<v-select
 				v-model="selectedProgram"
-				:items="programOptions"
-				item-title="title"
-				item-value="value"
-				label="Programm auswählen"
 				density="compact"
 				hide-details
+				item-title="title"
+				item-value="value"
+				:items="programOptions"
+				label="Programm auswählen"
 			/>
 		</v-card>
 		<AL_Bernoulli v-if="selectedProgram === 'bernoulli'" />
@@ -275,7 +276,7 @@ import AL_Horner from "./AL_Horner.vue";
 import AL_Sqrt from "./AL_Sqrt.vue";
 import AL_PrimeTest from "./AL_PrimeTest.vue";
 
-const selectedProgram = ref("bernoulli");
+const selectedProgram = ref( "bernoulli" );
 const programOptions = [
 	{ title: "Bernoulli-Zahlen (Note G)", value: "bernoulli" },
 	{ title: "Brüche kürzen (ggT)", value: "reduceFractions" },
