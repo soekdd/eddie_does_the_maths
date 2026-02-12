@@ -3,7 +3,7 @@
 	<template #title>
 		<div class="badge">O2</div>
 		<div>
-			<h1>Eddie rechnet: IMO 1985 Aufgabe 2</h1>
+			<h1>Eddie rechnet: IMO 1985 Aufgabe A2</h1>
 			<p class="sub">Entscheidungsbaum • Wahrscheinlichkeiten • Rechner</p>
 		</div>
 	</template>
@@ -17,7 +17,7 @@
 
 		<h2>Teil 1 — Aufgabenstellung</h2>
 		<div class="eddie">
-			<p class="muted"><i>IMO 1985 – Aufgabe 2: „Am Ende hat alles eine Farbe“</i></p>
+			<p class="muted"><i>IMO 1985 – Aufgabe A2: „Am Ende hat alles eine Farbe“</i></p>
 
 			<v-alert type="info" variant="tonal">
 				<strong>Eddie:</strong> Das ist so eine Aufgabe, die erst „bunt“ aussieht – und dann merkst du:

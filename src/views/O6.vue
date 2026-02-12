@@ -3,7 +3,7 @@
 	<template #title>
 		<div class="badge">O6</div>
 		<div>
-			<h1>Eddie rechnet: IMO 1985 Aufgabe 6</h1>
+			<h1>Eddie rechnet: IMO 1985 Aufgabe B3</h1>
 			<p class="sub">Rekursion • Monotonie • Existenz & Eindeutigkeit</p>
 		</div>
 	</template>

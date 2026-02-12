@@ -3,7 +3,7 @@
 	<template #title>
 		<div class="badge">O3</div>
 		<div>
-			<h1>Eddie rechnet: IMO 1985 Aufgabe 3</h1>
+			<h1>Eddie rechnet: IMO 1985 Aufgabe A3</h1>
 			<p class="sub">Binomialkoeffizienten • Parität • Induktion</p>
 		</div>
 	</template>

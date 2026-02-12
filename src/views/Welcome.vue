@@ -45,8 +45,5 @@ import welcomeImg from "@/images/welcome.webp";
 		<h2>Index</h2>
 		<ContentIndex />
 	</template>
-	<template #footer>
-		<p class="muted">Platzhalter</p>
-	</template>
 </AppFrame>
 </template>

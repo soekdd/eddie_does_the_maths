@@ -3,7 +3,7 @@
 	<template #title>
 		<div class="badge">O5</div>
 		<div>
-			<h1>Eddie rechnet: IMO 1985 Aufgabe 5</h1>
+			<h1>Eddie rechnet: IMO 1985 Aufgabe B2</h1>
 			<p class="sub">Geometrie • Potenzpunkte • Radikalachsen</p>
 		</div>
 	</template>

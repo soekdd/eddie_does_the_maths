@@ -3,7 +3,7 @@
 	<template #title>
 		<div class="badge">O4</div>
 		<div>
-			<h1>Eddie rechnet: IMO 1985 Aufgabe 4</h1>
+			<h1>Eddie rechnet: IMO 1985 Aufgabe B1</h1>
 			<p class="sub">Schubfachprinzip • Paritätsvektoren • vierte Potenz</p>
 		</div>
 	</template>

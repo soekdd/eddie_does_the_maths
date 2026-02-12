@@ -53,7 +53,7 @@ export const router = createRouter( {
 			name:      "O1",
 			component: O1,
 			meta:      {
-				title: "IMO 1985 Aufgabe 1", index: true, order: 30
+				title: "IMO 1985 Aufgabe A1", index: true, order: 30
 			}
 		},
 		{
@@ -61,7 +61,7 @@ export const router = createRouter( {
 			name:      "O2",
 			component: O2,
 			meta:      {
-				title: "IMO 1985 Aufgabe 2", index: true, order: 40
+				title: "IMO 1985 Aufgabe A2", index: true, order: 40
 			}
 		},
 		{
@@ -69,7 +69,7 @@ export const router = createRouter( {
 			name:      "O3",
 			component: O3,
 			meta:      {
-				title: "IMO 1985 Aufgabe 3", index: true, order: 50
+				title: "IMO 1985 Aufgabe A3", index: true, order: 50
 			}
 		},
 		{
@@ -77,7 +77,7 @@ export const router = createRouter( {
 			name:      "O4",
 			component: O4,
 			meta:      {
-				title: "IMO 1985 Aufgabe 4", index: true, order: 60
+				title: "IMO 1985 Aufgabe B1", index: true, order: 60
 			}
 		},
 		{
@@ -85,7 +85,7 @@ export const router = createRouter( {
 			name:      "O5",
 			component: O5,
 			meta:      {
-				title: "IMO 1985 Aufgabe 5", index: true, order: 70
+				title: "IMO 1985 Aufgabe B2", index: true, order: 70
 			}
 		},
 		{
@@ -93,7 +93,7 @@ export const router = createRouter( {
 			name:      "O6",
 			component: O6,
 			meta:      {
-				title: "IMO 1985 Aufgabe 6", index: true, order: 80
+				title: "IMO 1985 Aufgabe B3", index: true, order: 80
 			}
 		},
 		{

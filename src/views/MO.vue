@@ -25,7 +25,7 @@
 		<section class="problem">
 			<div class="problem-head">
 				<h3>A1</h3>
-				<RouterLink class="task-link" to="/O1">Zur Aufgabe O1</RouterLink>
+				<RouterLink class="task-link" to="/O1">Zur Aufgabe A1</RouterLink>
 			</div>
 			<p>
 				Ein Kreis hat seinen Mittelpunkt auf der Seite <Katex inline tex="AB" /> des Sehnenvierecks
@@ -38,7 +38,7 @@
 		<section class="problem">
 			<div class="problem-head">
 				<h3>A2</h3>
-				<RouterLink class="task-link" to="/O2">Zur Aufgabe O2</RouterLink>
+				<RouterLink class="task-link" to="/O2">Zur Aufgabe A2</RouterLink>
 			</div>
 			<p>
 				Seien <Katex inline tex="n" /> und <Katex inline tex="k" /> teilerfremde positive ganze Zahlen mit
@@ -64,7 +64,7 @@
 		<section class="problem">
 			<div class="problem-head">
 				<h3>A3</h3>
-				<RouterLink class="task-link" to="/O3">Zur Aufgabe O3</RouterLink>
+				<RouterLink class="task-link" to="/O3">Zur Aufgabe A3</RouterLink>
 			</div>
 			<p>
 				Für ein Polynom
@@ -85,7 +85,7 @@
 		<section class="problem">
 			<div class="problem-head">
 				<h3>B1</h3>
-				<RouterLink class="task-link" to="/O4">Zur Aufgabe O4</RouterLink>
+				<RouterLink class="task-link" to="/O4">Zur Aufgabe B1</RouterLink>
 			</div>
 			<p>
 				Gegeben ist eine Menge <Katex inline tex="M" /> aus <Katex inline tex="1985" /> paarweise
@@ -101,7 +101,7 @@
 		<section class="problem">
 			<div class="problem-head">
 				<h3>B2</h3>
-				<RouterLink class="task-link" to="/O5">Zur Aufgabe O5</RouterLink>
+				<RouterLink class="task-link" to="/O5">Zur Aufgabe B2</RouterLink>
 			</div>
 			<p>
 				Ein Kreis mit Mittelpunkt <Katex inline tex="O" /> geht durch die Eckpunkte
@@ -120,7 +120,7 @@
 		<section class="problem">
 			<div class="problem-head">
 				<h3>B3</h3>
-				<RouterLink class="task-link" to="/O6">Zur Aufgabe O6</RouterLink>
+				<RouterLink class="task-link" to="/O6">Zur Aufgabe B3</RouterLink>
 			</div>
 			<p>
 				Für jede reelle Zahl <Katex inline tex="x_1" /> wird eine Folge
@@ -184,9 +184,9 @@ import titleImg from "@/images/MO.webp";
 }
 
 .task-link {
-  background: rgba(0, 0, 0, 0.86);
+  background: rgb(var(--v-theme-primary));
   border-radius: 999px;
-  color: #fff;
+  color: rgb(var(--v-theme-on-primary));
   font-size: 0.88rem;
   padding: 6px 12px;
   text-decoration: none;
@@ -194,7 +194,7 @@ import titleImg from "@/images/MO.webp";
 }
 
 .task-link:hover {
-  background: rgba(0, 0, 0, 0.74);
+  background: rgba(var(--v-theme-primary), 0.86);
 }
 
 .problem ul {
