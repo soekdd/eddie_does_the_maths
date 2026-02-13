@@ -13,6 +13,8 @@ import PG from "@/views/PG.vue";
 import AL from "@/views/AL.vue";
 import BA from "@/views/BA.vue";
 import SE from "@/views/SE.vue";
+import RD from "@/views/RD.vue";
+import FX from "@/views/FX.vue";
 import CatchAll from "@/views/CatchAll.vue";
 import Welcome from "@/views/Welcome.vue";
 
@@ -147,9 +149,9 @@ export const router = createRouter( {
 		{
 			path:      "/RD",
 			name:      "RD",
-			component: CatchAll,
+			component: RD,
 			meta:      {
-				title: "Rentier-Depot", index: true, order: 140, wip: true
+				title: "Rentier-Depot", index: true, order: 140
 			}
 		},
 		{
@@ -201,11 +203,19 @@ export const router = createRouter( {
 			}
 		},
 		{
+			path:      "/FX",
+			name:      "FX",
+			component: FX,
+			meta:      {
+				title: "Fx7000G", index: true, order: 210
+			}
+		},		
+		{
 			path:      "/VA",
 			name:      "VA",
 			component: CatchAll,
 			meta:      {
-				title: "Warum die Vasa sinken musste", index: true, order: 200, wip: true
+				title: "Warum die Vasa sinken musste", index: true, order: 220, wip: true
 			}
 		},
 		{
@@ -213,7 +223,7 @@ export const router = createRouter( {
 			name:      "BZ",
 			component: CatchAll,
 			meta:      {
-				title: "Baustatik #2", index: true, order: 200, wip: true
+				title: "Baustatik #2", index: true, order: 230, wip: true
 			}
 		},
 		{
@@ -221,7 +231,7 @@ export const router = createRouter( {
 			name:      "GD",
 			component: CatchAll,
 			meta:      {
-				title: "Diophantos Grabplatte", index: true, order: 200, wip: true
+				title: "Diophantos Grabplatte", index: true, order: 240, wip: true
 			}
 		},
 		{
@@ -229,7 +239,7 @@ export const router = createRouter( {
 			name:      "QH",
 			component: CatchAll,
 			meta:      {
-				title: "Der Quanten-Hall-Effekt", index: true, order: 200, wip: true
+				title: "Der Quanten-Hall-Effekt", index: true, order: 250, wip: true
 			}
 		},
 		{
@@ -237,7 +247,7 @@ export const router = createRouter( {
 			name:      "LT",
 			component: CatchAll,
 			meta:      {
-				title: "Laplace-Transformation", index: true, order: 200, wip: true
+				title: "Laplace-Transformation", index: true, order: 260, wip: true
 			}
 		},
 		{

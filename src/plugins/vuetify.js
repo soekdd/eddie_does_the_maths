@@ -1,10 +1,18 @@
 import "vuetify/styles";
 import { createVuetify } from "vuetify";
+import { aliases, mdi } from "vuetify/iconsets/mdi-svg";
 
 const systemPrefersDark =
   typeof window !== "undefined" && window.matchMedia?.( "(prefers-color-scheme: dark)" )?.matches;
 
 export const vuetify = createVuetify( {
+	icons: {
+		defaultSet: "mdi",
+		aliases,
+		sets: {
+			mdi
+		}
+	},
 	theme: {
 		defaultTheme: systemPrefersDark ? "eddieDark" : "eddieLight",
 		themes:       {
