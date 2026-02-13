@@ -179,6 +179,7 @@ import {
 } from "vue";
 import katex from "katex";
 import "katex/dist/katex.min.css";
+import { ensureCbiLoaded } from "@/utils/cbi/cbi.mjs";
 
 type FinishCb = ( errorCode: number, message: string, programs?: any, where?: string, lineNum?: number ) => void;
 
@@ -498,13 +499,13 @@ Next`
 	},
 	{
 		id:     "fractionReduce",
-		name:   "Bruch kuerzen",
+		name:   "Bruch kürzen",
 		source: [
 			"Cls",
-			"Locate 1,1,\"BRUCH KUERZEN\"",
-			"Locate 1,2,\"ZAEHLER?\"",
+			"Locate 1,3,\"BRUCH KUERZEN\"",
+			"Locate 1,4,\"ZAEHLER?\"",
 			"?->N",
-			"Locate 1,3,\"NENNER?\"",
+			"Locate 1,5,\"NENNER?\"",
 			"?->D",
 			"If D=0",
 			"Then",
@@ -523,12 +524,12 @@ Next`
 			"B->A",
 			"T->B",
 			"WhileEnd",
-			"N/A->NQ",
-			"D/A->DQ",
+			"N/A->P",
+			"D/A->Q",
 			"Locate 1,6,\"R=\"",
-			"Locate 3,6,NQ",
+			"Locate 3,6,P",
 			"Locate 6,6,\"/\"",
-			"Locate 8,6,DQ",
+			"Locate 8,6,Q",
 			"Stop"
 		].join( "\n" )
 	},
@@ -562,7 +563,7 @@ Next`
 	},
 	{
 		id:     "pi",
-		name:   "PI Naeherung bis Reset",
+		name:   "PI Näherung bis Reset",
 		source: [
 			"Cls",
 			"Locate 1,1,\"PI LEIBNIZ\"",
@@ -623,51 +624,23 @@ function escapeHtml( s: string ) {
 	}[ c ] as string ) );
 }
 
-async function loadScriptOnce( src: string ) {
-	// If already present, wait for it to finish loading once.
-	const existing = document.querySelector<HTMLScriptElement>( `script[data-cbi-src="${src}"]` );
-
-	if ( existing ) {
-		if ( typeof window.jsccRun === "function" ) {
-			existing.dataset.cbiLoaded = "1";
-			return;
-		}
-
-		if ( existing.dataset.cbiLoaded === "1" ) {
-			return;
-		}
-
-		await new Promise<void>( ( resolve, reject ) => {
-			existing.addEventListener(
-				"load", () => resolve(), { once: true }
-			);
-			existing.addEventListener(
-				"error", () => reject( new Error( `Failed to load ${src}` ) ), { once: true }
-			);
-		} );
-		return;
-	}
-
-	await new Promise<void>( ( resolve, reject ) => {
-		const s = document.createElement( "script" );
-		s.src = src;
-		s.async = true;
-		s.dataset.cbiSrc = src;
-
-		s.onload = () => {
-			s.dataset.cbiLoaded = "1";
-			resolve();
-		};
-
-		s.onerror = () => reject( new Error( `Failed to load ${src}` ) );
-		document.head.appendChild( s );
-	} );
-}
-
 async function initCbi() {
 	status.value = "loading";
-	// expects you copied built bundle to /public/vendor/casio/cbi.js
-	await loadScriptOnce( "/casio/js/cbi.js" );
+
+	try {
+		const loaded = await ensureCbiLoaded();
+
+		if ( !loaded ) {
+			cbiReady.value = false;
+			status.value = "missing jsccRun";
+			return;
+		}
+	} catch ( error ) {
+		console.error( "Failed to load cbi wrapper", error );
+		cbiReady.value = false;
+		status.value = "failed to load cbi";
+		return;
+	}
 
 	await nextTick();
 
@@ -2141,6 +2114,7 @@ onBeforeUnmount( () => {
 }
 .key-btn {
   border-radius: 12px;
+  overflow: hidden;
   width: 100%;
   min-width: 0;
   max-width: 100%;
