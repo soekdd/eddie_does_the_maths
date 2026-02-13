@@ -1989,6 +1989,7 @@ onBeforeUnmount( () => {
   box-shadow: inset 0 2px 8px rgba(0,0,0,.25);
 }
 .lcd-glass {
+  box-shadow: rgba(0, 0, 0, 0.55) 0px 0px 30px 10px inset!important;
   border-radius: 10px;
   background: #bfc7b9;
   padding: 10px;
@@ -2029,6 +2030,7 @@ onBeforeUnmount( () => {
 }
 
 .lcd-overlay {
+  box-shadow: rgba(0, 0, 0, 0.75) 0px 0px 30px 10px inset;
   position: absolute;
   inset: 0;
   z-index: 3;
