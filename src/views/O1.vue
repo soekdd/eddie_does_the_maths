@@ -177,7 +177,7 @@
 			</p>
 		</div>
 		<div class="toolbar">
-			<button class="btn mt-3" @click="regenerateGraph">Neu zufällig</button>
+			<v-btn class="btn mt-3" @click="regenerateGraph">Neu zufällig</v-btn>
 			<div v-if="graphState?.ready" class="kbox px-5 mx-5">
 				<div class="mono"><b>AB</b> = {{ fmt(graphState.lenAB) }}</div>
 				<div class="mono"><b>AD</b> = {{ fmt(graphState.lenAD) }}</div>
@@ -228,18 +228,6 @@ function fmt( n, digits = 3 ) {
   flex-wrap: wrap;
   gap: 16px;
   margin-bottom: 10px;
-}
-
-.btn {
-  background: #fff;
-  border: 1px solid #bbb;
-  border-radius: 10px;
-  cursor: pointer;
-  padding: 10px 14px;
-}
-
-.btn:hover {
-  background: #f6f6f6;
 }
 
 .numbers {

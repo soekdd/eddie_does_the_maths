@@ -74,13 +74,13 @@
 	<template #interactivePart>
 		<h2>Interaktiver Rechner</h2>
 		<div class="eddie d-flex flex-column ga-3">
-			<v-sheet class="pa-4" rounded="lg" border>
+			<v-sheet border class="pa-4" rounded="lg">
 				<v-select
 					v-model="mode"
-					:items="modeItems"
 					hide-details="auto"
 					item-title="title"
 					item-value="value"
+					:items="modeItems"
 					label="Modus"
 				/>
 			</v-sheet>
@@ -90,25 +90,61 @@
 					Vorstufe: ein Depot. Didaktisch klar, aber noch ohne Reihenstruktur.
 				</v-alert>
 
-				<v-sheet class="pa-4" rounded="lg" border>
+				<v-sheet border class="pa-4" rounded="lg">
 					<v-row dense>
-						<v-col cols="12" sm="6" md="6">
-							<v-number-input controlVariant="stacked" v-model="CInput" label="C (Traglast)" hide-details="auto" :step="1" :precision="0" />
+						<v-col cols="12" md="6" sm="6">
+							<v-number-input v-model="CInput"
+								control-variant="stacked"
+								hide-details="auto"
+								label="C (Traglast)"
+								:precision="0"
+								:step="1"
+							/>
 						</v-col>
-						<v-col cols="12" sm="6" md="6">
-							<v-number-input controlVariant="stacked" v-model="cInput" label="c (Verbrauch/Tag)" hide-details="auto" :step="1" :precision="0" />
+						<v-col cols="12" md="6" sm="6">
+							<v-number-input v-model="cInput"
+								control-variant="stacked"
+								hide-details="auto"
+								label="c (Verbrauch/Tag)"
+								:precision="0"
+								:step="1"
+							/>
 						</v-col>
-						<v-col cols="12" sm="6" md="6">
-							<v-number-input controlVariant="stacked" v-model="vInput" label="v (km/Tag)" hide-details="auto" :step="1" :precision="0" />
+						<v-col cols="12" md="6" sm="6">
+							<v-number-input v-model="vInput"
+								control-variant="stacked"
+								hide-details="auto"
+								label="v (km/Tag)"
+								:precision="0"
+								:step="1"
+							/>
 						</v-col>
-						<v-col cols="12" sm="6" md="6">
-							<v-number-input controlVariant="stacked" v-model="xInput" label="x (Depot-km)" hide-details="auto" :step="1" :precision="0" />
+						<v-col cols="12" md="6" sm="6">
+							<v-number-input v-model="xInput"
+								control-variant="stacked"
+								hide-details="auto"
+								label="x (Depot-km)"
+								:precision="0"
+								:step="1"
+							/>
 						</v-col>
-						<v-col cols="12" sm="6" md="6">
-							<v-number-input controlVariant="stacked" v-model="dInput" label="d (Ablage/Shuttle)" hide-details="auto" :step="1" :precision="0" />
+						<v-col cols="12" md="6" sm="6">
+							<v-number-input v-model="dInput"
+								control-variant="stacked"
+								hide-details="auto"
+								label="d (Ablage/Shuttle)"
+								:precision="0"
+								:step="1"
+							/>
 						</v-col>
-						<v-col cols="12" sm="6" md="6">
-							<v-number-input controlVariant="stacked" v-model="kInput" label="k (Shuttles)" hide-details="auto" :step="1" :precision="0" />
+						<v-col cols="12" md="6" sm="6">
+							<v-number-input v-model="kInput"
+								control-variant="stacked"
+								hide-details="auto"
+								label="k (Shuttles)"
+								:precision="0"
+								:step="1"
+							/>
 						</v-col>
 					</v-row>
 
@@ -139,15 +175,15 @@
 						<div class="mono">Gewinn: Delta = {{ fmt(lightCalc.gain, 3) }} km</div>
 					</div>
 
-					<v-sheet class="pa-3" rounded="lg" border>
+					<v-sheet border class="pa-3" rounded="lg">
 						<RD_Graph
-							mode="light"
 							:cap="CInput"
 							:cons="cInput"
+							:d0="lightCalc.D0"
 							:depot-x="xInput"
 							:dmax="lightCalc.Dmax"
-							:d0="lightCalc.D0"
 							:drop="dInput"
+							mode="light"
 							:ok="lightCalc.ok"
 							:shuttles="kInput"
 							:speed="vInput"
@@ -162,19 +198,43 @@
 					Klassisches Mehrdepot-Modell: Hier entsteht die harmonische Reihe.
 				</v-alert>
 
-				<v-sheet class="pa-4" rounded="lg" border>
+				<v-sheet border class="pa-4" rounded="lg">
 					<v-row dense>
-						<v-col cols="12" sm="6" md="6">
-							<v-number-input controlVariant="stacked" v-model="classicCInput" label="C (Traglast)" hide-details="auto" :step="1" :precision="0" />
+						<v-col cols="12" md="6" sm="6">
+							<v-number-input v-model="classicCInput"
+								control-variant="stacked"
+								hide-details="auto"
+								label="C (Traglast)"
+								:precision="0"
+								:step="1"
+							/>
 						</v-col>
-						<v-col cols="12" sm="6" md="6">
-							<v-number-input controlVariant="stacked" v-model="classiccInput" label="c (Verbrauch/Tag)" hide-details="auto" :step="1" :precision="0" />
+						<v-col cols="12" md="6" sm="6">
+							<v-number-input v-model="classiccInput"
+								control-variant="stacked"
+								hide-details="auto"
+								label="c (Verbrauch/Tag)"
+								:precision="0"
+								:step="1"
+							/>
 						</v-col>
-						<v-col cols="12" sm="6" md="6">
-							<v-number-input controlVariant="stacked" v-model="classicVInput" label="v (km/Tag)" hide-details="auto" :step="1" :precision="0" />
+						<v-col cols="12" md="6" sm="6">
+							<v-number-input v-model="classicVInput"
+								control-variant="stacked"
+								hide-details="auto"
+								label="v (km/Tag)"
+								:precision="0"
+								:step="1"
+							/>
 						</v-col>
-						<v-col cols="12" sm="6" md="6">
-							<v-number-input controlVariant="stacked" v-model="mInput" label="m (Depotstufen)" hide-details="auto" :step="1" :precision="0" />
+						<v-col cols="12" md="6" sm="6">
+							<v-number-input v-model="mInput"
+								control-variant="stacked"
+								hide-details="auto"
+								label="m (Depotstufen)"
+								:precision="0"
+								:step="1"
+							/>
 						</v-col>
 					</v-row>
 
@@ -197,7 +257,7 @@
 						</div>
 					</div>
 
-					<v-sheet class="pa-3" rounded="lg" border>
+					<v-sheet border class="pa-3" rounded="lg">
 						<h3>Stufen als SVG</h3>
 						<RD_Graph mode="classic" :rows="classicCalc.rows" />
 					</v-sheet>
@@ -210,7 +270,7 @@
 		<h2>Tabellenansicht</h2>
 		<div class="eddie d-flex flex-column ga-3">
 			<template v-if="mode === 'light'">
-				<v-sheet class="pa-3" rounded="lg" border>
+				<v-sheet border class="pa-3" rounded="lg">
 					<v-table density="compact">
 						<thead>
 							<tr>
@@ -233,7 +293,7 @@
 			</template>
 
 			<template v-else>
-				<v-sheet class="pa-3" rounded="lg" border>
+				<v-sheet border class="pa-3" rounded="lg">
 					<v-table density="compact">
 						<thead>
 							<tr>
@@ -274,56 +334,71 @@ import { computed, ref } from "vue";
 import titleImg from "@/images/RD.webp";
 import RD_Graph from "@/views/RD_Graph.vue";
 
-const mode = ref("classic");
+const mode = ref( "classic" );
 const modeItems = [
 	{ title: "Klassisch (Mehrdepot, Reihe)", value: "classic" },
 	{ title: "Vorstufe (ein Depot)", value: "light" }
 ];
 
-const CInput = ref(3);
-const cInput = ref(1);
-const vInput = ref(20);
-const xInput = ref(20);
-const dInput = ref(1);
-const kInput = ref(3);
+const CInput = ref( 3 );
+const cInput = ref( 1 );
+const vInput = ref( 20 );
+const xInput = ref( 20 );
+const dInput = ref( 1 );
+const kInput = ref( 3 );
 
-const classicCInput = ref(3);
-const classiccInput = ref(1);
-const classicVInput = ref(20);
-const mInput = ref(6);
+const classicCInput = ref( 3 );
+const classiccInput = ref( 1 );
+const classicVInput = ref( 20 );
+const mInput = ref( 6 );
 
-function parseMaybeFloat(v) {
-	if (typeof v === "number") return Number.isFinite(v) ? v : null;
-	const s = String(v).trim().replace(",", ".");
-	if (!s) return null;
-	if (!/^[-+]?(\d+(\.\d+)?|\.\d+)$/.test(s)) return null;
-	const n = Number(s);
-	return Number.isFinite(n) ? n : null;
+function parseMaybeFloat( v ) {
+	if ( typeof v === "number" ) {
+		return Number.isFinite( v ) ? v : null;
+	}
+
+	const s = String( v ).trim()
+		.replace( ",", "." );
+
+	if ( !s ) {
+		return null;
+	}
+
+	if ( !/^[-+]?(\d+(\.\d+)?|\.\d+)$/.test( s ) ) {
+		return null;
+	}
+
+	const n = Number( s );
+	return Number.isFinite( n ) ? n : null;
 }
 
-function parseMaybeInt(v) {
-	const n = parseMaybeFloat(v);
-	if (n === null || !Number.isInteger(n)) return null;
+function parseMaybeInt( v ) {
+	const n = parseMaybeFloat( v );
+
+	if ( n === null || !Number.isInteger( n ) ) {
+		return null;
+	}
+
 	return n;
 }
 
-const lightCalc = computed(() => {
-	const C = parseMaybeFloat(CInput.value);
-	const c = parseMaybeFloat(cInput.value);
-	const speed = parseMaybeFloat(vInput.value);
-	const x = parseMaybeFloat(xInput.value);
-	const d = parseMaybeFloat(dInput.value);
-	const k = parseMaybeInt(kInput.value);
+const lightCalc = computed( () => {
+	const C = parseMaybeFloat( CInput.value );
+	const c = parseMaybeFloat( cInput.value );
+	const speed = parseMaybeFloat( vInput.value );
+	const x = parseMaybeFloat( xInput.value );
+	const d = parseMaybeFloat( dInput.value );
+	const k = parseMaybeInt( kInput.value );
 
-	if (C === null || c === null || speed === null || x === null || d === null || k === null) {
+	if ( C === null || c === null || speed === null || x === null || d === null || k === null ) {
 		return { error: "Bitte alle Felder mit gültigen Zahlen ausfüllen (k ganzzahlig)." };
 	}
 
-	if (C <= 0 || c <= 0 || speed <= 0) {
+	if ( C <= 0 || c <= 0 || speed <= 0 ) {
 		return { error: "C, c und v müssen größer als 0 sein." };
 	}
 
-	if (x < 0 || d < 0 || k < 0) {
+	if ( x < 0 || d < 0 || k < 0 ) {
 		return { error: "x, d und k dürfen nicht negativ sein." };
 	}
 
@@ -333,30 +408,32 @@ const lightCalc = computed(() => {
 	const finalReachFeasible = finalToDepotUse <= C + 1e-12;
 
 	const L = k * d;
-	const D0 = speed * C / (2 * c);
-	const Dmax = x + (speed / (2 * c)) * (L + C - finalToDepotUse);
+	const D0 = speed * C / ( 2 * c );
+	const Dmax = x + speed / ( 2 * c ) * ( L + C - finalToDepotUse );
 	const gain = Dmax - D0;
 
 	let ok = true;
 	let warning = "";
-	if (!finalReachFeasible) {
+
+	if ( !finalReachFeasible ) {
 		ok = false;
 		warning = "Das Depot liegt zu weit weg: Startladung reicht nicht, um x zu erreichen.";
-	} else if (!shuttleFeasible) {
+	} else if ( !shuttleFeasible ) {
 		ok = false;
 		warning = "Mit diesen Werten kann pro Shuttle nicht d abgelegt und sicher zurückgekehrt werden.";
 	}
 
 	const rows = [];
-	for (let kk = 0; kk <= 8; kk++) {
+
+	for ( let kk = 0; kk <= 8; kk++ ) {
 		const Lk = kk * d;
-		const Dk = x + (speed / (2 * c)) * (Lk + C - finalToDepotUse);
-		rows.push({
-			k: kk,
-			L: Lk,
-			D: Dk,
+		const Dk = x + speed / ( 2 * c ) * ( Lk + C - finalToDepotUse );
+		rows.push( {
+			k:    kk,
+			L:    Lk,
+			D:    Dk,
 			gain: Dk - D0
-		});
+		} );
 	}
 
 	return {
@@ -369,44 +446,44 @@ const lightCalc = computed(() => {
 		gain,
 		rows
 	};
-});
+} );
 
-const classicCalc = computed(() => {
-	const C = parseMaybeFloat(classicCInput.value);
-	const c = parseMaybeFloat(classiccInput.value);
-	const speed = parseMaybeFloat(classicVInput.value);
-	const m = parseMaybeInt(mInput.value);
+const classicCalc = computed( () => {
+	const C = parseMaybeFloat( classicCInput.value );
+	const c = parseMaybeFloat( classiccInput.value );
+	const speed = parseMaybeFloat( classicVInput.value );
+	const m = parseMaybeInt( mInput.value );
 
-	if (C === null || c === null || speed === null || m === null) {
+	if ( C === null || c === null || speed === null || m === null ) {
 		return { error: "Bitte alle Felder mit gültigen Zahlen ausfüllen (m ganzzahlig)." };
 	}
 
-	if (C <= 0 || c <= 0 || speed <= 0) {
+	if ( C <= 0 || c <= 0 || speed <= 0 ) {
 		return { error: "C, c und v müssen größer als 0 sein." };
 	}
 
-	if (m <= 0) {
+	if ( m <= 0 ) {
 		return { error: "m muss mindestens 1 sein." };
 	}
 
-	const D0 = speed * C / (2 * c);
+	const D0 = speed * C / ( 2 * c );
 	let Hodd = 0;
 	let Dm = 0;
 	let lastGain = 0;
 	const rows = [];
 
-	for (let j = 1; j <= m; j++) {
-		const term = 1 / (2 * j - 1);
+	for ( let j = 1; j <= m; j++ ) {
+		const term = 1 / ( 2 * j - 1 );
 		const delta = D0 * term;
 		Hodd += term;
 		Dm += delta;
 		lastGain = delta;
-		rows.push({
+		rows.push( {
 			j,
 			term,
 			delta,
 			cum: Dm
-		});
+		} );
 	}
 
 	return {
@@ -417,7 +494,7 @@ const classicCalc = computed(() => {
 		lastGain,
 		rows
 	};
-});
+} );
 
 function applyLapplandPreset() {
 	CInput.value = 3;
@@ -436,22 +513,26 @@ function applyClassicPreset() {
 }
 
 function setMaxFeasibleX() {
-	const C = parseMaybeFloat(CInput.value);
-	const c = parseMaybeFloat(cInput.value);
-	const speed = parseMaybeFloat(vInput.value);
-	const d = parseMaybeFloat(dInput.value);
-	if (C === null || c === null || speed === null || d === null || C <= 0 || c <= 0 || speed <= 0 || d < 0) {
+	const C = parseMaybeFloat( CInput.value );
+	const c = parseMaybeFloat( cInput.value );
+	const speed = parseMaybeFloat( vInput.value );
+	const d = parseMaybeFloat( dInput.value );
+
+	if ( C === null || c === null || speed === null || d === null || C <= 0 || c <= 0 || speed <= 0 || d < 0 ) {
 		return;
 	}
 
-	const xByShuttle = (speed / (2 * c)) * (C - d);
-	const xByReach = (speed / c) * C;
-	const xMax = Math.max(0, Math.min(xByShuttle, xByReach));
+	const xByShuttle = speed / ( 2 * c ) * ( C - d );
+	const xByReach = speed / c * C;
+	const xMax = Math.max( 0, Math.min( xByShuttle, xByReach ) );
 	xInput.value = xMax;
 }
 
-function fmt(n, digits = 3) {
-	if (!Number.isFinite(n)) return "-";
-	return n.toFixed(digits).replace(".", ",");
+function fmt( n, digits = 3 ) {
+	if ( !Number.isFinite( n ) ) {
+		return "-";
+	}
+
+	return n.toFixed( digits ).replace( ".", "," );
 }
 </script>

@@ -33,7 +33,7 @@ export const router = createRouter( {
 			name:      "ST",
 			component: ST,
 			meta:      {
-				title: "Spieltheorie am Busbahnhof", index: true, order: 10
+				title: "Spiel&shy;theorie am Bus&shy;bahnhof", index: true, order: 10
 			}
 		},
 		{
@@ -41,7 +41,7 @@ export const router = createRouter( {
 			name:      "DG",
 			component: DG,
 			meta:      {
-				title: "Diophantische Gleichung", index: true, order: 20
+				title: "Dio&shy;phan&shy;tische Gleichung", index: true, order: 20
 			}
 		},
 		{
@@ -103,7 +103,7 @@ export const router = createRouter( {
 			name:      "FI",
 			component: CatchAll,
 			meta:      {
-				title: "Landkarten Geometrie", index: true, order: 90, wip: true
+				title: "Land&shy;karten Geo&shy;metrie", index: true, order: 90, wip: true
 			}
 		},
 		{
@@ -111,7 +111,7 @@ export const router = createRouter( {
 			name:      "PG",
 			component: PG,
 			meta:      {
-				title: "Mit Eddie zum Pokergenie", index: true, order: 100
+				title: "Mit Eddie zum Poker&shy;genie", index: true, order: 100
 			}
 		},
 		{
@@ -119,7 +119,7 @@ export const router = createRouter( {
 			name:      "DZ",
 			component: CatchAll,
 			meta:      {
-				title: "Diophantische Gleichung #2", index: true, order: 110, wip: true
+				title: "Dio&shy;phan&shy;tische Gleichung #2", index: true, order: 110, wip: true
 			}
 		},
 		{
@@ -127,7 +127,7 @@ export const router = createRouter( {
 			name:      "NV",
 			component: CatchAll,
 			meta:      {
-				title: "Navigation im Wald", index: true, order: 120, wip: true
+				title: "Navi&shy;gation im Wald", index: true, order: 120, wip: true
 			}
 		},
 		{
@@ -135,7 +135,7 @@ export const router = createRouter( {
 			name:      "SE",
 			component: SE,
 			meta:      {
-				title: "Gute-Nacht-Rechenroutine", index: true, order: 125
+				title: "Gute-Nacht-Rechen&shy;routine", index: true, order: 125
 			}
 		},
 		{
@@ -159,7 +159,7 @@ export const router = createRouter( {
 			name:      "UD",
 			component: CatchAll,
 			meta:      {
-				title: "Minkowskis Uferaufdickung", index: true, order: 150, wip: true
+				title: "Minkow&shy;skis Ufer&shy;auf&shy;dickung", index: true, order: 150, wip: true
 			}
 		},
 		{
@@ -183,7 +183,7 @@ export const router = createRouter( {
 			name:      "AL",
 			component: AL,
 			meta:      {
-				title: "Kartenspiel mit Ada Lovelace", index: true, order: 180
+				title: "Karten&shy;spiel mit Ada Lovelace", index: true, order: 180
 			}
 		},
 		{
@@ -191,7 +191,7 @@ export const router = createRouter( {
 			name:      "OA",
 			component: CatchAll,
 			meta:      {
-				title: "Wegoptimierung", index: true, order: 190, wip: true
+				title: "Weg&shy;optimierung", index: true, order: 190, wip: true
 			}
 		},
 		{
@@ -231,7 +231,7 @@ export const router = createRouter( {
 			name:      "GD",
 			component: CatchAll,
 			meta:      {
-				title: "Diophantos Grabplatte", index: true, order: 240, wip: true
+				title: "Diophantos Grab&shy;platte", index: true, order: 240, wip: true
 			}
 		},
 		{
@@ -247,7 +247,7 @@ export const router = createRouter( {
 			name:      "LT",
 			component: CatchAll,
 			meta:      {
-				title: "Laplace-Transformation", index: true, order: 260, wip: true
+				title: "Laplace-Trans&shy;formation", index: true, order: 260, wip: true
 			}
 		},
 		{
@@ -262,8 +262,9 @@ export const router = createRouter( {
 // Page title from route meta
 router.afterEach( ( to ) => {
 	const title = typeof to?.meta?.title === "string" ? to.meta.title : "";
+	const browserTitle = title.replace( /&shy;/gi, "" );
 
 	if ( typeof document !== "undefined" ) {
-		document.title = title ? `Eddie rechnet: ${title}` : "Eddie rechnet";
+		document.title = browserTitle ? `Eddie rechnet: ${browserTitle}` : "Eddie rechnet";
 	}
 } );

@@ -2014,7 +2014,7 @@ onBeforeUnmount( () => {
   image-rendering: pixelated;
   image-rendering: crisp-edges;
   filter: contrast(1.08) brightness(.98) saturate(.75);
-  border-radius: 6px;
+  border-radius: 0px;
 }
 .lcd-text,
 .lcd-graph {
@@ -2035,7 +2035,7 @@ onBeforeUnmount( () => {
   inset: 0;
   z-index: 3;
   pointer-events: none;
-  border-radius: 6px;
+  border-radius: 0px;
   /* scanlines + subtle pixel grid */
   background:
     repeating-linear-gradient(

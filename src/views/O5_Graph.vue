@@ -15,7 +15,7 @@
 					:cy="geom.O.y"
 					fill="none"
 					:r="geom.baseRadius"
-					stroke="#1f2937"
+					stroke="var(--o5-ink)"
 					stroke-width="0.025"
 				/>
 
@@ -26,7 +26,7 @@
 					:cy="geom.circABC.center.y"
 					fill="none"
 					:r="geom.circABC.radius"
-					stroke="#9ca3af"
+					stroke="var(--o5-muted)"
 					stroke-dasharray="0.08 0.08"
 					stroke-width="0.018"
 				/>
@@ -36,7 +36,7 @@
 					:cy="geom.circKBN.center.y"
 					fill="none"
 					:r="geom.circKBN.radius"
-					stroke="#9ca3af"
+					stroke="var(--o5-muted)"
 					stroke-dasharray="0.08 0.08"
 					stroke-width="0.018"
 				/>
@@ -45,12 +45,12 @@
 				<polyline
 					fill="none"
 					:points="ptsStr([ geom.A, geom.B, geom.C, geom.A ])"
-					stroke="#2563eb"
+					stroke="var(--o5-primary)"
 					stroke-linejoin="round"
 					stroke-width="0.03"
 				/>
 				<line
-					stroke="#0f766e"
+					stroke="var(--o5-secondary)"
 					stroke-width="0.026"
 					:x1="geom.B.x"
 					:x2="geom.K.x"
@@ -58,7 +58,7 @@
 					:y2="geom.K.y"
 				/>
 				<line
-					stroke="#0f766e"
+					stroke="var(--o5-secondary)"
 					stroke-width="0.026"
 					:x1="geom.B.x"
 					:x2="geom.N.x"
@@ -68,7 +68,7 @@
 
 				<!-- Radical-axis related lines -->
 				<line
-					stroke="#7c3aed"
+					stroke="var(--o5-accent)"
 					stroke-dasharray="0.07 0.06"
 					stroke-width="0.022"
 					:x1="geom.A.x"
@@ -77,7 +77,7 @@
 					:y2="geom.C.y"
 				/>
 				<line
-					stroke="#7c3aed"
+					stroke="var(--o5-accent)"
 					stroke-dasharray="0.07 0.06"
 					stroke-width="0.022"
 					:x1="geom.K.x"
@@ -86,7 +86,7 @@
 					:y2="geom.N.y"
 				/>
 				<line
-					stroke="#111827"
+					stroke="var(--o5-ink)"
 					stroke-width="0.028"
 					:x1="geom.B.x"
 					:x2="geom.M.x"
@@ -96,7 +96,7 @@
 
 				<!-- Segment OM for right-angle statement -->
 				<line
-					stroke="#111827"
+					stroke="var(--o5-ink)"
 					stroke-width="0.028"
 					:x1="geom.O.x"
 					:x2="geom.M.x"
@@ -109,12 +109,12 @@
 					v-if="rightMarker"
 					fill="none"
 					:points="rightMarker"
-					stroke="#111827"
+					stroke="var(--o5-ink)"
 					stroke-width="0.02"
 				/>
 
 				<!-- Points -->
-				<g fill="#111827">
+				<g fill="var(--o5-ink)">
 					<circle v-for="p in geom.points"
 						:key="p.name"
 						:cx="p.x"
@@ -519,11 +519,19 @@ function labelPos( p ) {
 	gap: 10px;
 	justify-content: center;
 	width: 100%;
+	--o5-surface: rgb(var(--v-theme-surface, 255, 255, 255));
+	--o5-ink: rgba(var(--v-theme-on-surface, 17, 17, 17), 0.92);
+	--o5-muted: rgba(var(--v-theme-on-surface, 17, 17, 17), 0.45);
+	--o5-primary: rgb(var(--v-theme-primary, 37, 99, 235));
+	--o5-secondary: rgb(var(--v-theme-secondary, 15, 118, 110));
+	--o5-accent: rgb(var(--v-theme-info, 124, 58, 237));
+	--o5-border: rgba(var(--v-theme-on-surface, 17, 17, 17), 0.18);
+	--o5-panel: rgba(var(--v-theme-surface, 255, 255, 255), 0.86);
 }
 
 .svg {
-	background: #fff;
-	border: 1px solid #d1d5db;
+	background: var(--o5-surface);
+	border: 1px solid var(--o5-border);
 	border-radius: 10px;
 	display: block;
 	height: auto;
@@ -532,16 +540,16 @@ function labelPos( p ) {
 }
 
 .labels.points text {
-	fill: #0f172a;
+	fill: var(--o5-ink);
 	font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
 	font-weight: 600;
 }
 
 .legendHtml {
-	background: #ffffffdd;
-	border: 1px solid #d1d5db;
+	background: var(--o5-panel);
+	border: 1px solid var(--o5-border);
 	border-radius: 8px;
-	color: #0f172a;
+	color: var(--o5-ink);
 	display: grid;
 	font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
 	font-size: 13px;
@@ -564,23 +572,23 @@ function labelPos( p ) {
 }
 
 .swatch.tri {
-	border-top: 2px solid #2563eb;
+	border-top: 2px solid var(--o5-primary);
 }
 
 .swatch.rad {
-	border-top: 2px dashed #7c3aed;
+	border-top: 2px dashed var(--o5-accent);
 }
 
 .swatch.right {
-	border-top: 2px solid #111827;
+	border-top: 2px solid var(--o5-ink);
 }
 
 .swatch.circ {
-	border-top: 2px dashed #9ca3af;
+	border-top: 2px dashed var(--o5-muted);
 }
 
 .loading {
-	color: #6b7280;
+	color: var(--o5-muted);
 	font-size: 0.95rem;
 	padding: 0.65rem 0;
 }

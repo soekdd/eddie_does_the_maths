@@ -175,7 +175,7 @@
 	</template>
 	
 	<template #interactivePart>
-		<h2>Teil 7 — Rechner</h2>
+		<h2>Rechner</h2>
 
 		<v-card class="panel pa-5">
 			<div class="formGrid">

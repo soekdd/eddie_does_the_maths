@@ -15,7 +15,7 @@
 				:cy="state.circ.center.y"
 				fill="none"
 				:r="state.circ.r"
-				stroke="#8d8d8d"
+				stroke="var(--o1-muted)"
 				stroke-dasharray="7 7"
 				stroke-width="0.2"
 			/>
@@ -26,7 +26,7 @@
 				:cy="state.O.y"
 				fill="none"
 				:r="state.r"
-				stroke="#111"
+				stroke="var(--o1-ink)"
 				stroke-width="0.4"
 			/>
 
@@ -34,13 +34,13 @@
 			<polyline
 				fill="none"
 				:points="ptsStr([ state.A, state.B, state.C, state.D, state.A ])"
-				stroke="#00f"
+				stroke="var(--o1-primary)"
 				stroke-linejoin="round"
 				stroke-width="0.6"
 			/>
 
 			<!-- radii to tangency points -->
-			<line stroke="#666"
+			<line stroke="var(--o1-muted)"
 				stroke-dasharray="1 1"
 				stroke-width="0.4"
 				:x1="state.O.x"
@@ -48,7 +48,7 @@
 				:y1="state.O.y"
 				:y2="state.L.y"
 			/>
-			<line stroke="#666"
+			<line stroke="var(--o1-muted)"
 				stroke-dasharray="1 1"
 				stroke-width="0.4"
 				:x1="state.O.x"
@@ -56,7 +56,7 @@
 				:y1="state.O.y"
 				:y2="state.M.y"
 			/>
-			<line stroke="#666"
+			<line stroke="var(--o1-muted)"
 				stroke-dasharray="1 1"
 				stroke-width="0.4"
 				:x1="state.O.x"
@@ -66,7 +66,7 @@
 			/>
 
 			<!-- points -->
-			<g fill="#111">
+			<g fill="var(--o1-ink)">
 				<circle :cx="state.A.x" :cy="state.A.y" r="1.0"/>
 				<circle :cx="state.B.x" :cy="state.B.y" r="1.0"/>
 				<circle :cx="state.C.x" :cy="state.C.y" r="1.0"/>
@@ -81,22 +81,22 @@
 			<!-- right-angle markers at L, M, N -->
 			<polyline fill="none"
 				:points="rightAngleMarker(state.L, state.O)"
-				stroke="#111"
+				stroke="var(--o1-ink)"
 				stroke-width="0.4"
 			/>
 			<polyline fill="none"
 				:points="rightAngleMarker(state.M, state.O)"
-				stroke="#111"
+				stroke="var(--o1-ink)"
 				stroke-width="0.4"
 			/>
 			<polyline fill="none"
 				:points="rightAngleMarker(state.N, state.O)"
-				stroke="#111"
+				stroke="var(--o1-ink)"
 				stroke-width="0.4"
 			/>
 
 			<!-- line AB (optional emphasize) -->
-			<line stroke="#000"
+			<line stroke="var(--o1-ink)"
 				stroke-width="0.6"
 				:x1="state.D.x"
 				:x2="state.C.x"
@@ -521,27 +521,33 @@ onMounted( () => regenerate() );
 .wrap {
   display: grid;
   gap: 12px;
+  --o1-surface: rgb(var(--v-theme-surface, 255, 255, 255));
+  --o1-ink: rgba(var(--v-theme-on-surface, 17, 17, 17), 0.92);
+  --o1-muted: rgba(var(--v-theme-on-surface, 17, 17, 17), 0.58);
+  --o1-primary: rgb(var(--v-theme-primary, 25, 118, 210));
+  --o1-border: rgba(var(--v-theme-on-surface, 17, 17, 17), 0.18);
+  --o1-panel: rgba(var(--v-theme-surface, 255, 255, 255), 0.86);
 }
 .svg {
   width: min(900px, 100%);
   height: auto;
-  border: 1px solid #e3e3e3;
+  border: 1px solid var(--o1-border);
   border-radius: 14px;
-  background: white;
+  background: var(--o1-surface);
 }
 .labels text {
   font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
   font-size: 4px;
-  fill: #111;
+  fill: var(--o1-ink);
   letter-spacing: initial;
   user-select: none;
 }
 
 .legendHtml {
-  background: #ffffffdd;
-  border: 1px solid #d1d5db;
+  background: var(--o1-panel);
+  border: 1px solid var(--o1-border);
   border-radius: 8px;
-  color: #0f172a;
+  color: var(--o1-ink);
   display: grid;
   font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
   font-size: 13px;
@@ -564,11 +570,11 @@ onMounted( () => regenerate() );
 }
 
 .swatch.circ {
-  border-top: 2px dashed #8d8d8d;
+  border-top: 2px dashed var(--o1-muted);
 }
 
 .swatch.tan {
-  border-top: 2px solid #111;
+  border-top: 2px solid var(--o1-ink);
 }
 
 .loading {

@@ -15,14 +15,13 @@ import welcomeImg from "@/images/welcome.webp";
 	</template>
 
 	<template #descriptionPart>
+		<figure class="exampleFigure">
+			<ImageZoomer title="Titelbild: Eddie rechnet">
+				<img alt="Eddie rechnet" loading="lazy" :src="welcomeImg" />
+			</ImageZoomer>
+		</figure>
 		<h2>Willkommen</h2>
 		<div class="eddie">
-			<figure class="exampleFigure">
-				<ImageZoomer title="Titelbild: Eddie rechnet">
-					<img alt="Eddie rechnet" loading="lazy" :src="welcomeImg" />
-				</ImageZoomer>
-			</figure>
-
 			<p>
 				Hey, ich bin Eddie und wenn du mein Buch kennst, weißt du: Meine Flucht aus der DDR ist kein
 				Zufall, sondern ein Plan aus Papier, Mut und Mathe.

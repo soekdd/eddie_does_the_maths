@@ -158,7 +158,7 @@ h3 {
 .exampleFigure {
   float: right;
   width: min(360px, 45%);
-  margin: 2px 0 12px 14px;
+  margin: 2px 0 2px 18px;
   padding: 10px;
   border: 1px solid var(--line);
   border-radius: 16px;
