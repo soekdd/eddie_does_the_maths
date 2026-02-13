@@ -207,9 +207,9 @@ export const router = createRouter( {
 			name:      "FX",
 			component: FX,
 			meta:      {
-				title: "Fx7000G", index: true, order: 210
+				title: "Mein fx-7000G", index: true, order: 210
 			}
-		},		
+		},
 		{
 			path:      "/VA",
 			name:      "VA",

@@ -15,10 +15,11 @@ var CYAN    = [0x00, 0xFF, 0xFE];
 var YELLOW  = [0xFF, 0xF2, 0x00];
 var MAGENTA = [0xFF, 0x00, 0xFD];
 var GREEN   = [0x00, 0xFF, 0x00];
+var GRAY70  = [0x63, 0x63, 0x63];
 
 var MONO_NB_COLOR = [WHITE, BLACK];
 var MONO_BLUEGREEN_COLOR = [MONO_GREEN, MONO_BLUE];
-var POLY_COLOR = [WHITE, BLACK, BLUE, RED, MAGENTA, GREEN, CYAN, YELLOW];
+var POLY_COLOR = [WHITE, BLACK, BLUE, RED, MAGENTA, GREEN, CYAN, YELLOW, GRAY70];
 
 var COLOR_NAMES = {
   "White" : 0,
@@ -28,11 +29,16 @@ var COLOR_NAMES = {
   "Magenta" : 4,
   "Green" : 5,
   "Cyan" : 6,
-  "Yellow" : 7
+  "Yellow" : 7,
+  "Gray70" : 8,
+  "Gray" : 8
   // 8: White
   // 9: Auto
   // A: Clear
 }
+
+// Single source of truth for default text and graphics color.
+var DEFAULT_INK_COLOR_NAME = "Gray70";
 
 var currentMenu;
 var menuActive = false; // At start non menu is currently active
@@ -199,20 +205,15 @@ function chooseColorScheme(colorSchemeName) {
   var oldPalette = currentPalette;
   if (colorSchemeName == "black&white") {
     currentPalette = MONO_NB_COLOR;
-    currentDrawColorIdx = 1;
-    currentTextColorIdx = 1;
     fonts = MONO_NB_COLOR_fonts;
   } else if (colorSchemeName == "blue&green") {
     currentPalette = MONO_BLUEGREEN_COLOR;
-    currentDrawColorIdx = 1;
-    currentTextColorIdx = 1;
     fonts = MONO_BLUEGREEN_COLOR_fonts;
   } else if (colorSchemeName == "multicolor") {
     currentPalette = POLY_COLOR;
-    currentDrawColorIdx = getColorIndexFromColorName("Blue");
-    currentTextColorIdx = getColorIndexFromColorName("Black");
     fonts = POLY_COLOR_fonts;
   }
+  applyDefaultInkColor();
 
   for (var i = 0; i < oldPalette.length; i++) {
     var destColor = (i < currentPalette.length) ? currentPalette[i] : currentPalette[currentPalette.length - 1]; // new palette may have fewer colors
@@ -285,6 +286,21 @@ function getNewImage(imgSrc, fgColor, bgColor) {
 function getColorIndexFromColorName(colorName) {
   var colorIndex = COLOR_NAMES[colorName];
   return (colorIndex < currentPalette.length) ? colorIndex : currentPalette.length - 1;
+}
+
+function getDefaultInkColorIndex() {
+  var colorIndex = getColorIndexFromColorName(DEFAULT_INK_COLOR_NAME);
+  return colorIndex > 0 ? colorIndex : 1;
+}
+
+function applyDefaultInkColor() {
+  var colorIndex = getDefaultInkColorIndex();
+  currentDrawColorIdx = colorIndex;
+  currentTextColorIdx = colorIndex;
+}
+
+function getCurrentTextColorCode() {
+  return String(currentTextColorIdx || getDefaultInkColorIndex());
 }
 
 function cbiInit() {
@@ -547,8 +563,7 @@ function preset() {
     Ans = 0;
     ListAns = [];
     MatAns = [];
-    currentDrawColorIdx = getColorIndexFromColorName("Blue");
-    currentTextColorIdx = getColorIndexFromColorName("Black");
+    applyDefaultInkColor();
     currentSketchMode = "SketchNormal";
     angleMode = DEG;
     cls();
@@ -777,7 +792,7 @@ function txtScrollVertical() {
     textScreenLines.shift();
     textScreenLines.push("".padStart(TEXT_SCREEN_WIDTH, " "));
     txtColorScreenLines.shift();
-    txtColorScreenLines.push("".padStart(TEXT_SCREEN_WIDTH, "1"));
+    txtColorScreenLines.push("".padStart(TEXT_SCREEN_WIDTH, getCurrentTextColorCode()));
     currentTextLineIdx--;
 }
 
@@ -790,7 +805,7 @@ function print(str) {
 
     do {
         textScreenLines[currentTextLineIdx] = str.padEnd(TEXT_SCREEN_WIDTH, " ");
-        txtColorScreenLines[currentTextLineIdx] = "".padStart(TEXT_SCREEN_WIDTH, "1");
+        txtColorScreenLines[currentTextLineIdx] = "".padStart(TEXT_SCREEN_WIDTH, getCurrentTextColorCode());
         str = str.substring(TEXT_SCREEN_WIDTH);
         currentTextLineIdx++;
         if (currentTextLineIdx == TEXT_SCREEN_HEIGHT) {
@@ -808,6 +823,9 @@ function print(str) {
 
 function locate(col, ligne, str, colorIdx) {
     var newLine = "";
+    if (colorIdx == undefined) {
+      colorIdx = currentTextColorIdx || getDefaultInkColorIndex();
+    }
     if (col < 1 || col > TEXT_SCREEN_WIDTH
       || ligne < 1 || ligne > TEXT_SCREEN_HEIGHT) {
       throw {errorCode: EXIT_DOMAIN_ERROR, offset: node.offsetDbg};
@@ -830,7 +848,7 @@ function cleartext() {
     }
     txtColorScreenLines = [];
     for (var i=0; i< TEXT_SCREEN_HEIGHT; i++) {
-        txtColorScreenLines.push("".padStart(TEXT_SCREEN_WIDTH, "1"));
+        txtColorScreenLines.push("".padStart(TEXT_SCREEN_WIDTH, getCurrentTextColorCode()));
     }
     redrawAllTextScreen();
 }
@@ -842,7 +860,7 @@ function drawTextLine(lineNb, str, deltaCol, decLineNb) {
     var charH = txtCharH; //8;
     var y = (lineNb + decLineNb - 1) * charH + 1;
     var x = 0;
-    var colorIdx = 1;
+    var colorIdx = getCurrentTextColorCode();
     str = str.substring(0, TEXT_SCREEN_WIDTH);
     for (var i = 0; i < str.length; i++) {
         x = (i + deltaCol) * charW + 1;
@@ -1097,7 +1115,13 @@ function plot(x, y, mode) {
 }
 
 function pixelTest(x, y) {
-    var color = getPixelColor(x, y);
+    var realX = x;
+    var realY = y;
+    if (shouldUseFxPixelMapping(x, y)) {
+        realX = fxPixelXToScreenX(x);
+        realY = fxPixelYToScreenY(y);
+    }
+    var color = getPixelColor(realX, realY);
     // Tester toutes les couleurs de la palette
     // en partant de 0, s'arrête en indiquant l'index de la couleur trouvée (si trouvée)
     for (var i = 0; i < currentPalette.length; i++) {
@@ -1140,11 +1164,39 @@ function pixel(x, y, mode) {
     }
     letvar("A_24", x);
     letvar("A_25", y);
-    if (mode) {
-        setPixelOn(x, y, 1);
-    } else {
-        setPixelOff(x, y, 1);
+    var realX = x;
+    var realY = y;
+    var pxlSize = 1;
+    if (shouldUseFxPixelMapping(x, y)) {
+        realX = fxPixelXToScreenX(x);
+        realY = fxPixelYToScreenY(y);
+        // Match visual weight of other plot commands in hi-res mode.
+        pxlSize = plotSize;
     }
+    if (mode) {
+        setPixelOn(realX, realY, pxlSize);
+    } else {
+        setPixelOff(realX, realY, pxlSize);
+    }
+}
+
+var FX_PXL_MAX_X = 95;
+var FX_PXL_MAX_Y = 63;
+
+function shouldUseFxPixelMapping(x, y) {
+    return x >= 1
+        && x <= FX_PXL_MAX_X
+        && y >= 1
+        && y <= FX_PXL_MAX_Y
+        && (casioScreenW != FX_PXL_MAX_X || casioScreenH != FX_PXL_MAX_Y);
+}
+
+function fxPixelXToScreenX(x) {
+    return ((x - 1) * (casioScreenW - 1) / (FX_PXL_MAX_X - 1)) + 1;
+}
+
+function fxPixelYToScreenY(y) {
+    return ((y - 1) * (casioScreenH - 1) / (FX_PXL_MAX_Y - 1)) + 1;
 }
 
 function readGraphVar(index) {
@@ -1480,11 +1532,6 @@ function adjustTimeout(delta) {
       currentExecutionTimeout = 0;
     }
     return currentExecutionTimeout;
-}
-
-function debugToggle() {
-    DEBUG = !DEBUG;
-    return DEBUG;
 }
 
 /* This part is from 'js-floating-point', under MIT License, from Vitalii Maslianok
@@ -1915,7 +1962,7 @@ function execute(node) {
                     break;
                 case OP_LOCATE: // Efface l'écran texte puis affiche le texte demandé à la position demandée
                     //var prevTextColor = currentTextColorIdx;
-                    var colorIndex = 1;
+                    var colorIndex = currentTextColorIdx || getDefaultInkColorIndex();
                     if (node.children[3]) {
                         colorIndex = getColorIndexFromColorName(node.children[3]);
                     }
@@ -10060,6 +10107,3 @@ switch( act )
 	
 	return err_cnt;
 }
-
-
-

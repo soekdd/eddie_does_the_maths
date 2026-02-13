@@ -18,13 +18,19 @@
 		<h2>Teil 1 — Warum der fx-7000G spannend ist</h2>
 		<div class="eddie">
 			<p>
-				Der <b>Casio fx-7000G</b> war Mitte der 1980er ein echter Meilenstein:
-				ein früher grafikfähiger Taschenrechner, auf dem man nicht nur tippt,
-				sondern systematisch denkt.
+				Stell dir 1985 vor: Du bist ein Kind in der DDR, Computer kennst du nur aus der Ferne,
+				aus Erzaehlungen, vielleicht aus einer Zeitschrift. Und plötzlich
+				liegt da etwas in der Hand, das man <b>programmieren</b> kann: der <b>Casio fx-7000G</b>.
 			</p>
 			<p>
-				Für mich ist das Gerät weniger Nostalgie und mehr Haltung:
-				<b>Problem in Schritte zerlegen</b>, in Variablen gießen, Ergebnis prüfen, wiederholen.
+				Auch im Westen war das ein Meilenstein: ein früher grafikfähiger Rechner für die Tasche,
+				der BASIC und Graphik zusammenbrachte. Nicht nur rechnen, sondern denken in Schritten:
+				<b>Problem zerlegen</b>, Variablen setzen, prüfen, verbessern.
+			</p>
+			<p>
+				Die Daten waren für die Zeit stark: Matrix-Display mit <b>96x64 Pixel</b>,
+				<b>78 Zahlenspeicher</b>, <b>422 Zeichen Programmspeicher</b>.
+				Und der Preis von etwa <b>300 DM</b>&nbsp;(kaufkraftbereinigt, heute etwa 330 €) war fuer diese Funktionsfülle erstaunlich niedrig.
 			</p>
 		</div>
 
@@ -49,16 +55,16 @@
 				Genau dieses Schema steckt in vielen Schul- und Olympia-Helfern.
 			</p>
 			<div class="kbox">
-				<div class="mono" v-for="(line, idx) in miniProgram" :key="idx">{{ line }}</div>
+				<div v-for="(line, idx) in miniProgram" :key="idx" class="mono">{{ line }}</div>
 			</div>
 			<p class="muted">
 				Merksatz: Erst kleine, sichere Bausteine. Dann erst große Programme.
 			</p>
 		</div>
 
-<h2>Teil 5 — Eddie-Spickzettel</h2>
+		<h2>Teil 5 — Eddie-Spickzettel</h2>
 		<div class="eddie d-flex flex-column ga-3">
-			<v-sheet class="pa-3" rounded="lg" border>
+			<v-sheet border class="pa-3" rounded="lg">
 				<div class="text-subtitle-1 font-weight-medium mb-2">Schneller Start</div>
 				<ol class="mb-0">
 					<li><code class="mono">RUN</code> für direkte Rechnungen nutzen.</li>
@@ -68,7 +74,7 @@
 				</ol>
 			</v-sheet>
 
-			<v-sheet class="pa-3" rounded="lg" border>
+			<v-sheet border class="pa-3" rounded="lg">
 				<div class="text-subtitle-1 font-weight-medium mb-2">Denkmuster</div>
 				<v-table density="compact">
 					<thead>
@@ -94,8 +100,8 @@
 		<h2> Interaktiv: fx-7000G ausprobieren</h2>
 		<div class="eddie d-flex flex-column ga-3">
 			<p>
-				Hier läuft ein fx-7000G-orientierter Emulator direkt im Browser.
-				Du kannst Tasten drücken, BASIC-Text einfügen und Programme ausführen.
+				Leider kann darf ich hier nicht den echten fx-700G zeigen. Casio hält eifersüchtig am Copyright fest.
+				Daher habe ich hier nur die Programmierfähigkeit des fx-7000G und die grundlegenden Funktionen simuliert.
 			</p>
 			<v-alert type="info" variant="tonal">
 				Tipp: Starte mit dem Demo-Programm, ändere dann nur eine Zeile und beobachte den Effekt.
@@ -106,7 +112,7 @@
 
 	<template #footer>
 		<p class="muted">
-			Technik mit Interpreter-Skripten aus <code>public/casio/js</code>.
+			<a href="https://github.com/Krevo/CasioBasicInterpreter">Thanks to Krevo for his CasioBasicInterpreter</a>
 		</p>
 	</template>
 </AppFrame>
@@ -118,11 +124,11 @@ import titleImg from "@/images/FX.webp";
 
 const miniProgram = [
 	"Cls",
-	'Locate 1,1,"ZAHL?"',
+	"Locate 1,1,\"ZAHL?\"",
 	"?->A",
-	'Locate 1,3,"A^2="',
+	"Locate 1,3,\"A^2=\"",
 	"Locate 6,3,A^2",
-	'Locate 1,4,"sqrt(A)="',
+	"Locate 1,4,\"sqrt(A)=\"",
 	"Locate 9,4,Sqrt A"
 ];
 
