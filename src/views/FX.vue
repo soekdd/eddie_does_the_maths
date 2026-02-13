@@ -100,7 +100,7 @@
 		<h2> Interaktiv: fx-7000G ausprobieren</h2>
 		<div class="eddie d-flex flex-column ga-3">
 			<p>
-				Leider kann darf ich hier nicht den echten fx-700G zeigen. Casio hält eifersüchtig am Copyright fest.
+				Leider darf ich nicht den echten fx-700G zeigen. Casio hält eifersüchtig am Copyright fest.
 				Daher habe ich hier nur die Programmierfähigkeit des fx-7000G und die grundlegenden Funktionen simuliert.
 			</p>
 			<v-alert type="info" variant="tonal">
