@@ -7,7 +7,7 @@
 		@keydown="onKeydown"
 	>
 		<slot />
-		<span class="zoomerHint">{{ hint }}</span>
+		<!-- <span class="zoomerHint">{{ hint }}</span> -->
 	</div>
 
 	<v-dialog
@@ -64,7 +64,7 @@ import { useDisplay } from "vuetify";
 
 const props = defineProps( {
 	title:    { type: String, default: "" },
-	hint:     { type: String, default: "Zum Zoomen klicken" },
+	//hint:     { type: String, default: "Zum Zoomen klicken" },
 	maxWidth: { type: [ Number, String ], default: 1400 }
 } );
 
