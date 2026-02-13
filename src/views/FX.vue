@@ -24,7 +24,7 @@
 			</p>
 			<p>
 				Auch im Westen war das ein Meilenstein: ein früher grafikfähiger Rechner für die Tasche,
-				der BASIC und Graphik zusammenbrachte. Nicht nur rechnen, sondern denken in Schritten:
+				der BASIC und Grafik zusammenbrachte. Nicht nur rechnen, sondern denken in Schritten:
 				<b>Problem zerlegen</b>, Variablen setzen, prüfen, verbessern.
 			</p>
 			<p>
