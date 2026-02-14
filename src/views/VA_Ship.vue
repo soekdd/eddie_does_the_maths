@@ -302,6 +302,15 @@ const model = computed( () => {
 	const halfB = beam / 2;
 	const heelRad = degToRad( heelDeg );
 	const sailTopY = depth + ( hCe - depth ) * 2.35;
+	const sailBulge = clamp(
+		windSpeed / 12,
+		0.35,
+		1.8
+	);
+	const sailOuterFactor1 = 0.75 + 0.90 * sailBulge;
+	const sailOuterFactor2 = 1.05 + 0.90 * sailBulge;
+	const sailInnerFactor1 = 0.30 + 0.32 * sailBulge;
+	const sailInnerFactor2 = 0.16 + 0.18 * sailBulge;
 	const extX = halfB * 2.2 + 1.2;
 	const extY = Math.max(
 		hCe + 2,
@@ -433,7 +442,7 @@ const model = computed( () => {
 	) );
 	const sailOuterCtrl1 = toScreen( rotatePoint(
 		{
-			x: halfB * 1.65,
+			x: halfB * sailOuterFactor1,
 			y: depth + ( sailTopY - depth ) * 0.18
 		},
 		pivot,
@@ -441,7 +450,7 @@ const model = computed( () => {
 	) );
 	const sailOuterCtrl2 = toScreen( rotatePoint(
 		{
-			x: halfB * 1.95,
+			x: halfB * sailOuterFactor2,
 			y: depth + ( sailTopY - depth ) * 0.78
 		},
 		pivot,
@@ -449,7 +458,7 @@ const model = computed( () => {
 	) );
 	const sailInnerCtrl1 = toScreen( rotatePoint(
 		{
-			x: halfB * 0.62,
+			x: halfB * sailInnerFactor1,
 			y: depth + ( sailTopY - depth ) * 0.86
 		},
 		pivot,
@@ -457,7 +466,7 @@ const model = computed( () => {
 	) );
 	const sailInnerCtrl2 = toScreen( rotatePoint(
 		{
-			x: halfB * 0.34,
+			x: halfB * sailInnerFactor2,
 			y: depth + ( sailTopY - depth ) * 0.16
 		},
 		pivot,
