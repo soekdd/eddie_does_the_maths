@@ -1,80 +1,3 @@
-<script setup>
-import {
-	computed, onMounted, ref, useSlots
-} from "vue";
-import { useRoute } from "vue-router";
-import { useDisplay } from "vuetify";
-import impressumHtml from "./utils/disclaimer/impressum_de.html?raw";
-import privacyPolicyHtml from "./utils/disclaimer/privacy_policy_de.html?raw";
-import faviconPng from "./images/favicon.png";
-
-const props = defineProps( {
-	// Show a "work in progress" banner for content that isn't finished yet.
-	// Usage:
-	// - <AppFrame warning> ... </AppFrame> (default text)
-	// - <AppFrame warning="Custom text"> ... </AppFrame>
-	warning:    { type: [ Boolean, String ], default: false },
-	short:      { type: String, default: "" },
-	title:      { type: String, default: "" },
-	subChapter: {
-		type:    Object,
-		default: () => ( {} )
-	}
-} );
-
-const { width } = useDisplay();
-const slots = useSlots();
-const route = useRoute();
-
-// Vuetify's built-in "mobile" flag defaults to < lg (1280px), which is too wide for our
-// header-wrapping case. Match the app's existing "mobile-ish" breakpoint (see eddie.css).
-const isMobile = computed( () => width.value < 860 );
-const appBarHeight = computed( () => isMobile.value ? 108 : 72 );
-
-const warningMessage = computed( () => {
-	if ( props.warning === true ) {
-		return "Hinweis: An diesem Inhalt wird noch gearbeitet. " +
-			"Texte, Grafiken und Rechenwege können sich noch ändern.";
-	}
-
-	if ( typeof props.warning === "string" ) {
-		return props.warning.trim();
-	}
-
-	return "";
-} );
-
-const showWarning = computed( () => Boolean( warningMessage.value ) );
-const hasInteractivePart = computed( () => Boolean( slots.interactivePart ) );
-const hasCalculationPart = computed( () => Boolean( slots.calculationPart ) );
-const showPartsCard = computed( () => hasInteractivePart.value || hasCalculationPart.value );
-const showImpressumDialog = ref( false );
-const showPrivacyDialog = ref( false );
-const showHomeBadge = computed( () => route.path !== "/" );
-const shortText = computed( () => props.short.trim() );
-const titleText = computed( () => props.title.trim() );
-const subChapterEntries = computed( () => Object.entries( props.subChapter ?? {} )
-	.map( ( [ id, label ] ) => ( {
-		id:    String( id ).trim(),
-		label: String( label ?? "" ).trim()
-	} ) )
-	.filter( ( entry ) => entry.id && entry.label ) );
-const showFormalTitle = computed( () =>
-	Boolean( shortText.value || titleText.value || subChapterEntries.value.length ) );
-
-onMounted( () => {
-	if ( route.hash ) {
-		return;
-	}
-
-	window.scrollTo( {
-		top:      0,
-		left:     0,
-		behavior: "auto"
-	} );
-} );
-</script>
-
 <template>
 <div class="frame">
 	<v-app-bar class="topBar pa-0" flat :height="appBarHeight">
@@ -142,6 +65,15 @@ onMounted( () => {
 						<slot name="calculationPart" />
 					</v-col>
 				</v-row>
+				<v-row class="gridRow" dense>
+					<v-col
+						v-if="hasSummaryPart"
+						cols="12"
+						:md="12"
+					>
+						<slot name="summaryPart" />
+					</v-col>
+				</v-row>
 			</section>
 
 			<footer class="foot">
@@ -194,7 +126,83 @@ onMounted( () => {
 	</v-dialog>
 </div>
 </template>
+<script setup>
+import {
+	computed, onMounted, ref, useSlots
+} from "vue";
+import { useRoute } from "vue-router";
+import { useDisplay } from "vuetify";
+import impressumHtml from "./utils/disclaimer/impressum_de.html?raw";
+import privacyPolicyHtml from "./utils/disclaimer/privacy_policy_de.html?raw";
+import faviconPng from "./images/favicon.png";
 
+const props = defineProps( {
+	// Show a "work in progress" banner for content that isn't finished yet.
+	// Usage:
+	// - <AppFrame warning> ... </AppFrame> (default text)
+	// - <AppFrame warning="Custom text"> ... </AppFrame>
+	warning:    { type: [ Boolean, String ], default: false },
+	short:      { type: String, default: "" },
+	title:      { type: String, default: "" },
+	subChapter: {
+		type:    Object,
+		default: () => ( {} )
+	}
+} );
+
+const { width } = useDisplay();
+const slots = useSlots();
+const route = useRoute();
+
+// Vuetify's built-in "mobile" flag defaults to < lg (1280px), which is too wide for our
+// header-wrapping case. Match the app's existing "mobile-ish" breakpoint (see eddie.css).
+const isMobile = computed( () => width.value < 860 );
+const appBarHeight = computed( () => isMobile.value ? 108 : 72 );
+
+const warningMessage = computed( () => {
+	if ( props.warning === true ) {
+		return "Hinweis: An diesem Inhalt wird noch gearbeitet. " +
+			"Texte, Grafiken und Rechenwege können sich noch ändern.";
+	}
+
+	if ( typeof props.warning === "string" ) {
+		return props.warning.trim();
+	}
+
+	return "";
+} );
+
+const showWarning = computed( () => Boolean( warningMessage.value ) );
+const hasInteractivePart = computed( () => Boolean( slots.interactivePart ) );
+const hasCalculationPart = computed( () => Boolean( slots.calculationPart ) );
+const hasSummaryPart = computed( () => Boolean( slots.summaryPart ) );
+const showPartsCard = computed( () => hasInteractivePart.value || hasCalculationPart.value || hasSummaryPart.value );
+const showImpressumDialog = ref( false );
+const showPrivacyDialog = ref( false );
+const showHomeBadge = computed( () => route.path !== "/" );
+const shortText = computed( () => props.short.trim() );
+const titleText = computed( () => props.title.trim() );
+const subChapterEntries = computed( () => Object.entries( props.subChapter ?? {} )
+	.map( ( [ id, label ] ) => ( {
+		id:    String( id ).trim(),
+		label: String( label ?? "" ).trim()
+	} ) )
+	.filter( ( entry ) => entry.id && entry.label ) );
+const showFormalTitle = computed( () =>
+	Boolean( shortText.value || titleText.value || subChapterEntries.value.length ) );
+
+onMounted( () => {
+	if ( route.hash ) {
+		return;
+	}
+
+	window.scrollTo( {
+		top:      0,
+		left:     0,
+		behavior: "auto"
+	} );
+} );
+</script>
 <style scoped>
 .wipAlert {
   margin-top: 16px;

@@ -15,6 +15,7 @@ import BA from "@/views/BA.vue";
 import SE from "@/views/SE.vue";
 import RD from "@/views/RD.vue";
 import FX from "@/views/FX.vue";
+import VA from "@/views/VA.vue";
 import CatchAll from "@/views/CatchAll.vue";
 import Welcome from "@/views/Welcome.vue";
 
@@ -236,9 +237,9 @@ export const router = createRouter( {
 		{
 			path:      "/VA",
 			name:      "VA",
-			component: CatchAll,
+			component: VA,
 			meta:      {
-				title: "Warum die Vasa sinken musste", index: true, order: 220, wip: true
+				title: "Warum die Vasa sinken musste", index: true, order: 220
 			}
 		},
 		{
