@@ -121,10 +121,18 @@
 			<text :x="model.left + 192" :y="model.axisY + 46">Rueckweg</text>
 		</g>
 
-		<text v-if="model.trimmed" class="note" :x="model.left" :y="model.axisY + 66">
+		<text v-if="model.trimmed"
+			class="note"
+			:x="model.left"
+			:y="model.axisY + 66"
+		>
 			Es werden die ersten {{ model.shownK }} von {{ model.k }} Shuttles gezeigt.
 		</text>
-		<text v-if="model.warning" class="warn" :x="model.left" :y="model.axisY + 84">
+		<text v-if="model.warning"
+			class="warn"
+			:x="model.left"
+			:y="model.axisY + 84"
+		>
 			{{ model.warning }}
 		</text>
 	</g>
@@ -275,7 +283,8 @@ function fmt( n, digits = 1 ) {
 		return "-";
 	}
 
-	return Number( n ).toFixed( digits ).replace( ".", "," );
+	return Number( n ).toFixed( digits )
+		.replace( ".", "," );
 }
 
 function uniqueByValue( list, tolerance ) {
@@ -304,10 +313,10 @@ const viewBox = computed( () => `0 0 ${model.value.width} ${model.value.height}`
 
 const ariaLabel = computed( () => {
 	if ( props.mode === "classic" ) {
-		return "Mehrdepot-Stufen als SVG";
+		return "Mehrdepot-Stufen";
 	}
 
-	return "Touren der Ein-Depot-Strategie als SVG";
+	return "Touren der Ein-Depot-Strategie";
 } );
 
 function buildLightModel() {
@@ -352,15 +361,25 @@ function buildLightModel() {
 	const axisY = top + rowGap * rowCount + 14;
 	const height = axisY + 96;
 
-	const domainMax = Math.max( 1, d0, dmax, depotX );
+	const domainMax = Math.max(
+		1, d0, dmax, depotX
+	);
 	const pxPerKm = ( right - left ) / domainMax;
 	const toX = ( v ) => left + v * pxPerKm;
 
 	const baseGuides = [
-		{ id: "start", value: 0, label: "Start" },
-		{ id: "depot", value: depotX, label: `Depot ${fmt( depotX )} km` },
-		{ id: "d0", value: d0, label: `Ohne Depot ${fmt( d0 )} km` },
-		{ id: "turn", value: dmax, label: `Wende ${fmt( dmax )} km` }
+		{
+			id: "start", value: 0, label: "Start"
+		},
+		{
+			id: "depot", value: depotX, label: `Depot ${fmt( depotX )} km`
+		},
+		{
+			id: "d0", value: d0, label: `Ohne Depot ${fmt( d0 )} km`
+		},
+		{
+			id: "turn", value: dmax, label: `Wende ${fmt( dmax )} km`
+		}
 	];
 	const tolerance = domainMax * 0.005;
 	const guides = uniqueByValue( baseGuides, tolerance ).map( ( g, i ) => {
@@ -380,55 +399,68 @@ function buildLightModel() {
 		{ id: "tx", value: depotX },
 		{ id: "td0", value: d0 },
 		{ id: "tdmax", value: dmax }
-	], tolerance ).sort( ( a, b ) => a.value - b.value ).map( ( t ) => ( {
-		...t,
-		x:     toX( t.value ),
-		value: fmt( t.value )
-	} ) );
+	], tolerance ).sort( ( a, b ) => a.value - b.value )
+		.map( ( t ) => ( {
+			...t,
+			x:     toX( t.value ),
+			value: fmt( t.value )
+		} ) );
 
 	const rows = [];
 
 	for ( let i = 0; i < shownK; i++ ) {
 		const y = top + i * rowGap;
 		rows.push( {
-			id:    `shuttle-${i + 1}`,
-			label: `Shuttle ${i + 1}`,
+			id:       `shuttle-${i + 1}`,
+			label:    `Shuttle ${i + 1}`,
 			y,
-			turnX: null,
+			turnX:    null,
 			segments: [
-				{ kind: "out", x1: left, x2: toX( depotX ) },
-				{ kind: "back", x1: toX( depotX ), x2: left }
+				{
+					kind: "out", x1: left, x2: toX( depotX )
+				},
+				{
+					kind: "back", x1: toX( depotX ), x2: left
+				}
 			]
 		} );
 	}
 
 	const finalY = top + shownK * rowGap;
 	rows.push( {
-		id:    "final",
-		label: "Finale Tour",
-		y:     finalY,
-		turnX: toX( dmax ),
+		id:       "final",
+		label:    "Finale Tour",
+		y:        finalY,
+		turnX:    toX( dmax ),
 		segments: [
-			{ kind: "out", x1: left, x2: toX( depotX ) },
-			{ kind: "outStrong", x1: toX( depotX ), x2: toX( dmax ) },
-			{ kind: "backStrong", x1: toX( dmax ), x2: toX( depotX ) },
-			{ kind: "back", x1: toX( depotX ), x2: left }
+			{
+				kind: "out", x1: left, x2: toX( depotX )
+			},
+			{
+				kind: "outStrong", x1: toX( depotX ), x2: toX( dmax )
+			},
+			{
+				kind: "backStrong", x1: toX( dmax ), x2: toX( depotX )
+			},
+			{
+				kind: "back", x1: toX( depotX ), x2: left
+			}
 		]
 	} );
 
 	return {
-		kind: "light",
+		kind:    "light",
 		width,
 		height,
 		top,
 		left,
 		right,
 		axisY,
-		depotX: toX( depotX ),
+		depotX:  toX( depotX ),
 		rows,
 		ticks,
 		guides,
-		k: shuttles,
+		k:       shuttles,
 		shownK,
 		trimmed: shuttles > shownK,
 		warning: props.ok ? "" : props.warning
@@ -441,9 +473,8 @@ function buildClassicModel() {
 		term:  toNumber( row?.term ),
 		delta: toNumber( row?.delta ),
 		cum:   toNumber( row?.cum )
-	} ) ).filter( ( r ) => (
-		r.j !== null && r.j > 0 && r.term !== null && r.delta !== null && r.cum !== null
-	) );
+	} ) ).filter( ( r ) =>
+		r.j !== null && r.j > 0 && r.term !== null && r.delta !== null && r.cum !== null );
 
 	if ( !parsedRows.length ) {
 		return {
@@ -464,7 +495,7 @@ function buildClassicModel() {
 	const height = 280;
 	const totalDistance = shownRows[ shownRows.length - 1 ].cum;
 	const domainMax = Math.max( 1, totalDistance );
-	const toX = ( v ) => left + ( ( right - left ) * v / domainMax );
+	const toX = ( v ) => left + ( right - left ) * v / domainMax ;
 
 	const segments = [];
 	const labels = [];
@@ -495,22 +526,23 @@ function buildClassicModel() {
 
 	const tickValues = [ 0 ];
 	const step = Math.max( 1, Math.floor( shownRows.length / 4 ) );
+
 	for ( let i = step - 1; i < shownRows.length; i += step ) {
 		tickValues.push( shownRows[ i ].cum );
 	}
+
 	tickValues.push( totalDistance );
 
-	const ticks = uniqueByValue(
-		tickValues.map( ( v, idx ) => ( { id: `cv-${idx}`, value: v } ) ),
-		domainMax * 0.002
-	).sort( ( a, b ) => a.value - b.value ).map( ( t ) => ( {
-		...t,
-		x:     toX( t.value ),
-		value: fmt( t.value )
-	} ) );
+	const ticks = uniqueByValue( tickValues.map( ( v, idx ) => ( { id: `cv-${idx}`, value: v } ) ),
+		domainMax * 0.002 ).sort( ( a, b ) => a.value - b.value )
+		.map( ( t ) => ( {
+			...t,
+			x:     toX( t.value ),
+			value: fmt( t.value )
+		} ) );
 
 	return {
-		kind: "classic",
+		kind:          "classic",
 		width,
 		height,
 		left,
@@ -521,9 +553,9 @@ function buildClassicModel() {
 		segments,
 		labels,
 		ticks,
-		trimmed: parsedRows.length > shownRows.length,
-		total: parsedRows.length,
-		shown: shownRows.length
+		trimmed:       parsedRows.length > shownRows.length,
+		total:         parsedRows.length,
+		shown:         shownRows.length
 	};
 }
 </script>

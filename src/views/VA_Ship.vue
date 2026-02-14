@@ -167,7 +167,7 @@
 			<text :x="model.g.x + 8" :y="model.g.y - 8">G</text>
 
 			<circle :cx="model.b.x" :cy="model.b.y" r="5" />
-			<text :x="model.b.x + 8" :y="model.b.y - 8">B'</text>
+			<text :x="model.b.x + 8" :y="model.b.y + 8">B'</text>
 
 			<circle :cx="model.m.x" :cy="model.m.y" r="5" />
 			<text :x="model.m.x + 8" :y="model.m.y - 8">M</text>

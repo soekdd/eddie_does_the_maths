@@ -174,22 +174,6 @@
 						<div class="mono">Mit Depot: Dmax = {{ fmt(lightCalc.Dmax, 3) }} km</div>
 						<div class="mono">Gewinn: Delta = {{ fmt(lightCalc.gain, 3) }} km</div>
 					</div>
-
-					<v-sheet border class="pa-3" rounded="lg">
-						<RD_Graph
-							:cap="CInput"
-							:cons="cInput"
-							:d0="lightCalc.D0"
-							:depot-x="xInput"
-							:dmax="lightCalc.Dmax"
-							:drop="dInput"
-							mode="light"
-							:ok="lightCalc.ok"
-							:shuttles="kInput"
-							:speed="vInput"
-							:warning="lightCalc.warning"
-						/>
-					</v-sheet>
 				</template>
 			</template>
 
@@ -256,11 +240,6 @@
 							Letzter Stufengewinn: Delta xm = {{ fmt(classicCalc.lastGain, 3) }} km
 						</div>
 					</div>
-
-					<v-sheet border class="pa-3" rounded="lg">
-						<h3>Stufen als SVG</h3>
-						<RD_Graph mode="classic" :rows="classicCalc.rows" />
-					</v-sheet>
 				</template>
 			</template>
 		</div>
@@ -317,6 +296,43 @@
 					Interpretation: Die Zugewinne werden kleiner (<Katex tex="\propto \frac{1}{2j-1}" />),
 					daher wirkt es wie Sättigung, obwohl die Summe theoretisch weiter wächst.
 				</p>
+			</template>
+		</div>
+	</template>
+
+	<template #summaryPart>
+		<h2>Grafische Darstellung</h2>
+		<div class="eddie d-flex flex-column ga-3">
+			<template v-if="mode === 'light'">
+				<v-sheet v-if="!lightCalc.error"
+					border
+					class="pa-3"
+					rounded="lg"
+				>
+					<RD_Graph
+						:cap="CInput"
+						:cons="cInput"
+						:d0="lightCalc.D0"
+						:depot-x="xInput"
+						:dmax="lightCalc.Dmax"
+						:drop="dInput"
+						mode="light"
+						:ok="lightCalc.ok"
+						:shuttles="kInput"
+						:speed="vInput"
+						:warning="lightCalc.warning"
+					/>
+				</v-sheet>
+			</template>
+			<template v-else>
+				<v-sheet v-if="!classicCalc.error"
+					border
+					class="pa-3"
+					rounded="lg"
+				>
+					<h3>Stufen als SVG</h3>
+					<RD_Graph mode="classic" :rows="classicCalc.rows" />
+				</v-sheet>
 			</template>
 		</div>
 	</template>
