@@ -1,13 +1,78 @@
+<template>
+<div class="contentIndex">
+	<p class="muted mb-2">{{ title }}</p>
+
+	<v-tabs
+		v-if="bookTabs.length"
+		v-model="activeBook"
+		align-tabs="center"
+		class="contentIndexTabs mb-4"
+		color="primary"
+		density="comfortable"
+		show-arrows
+	>
+		<v-tab
+			v-for="book in bookTabs"
+			:key="book.value"
+			:title="book.title"
+			:value="book.value"
+			v-html="book.short"
+		/>
+	</v-tabs>
+
+	<v-window v-if="bookTabs.length" v-model="activeBook" class="contentIndexWindow">
+		<v-window-item
+			v-for="book in bookTabs"
+			:key="book.value"
+			:value="book.value"
+		>
+			<div v-if="itemsByBook[book.value]?.length" class="contentIndexList">
+				<v-btn
+					v-for="it in itemsByBook[book.value]"
+					:key="it.key"
+					:aria-disabled="it.wip ? 'true' : 'false'"
+					class="index-tile"
+					:class="tileClasses(it)"
+					:ripple="!it.wip"
+					:style="tileStyle(it)"
+					:to="it.wip ? undefined : it.to"
+					variant="flat"
+				>
+					<span class="tile-title" :class="tileTitleClass(it)">{{ it.title }}</span>
+				</v-btn>
+			</div>
+
+			<p v-else class="muted">Noch keine Inhalte für dieses Buch registriert.</p>
+		</v-window-item>
+	</v-window>
+
+	<p v-else class="muted">Noch keine Inhalte registriert.</p>
+</div>
+</template>
 <script setup>
 import {
 	computed, ref, watch
 } from "vue";
-import { useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 
 const props = defineProps( { title: { type: String, default: "Die aktuell ausgearbeiteten Inhalte sind:" } } );
 
+const route = useRoute();
 const router = useRouter();
 const TILE_SIZE_PX = 195;
+
+const books = {
+	1: {
+		index: 1,
+		title: "Eddie und die Diophantische Gleichung",
+		short: "Eddie &#9312;"
+	},
+	2: {
+		index: 2,
+		title: "Eddie und das Monty Hall Problem",
+		short: "Eddie &#9313;"
+	}
+};
 
 const imageModules = import.meta.glob( "@/images/*.webp", { eager: true, import: "default" } );
 const imageByRouteName = Object.entries( imageModules ).reduce( ( acc, [ path, url ] ) => {
@@ -25,6 +90,22 @@ const imageByRouteName = Object.entries( imageModules ).reduce( ( acc, [ path, u
 const tileToneByImageUrl = ref( {} );
 const toneCache = new Map();
 
+function normalizeBookIndex( value ) {
+	const normalized = Number( value );
+	return Number.isFinite( normalized ) ? normalized : null;
+}
+
+const bookTabs = computed( () => Object.values( books )
+	.map( ( book ) => ( {
+		value: normalizeBookIndex( book?.index ),
+		title: String( book?.title ?? "" ),
+		short: String( book?.short ?? book?.title ?? "" )
+	} ) )
+	.filter( ( tab ) => tab.value !== null && tab.short.trim() )
+	.sort( ( a, b ) => a.value - b.value ) );
+
+const activeBook = ref( null );
+
 const items = computed( () => {
 	const routes = router.getRoutes();
 
@@ -36,6 +117,7 @@ const items = computed( () => {
 			to:       r.name ? { name: r.name } : r.path,
 			order:    Number.isFinite( r?.meta?.order ) ? Number( r.meta.order ) : null,
 			path:     r.path,
+			book:     normalizeBookIndex( r?.meta?.book ),
 			wip:      r?.meta?.wip === true,
 			imageKey: String( r.name ?? "" ).toUpperCase(),
 			imageUrl: imageByRouteName[ String( r.name ?? "" ).toUpperCase() ] ?? null
@@ -56,6 +138,30 @@ const items = computed( () => {
 			return a.title.localeCompare( b.title, "de" );
 		} );
 } );
+
+const itemsByBook = computed( () => Object.fromEntries( bookTabs.value.map( ( tab ) => [
+	tab.value, items.value.filter( ( item ) => item.book === tab.value )
+] ) ) );
+
+watch(
+	[
+		bookTabs, () => route?.meta?.book
+	], ( [ tabs, routeBook ] ) => {
+		if ( !tabs.length ) {
+			activeBook.value = null;
+			return;
+		}
+
+		const availableBooks = tabs.map( ( tab ) => tab.value );
+
+		if ( availableBooks.includes( activeBook.value ) ) {
+			return;
+		}
+
+		const preferredBook = normalizeBookIndex( routeBook );
+		activeBook.value = availableBooks.includes( preferredBook ) ? preferredBook : availableBooks[ 0 ];
+	}, { immediate: true }
+);
 
 async function detectImageTone( imageUrl ) {
 	if ( typeof window === "undefined" ) {
@@ -167,32 +273,13 @@ function tileTitleClass( item ) {
 	return item.wip ? "tile-title-dark-wip" : "tile-title-dark";
 }
 </script>
-
-<template>
-<div class="contentIndex">
-	<p class="muted mb-2">{{ title }}</p>
-
-	<div v-if="items.length" class="contentIndexList">
-		<v-btn
-			v-for="it in items"
-			:key="it.key"
-			:aria-disabled="it.wip ? 'true' : 'false'"
-			class="index-tile"
-			:class="tileClasses(it)"
-			:ripple="!it.wip"
-			:style="tileStyle(it)"
-			:to="it.wip ? undefined : it.to"
-			variant="flat"
-		>
-			<span class="tile-title" :class="tileTitleClass(it)">{{ it.title }}</span>
-		</v-btn>
-	</div>
-
-	<p v-else class="muted">Noch keine Inhalte registriert.</p>
-</div>
-</template>
-
 <style scoped>
+.contentIndexTabs :deep(.v-tab) {
+  text-transform: none;
+  font-weight: 500;
+  font-size: 120%;
+}
+
 .contentIndexList {
   display: flex;
   flex-wrap: wrap;

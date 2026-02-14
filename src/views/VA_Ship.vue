@@ -58,7 +58,7 @@
 				:y1="model.mastBase.y"
 				:y2="model.mastTop.y"
 			/>
-			<polygon class="sail" :points="model.sailPoints" />
+			<path class="sail" :d="model.sailPath" />
 		</g>
 
 		<g class="dims">
@@ -149,7 +149,8 @@
 		</g>
 
 		<g class="lever">
-			<line class="gz"
+			<line v-if="!props.nolegend"
+				class="gz"
 				marker-end="url(#vaArrow)"
 				marker-start="url(#vaArrow)"
 				:x1="model.gzA.x"
@@ -414,30 +415,64 @@ const model = computed( () => {
 		heelRad
 	) );
 
-	const sailA = toScreen( rotatePoint(
+	const sailLower = toScreen( rotatePoint(
 		{
-			x: halfB * 0.10,
+			x: 0,
 			y: depth * 1.02
 		},
 		pivot,
 		heelRad
 	) );
-	const sailB = toScreen( rotatePoint(
+	const sailUpper = toScreen( rotatePoint(
 		{
-			x: halfB * 1.80,
-			y: depth + ( hCe - depth ) * 0.45
-		},
-		pivot,
-		heelRad
-	) );
-	const sailC = toScreen( rotatePoint(
-		{
-			x: halfB * 0.12,
+			x: 0,
 			y: sailTopY
 		},
 		pivot,
 		heelRad
 	) );
+	const sailOuterCtrl1 = toScreen( rotatePoint(
+		{
+			x: halfB * 1.65,
+			y: depth + ( sailTopY - depth ) * 0.18
+		},
+		pivot,
+		heelRad
+	) );
+	const sailOuterCtrl2 = toScreen( rotatePoint(
+		{
+			x: halfB * 1.95,
+			y: depth + ( sailTopY - depth ) * 0.78
+		},
+		pivot,
+		heelRad
+	) );
+	const sailInnerCtrl1 = toScreen( rotatePoint(
+		{
+			x: halfB * 0.62,
+			y: depth + ( sailTopY - depth ) * 0.86
+		},
+		pivot,
+		heelRad
+	) );
+	const sailInnerCtrl2 = toScreen( rotatePoint(
+		{
+			x: halfB * 0.34,
+			y: depth + ( sailTopY - depth ) * 0.16
+		},
+		pivot,
+		heelRad
+	) );
+	const sailPath = [
+		`M ${sailLower.x.toFixed( 2 )} ${sailLower.y.toFixed( 2 )}`,
+		`C ${sailOuterCtrl1.x.toFixed( 2 )} ${sailOuterCtrl1.y.toFixed( 2 )}, 
+		${sailOuterCtrl2.x.toFixed( 2 )} ${sailOuterCtrl2.y.toFixed( 2 )}, 
+		${sailUpper.x.toFixed( 2 )} ${sailUpper.y.toFixed( 2 )}`,
+		`C ${sailInnerCtrl1.x.toFixed( 2 )} ${sailInnerCtrl1.y.toFixed( 2 )}, 
+		${sailInnerCtrl2.x.toFixed( 2 )} ${sailInnerCtrl2.y.toFixed( 2 )}, 
+		${sailLower.x.toFixed( 2 )} ${sailLower.y.toFixed( 2 )}`,
+		"Z"
+	].join( " " );
 
 	const gWorld = rotatePoint(
 		{
@@ -609,7 +644,7 @@ const model = computed( () => {
 		windMoment,
 		restoringMoment,
 		hullPoints:        pointsToString( hullScreen ),
-		sailPoints:        pointsToString( [ sailA, sailB, sailC ] ),
+		sailPath,
 		deckL,
 		deckR,
 		mastBase,

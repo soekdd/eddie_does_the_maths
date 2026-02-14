@@ -57,7 +57,7 @@ export const router = createRouter( {
 			name:      "ST",
 			component: ST,
 			meta:      {
-				title: "Spiel&shy;theorie am Bus&shy;bahnhof", index: true, order: 10
+				title: "Spiel&shy;theorie am Bus&shy;bahnhof", index: true, book: 1, order: 10
 			}
 		},
 		{
@@ -65,7 +65,7 @@ export const router = createRouter( {
 			name:      "DG",
 			component: DG,
 			meta:      {
-				title: "Dio&shy;phan&shy;tische Gleichung", index: true, order: 20
+				title: "Dio&shy;phan&shy;tische Gleichung #1", index: true, book: 1, order: 20
 			}
 		},
 		{
@@ -79,7 +79,7 @@ export const router = createRouter( {
 			name:      "O1",
 			component: O1,
 			meta:      {
-				title: "IMO 1985 Aufgabe A1", index: true, order: 30
+				title: "IMO 1985 Aufgabe A1", index: true, book: 1, order: 30
 			}
 		},
 		{
@@ -87,7 +87,7 @@ export const router = createRouter( {
 			name:      "O2",
 			component: O2,
 			meta:      {
-				title: "IMO 1985 Aufgabe A2", index: true, order: 40
+				title: "IMO 1985 Aufgabe A2", index: true, book: 1, order: 40
 			}
 		},
 		{
@@ -95,7 +95,7 @@ export const router = createRouter( {
 			name:      "O3",
 			component: O3,
 			meta:      {
-				title: "IMO 1985 Aufgabe A3", index: true, order: 50
+				title: "IMO 1985 Aufgabe A3", index: true, book: 1, order: 50
 			}
 		},
 		{
@@ -103,7 +103,7 @@ export const router = createRouter( {
 			name:      "O4",
 			component: O4,
 			meta:      {
-				title: "IMO 1985 Aufgabe B1", index: true, order: 60
+				title: "IMO 1985 Aufgabe B1", index: true, book: 1, order: 60
 			}
 		},
 		{
@@ -111,7 +111,7 @@ export const router = createRouter( {
 			name:      "O5",
 			component: O5,
 			meta:      {
-				title: "IMO 1985 Aufgabe B2", index: true, order: 70
+				title: "IMO 1985 Aufgabe B2", index: true, book: 1, order: 70
 			}
 		},
 		{
@@ -119,7 +119,7 @@ export const router = createRouter( {
 			name:      "O6",
 			component: O6,
 			meta:      {
-				title: "IMO 1985 Aufgabe B3", index: true, order: 80
+				title: "IMO 1985 Aufgabe B3", index: true, book: 1, order: 80
 			}
 		},
 		{
@@ -127,7 +127,7 @@ export const router = createRouter( {
 			name:      "FI",
 			component: CatchAll,
 			meta:      {
-				title: "Land&shy;karten Geo&shy;metrie", index: true, order: 90, wip: true
+				title: "Land&shy;karten Geo&shy;metrie", index: true, book: 1, order: 90, wip: true
 			}
 		},
 		{
@@ -135,7 +135,7 @@ export const router = createRouter( {
 			name:      "PG",
 			component: PG,
 			meta:      {
-				title: "Mit Eddie zum Poker&shy;genie", index: true, order: 100
+				title: "Mit Eddie zum Poker&shy;genie", index: true, book: 1, order: 100
 			}
 		},
 		{
@@ -143,7 +143,7 @@ export const router = createRouter( {
 			name:      "DZ",
 			component: CatchAll,
 			meta:      {
-				title: "Dio&shy;phan&shy;tische Gleichung #2", index: true, order: 110, wip: true
+				title: "Dio&shy;phan&shy;tische Gleichung #2", index: true, book: 1, order: 110, wip: true
 			}
 		},
 		{
@@ -151,7 +151,7 @@ export const router = createRouter( {
 			name:      "NV",
 			component: CatchAll,
 			meta:      {
-				title: "Navi&shy;gation im Wald", index: true, order: 120, wip: true
+				title: "Navi&shy;gation im Wald", index: true, book: 1, order: 120, wip: true
 			}
 		},
 		{
@@ -159,7 +159,7 @@ export const router = createRouter( {
 			name:      "SE",
 			component: SE,
 			meta:      {
-				title: "Gute-Nacht-Rechen&shy;routine", index: true, order: 125
+				title: "Gute-Nacht-Rechen&shy;routine", index: true, book: 1, order: 125
 			}
 		},
 		{
@@ -167,7 +167,7 @@ export const router = createRouter( {
 			name:      "FS",
 			component: CatchAll,
 			meta:      {
-				title: "Fischsee", index: true, order: 130, wip: true
+				title: "Fischsee", index: true, book: 1, order: 130, wip: true
 			}
 		},
 		{
@@ -175,7 +175,7 @@ export const router = createRouter( {
 			name:      "RD",
 			component: RD,
 			meta:      {
-				title: "Rentier-Depot", index: true, order: 140
+				title: "Rentier-Depot", index: true, book: 1, order: 140
 			}
 		},
 		{
@@ -183,7 +183,7 @@ export const router = createRouter( {
 			name:      "UD",
 			component: CatchAll,
 			meta:      {
-				title: "Minkow&shy;skis Ufer&shy;auf&shy;dickung", index: true, order: 150, wip: true
+				title: "Minkow&shy;skis Ufer&shy;auf&shy;dickung", index: true, book: 1, order: 150, wip: true
 			}
 		},
 		{
@@ -191,7 +191,7 @@ export const router = createRouter( {
 			name:      "BA",
 			component: BA,
 			meta:      {
-				title: "BASIC for Runaways", index: true, order: 160
+				title: "BASIC for Runaways", index: true, book: 1, order: 160
 			}
 		},
 		{
@@ -199,7 +199,7 @@ export const router = createRouter( {
 			name:      "SD",
 			component: CatchAll,
 			meta:      {
-				title: "Ich zeig dir deine DNA", index: true, order: 170, wip: true
+				title: "Ich zeig dir deine DNA", index: true, book: 1, order: 170, wip: true
 			}
 		},
 		{
@@ -207,7 +207,7 @@ export const router = createRouter( {
 			name:      "AL",
 			component: AL,
 			meta:      {
-				title: "Karten&shy;spiel mit Ada Lovelace", index: true, order: 180
+				title: "Karten&shy;spiel mit Ada Lovelace", index: true, book: 1, order: 180
 			}
 		},
 		{
@@ -215,7 +215,7 @@ export const router = createRouter( {
 			name:      "OA",
 			component: CatchAll,
 			meta:      {
-				title: "Weg&shy;optimierung", index: true, order: 190, wip: true
+				title: "Weg&shy;optimierung", index: true, book: 1, order: 190, wip: true
 			}
 		},
 		{
@@ -223,7 +223,7 @@ export const router = createRouter( {
 			name:      "BS",
 			component: CatchAll,
 			meta:      {
-				title: "Baustatik #1", index: true, order: 200, wip: true
+				title: "Baustatik #1", index: true, book: 1, order: 200, wip: true
 			}
 		},
 		{
@@ -231,7 +231,7 @@ export const router = createRouter( {
 			name:      "FX",
 			component: FX,
 			meta:      {
-				title: "Mein fx-7000G", index: true, order: 210
+				title: "Mein fx-7000G", index: true, book: 1, order: 210
 			}
 		},
 		{
@@ -239,7 +239,7 @@ export const router = createRouter( {
 			name:      "VA",
 			component: VA,
 			meta:      {
-				title: "Warum die Vasa sinken musste", index: true, order: 220
+				title: "Warum die Vasa sinken musste", index: true, book: 1, order: 220
 			}
 		},
 		{
@@ -247,7 +247,7 @@ export const router = createRouter( {
 			name:      "BZ",
 			component: CatchAll,
 			meta:      {
-				title: "Baustatik #2", index: true, order: 230, wip: true
+				title: "Baustatik #2", index: true, book: 1, order: 230, wip: true
 			}
 		},
 		{
@@ -255,7 +255,7 @@ export const router = createRouter( {
 			name:      "GD",
 			component: CatchAll,
 			meta:      {
-				title: "Diophantos Grab&shy;platte", index: true, order: 240, wip: true
+				title: "Diophantos Grab&shy;platte", index: true, book: 1, order: 240, wip: true
 			}
 		},
 		{
@@ -263,7 +263,7 @@ export const router = createRouter( {
 			name:      "QH",
 			component: CatchAll,
 			meta:      {
-				title: "Der Quanten-Hall-Effekt", index: true, order: 250, wip: true
+				title: "Der Quanten-Hall-Effekt", index: true, book: 1, order: 250, wip: true
 			}
 		},
 		{
@@ -271,7 +271,30 @@ export const router = createRouter( {
 			name:      "LT",
 			component: CatchAll,
 			meta:      {
-				title: "Laplace-Trans&shy;formation", index: true, order: 260, wip: true
+				title: "Laplace-Trans&shy;formation", index: true, book: 1, order: 260, wip: true
+			}
+		},
+		{
+			path:      "/ZR",
+			name:      "ZR",
+			component: CatchAll,
+			meta:      {
+				title: "Atomare Zerfalls&shy;reihen", index: true, book: 2, order: 10, wip: true
+			}
+		},
+		{
+			path:      "/AW",
+			name:      "AW",
+			component: CatchAll,
+			meta:      {
+				title: "Aus&shy;sage&shy;wahrs&shy;cheinlichkeit", index: true, book: 2, order: 20, wip: true
+			}
+		},{
+			path:      "/KK",
+			name:      "KK",
+			component: CatchAll,
+			meta:      {
+				title: "Spaß mit Kugel&shy;koordinaten", index: true, book: 2, order: 20, wip: true
 			}
 		},
 		{
