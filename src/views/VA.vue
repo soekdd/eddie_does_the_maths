@@ -774,9 +774,11 @@ const calc = computed( () => {
 		const instability = Math.max( 0, -gmEff );
 		const baseHeel = downfloodAngle * 0.55 + 3 + instability * 2.5;
 		const windHeel = radToDeg( Math.atan( windDrive * 5 ) );
-		heelDeg = clamp( baseHeel + windHeel,
+		heelDeg = clamp(
+			baseHeel + windHeel,
 			0,
-			70 );
+			70
+		);
 	} else if ( ratio <= 1 ) {
 		heelDeg = radToDeg( Math.asin( Math.max( 0, ratio ) ) );
 	} else {
