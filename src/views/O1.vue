@@ -1,12 +1,14 @@
 <template>
-<AppFrame warning>
-	<template #title>
-		<div class="badge">O1</div>
-		<div>
-			<h1>Eddie rechnet: IMO 1985 Aufgabe A1</h1>
-			<p class="sub">Geometrie • Tangenten • zyklisch • Kongruenz</p>
-		</div>
-	</template>
+<AppFrame short="O1"
+	:sub-chapter="{
+		'geometrie': 'Geometrie',
+		'tangenten': 'Tangenten',
+		'zyklisch': 'zyklisch',
+		'kongruenz': 'Kongruenz'
+	}"
+	title="Eddie rechnet: IMO 1985 Aufgabe A1"
+	warning
+>
 
 	<template #descriptionPart>
 		<figure class="exampleFigure">
@@ -14,7 +16,7 @@
 				<img alt="Eddie rechnet" loading="lazy" :src="titleImg" />
 			</ImageZoomer>
 		</figure>
-		<h2>Aufgabenstellung</h2>
+		<h2 id="geometrie">Aufgabenstellung</h2>
 		<div class="eddie">
 			<p>
 				Ein Kreis hat seinen Mittelpunkt auf der Seite <Katex tex="AB" /> eines <b>zyklischen</b>
@@ -77,7 +79,7 @@
 				Damit bauen wir gleich zwei rechtwinklige Dreiecke, die sich sauber vergleichen lassen.
 			</p>
 
-			<h3>2) Winkelhalbierenden aus Tangenten: CO und DO</h3>
+			<h3 id="tangenten">2) Winkelhalbierenden aus Tangenten: CO und DO</h3>
 			<p class="muted">
 				Weil der Kreis zwei Geraden tangiert, ist der Abstand des Mittelpunkts zu beiden Geraden gleich
 				(nämlich der Radius). Damit liegt <Katex tex="O" /> auf der Winkelhalbierenden.
@@ -95,13 +97,13 @@
 				/>
 			</div>
 
-			<h3>3) Zyklisch: Gegenwinkel sind Supplementwinkel</h3>
+			<h3 id="zyklisch">3) Zyklisch: Gegenwinkel sind Supplementwinkel</h3>
 			<div class="kbox">
 				<Katex as="div" display tex="\angle DAB + \angle DCB = 180^\circ." />
 				<Katex as="div" display tex="\frac{\angle DCB}{2}=90^\circ-\frac{\angle DAB}{2}." />
 			</div>
 
-			<h3>4) Kongruenz: Dreiecke O L X und O M C</h3>
+			<h3 id="kongruenz">4) Kongruenz: Dreiecke O L X und O M C</h3>
 			<p>Wir vergleichen die rechtwinkligen Dreiecke <Katex tex="\triangle OLX" /> und <Katex tex="\triangle OMC" />:</p>
 			<ul>
 				<li><Katex tex="\angle OLX = 90^\circ" /> (weil <Katex tex="OL\perp AD" /> und <Katex tex="X\in AD" />)</li>

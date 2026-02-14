@@ -1,12 +1,16 @@
 <template>
-<AppFrame>
-	<template #title>
-		<div class="badge">O1</div>
-		<div>
-			<h1>Eddie rechnet: IMO 1985 Aufgaben Übersicht</h1>
-			<p class="sub">A1 • A2 • A3 • B1 • B2 • B3</p>
-		</div>
-	</template>
+<AppFrame
+	short="O1"
+	:sub-chapter="{
+		'a1': 'A1',
+		'a2': 'A2',
+		'a3': 'A3',
+		'b1': 'B1',
+		'b2': 'B2',
+		'b3': 'B3'
+	}"
+	title="Eddie rechnet: IMO 1985 Aufgaben Übersicht"
+>
 
 	<template #descriptionPart>
 		<figure class="exampleFigure">
@@ -24,7 +28,7 @@
 
 		<section class="problem">
 			<div class="problem-head">
-				<h3>A1</h3>
+				<h3 id="a1">A1</h3>
 				<RouterLink class="task-link" to="/O1">Zur Aufgabe A1</RouterLink>
 			</div>
 			<p>
@@ -37,7 +41,7 @@
 
 		<section class="problem">
 			<div class="problem-head">
-				<h3>A2</h3>
+				<h3 id="a2">A2</h3>
 				<RouterLink class="task-link" to="/O2">Zur Aufgabe A2</RouterLink>
 			</div>
 			<p>
@@ -63,7 +67,7 @@
 
 		<section class="problem">
 			<div class="problem-head">
-				<h3>A3</h3>
+				<h3 id="a3">A3</h3>
 				<RouterLink class="task-link" to="/O3">Zur Aufgabe A3</RouterLink>
 			</div>
 			<p>
@@ -84,7 +88,7 @@
 
 		<section class="problem">
 			<div class="problem-head">
-				<h3>B1</h3>
+				<h3 id="b1">B1</h3>
 				<RouterLink class="task-link" to="/O4">Zur Aufgabe B1</RouterLink>
 			</div>
 			<p>
@@ -100,7 +104,7 @@
 
 		<section class="problem">
 			<div class="problem-head">
-				<h3>B2</h3>
+				<h3 id="b2">B2</h3>
 				<RouterLink class="task-link" to="/O5">Zur Aufgabe B2</RouterLink>
 			</div>
 			<p>
@@ -119,7 +123,7 @@
 
 		<section class="problem">
 			<div class="problem-head">
-				<h3>B3</h3>
+				<h3 id="b3">B3</h3>
 				<RouterLink class="task-link" to="/O6">Zur Aufgabe B3</RouterLink>
 			</div>
 			<p>

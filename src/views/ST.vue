@@ -1,12 +1,13 @@
 <template>
-<AppFrame>
-	<template #title>
-		<div class="badge">ST</div>
-		<div>
-			<h1>Eddie rechnet: Spieltheorie am Busbahnhof</h1>
-			<p class="sub">Entscheidungsbaum • Wahrscheinlichkeiten • Rechner</p>
-		</div>
-	</template>
+<AppFrame
+	short="ST"
+	:sub-chapter="{
+		'entscheidungsbaum': 'Entscheidungsbaum',
+		'wahrscheinlichkeiten': 'Wahrscheinlichkeiten',
+		'rechner': 'Rechner'
+	}"
+	title="Eddie rechnet: Spieltheorie am Busbahnhof"
+>
 
 	<template #descriptionPart>
 		<figure class="exampleFigure">
@@ -15,7 +16,7 @@
 			</ImageZoomer>
 		</figure>
 
-		<h2>Teil 1 — Worum’s geht (Kurzfassung)</h2>
+		<h2 id="entscheidungsbaum">Teil 1 — Worum’s geht (Kurzfassung)</h2>
 		<div class="eddie">
 			<p class="muted">
 				<i>„Spieltheorie“</i>
@@ -37,7 +38,7 @@
 			<div class="exampleClear"></div>
 		</div>
 
-		<h2 class="mt-8">Teil 2 — Wie komme ich an p (Bus kommt)?</h2>
+		<h2 id="wahrscheinlichkeiten" class="mt-8">Teil 2 — Wie komme ich an p (Bus kommt)?</h2>
 		<div class="eddie">
 			<p>
 				Ein einfaches Bauch-zu-Zahl‑Modell: Ich betrachte eine Stunde als Zeitfenster und frage:
@@ -175,7 +176,7 @@
 	</template>
 	
 	<template #interactivePart>
-		<h2>Rechner</h2>
+		<h2 id="rechner">Rechner</h2>
 
 		<v-card class="panel pa-5">
 			<div class="formGrid">

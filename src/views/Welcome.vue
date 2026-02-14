@@ -1,18 +1,12 @@
-<script setup>
-import ContentIndex from "@/components/ContentIndex.vue";
-import ImageZoomer from "@/components/ImageZoomer.vue";
-import welcomeImg from "@/images/welcome.webp";
-</script>
-
 <template>
-<AppFrame>
-	<template #title>
-		<div class="badge">ER</div>
-		<div>
-			<h1>Eddie rechnet</h1>
-			<p class="sub">Willkommen • Übersicht</p>
-		</div>
-	</template>
+<AppFrame
+	short="ER"
+	:sub-chapter="{
+		'willkommen': 'Willkommen',
+		'ubersicht': 'Übersicht'
+	}"
+	title="Eddie rechnet"
+>
 
 	<template #descriptionPart>
 		<figure class="exampleFigure">
@@ -20,7 +14,7 @@ import welcomeImg from "@/images/welcome.webp";
 				<img alt="Eddie rechnet" loading="lazy" :src="welcomeImg" />
 			</ImageZoomer>
 		</figure>
-		<h2>Willkommen</h2>
+		<h2 id="willkommen">Willkommen</h2>
 		<div class="eddie">
 			<p>
 				Hey, ich bin Eddie und wenn du mein Buch kennst, weißt du: Meine Flucht aus der DDR ist kein
@@ -41,8 +35,13 @@ import welcomeImg from "@/images/welcome.webp";
 	</template>
 
 	<template #interactivePart>
-		<h2>Index</h2>
+		<h2 id="ubersicht">Index</h2>
 		<ContentIndex />
 	</template>
 </AppFrame>
 </template>
+
+<script setup>
+import ContentIndex from "@/components/ContentIndex.vue";
+import welcomeImg from "@/images/welcome.webp";
+</script>

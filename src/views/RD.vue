@@ -1,12 +1,12 @@
 <template>
-<AppFrame warning>
-	<template #title>
-		<div class="badge">RD</div>
-		<div>
-			<h1>Eddie rechnet: Das Rentier-Problem</h1>
-			<p class="sub">Depot-Strategie • Vorstufe + klassisches Mehrdepot-Modell</p>
-		</div>
-	</template>
+<AppFrame short="RD"
+	:sub-chapter="{
+		'depot-strategie': 'Depot-Strategie',
+		'vorstufe-plus-klassisches-mehrdepot-modell': 'Vorstufe + klassisches Mehrdepot-Modell'
+	}"
+	title="Eddie rechnet: Das Rentier-Problem"
+	warning
+>
 
 	<template #descriptionPart>
 		<figure class="exampleFigure">
@@ -24,7 +24,7 @@
 			</p>
 		</div>
 
-		<h2 class="mt-8">Teil 2 — Warum ein Depot nur die Vorstufe ist</h2>
+		<h2 id="vorstufe-plus-klassisches-mehrdepot-modell" class="mt-8">Teil 2 — Warum ein Depot nur die Vorstufe ist</h2>
 		<div class="eddie">
 			<p>
 				Dein Punkt ist richtig: Mit genau einem Depot entsteht noch keine Reihenstruktur.
@@ -37,7 +37,7 @@
 			</p>
 		</div>
 
-		<h2 class="mt-8">Teil 3 — Klassische Mehrdepot-Idee (harmonische Struktur)</h2>
+		<h2 id="depot-strategie" class="mt-8">Teil 3 — Klassische Mehrdepot-Idee (harmonische Struktur)</h2>
 		<div class="eddie">
 			<p>
 				Für das idealisierte Mehrdepot-Modell mit Rückkehrpflicht gilt pro Stufe

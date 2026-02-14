@@ -13,7 +13,13 @@ const props = defineProps( {
 	// Usage:
 	// - <AppFrame warning> ... </AppFrame> (default text)
 	// - <AppFrame warning="Custom text"> ... </AppFrame>
-	warning: { type: [ Boolean, String ], default: false }
+	warning:    { type: [ Boolean, String ], default: false },
+	short:      { type: String, default: "" },
+	title:      { type: String, default: "" },
+	subChapter: {
+		type:    Object,
+		default: () => ( {} )
+	}
 } );
 
 const { width } = useDisplay();
@@ -45,8 +51,22 @@ const showPartsCard = computed( () => hasInteractivePart.value || hasCalculation
 const showImpressumDialog = ref( false );
 const showPrivacyDialog = ref( false );
 const showHomeBadge = computed( () => route.path !== "/" );
+const shortText = computed( () => props.short.trim() );
+const titleText = computed( () => props.title.trim() );
+const subChapterEntries = computed( () => Object.entries( props.subChapter ?? {} )
+	.map( ( [ id, label ] ) => ( {
+		id:    String( id ).trim(),
+		label: String( label ?? "" ).trim()
+	} ) )
+	.filter( ( entry ) => entry.id && entry.label ) );
+const showFormalTitle = computed( () =>
+	Boolean( shortText.value || titleText.value || subChapterEntries.value.length ) );
 
 onMounted( () => {
+	if ( route.hash ) {
+		return;
+	}
+
 	window.scrollTo( {
 		top:      0,
 		left:     0,
@@ -69,7 +89,21 @@ onMounted( () => {
 				>
 					<img alt="" class="homeBadgeIcon" :src="faviconPng" />
 				</router-link>
-				<slot name="title" />
+				<template v-if="showFormalTitle">
+					<div v-if="shortText" class="badge">{{ shortText }}</div>
+					<div>
+						<h1 v-if="titleText">{{ titleText }}</h1>
+						<p v-if="subChapterEntries.length" class="sub">
+							<template v-for="( chapter, index ) in subChapterEntries" :key="chapter.id">
+								<router-link :to="{ path: route.path, hash: `#${chapter.id}` }">
+									{{ chapter.label }}
+								</router-link>
+								<span v-if="index < subChapterEntries.length - 1"> • </span>
+							</template>
+						</p>
+					</div>
+				</template>
+				<slot v-else name="title" />
 			</div>
 		</v-container>
 	</v-app-bar>

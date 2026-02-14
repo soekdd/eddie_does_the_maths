@@ -1,12 +1,13 @@
 <template>
-<AppFrame warning>
-	<template #title>
-		<div class="badge">O5</div>
-		<div>
-			<h1>Eddie rechnet: IMO 1985 Aufgabe B2</h1>
-			<p class="sub">Geometrie • Potenzpunkte • Radikalachsen</p>
-		</div>
-	</template>
+<AppFrame short="O5"
+	:sub-chapter="{
+		'geometrie': 'Geometrie',
+		'potenzpunkte': 'Potenzpunkte',
+		'radikalachsen': 'Radikalachsen'
+	}"
+	title="Eddie rechnet: IMO 1985 Aufgabe B2"
+	warning
+>
 
 	<template #descriptionPart>
 		<figure class="exampleFigure">
@@ -15,7 +16,7 @@
 			</ImageZoomer>
 		</figure>
 
-		<h2>Teil 1 — Aufgabenstellung (deutsch)</h2>
+		<h2 id="geometrie">Teil 1 — Aufgabenstellung</h2>
 		<div class="eddie">
 			<p>
 				Ein Kreis mit Mittelpunkt <Katex tex="O" /> geht durch die Punkte <Katex tex="A" /> und
@@ -33,7 +34,7 @@
 			</div>
 		</div>
 
-		<h2 class="mt-8">Teil 2 — Beweisidee</h2>
+		<h2 id="radikalachsen" class="mt-8">Teil 2 — Beweisidee</h2>
 		<div class="eddie">
 			<p>
 				Die Lösung geht über <b>Radikalachsen</b> und <b>Potenzen</b>:
@@ -60,7 +61,7 @@
 			</ol>
 		</div>
 
-		<h2 class="mt-8">Teil 3 — Formelblock aus der Lösung</h2>
+		<h2 id="potenzpunkte" class="mt-8">Teil 3 — Formelblock aus der Lösung</h2>
 		<div class="eddie">
 			<div class="kbox">
 				<Katex as="div" display tex="XM\cdot XB = XK\cdot XN = XO^2-ON^2" />

@@ -1,12 +1,13 @@
 <template>
-<AppFrame warning>
-	<template #title>
-		<div class="badge">O4</div>
-		<div>
-			<h1>Eddie rechnet: IMO 1985 Aufgabe B1</h1>
-			<p class="sub">Schubfachprinzip • Paritätsvektoren • vierte Potenz</p>
-		</div>
-	</template>
+<AppFrame short="O4"
+	:sub-chapter="{
+		'schubfachprinzip': 'Schubfachprinzip',
+		'paritatsvektoren': 'Paritätsvektoren',
+		'vierte-potenz': 'vierte Potenz'
+	}"
+	title="Eddie rechnet: IMO 1985 Aufgabe B1"
+	warning
+>
 
 	<template #descriptionPart>
 		<figure class="exampleFigure">
@@ -15,7 +16,7 @@
 			</ImageZoomer>
 		</figure>
 
-		<h2>Teil 1 — Aufgabenstellung (deutsch)</h2>
+		<h2>Teil 1 — Aufgabenstellung</h2>
 		<div class="eddie">
 			<p>
 				Gegeben sei eine Menge <Katex tex="M" /> aus <b>1985 verschiedenen positiven ganzen Zahlen</b>.
@@ -30,7 +31,7 @@
 			</div>
 		</div>
 
-		<h2 class="mt-8">Teil 2 — Mini-Crashkurs: Was muss eine vierte Potenz erfüllen?</h2>
+		<h2 id="vierte-potenz" class="mt-8">Teil 2 — Mini-Crashkurs: Was muss eine vierte Potenz erfüllen?</h2>
 		<div class="eddie">
 			<p>
 				Die erlaubten Primzahlen sind genau
@@ -52,7 +53,7 @@
 			</p>
 		</div>
 
-		<h2 class="mt-8">Teil 3 — Quadratfreier Kern und Paritätsvektor</h2>
+		<h2 id="paritatsvektoren" class="mt-8">Teil 3 — Quadratfreier Kern und Paritätsvektor</h2>
 		<div class="eddie">
 			<p>
 				Eine anschauliche Sicht (wie im Kapiteltext): Zerlege jede Zahl als
@@ -86,7 +87,7 @@
 			</div>
 		</div>
 
-		<h2 class="mt-8">Teil 5 — Herleitung Schritt für Schritt</h2>
+		<h2 id="schubfachprinzip" class="mt-8">Teil 5 — Herleitung Schritt für Schritt</h2>
 		<div class="eddie">
 			<v-expansion-panels variant="accordion">
 				<v-expansion-panel>

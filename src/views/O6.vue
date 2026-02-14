@@ -1,12 +1,14 @@
 <template>
-<AppFrame warning>
-	<template #title>
-		<div class="badge">O6</div>
-		<div>
-			<h1>Eddie rechnet: IMO 1985 Aufgabe B3</h1>
-			<p class="sub">Rekursion • Monotonie • Existenz & Eindeutigkeit</p>
-		</div>
-	</template>
+<AppFrame
+	short="O6"
+	:sub-chapter="{
+		rekursion: 'Rekursion',
+		monotonie: 'Monotonie',
+		'existenz-eindeutigkeit': 'Existenz & Eindeutigkeit'
+	}"
+	title="Eddie rechnet: IMO 1985 Aufgabe B3"
+	warning
+>
 
 	<template #descriptionPart>
 		<figure class="exampleFigure">
@@ -15,7 +17,7 @@
 			</ImageZoomer>
 		</figure>
 
-		<h2>Teil 1 — Aufgabenstellung (deutsch)</h2>
+		<h2 id="rekursion">Teil 1 — Aufgabenstellung</h2>
 		<div class="eddie">
 			<p>
 				Für jede reelle Startzahl <Katex tex="x_1" /> wird eine Folge durch
@@ -34,7 +36,7 @@
 			</p>
 		</div>
 
-		<h2 class="mt-8">Teil 2 — Umformulierung mit S_n</h2>
+		<h2 id="monotonie" class="mt-8">Teil 2 — Umformulierung mit S_n</h2>
 		<div class="eddie">
 			<p>
 				Definiere Hilfsfunktionen
@@ -50,7 +52,7 @@
 			</p>
 		</div>
 
-		<h2 class="mt-8">Teil 3 — Existenz über Intervallschachtelung</h2>
+		<h2 id="existenz-eindeutigkeit" class="mt-8">Teil 3 — Existenz über Intervallschachtelung</h2>
 		<div class="eddie">
 			<p>
 				Definiere <Katex tex="a_n,b_n" /> eindeutig durch

@@ -1,12 +1,15 @@
 <template>
-<AppFrame>
-	<template #title>
-		<div class="badge">DG</div>
-		<div>
-			<h1>Eddie rechnet: Lineare diophantische Gleichung</h1>
-			<p class="sub">Einführungsbeispiel • Erklärung • Rechner • Schritt-für-Schritt • Lösungstabelle</p>
-		</div>
-	</template>
+<AppFrame
+	short="DG"
+	:sub-chapter="{
+		'einfuhrungsbeispiel': 'Einführungsbeispiel',
+		'erklarung': 'Erklärung',
+		'rechner': 'Rechner',
+		'schritt-fur-schritt': 'Schritt-für-Schritt',
+		'losungstabelle': 'Lösungstabelle'
+	}"
+	title="Eddie rechnet: Lineare diophantische Gleichung"
+>
 
 	<template #descriptionPart>
 		<figure class="exampleFigure">
@@ -14,7 +17,7 @@
 				<img alt="Eddie rechnet" loading="lazy" :src="titleImg" />
 			</ImageZoomer>
 		</figure>
-		<h2>Teil 1 — Einfaches Beispiel</h2>
+		<h2 id="einfuhrungsbeispiel">Teil 1 — Einfaches Beispiel</h2>
 
 		<div class="eddie">
 			<p>
@@ -78,7 +81,7 @@
 			</p>
 		</div>
 
-		<h2 class="mt-8">Teil 2 — Eddie erklärt’s</h2>
+		<h2 id="erklarung" class="mt-8">Teil 2 — Eddie erklärt’s</h2>
 
 		<figure class="exampleFigure">
 			<ImageZoomer :title="`Grafik: ${example.a}k + ${example.b}s = ${example.c}`">
@@ -152,7 +155,7 @@
 	</template>
 
 	<template #interactivePart>
-		<h2>Teil 3 — Rechner: <Katex tex="ax + by = c" /></h2>
+		<h2 id="rechner">Teil 3 — Rechner: <Katex tex="ax + by = c" /></h2>
 
 		<v-card class="panel pa-5" >
 			<v-form autocomplete="off" @submit.prevent="submit">
@@ -217,7 +220,7 @@
 			</div>
 
 			<div v-if="steps" class="stepWrap">
-				<h3>Schritt-für-Schritt (ausklappbar)</h3>
+				<h3 id="schritt-fur-schritt">Schritt-für-Schritt (ausklappbar)</h3>
 
 				<v-expansion-panels multiple variant="accordion">
 					<v-expansion-panel :value="0">
@@ -325,7 +328,7 @@
 			</div>
 
 			<div v-if="lastSolution" class="tableWrap">
-				<h3>Viele Lösungen als Tabelle</h3>
+				<h3 id="losungstabelle">Viele Lösungen als Tabelle</h3>
 
 				<v-row dense>
 					<v-col cols="12" md="4">

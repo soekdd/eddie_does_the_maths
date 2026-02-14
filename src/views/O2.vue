@@ -1,12 +1,13 @@
 <template>
-<AppFrame warning>
-	<template #title>
-		<div class="badge">O2</div>
-		<div>
-			<h1>Eddie rechnet: IMO 1985 Aufgabe A2</h1>
-			<p class="sub">Entscheidungsbaum • Wahrscheinlichkeiten • Rechner</p>
-		</div>
-	</template>
+<AppFrame short="O2"
+	:sub-chapter="{
+		'entscheidungsbaum': 'Entscheidungsbaum',
+		'wahrscheinlichkeiten': 'Wahrscheinlichkeiten',
+		'rechner': 'Rechner'
+	}"
+	title="Eddie rechnet: IMO 1985 Aufgabe A2"
+	warning
+>
 
 	<template #descriptionPart>
 		<figure class="exampleFigure">
@@ -46,7 +47,7 @@
 			<p><strong>Zu zeigen:</strong> Alle Zahlen in <Katex :tex="'M'" /> müssen dieselbe Farbe haben.</p>
 		</div>
 
-		<h2 class="mt-8">Teil 2 — Eddies Idee</h2>
+		<h2 id="wahrscheinlichkeiten" class="mt-8">Teil 2 — Eddies Idee</h2>
 		<div class="eddie">
 			<p>
 				Stell dir vor, du gehst nicht „1,2,3,…“ entlang, sondern du springst in Schritten von <Katex :tex="'k'" />
@@ -59,7 +60,7 @@
 			</v-alert>
 		</div>
 
-		<h2 class="mt-8">Teil 3 — Beweis in drei Schritten</h2>
+		<h2 id="entscheidungsbaum" class="mt-8">Teil 3 — Beweis in drei Schritten</h2>
 		<div class="eddie">
 			<v-expansion-panels variant="accordion">
 				<v-expansion-panel>
@@ -150,7 +151,7 @@
 	</template>
 
 	<template #interactivePart>
-		<h2>Spielplatz: Prüfe es für konkrete n und k</h2>
+		<h2 id="rechner">Spielplatz: Prüfe es für konkrete n und k</h2>
 		<div class="eddie d-flex flex-column ga-3">
 			<p>
 				Ich baue die „gleichfarbig“-Regeln als Graph: Kante bedeutet „muss gleiche Farbe haben“.

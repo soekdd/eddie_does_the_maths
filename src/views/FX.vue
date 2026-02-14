@@ -1,12 +1,13 @@
 <template>
-<AppFrame warning>
-	<template #title>
-		<div class="badge">FX</div>
-		<div>
-			<h1>Eddie rechnet: Der fx-7000G</h1>
-			<p class="sub">Geschichte • BASIC-Denke • Interaktiver Rechner</p>
-		</div>
-	</template>
+<AppFrame short="FX"
+	:sub-chapter="{
+		'geschichte': 'Geschichte',
+		'basic-denke': 'BASIC-Denke',
+		'interaktiver-rechner': 'Interaktiver Rechner'
+	}"
+	title="Eddie rechnet: Der fx-7000G"
+	warning
+>
 
 	<template #descriptionPart>
 		<figure class="exampleFigure">
@@ -15,7 +16,7 @@
 			</ImageZoomer>
 		</figure>
 
-		<h2>Teil 1 — Warum der fx-7000G spannend ist</h2>
+		<h2 id="geschichte">Teil 1 — Warum der fx-7000G spannend ist</h2>
 		<div class="eddie">
 			<p>
 				Stell dir 1985 vor: Du bist ein Kind in der DDR, Computer kennst du nur aus der Ferne,
@@ -34,7 +35,7 @@
 			</p>
 		</div>
 
-		<h2 class="mt-8">Teil 2 — Eddie-Workflow auf dem Rechner</h2>
+		<h2 id="basic-denke" class="mt-8">Teil 2 — Eddie-Workflow auf dem Rechner</h2>
 		<div class="eddie">
 			<p>Wenn ich mit dem fx-7000G arbeite, nutze ich immer denselben Ablauf:</p>
 			<ol>
@@ -97,7 +98,7 @@
 	</template>
 
 	<template #interactivePart>
-		<h2> Interaktiv: fx-7000G ausprobieren</h2>
+		<h2 id="interaktiver-rechner"> Interaktiv: fx-7000G ausprobieren</h2>
 		<div class="eddie d-flex flex-column ga-3">
 			<p>
 				Leider darf ich nicht den echten fx-700G zeigen. Casio hält eifersüchtig am Copyright fest.

@@ -1,12 +1,14 @@
 <template>
-<AppFrame>
-	<template #title>
-		<div class="badge">PG</div>
-		<div>
-			<h1>Eddie rechnet: Five Card Draw - 7 statistische Aufgaben</h1>
-			<p class="sub">Poker • Wahrscheinlichkeiten • Bayes • EV</p>
-		</div>
-	</template>
+<AppFrame
+	short="PG"
+	:sub-chapter="{
+		'poker': 'Poker',
+		'wahrscheinlichkeiten': 'Wahrscheinlichkeiten',
+		'bayes': 'Bayes',
+		'ev': 'EV'
+	}"
+	title="Eddie rechnet: Five Card Draw - 7 statistische Aufgaben"
+>
 
 	<template #descriptionPart>
 		<figure class="exampleFigure">
@@ -14,7 +16,7 @@
 				<img alt="Eddie rechnet" loading="lazy" :src="titleImg" />
 			</ImageZoomer>
 		</figure>
-		<h2>Five Card Draw - Aufgabenblock</h2>
+		<h2 id="poker">Five Card Draw - Aufgabenblock</h2>
 		<div class="eddie">
 			<p>
 				Im <b>Five Card Draw</b> (5 Karten aus einem 52er-Deck, Reihenfolge egal) lassen sich
@@ -24,7 +26,7 @@
 		</div>
 
 		<section class="task">
-			<h3>Aufgabe 1 - Das klassische Paar: Lohnt sich "3 ziehen"?</h3>
+			<h3 id="wahrscheinlichkeiten">Aufgabe 1 - Das klassische Paar: Lohnt sich "3 ziehen"?</h3>
 			<div class="eddie">
 				<p>
 					<b>Situation:</b> Eddie haelt nach dem Deal ein Paar (z.B.
@@ -100,7 +102,7 @@
 		</section>
 
 		<section class="task">
-			<h3>Aufgabe 5 - Bayes aus Ziehzahl: Gegner zieht 1 Karte</h3>
+			<h3 id="bayes">Aufgabe 5 - Bayes aus Ziehzahl: Gegner zieht 1 Karte</h3>
 			<div class="eddie">
 				<p>
 					<b>Modellannahme (vereinfacht):</b>
@@ -140,7 +142,7 @@
 		</section>
 
 		<section class="task">
-			<h3>Aufgabe 7 - EV statt Bauchgefuehl: Welche Linie ist besser?</h3>
+			<h3 id="ev">Aufgabe 7 - EV statt Bauchgefuehl: Welche Linie ist besser?</h3>
 			<div class="eddie">
 				<p>
 					<b>Situation:</b> Eddie hat ein Paar und kann waehlen:

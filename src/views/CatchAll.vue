@@ -9,17 +9,16 @@ const where = computed( () => route.fullPath || route.path || "" );
 </script>
 
 <template>
-<AppFrame>
-	<template #title>
-		<div class="badge">…</div>
-		<div>
-			<h1>Eddie rechnet: Thema in Arbeit</h1>
-			<p class="sub">Dieses Thema ist noch nicht ausgearbeitet</p>
-		</div>
-	</template>
+<AppFrame
+	short="…"
+	title="Eddie rechnet: Thema in Arbeit"
+	:subChapter="{
+		'dieses-thema-ist-noch-nicht-ausgearbeitet': 'Dieses Thema ist noch nicht ausgearbeitet'
+	}"
+>
 
 	<template #descriptionPart>
-		<h2>Oh nein – das ist gerade eine echte <strong>404</strong>… sorry! 😅</h2>
+		<h2 id="dieses-thema-ist-noch-nicht-ausgearbeitet">Oh nein – das ist gerade eine echte <strong>404</strong>… sorry! 😅</h2>
 		<div class="eddie">
 			<p>Der Inhalt, den du suchst, ist noch nicht verfügbar, aber ich bin schon dran
 				und baue ihn gerade zusammen, Schritt für Schritt, wie eine Rechnung, die am Ende aufgeht.</p>

@@ -1,12 +1,13 @@
 <template>
-<AppFrame warning>
-	<template #title>
-		<div class="badge">O3</div>
-		<div>
-			<h1>Eddie rechnet: IMO 1985 Aufgabe A3</h1>
-			<p class="sub">Binomialkoeffizienten • Parität • Induktion</p>
-		</div>
-	</template>
+<AppFrame short="O3"
+	:sub-chapter="{
+		'binomialkoeffizienten': 'Binomialkoeffizienten',
+		'paritat': 'Parität',
+		'induktion': 'Induktion'
+	}"
+	title="Eddie rechnet: IMO 1985 Aufgabe A3"
+	warning
+>
 
 	<template #descriptionPart>
 		<figure class="exampleFigure">
@@ -15,7 +16,7 @@
 			</ImageZoomer>
 		</figure>
 
-		<h2>Teil 1 — Aufgabenstellung</h2>
+		<h2 id="binomialkoeffizienten">Teil 1 — Aufgabenstellung</h2>
 		<div class="eddie">
 			<p>
 				Für ein Polynom <Katex tex="P(x)=a_0+a_1x+\dots+a_kx^k" /> mit ganzzahligen Koeffizienten
@@ -34,7 +35,7 @@
 			</div>
 		</div>
 
-		<h2 class="mt-8">Teil 2 — Kernidee (Parität statt Größe)</h2>
+		<h2 id="paritat" class="mt-8">Teil 2 — Kernidee (Parität statt Größe)</h2>
 		<div class="eddie">
 			<p>
 				Wir schauen nur auf <b>ungerade/gerade</b> (also Modulo 2). Die exakten Größen der
@@ -56,7 +57,7 @@
 			</ul>
 		</div>
 
-		<h2 class="mt-8">Teil 3 — Beweisidee (Induktion mit 2er-Fenster)</h2>
+		<h2 id="induktion" class="mt-8">Teil 3 — Beweisidee (Induktion mit 2er-Fenster)</h2>
 		<div class="eddie">
 			<v-expansion-panels variant="accordion">
 				<v-expansion-panel>

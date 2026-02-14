@@ -1,18 +1,22 @@
 <template>
-<AppFrame>
-	<template #title>
-		<div class="badge">ST</div>
-		<div>
-			<h1>Eddie rechnet: Internationale Matheolympiade 1885 Aufgabe 1</h1>
-			<p class="sub">Entscheidungsbaum • Wahrscheinlichkeiten • Rechner</p>
-		</div>
-	</template>
+<AppFrame
+	short="ST"
+	title="Eddie rechnet: Internationale Matheolympiade 1885 Aufgabe 1"
+	:subChapter="{
+		'entscheidungsbaum': 'Entscheidungsbaum',
+		'wahrscheinlichkeiten': 'Wahrscheinlichkeiten',
+		'rechner': 'Rechner'
+	}"
+>
 
 	<template #descriptionPart>
+		<div id="entscheidungsbaum"></div>
+		<div id="wahrscheinlichkeiten"></div>
       
 	</template>
 
 	<template #interactivePart>
+		<div id="rechner"></div>
 
 	</template>
 

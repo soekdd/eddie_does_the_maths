@@ -1,12 +1,12 @@
 <template>
-<AppFrame>
-	<template #title>
-		<div class="badge">SE</div>
-		<div>
-			<h1>Eddie rechnet: Gute-Nacht-Rechenroutine</h1>
-			<p class="sub">Kleine Einschlafübungen • Muster statt Grübeln</p>
-		</div>
-	</template>
+<AppFrame
+	short="SE"
+	:sub-chapter="{
+		'kleine-einschlafubungen': 'Kleine Einschlafübungen',
+		'muster-statt-grubeln': 'Muster statt Grübeln'
+	}"
+	title="Eddie rechnet: Gute-Nacht-Rechenroutine"
+>
 
 	<template #descriptionPart>
 		<figure class="exampleFigure">
@@ -15,7 +15,7 @@
 			</ImageZoomer>
 		</figure>
 
-		<h2>Worum geht's?</h2>
+		<h2 id="muster-statt-grubeln">Worum geht's?</h2>
 		<div class="eddie">
 			<p>
 				Die Idee ist simpel: kurze, abgeschlossene Rechenmuster beruhigen den Kopf besser als
@@ -28,7 +28,7 @@
 			</p>
 		</div>
 
-		<h2 class="mt-8">Die 12 Rituale</h2>
+		<h2 id="kleine-einschlafubungen" class="mt-8">Die 12 Rituale</h2>
 		<div class="eddie">
 			<v-expansion-panels variant="accordion">
 				<v-expansion-panel v-for="item in routines" :key="item.id">

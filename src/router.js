@@ -21,7 +21,30 @@ import Welcome from "@/views/Welcome.vue";
 export const router = createRouter( {
 	// Keep this working for both dev-server and static file hosting.
 	history: createWebHashHistory(),
-	routes:  [
+	scrollBehavior(
+		to, _from, savedPosition
+	) {
+		if ( savedPosition ) {
+			return savedPosition;
+		}
+
+		if ( to.hash ) {
+			const hashOffset = globalThis.matchMedia?.( "(max-width: 860px)" )?.matches ? 132 : 96;
+
+			return {
+				el:       to.hash,
+				top:      hashOffset,
+				behavior: "smooth"
+			};
+		}
+
+		return {
+			top:      0,
+			left:     0,
+			behavior: "auto"
+		};
+	},
+	routes: [
 		{
 			path:      "/",
 			name:      "Welcome",

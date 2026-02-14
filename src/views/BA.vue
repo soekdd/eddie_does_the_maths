@@ -1,12 +1,13 @@
 <template>
-<AppFrame>
-	<template #title>
-		<div class="badge">BA</div>
-		<div>
-			<h1>Eddie rechnet: BASIC for runaways</h1>
-			<p class="sub">Cäsar • Vigenère • C64 Emulator</p>
-		</div>
-	</template>
+<AppFrame
+	short="BA"
+	:sub-chapter="{
+		'casar': 'Cäsar',
+		'vigenere': 'Vigenère',
+		'c64-emulator': 'C64 Emulator'
+	}"
+	title="Eddie rechnet: BASIC for runaways"
+>
 
 	<template #descriptionPart>
 		<figure class="exampleFigure">
@@ -59,7 +60,7 @@
 			</p>
 		</div>
 
-		<h2 class="mt-8">Teil 3 — Cäsar-Verschlüsselung</h2>
+		<h2 id="casar" class="mt-8">Teil 3 — Cäsar-Verschlüsselung</h2>
 		<div class="eddie">
 			<p class="mb-3">
 				Cäsar ist die Minimalversion: ein fester Shift <span class="font-weight-medium">k</span>.
@@ -120,7 +121,7 @@
 			</v-row>
 		</div>
 
-		<h2 class="mt-8">Teil 4 — Vigenère-Verschlüsselung</h2>
+		<h2 id="vigenere" class="mt-8">Teil 4 — Vigenère-Verschlüsselung</h2>
 		<div class="eddie">
 			<p class="mb-3">
 				Vigenère ist wie Cäsar – nur mit einem <strong>rotierenden Schlüssel</strong>.
@@ -263,7 +264,7 @@
 	</template>
 
 	<template #interactivePart>
-		<h2>BASIC-Emulator</h2>
+		<h2 id="c64-emulator">BASIC-Emulator</h2>
 		<div class="eddie d-flex flex-column ga-3">
 			<div class="kbox">
 				<v-row align="center" dense>

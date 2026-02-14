@@ -1,13 +1,14 @@
 <!-- eslint-disable vue/max-len -->
 <template>
-<AppFrame warning>
-	<template #title>
-		<div class="badge">AL</div>
-		<div>
-			<h1>Eddie rechnet: Kartenspiele mit Ada Lovelace</h1>
-			<p class="sub">Analytical Engine • Bernoulli-Zahlen • gcd</p>
-		</div>
-	</template>
+<AppFrame short="AL"
+	:sub-chapter="{
+		'analytical-engine': 'Analytical Engine',
+		'bernoulli-zahlen': 'Bernoulli-Zahlen',
+		'gcd': 'gcd'
+	}"
+	title="Eddie rechnet: Kartenspiele mit Ada Lovelace"
+	warning
+>
 
 	<template #descriptionPart>
 		<figure class="exampleFigure">
@@ -23,7 +24,7 @@
 			</p>
 		</div>
 
-		<h2>Teil 1 — Was ist Adas "Computer"?</h2>
+		<h2 id="analytical-engine">Teil 1 — Was ist Adas "Computer"?</h2>
 		<div class="eddie">
 			<p>
 				Adas Maschine heisst <b>Analytical Engine</b>. Sie wurde historisch nie vollständig gebaut,
@@ -48,7 +49,7 @@
 			</p>
 		</div>
 
-		<h2>Teil 2 — Was sind Bernoulli-Zahlen?</h2>
+		<h2 id="bernoulli-zahlen">Teil 2 — Was sind Bernoulli-Zahlen?</h2>
 		<div class="eddie">
 			<p>
 				Bernoulli-Zahlen <Katex inline tex="B_0,B_1,B_2,\dots" /> sind eine spezielle Zahlenfolge,
@@ -176,7 +177,7 @@
 			</ul>
 		</div>
 
-		<h2 class="mt-2">Teil 4 — Eddie kürzt Brüche mit Ada</h2>
+		<h2 id="gcd" class="mt-2">Teil 4 — Eddie kürzt Brüche mit Ada</h2>
 		<div class="eddie">
 			<p>
 				Brüche kürzen geht über den grössten gemeinsamen Teiler:
