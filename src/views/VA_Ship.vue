@@ -39,6 +39,11 @@
 			:y2="model.waterY"
 		/>
 
+		<g v-if="!props.nolegend" class="windLogo" :transform="model.windLogoTransform">
+			<!--  eslint-disable-next-line vue/max-len -->
+			<path d="M28.69,53.38c-1.61,0-2.91-1.3-2.91-2.91c0-1.61,1.3-2.91,2.91-2.91h51.37c0.21,0,0.42,0.02,0.62,0.07 c1.84,0.28,3.56,0.8,5.1,1.63c1.7,0.92,3.15,2.19,4.27,3.89c3.85,5.83,3.28,11.24,0.56,15.24c-1.77,2.61-4.47,4.55-7.45,5.57 c-3,1.03-6.32,1.13-9.32,0.03c-4.54-1.66-8.22-5.89-8.76-13.55c-0.11-1.6,1.1-2.98,2.7-3.09c1.6-0.11,2.98,1.1,3.09,2.7 c0.35,4.94,2.41,7.56,4.94,8.48c1.71,0.62,3.67,0.54,5.48-0.08c1.84-0.63,3.48-1.79,4.52-3.32c1.49-2.19,1.71-5.28-0.61-8.79 c-0.57-0.86-1.31-1.51-2.18-1.98c-0.91-0.49-1.97-0.81-3.13-0.99H28.69L28.69,53.38z M15.41,27.21c-1.61,0-2.91-1.3-2.91-2.91 c0-1.61,1.3-2.91,2.91-2.91h51.21c1.17-0.18,2.23-0.5,3.14-0.99c0.87-0.47,1.61-1.12,2.18-1.98c2.32-3.51,2.09-6.6,0.61-8.79 c-1.04-1.53-2.68-2.69-4.52-3.32c-1.81-0.62-3.78-0.7-5.48-0.08c-2.52,0.92-4.59,3.54-4.94,8.48c-0.11,1.6-1.49,2.81-3.09,2.7 c-1.6-0.11-2.81-1.49-2.7-3.09c0.54-7.66,4.22-11.89,8.76-13.55c3-1.09,6.32-0.99,9.32,0.03c2.98,1.02,5.68,2.97,7.45,5.57 c2.72,4,3.29,9.41-0.56,15.24c-1.12,1.7-2.57,2.97-4.27,3.89c-1.54,0.83-3.26,1.35-5.1,1.63c-0.2,0.04-0.41,0.07-0.62,0.07H15.41 L15.41,27.21z M2.91,40.3C1.3,40.3,0,38.99,0,37.39c0-1.61,1.3-2.91,2.91-2.91h107.07c1.17-0.18,2.23-0.5,3.13-0.99 c0.87-0.47,1.61-1.12,2.18-1.98c2.32-3.51,2.09-6.6,0.61-8.79c-1.04-1.53-2.68-2.69-4.52-3.32c-1.81-0.62-3.78-0.7-5.48-0.08 c-2.52,0.92-4.59,3.54-4.94,8.48c-0.11,1.6-1.49,2.81-3.09,2.7c-1.6-0.11-2.81-1.49-2.7-3.09c0.54-7.66,4.22-11.89,8.76-13.55 c3-1.09,6.32-0.99,9.32,0.03c2.98,1.02,5.68,2.97,7.45,5.57c2.72,4,3.29,9.41-0.56,15.24c-1.12,1.7-2.57,2.97-4.27,3.89 c-1.54,0.83-3.26,1.35-5.1,1.63c-0.2,0.04-0.41,0.07-0.62,0.07H2.91L2.91,40.3z" />
+		</g>
+
 		<g>
 			<polygon class="hull" :points="model.hullPoints" />
 			<line class="deck"
@@ -110,7 +115,7 @@
 				:y2="model.axisNowB.y"
 			/>
 			<text class="valueText" :x="model.phiLabel.x" :y="model.phiLabel.y">
-				phi = {{ fmt( model.heelDeg, 1 ) }} deg
+				phi = {{ fmt( -model.heelDeg, 1 ) }} deg
 			</text>
 		</g>
 
@@ -278,12 +283,13 @@ const model = computed( () => {
 	const kb = Math.max( 0.05, toFinite( props.kb, 2.5 ) );
 	const bm = Math.max( 0.01, toFinite( props.bm, 0.8 ) );
 	const gm = toFinite( props.gm, 0.5 );
-	const heelDeg = clamp(
+	const heelDeg = -clamp(
 		toFinite( props.heelDeg, 0 ),
 		-70,
 		70
 	);
 	const windMoment = Math.max( 0, toFinite( props.windMoment, 0 ) );
+	const windSpeed = Math.max( 0, toFinite( props.windSpeed, 0 ) );
 	const restoringMoment = toFinite( props.restoringMoment, 0 );
 	const hCe = Math.max( depth + 0.5, toFinite( props.hCe, depth + 1.5 ) );
 	const zoom = clamp(
@@ -305,18 +311,11 @@ const model = computed( () => {
 	const scaleX = width * 0.96 / ( 2 * extX );
 	const scaleY = height * 0.90 / ( extY + draft + 1.2 );
 	const scale = Math.max( 9, Math.min( scaleX, scaleY ) );
-	const cx = width * 0.5;
-	const waterY = height * 0.76;
 
 	const pivot = {
 		x: 0,
 		y: kb
 	};
-
-	const toScreen = ( p ) => ( {
-		x: cx + p.x * scale,
-		y: waterY - ( p.y - draft ) * scale
-	} );
 
 	const hullBase = [
 		{
@@ -362,6 +361,19 @@ const model = computed( () => {
 		pivot,
 		heelRad
 	) );
+	const hullWorldXs = hullWorld.map( ( p ) => p.x );
+	const hullWorldWidth = Math.max( ...hullWorldXs ) - Math.min( ...hullWorldXs );
+	const freeViewportWidth = Math.max( 0,
+		width - hullWorldWidth * scale );
+	const shipLeftShift = freeViewportWidth * 0.2;
+	const cx = width * 0.5 - shipLeftShift;
+	const waterY = height * 0.76;
+
+	const toScreen = ( p ) => ( {
+		x: cx + p.x * scale,
+		y: waterY - ( p.y - draft ) * scale
+	} );
+
 	const hullScreen = hullWorld.map( toScreen );
 	const hullXs = hullScreen.map( ( p ) => p.x );
 	const hullYs = hullScreen.map( ( p ) => p.y );
@@ -501,8 +513,8 @@ const model = computed( () => {
 		heelRad
 	) );
 
-	const draftWorldX = halfB + 1.3;
-	const depthWorldX = halfB + 2.7;
+	const draftWorldX = -halfB - 1.3;
+	const depthWorldX = -halfB - 2.7;
 	const draftTop = toScreen( {
 		x: draftWorldX,
 		y: draft
@@ -553,7 +565,7 @@ const model = computed( () => {
 		`GM = ${fmt( gm, 2 )} m`,
 		`M_w = ${fmt( windMoment / 1000, 1 )} kN m`,
 		`M_r = ${fmt( restoringMoment / 1000, 1 )} kN m`,
-		`v = ${fmt( Math.max( 0, toFinite( props.windSpeed, 0 ) ), 1 )} m/s, A = ${
+		`v = ${fmt( windSpeed, 1 )} m/s, A = ${
 			fmt( Math.max( 0, toFinite( props.sailArea, 0 ) ), 0 )} m^2`,
 		`Downflooding bei phi ~= ${fmt( toFinite( props.downfloodAngle, NaN ), 1 )} deg`,
 		`Status: ${statusText}`
@@ -572,11 +584,19 @@ const model = computed( () => {
 		0,
 		height - shipViewH
 	);
+	const windLogoScale = clamp(
+		0.28 + windSpeed / 40,
+		0.28,
+		1.15
+	);
+	const windLogoX = shipViewX + shipViewW * 0.04;
+	const windLogoY = shipViewY + shipViewH * 0.25;
 
 	return {
 		width,
 		height,
-		shipViewBox: `${shipViewX} ${shipViewY} ${shipViewW} ${shipViewH}`,
+		shipViewBox:       `${shipViewX} ${shipViewY} ${shipViewW} ${shipViewH}`,
+		windLogoTransform: `translate(${windLogoX} ${windLogoY}) scale(${windLogoScale})`,
 		waterY,
 		beam,
 		depth,
@@ -588,8 +608,8 @@ const model = computed( () => {
 		heelDeg,
 		windMoment,
 		restoringMoment,
-		hullPoints:  pointsToString( hullScreen ),
-		sailPoints:  pointsToString( [ sailA, sailB, sailC ] ),
+		hullPoints:        pointsToString( hullScreen ),
+		sailPoints:        pointsToString( [ sailA, sailB, sailC ] ),
 		deckL,
 		deckR,
 		mastBase,
@@ -601,7 +621,7 @@ const model = computed( () => {
 		windTo,
 		weightTo,
 		buoyTo,
-		windText:    {
+		windText:          {
 			x: ce.x + windLen + 8,
 			y: ce.y - 2
 		},
@@ -683,6 +703,10 @@ const model = computed( () => {
   stroke: rgba(14, 165, 233, 0.9);
   stroke-width: 2;
   stroke-dasharray: 7 5;
+}
+
+.windLogo path {
+  fill: #7dd3fc;
 }
 
 .hull {

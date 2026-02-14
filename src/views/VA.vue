@@ -765,11 +765,18 @@ const calc = computed( () => {
 
 	const stableDenominator = displacementKg * G * Math.max( gmEff, 1e-9 );
 	const ratio = gmEff > 0 ? windMoment / stableDenominator : Number.POSITIVE_INFINITY;
+	const windDrive = windMoment / ( displacementKg * G * Math.max( beam * 0.5, 0.25 ) );
 
 	let heelDeg = 0;
 
 	if ( gmEff <= 0 ) {
-		heelDeg = Math.min( 70, downfloodAngle + 14 );
+		// Even in unstable mode, stronger wind should increase heel.
+		const instability = Math.max( 0, -gmEff );
+		const baseHeel = downfloodAngle * 0.55 + 3 + instability * 2.5;
+		const windHeel = radToDeg( Math.atan( windDrive * 5 ) );
+		heelDeg = clamp( baseHeel + windHeel,
+			0,
+			70 );
 	} else if ( ratio <= 1 ) {
 		heelDeg = radToDeg( Math.asin( Math.max( 0, ratio ) ) );
 	} else {
