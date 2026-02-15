@@ -12,6 +12,11 @@
 >
 
 	<template #descriptionPart>
+		<figure class="exampleFigure">
+			<ImageZoomer :title="`Eddie`">
+				<img alt="Eddie und die Vasa" loading="lazy" :src="titleImg" />
+			</ImageZoomer>
+		</figure>
 		<h2 id="frage">Wie wahrscheinlich ist "maximal 100 m bis zum nächsten See"?</h2>
 		<div class="eddie">
 			<p>
@@ -242,7 +247,7 @@
 
 <script setup>
 import { computed } from "vue";
-
+import titleImg from "@/images/UD.webp";
 import UD_Graph from "./UD_Graph.vue";
 import UD_Finland from "./UD_Finland.vue";
 
