@@ -16,6 +16,7 @@ import SE from "@/views/SE.vue";
 import RD from "@/views/RD.vue";
 import FX from "@/views/FX.vue";
 import VA from "@/views/VA.vue";
+import QH from "@/views/QH.vue";
 import CatchAll from "@/views/CatchAll.vue";
 import Welcome from "@/views/Welcome.vue";
 
@@ -261,9 +262,9 @@ export const router = createRouter( {
 		{
 			path:      "/QH",
 			name:      "QH",
-			component: CatchAll,
+			component: QH,
 			meta:      {
-				title: "Der Quanten-Hall-Effekt", index: true, book: 1, order: 250, wip: true
+				title: "Der Quanten-Hall-Effekt", index: true, book: 1, order: 250
 			}
 		},
 		{
