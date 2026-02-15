@@ -6,13 +6,11 @@
 		'wahrscheinlichkeiten': 'Wahrscheinlichkeiten',
 		'rechner': 'Rechner'
 	}"
-	title="Eddie rechnet: Internationale Matheolympiade 1885 Aufgabe 1"
+	title="Eddie rechnet: Mathezettel #3 Uferaufdickung"
 >
 
 	<template #descriptionPart>
-		<div id="entscheidungsbaum"></div>
-		<div id="wahrscheinlichkeiten"></div>
-      
+		<UD_Graph/>
 	</template>
 
 	<template #interactivePart>
@@ -31,4 +29,5 @@
 </template>
 
 <script setup>
+import UD_Graph from "./UD_Graph.vue";
 </script>

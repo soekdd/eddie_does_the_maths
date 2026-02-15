@@ -15,6 +15,7 @@ import BA from "@/views/BA.vue";
 import SE from "@/views/SE.vue";
 import RD from "@/views/RD.vue";
 import FX from "@/views/FX.vue";
+import UD from "@/views/UD.vue";
 import VA from "@/views/VA.vue";
 import QH from "@/views/QH.vue";
 import CatchAll from "@/views/CatchAll.vue";
@@ -182,9 +183,9 @@ export const router = createRouter( {
 		{
 			path:      "/UD",
 			name:      "UD",
-			component: CatchAll,
+			component: UD,
 			meta:      {
-				title: "Minkow&shy;skis Ufer&shy;auf&shy;dickung", index: true, book: 1, order: 150, wip: true
+				title: "Minkow&shy;skis Ufer&shy;auf&shy;dickung", index: true, book: 1, order: 150
 			}
 		},
 		{
