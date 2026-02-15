@@ -5,7 +5,7 @@
 		'frage': 'Fragestellung',
 		'formel': 'Formel',
 		'winkel': 'Winkelargument',
-		'finnland': 'Finnland'
+		'finnland': 'Länderbeispiel'
 	}"
 	title="Eddie rechnet: Frühstückszettel #3 Uferaufdickung"
 	warning
@@ -153,38 +153,51 @@
 	</template>
 
 	<template #interactivePart>
-		<h2 id="finnland">Beispiel: Finnlandkarte</h2>
+		<h2 id="finnland">Beispiel: {{ activeCountry.name }}</h2>
+		<v-select
+			v-model="selectedCountryCode"
+			class="mb-4"
+			density="comfortable"
+			hide-details
+			item-title="name"
+			item-value="code"
+			:items="COUNTRY_DATA"
+			label="Land auswählen"
+			variant="outlined"
+		/>
 		<div class="eddie">
 			<p>
 				Der Slider steuert <Katex tex="h" /> direkt die Uferflächen:
 			</p>
 		</div>
-		<UD_Finland/>
+		<UD_Finland v-if="activeCountry.code === 'FI'"/>
+		<UD_Germany v-else-if="activeCountry.code === 'DE'"/>
+		<UD_Finland v-else/>
 	</template>
 
 	<template #calculationPart>
-		<h2>Berechnung für Finnland</h2>
+		<h2>Berechnung für {{ activeCountry.name }}</h2>
 		<div class="eddie">
 			<p>
 				Verwendete Distanzschwelle:
 				<Katex :tex="`h=${hDistanceMeters}\\ \\mathrm{m}=${hDistanceKm}\\ \\mathrm{km}`" /> und
 				Kontrollwert <Katex :tex="`h=${hStressKm}\\ \\mathrm{km}`" />.
 			</p>
-			<div id="werteFinnland" class="kbox">
+			<div id="werteLand" class="kbox">
 				<Katex
 					as="div"
 					display
-					:tex="texFinnlandLakesCount"
+					:tex="texCountryLakesCount"
 				/>
 				<Katex
 					as="div"
 					display
-					:tex="texFinnlandShoreline"
+					:tex="texCountryShoreline"
 				/>
 				<Katex
 					as="div"
 					display
-					:tex="texFinnlandLandArea"
+					:tex="texCountryLandArea"
 				/>
 			</div>
 			<h3>Stufe 1: Additive Näherung</h3>
@@ -246,10 +259,14 @@
 </template>
 
 <script setup>
-import { computed } from "vue";
+import {
+	computed,
+	ref
+} from "vue";
 import titleImg from "@/images/UD.webp";
 import UD_Graph from "./UD_Graph.vue";
 import UD_Finland from "./UD_Finland.vue";
+import UD_Germany from "./UD_Germany.vue";
 
 const COUNTRY_DATA = [
 	{
@@ -258,24 +275,31 @@ const COUNTRY_DATA = [
 		lakesCount:  187888,
 		shorelineKm: 214896,
 		landAreaKm2: 304000
+	},
+	{
+		code:        "DE",
+		name:        "Deutschland",
+		lakesCount:  12000,
+		shorelineKm: 11000,
+		landAreaKm2: 353674
 	}
 ];
 
-const ACTIVE_COUNTRY_CODE = "FI";
+const selectedCountryCode = ref( COUNTRY_DATA[ 0 ]?.code ?? "FI" );
 const hDistanceMeters = 100;
 const hDistanceKm = hDistanceMeters / 1000;
 const hStressKm = 1;
 
 const activeCountry = computed( () =>
-	COUNTRY_DATA.find( ( c ) => c.code === ACTIVE_COUNTRY_CODE ) ?? COUNTRY_DATA[ 0 ] );
+	COUNTRY_DATA.find( ( c ) => c.code === selectedCountryCode.value ) ?? COUNTRY_DATA[ 0 ] );
 
 const mainModel = computed( () => computeModelValues( hDistanceKm, activeCountry.value ) );
 const stressModel = computed( () => computeModelValues( hStressKm, activeCountry.value ) );
-const texFinnlandLakesCount = computed( () =>
+const texCountryLakesCount = computed( () =>
 	`n_{\\text{Seen}}=${fmtIntMath( activeCountry.value.lakesCount )}` );
-const texFinnlandShoreline = computed( () =>
+const texCountryShoreline = computed( () =>
 	`d_{\\text{Seen}}=${fmtIntMath( activeCountry.value.shorelineKm )}\\ \\mathrm{km}` );
-const texFinnlandLandArea = computed( () =>
+const texCountryLandArea = computed( () =>
 	`A_{\\text{Land}}=${fmtIntMath( activeCountry.value.landAreaKm2 )}\\ \\mathrm{km}^2` );
 
 const texStage1Main = computed( () => [

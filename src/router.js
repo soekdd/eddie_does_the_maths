@@ -18,6 +18,7 @@ import FX from "@/views/FX.vue";
 import UD from "@/views/UD.vue";
 import VA from "@/views/VA.vue";
 import QH from "@/views/QH.vue";
+import FS from "@/views/FS.vue";
 import CatchAll from "@/views/CatchAll.vue";
 import Welcome from "@/views/Welcome.vue";
 
@@ -167,9 +168,9 @@ export const router = createRouter( {
 		{
 			path:      "/FS",
 			name:      "FS",
-			component: CatchAll,
+			component: FS,
 			meta:      {
-				title: "Fischsee", index: true, book: 1, order: 130, wip: true
+				title: "Fischsee", index: true, book: 1, order: 130
 			}
 		},
 		{

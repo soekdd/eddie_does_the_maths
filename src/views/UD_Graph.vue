@@ -750,6 +750,17 @@ function fmt( value ) {
 
 <style scoped>
 .udGraph {
+	--ud-surface: rgb(var(--v-theme-surface, 255, 255, 255));
+	--ud-on-surface: rgb(var(--v-theme-on-surface, 17, 17, 17));
+	--ud-primary: rgb(var(--v-theme-primary, 2, 132, 199));
+	--ud-on-primary: rgb(var(--v-theme-on-primary, 255, 255, 255));
+	--ud-info: rgb(var(--v-theme-info, 37, 99, 235));
+	--ud-success: rgb(var(--v-theme-success, 16, 185, 129));
+	--ud-warning: rgb(var(--v-theme-warning, 245, 158, 11));
+	--ud-error: rgb(var(--v-theme-error, 225, 29, 72));
+	--ud-border: rgba(var(--v-theme-on-surface, 17, 17, 17), 0.16);
+	--ud-muted: rgba(var(--v-theme-on-surface, 17, 17, 17), 0.72);
+
 	display: flex;
 	flex-direction: column;
 	gap: 10px;
@@ -770,15 +781,15 @@ function fmt( value ) {
 }
 
 .vertexSlider {
-	accent-color: #204ecf;
+	accent-color: var(--ud-primary);
 	width: 150px;
 }
 
 .regenButton {
-	background: #204ecf;
+	background: var(--ud-primary);
 	border: 0;
 	border-radius: 10px;
-	color: #fff;
+	color: var(--ud-on-primary);
 	cursor: pointer;
 	font-size: 0.92rem;
 	font-weight: 600;
@@ -786,23 +797,26 @@ function fmt( value ) {
 }
 
 .regenButton:hover {
-	background: #1a43ba;
+	background: rgba(var(--v-theme-primary, 2, 132, 199), 0.9);
 }
 
 .regenButton:focus-visible {
-	outline: 2px solid #0f4d7a;
+	outline: 2px solid var(--ud-info);
 	outline-offset: 2px;
 }
 
 .meta {
-	color: var(--v-theme-on-surface, #2a2a2a);
+	color: rgba(var(--v-theme-on-surface, 17, 17, 17), 0.78);
 	font-size: 0.9rem;
-	opacity: 0.78;
 }
 
 .canvas {
-	background: linear-gradient(180deg, #fff, #f7f9ff);
-	border: 1px solid #d6dcef;
+	background: linear-gradient(
+		180deg,
+		rgba(var(--v-theme-surface, 255, 255, 255), 1) 0%,
+		rgba(var(--v-theme-primary, 2, 132, 199), 0.08) 100%
+	);
+	border: 1px solid var(--ud-border);
 	border-radius: 12px;
 	cursor: pointer;
 	height: auto;
@@ -815,27 +829,27 @@ function fmt( value ) {
 }
 
 .polygon {
-	fill: rgba(32, 78, 207, 0.14);
-	stroke: rgba(32, 78, 207, 0.38);
+	fill: rgba(var(--v-theme-primary, 2, 132, 199), 0.14);
+	stroke: rgba(var(--v-theme-primary, 2, 132, 199), 0.38);
 	stroke-linejoin: round;
 	stroke-width: 1.4;
 }
 
 .edgeRect {
-	fill: rgba(215, 38, 61, 0.18);
-	stroke: rgba(215, 38, 61, 0.5);
+	fill: rgba(var(--v-theme-error, 225, 29, 72), 0.2);
+	stroke: rgba(var(--v-theme-error, 225, 29, 72), 0.5);
 	stroke-width: 1;
 }
 
 .cornerSliceConvex {
-	fill: rgba(20, 150, 120, 0.46);
-	stroke: rgba(12, 110, 90, 0.9);
+	fill: rgba(var(--v-theme-success, 16, 185, 129), 0.44);
+	stroke: rgba(var(--v-theme-success, 16, 185, 129), 0.9);
 	stroke-width: 1;
 }
 
 .cornerSliceConcave {
-	fill: rgba(242, 147, 34, 0.48);
-	stroke: rgba(196, 94, 12, 0.9);
+	fill: rgba(var(--v-theme-warning, 245, 158, 11), 0.42);
+	stroke: rgba(var(--v-theme-warning, 245, 158, 11), 0.9);
 	stroke-width: 1;
 }
 
@@ -845,13 +859,13 @@ function fmt( value ) {
 
 .slicePackCircle {
 	fill: none;
-	stroke: rgba(28, 53, 99, 0.7);
+	stroke: rgba(var(--v-theme-on-surface, 17, 17, 17), 0.7);
 	stroke-dasharray: 3 3;
 	stroke-width: 1.2;
 }
 
 .edge {
-	stroke: #204ecf;
+	stroke: var(--ud-primary);
 	stroke-width: 2.2;
 }
 
@@ -860,23 +874,23 @@ function fmt( value ) {
 }
 
 .point {
-	fill: #113189;
+	fill: var(--ud-info);
 	transition: r 120ms ease;
 }
 
 .point.active {
-	fill: #d7263d;
+	fill: var(--ud-error);
 }
 
 .pointLabel {
-	fill: #12295f;
+	fill: var(--ud-on-surface);
 	font-size: 12px;
 	font-weight: 600;
 	pointer-events: none;
 }
 
 .hint {
-	color: #3b4361;
+	color: var(--ud-muted);
 	font-size: 0.9rem;
 	margin: 0;
 }

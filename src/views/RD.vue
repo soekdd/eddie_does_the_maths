@@ -1,11 +1,12 @@
 <template>
-<AppFrame short="RD"
+<AppFrame
+	error
+	short="RD"
 	:sub-chapter="{
 		'depot-strategie': 'Depot-Strategie',
 		'vorstufe-plus-klassisches-mehrdepot-modell': 'Vorstufe + klassisches Mehrdepot-Modell'
 	}"
-	title="Eddie rechnet: Das Rentier-Problem"
-	warning
+	title="Eddie rechnet: Frühstückszettel #2 Das Rentier-Problem"
 >
 
 	<template #descriptionPart>

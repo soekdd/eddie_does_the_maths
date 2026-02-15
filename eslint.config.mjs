@@ -6,7 +6,7 @@ import jsdoc from "eslint-plugin-jsdoc";
 import vueParser from "vue-eslint-parser";
 import importPlugin from "eslint-plugin-import";
 import preferOptionalChaining from "eslint-plugin-prefer-optional-chaining";
-import pluginSVGO from "eslint-plugin-svgo";
+import pluginSVGO, { parserPlain } from "eslint-plugin-svgo";
 import tsParser from "@typescript-eslint/parser";
 
 export default [
@@ -14,6 +14,7 @@ export default [
 	{
 		files:   [ "**/*.svg" ],
 		ignores: [ "icons/*.svg" ],
+		languageOptions: { parser: parserPlain },
 		plugins: { svgo: pluginSVGO },
 		rules:   {
 			  "svgo/svgo": [ "error", {

@@ -34,6 +34,17 @@
 	<v-main>
 		<v-container class="wrap mainWrap">
 			<v-alert
+				v-if="showError"
+				border="start"
+				class="wipAlert"
+				:density="isMobile ? 'compact' : 'comfortable'"
+				type="error"
+				variant="tonal"
+			>
+				{{ errorMessage }}
+			</v-alert>
+
+			<v-alert
 				v-if="showWarning"
 				border="start"
 				class="wipAlert"
@@ -137,6 +148,11 @@ import privacyPolicyHtml from "./utils/disclaimer/privacy_policy_de.html?raw";
 import faviconPng from "./images/favicon.png";
 
 const props = defineProps( {
+	// Show an error banner for content that is known to contain mistakes.
+	// Usage:
+	// - <AppFrame error> ... </AppFrame> (default text)
+	// - <AppFrame error="Custom text"> ... </AppFrame>
+	error:      { type: [ Boolean, String ], default: false },
 	// Show a "work in progress" banner for content that isn't finished yet.
 	// Usage:
 	// - <AppFrame warning> ... </AppFrame> (default text)
@@ -159,6 +175,19 @@ const route = useRoute();
 const isMobile = computed( () => width.value < 860 );
 const appBarHeight = computed( () => isMobile.value ? 108 : 72 );
 
+const errorMessage = computed( () => {
+	if ( props.error === true ) {
+		return "Achtung: Dieser Inhalt ist bekanntermaßen noch fehlerhaft. " +
+			"Texte, Grafiken und Rechenwege können falsch sein.";
+	}
+
+	if ( typeof props.error === "string" ) {
+		return props.error.trim();
+	}
+
+	return "";
+} );
+
 const warningMessage = computed( () => {
 	if ( props.warning === true ) {
 		return "Hinweis: An diesem Inhalt wird noch gearbeitet. " +
@@ -172,6 +201,7 @@ const warningMessage = computed( () => {
 	return "";
 } );
 
+const showError = computed( () => Boolean( errorMessage.value ) );
 const showWarning = computed( () => Boolean( warningMessage.value ) );
 const hasInteractivePart = computed( () => Boolean( slots.interactivePart ) );
 const hasCalculationPart = computed( () => Boolean( slots.calculationPart ) );

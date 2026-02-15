@@ -1,11 +1,11 @@
 <template>
-<div class="udFinnland">
+<div class="udGermany">
 	<div class="controls">
-		<label class="meta" for="shoreWidth">
+		<label class="meta" for="shoreWidthGermany">
 			Uferbreite h:
 		</label>
 		<input
-			id="shoreWidth"
+			id="shoreWidthGermany"
 			v-model.number="shoreWidth"
 			:max="maxBorder"
 			:min="minBorder"
@@ -14,7 +14,7 @@
 		/>
 	</div>
 
-	<div ref="svgHost" class="mapFrame" v-html="finlandSvgRaw"></div>
+	<div ref="svgHost" class="mapFrame" v-html="germanySvgRaw"></div>
 </div>
 </template>
 
@@ -26,7 +26,7 @@ import {
 	watch
 } from "vue";
 
-import finlandSvgRaw from "./UD_Finland.svg?raw";
+import germanySvgRaw from "./UD_Germany.svg?raw";
 
 const SVG_NS = "http://www.w3.org/2000/svg";
 
@@ -121,7 +121,7 @@ function updateLakesOverlay() {
 </script>
 
 <style scoped>
-.udFinnland {
+.udGermany {
 	display: flex;
 	flex-direction: column;
 	gap: 10px;
