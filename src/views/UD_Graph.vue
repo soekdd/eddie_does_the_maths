@@ -8,9 +8,20 @@
 		>
 			Neues Polygon
 		</button>
-		<span class="meta">Punkte: {{ model.vertexCount }}</span>
+		<label class="vertexControl" for="vertexCountSlider">
+			<span class="meta">Ecken: {{ vertexCountTarget }}</span>
+			<input
+				id="vertexCountSlider"
+				v-model.number="vertexCountTarget"
+				class="vertexSlider"
+				:max="MAX_VERTEX_COUNT"
+				:min="MIN_VERTEX_COUNT"
+				step="1"
+				type="range"
+				@input="regenerate"
+			>
+		</label>
 		<span class="meta">Typ: {{ model.concave ? "konkav" : "konvex" }}</span>
-		<span class="meta">H: {{ fmt( stripHeight ) }}</span>
 	</div>
 
 	<svg
@@ -99,7 +110,7 @@
 	</svg>
 
 	<p class="hint">
-		Klick auf die SVG oder auf "Neues Polygon", um neue Zufallspunkte (5-7) zu erzeugen.
+		Im Kreis oben rechts wird klar, dass die Kreissektoren um die Ecken in der Summe genau eine Kreisfläche ergeben.
 	</p>
 </div>
 </template>
@@ -110,14 +121,19 @@ import { computed, ref } from "vue";
 const VIEWBOX_WIDTH = 640;
 const VIEWBOX_HEIGHT = 420;
 const VIEWBOX_PADDING = 34;
+const VIEWBOX_LEFT_SHIFT_RATIO = 0.05;
+const MIN_VERTEX_COUNT = 4;
+const MAX_VERTEX_COUNT = 12;
 const EPS = 1e-9;
 const MAX_GENERATION_ATTEMPTS = 200;
+const SLICE_PACK_GAP = 6;
 const SLICE_PACK_CENTER = {
 	x: VIEWBOX_WIDTH - 78,
 	y: 74
 };
 
-const model = ref( createPolygonModel() );
+const vertexCountTarget = ref( 6 );
+const model = ref( createPolygonModel( vertexCountTarget.value ) );
 const hoveredIndex = ref( -1 );
 
 const ariaLabel = computed( () => `Zufallspolygon mit ${model.value.vertexCount} Punkten` );
@@ -297,7 +313,8 @@ const cornerSlices = computed( () => {
 			index:  i,
 			kind,
 			d:      sector.d,
-			center: sector.center
+			center: sector.center,
+			dir:    sector.dir
 		} );
 	}
 
@@ -306,7 +323,11 @@ const cornerSlices = computed( () => {
 
 const packedCornerSlices = computed( () => cornerSlices.value.map( ( slice ) => ( {
 	...slice,
-	transform: `translate(${SLICE_PACK_CENTER.x - slice.center.x} ${SLICE_PACK_CENTER.y - slice.center.y})`
+	transform: `translate(${
+		SLICE_PACK_CENTER.x - slice.center.x + slice.dir.x * SLICE_PACK_GAP
+	} ${
+		SLICE_PACK_CENTER.y - slice.center.y + slice.dir.y * SLICE_PACK_GAP
+	})`
 } ) ) );
 
 function buildSectorPath(
@@ -335,10 +356,15 @@ function buildSectorPath(
 		x: center.x + Math.cos( a0 + delta ) * radius,
 		y: center.y + Math.sin( a0 + delta ) * radius
 	};
+	const midAngle = a0 + delta / 2;
 	const sweep = delta >= 0 ? 1 : 0;
 
 	return {
 		center,
+		dir: {
+			x: Math.cos( midAngle ),
+			y: Math.sin( midAngle )
+		},
 		d: `M ${center.x} ${center.y} L ${start.x} ${start.y} A ${radius} ${radius} 0 0 ${sweep} ${end.x} ${end.y} Z`
 	};
 }
@@ -362,14 +388,14 @@ function cross2d( a, b ) {
 }
 
 function regenerate() {
-	model.value = createPolygonModel();
+	model.value = createPolygonModel( vertexCountTarget.value );
 	hoveredIndex.value = -1;
 }
 
-function createPolygonModel() {
+function createPolygonModel( vertexCountInput ) {
+	const vertexCount = clampVertexCount( vertexCountInput );
+
 	for ( let attempt = 0; attempt < MAX_GENERATION_ATTEMPTS; attempt++ ) {
-		const vertexCount = randInt( 5,
-			7 );
 		const rawPoints = makeAngularPolygon( vertexCount );
 
 		if ( !isSimplePolygon( rawPoints ) ) {
@@ -400,35 +426,18 @@ function createPolygonModel() {
 		};
 	}
 
+	const fallback = normalizeToViewbox(
+		makeRegularPolygon( vertexCount,
+			140 ),
+		VIEWBOX_WIDTH,
+		VIEWBOX_HEIGHT,
+		VIEWBOX_PADDING
+	);
+
 	return {
-		points: [
-			{
-				x: 130,
-				y: 140
-			},
-			{
-				x: 330,
-				y: 90
-			},
-			{
-				x: 510,
-				y: 170
-			},
-			{
-				x: 450,
-				y: 320
-			},
-			{
-				x: 250,
-				y: 350
-			},
-			{
-				x: 110,
-				y: 250
-			}
-		],
-		vertexCount: 6,
-		concave:     true
+		points:      fallback,
+		vertexCount: vertexCount,
+		concave:     false
 	};
 }
 
@@ -460,6 +469,20 @@ function makeAngularPolygon( vertexCount ) {
 	} ) );
 }
 
+function makeRegularPolygon( vertexCount, radius ) {
+	const points = [];
+	const step = Math.PI * 2 / vertexCount;
+
+	for ( let i = 0; i < vertexCount; i++ ) {
+		points.push( {
+			x: Math.cos( step * i ) * radius,
+			y: Math.sin( step * i ) * radius
+		} );
+	}
+
+	return points;
+}
+
 function normalizeToViewbox(
 	points, width, height, padding
 ) {
@@ -488,7 +511,7 @@ function normalizeToViewbox(
 	const scale = Math.min( drawableW / spanX, drawableH / spanY );
 	const occupiedW = spanX * scale;
 	const occupiedH = spanY * scale;
-	const offsetX = ( width - occupiedW ) / 2;
+	const offsetX = ( width - occupiedW ) / 2 - width * VIEWBOX_LEFT_SHIFT_RATIO;
 	const offsetY = ( height - occupiedH ) / 2;
 
 	return points.map( ( p ) => ( {
@@ -710,6 +733,16 @@ function randInt( min, max ) {
 	return min + Math.floor( Math.random() * ( max - min + 1 ) );
 }
 
+function clampVertexCount( value ) {
+	const numeric = Number( value );
+
+	if ( !Number.isFinite( numeric ) ) {
+		return MIN_VERTEX_COUNT;
+	}
+
+	return Math.min( MAX_VERTEX_COUNT, Math.max( MIN_VERTEX_COUNT, Math.round( numeric ) ) );
+}
+
 function fmt( value ) {
 	return Number( value ).toFixed( 1 );
 }
@@ -728,6 +761,17 @@ function fmt( value ) {
 	flex-wrap: wrap;
 	align-items: center;
 	gap: 10px;
+}
+
+.vertexControl {
+	align-items: center;
+	display: flex;
+	gap: 8px;
+}
+
+.vertexSlider {
+	accent-color: #204ecf;
+	width: 150px;
 }
 
 .regenButton {
