@@ -154,7 +154,8 @@
 			<p>
 				Das hier ist ein keine Wissenschaft, sondern nur ein kleiner Geschenkspaß für Nerds.
 				Zu jeder Aminosäure existiert eine einbuchstabige Abkürzung. Die nutzen wir, um Namen oder Botschaften als DNA darzustellen.
-				Leider existieren für die Buchstaben <b>B, J, X, Z</b> in diesem Kontext keine eindeutige Zuordnung. Diese können wir daher nicht kodieren.
+				Leider existieren für die Buchstaben <b>B, J, X, Z</b> in diesem Kontext keine eindeutige Zuordnung.
+				Diese können wir daher nicht kodieren.
 			</p>
 
 			<v-text-field
@@ -212,7 +213,11 @@
 		</div>
 	</template>
 	<template #calculationPart>
-		<SD_DNA v-if="canEncode" :dna="dnaCompact"/>
+
+		<ImageZoomer :title="`Ich zeig dir deine DNA`">
+			<SD_DNA v-if="canEncode" :dna="dnaCompact"/>
+		</ImageZoomer>
+
 	</template>
 </AppFrame>
 </template>

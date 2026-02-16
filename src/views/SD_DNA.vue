@@ -98,17 +98,15 @@
 				/>
 
 				<g v-for="node in backNodes" :key="node.key">
-					<circle
+					<path
 						class="baseBubble baseBubbleBack"
-						:cx="node.x"
-						:cy="node.y"
+						:d="baseBubblePath( node )"
 						:fill="baseColor( node.letter )"
-						:r="BASE_BUBBLE_RADIUS"
 					/>
 					<text
 						class="baseLabel"
 						:fill="baseTextColor( node.letter )"
-						:x="node.x"
+						:x="baseLabelX( node )"
 						:y="node.y"
 					>
 						{{ node.letter }}
@@ -116,17 +114,15 @@
 				</g>
 
 				<g v-for="node in frontNodes" :key="node.key">
-					<circle
+					<path
 						class="baseBubble baseBubbleFront"
-						:cx="node.x"
-						:cy="node.y"
+						:d="baseBubblePath( node )"
 						:fill="baseColor( node.letter )"
-						:r="BASE_BUBBLE_RADIUS"
 					/>
 					<text
 						class="baseLabel"
 						:fill="baseTextColor( node.letter )"
-						:x="node.x"
+						:x="baseLabelX( node )"
 						:y="node.y"
 					>
 						{{ node.letter }}
@@ -175,6 +171,7 @@ const ANGLE_STEP = Math.PI * 2 / BASES_PER_TURN;
 const STRAND_HALF_SPAN = 96;
 const TWIST_AMPLITUDE = 46;
 const BASE_BUBBLE_RADIUS = 14;
+const BASE_RECT_EXTENSION = 39;
 const SPLINE_HANDLE_FACTOR = 0.24;
 
 const COMPLEMENT = {
@@ -505,6 +502,7 @@ const baseNodes = computed( () => pairs.value.flatMap( ( pair ) => [ {
 	x:      pair.leftX,
 	y:      pair.y,
 	letter: pair.complement,
+	side:   "left",
 	depth:  pair.depth
 },
 {
@@ -512,10 +510,43 @@ const baseNodes = computed( () => pairs.value.flatMap( ( pair ) => [ {
 	x:      pair.rightX,
 	y:      pair.y,
 	letter: pair.base,
+	side:   "right",
 	depth:  pair.depth
 } ] ) );
 const backNodes = computed( () => baseNodes.value.filter( ( node ) => node.depth < 0 ) );
 const frontNodes = computed( () => baseNodes.value.filter( ( node ) => node.depth >= 0 ) );
+
+function baseBubblePath( node ) {
+	const seamX = node.x;
+	const top = node.y - BASE_BUBBLE_RADIUS;
+	const bottom = node.y + BASE_BUBBLE_RADIUS;
+	const arcRadius = fmtSvg( BASE_BUBBLE_RADIUS );
+
+	if ( node.side === "left" ) {
+		const rectX = seamX + BASE_RECT_EXTENSION;
+
+		return `M ${fmtSvg( seamX )} ${fmtSvg( top )} ` +
+			`L ${fmtSvg( rectX )} ${fmtSvg( top )} ` +
+			`L ${fmtSvg( rectX )} ${fmtSvg( bottom )} ` +
+			`L ${fmtSvg( seamX )} ${fmtSvg( bottom )} ` +
+			`A ${arcRadius} ${arcRadius} 0 0 1 ${fmtSvg( seamX )} ${fmtSvg( top )} Z`;
+	}
+
+	const rectX = seamX - BASE_RECT_EXTENSION;
+
+	return `M ${fmtSvg( seamX )} ${fmtSvg( top )} ` +
+		`L ${fmtSvg( rectX )} ${fmtSvg( top )} ` +
+		`L ${fmtSvg( rectX )} ${fmtSvg( bottom )} ` +
+		`L ${fmtSvg( seamX )} ${fmtSvg( bottom )} ` +
+		`A ${arcRadius} ${arcRadius} 0 0 0 ${fmtSvg( seamX )} ${fmtSvg( top )} Z`;
+}
+
+function baseLabelX( node ) {
+	const centerShift = ( BASE_RECT_EXTENSION - BASE_BUBBLE_RADIUS ) / 2;
+	return node.side === "left" ?
+		node.x + centerShift :
+		node.x - centerShift;
+}
 
 function buildSplineSegments( side, points ) {
 	const segments = [];
@@ -591,8 +622,8 @@ function resolveAminoByCodon( codon ) {
 	background: rgba(var(--v-theme-surface, 255, 255, 255), 1);
 	border: 1px solid rgba(var(--v-theme-on-surface, 17, 17, 17), 0.16);
 	border-radius: 12px;
-	max-height: 640px;
-	overflow: auto;
+	overflow-x: auto;
+	overflow-y: hidden;
 }
 
 .helix {

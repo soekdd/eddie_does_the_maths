@@ -255,6 +255,11 @@
 			</div>
 		</div>
 	</template>
+	<template #footer>
+		<p class="muted">
+			<a href="https://matheplanet.com/default3.html?topic=267213=103">Vielen Dank für die Herleitung von Kitaktus und haribo</a>
+		</p>
+	</template>
 </AppFrame>
 </template>
 
