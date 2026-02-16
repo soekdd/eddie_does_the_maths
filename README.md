@@ -41,3 +41,8 @@ Output landet in `@/dist/`.
 - Seite leer? Du bist wahrscheinlich ohne Hash gelandet. Richtig ist `/#/DG` statt `/DG`.
 - Formeln sehen aus wie 1996? Check `eddie_does_the_maths/src/main.js`: `import 'katex/dist/katex.min.css'`.
 - Titel passt mobil nicht in die App-Bar? Eddie nimmt sich Platz. Guck in `eddie_does_the_maths/src/App.vue`.
+
+## Lizenz
+
+Dieses Subprojekt `eddie_does_the_maths` steht unter der MIT-Lizenz.
+Siehe `eddie_does_the_maths/LICENSE`.

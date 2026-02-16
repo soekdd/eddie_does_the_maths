@@ -222,9 +222,6 @@
 	</template>
 
 	<template #footer>
-		<p class="muted">
-			Literarische Basis: <code>marketing/cutout/165_Quanten_Hall_Effekt.md</code>
-		</p>
 	</template>
 </AppFrame>
 </template>

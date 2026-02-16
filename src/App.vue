@@ -90,6 +90,16 @@
 			<footer class="foot">
 				<slot name="footer" />
 				<div class="legalRow">
+					<a class="legalLink" href="https://github.com/soekdd/eddie_does_the_maths">GitHub</a>
+					<span class="legalSep">·</span>
+					<button
+						class="legalLink"
+						type="button"
+						@click="showReportErrorDialog = true"
+					>
+						Fehler melden
+					</button>
+					<span class="legalSep">·</span>
 					<button
 						class="legalLink"
 						type="button"
@@ -109,6 +119,19 @@
 			</footer>
 		</v-container>
 	</v-main>
+
+	<v-dialog v-model="showReportErrorDialog" max-width="900" scrollable>
+		<v-card>
+			<v-card-title class="text-h6">Fehler melden</v-card-title>
+			<v-card-text class="legalContent" v-html="reportErrorHTML" />
+			<v-card-actions>
+				<v-spacer />
+				<v-btn variant="text" @click="showReportErrorDialog = false">
+					Schließen
+				</v-btn>
+			</v-card-actions>
+		</v-card>
+	</v-dialog>
 
 	<v-dialog v-model="showImpressumDialog" max-width="900" scrollable>
 		<v-card>
@@ -143,6 +166,7 @@ import {
 } from "vue";
 import { useRoute } from "vue-router";
 import { useDisplay } from "vuetify";
+import reportErrorHTML from "./utils/disclaimer/report_errors_de.html?raw";
 import impressumHtml from "./utils/disclaimer/impressum_de.html?raw";
 import privacyPolicyHtml from "./utils/disclaimer/privacy_policy_de.html?raw";
 import faviconPng from "./images/favicon.png";
@@ -207,6 +231,7 @@ const hasInteractivePart = computed( () => Boolean( slots.interactivePart ) );
 const hasCalculationPart = computed( () => Boolean( slots.calculationPart ) );
 const hasSummaryPart = computed( () => Boolean( slots.summaryPart ) );
 const showPartsCard = computed( () => hasInteractivePart.value || hasCalculationPart.value || hasSummaryPart.value );
+const showReportErrorDialog = ref( false );
 const showImpressumDialog = ref( false );
 const showPrivacyDialog = ref( false );
 const showHomeBadge = computed( () => route.path !== "/" );
