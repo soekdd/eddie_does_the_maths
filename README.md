@@ -45,4 +45,4 @@ Output landet in `@/dist/`.
 ## Lizenz
 
 Dieses Subprojekt `eddie_does_the_maths` steht unter der MIT-Lizenz.
-Siehe `eddie_does_the_maths/LICENSE`.
+Siehe `LICENSE`.

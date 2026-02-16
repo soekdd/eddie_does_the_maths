@@ -115,6 +115,14 @@
 					>
 						Datenschutzerklärung
 					</button>
+					<span v-if="buildDateText" class="legalSep">·</span>
+					<time
+						v-if="buildDateText"
+						class="legalBuild"
+						:datetime="buildDateRaw"
+					>
+						Build: {{ buildDateText }}
+					</time>
 				</div>
 			</footer>
 		</v-container>
@@ -245,6 +253,26 @@ const subChapterEntries = computed( () => Object.entries( props.subChapter ?? {}
 	.filter( ( entry ) => entry.id && entry.label ) );
 const showFormalTitle = computed( () =>
 	Boolean( shortText.value || titleText.value || subChapterEntries.value.length ) );
+const buildDateRaw = String( import.meta.env.VITE_BUILD_DATE ?? "" ).trim();
+const buildDateText = computed( () => {
+	if ( !buildDateRaw ) {
+		return "";
+	}
+
+	const parsedDate = new Date( buildDateRaw );
+
+	if ( Number.isNaN( parsedDate.getTime() ) ) {
+		return buildDateRaw;
+	}
+
+	const formattedDate = new Intl.DateTimeFormat( "de-DE", {
+		dateStyle: "medium",
+		timeStyle: "short",
+		timeZone:  "UTC"
+	} ).format( parsedDate );
+
+	return `${formattedDate} GMT`;
+} );
 
 onMounted( () => {
 	if ( route.hash ) {
@@ -283,6 +311,10 @@ onMounted( () => {
 
 .legalSep {
   opacity: 0.6;
+}
+
+.legalBuild {
+  opacity: 0.8;
 }
 
 .legalContent {
