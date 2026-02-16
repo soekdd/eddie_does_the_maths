@@ -15,8 +15,8 @@
 >
 	<template #descriptionPart>
 		<figure class="exampleFigure">
-			<ImageZoomer :title="`Eddie und Genetik`">
-				<img alt="Eddie über Genetik" loading="lazy" :src="titleImg" />
+			<ImageZoomer :title="`Eddie und Sini`">
+				<img alt="Eddie und Sini" loading="lazy" :src="titleImg" />
 			</ImageZoomer>
 		</figure>
 
@@ -54,6 +54,11 @@
 					{{ row.bits }} = {{ row.base }}
 				</div>
 			</div>
+			<figure class="exampleFigure">
+				<ImageZoomer :title="`Sinis SAMI DNA`">
+					<img alt="Sinis SAMI DNA" loading="lazy" :src="samiImg" />
+				</ImageZoomer>
+			</figure>
 			<p class="muted">
 				Eine Base trägt damit informations-theoretisch grob zwei Bits.
 			</p>
@@ -227,6 +232,7 @@ import { computed, ref } from "vue";
 
 import SD_DNA from "./SD_DNA.vue";
 import titleImg from "@/images/SD.webp";
+import samiImg from "@/images/SD_SAMI.webp";
 
 const baseEncodingRows = [
 	{ bits: "00", base: "A" },
