@@ -10,7 +10,7 @@
 		'warum': 'Warum mich das packt',
 		'gift-code': 'String zu DNA'
 	}"
-	title="Eddie über Genetik: Wenn das Leben Code schreibt"
+	title="Eddie rechnet: Ich zeig dir deine DNA"
 	warning
 >
 	<template #descriptionPart>
@@ -152,8 +152,9 @@
 		<h2 id="gift-code">Nerd-Geschenk: String zu DNA</h2>
 		<div class="eddie d-flex flex-column ga-3">
 			<p>
-				Das hier ist ein Geschenkspaß für Nerds, keine Wissenschaftssimulation.
-				Für die Buchstaben <b>B, J, X, Z</b> gibt es in diesem Kontext keine eindeutige Zuordnung.
+				Das hier ist ein keine Wissenschaft, sondern nur ein kleiner Geschenkspaß für Nerds.
+				Zu jeder Aminosäure existiert eine einbuchstabige Abkürzung. Die nutzen wir, um Namen oder Botschaften als DNA darzustellen.
+				Leider existieren für die Buchstaben <b>B, J, X, Z</b> in diesem Kontext keine eindeutige Zuordnung. Diese können wir daher nicht kodieren.
 			</p>
 
 			<v-text-field

@@ -5,7 +5,7 @@
 			aria-label="DNA-Helix aus einem Textstring"
 			class="helix"
 			role="img"
-			:viewBox="`150 0 ${VIEW.width-100} ${viewHeight}`"
+			:viewBox="`180 0 ${VIEW.width-200} ${viewHeight}`"
 			xmlns="http://www.w3.org/2000/svg"
 		>
 			<rect
@@ -65,14 +65,11 @@
 					</g>
 				</g>
 
-				<line
+				<path
 					v-for="segment in backSegments"
 					:key="segment.key"
 					class="strand strandBack"
-					:x1="segment.x1"
-					:x2="segment.x2"
-					:y1="segment.y1"
-					:y2="segment.y2"
+					:d="segment.d"
 				/>
 				<line
 					v-for="rung in backRungs"
@@ -84,14 +81,11 @@
 					:y2="rung.y"
 				/>
 
-				<line
+				<path
 					v-for="segment in frontSegments"
 					:key="segment.key"
 					class="strand strandFront"
-					:x1="segment.x1"
-					:x2="segment.x2"
-					:y1="segment.y1"
-					:y2="segment.y2"
+					:d="segment.d"
 				/>
 				<line
 					v-for="rung in frontRungs"
@@ -109,7 +103,7 @@
 						:cx="node.x"
 						:cy="node.y"
 						:fill="baseColor( node.letter )"
-						r="14"
+						:r="BASE_BUBBLE_RADIUS"
 					/>
 					<text
 						class="baseLabel"
@@ -127,7 +121,7 @@
 						:cx="node.x"
 						:cy="node.y"
 						:fill="baseColor( node.letter )"
-						r="14"
+						:r="BASE_BUBBLE_RADIUS"
 					/>
 					<text
 						class="baseLabel"
@@ -180,6 +174,8 @@ const BASES_PER_TURN = 3;
 const ANGLE_STEP = Math.PI * 2 / BASES_PER_TURN;
 const STRAND_HALF_SPAN = 96;
 const TWIST_AMPLITUDE = 46;
+const BASE_BUBBLE_RADIUS = 14;
+const SPLINE_HANDLE_FACTOR = 0.24;
 
 const COMPLEMENT = {
 	A: "T",
@@ -431,8 +427,8 @@ const helixBounds = computed( () => {
 		);
 	}
 
-	const left = minX - 24;
-	const right = maxX + 24;
+	const left = minX - ( BASE_BUBBLE_RADIUS + 12 );
+	const right = maxX + ( BASE_BUBBLE_RADIUS + 12 );
 
 	return {
 		left,
@@ -482,8 +478,8 @@ const strandSegments = computed( () => {
 		y:     pair.y,
 		theta: pair.theta
 	} ) );
-	const leftSegments = buildSegments( "left", leftPoints );
-	const rightSegments = buildSegments( "right", rightPoints );
+	const leftSegments = buildSplineSegments( "left", leftPoints );
+	const rightSegments = buildSplineSegments( "right", rightPoints );
 
 	return [
 		...leftSegments,
@@ -508,38 +504,52 @@ const baseNodes = computed( () => pairs.value.flatMap( ( pair ) => [ {
 	key:    `base-${pair.index}-left`,
 	x:      pair.leftX,
 	y:      pair.y,
-	letter: pair.base,
+	letter: pair.complement,
 	depth:  pair.depth
 },
 {
 	key:    `base-${pair.index}-right`,
 	x:      pair.rightX,
 	y:      pair.y,
-	letter: pair.complement,
+	letter: pair.base,
 	depth:  pair.depth
 } ] ) );
 const backNodes = computed( () => baseNodes.value.filter( ( node ) => node.depth < 0 ) );
 const frontNodes = computed( () => baseNodes.value.filter( ( node ) => node.depth >= 0 ) );
 
-function buildSegments( side, points ) {
+function buildSplineSegments( side, points ) {
 	const segments = [];
 
 	for ( let index = 0; index < points.length - 1; index++ ) {
+		const prev = points[ Math.max( 0, index - 1 ) ];
 		const current = points[ index ];
 		const next = points[ index + 1 ];
+		const nextNext = points[ Math.min( points.length - 1, index + 2 ) ];
+		const cp1 = {
+			x: current.x + ( next.x - prev.x ) * SPLINE_HANDLE_FACTOR,
+			y: current.y + ( next.y - prev.y ) * SPLINE_HANDLE_FACTOR
+		};
+		const cp2 = {
+			x: next.x - ( nextNext.x - current.x ) * SPLINE_HANDLE_FACTOR,
+			y: next.y - ( nextNext.y - current.y ) * SPLINE_HANDLE_FACTOR
+		};
 		const depth = Math.cos( ( current.theta + next.theta ) / 2 );
 
 		segments.push( {
 			key: `strand-${side}-${index}`,
-			x1:  current.x,
-			y1:  current.y,
-			x2:  next.x,
-			y2:  next.y,
+			d:   `M ${fmtSvg( current.x )} ${fmtSvg( current.y )} ` +
+				`C ${fmtSvg( cp1.x )} ${fmtSvg( cp1.y )}, ` +
+				`${fmtSvg( cp2.x )} ${fmtSvg( cp2.y )}, ` +
+				`${fmtSvg( next.x )} ${fmtSvg( next.y )}`,
 			depth
 		} );
 	}
 
 	return segments;
+}
+
+function fmtSvg( value ) {
+	return Number( value ).toFixed( 2 );
 }
 
 function baseColor( letter ) {
@@ -588,7 +598,7 @@ function resolveAminoByCodon( codon ) {
 .helix {
 	display: block;
 	height: auto;
-	min-width: 640px;
+	min-width: 440px;
 	width: 100%;
 }
 
@@ -636,13 +646,13 @@ function resolveAminoByCodon( codon ) {
 .strandBack {
 	opacity: 0.38;
 	stroke: rgba(var(--v-theme-primary, 21, 101, 192), 0.78);
-	stroke-width: 6;
+	stroke-width: 18;
 }
 
 .strandFront {
 	opacity: 0.94;
 	stroke: rgba(var(--v-theme-primary, 21, 101, 192), 1);
-	stroke-width: 6;
+	stroke-width: 18;
 }
 
 .rung {
@@ -667,7 +677,7 @@ function resolveAminoByCodon( codon ) {
 }
 
 .baseBubbleBack {
-	opacity: 0.74;
+	opacity: 0.92;
 }
 
 .baseBubbleFront {
