@@ -14,6 +14,7 @@ import AL from "@/views/AL.vue";
 import BA from "@/views/BA.vue";
 import SE from "@/views/SE.vue";
 import RD from "@/views/RD.vue";
+import SD from "@/views/SD.vue";
 import FX from "@/views/FX.vue";
 import UD from "@/views/UD.vue";
 import VA from "@/views/VA.vue";
@@ -200,9 +201,9 @@ export const router = createRouter( {
 		{
 			path:      "/SD",
 			name:      "SD",
-			component: CatchAll,
+			component: SD,
 			meta:      {
-				title: "Ich zeig dir deine DNA", index: true, book: 1, order: 170, wip: true
+				title: "Ich zeig dir deine DNA", index: true, book: 1, order: 170
 			}
 		},
 		{
