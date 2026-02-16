@@ -373,12 +373,6 @@
 			/>
 		</ImageZoomer>
 	</template>
-
-	<template #footer>
-		<p class="muted">
-			Inhaltliche Quelle: <code>eddie_does_the_maths/concepts/vasa.html</code>.
-		</p>
-	</template>
 </AppFrame>
 </template>
 
