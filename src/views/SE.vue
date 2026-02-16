@@ -111,12 +111,6 @@
 			</v-sheet>
 		</div>
 	</template>
-
-	<template #footer>
-		<p class="muted">
-			Quelle: <code>eddie/03_Eddie_rechnet/260_Gute_Nacht_Rechenroutine.md</code>
-		</p>
-	</template>
 </AppFrame>
 </template>
 

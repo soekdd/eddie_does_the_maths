@@ -337,12 +337,6 @@
 			</template>
 		</div>
 	</template>
-
-	<template #footer>
-		<p class="muted">
-			Quelle: <code class="mono">eddie/03_Eddie_rechnet/130_Rentiere.md</code>
-		</p>
-	</template>
 </AppFrame>
 </template>
 
