@@ -9,6 +9,7 @@ import O3 from "@/views/O3.vue";
 import O4 from "@/views/O4.vue";
 import O5 from "@/views/O5.vue";
 import O6 from "@/views/O6.vue";
+import FI from "@/views/FI.vue";
 import PG from "@/views/PG.vue";
 import AL from "@/views/AL.vue";
 import BA from "@/views/BA.vue";
@@ -129,9 +130,9 @@ export const router = createRouter( {
 		{
 			path:      "/FI",
 			name:      "FI",
-			component: CatchAll,
+			component: FI,
 			meta:      {
-				title: "Land&shy;karten Geo&shy;metrie", index: true, book: 1, order: 90, wip: true
+				title: "Land&shy;karten Geo&shy;metrie", index: true, book: 1, order: 90
 			}
 		},
 		{

@@ -12,11 +12,11 @@ import tsParser from "@typescript-eslint/parser";
 export default [
 	...vue.configs[ "flat/essential" ],
 	{
-		files:   [ "**/*.svg" ],
-		ignores: [ "icons/*.svg" ],
+		files:           [ "**/*.svg" ],
+		ignores:         [ "icons/*.svg" ],
 		languageOptions: { parser: parserPlain },
-		plugins: { svgo: pluginSVGO },
-		rules:   {
+		plugins:         { svgo: pluginSVGO },
+		rules:           {
 			  "svgo/svgo": [ "error", {
 				floatPrecision: 2,
 				multipass:      true,
