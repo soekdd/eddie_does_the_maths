@@ -371,6 +371,10 @@ function tileStatusClass( item ) {
   font-size: 120%;
 }
 
+.contentIndexWindow {
+	overflow: visible;
+}
+
 .contentIndexList {
   display: flex;
   flex-wrap: wrap;
@@ -433,6 +437,19 @@ function tileStatusClass( item ) {
 
 .index-tile:not(.is-wip):focus-visible {
   transform: scale(1.03);
+}
+
+.index-tile.has-image:not(.is-wip):hover {
+  box-shadow:
+    0 18px 42px rgba(15, 23, 42, 0.26),
+    0 6px 16px rgba(15, 23, 42, 0.12);
+}
+
+.index-tile.has-image:not(.is-wip):hover {
+  box-shadow:
+    0 0 0 1px rgba(var(--v-theme-primary, 125, 211, 252), 0.24),
+    0 0 24px rgba(var(--v-theme-primary, 125, 211, 252), 0.42),
+    0 0 48px rgba(var(--v-theme-info, 56, 189, 248), 0.28);
 }
 
 @keyframes tile-boing-in {

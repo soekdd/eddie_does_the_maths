@@ -58,7 +58,7 @@ export const router = createRouter( {
 			path:      "/",
 			name:      "ER",
 			component: Welcome,
-			meta:      { warning: true, title: "Welcome" }
+			meta:      { title: "Welcome" }
 		},
 		{
 			path:      "/ST",
@@ -418,13 +418,12 @@ export const router = createRouter( {
 			name:      "LT",
 			component: LT,
 			meta:      {
-				error,
+				warning,
 				difficulty: 3,
 				title:      "Laplace-Trans&shy;formation",
 				index:      true,
 				book:       1,
-				order:      260,
-				error:      true
+				order:      260
 			}
 		},
 		{
@@ -472,9 +471,7 @@ export const router = createRouter( {
 			path:      "/:pathMatch(.*)*",
 			name:      "CatchAll",
 			component: CatchAll,
-			meta:      {
-				warning: true, difficulty: 2, title: "Thema in Arbeit"
-			}
+			meta:      { title: "Thema in Arbeit" }
 		}
 	]
 } );

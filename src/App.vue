@@ -141,7 +141,12 @@
 		</v-container>
 	</v-main>
 
-	<v-dialog v-model="showReportErrorDialog" max-width="900" scrollable>
+	<v-dialog
+		v-model="showReportErrorDialog"
+		content-class="legalDialogContent"
+		max-width="900"
+		scrollable
+	>
 		<v-card>
 			<v-card-title class="text-h6">Fehler melden</v-card-title>
 			<v-card-text class="legalContent" v-html="reportErrorHTML" />
@@ -154,7 +159,12 @@
 		</v-card>
 	</v-dialog>
 
-	<v-dialog v-model="showImpressumDialog" max-width="900" scrollable>
+	<v-dialog
+		v-model="showImpressumDialog"
+		content-class="legalDialogContent"
+		max-width="900"
+		scrollable
+	>
 		<v-card>
 			<v-card-title class="text-h6">Impressum</v-card-title>
 			<v-card-text class="legalContent" v-html="impressumHtml" />
@@ -167,7 +177,12 @@
 		</v-card>
 	</v-dialog>
 
-	<v-dialog v-model="showPrivacyDialog" max-width="900" scrollable>
+	<v-dialog
+		v-model="showPrivacyDialog"
+		content-class="legalDialogContent"
+		max-width="900"
+		scrollable
+	>
 		<v-card>
 			<v-card-title class="text-h6">Datenschutzerklärung</v-card-title>
 			<v-card-text class="legalContent" v-html="privacyPolicyHtml" />
@@ -378,6 +393,19 @@ onMounted( () => {
   margin-bottom: 0.75rem;
 }
 
+:global(.v-theme--eddieLight .legalDialogContent > .v-card) {
+  box-shadow:
+    0 18px 42px rgba(15, 23, 42, 0.26),
+    0 6px 16px rgba(15, 23, 42, 0.12) !important;
+}
+
+:global(.v-theme--eddieDark .legalDialogContent > .v-card) {
+  box-shadow:
+    0 0 0 1px rgba(var(--v-theme-primary, 125, 211, 252), 0.24),
+    0 0 24px rgba(var(--v-theme-primary, 125, 211, 252), 0.42),
+    0 0 48px rgba(var(--v-theme-info, 56, 189, 248), 0.28) !important;
+}
+
 .homeBadgeLink {
   text-decoration: none;
 }
@@ -389,13 +417,13 @@ onMounted( () => {
 }
 
 .titleRow {
-  display: inline-flex;
   align-items: center;
   gap: 10px;
   flex-wrap: wrap;
 }
 
 .difficultyStars {
+  margin-left:1em;
   cursor: help;
   color: rgb(var(--v-theme-warning));
   letter-spacing: 0.08em;
