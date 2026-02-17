@@ -1,12 +1,11 @@
 <template>
-<AppFrame short="O3"
+<AppFrame
 	:sub-chapter="{
 		'binomialkoeffizienten': 'Binomialkoeffizienten',
 		'paritat': 'Parität',
 		'induktion': 'Induktion'
 	}"
 	title="Eddie rechnet: IMO 1985 Aufgabe A3"
-	warning
 >
 
 	<template #descriptionPart>

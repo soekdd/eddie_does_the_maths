@@ -1,12 +1,11 @@
 <template>
-<AppFrame short="O5"
+<AppFrame
 	:sub-chapter="{
 		'geometrie': 'Geometrie',
 		'potenzpunkte': 'Potenzpunkte',
 		'radikalachsen': 'Radikalachsen'
 	}"
 	title="Eddie rechnet: IMO 1985 Aufgabe B2"
-	warning
 >
 
 	<template #descriptionPart>

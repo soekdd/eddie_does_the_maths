@@ -21,9 +21,12 @@ import UD from "@/views/UD.vue";
 import VA from "@/views/VA.vue";
 import QH from "@/views/QH.vue";
 import FS from "@/views/FS.vue";
+import LT from "@/views/LT.vue";
 import CatchAll from "@/views/CatchAll.vue";
 import Welcome from "@/views/Welcome.vue";
-
+const error = true;
+const warning = true;
+const wip = true;
 export const router = createRouter( {
 	// Keep this working for both dev-server and static file hosting.
 	history: createWebHashHistory(),
@@ -53,16 +56,20 @@ export const router = createRouter( {
 	routes: [
 		{
 			path:      "/",
-			name:      "Welcome",
+			name:      "ER",
 			component: Welcome,
-			meta:      { title: "Welcome" }
+			meta:      { warning: true, title: "Welcome" }
 		},
 		{
 			path:      "/ST",
 			name:      "ST",
 			component: ST,
 			meta:      {
-				title: "Spiel&shy;theorie am Bus&shy;bahnhof", index: true, book: 1, order: 10
+				difficulty: 1,
+				title:      "Spiel&shy;theorie am Bus&shy;bahnhof",
+				index:      true,
+				book:       1,
+				order:      10
 			}
 		},
 		{
@@ -70,21 +77,35 @@ export const router = createRouter( {
 			name:      "DG",
 			component: DG,
 			meta:      {
-				title: "Dio&shy;phan&shy;tische Gleichung #1", index: true, book: 1, order: 20
+				difficulty: 2,
+				title:      "Dio&shy;phan&shy;tische Gleichung #1",
+				index:      true,
+				book:       1,
+				order:      20
 			}
 		},
 		{
 			path:      "/MO",
 			name:      "MO",
 			component: MO,
-			meta:      { title: "IMO 1985 Aufgaben 1-6", index: false }
+			meta:      {
+				warning,
+				difficulty: 3,
+				title:      "IMO 1985 Aufgaben 1-6",
+				index:      false
+			}
 		},
 		{
 			path:      "/O1",
 			name:      "O1",
 			component: O1,
 			meta:      {
-				title: "IMO 1985 Aufgabe A1", index: true, book: 1, order: 30
+				warning,
+				difficulty: 3,
+				title:      "IMO 1985 Aufgabe A1",
+				index:      true,
+				book:       1,
+				order:      30
 			}
 		},
 		{
@@ -92,7 +113,12 @@ export const router = createRouter( {
 			name:      "O2",
 			component: O2,
 			meta:      {
-				title: "IMO 1985 Aufgabe A2", index: true, book: 1, order: 40
+				warning,
+				difficulty: 3,
+				title:      "IMO 1985 Aufgabe A2",
+				index:      true,
+				book:       1,
+				order:      40
 			}
 		},
 		{
@@ -100,7 +126,12 @@ export const router = createRouter( {
 			name:      "O3",
 			component: O3,
 			meta:      {
-				title: "IMO 1985 Aufgabe A3", index: true, book: 1, order: 50
+				warning,
+				difficulty: 3,
+				title:      "IMO 1985 Aufgabe A3",
+				index:      true,
+				book:       1,
+				order:      50
 			}
 		},
 		{
@@ -108,7 +139,12 @@ export const router = createRouter( {
 			name:      "O4",
 			component: O4,
 			meta:      {
-				title: "IMO 1985 Aufgabe B1", index: true, book: 1, order: 60
+				warning,
+				difficulty: 3,
+				title:      "IMO 1985 Aufgabe B1",
+				index:      true,
+				book:       1,
+				order:      60
 			}
 		},
 		{
@@ -116,7 +152,12 @@ export const router = createRouter( {
 			name:      "O5",
 			component: O5,
 			meta:      {
-				title: "IMO 1985 Aufgabe B2", index: true, book: 1, order: 70
+				warning,
+				difficulty: 3,
+				title:      "IMO 1985 Aufgabe B2",
+				index:      true,
+				book:       1,
+				order:      70
 			}
 		},
 		{
@@ -124,7 +165,12 @@ export const router = createRouter( {
 			name:      "O6",
 			component: O6,
 			meta:      {
-				title: "IMO 1985 Aufgabe B3", index: true, book: 1, order: 80
+				warning,
+				difficulty: 3,
+				title:      "IMO 1985 Aufgabe B3",
+				index:      true,
+				book:       1,
+				order:      80
 			}
 		},
 		{
@@ -132,7 +178,12 @@ export const router = createRouter( {
 			name:      "FI",
 			component: FI,
 			meta:      {
-				title: "Land&shy;karten Geo&shy;metrie", index: true, book: 1, order: 90
+				error,
+				difficulty: 2,
+				title:      "Land&shy;karten Geo&shy;metrie",
+				index:      true,
+				book:       1,
+				order:      90
 			}
 		},
 		{
@@ -140,7 +191,12 @@ export const router = createRouter( {
 			name:      "PG",
 			component: PG,
 			meta:      {
-				title: "Mit Eddie zum Poker&shy;genie", index: true, book: 1, order: 100
+				warning,
+				difficulty: 1,
+				title:      "Mit Eddie zum Poker&shy;genie",
+				index:      true,
+				book:       1,
+				order:      100
 			}
 		},
 		{
@@ -148,7 +204,13 @@ export const router = createRouter( {
 			name:      "DZ",
 			component: CatchAll,
 			meta:      {
-				title: "Dio&shy;phan&shy;tische Gleichung #2", index: true, book: 1, order: 110, wip: true
+				warning,
+				difficulty: 1,
+				title:      "Dio&shy;phan&shy;tische Gleichung #2",
+				index:      true,
+				book:       1,
+				order:      110,
+				wip
 			}
 		},
 		{
@@ -156,7 +218,13 @@ export const router = createRouter( {
 			name:      "NV",
 			component: CatchAll,
 			meta:      {
-				title: "Navi&shy;gation im Wald", index: true, book: 1, order: 120, wip: true
+				warning,
+				difficulty: 1,
+				title:      "Navi&shy;gation im Wald",
+				index:      true,
+				book:       1,
+				order:      120,
+				wip
 			}
 		},
 		{
@@ -164,7 +232,12 @@ export const router = createRouter( {
 			name:      "SE",
 			component: SE,
 			meta:      {
-				title: "Gute-Nacht-Rechen&shy;routine", index: true, book: 1, order: 125
+				warning,
+				difficulty: 1,
+				title:      "Gute-Nacht-Rechen&shy;routine",
+				index:      true,
+				book:       1,
+				order:      125
 			}
 		},
 		{
@@ -172,7 +245,12 @@ export const router = createRouter( {
 			name:      "FS",
 			component: FS,
 			meta:      {
-				title: "Fischsee", index: true, book: 1, order: 130
+				warning,
+				difficulty: 2,
+				title:      "Fischsee",
+				index:      true,
+				book:       1,
+				order:      130
 			}
 		},
 		{
@@ -180,7 +258,12 @@ export const router = createRouter( {
 			name:      "RD",
 			component: RD,
 			meta:      {
-				title: "Rentier-Depot", index: true, book: 1, order: 140
+				error,
+				difficulty: 2,
+				title:      "Rentier-Depot",
+				index:      true,
+				book:       1,
+				order:      140
 			}
 		},
 		{
@@ -188,7 +271,12 @@ export const router = createRouter( {
 			name:      "UD",
 			component: UD,
 			meta:      {
-				title: "Minkow&shy;skis Ufer&shy;auf&shy;dickung", index: true, book: 1, order: 150
+				warning,
+				difficulty: 3,
+				title:      "Minkow&shy;skis Ufer&shy;auf&shy;dickung",
+				index:      true,
+				book:       1,
+				order:      150
 			}
 		},
 		{
@@ -196,7 +284,12 @@ export const router = createRouter( {
 			name:      "BA",
 			component: BA,
 			meta:      {
-				title: "BASIC for Runaways", index: true, book: 1, order: 160
+				warning,
+				difficulty: 1,
+				title:      "BASIC for Runaways",
+				index:      true,
+				book:       1,
+				order:      160
 			}
 		},
 		{
@@ -204,7 +297,12 @@ export const router = createRouter( {
 			name:      "SD",
 			component: SD,
 			meta:      {
-				title: "Ich zeig dir deine DNA", index: true, book: 1, order: 170
+				warning,
+				difficulty: 1,
+				title:      "Ich zeig dir deine DNA",
+				index:      true,
+				book:       1,
+				order:      170
 			}
 		},
 		{
@@ -212,7 +310,12 @@ export const router = createRouter( {
 			name:      "AL",
 			component: AL,
 			meta:      {
-				title: "Karten&shy;spiel mit Ada Lovelace", index: true, book: 1, order: 180
+				warning,
+				difficulty: 2,
+				title:      "Karten&shy;spiel mit Ada Lovelace",
+				index:      true,
+				book:       1,
+				order:      180
 			}
 		},
 		{
@@ -220,7 +323,13 @@ export const router = createRouter( {
 			name:      "OA",
 			component: CatchAll,
 			meta:      {
-				title: "Weg&shy;optimierung", index: true, book: 1, order: 190, wip: true
+				warning,
+				difficulty: 2,
+				title:      "Weg&shy;optimierung",
+				index:      true,
+				book:       1,
+				order:      190,
+				wip
 			}
 		},
 		{
@@ -228,7 +337,13 @@ export const router = createRouter( {
 			name:      "BS",
 			component: CatchAll,
 			meta:      {
-				title: "Baustatik #1", index: true, book: 1, order: 200, wip: true
+				warning,
+				difficulty: 2,
+				title:      "Baustatik #1",
+				index:      true,
+				book:       1,
+				order:      200,
+				wip
 			}
 		},
 		{
@@ -236,7 +351,12 @@ export const router = createRouter( {
 			name:      "FX",
 			component: FX,
 			meta:      {
-				title: "Mein fx-7000G", index: true, book: 1, order: 210
+				warning,
+				difficulty: 1,
+				title:      "Mein fx-7000G",
+				index:      true,
+				book:       1,
+				order:      210
 			}
 		},
 		{
@@ -244,7 +364,12 @@ export const router = createRouter( {
 			name:      "VA",
 			component: VA,
 			meta:      {
-				title: "Warum die Vasa sinken musste", index: true, book: 1, order: 220
+				warning,
+				difficulty: 2,
+				title:      "Warum die Vasa sinken musste",
+				index:      true,
+				book:       1,
+				order:      220
 			}
 		},
 		{
@@ -252,7 +377,13 @@ export const router = createRouter( {
 			name:      "BZ",
 			component: CatchAll,
 			meta:      {
-				title: "Baustatik #2", index: true, book: 1, order: 230, wip: true
+				warning,
+				difficulty: 3,
+				title:      "Baustatik #2",
+				index:      true,
+				book:       1,
+				order:      230,
+				wip
 			}
 		},
 		{
@@ -260,7 +391,13 @@ export const router = createRouter( {
 			name:      "GD",
 			component: CatchAll,
 			meta:      {
-				title: "Diophantos Grab&shy;platte", index: true, book: 1, order: 240, wip: true
+				warning,
+				difficulty: 1,
+				title:      "Diophantos Grab&shy;platte",
+				index:      true,
+				book:       1,
+				order:      240,
+				wip
 			}
 		},
 		{
@@ -268,15 +405,26 @@ export const router = createRouter( {
 			name:      "QH",
 			component: QH,
 			meta:      {
-				title: "Der Quanten-Hall-Effekt", index: true, book: 1, order: 250
+				warning,
+				difficulty: 2,
+				title:      "Der Quanten-Hall-Effekt",
+				index:      true,
+				book:       1,
+				order:      250
 			}
 		},
 		{
 			path:      "/LT",
 			name:      "LT",
-			component: CatchAll,
+			component: LT,
 			meta:      {
-				title: "Laplace-Trans&shy;formation", index: true, book: 1, order: 260, wip: true
+				error,
+				difficulty: 3,
+				title:      "Laplace-Trans&shy;formation",
+				index:      true,
+				book:       1,
+				order:      260,
+				error:      true
 			}
 		},
 		{
@@ -284,7 +432,13 @@ export const router = createRouter( {
 			name:      "ZR",
 			component: CatchAll,
 			meta:      {
-				title: "Atomare Zerfalls&shy;reihen", index: true, book: 2, order: 10, wip: true
+				warning,
+				difficulty: 2,
+				title:      "Atomare Zerfalls&shy;reihen",
+				index:      true,
+				book:       2,
+				order:      10,
+				wip
 			}
 		},
 		{
@@ -292,21 +446,35 @@ export const router = createRouter( {
 			name:      "AW",
 			component: CatchAll,
 			meta:      {
-				title: "Aus&shy;sage&shy;wahrs&shy;cheinlichkeit", index: true, book: 2, order: 20, wip: true
+				warning,
+				difficulty: 2,
+				title:      "Aus&shy;sage&shy;wahrs&shy;cheinlichkeit",
+				index:      true,
+				book:       2,
+				order:      20,
+				wip
 			}
 		},{
 			path:      "/KK",
 			name:      "KK",
 			component: CatchAll,
 			meta:      {
-				title: "Spaß mit Kugel&shy;koordinaten", index: true, book: 2, order: 20, wip: true
+				warning,
+				difficulty: 2,
+				title:      "Spaß mit Kugel&shy;koordinaten",
+				index:      true,
+				book:       2,
+				order:      20,
+				wip
 			}
 		},
 		{
 			path:      "/:pathMatch(.*)*",
 			name:      "CatchAll",
 			component: CatchAll,
-			meta:      { title: "Thema in Arbeit" }
+			meta:      {
+				warning: true, difficulty: 2, title: "Thema in Arbeit"
+			}
 		}
 	]
 } );

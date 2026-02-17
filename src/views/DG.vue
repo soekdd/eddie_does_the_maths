@@ -1,6 +1,5 @@
 <template>
 <AppFrame
-	short="DG"
 	:sub-chapter="{
 		'einfuhrungsbeispiel': 'Einführungsbeispiel',
 		'erklarung': 'Erklärung',

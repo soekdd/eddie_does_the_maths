@@ -1,7 +1,5 @@
 <template>
 <AppFrame
-	error
-	short="RD"
 	:sub-chapter="{
 		'depot-strategie': 'Depot-Strategie',
 		'vorstufe-plus-klassisches-mehrdepot-modell': 'Vorstufe + klassisches Mehrdepot-Modell'

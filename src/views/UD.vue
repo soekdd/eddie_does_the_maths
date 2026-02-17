@@ -1,6 +1,5 @@
 <template>
 <AppFrame
-	short="UD"
 	:sub-chapter="{
 		'frage': 'Fragestellung',
 		'formel': 'Formel',
@@ -8,7 +7,6 @@
 		'finnland': 'Länderbeispiel'
 	}"
 	title="Eddie rechnet: Frühstückszettel #3 Uferaufdickung"
-	warning
 >
 
 	<template #descriptionPart>

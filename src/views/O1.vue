@@ -1,5 +1,5 @@
 <template>
-<AppFrame short="O1"
+<AppFrame
 	:sub-chapter="{
 		'geometrie': 'Geometrie',
 		'tangenten': 'Tangenten',
@@ -7,7 +7,6 @@
 		'kongruenz': 'Kongruenz'
 	}"
 	title="Eddie rechnet: IMO 1985 Aufgabe A1"
-	warning
 >
 
 	<template #descriptionPart>

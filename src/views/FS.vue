@@ -1,6 +1,5 @@
 <template>
 <AppFrame
-	short="FS"
 	:sub-chapter="{
 		'aufgabe': 'Aufgabe',
 		'loesung': 'Lösung',
@@ -8,7 +7,6 @@
 		'simulation': 'Simulation'
 	}"
 	title="Eddie rechnet: Frühstückszettel #1 Fischpopulation"
-	warning
 >
 
 	<template #descriptionPart>

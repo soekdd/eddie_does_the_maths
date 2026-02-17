@@ -1,6 +1,5 @@
 <template>
 <AppFrame
-	short="SD"
 	:sub-chapter="{
 		'einleitung': 'Einleitung',
 		'bits-zu-basen': 'Bits zu Basen',
@@ -11,7 +10,6 @@
 		'gift-code': 'String zu DNA'
 	}"
 	title="Eddie rechnet: Ich zeig dir deine DNA"
-	warning
 >
 	<template #descriptionPart>
 		<figure class="exampleFigure">

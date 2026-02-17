@@ -1,13 +1,12 @@
 <!-- eslint-disable vue/max-len -->
 <template>
-<AppFrame short="AL"
+<AppFrame
 	:sub-chapter="{
 		'analytical-engine': 'Analytical Engine',
 		'bernoulli-zahlen': 'Bernoulli-Zahlen',
 		'gcd': 'gcd'
 	}"
 	title="Eddie rechnet: Kartenspiele mit Ada Lovelace"
-	warning
 >
 
 	<template #descriptionPart>

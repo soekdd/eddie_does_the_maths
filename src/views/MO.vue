@@ -1,6 +1,5 @@
 <template>
 <AppFrame
-	short="O1"
 	:sub-chapter="{
 		'a1': 'A1',
 		'a2': 'A2',

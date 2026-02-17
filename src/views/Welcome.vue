@@ -1,6 +1,5 @@
 <template>
 <AppFrame
-	short="ER"
 	:sub-chapter="{
 		'willkommen': 'Willkommen',
 		'ubersicht': 'Übersicht'

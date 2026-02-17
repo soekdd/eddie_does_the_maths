@@ -1,6 +1,5 @@
 <template>
 <AppFrame
-	short="QH"
 	:sub-chapter="{
 		vorlesung: 'Stockholm 1985',
 		quantisierung: 'Quantisierung',

@@ -10,11 +10,10 @@ const where = computed( () => route.fullPath || route.path || "" );
 
 <template>
 <AppFrame
-	short="…"
-	title="Eddie rechnet: Thema in Arbeit"
-	:subChapter="{
+	:sub-chapter="{
 		'dieses-thema-ist-noch-nicht-ausgearbeitet': 'Dieses Thema ist noch nicht ausgearbeitet'
 	}"
+	title="Eddie rechnet: Thema in Arbeit"
 >
 
 	<template #descriptionPart>

@@ -1,12 +1,11 @@
 <template>
-<AppFrame short="FX"
+<AppFrame
 	:sub-chapter="{
 		'geschichte': 'Geschichte',
 		'basic-denke': 'BASIC-Denke',
 		'interaktiver-rechner': 'Interaktiver Rechner'
 	}"
 	title="Eddie rechnet: Der fx-7000G"
-	warning
 >
 
 	<template #descriptionPart>

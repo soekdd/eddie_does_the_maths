@@ -38,6 +38,24 @@
 					:to="it.wip ? undefined : it.to"
 					variant="flat"
 				>
+					<span
+						v-if="tileStatusIcon(it)"
+						class="tile-status"
+						:class="tileStatusClass(it)"
+					>
+						<v-icon :icon="tileStatusIcon(it)" size="18" />
+					</span>
+					<v-tooltip
+						v-if="it.difficulty !== null"
+						location="bottom"
+						:text="difficultyLabel(it.difficulty)"
+					>
+						<template #activator="{ props: tooltipProps }">
+							<span class="tile-difficulty" :class="{ 'is-wip': it.wip }" v-bind="tooltipProps">
+								{{ difficultyStars(it.difficulty) }}
+							</span>
+						</template>
+					</v-tooltip>
 					<span class="tile-title" :class="tileTitleClass(it)">{{ it.title }}</span>
 				</v-btn>
 			</div>
@@ -95,6 +113,16 @@ function normalizeBookIndex( value ) {
 	return Number.isFinite( normalized ) ? normalized : null;
 }
 
+function normalizeDifficulty( value ) {
+	const normalized = Number( value );
+
+	if ( !Number.isInteger( normalized ) || normalized < 1 || normalized > 3 ) {
+		return null;
+	}
+
+	return normalized;
+}
+
 const bookTabs = computed( () => Object.values( books )
 	.map( ( book ) => ( {
 		value: normalizeBookIndex( book?.index ),
@@ -112,15 +140,18 @@ const items = computed( () => {
 	return routes
 		.filter( ( r ) => r?.meta?.index === true && typeof r.meta?.title === "string" && r.meta.title.trim() )
 		.map( ( r ) => ( {
-			key:      String( r.name ?? r.path ),
-			title:    String( r.meta.title ).replace( /&shy;/gi, "\u00AD" ),
-			to:       r.name ? { name: r.name } : r.path,
-			order:    Number.isFinite( r?.meta?.order ) ? Number( r.meta.order ) : null,
-			path:     r.path,
-			book:     normalizeBookIndex( r?.meta?.book ),
-			wip:      r?.meta?.wip === true,
-			imageKey: String( r.name ?? "" ).toUpperCase(),
-			imageUrl: imageByRouteName[ String( r.name ?? "" ).toUpperCase() ] ?? null
+			key:        String( r.name ?? r.path ),
+			title:      String( r.meta.title ).replace( /&shy;/gi, "\u00AD" ),
+			to:         r.name ? { name: r.name } : r.path,
+			order:      Number.isFinite( r?.meta?.order ) ? Number( r.meta.order ) : null,
+			path:       r.path,
+			book:       normalizeBookIndex( r?.meta?.book ),
+			difficulty: normalizeDifficulty( r?.meta?.difficulty ),
+			warning:    r?.meta?.warning === true || typeof r?.meta?.warning === "string",
+			error:      r?.meta?.error === true || typeof r?.meta?.error === "string",
+			wip:        r?.meta?.wip === true,
+			imageKey:   String( r.name ?? "" ).toUpperCase(),
+			imageUrl:   imageByRouteName[ String( r.name ?? "" ).toUpperCase() ] ?? null
 		} ) )
 		.sort( ( a, b ) => {
 			if ( a.order !== null && b.order !== null ) {
@@ -272,6 +303,66 @@ function tileTitleClass( item ) {
 
 	return item.wip ? "tile-title-dark-wip" : "tile-title-dark";
 }
+
+function difficultyStars( difficulty ) {
+	if ( difficulty === 1 ) {
+		return "★☆☆";
+	}
+
+	if ( difficulty === 2 ) {
+		return "★★☆";
+	}
+
+	if ( difficulty === 3 ) {
+		return "★★★";
+	}
+
+	return "";
+}
+
+function difficultyLabel( difficulty ) {
+	if ( difficulty === 1 ) {
+		return "Schwierigkeitsgrad: leicht";
+	}
+
+	if ( difficulty === 2 ) {
+		return "Schwierigkeitsgrad: mittel";
+	}
+
+	if ( difficulty === 3 ) {
+		return "Schwierigkeitsgrad: schwer";
+	}
+
+	return "";
+}
+
+function tileStatusIcon( item ) {
+	if ( item.wip ) {
+		return "";
+	}
+
+	if ( item.error ) {
+		return "$error";
+	}
+
+	if ( item.warning ) {
+		return "$warning";
+	}
+
+	return "";
+}
+
+function tileStatusClass( item ) {
+	if ( item.error ) {
+		return "tile-status-error";
+	}
+
+	if ( item.warning ) {
+		return "tile-status-warning";
+	}
+
+	return "";
+}
 </script>
 <style scoped>
 .contentIndexTabs :deep(.v-tab) {
@@ -288,6 +379,7 @@ function tileTitleClass( item ) {
 }
 
 .index-tile {
+  position: relative;
   width: var(--tile-size, 180px);
   height: var(--tile-size, 180px);
   min-width: var(--tile-size, 180px);
@@ -370,6 +462,49 @@ function tileTitleClass( item ) {
   text-align: center;
   padding: 10px;
   white-space: normal;
+}
+
+.tile-status {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.48);
+  z-index: 2;
+}
+
+.tile-status-warning {
+  color: rgb(var(--v-theme-warning));
+}
+
+.tile-status-error {
+  color: rgb(var(--v-theme-error));
+}
+
+.tile-difficulty {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 2;
+  cursor: help;
+  color: rgb(var(--v-theme-warning));
+  font-size: 0.92rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-shadow:
+    -1px -1px 0 rgba(0, 0, 0, 0.7),
+    1px -1px 0 rgba(0, 0, 0, 0.7),
+    -1px 1px 0 rgba(0, 0, 0, 0.7),
+    1px 1px 0 rgba(0, 0, 0, 0.7);
+}
+
+.tile-difficulty.is-wip {
+  opacity: 0.5;
 }
 
 .tile-title {

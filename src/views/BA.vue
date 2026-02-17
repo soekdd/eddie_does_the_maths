@@ -1,6 +1,5 @@
 <template>
 <AppFrame
-	short="BA"
 	:sub-chapter="{
 		'casar': 'Cäsar',
 		'vigenere': 'Vigenère',

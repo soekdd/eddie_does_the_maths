@@ -1,12 +1,11 @@
 <template>
-<AppFrame short="O2"
+<AppFrame
 	:sub-chapter="{
 		'entscheidungsbaum': 'Entscheidungsbaum',
 		'wahrscheinlichkeiten': 'Wahrscheinlichkeiten',
 		'rechner': 'Rechner'
 	}"
 	title="Eddie rechnet: IMO 1985 Aufgabe A2"
-	warning
 >
 
 	<template #descriptionPart>

@@ -1,6 +1,5 @@
 <template>
 <AppFrame
-	short="VA"
 	:sub-chapter="{
 		gleichgewicht: 'Gleichgewicht',
 		metazentrum: 'Metazentrum',
@@ -9,7 +8,6 @@
 		interaktiv: 'Interaktiv'
 	}"
 	title="Eddie rechnet: Warum die Vasa sinken musste"
-	warning
 >
 	<template #descriptionPart>
 		<figure class="exampleFigure">

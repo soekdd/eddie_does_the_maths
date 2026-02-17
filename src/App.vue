@@ -15,7 +15,20 @@
 				<template v-if="showFormalTitle">
 					<div v-if="shortText" class="badge">{{ shortText }}</div>
 					<div>
-						<h1 v-if="titleText">{{ titleText }}</h1>
+						<h1 v-if="titleText" class="titleRow">
+							<span>{{ titleText }}</span>
+							<v-tooltip
+								v-if="difficultyStars"
+								location="bottom"
+								:text="difficultyLabel"
+							>
+								<template #activator="{ props: tooltipProps }">
+									<span class="difficultyStars" :class="{ 'is-wip': routeIsWip }" v-bind="tooltipProps">
+										{{ difficultyStars }}
+									</span>
+								</template>
+							</v-tooltip>
+						</h1>
 						<p v-if="subChapterEntries.length" class="sub">
 							<template v-for="( chapter, index ) in subChapterEntries" :key="chapter.id">
 								<router-link :to="{ path: route.path, hash: `#${chapter.id}` }">
@@ -180,17 +193,6 @@ import privacyPolicyHtml from "./utils/disclaimer/privacy_policy_de.html?raw";
 import faviconPng from "./images/favicon.png";
 
 const props = defineProps( {
-	// Show an error banner for content that is known to contain mistakes.
-	// Usage:
-	// - <AppFrame error> ... </AppFrame> (default text)
-	// - <AppFrame error="Custom text"> ... </AppFrame>
-	error:      { type: [ Boolean, String ], default: false },
-	// Show a "work in progress" banner for content that isn't finished yet.
-	// Usage:
-	// - <AppFrame warning> ... </AppFrame> (default text)
-	// - <AppFrame warning="Custom text"> ... </AppFrame>
-	warning:    { type: [ Boolean, String ], default: false },
-	short:      { type: String, default: "" },
 	title:      { type: String, default: "" },
 	subChapter: {
 		type:    Object,
@@ -208,33 +210,34 @@ const isMobile = computed( () => width.value < 860 );
 const appBarHeight = computed( () => isMobile.value ? 108 : 72 );
 
 const errorMessage = computed( () => {
-	if ( props.error === true ) {
+	if ( route.meta?.error === true ) {
 		return "Achtung: Dieser Inhalt ist bekanntermaßen noch fehlerhaft. " +
-			"Texte, Grafiken und Rechenwege können falsch sein.";
+				"Texte, Grafiken und Rechenwege können falsch sein.";
 	}
 
-	if ( typeof props.error === "string" ) {
-		return props.error.trim();
+	if ( typeof route.meta?.error === "string" ) {
+		return route.meta.error.trim();
 	}
 
 	return "";
 } );
 
 const warningMessage = computed( () => {
-	if ( props.warning === true ) {
+	if ( route.meta?.warning === true ) {
 		return "Hinweis: An diesem Inhalt wird noch gearbeitet. " +
-			"Texte, Grafiken und Rechenwege können sich noch ändern.";
+				"Texte, Grafiken und Rechenwege können sich noch ändern.";
 	}
 
-	if ( typeof props.warning === "string" ) {
-		return props.warning.trim();
+	if ( typeof route.meta?.warning === "string" ) {
+		return route.meta.warning.trim();
 	}
 
 	return "";
 } );
 
-const showError = computed( () => Boolean( errorMessage.value ) );
-const showWarning = computed( () => Boolean( warningMessage.value ) );
+const routeIsWip = computed( () => route.meta?.wip === true );
+const showError = computed( () => !routeIsWip.value && Boolean( errorMessage.value ) );
+const showWarning = computed( () => !routeIsWip.value && Boolean( warningMessage.value ) );
 const hasInteractivePart = computed( () => Boolean( slots.interactivePart ) );
 const hasCalculationPart = computed( () => Boolean( slots.calculationPart ) );
 const hasSummaryPart = computed( () => Boolean( slots.summaryPart ) );
@@ -243,7 +246,50 @@ const showReportErrorDialog = ref( false );
 const showImpressumDialog = ref( false );
 const showPrivacyDialog = ref( false );
 const showHomeBadge = computed( () => route.path !== "/" );
-const shortText = computed( () => props.short.trim() );
+const shortText = computed( () => {
+	const routeName = typeof route.name === "string" ? route.name : "";
+	const normalizedRouteName = routeName.trim().toUpperCase();
+	return normalizedRouteName.slice( 0, 2 );
+} );
+const difficultyValue = computed( () => {
+	const asNumber = Number( route.meta?.difficulty );
+
+	if ( !Number.isInteger( asNumber ) || asNumber < 1 || asNumber > 3 ) {
+		return null;
+	}
+
+	return asNumber;
+} );
+const difficultyStars = computed( () => {
+	if ( difficultyValue.value === 1 ) {
+		return "★☆☆";
+	}
+
+	if ( difficultyValue.value === 2 ) {
+		return "★★☆";
+	}
+
+	if ( difficultyValue.value === 3 ) {
+		return "★★★";
+	}
+
+	return "";
+} );
+const difficultyLabel = computed( () => {
+	if ( difficultyValue.value === 1 ) {
+		return "Schwierigkeitsgrad: leicht";
+	}
+
+	if ( difficultyValue.value === 2 ) {
+		return "Schwierigkeitsgrad: mittel";
+	}
+
+	if ( difficultyValue.value === 3 ) {
+		return "Schwierigkeitsgrad: schwer";
+	}
+
+	return "";
+} );
 const titleText = computed( () => props.title.trim() );
 const subChapterEntries = computed( () => Object.entries( props.subChapter ?? {} )
 	.map( ( [ id, label ] ) => ( {
@@ -340,5 +386,24 @@ onMounted( () => {
   width: 24px;
   height: 24px;
   object-fit: contain;
+}
+
+.titleRow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.difficultyStars {
+  cursor: help;
+  color: rgb(var(--v-theme-warning));
+  letter-spacing: 0.08em;
+  user-select: none;
+  line-height: 1;
+}
+
+.difficultyStars.is-wip {
+  opacity: 0.5;
 }
 </style>

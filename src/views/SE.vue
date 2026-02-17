@@ -1,6 +1,5 @@
 <template>
 <AppFrame
-	short="SE"
 	:sub-chapter="{
 		'kleine-einschlafubungen': 'Kleine Einschlafübungen',
 		'muster-statt-grubeln': 'Muster statt Grübeln'
@@ -56,6 +55,7 @@
 				item-value="value"
 				:items="modes"
 				label="Übungsmodus"
+				@update:model-value="nextExercise"
 			/>
 			<div class="d-flex flex-wrap ga-3 align-center w-100 px-2">
 				<v-btn color="primary" variant="flat" @click="nextExercise">Neue Übung</v-btn>
@@ -99,7 +99,7 @@
 	<template #calculationPart>
 		<h2>Rechendetails</h2>
 		<div class="eddie d-flex flex-column ga-3">
-			<v-sheet v-if="exercise" class="pa-3 rounded">
+			<v-sheet v-if="exercise && solved" class="pa-3 rounded">
 				<div class="text-subtitle-1 font-weight-medium mb-2">Lösungsweg</div>
 				<div class="mono mb-2">{{ exercise.formula }}</div>
 				<div v-for="(line, idx) in exercise.steps" :key="idx" class="mono">{{ line }}</div>
@@ -196,6 +196,7 @@ const exercise = ref( null );
 const selectedOption = ref( "" );
 const revealSolution = ref( false );
 const feedback = ref( null );
+const solved = ref( false );
 
 function randInt( min, max ) {
 	return min + Math.floor( Math.random() * ( max - min + 1 ) );
@@ -367,11 +368,13 @@ function nextExercise() {
 	selectedOption.value = "";
 	feedback.value = null;
 	revealSolution.value = false;
+	solved.value = false;
 }
 
 function resetChoice() {
 	selectedOption.value = "";
 	feedback.value = null;
+	solved.value = false;
 }
 
 function checkAnswer() {
@@ -381,6 +384,7 @@ function checkAnswer() {
 
 	const selected = exercise.value.options.find( ( o ) => o.id === selectedOption.value );
 	const ok = selected && Math.abs( selected.value - exercise.value.correctValue ) < 1e-9;
+	solved.value = Boolean( ok );
 	feedback.value = {
 		ok,
 		text: ok ?

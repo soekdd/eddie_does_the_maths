@@ -1,6 +1,5 @@
 <template>
 <AppFrame
-	short="PG"
 	:sub-chapter="{
 		'poker': 'Poker',
 		'wahrscheinlichkeiten': 'Wahrscheinlichkeiten',

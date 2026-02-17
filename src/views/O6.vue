@@ -1,13 +1,11 @@
 <template>
 <AppFrame
-	short="O6"
 	:sub-chapter="{
 		rekursion: 'Rekursion',
 		monotonie: 'Monotonie',
 		'existenz-eindeutigkeit': 'Existenz & Eindeutigkeit'
 	}"
 	title="Eddie rechnet: IMO 1985 Aufgabe B3"
-	warning
 >
 
 	<template #descriptionPart>

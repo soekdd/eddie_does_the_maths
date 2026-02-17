@@ -1,6 +1,5 @@
 <template>
 <AppFrame
-	short="ST"
 	:sub-chapter="{
 		'entscheidungsbaum': 'Entscheidungsbaum',
 		'wahrscheinlichkeiten': 'Wahrscheinlichkeiten',

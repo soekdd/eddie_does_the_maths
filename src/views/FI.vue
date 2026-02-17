@@ -1,7 +1,5 @@
 <template>
 <AppFrame
-	error
-	short="FI"
 	:sub-chapter="{
 		
 	}"

@@ -1,12 +1,11 @@
 <template>
-<AppFrame short="O4"
+<AppFrame
 	:sub-chapter="{
 		'schubfachprinzip': 'Schubfachprinzip',
 		'paritatsvektoren': 'Paritätsvektoren',
 		'vierte-potenz': 'vierte Potenz'
 	}"
 	title="Eddie rechnet: IMO 1985 Aufgabe B1"
-	warning
 >
 
 	<template #descriptionPart>
