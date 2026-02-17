@@ -319,8 +319,8 @@ export const router = createRouter( {
 			}
 		},
 		{
-			path:      "/OA",
-			name:      "OA",
+			path:      "/WO",
+			name:      "WO",
 			component: CatchAll,
 			meta:      {
 				warning,
@@ -465,6 +465,84 @@ export const router = createRouter( {
 				book:       2,
 				order:      20,
 				wip
+			}
+		},
+		{
+			path:      "/O7",
+			name:      "O7",
+			component: CatchAll,
+			meta:      {
+				wip,
+				difficulty: 3,
+				title:      "IMO 1987 Aufgabe A1",
+				index:      true,
+				book:       2,
+				order:      30
+			}
+		},
+		{
+			path:      "/O8",
+			name:      "O8",
+			component: CatchAll,
+			meta:      {
+				wip,
+				difficulty: 3,
+				title:      "IMO 1987 Aufgabe A2",
+				index:      true,
+				book:       2,
+				order:      30
+			}
+		},
+		{
+			path:      "/O9",
+			name:      "O9",
+			component: CatchAll,
+			meta:      {
+				wip,
+				difficulty: 3,
+				title:      "IMO 1987 Aufgabe A3",
+				index:      true,
+				book:       2,
+				order:      30
+			}
+		},
+		{
+			path:      "/OA",
+			name:      "OA",
+			component: CatchAll,
+			meta:      {
+				wip,
+				difficulty: 3,
+				title:      "IMO 1987 Aufgabe B1",
+				index:      true,
+				book:       2,
+				order:      30
+			}
+		},
+		{
+			path:      "/OB",
+			name:      "OB",
+			component: CatchAll,
+			meta:      {
+				wip,
+				difficulty: 3,
+				title:      "IMO 1987 Aufgabe B2",
+				index:      true,
+				book:       2,
+				order:      30
+			}
+		},
+		{
+			path:      "/OC",
+			name:      "OC",
+			component: CatchAll,
+			meta:      {
+				wip,
+				difficulty: 3,
+				title:      "IMO 1987 Aufgabe B3",
+				index:      true,
+				book:       2,
+				order:      30
 			}
 		},
 		{
