@@ -112,7 +112,7 @@
 
 	<template #footer>
 		<p class="muted">
-			<a href="https://github.com/Krevo/CasioBasicInterpreter">Thanks to Krevo for his CasioBasicInterpreter</a>
+			<a href="https://github.com/Krevo/CasioBasicInterpreter">Thanks to Krevo for his CasioBasicInterpreter (BSD License)</a>
 		</p>
 	</template>
 </AppFrame>

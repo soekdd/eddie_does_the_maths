@@ -19,11 +19,11 @@
 		<div class="eddie">
 			<p>
 				Im <b>Five Card Draw</b> (5 Karten aus einem 52er-Deck, Reihenfolge egal) lassen sich
-				Entscheidungen sehr gut ueber <b>Wahrscheinlichkeiten</b> und <b>Erwartungswerte</b>
+				Entscheidungen sehr gut über <b>Wahrscheinlichkeiten</b> und <b>Erwartungswerte</b>
 				modellieren.
 			</p>
 			<p class="mono">
-				Wichtiger Zaehlhinweis fuer die Draw-Aufgaben: Bei einer 1-Karten-Ziehung sind
+				Wichtiger Zählhinweis für die Draw-Aufgaben: Bei einer 1-Karten-Ziehung sind
 				<b>47 Karten ziehbar</b>, also <Katex inline tex="52-5=47" />.
 				Grund: 4 gehaltene Karten <i>und</i> die abgeworfene Karte sind nicht im Ziehstapel.
 			</p>
@@ -33,7 +33,7 @@
 			<h3 id="wahrscheinlichkeiten">Aufgabe 1 - Das klassische Paar: Lohnt sich "3 ziehen"?</h3>
 			<div class="eddie">
 				<p>
-					<b>Situation:</b> Eddie haelt nach dem Deal ein Paar (z.B.
+					<b>Situation:</b> Eddie hält nach dem Deal ein Paar (z.B.
 					<span class="miniPair">
 						<PokerCard mini rank="7" suit="Kreuz" />
 						<PokerCard mini rank="7" suit="Karo" />
@@ -46,7 +46,7 @@
 					<li>Wie oft bleibt sie bei nur einem Paar?</li>
 				</ol>
 				<p>
-					<b>Loesung (exakt):</b> Insgesamt gibt es
+					<b>Lösung (exakt):</b> Insgesamt gibt es
 					<Katex inline tex="\binom{52-5}{3}=\binom{47}{3}=16{,}215" /> Ziehungen.
 				</p>
 				<div class="kbox">
@@ -77,7 +77,7 @@
 				<div class="kbox">
 					<p class="mono">
 						Ziehbare Karten: <Katex inline tex="52-5=47" /> (nicht 48), denn die 5. Handkarte wurde abgeworfen.
-						Outs: 2 Koenige + 2 Vieren = 4 von 47
+						Outs: 2 Könige + 2 Vieren = 4 von 47
 					</p>
 					<Katex as="div" display tex="P(\text{Full House})=\frac{4}{47}\approx 8{,}51\%" />
 				</div>
@@ -125,7 +125,7 @@
 				<ul>
 					<li>Wer Two Pair hat, zieht genau 1 Karte (auf Full House).</li>
 					<li>Wer 4-Flush hat, zieht genau 1 Karte (auf Flush).</li>
-					<li>Andere Haende ziehen in diesem Modell nicht genau 1 Karte.</li>
+					<li>Andere Hände ziehen in diesem Modell nicht genau 1 Karte.</li>
 				</ul>
 				<p>
 					<b>Beobachtung:</b> Gegner zieht 1 Karte.
@@ -148,7 +148,7 @@
 					<b>Situation:</b> Nach dem Draw ist der Pot <Katex inline tex="P" />.
 					Eddie blufft mit Einsatz <Katex inline tex="B" />.
 				</p>
-				<p><b>Frage:</b> Welche Mindest-Foldrate <Katex inline tex="f" /> braucht sie fuer Break-even?</p>
+				<p><b>Frage:</b> Welche Mindest-Foldrate <Katex inline tex="f" /> braucht sie für Break-even?</p>
 				<div class="kbox">
 					<Katex as="div" display tex="f\cdot P-(1-f)\cdot B=0\Rightarrow f=\frac{B}{P+B}" />
 					<Katex as="div" display tex="P=20,\;B=10\Rightarrow f=\frac{10}{30}=\frac{1}{3}\approx 33{,}3\%" />
@@ -157,14 +157,14 @@
 		</section>
 
 		<section class="task">
-			<h3 id="ev">Aufgabe 7 - EV statt Bauchgefuehl: Welche Linie ist besser?</h3>
+			<h3 id="ev">Aufgabe 7 - EV statt Bauchgefühl: Welche Linie ist besser?</h3>
 			<div class="eddie">
 				<p>
-					<b>Situation:</b> Eddie hat ein Paar und kann waehlen:
+					<b>Situation:</b> Eddie hat ein Paar und kann wählen:
 				</p>
 				<ul>
 					<li>Linie A: 3 Karten ziehen (klassisch)</li>
-					<li>Linie B: 0 ziehen (stehen bleiben), um Staerke zu repraesentieren</li>
+					<li>Linie B: 0 ziehen (stehen bleiben), um Stärke zu repräsentieren</li>
 				</ul>
 				<p>
 					Gegner callt nach dem Draw nur ab Two Pair.
@@ -177,8 +177,8 @@
 					/>
 				</div>
 				<ol>
-					<li>Nutze diese Wahrscheinlichkeit fuer Linie A.</li>
-					<li>Linie B gewinnt nur ueber Folds.</li>
+					<li>Nutze diese Wahrscheinlichkeit für Linie A.</li>
+					<li>Linie B gewinnt nur über Folds.</li>
 					<li>Setze Pot, Bet und Calling-Range ein und vergleiche den EV.</li>
 					<li>Optional: Monte-Carlo-Simulation als Check.</li>
 				</ol>
@@ -187,6 +187,12 @@
 	</template>
 	<template #interactivePart>
 		<PG_Game/>
+	</template>
+
+	<template #footer>
+		<p class="muted">
+			<a href="https://github.com/goldfire/pokersolver">Thanks to James Simpson and GoldFire Studios, Inc. for their Poker Solver (MIT License)</a>
+		</p>
 	</template>
 </AppFrame>
 </template>

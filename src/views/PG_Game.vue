@@ -39,8 +39,9 @@
 				v-for="(c, idx) in cards"
 				:key="c.code"
 				class="cardWrap"
-				:class="{ hovered: hoveredCardIndex === idx }"
+				:class="{ hovered: hoveredCardIndex === idx, removable: canRemoveCard }"
 				:style="pose(idx, cards.length).wrapper"
+				@click="removeCardAt( idx )"
 				@mouseenter="hoveredCardIndex = idx"
 				@mouseleave="hoveredCardIndex = null"
 			>
@@ -76,7 +77,7 @@
 
 	<div v-if="missingToFive > 0 && completionOptionsCards.length" class="mt-2 text-body-2 text-medium-emphasis">
 		<span class="completionOptions">
-			Ergänzungskarten (optimal):
+			erforderliche Ergänzungskarten:
 			<template v-for="(option, optionIndex) in completionOptionsCards" :key="`completion-option-${optionIndex}`">
 				<span v-if="optionIndex > 0" class="completionOr">oder</span>
 				<span class="completionMiniCards">
@@ -95,7 +96,7 @@
 		v-if="completionDrawProbability !== null"
 		class="mt-1 text-body-2 text-medium-emphasis"
 	>
-		Wahrscheinlichkeit, eine optimale Ergänzung zu ziehen:
+		Wahrscheinlichkeit, eine solche Ergänzung zu ziehen:
 		<Katex
 			as="div"
 			:display="true"
@@ -198,6 +199,7 @@ function parseCard( code: string ) {
 }
 
 const cards = computed( () => handCodes.value.map( parseCard ) );
+const canRemoveCard = computed( () => handCodes.value.length === 5 );
 const missingToFive = computed( () => Math.max( 0, 5 - handCodes.value.length ) );
 const remainingDeckCount = computed( () => 52 - handCodes.value.length );
 const completionOptionsCards = computed( () => bestCompletionOptions.value.map( option => option.map( parseCard ) ) );
@@ -269,7 +271,8 @@ function evaluateWithPokerSolver( current: string[] ) {
 	if ( missing <= 0 ) {
 		bestCompletionOptions.value = [];
 		solved.value = Hand.solve( current.slice( 0, 5 ) );
-		note.value = "";
+		note.value = "Hinweis: Du siehst ein volles Kartendeck. Du kannst eine Karte entfernen und sehen" +
+		" welche Möglichkeiten sich dadurch eröffnen.";
 		return;
 	}
 
@@ -349,6 +352,18 @@ function newRandomHand( size: 3 | 4 | 5 = selectedHandSize.value ) {
 	evaluateWithPokerSolver( hand );
 }
 
+function removeCardAt( index: number ) {
+	if ( !canRemoveCard.value ) {
+		return;
+	}
+
+	const next = handCodes.value.filter( ( _, idx ) => idx !== index );
+	handCodes.value = next;
+	selectedHandSize.value = 4;
+	hoveredCardIndex.value = null;
+	evaluateWithPokerSolver( next );
+}
+
 function pose( i: number, n: number ) {
 	const mid = ( n - 1 ) / 2;
 	const spread = 9; // Grad pro Schritt
@@ -408,6 +423,10 @@ onMounted( () => {
   left: 50%;
   top: 0;
   transform: translateX(-50%);
+}
+
+.cardWrap.removable {
+  cursor: pointer;
 }
 
 .cardHoverShell {

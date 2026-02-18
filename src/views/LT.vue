@@ -252,7 +252,9 @@
 	</template>
 
 	<template #footer>
-     
+		<p class="muted">
+			<a href="http://www-fourier.ujf-grenoble.fr/~parisse/giac.html">Thanks to Universität Joseph Fourier Grenoble for giac (GPLv3)</a>
+		</p>
 	</template>
 </AppFrame>
 </template>
