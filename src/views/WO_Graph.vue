@@ -4,31 +4,43 @@
 	<div v-if="showControls" class="panel">
 		<div class="row">
 			<label>L (m)</label>
-			<input v-model.number="L"
+			<v-slider
+				v-model="L"
+				class="controlSlider"
+				color="primary"
+				density="compact"
+				hide-details
 				max="200"
 				min="20"
 				step="1"
-				type="range"
 			/>
 			<span class="val">{{ L.toFixed(0) }}</span>
 		</div>
 		<div class="row">
 			<label>W (m)</label>
-			<input v-model.number="W"
+			<v-slider
+				v-model="W"
+				class="controlSlider"
+				color="primary"
+				density="compact"
+				hide-details
 				max="80"
 				min="5"
 				step="1"
-				type="range"
 			/>
 			<span class="val">{{ W.toFixed(0) }}</span>
 		</div>
 		<div class="row">
 			<label>r (Risiko quer / Schatten)</label>
-			<input v-model.number="r"
+			<v-slider
+				v-model="r"
+				class="controlSlider"
+				color="primary"
+				density="compact"
+				hide-details
 				max="6"
 				min="0.5"
 				step="0.1"
-				type="range"
 			/>
 			<span class="val">{{ r.toFixed(1) }}</span>
 		</div>
@@ -53,7 +65,7 @@
 		<g :transform="geometryTransform">
 			<!-- Hof (Rechteck) -->
 			<rect
-				fill="#111a33"
+				fill="#212a43"
 				:height="W"
 				rx="1.2"
 				stroke="#8aa0ff"
@@ -63,7 +75,34 @@
 				x="0"
 				y="0"
 			/>
-
+			<!-- Terminalgebäude am linken Rand (liegt über dem Hof) -->
+			<rect
+				fill="#202a45"
+				:height="buildingHeight"
+				opacity="0.98"
+				rx="1.1"
+				stroke="#8aa0ff"
+				stroke-width="0.6"
+				vector-effect="non-scaling-stroke"
+				:width="buildingWidth"
+				:x="buildingX"
+				:y="buildingY"
+			/>
+			<!-- Lichtkegel aus den rechten Gebäudeecken -->
+			<path
+				:d="lowerBeamPathD"
+				fill="rgba(255, 244, 173, 0.20)"
+				stroke="rgba(255, 244, 173, 0.28)"
+				stroke-width="0.35"
+				vector-effect="non-scaling-stroke"
+			/>
+			<path
+				:d="upperBeamPathD"
+				fill="rgba(255, 244, 173, 0.20)"
+				stroke="rgba(255, 244, 173, 0.28)"
+				stroke-width="0.35"
+				vector-effect="non-scaling-stroke"
+			/>
 			<!-- Schattenkante (unten) -->
 			<line
 				stroke="#2b2f40"
@@ -81,10 +120,35 @@
 				x="0"
 				y="0"
 			/>
+			<!-- Schattenkante (rechts) -->
+			<line
+				stroke="#2b2f40"
+				stroke-width="2.0"
+				vector-effect="non-scaling-stroke"
+				:x1="L"
+				:x2="L"
+				y1="0"
+				:y2="W"
+			/>
+			<rect
+				fill="rgba(20, 25, 45, 0.55)"
+				:height="W"
+				:width="shadowBand"
+				:x="L - shadowBand"
+				y="0"
+			/>
+			<!-- Schattenkante (oben) -->
+			<rect
+				fill="rgba(20, 25, 45, 0.55)"
+				:height="shadowBand"
+				:width="L"
+				x="0"
+				:y="W - shadowBand"
+			/>
 
 			<!-- Optional: "Außenrum"-Route (schematisch) -->
 			<path
-				v-if="showOuterRoute"
+				v-if="showOuterRoute && !useOuterAsOptimal"
 				:d="outerPathD"
 				fill="none"
 				opacity="0.9"
@@ -95,23 +159,35 @@
 			/>
 
 			<!-- Optimaler Weg -->
-			<polyline
+			<g v-if="!useOuterAsOptimal">
+				<polyline
+					fill="none"
+					:points="`${A.x},${A.y} ${P.x},${P.y}`"
+					stroke="#4cc3ff"
+					stroke-linecap="round"
+					stroke-width="2.2"
+					vector-effect="non-scaling-stroke"
+				/>
+				<line
+					stroke="#ff4d6d"
+					stroke-linecap="round"
+					stroke-width="2.2"
+					vector-effect="non-scaling-stroke"
+					:x1="P.x"
+					:x2="B.x"
+					:y1="P.y"
+					:y2="B.y"
+				/>
+			</g>
+			<path
+				v-else
+				:d="outerPathD"
 				fill="none"
-				:points="`${A.x},${A.y} ${P.x},${P.y}`"
 				stroke="#4cc3ff"
 				stroke-linecap="round"
+				stroke-linejoin="round"
 				stroke-width="2.2"
 				vector-effect="non-scaling-stroke"
-			/>
-			<line
-				stroke="#ff4d6d"
-				stroke-linecap="round"
-				stroke-width="2.2"
-				vector-effect="non-scaling-stroke"
-				:x1="P.x"
-				:x2="B.x"
-				:y1="P.y"
-				:y2="B.y"
 			/>
 
 			<!-- Punkte -->
@@ -120,7 +196,8 @@
 				fill="#d6e4ff"
 				r="0.5"
 			/>
-			<circle :cx="P.x"
+			<circle v-if="!useOuterAsOptimal"
+				:cx="P.x"
 				:cy="P.y"
 				fill="#d6e4ff"
 				r="0.5"
@@ -134,9 +211,24 @@
 
 		<!-- Labels (nicht gespiegelt; SVG-Koordinaten, y nach unten) -->
 		<g class="labels">
+			<text
+				class="terminalLabel"
+				dominant-baseline="middle"
+				text-anchor="middle"
+				:transform="`rotate(-90 ${toSvgX( buildingCenterX )} ${toSvgY( buildingCenterY )})`"
+				:x="toSvgX( buildingCenterX )"
+				:y="toSvgY( buildingCenterY )"
+			>
+				Terminal
+			</text>
+
 			<text class="t" :x="toSvgX( A.x )" :y="toSvgY( A.y ) + 64">A (Start)</text>
 
-			<text class="t" :x="toSvgX( P.x ) - 20" :y="toSvgY( P.y ) + 64">
+			<text v-if="!useOuterAsOptimal"
+				class="t"
+				:x="toSvgX( P.x ) - 20"
+				:y="toSvgY( P.y ) + 64"
+			>
 				P (x*={{ xOpt.toFixed(2) }})
 			</text>
 
@@ -147,13 +239,13 @@
 	<div class="legendHtml">
 		<div class="legendItem">
 			<span class="swatch shadow"></span>
-			<span>Schatten: 1 / m</span>
+			<span>Schatten: 1 Riskopunkt / Meter</span>
 		</div>
 		<div class="legendItem">
 			<span class="swatch sprint"></span>
-			<span>Querung: r / m</span>
+			<span>Querung: {{r}} Risikopunkte / Meter (r)</span>
 		</div>
-		<div v-if="showOuterRoute" class="legendItem">
+		<div v-if="showOuterRoute && !useOuterAsOptimal" class="legendItem">
 			<span class="swatch outer"></span>
 			<span>Außenroute (schematisch)</span>
 		</div>
@@ -163,10 +255,17 @@
 		<div class="kpi">
 			<div>
 				<b>Formel:&nbsp;</b>
-				<Katex tex="x^* = L - \dfrac{W}{\sqrt{r^2 - 1}}\quad (\text{für } r>1)" />
+				<Katex tex="x^* = \frac{L}{2} - \dfrac{W}{\sqrt{r^2 - 1}}\quad (\text{für } r>1)" />
 			</div>
-			<div><b>x*</b> = {{ xOpt.toFixed(2) }} m &nbsp;|&nbsp; <b>u</b> =&nbsp;L-x* = {{ u.toFixed(2) }} m</div>
+			<div><b>x*</b> = {{ xOpt.toFixed(2) }} m &nbsp;|&nbsp; <b>u</b> =&nbsp;L/2-x* = {{ u.toFixed(2) }} m</div>
 			<div><b>PB</b> = {{ PB.toFixed(2) }} m &nbsp;|&nbsp; <b>Risiko</b> = {{ Ropt.toFixed(2) }} Punkte</div>
+			<div><b>Außenrum (nur Schatten)
+			</b> = {{ shadowOnlyDistance.toFixed(2) }} m &nbsp;|&nbsp; <b>Risiko</b> = {{ shadowOnlyRisk.toFixed(2) }} Punkte</div>
+			<div><b>Ersparnis vs. außenrum
+			</b> = {{ savingsVsShadowOnly.toFixed(2) }} Punkte</div>
+			<div><b>Gewählte Route
+			</b> = {{ useOuterAsOptimal ? "Außenrum (nur Schatten)" : "Schatten + Querung" }} &nbsp;|
+				&nbsp; <b>Minimalrisiko</b> = {{ selectedRisk.toFixed(2) }} Punkte</div>
 		</div>
 		<div v-if="r <= 1" class="hint">
 			Hinweis: r ≤ 1 ⇒ Querung ist nicht riskanter als Schatten; dann ist „so früh wie möglich“ optimal (x*=0).
@@ -177,7 +276,7 @@
 
 <script setup>
 import {
-	computed, ref, watchEffect
+	computed, onBeforeUnmount, onMounted, ref, watch, watchEffect
 } from "vue";
 /**
  * Parametrisierbar:
@@ -186,7 +285,7 @@ import {
  *  - r: Risikofaktor Querung vs. Schatten (z.B. 3)
  */
 const props = defineProps( {
-	L:              { type: Number, default: 40 },
+	L:              { type: Number, default: 70 },
 	W:              { type: Number, default: 30 },
 	r:              { type: Number, default: 3 },
 	showControls:   { type: Boolean, default: true },
@@ -204,58 +303,208 @@ watchEffect( () => {
 	r.value = props.r;
 } );
 
-const shadowBand = computed( () => Math.min( 3, W.value * 0.18 ) ); // rein visuell
+const shadowBand = computed( () => Math.min( 3, W.value * 0.28 ) ); // rein visuell
 const viewport = {
 	w: 1200,
 	h: 520
 };
 const fitPadding = 28;
+const buildingWidth = 8; // feste Breite in Meterdarstellung
 
-// Punkte im Mathe-Koordinatensystem: A(0,0), B(L,W), P(x*,0)
+// Punkte im Mathe-Koordinatensystem: A(0,0), B(L/2,W), P(x*,0)
 const A = computed( () => ( { x: 0, y: 0 } ) );
-const B = computed( () => ( { x: L.value, y: W.value } ) );
+const targetX = computed( () => L.value / 2 );
+const B = computed( () => ( { x: targetX.value, y: W.value } ) );
+const buildingHeight = computed( () => 0.8 * W.value );
+const buildingY = computed( () => ( W.value - buildingHeight.value ) / 2 );
+const buildingX = computed( () => -0.5 * buildingWidth );
+const buildingCenterX = computed( () => buildingX.value + buildingWidth / 2 );
+const buildingCenterY = computed( () => buildingY.value + buildingHeight.value / 2 );
+const buildingRightX = computed( () => buildingX.value + buildingWidth );
+const beamCapRadius = computed( () => Math.max( 3, Math.min( 14, 0.16 * W.value ) ) );
+const beamMinX = computed( () => Math.min( L.value - 2, buildingRightX.value + Math.max( 2, 0.07 * L.value ) ) );
+const beamMaxX = computed( () => L.value - Math.max( 2, 0.06 * L.value ) );
+const beamMinY = computed( () => Math.max( 1.5, 0.08 * W.value ) );
+const beamMaxY = computed( () => W.value - Math.max( 1.5, 0.08 * W.value ) );
+const beamSpeed = computed( () => Math.max( 8, 0.42 * L.value ) );
+
+const lowerBeamCenter = ref( { x: 0, y: 0 } );
+const upperBeamCenter = ref( { x: 0, y: 0 } );
+const lowerBeamTarget = ref( { x: 0, y: 0 } );
+const upperBeamTarget = ref( { x: 0, y: 0 } );
+const lowerBeamDirection = ref( 1 );
+const upperBeamDirection = ref( -1 );
+
+let beamAnimationFrameId = 0;
+let lastBeamTimestamp = 0;
+
+const randomBetween = ( min, max ) => min + Math.random() * ( max - min );
+
+const clampBeamPoint = ( point ) => ( {
+	x: Math.min( beamMaxX.value, Math.max( beamMinX.value, point.x ) ),
+	y: Math.min( beamMaxY.value, Math.max( beamMinY.value, point.y ) )
+} );
+
+const nextBeamTarget = ( directionRef ) => {
+	const xSpan = Math.max( 1, beamMaxX.value - beamMinX.value );
+	const edgeBand = Math.max( 0.8, 0.18 * xSpan );
+	const targetXValue = directionRef.value > 0 ?
+		randomBetween( beamMaxX.value - edgeBand, beamMaxX.value ) :
+		randomBetween( beamMinX.value, beamMinX.value + edgeBand );
+	const targetYValue = randomBetween( beamMinY.value, beamMaxY.value );
+	directionRef.value *= -1;
+
+	return clampBeamPoint( {
+		x: targetXValue,
+		y: targetYValue
+	} );
+};
+
+const resetBeamAnimation = () => {
+	const midX = ( beamMinX.value + beamMaxX.value ) / 2;
+	lowerBeamCenter.value = clampBeamPoint( {
+		x: midX,
+		y: buildingY.value + 0.24 * W.value
+	} );
+	upperBeamCenter.value = clampBeamPoint( {
+		x: midX,
+		y: buildingY.value + buildingHeight.value - 0.24 * W.value
+	} );
+	lowerBeamDirection.value = 1;
+	upperBeamDirection.value = -1;
+	lowerBeamTarget.value = nextBeamTarget( lowerBeamDirection );
+	upperBeamTarget.value = nextBeamTarget( upperBeamDirection );
+};
+
+const advanceBeam = (
+	centerRef, targetRef, directionRef, stepDistance
+) => {
+	const dx = targetRef.value.x - centerRef.value.x;
+	const dy = targetRef.value.y - centerRef.value.y;
+	const distance = Math.hypot( dx, dy );
+
+	if ( distance <= stepDistance ) {
+		centerRef.value = targetRef.value;
+		targetRef.value = nextBeamTarget( directionRef );
+		return;
+	}
+
+	const ratio = stepDistance / distance;
+	centerRef.value = {
+		x: centerRef.value.x + dx * ratio,
+		y: centerRef.value.y + dy * ratio
+	};
+};
+
+const animateBeams = ( timestamp ) => {
+	if ( !lastBeamTimestamp ) {
+		lastBeamTimestamp = timestamp;
+	}
+
+	const dt = Math.min( 0.01, ( timestamp - lastBeamTimestamp ) / 1000 );
+	lastBeamTimestamp = timestamp;
+
+	const stepDistance = beamSpeed.value * dt;
+	advanceBeam(
+		lowerBeamCenter, lowerBeamTarget, lowerBeamDirection, stepDistance
+	);
+	advanceBeam(
+		upperBeamCenter, upperBeamTarget, upperBeamDirection, stepDistance * 0.97
+	);
+	beamAnimationFrameId = window.requestAnimationFrame( animateBeams );
+};
+
+onMounted( () => {
+	resetBeamAnimation();
+	beamAnimationFrameId = window.requestAnimationFrame( animateBeams );
+} );
+
+onBeforeUnmount( () => {
+	if ( beamAnimationFrameId ) {
+		window.cancelAnimationFrame( beamAnimationFrameId );
+	}
+} );
+
+watch( [ L, W ], () => {
+	resetBeamAnimation();
+	lastBeamTimestamp = 0;
+} );
+
+const buildBeamPath = (
+	sx, sy, cx, cy, capRadius
+) => {
+	const dx = cx - sx;
+	const dy = cy - sy;
+	const length = Math.max( 1e-6, Math.hypot( dx, dy ) );
+	const ux = dx / length;
+	const uy = dy / length;
+	const px = -uy;
+	const py = ux;
+
+	const x1 = cx + px * capRadius;
+	const y1 = cy + py * capRadius;
+	const x2 = cx - px * capRadius;
+	const y2 = cy - py * capRadius;
+
+	return `M ${sx} ${sy}
+	        L ${x1} ${y1}
+	        A ${capRadius} ${capRadius} 0 0 0 ${x2} ${y2}
+	        Z`;
+};
+
+const lowerBeamPathD = computed( () => buildBeamPath(
+	buildingRightX.value - 2,
+	buildingY.value + 2,
+	lowerBeamCenter.value.x,
+	lowerBeamCenter.value.y,
+	beamCapRadius.value
+) );
+const upperBeamPathD = computed( () => buildBeamPath(
+	buildingRightX.value - 2,
+	buildingY.value + buildingHeight.value - 2 ,
+	upperBeamCenter.value.x,
+	upperBeamCenter.value.y,
+	beamCapRadius.value
+) );
 
 const xOpt = computed( () => {
-	// Minimiert: R(x)=x + r*sqrt((L-x)^2+W^2)
+	// Minimiert: R(x)=x + r*sqrt((L/2-x)^2+W^2)
 	// r<=1: Querung nicht schlimmer -> x*=0 (sofort quer)
 	if ( r.value <= 1 ) {
 		return 0;
 	}
 
-	const raw = L.value - W.value / Math.sqrt( r.value * r.value - 1 );
-	// in [0,L] clampen
-	return Math.min( L.value, Math.max( 0, raw ) );
+	const raw = targetX.value - W.value / Math.sqrt( r.value * r.value - 1 );
+	// in [0,L/2] clampen
+	return Math.min( targetX.value, Math.max( 0, raw ) );
 } );
 
 const P = computed( () => ( { x: xOpt.value, y: 0 } ) );
 
 // Hilfsgrößen
-const u = computed( () => L.value - xOpt.value );
+const u = computed( () => targetX.value - xOpt.value );
 const PB = computed( () => Math.hypot( u.value, W.value ) );
 const Ropt = computed( () => xOpt.value + r.value * PB.value );
+const shadowOnlyDistance = computed( () => 1.5 * L.value + W.value );
+const shadowOnlyRisk = computed( () => shadowOnlyDistance.value ); // 1 Punkt/m im Schatten
+const savingsVsShadowOnly = computed( () => shadowOnlyRisk.value - Ropt.value );
+const useOuterAsOptimal = computed( () => savingsVsShadowOnly.value < 0 );
+const selectedRisk = computed( () => useOuterAsOptimal.value ? shadowOnlyRisk.value : Ropt.value );
 
-const outerExtra = computed( () => Math.max( 8, Math.min( 18, ( L.value + W.value ) * 0.08 ) ) );
-
-// Schematische Außenroute: unten raus, links hoch, oben rüber, rechts runter (nur Visual)
+// Außenroute entlang der Hofkante: rechts, hoch, links zu B
 const outerPathD = computed( () => {
-	const extra = outerExtra.value;
-	// Start (0,0) -> links runter (kleiner Knick) -> außen hoch -> außen rechts -> Ziel
-	// rein illustrativ, nicht maßstäblich für "5x"
 	return `M 0 0
-          L ${-extra} 0
-          L ${-extra} ${W.value + extra}
-          L ${L.value + extra} ${W.value + extra}
-          L ${L.value} ${W.value}`;
+          L ${L.value} 0
+          L ${L.value} ${W.value}
+          L ${B.value.x} ${B.value.y}`;
 } );
 
 const worldBounds = computed( () => {
-	const extra = props.showOuterRoute ? outerExtra.value : 0;
-
 	return {
-		minX: -extra,
-		maxX: L.value + extra,
+		minX: buildingX.value,
+		maxX: L.value,
 		minY: 0,
-		maxY: W.value + extra
+		maxY: W.value
 	};
 } );
 
@@ -290,13 +539,14 @@ const toSvgY = ( y ) => fit.value.ty - y * fit.value.scale;
   display: grid;
   gap: 12px;
   max-width: 980px;
+  color: rgb(var(--v-theme-on-surface));
 }
 .panel {
-  background: #0e1733;
-  border: 1px solid rgba(138, 160, 255, 0.25);
+  background: rgb(var(--v-theme-surface));
+  border: 1px solid rgba(var(--v-theme-on-surface), 0.16);
   border-radius: 12px;
   padding: 10px 12px;
-  color: #d6e4ff;
+  color: rgb(var(--v-theme-on-surface));
 }
 .row {
   display: grid;
@@ -309,8 +559,11 @@ const toSvgY = ( y ) => fit.value.ty - y * fit.value.scale;
   font-size: 13px;
   opacity: 0.95;
 }
-.row input[type="range"] {
-  width: 100%;
+.controlSlider {
+  margin: 0;
+}
+.row :deep(.controlSlider .v-input__control) {
+  min-height: 24px;
 }
 .val {
   text-align: right;
@@ -321,7 +574,7 @@ const toSvgY = ( y ) => fit.value.ty - y * fit.value.scale;
   width: 100%;
   height: min(520px, 62vh);
   border-radius: 14px;
-  border: 1px solid rgba(138, 160, 255, 0.25);
+  border: 1px solid rgba(var(--v-theme-on-surface), 0.2);
   background: #0b1020;
 }
 .labels .t {
@@ -329,12 +582,19 @@ const toSvgY = ( y ) => fit.value.ty - y * fit.value.scale;
   font-size: 22px;
   opacity: 0.95;
 }
+.labels .terminalLabel {
+  fill: #d6e4ff;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  opacity: 0.9;
+}
 
 .legendHtml {
-  background: #0e1733;
-  border: 1px solid rgba(138, 160, 255, 0.25);
+  background: rgb(var(--v-theme-surface));
+  border: 1px solid rgba(var(--v-theme-on-surface), 0.16);
   border-radius: 12px;
-  color: #d6e4ff;
+  color: rgb(var(--v-theme-on-surface));
   display: grid;
   font-size: 13px;
   gap: 6px;
@@ -367,9 +627,9 @@ const toSvgY = ( y ) => fit.value.ty - y * fit.value.scale;
 }
 
 .meta {
-  color: #d6e4ff;
-  background: #0e1733;
-  border: 1px solid rgba(138, 160, 255, 0.25);
+  color: rgb(var(--v-theme-on-surface));
+  background: rgb(var(--v-theme-surface));
+  border: 1px solid rgba(var(--v-theme-on-surface), 0.16);
   border-radius: 12px;
   padding: 10px 12px;
 }

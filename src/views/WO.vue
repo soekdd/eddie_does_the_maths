@@ -5,7 +5,8 @@
 		'risiko-modell': 'Risiko-Modell',
 		aufgabe: 'Aufgabe',
 		loesung: 'Lösung',
-		interpretation: 'Interpretation'
+		interpretation: 'Interpretation',
+		interaction: 'Interaktion'
 	}"
 	title="Eddie rechnet: Optimale Querung"
 >
@@ -22,7 +23,7 @@
 		<div class="eddie">
 			<p>Der überwachte Hof ist rechteckig:</p>
 			<ul>
-				<li>Länge entlang der Containerkante (Schatten): <Katex inline tex="L = 40\,\text{m}" /></li>
+				<li>Länge entlang der Containerkante (Schatten): <Katex inline tex="L = 70\,\text{m}" /></li>
 				<li>Tiefe des Hofs (offen, hell): <Katex inline tex="W = 30\,\text{m}" /></li>
 			</ul>
 
@@ -31,13 +32,17 @@
 				Start <Katex inline tex="A=(0,0)" />.
 			</p>
 			<p>
-				Der feste Zielpunkt ist ein Tor rechts oben:
-				Ziel <Katex inline tex="B=(L,W)" />.
+				Der feste Zielpunkt ist ein Tor in der Mitte der oberen Hofkante:
+				Ziel <Katex inline tex="B=\left(\frac{L}{2},W\right)" />.
+			</p>
+			<p>
+				Die linke Hofkante ist durch das Terminalgebäude versperrt. Durch ein Fenster des Sicherheitsdiensts
+				ist der Hof einsehbar, daher ist ein Weg direkt am Gebäude entlang unmöglich.
 			</p>
 			<p>
 				Entlang der unteren Kante (bei <Katex inline tex="y=0" />) liegt Schatten (Terminal/Zaun).
 				Eddie kann dort unauffällig schleichen. Irgendwo bei
-				<Katex inline tex="P=(x,0)\;\text{mit}\;0\le x\le L" />
+				<Katex inline tex="P=(x,0)\;\text{mit}\;0\le x\le \frac{L}{2}" />
 				entscheidet sie sich, diagonal quer über den Hof direkt zum Tor <Katex inline tex="B" /> zu sprinten.
 			</p>
 		</div>
@@ -55,10 +60,11 @@
 				im Beispiel dann <Katex inline tex="a=1,\;b=3" />.
 			</p>
 			<p>
-				Als Story-Fakt: außen komplett rum gäbe es zwar nur Schatten, aber der Umweg ist etwa
-				5x so lang wie die direkte Diagonale <Katex inline tex="AB=\sqrt{L^2+W^2}" />,
+				Als Story-Fakt: Geht Eddie nicht quer, sondern bleibt komplett an den Hofkanten im Schatten,
+				dann ist die Außenroute
+				<Katex inline tex="L + W + \frac{L}{2}=\frac{3}{2}L+W" />,
 				im konkreten Fall also
-				<Katex inline tex="5\cdot \sqrt{40^2+30^2}=250\,\text{m}" />.
+				<Katex inline tex="\frac{3}{2}\cdot 70 + 30 = 135\,\text{m}" />.
 			</p>
 		</div>
 
@@ -76,23 +82,23 @@
 			<p>Zunächst rein symbolisch mit <Katex inline tex="L,W,a,b" />.</p>
 			<p>Schatten-Strecke: <Katex inline tex="x" /></p>
 			<p>
-				Sprint-Strecke: Abstand von <Katex inline tex="P=(x,0)" /> nach <Katex inline tex="B=(L,W)" />:
+				Sprint-Strecke: Abstand von <Katex inline tex="P=(x,0)" /> nach <Katex inline tex="B=\left(\frac{L}{2},W\right)" />:
 			</p>
 			<div class="kbox">
-				<Katex as="div" display tex="PB=\sqrt{(L-x)^2+W^2}" />
+				<Katex as="div" display tex="PB=\sqrt{\left(\frac{L}{2}-x\right)^2+W^2}" />
 			</div>
 			<p>Risiko:</p>
 			<div class="kbox">
-				<Katex as="div" display tex="R(x)=a\,x+b\sqrt{(L-x)^2+W^2}" />
+				<Katex as="div" display tex="R(x)=a\,x+b\sqrt{\left(\frac{L}{2}-x\right)^2+W^2}" />
 			</div>
 
 			<h4>2) Ableiten und Nullsetzen</h4>
 			<div class="kbox">
-				<Katex as="div" display tex="R'(x)=a+b\cdot\frac{x-L}{\sqrt{(L-x)^2+W^2}}" />
+				<Katex as="div" display tex="R'(x)=a+b\cdot\frac{x-\frac{L}{2}}{\sqrt{\left(\frac{L}{2}-x\right)^2+W^2}}" />
 				<Katex as="div" display tex="R'(x)=0" />
-				<Katex as="div" display tex="a=b\cdot\frac{L-x}{\sqrt{(L-x)^2+W^2}}" />
+				<Katex as="div" display tex="a=b\cdot\frac{\frac{L}{2}-x}{\sqrt{\left(\frac{L}{2}-x\right)^2+W^2}}" />
 			</div>
-			<p>Setze <Katex inline tex="u=L-x" /> (also <Katex inline tex="u\ge 0" />):</p>
+			<p>Setze <Katex inline tex="u=\frac{L}{2}-x" /> (also <Katex inline tex="u\ge 0" />):</p>
 			<div class="kbox">
 				<Katex as="div" display tex="a=b\cdot\frac{u}{\sqrt{u^2+W^2}}" />
 			</div>
@@ -105,24 +111,24 @@
 			</div>
 			<p>Zurück zu <Katex inline tex="x" />:</p>
 			<div class="kbox">
-				<Katex as="div" display tex="(L-x)^2=\frac{a^2W^2}{b^2-a^2}" />
-				<Katex as="div" display tex="x^2-2Lx+\left(L^2-\frac{a^2W^2}{b^2-a^2}\right)=0" />
-				<Katex as="div" display tex="x^*=L-\frac{aW}{\sqrt{b^2-a^2}}" />
-				<Katex as="div" display tex="\text{mit }r=\frac{b}{a}: \quad x^*=L-\frac{W}{\sqrt{r^2-1}}" />
+				<Katex as="div" display tex="\left(\frac{L}{2}-x\right)^2=\frac{a^2W^2}{b^2-a^2}" />
+				<Katex as="div" display tex="x^2-Lx+\left(\frac{L^2}{4}-\frac{a^2W^2}{b^2-a^2}\right)=0" />
+				<Katex as="div" display tex="x^*=\frac{L}{2}-\frac{aW}{\sqrt{b^2-a^2}}" />
+				<Katex as="div" display tex="\text{mit }r=\frac{b}{a}: \quad x^*=\frac{L}{2}-\frac{W}{\sqrt{r^2-1}}" />
 			</div>
 
-			<h4>4) Zahlen erst am Schluss einsetzen</h4>
-			<p>Jetzt mit <Katex inline tex="L=40,\;W=30,\;a=1,\;b=3\;(r=3)" />:</p>
+			<h4>4) Jetzt mir konkreten Werten</h4>
+			<p>Jetzt mit <Katex inline tex="L=70,\;W=30,\;a=1,\;b=3\;(r=3)" />:</p>
 			<div class="kbox">
 				<Katex
 					as="div"
 					display
-					tex="x^*=40-\frac{30}{\sqrt{9-1}}=40-\frac{30}{\sqrt8}=40-\frac{15}{\sqrt2}=40-\frac{15\sqrt2}{2}\approx 29{,}39\,\text{m}"
+					tex="x^*=\frac{L}{2}-\frac{W}{\sqrt{r^2-1}}=35-\frac{30}{\sqrt{9-1}}=35-\frac{15\sqrt2}{2}\approx 24{,}39\,\text{m}"
 				/>
 				<Katex
 					as="div"
 					display
-					tex="u^*=L-x^*=\frac{30}{\sqrt8}=\frac{15}{\sqrt2}=\frac{15\sqrt2}{2}\approx 10{,}61\,\text{m}"
+					tex="u^*=\frac{L}{2}-x^*=35-\left(35-\frac{15\sqrt2}{2}\right)=\frac{15\sqrt2}{2}\approx 10{,}61\,\text{m}"
 				/>
 				<Katex
 					as="div"
@@ -133,7 +139,7 @@
 
 			<h4 id="interpretation">5) Interpretation (für die Szene)</h4>
 			<p>
-				Eddie schleicht rund <Katex inline tex="29{,}39\,\text{m}" /> entlang der Containerkante
+				Eddie schleicht rund <Katex inline tex="24{,}39\,\text{m}" /> entlang der Containerkante
 				und sprintet dann die letzte Diagonale.
 			</p>
 			<p>
@@ -153,7 +159,7 @@
 		</div>
 	</template>
 	<template #interactivePart>
-		<h2>Interaktiv</h2>
+		<h2 id="interaction">Interaktiv</h2>
 		<WO_Graph/>
 	</template>
 </AppFrame>

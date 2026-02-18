@@ -337,7 +337,7 @@ export const router = createRouter( {
 			name:      "WO",
 			component: WO,
 			meta:      {
-				error,
+				warning,
 				difficulty: 2,
 				title:      "Weg&shy;optimierung",
 				index:      true,
