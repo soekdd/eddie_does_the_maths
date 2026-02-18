@@ -11,13 +11,14 @@
   },
   "dependencies": {
     "katex": "^0.16.28",
+    "pokersolver": "^2.1.4",
     "vue": "^3.4.0",
     "vue-router": "^4.2.0",
     "vuetify": "^3.6.0"
   },
   "devDependencies": {
-    "@typescript-eslint/parser": "latest",
     "@stylistic/eslint-plugin": "latest",
+    "@typescript-eslint/parser": "latest",
     "@vitejs/plugin-vue": "^5.0.0",
     "eslint": "^9.34.0",
     "eslint-plugin-import": "latest",

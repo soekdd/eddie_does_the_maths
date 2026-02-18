@@ -29,7 +29,10 @@
 			<div class="eddie">
 				<p>
 					<b>Situation:</b> Eddie haelt nach dem Deal ein Paar (z.B.
-					<Katex inline tex="[7\clubsuit][7\diamondsuit]" />) und wirft die anderen drei Karten weg.
+					<span class="miniPair">
+						<PokerCard mini rank="7" suit="Kreuz" />
+						<PokerCard mini rank="7" suit="Karo" />
+					</span>) und wirft die anderen drei Karten weg.
 					Sie zieht <b>3 neue Karten</b>.
 				</p>
 				<p><b>Fragen:</b></p>
@@ -57,7 +60,12 @@
 			<div class="eddie">
 				<p>
 					<b>Situation:</b> Eddie hat zwei Paare (z.B.
-					<Katex inline tex="[K\spadesuit][K\diamondsuit][4\clubsuit][4\heartsuit]" /> plus Kicker),
+					<span class="miniPair">
+						<PokerCard mini rank="König" suit="Pik" />
+						<PokerCard mini rank="König" suit="Karo" />
+						<PokerCard mini rank="4" suit="Kreuz" />
+						<PokerCard mini rank="4" suit="Herz" />
+					</span> plus Kicker),
 					wirft den Kicker weg und zieht <b>1 Karte</b>.
 				</p>
 				<p><b>Frage:</b> Wie wahrscheinlich wird daraus ein Full House?</p>
@@ -116,9 +124,9 @@
 					Gesucht ist <Katex inline tex="P(\text{Two Pair}\mid \text{zieht 1})" />.
 				</p>
 				<div class="kbox">
-					<Katex as="div" display tex="P(\text{Two Pair})=\frac{123{,}552}{2{,}598{,}960}\approx 4{,}754\%" />
-					<Katex as="div" display tex="N(\text{4-Flush})=4\cdot \binom{13}{4}\cdot 39=111{,}540" />
-					<Katex as="div" display tex="P(\text{4-Flush})=\frac{111{,}540}{2{,}598{,}960}\approx 4{,}292\%" />
+					<Katex as="div" display tex="P(\text{Two Pair})=\frac{123{.}552}{2{.}598{.}960}\approx 4{,}754\%" />
+					<Katex as="div" display tex="N(\text{4-Flush})=4\cdot \binom{13}{4}\cdot 39=111{.}540" />
+					<Katex as="div" display tex="P(\text{4-Flush})=\frac{111{.}540}{2{.}598{.}960}\approx 4{,}292\%" />
 					<Katex as="div" display tex="P(\text{Two Pair}\mid 1)\approx 0{,}5255" />
 				</div>
 				<p class="mono">Also: ca. 52,6% Two Pair vs. 47,4% 4-Flush.</p>
@@ -169,15 +177,28 @@
 			</div>
 		</section>
 	</template>
+	<template #interactivePart>
+		<PG_Game/>
+	</template>
 </AppFrame>
 </template>
 
 <script setup>
 import titleImg from "@/images/PG.webp";
+import PG_Game from "./PG_Game.vue";
+import PokerCard from "./PG_Card.vue";
 </script>
 
 <style scoped>
 .task {
   margin-top: 14px;
+}
+
+.miniPair {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0 4px;
+  vertical-align: middle;
 }
 </style>
