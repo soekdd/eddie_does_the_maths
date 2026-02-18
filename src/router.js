@@ -22,6 +22,7 @@ import VA from "@/views/VA.vue";
 import QH from "@/views/QH.vue";
 import FS from "@/views/FS.vue";
 import LT from "@/views/LT.vue";
+import WO from "@/views/WO.vue";
 import CatchAll from "@/views/CatchAll.vue";
 import Welcome from "@/views/Welcome.vue";
 const error = true;
@@ -320,15 +321,14 @@ export const router = createRouter( {
 		{
 			path:      "/WO",
 			name:      "WO",
-			component: CatchAll,
+			component: WO,
 			meta:      {
 				warning,
 				difficulty: 2,
 				title:      "Weg&shy;optimierung",
 				index:      true,
 				book:       1,
-				order:      190,
-				wip
+				order:      190
 			}
 		},
 		{
