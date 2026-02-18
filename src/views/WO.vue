@@ -54,9 +54,9 @@
 				<li>Quer über den Hof (offen): 3 Risikopunkte pro Meter</li>
 			</ul>
 			<p>
-				Für die Herleitung verwenden wir allgemein:
-				<Katex inline tex="a=\text{Risiko/m im Schatten}" /> und
-				<Katex inline tex="b=\text{Risiko/m bei Querung}" />,
+				Für die Herleitung verwenden wir allgemein:<br>
+				<Katex inline tex="a=\text{Risiko/m im Schatten}" /> und<br>
+				<Katex inline tex="b=\text{Risiko/m bei Querung}" />,<br>
 				im Beispiel dann <Katex inline tex="a=1,\;b=3" />.
 			</p>
 			<p>

@@ -101,12 +101,12 @@
 		class="svg"
 		preserveAspectRatio="xMidYMid meet"
 		role="img"
-		:viewBox="`0 0 ${viewport.w} ${viewport.h}`"
+		:viewBox="`0 0 ${activeViewport.w} ${activeViewport.h}`"
 	>
 		<!-- Hintergrund -->
 		<rect fill="#0b1020"
-			:height="viewport.h"
-			:width="viewport.w"
+			:height="activeViewport.h"
+			:width="activeViewport.w"
 			x="0"
 			y="0"
 		/>
@@ -265,24 +265,25 @@
 				class="terminalLabel"
 				dominant-baseline="middle"
 				text-anchor="middle"
-				:transform="`rotate(-90 ${toSvgX( buildingCenterX )} ${toSvgY( buildingCenterY )})`"
-				:x="toSvgX( buildingCenterX )"
-				:y="toSvgY( buildingCenterY )"
+				:transform="rotateMobile
+					? undefined : `rotate(-90 ${toSvgX( buildingCenterX, buildingCenterY )} ${toSvgY( buildingCenterX, buildingCenterY )})`"
+				:x="toSvgX( buildingCenterX, buildingCenterY )"
+				:y="toSvgY( buildingCenterX, buildingCenterY )"
 			>
 				Terminal
 			</text>
 
-			<text class="t" :x="toSvgX( A.x )" :y="toSvgY( A.y ) + 64">A (Start)</text>
+			<text class="t" :x="toSvgX( A.x, A.y )" :y="toSvgY( A.x, A.y ) + 64">A (Start)</text>
 
 			<text v-if="!useOuterAsOptimal"
 				class="t"
-				:x="toSvgX( P.x ) - 20"
-				:y="toSvgY( P.y ) + 64"
+				:x="toSvgX( P.x, P.y ) - 20"
+				:y="toSvgY( P.x, P.y ) + 64"
 			>
 				P (x*={{ xOpt.toFixed(2) }})
 			</text>
 
-			<text class="t" :x="toSvgX( B.x ) - 44" :y="toSvgY( B.y ) - 40">B (Tor)</text>
+			<text class="t" :x="toSvgX( B.x, B.y ) - 44" :y="toSvgY( B.x, B.y ) - 40">B (Tor)</text>
 		</g>
 	</svg>
 
@@ -328,6 +329,7 @@
 import {
 	computed, onBeforeUnmount, onMounted, ref, watch, watchEffect
 } from "vue";
+import { useDisplay } from "vuetify";
 /**
  * Parametrisierbar:
  *  - L: Länge des Hofs (m)
@@ -341,6 +343,8 @@ const props = defineProps( {
 	showControls:   { type: Boolean, default: true },
 	showOuterRoute: { type: Boolean, default: false }
 } );
+const { smAndDown } = useDisplay();
+const rotateMobile = computed( () => smAndDown.value );
 
 const L = ref( props.L );
 const W = ref( props.W );
@@ -354,10 +358,15 @@ watchEffect( () => {
 } );
 
 const shadowBand = computed( () => Math.min( 3, W.value * 0.28 ) ); // rein visuell
-const viewport = {
+const viewportLandscape = {
 	w: 1200,
 	h: 520
 };
+const viewportPortrait = {
+	w: 520,
+	h: 1200
+};
+const activeViewport = computed( () => rotateMobile.value ? viewportPortrait : viewportLandscape );
 const fitPadding = 28;
 const buildingWidth = 8; // feste Breite in Meterdarstellung
 
@@ -562,11 +571,33 @@ const fit = computed( () => {
 	const bounds = worldBounds.value;
 	const rangeX = Math.max( 1e-6, bounds.maxX - bounds.minX );
 	const rangeY = Math.max( 1e-6, bounds.maxY - bounds.minY );
-	const sx = ( viewport.w - 2 * fitPadding ) / rangeX;
-	const sy = ( viewport.h - 2 * fitPadding ) / rangeY;
-	const scale = Math.max( 1e-6, Math.min( sx, sy ) );
-	const tx = ( viewport.w - rangeX * scale ) / 2 - bounds.minX * scale;
-	const ty = ( viewport.h - rangeY * scale ) / 2 + bounds.maxY * scale;
+	const fitWidth = activeViewport.value.w - 2 * fitPadding;
+	const fitHeight = activeViewport.value.h - 2 * fitPadding;
+
+	if ( !rotateMobile.value ) {
+		const sx = fitWidth / rangeX;
+		const sy = fitHeight / rangeY;
+		const scale = Math.max( 1e-6, Math.min( sx, sy ) );
+		const tx = ( activeViewport.value.w - rangeX * scale ) / 2 - bounds.minX * scale;
+		const ty = ( activeViewport.value.h - rangeY * scale ) / 2 + bounds.maxY * scale;
+
+		return {
+			scale,
+			tx,
+			ty
+		};
+	}
+
+	// Mobile: 90° im Uhrzeigersinn drehen und danach einpassen (Breite/Höhe tauschen sich effektiv).
+	const sxRot = fitWidth / rangeY;
+	const syRot = fitHeight / rangeX;
+	const scale = Math.max( 1e-6, Math.min( sxRot, syRot ) );
+	const widthRot = rangeY * scale;
+	const heightRot = rangeX * scale;
+	const left = ( activeViewport.value.w - widthRot ) / 2;
+	const top = ( activeViewport.value.h - heightRot ) / 2;
+	const tx = left + bounds.maxY * scale;
+	const ty = top + bounds.maxX * scale;
 
 	return {
 		scale,
@@ -577,11 +608,32 @@ const fit = computed( () => {
 
 const geometryTransform = computed( () => {
 	const f = fit.value;
+
+	if ( rotateMobile.value ) {
+		return `translate(${f.tx} ${f.ty}) rotate(-90) scale(${f.scale} ${-f.scale})`;
+	}
+
 	return `translate(${f.tx} ${f.ty}) scale(${f.scale} -${f.scale})`;
 } );
 
-const toSvgX = ( x ) => fit.value.tx + x * fit.value.scale;
-const toSvgY = ( y ) => fit.value.ty - y * fit.value.scale;
+const mapToSvg = ( x, y ) => {
+	const f = fit.value;
+
+	if ( rotateMobile.value ) {
+		return {
+			x: f.tx - y * f.scale,
+			y: f.ty - x * f.scale
+		};
+	}
+
+	return {
+		x: f.tx + x * f.scale,
+		y: f.ty - y * f.scale
+	};
+};
+
+const toSvgX = ( x, y ) => mapToSvg( x, y ).x;
+const toSvgY = ( x, y ) => mapToSvg( x, y ).y;
 </script>
 
 <style scoped>
@@ -630,6 +682,11 @@ const toSvgY = ( y ) => fit.value.ty - y * fit.value.scale;
   border-radius: 14px;
   border: 1px solid rgba(var(--v-theme-on-surface), 0.2);
   background: #0b1020;
+}
+@media (max-width: 600px) {
+  .svg {
+    height: min(760px, 82vh);
+  }
 }
 .labels .t {
   fill: #d6e4ff;
