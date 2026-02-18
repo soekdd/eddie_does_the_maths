@@ -22,7 +22,13 @@
 
 		<!-- Mitte -->
 		<div class="center">
-			<span class="centerSuit">{{ suitIcon }}</span>
+			<img
+				v-if="centerFigureSrc"
+				:alt="centerFigureAlt"
+				class="centerFigure"
+				:src="centerFigureSrc"
+			/>
+			<span v-else class="centerSuit">{{ suitIcon }}</span>
 		</div>
 
 		<!-- Ecke unten rechts (um 180° gedreht) -->
@@ -91,6 +97,19 @@ const suitIcon = computed( () => {
 	}
 } );
 
+const suitAssetCode = computed( () => {
+	switch ( normSuit.value ) {
+		case "herz":
+			return "H";
+		case "karo":
+			return "C";
+		case "kreuz":
+			return "K";
+		default:
+			return "P";
+	}
+} );
+
 const rankText = computed( () => {
 	const r = props.rank;
 
@@ -138,6 +157,37 @@ const rankText = computed( () => {
 	// "7", "10", ...
 	return ( r ?? "" ).toString();
 } );
+
+const figureRankAssetCode = computed( () => {
+	switch ( rankText.value ) {
+		case "B":
+			return "B";
+		case "D":
+			return "Q";
+		case "K":
+			return "K";
+		default:
+			return "";
+	}
+} );
+
+const figureImages = import.meta.glob( "../images/PG_Card_*.webp",
+	{
+		eager:  true,
+		import: "default"
+	} ) as Record<string, string>;
+
+const centerFigureSrc = computed( () => {
+	if ( !figureRankAssetCode.value ) {
+		return "";
+	}
+
+	const imagePath = `../images/PG_Card_${suitAssetCode.value}${figureRankAssetCode.value}.webp`;
+
+	return figureImages[ imagePath ] ?? "";
+} );
+
+const centerFigureAlt = computed( () => `Bildkarte ${rankText.value}${suitIcon.value}` );
 
 const cardStyle = computed( () => ( { transform: `rotate(${props.rotation ?? 0}deg)` } ) );
 </script>
@@ -253,5 +303,11 @@ const cardStyle = computed( () => ( { transform: `rotate(${props.rotation ?? 0}d
     "Segoe UI Symbol",
     "Apple Symbols",
     sans-serif;
+}
+
+.centerFigure {
+  width: 90%;
+  height: auto;
+  object-fit: contain;
 }
 </style>
