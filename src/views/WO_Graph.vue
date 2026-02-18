@@ -2,48 +2,98 @@
 <template>
 <div class="wrap">
 	<div v-if="showControls" class="panel">
-		<div class="row">
-			<label>L (m)</label>
-			<v-slider
-				v-model="L"
-				class="controlSlider"
-				color="primary"
-				density="compact"
-				hide-details
-				max="200"
-				min="20"
-				step="1"
-			/>
-			<span class="val">{{ L.toFixed(0) }}</span>
-		</div>
-		<div class="row">
-			<label>W (m)</label>
-			<v-slider
-				v-model="W"
-				class="controlSlider"
-				color="primary"
-				density="compact"
-				hide-details
-				max="80"
-				min="5"
-				step="1"
-			/>
-			<span class="val">{{ W.toFixed(0) }}</span>
-		</div>
-		<div class="row">
-			<label>r (Risiko quer / Schatten)</label>
-			<v-slider
-				v-model="r"
-				class="controlSlider"
-				color="primary"
-				density="compact"
-				hide-details
-				max="6"
-				min="0.5"
-				step="0.1"
-			/>
-			<span class="val">{{ r.toFixed(1) }}</span>
-		</div>
+		<v-row dense>
+			<v-col cols="12">
+				<v-row align="center" class="controlRow" dense>
+					<v-col cols="12" md="3" sm="3">
+						<v-label class="controlLabel">L (m)</v-label>
+					</v-col>
+					<v-col cols="9" md="7" sm="7">
+						<v-slider
+							v-model="L"
+							class="controlSlider"
+							color="primary"
+							density="compact"
+							hide-details
+							max="200"
+							min="20"
+							step="1"
+						/>
+					</v-col>
+					<v-col class="d-flex justify-end"
+						cols="3"
+						md="2"
+						sm="2"
+					>
+						<v-chip class="controlValueChip"
+							color="primary"
+							size="small"
+							variant="tonal"
+						>{{ L.toFixed(0) }}</v-chip>
+					</v-col>
+				</v-row>
+			</v-col>
+			<v-col cols="12">
+				<v-row align="center" class="controlRow" dense>
+					<v-col cols="12" md="3" sm="3">
+						<v-label class="controlLabel">W (m)</v-label>
+					</v-col>
+					<v-col cols="9" md="7" sm="7">
+						<v-slider
+							v-model="W"
+							class="controlSlider"
+							color="primary"
+							density="compact"
+							hide-details
+							max="80"
+							min="5"
+							step="1"
+						/>
+					</v-col>
+					<v-col class="d-flex justify-end"
+						cols="3"
+						md="2"
+						sm="2"
+					>
+						<v-chip class="controlValueChip"
+							color="primary"
+							size="small"
+							variant="tonal"
+						>{{ W.toFixed(0) }}</v-chip>
+					</v-col>
+				</v-row>
+			</v-col>
+			<v-col cols="12">
+				<v-row align="center" class="controlRow" dense>
+					<v-col cols="12" md="3" sm="3">
+						<v-label class="controlLabel">r (Risiko)</v-label>
+					</v-col>
+					<v-col cols="9" md="7" sm="7">
+						<v-slider
+							v-model="r"
+							class="controlSlider"
+							color="primary"
+							density="compact"
+							hide-details
+							max="6"
+							min="0.5"
+							step="0.1"
+						/>
+					</v-col>
+					<v-col class="d-flex justify-end"
+						cols="3"
+						md="2"
+						sm="2"
+					>
+						<v-chip class="controlValueChip"
+							color="primary"
+							size="small"
+							variant="tonal"
+						>{{ r.toFixed(1) }}</v-chip>
+					</v-col>
+				</v-row>
+			</v-col>
+		</v-row>
 	</div>
 
 	<svg
@@ -548,27 +598,31 @@ const toSvgY = ( y ) => fit.value.ty - y * fit.value.scale;
   padding: 10px 12px;
   color: rgb(var(--v-theme-on-surface));
 }
-.row {
-  display: grid;
-  grid-template-columns: 220px 1fr 70px;
-  gap: 10px;
-  align-items: center;
-  margin: 6px 0;
+.controlRow {
+  margin: 0;
 }
-.row label {
+.controlLabel {
+  color: rgb(var(--v-theme-on-surface));
   font-size: 13px;
   opacity: 0.95;
 }
 .controlSlider {
   margin: 0;
 }
-.row :deep(.controlSlider .v-input__control) {
+.controlRow :deep(.controlSlider .v-input__control) {
   min-height: 24px;
 }
-.val {
-  text-align: right;
+.controlValueChip {
   font-variant-numeric: tabular-nums;
-  opacity: 0.95;
+  justify-content: center;
+  min-width: 56px;
+}
+.controlRow :deep(.v-col) {
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+.controlRow :deep(.controlSlider .v-slider-thumb__label) {
+  font-variant-numeric: tabular-nums;
 }
 .svg {
   width: 100%;
