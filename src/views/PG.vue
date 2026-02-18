@@ -22,6 +22,11 @@
 				Entscheidungen sehr gut ueber <b>Wahrscheinlichkeiten</b> und <b>Erwartungswerte</b>
 				modellieren.
 			</p>
+			<p class="mono">
+				Wichtiger Zaehlhinweis fuer die Draw-Aufgaben: Bei einer 1-Karten-Ziehung sind
+				<b>47 Karten ziehbar</b>, also <Katex inline tex="52-5=47" />.
+				Grund: 4 gehaltene Karten <i>und</i> die abgeworfene Karte sind nicht im Ziehstapel.
+			</p>
 		</div>
 
 		<section class="task">
@@ -42,7 +47,7 @@
 				</ol>
 				<p>
 					<b>Loesung (exakt):</b> Insgesamt gibt es
-					<Katex inline tex="\binom{47}{3}=16{,}215" /> Ziehungen.
+					<Katex inline tex="\binom{52-5}{3}=\binom{47}{3}=16{,}215" /> Ziehungen.
 				</p>
 				<div class="kbox">
 					<div class="mono">Two Pair: 2592/16215 ≈ 15,985%</div>
@@ -71,6 +76,7 @@
 				<p><b>Frage:</b> Wie wahrscheinlich wird daraus ein Full House?</p>
 				<div class="kbox">
 					<p class="mono">
+						Ziehbare Karten: <Katex inline tex="52-5=47" /> (nicht 48), denn die 5. Handkarte wurde abgeworfen.
 						Outs: 2 Koenige + 2 Vieren = 4 von 47
 					</p>
 					<Katex as="div" display tex="P(\text{Full House})=\frac{4}{47}\approx 8{,}51\%" />
@@ -86,6 +92,7 @@
 				</p>
 				<p><b>Frage:</b> Wie oft trifft sie den Flush?</p>
 				<div class="kbox">
+					<p class="mono">Ziehbare Karten: <Katex inline tex="52-5=47" />, davon 9 in der gesuchten Farbe.</p>
 					<Katex as="div" display tex="P(\text{Flush})=\frac{9}{47}\approx 19{,}15\%" />
 				</div>
 			</div>
@@ -102,6 +109,7 @@
 					<li>Gutshot Draw, z.B. 6-7-9-10 (es fehlt 8)</li>
 				</ul>
 				<div class="kbox">
+					<p class="mono">Auch hier gilt beim 1-Karten-Draw: <Katex inline tex="52-5=47" /> ziehbare Karten.</p>
 					<Katex as="div" display tex="P(\text{Straight, open-ended})=\frac{8}{47}\approx 17{,}02\%" />
 					<Katex as="div" display tex="P(\text{Straight, gutshot})=\frac{4}{47}\approx 8{,}51\%" />
 				</div>

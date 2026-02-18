@@ -28,6 +28,20 @@
 				class="centerFigure"
 				:src="centerFigureSrc"
 			/>
+			<div v-else-if="centerPipRows.length" class="centerPips">
+				<div
+					v-for="( rowCount, rowIndex ) in centerPipRows"
+					:key="`pip-row-${rowIndex}`"
+					class="pipRow"
+					:class="pipRowClass( rowCount )"
+				>
+					<span
+						v-for="pipIndex in rowCount"
+						:key="`pip-${rowIndex}-${pipIndex}`"
+						class="pip"
+					>{{ suitIcon }}</span>
+				</div>
+			</div>
 			<span v-else class="centerSuit">{{ suitIcon }}</span>
 		</div>
 
@@ -189,6 +203,49 @@ const centerFigureSrc = computed( () => {
 
 const centerFigureAlt = computed( () => `Bildkarte ${rankText.value}${suitIcon.value}` );
 
+const numberRank = computed( () => {
+	const parsedRank = Number( rankText.value );
+
+	return Number.isInteger( parsedRank ) ? parsedRank : null;
+} );
+
+const centerPipRows = computed( () => {
+	switch ( numberRank.value ) {
+		case 2:
+			return [ 1, 1 ];
+		case 3:
+			return [ 1, 1, 1 ];
+		case 4:
+			return [ 2, 2 ];
+		case 5:
+			return [ 2, 1, 2 ];
+		case 6:
+			return [ 2, 2, 2 ];
+		case 7:
+			return [ 2, 1, 2, 2 ];
+		case 8:
+			return [ 2, 1, 2, 1, 2 ];
+		case 9:
+			return [ 2, 2, 1, 2, 2 ];
+		case 10:
+			return [ 2, 1, 2, 2, 1, 2 ];
+		default:
+			return [];
+	}
+} );
+
+const pipRowClass = ( rowCount: number ) => {
+	if ( rowCount === 1 && ( numberRank.value ?? 0 ) <= 5 ) {
+		return "count-small";
+	}
+
+	if ( rowCount === 2 && ( numberRank.value ?? 0 ) < 5 ) {
+		return "count-small2";
+	}
+
+	return `count-${rowCount}`;
+};
+
 const cardStyle = computed( () => ( { transform: `rotate(${props.rotation ?? 0}deg)` } ) );
 </script>
 
@@ -237,6 +294,7 @@ const cardStyle = computed( () => ( { transform: `rotate(${props.rotation ?? 0}d
 .miniRank {
   font-size: 19px;
   line-height: 1;
+  letter-spacing: -2px;
 }
 
 .miniSuit {
@@ -306,8 +364,50 @@ const cardStyle = computed( () => ( { transform: `rotate(${props.rotation ?? 0}d
 }
 
 .centerFigure {
-  width: 90%;
+  width: 110%;
   height: auto;
   object-fit: contain;
+}
+
+.centerPips {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: -3px;
+}
+
+.pipRow {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+.pipRow.count-small {
+  justify-content: center;
+}
+
+.pipRow.count-1 {
+  justify-content: center;
+  margin: -15px 0;
+}
+
+
+.pipRow.count-small2 {
+  justify-content: space-between;
+  margin: 15px 0;
+}
+
+.pipRow.count-2 {
+  justify-content: space-between;
+}
+
+.pip {
+  font-size: 30px;
+  line-height: 1;
+  font-family:
+    "Noto Sans Symbols 2",
+    "Segoe UI Symbol",
+    "Apple Symbols",
+    sans-serif;
 }
 </style>

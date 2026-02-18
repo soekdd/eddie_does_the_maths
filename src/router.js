@@ -191,7 +191,6 @@ export const router = createRouter( {
 			name:      "PG",
 			component: PG,
 			meta:      {
-				warning,
 				difficulty: 1,
 				title:      "Mit Eddie zum Poker&shy;genie",
 				index:      true,
