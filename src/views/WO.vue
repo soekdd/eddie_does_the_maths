@@ -153,6 +153,7 @@
 		</div>
 	</template>
 	<template #interactivePart>
+		<h2>Interaktiv</h2>
 		<WO_Graph/>
 	</template>
 </AppFrame>

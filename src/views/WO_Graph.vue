@@ -118,25 +118,25 @@
 			<circle :cx="A.x"
 				:cy="A.y"
 				fill="#d6e4ff"
-				r="1.5"
+				r="0.5"
 			/>
 			<circle :cx="P.x"
 				:cy="P.y"
 				fill="#d6e4ff"
-				r="1.5"
+				r="0.5"
 			/>
 			<circle :cx="B.x"
 				:cy="B.y"
 				fill="#d6e4ff"
-				r="1.5"
+				r="0.5"
 			/>
 		</g>
 
 		<!-- Labels (nicht gespiegelt; SVG-Koordinaten, y nach unten) -->
 		<g class="labels">
-			<text class="t" :x="toSvgX( A.x )" :y="toSvgY( A.y ) + 84">A (Start)</text>
+			<text class="t" :x="toSvgX( A.x )" :y="toSvgY( A.y ) + 64">A (Start)</text>
 
-			<text class="t" :x="toSvgX( P.x ) - 20" :y="toSvgY( P.y ) + 84">
+			<text class="t" :x="toSvgX( P.x ) - 20" :y="toSvgY( P.y ) + 64">
 				P (x*={{ xOpt.toFixed(2) }})
 			</text>
 
@@ -326,7 +326,7 @@ const toSvgY = ( y ) => fit.value.ty - y * fit.value.scale;
 }
 .labels .t {
   fill: #d6e4ff;
-  font-size: 42px;
+  font-size: 22px;
   opacity: 0.95;
 }
 

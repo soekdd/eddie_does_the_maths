@@ -306,6 +306,20 @@ export const router = createRouter( {
 			}
 		},
 		{
+			path:      "/BS",
+			name:      "BS",
+			component: CatchAll,
+			meta:      {
+				warning,
+				difficulty: 2,
+				title:      "Baustatik #1",
+				index:      true,
+				book:       1,
+				order:      180,
+				wip
+			}
+		},
+		{
 			path:      "/AL",
 			name:      "AL",
 			component: AL,
@@ -315,7 +329,7 @@ export const router = createRouter( {
 				title:      "Karten&shy;spiel mit Ada Lovelace",
 				index:      true,
 				book:       1,
-				order:      180
+				order:      190
 			}
 		},
 		{
@@ -328,21 +342,7 @@ export const router = createRouter( {
 				title:      "Weg&shy;optimierung",
 				index:      true,
 				book:       1,
-				order:      190
-			}
-		},
-		{
-			path:      "/BS",
-			name:      "BS",
-			component: CatchAll,
-			meta:      {
-				warning,
-				difficulty: 2,
-				title:      "Baustatik #1",
-				index:      true,
-				book:       1,
-				order:      200,
-				wip
+				order:      200
 			}
 		},
 		{
