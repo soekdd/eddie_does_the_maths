@@ -42,7 +42,7 @@
 				<Katex as="div" display tex="I_x = I_{x,S} + A\cdot d^2" />
 			</div>
 			<figure class="exampleFigure">
-				<ImageZoomer title="Doppelt-T-Träger mit Steiner-Rechnung">
+				<ImageZoomer title="Doppelt-T-Träger">
 					<BS_Graph
 						:bf="100"
 						:h="200"
