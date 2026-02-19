@@ -117,6 +117,11 @@
 		</section>
 
 		<section class="task">
+			<figure class="exampleFigure">
+				<ImageZoomer :title="`Eddie`">
+					<img alt="Eddie rechnet" loading="lazy" :src="eddieImg" />
+				</ImageZoomer>
+			</figure>
 			<h3 id="bayes">Aufgabe 5 - Bayes aus Ziehzahl: Gegner zieht 1 Karte</h3>
 			<div class="eddie">
 				<p>
@@ -199,6 +204,7 @@
 
 <script setup>
 import titleImg from "@/images/PG.webp";
+import eddieImg from "@/images/PG_Eddie.webp";
 import PG_Game from "./PG_Game.vue";
 import PokerCard from "./PG_Card.vue";
 </script>
