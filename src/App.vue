@@ -10,7 +10,7 @@
 					title="Home"
 					to="/"
 				>
-					<img alt="" class="homeBadgeIcon" :src="faviconPng" />
+					<img alt="Home" class="homeBadgeIcon" :src="faviconPng" />
 				</router-link>
 				<template v-if="showFormalTitle">
 					<div v-if="shortText" class="badge">{{ shortText }}</div>

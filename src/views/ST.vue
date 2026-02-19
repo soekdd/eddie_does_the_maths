@@ -10,8 +10,8 @@
 
 	<template #descriptionPart>
 		<figure class="exampleFigure">
-			<ImageZoomer :title="`Eddie`">
-				<img alt="Eddie rechnet" loading="lazy" :src="titleImg" />
+			<ImageZoomer title="Eddie muss sich entscheiden">
+				<img loading="lazy" :src="titleImg" />
 			</ImageZoomer>
 		</figure>
 
@@ -60,7 +60,7 @@
 		</div>
 		<h2 class="mt-8">Teil 3 — Warum man Wahrscheinlichkeiten nicht addieren darf</h2>
 		<figure class="exampleFigure">
-			<ImageZoomer :title="`Baum`">
+			<ImageZoomer title="Entscheidungsbaum">
 				<ST_Graph a="0.8"
 					bus-per-hour="1"
 					r="0.2"

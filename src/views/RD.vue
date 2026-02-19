@@ -9,8 +9,8 @@
 
 	<template #descriptionPart>
 		<figure class="exampleFigure">
-			<ImageZoomer :title="`Eddie`">
-				<img alt="Eddie rechnet" loading="lazy" :src="titleImg" />
+			<ImageZoomer title="Eddie als Rentierführerin">
+				<img loading="lazy" :src="titleImg" />
 			</ImageZoomer>
 		</figure>
 		<h2>Teil 1 — Aufgabe (Lappland-Version)</h2>

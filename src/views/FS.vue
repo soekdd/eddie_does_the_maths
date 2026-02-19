@@ -11,8 +11,8 @@
 
 	<template #descriptionPart>
 		<figure class="exampleFigure">
-			<ImageZoomer :title="`Eddie`">
-				<img alt="Eddie rechnet zur Fischpopulation" loading="lazy" :src="titleImg" />
+			<ImageZoomer title="Eddie rechnet zur Fischpopulation">
+				<img  loading="lazy" :src="titleImg" />
 			</ImageZoomer>
 		</figure>
 

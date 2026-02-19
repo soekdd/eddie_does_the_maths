@@ -13,8 +13,8 @@
 
 	<template #descriptionPart>
 		<figure class="exampleFigure">
-			<ImageZoomer :title="`Eddie und Zarah lösen Differentialgleichungen`">
-				<img alt="Eddie und Zarah lösen Differentialgleichungen" loading="lazy" :src="titleImg" />
+			<ImageZoomer title="Eddie und Zarah lösen Differentialgleichungen">
+				<img loading="lazy" :src="titleImg" />
 			</ImageZoomer>
 		</figure>
 		<h3>Differentialgleichungen - Klassischer Lösungsweg vs. Laplace-Transformation</h3>

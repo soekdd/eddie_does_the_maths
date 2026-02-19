@@ -12,7 +12,7 @@
 	<template #descriptionPart>
 		<figure class="exampleFigure">
 			<ImageZoomer :title="`Eddie und Klaus von Klitzing`">
-				<img alt="Eddie und der Quanten-Hall-Effekt" loading="lazy" :src="titleImg" />
+				<img loading="lazy" :src="titleImg" />
 			</ImageZoomer>
 		</figure>
 

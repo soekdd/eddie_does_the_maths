@@ -1,12 +1,13 @@
 <template>
 <div class="imageZoomer">
-	<div class="zoomerActivator"
+	<div ref="activatorRef"
+		class="zoomerActivator"
 		role="button"
 		tabindex="0"
 		@click="open = true"
 		@keydown="onKeydown"
 	>
-		<slot />
+		<slot :alt="effectiveImgAlt" />
 		<!-- <span class="zoomerHint">{{ hint }}</span> -->
 	</div>
 
@@ -47,7 +48,7 @@
 						:style="fitStyle"
 						@click="open = false"
 					>
-						<slot />
+						<slot :alt="effectiveImgAlt" />
 					</div>
 				</div>
 			</v-card-text>
@@ -58,12 +59,13 @@
 
 <script setup>
 import {
-	computed, nextTick, onBeforeUnmount, ref, watch
+	computed, nextTick, onBeforeUnmount, onMounted, ref, watch
 } from "vue";
 import { useDisplay } from "vuetify";
 
 const props = defineProps( {
 	title:    { type: String, default: "" },
+	imgAlt:   { type: String, default: "" },
 	//hint:     { type: String, default: "Zum Zoomen klicken" },
 	maxWidth: { type: [ Number, String ], default: 1400 }
 } );
@@ -77,7 +79,9 @@ const dialogHeight = computed( () => smAndDown.value ? undefined : "calc(100dvh 
 
 const contentBoxRef = ref( null );
 const fitBoxRef = ref( null );
+const activatorRef = ref( null );
 const fitStyle = ref( {} );
+const effectiveImgAlt = computed( () => props.imgAlt || props.title || "" );
 
 let ro = null;
 
@@ -192,6 +196,25 @@ function stopObservers() {
 	ro = null;
 }
 
+function applyAltToImages( rootEl ) {
+	if ( !rootEl || !effectiveImgAlt.value ) {
+		return;
+	}
+
+	const images = rootEl.querySelectorAll( "img" );
+
+	images.forEach( ( img ) => {
+		if ( !img.getAttribute( "alt" ) ) {
+			img.setAttribute( "alt", effectiveImgAlt.value );
+		}
+	} );
+}
+
+function applyAltEverywhere() {
+	applyAltToImages( activatorRef.value );
+	applyAltToImages( fitBoxRef.value );
+}
+
 watch( open, async( v ) => {
 	if ( !v ) {
 		stopObservers();
@@ -201,6 +224,7 @@ watch( open, async( v ) => {
 
 	await nextTick();
 	fitToViewport();
+	applyAltEverywhere();
 
 	stopObservers();
 
@@ -208,6 +232,16 @@ watch( open, async( v ) => {
 		ro = new ResizeObserver( () => fitToViewport() );
 		ro.observe( contentBoxRef.value );
 	}
+} );
+
+watch( effectiveImgAlt, async() => {
+	await nextTick();
+	applyAltEverywhere();
+} );
+
+onMounted( async() => {
+	await nextTick();
+	applyAltEverywhere();
 } );
 
 onBeforeUnmount( () => stopObservers() );

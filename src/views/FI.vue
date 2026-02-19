@@ -8,8 +8,8 @@
 
 	<template #descriptionPart>
 		<figure class="exampleFigure">
-			<ImageZoomer :title="`Eddie`">
-				<img alt="Eddie rechnet zur Fischpopulation" loading="lazy" :src="titleImg" />
+			<ImageZoomer title="Eddie">
+				<img loading="lazy" :src="titleImg" />
 			</ImageZoomer>
 		</figure>
 		<div style="height:20em">&nbsp;</div>

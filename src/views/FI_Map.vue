@@ -12,7 +12,7 @@
 			</label>
 
 			<label>
-				Asset (aus Projekt)
+				Karten meiner Reise
 				<select v-model="selectedAssetKey" :disabled="assetKeys.length === 0" @change="loadSelectedAsset">
 					<option disabled value="">– auswählen –</option>
 					<option v-for="k in assetKeys" :key="k" :value="k">

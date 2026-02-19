@@ -13,8 +13,8 @@
 >
 	<template #descriptionPart>
 		<figure class="exampleFigure">
-			<ImageZoomer :title="`Eddie und Sini`">
-				<img alt="Eddie und Sini" loading="lazy" :src="titleImg" />
+			<ImageZoomer title="Eddie und Sini in Vaasa">
+				<img loading="lazy" :src="titleImg" />
 			</ImageZoomer>
 		</figure>
 
@@ -53,8 +53,8 @@
 				</div>
 			</div>
 			<figure class="exampleFigure">
-				<ImageZoomer :title="`Sinis SAMI DNA`">
-					<img alt="Sinis SAMI DNA" loading="lazy" :src="samiImg" />
+				<ImageZoomer title="Sinis SAMI DNA">
+					<img loading="lazy" :src="samiImg" />
 				</ImageZoomer>
 			</figure>
 			<p class="muted">
@@ -217,7 +217,7 @@
 	</template>
 	<template #calculationPart>
 
-		<ImageZoomer :title="`Ich zeig dir deine DNA`">
+		<ImageZoomer title="Ich zeig dir deine DNA">
 			<SD_DNA v-if="canEncode" :dna="dnaCompact"/>
 		</ImageZoomer>
 

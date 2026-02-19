@@ -13,8 +13,8 @@
 
 	<template #descriptionPart>
 		<figure class="exampleFigure">
-			<ImageZoomer :title="`Eddie`">
-				<img alt="Eddie rechnet" loading="lazy" :src="titleImg" />
+			<ImageZoomer title="Eddie am zweiten Wettkampftag">
+				<img loading="lazy" :src="titleImg" />
 			</ImageZoomer>
 		</figure>
 		<h2>IMO 1985 – Aufgaben</h2>

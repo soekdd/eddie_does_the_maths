@@ -11,8 +11,8 @@
 
 	<template #descriptionPart>
 		<figure class="exampleFigure">
-			<ImageZoomer :title="`Eddie`">
-				<img alt="Eddie rechnet" loading="lazy" :src="titleImg" />
+			<ImageZoomer title="Eddie und Ada Lovelace">
+				<img loading="lazy" :src="titleImg" />
 			</ImageZoomer>
 		</figure>
 		<h2>Kartenspiel mit Ada</h2>

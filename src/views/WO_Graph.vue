@@ -460,7 +460,7 @@ const animateBeams = ( timestamp ) => {
 		lastBeamTimestamp = timestamp;
 	}
 
-	const dt = Math.min( 0.01, ( timestamp - lastBeamTimestamp ) / 1000 );
+	const dt = Math.min( 0.002, ( timestamp - lastBeamTimestamp ) / 1000 );
 	lastBeamTimestamp = timestamp;
 
 	const stepDistance = beamSpeed.value * dt;

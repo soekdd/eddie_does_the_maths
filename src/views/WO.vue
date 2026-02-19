@@ -12,8 +12,8 @@
 >
 	<template #descriptionPart>
 		<figure class="exampleFigure">
-			<ImageZoomer :title="`Eddie`">
-				<img alt="Eddie und die optimale Querung" loading="lazy" :src="titleImg" />
+			<ImageZoomer title="Eddie hat ihr Ziel erreicht">
+				<img loading="lazy" :src="titleImg" />
 			</ImageZoomer>
 		</figure>
 
@@ -29,10 +29,14 @@
 
 			<p>
 				Eddie startet links unten am Hinterausgang des Terminals:
+			</p>
+			<p>
 				Start <Katex inline tex="A=(0,0)" />.
 			</p>
 			<p>
-				Der feste Zielpunkt ist ein Tor in der Mitte der oberen Hofkante:
+				Der feste Zielpunkt ist ein Tor in der Mitte der oberen Hofkante, das leicht zu übersteigen ist:
+			</p>
+			<p>
 				Ziel <Katex inline tex="B=\left(\frac{L}{2},W\right)" />.
 			</p>
 			<p>

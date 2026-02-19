@@ -11,8 +11,8 @@
 >
 	<template #descriptionPart>
 		<figure class="exampleFigure">
-			<ImageZoomer :title="`Eddie`">
-				<img alt="Eddie und die Vasa" loading="lazy" :src="titleImg" />
+			<ImageZoomer title="Vidar zeigt Eddie die Vaasa">
+				<img loading="lazy" :src="titleImg" />
 			</ImageZoomer>
 		</figure>
 
@@ -72,7 +72,7 @@
 
 		<h2 id="metazentrum" class="mt-8">Teil 2 — Schwerpunkt, Auftriebspunkt, Metazentrum</h2>
 		<figure class="exampleFigure">
-			<ImageZoomer>
+			<ImageZoomer title="Schwerpunkt, Auftriebspunkt, Metazentrum">
 				<VA_Ship nolegend zoom="2"/>
 			</ImageZoomer>
 		</figure>
@@ -350,7 +350,7 @@
 	</template>
 
 	<template #calculationPart>
-		<ImageZoomer>
+		<ImageZoomer title="Segelschiff Simulation">
 			<VA_Ship
 				:beam="calc.beam"
 				:bm="calc.bm"

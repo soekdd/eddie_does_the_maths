@@ -11,8 +11,8 @@
 
 	<template #descriptionPart>
 		<figure class="exampleFigure">
-			<ImageZoomer :title="`Eddie`">
-				<img alt="Eddie rechnet" loading="lazy" :src="titleImg" />
+			<ImageZoomer title="Eddie zockt die Jungs ab">
+				<img loading="lazy" :src="titleImg" />
 			</ImageZoomer>
 		</figure>
 		<h2 id="poker">Five Card Draw - Aufgabenblock</h2>
@@ -118,8 +118,8 @@
 
 		<section class="task">
 			<figure class="exampleFigure">
-				<ImageZoomer :title="`Eddie`">
-					<img alt="Eddie rechnet" loading="lazy" :src="eddieImg" />
+				<ImageZoomer title="Eddie Pokerqueen">
+					<img loading="lazy" :src="eddieImg" />
 				</ImageZoomer>
 			</figure>
 			<h3 id="bayes">Aufgabe 5 - Bayes aus Ziehzahl: Gegner zieht 1 Karte</h3>
