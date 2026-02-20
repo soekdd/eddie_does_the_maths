@@ -10,16 +10,16 @@
 		ergebnis: 'Ergebnis',
 		bonus: 'Bonus'
 	}"
-	title="Eddie rechnet: Baustatik #1"
+	title="Eddie rechnet: Baustatik #1, Satz von Steiner"
 >
 	<template #descriptionPart>
 		<figure class="exampleFigure">
-			<ImageZoomer title="Eddie zeigt Sini wie die Summer aller Kräft null ist">
+			<ImageZoomer title="Eddie zeigt Sini wie die Summe aller Kräfte null ist">
 				<img loading="lazy" :src="titleImg" />
 			</ImageZoomer>
 		</figure>
 
-		<h2 id="ziel">Doppelt-T-Träger (I-Profil): Flächenträgheitsmoment mit dem Satz von Steiner</h2>
+		<h2 id="ziel">Flächenträgheitsmoment mit dem Satz von Steiner am Beispiel eines Doppelt-T-Träger (I-Profil): </h2>
 		<div class="eddie">
 			<p>
 				<b>Ziel:</b> Wir berechnen das <b>zweite Flächenträgheitsmoment</b> eines Doppelt-T-Querschnitts
@@ -197,8 +197,13 @@
 					<template #thumb-label>{{ formatMm( tw ) }}</template>
 				</v-slider>
 			</v-card>
-
-
+			<BS_Graph
+				:bf="bf"
+				class="mt-4"
+				:h="h"
+				:tf="tf"
+				:tw="tw"
+			/>
 			<v-alert v-if="matchingProfiles.length"
 				class="mt-3"
 				density="comfortable"
@@ -225,20 +230,11 @@
 			>
 				Geometrisch nicht möglich: <Katex inline tex="h_w=h-2t_f" /> ist negativ.
 			</v-alert>
-			<BS_Graph
-				:bf="bf"
-				class="mt-4"
-				:h="h"
-				:tf="tf"
-				:tw="tw"
-			/>
 		</div>
 	</template>
 
 	<template #calculationPart>
-		<h2>Berechnung</h2>
-
-		<h3 id="beispiel" class="mt-2">3) Beispielwerte (parametrisierbar)</h3>
+		<h3 id="beispiel" class="mt-2">3) Beispielwerte</h3>
 		<div class="eddie">
 			<ul>
 				<li><Katex inline :tex="`h=${kFmt(h,0)}\\,\\text{mm}`" /></li>
