@@ -13,6 +13,7 @@ import FI from "@/views/FI.vue";
 import PG from "@/views/PG.vue";
 import AL from "@/views/AL.vue";
 import BA from "@/views/BA.vue";
+import BS from "@/views/BS.vue";
 import SE from "@/views/SE.vue";
 import RD from "@/views/RD.vue";
 import SD from "@/views/SD.vue";
@@ -308,15 +309,13 @@ export const router = createRouter( {
 		{
 			path:      "/BS",
 			name:      "BS",
-			component: CatchAll,
+			component: BS,
 			meta:      {
-				warning,
 				difficulty: 2,
 				title:      "Baustatik #1",
 				index:      true,
 				book:       1,
-				order:      180,
-				wip
+				order:      180
 			}
 		},
 		{
