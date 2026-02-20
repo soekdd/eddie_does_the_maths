@@ -1478,12 +1478,28 @@ function handleDirectKey( key: KeyDef ) {
 	}
 }
 
+function isEditableKeyboardTarget( target: EventTarget | null ): boolean {
+	if ( !( target instanceof Element ) ) {
+		return false;
+	}
+
+	if ( target.closest( "input, textarea, select, [contenteditable=''], [contenteditable='true'], [role='textbox']" ) ) {
+		return true;
+	}
+
+	return target instanceof HTMLElement && target.isContentEditable;
+}
+
 function handleDirectKeyboard( e: KeyboardEvent ) {
 	if ( calcMode.value !== "direct" ) {
 		return;
 	}
 
 	if ( e.metaKey || e.ctrlKey || e.altKey ) {
+		return;
+	}
+
+	if ( isEditableKeyboardTarget( e.target ) ) {
 		return;
 	}
 
