@@ -168,9 +168,30 @@
 				Der Slider steuert <Katex tex="h" /> direkt die Uferflächen:
 			</p>
 		</div>
-		<UD_Finland v-if="activeCountry.code === 'FI'"/>
-		<UD_Germany v-else-if="activeCountry.code === 'DE'"/>
-		<UD_Finland v-else/>
+		<div class="controls">
+			<label class="meta" for="shoreWidth">
+				Uferbreite h:
+			</label>
+			<input
+				id="shoreWidth"
+				v-model.number="shoreWidth"
+				:max="maxBorder"
+				:min="minBorder"
+				step="0.5"
+				type="range"
+			/>
+		</div>
+		<UD_Map
+			:country="activeCountry.code === 'FI' ? 'finland' : 'germany'"
+			:h-distance-meters="hDistanceMeters"
+			:probability-percent="mainModel.poissonProbabilityPercent"
+			:shore-width="shoreWidth"
+		/>
+		<div class="eddie">
+			<p>
+				Die dargestellten Entfernungen sind nichnt maßstabsgerecht. Die Anzahl an Wasserflächen ist in der Realität viel größer.
+			</p>
+		</div>
 	</template>
 
 	<template #calculationPart>
@@ -178,7 +199,7 @@
 		<div class="eddie">
 			<p>
 				Verwendete Distanzschwelle:
-				<Katex :tex="`h=${hDistanceMeters}\\ \\mathrm{m}=${hDistanceKm}\\ \\mathrm{km}`" /> und
+				<Katex :tex="`h=${hDistanceMeters}\\ \\mathrm{m}=${hDistanceKmTex}\\ \\mathrm{km}`" /> und
 				Kontrollwert <Katex :tex="`h=${hStressKm}\\ \\mathrm{km}`" />.
 			</p>
 			<div id="werteLand" class="kbox">
@@ -268,8 +289,7 @@ import {
 } from "vue";
 import titleImg from "@/images/UD.webp";
 import UD_Graph from "./UD_Graph.vue";
-import UD_Finland from "./UD_Finland.vue";
-import UD_Germany from "./UD_Germany.vue";
+import UD_Map from "./UD_Map.vue";
 
 const COUNTRY_DATA = [
 	{
@@ -289,14 +309,27 @@ const COUNTRY_DATA = [
 ];
 
 const selectedCountryCode = ref( COUNTRY_DATA[ 0 ]?.code ?? "FI" );
-const hDistanceMeters = 100;
-const hDistanceKm = hDistanceMeters / 1000;
+const shoreWidth = ref( 2.5 );
+const minBorder = 0;
+const maxBorder = 50;
+const hDistanceKm = computed( () => {
+	const span = maxBorder - minBorder;
+
+	if ( span <= 0 ) {
+		return 0;
+	}
+
+	const normalized = ( shoreWidth.value - minBorder ) / span;
+	return Math.min( 1, Math.max( 0, normalized ) );
+} );
+const hDistanceKmTex = computed( () => fmtTexNum( hDistanceKm.value, 3 ) );
+const hDistanceMeters = computed( () => Math.round( hDistanceKm.value * 1000 ) );
 const hStressKm = 1;
 
 const activeCountry = computed( () =>
 	COUNTRY_DATA.find( ( c ) => c.code === selectedCountryCode.value ) ?? COUNTRY_DATA[ 0 ] );
 
-const mainModel = computed( () => computeModelValues( hDistanceKm, activeCountry.value ) );
+const mainModel = computed( () => computeModelValues( hDistanceKm.value, activeCountry.value ) );
 const stressModel = computed( () => computeModelValues( hStressKm, activeCountry.value ) );
 const texCountryLakesCount = computed( () =>
 	`n_{\\text{Seen}}=${fmtIntMath( activeCountry.value.lakesCount )}` );
@@ -306,8 +339,9 @@ const texCountryLandArea = computed( () =>
 	`A_{\\text{Land}}=${fmtIntMath( activeCountry.value.landAreaKm2 )}\\ \\mathrm{km}^2` );
 
 const texStage1Main = computed( () => [
-	`A_{\\text{add}}(${mainModel.value.hKm})=${mainModel.value.hKm}\\cdot ${activeCountry.value.shorelineKm}`,
-	`+${activeCountry.value.lakesCount}\\pi\\cdot ${mainModel.value.hKm}^2=`,
+	`A_{\\text{add}}(${fmtTexNum( mainModel.value.hKm, 3 )})=${
+		fmtTexNum( mainModel.value.hKm, 3 )}\\cdot ${activeCountry.value.shorelineKm}`,
+	`+${activeCountry.value.lakesCount}\\pi\\cdot ${fmtTexNum( mainModel.value.hKm, 3 )}^2=`,
 	`${fmtNum( mainModel.value.addAreaKm2, 3 )}\\ \\mathrm{km}^2`
 ].join( "" ) );
 
@@ -318,8 +352,9 @@ const texStage1ProbMain = computed( () => [
 ].join( "" ) );
 
 const texStage1Stress = computed( () => [
-	`A_{\\text{add}}(${stressModel.value.hKm})=${stressModel.value.hKm}\\cdot ${activeCountry.value.shorelineKm}`,
-	`+${activeCountry.value.lakesCount}\\pi\\cdot ${stressModel.value.hKm}^2=`,
+	`A_{\\text{add}}(${fmtTexNum( stressModel.value.hKm, 3 )})=${
+		fmtTexNum( stressModel.value.hKm, 3 )}\\cdot ${activeCountry.value.shorelineKm}`,
+	`+${activeCountry.value.lakesCount}\\pi\\cdot ${fmtTexNum( stressModel.value.hKm, 3 )}^2=`,
 	`${fmtNum( stressModel.value.addAreaKm2, 3 )}\\ \\mathrm{km}^2`
 ].join( "" ) );
 
@@ -330,13 +365,13 @@ const texStage1ProbStress = computed( () => [
 ].join( "" ) );
 
 const texStage2Main = computed( () => [
-	`P_{2}(${mainModel.value.hKm})=${fmtNum( mainModel.value.poissonProbability, 6 )}\\approx `,
+	`P_{2}(${fmtTexNum( mainModel.value.hKm, 3 )})=${fmtNum( mainModel.value.poissonProbability, 6 )}\\approx `,
 	`${fmtNum( mainModel.value.poissonProbabilityPercent, 2 )}\\%,\\quad A_{2}=`,
 	`${fmtNum( mainModel.value.poissonAreaKm2, 3 )}\\ \\mathrm{km}^2`
 ].join( "" ) );
 
 const texStage2Stress = computed( () => [
-	`P_{2}(${stressModel.value.hKm})=${fmtNum( stressModel.value.poissonProbability, 6 )}\\approx `,
+	`P_{2}(${fmtTexNum( stressModel.value.hKm, 3 )})=${fmtNum( stressModel.value.poissonProbability, 6 )}\\approx `,
 	`${fmtNum( stressModel.value.poissonProbabilityPercent, 2 )}\\%,\\quad A_{2}=`,
 	`${fmtNum( stressModel.value.poissonAreaKm2, 3 )}\\ \\mathrm{km}^2`
 ].join( "" ) );
@@ -368,4 +403,29 @@ function fmtNum( value, digits = 2 ) {
 	return Number( value ).toFixed( digits )
 		.replace( ".", "," );
 }
+
+function fmtTexNum( value, digits = 3 ) {
+	return Number( value ).toFixed( digits )
+		.replace( /(?:\.0+|(\.\d+?)0+)$/, "$1" );
+}
 </script>
+
+<style scoped>
+.controls {
+	align-items: center;
+	display: flex;
+	gap: 12px;
+}
+
+.controls input {
+	accent-color: rgb(var(--v-theme-primary, 2, 132, 199));
+	flex: 1;
+	max-width: 340px;
+}
+
+.meta {
+	color: rgba(var(--v-theme-on-surface, 17, 17, 17), 0.82);
+	font-size: 0.95rem;
+	font-weight: 600;
+}
+</style>
