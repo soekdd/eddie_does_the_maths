@@ -312,6 +312,7 @@ export const router = createRouter( {
 			component: BS,
 			meta:      {
 				difficulty: 2,
+				warning,
 				title:      "Baustatik #1",
 				index:      true,
 				book:       1,

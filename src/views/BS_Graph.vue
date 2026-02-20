@@ -252,11 +252,11 @@ const props = defineProps( {
 	},
 	viewWidth: {
 		type:    Number,
-		default: 691
+		default: 891
 	},
 	viewHeight: {
 		type:    Number,
-		default: 1320
+		default: 1120
 	}
 } );
 
@@ -274,8 +274,10 @@ const webY = computed( () => beamY.value + tf.value );
 const webHeight = computed( () => Math.max( h.value - 2 * tf.value, 0 ) );
 const bottomFlangeY = computed( () => beamY.value + h.value - tf.value );
 
+const isTallSection = computed( () => h.value > 800 );
 const hDimX = computed( () => beamX.value - 95 );
-const bfDimY = computed( () => beamY.value - 75 );
+const bfDimY = computed( () =>
+	isTallSection.value ? beamY.value + tf.value + 76 : beamY.value - 75 );
 const tfDimX = computed( () => beamX.value + bf.value + 95 );
 const twDimY = computed( () => beamY.value + h.value / 2 );
 const dimOutsideLead = 24;
@@ -287,10 +289,12 @@ const labelBoxHeight = 44;
 const hLabelCx = computed( () => hDimX.value - 28 );
 const hLabelCy = computed( () => beamY.value + h.value / 2 );
 const bfLabelCx = computed( () => beamX.value + bf.value / 2 );
-const bfLabelCy = computed( () => bfDimY.value - 28 );
-const tfLabelCx = computed( () => tfDimX.value + 48 );
-const tfLabelCy = computed( () => beamY.value + tf.value / 2 );
-const twLabelCx = computed( () => webX.value + tw.value + dimOutsideLead + 20 );
+const bfLabelCy = computed( () =>
+	isTallSection.value ? bfDimY.value + 22 : bfDimY.value - 28 );
+const tfLabelCx = computed( () => tfDimX.value + 8 );
+const tfLabelCy = computed( () =>
+	beamY.value + tf.value / 2 + ( h.value < 600 ? -150 : 150 ) + ( hideNumeric.value ? 80 : 0 ) );
+const twLabelCx = computed( () => webX.value + tw.value + dimOutsideLead + 20 + ( hideNumeric.value ? -100 : 0 ) );
 const twLabelCy = computed( () => twDimY.value - 18 );
 
 function formatMm( value ) {
