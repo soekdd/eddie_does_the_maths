@@ -168,19 +168,31 @@
 				Der Slider steuert <Katex tex="h" /> direkt die Uferflächen:
 			</p>
 		</div>
-		<div class="controls">
-			<label class="meta" for="shoreWidth">
-				Uferbreite h:
-			</label>
-			<input
-				id="shoreWidth"
-				v-model.number="shoreWidth"
-				:max="maxBorder"
-				:min="minBorder"
-				step="0.5"
-				type="range"
-			/>
-		</div>
+		<v-row align="center" class="controls" dense>
+			<v-col cols="12" md="3" sm="3">
+				<v-label class="meta">Uferbreite h</v-label>
+			</v-col>
+			<v-col cols="9" md="7" sm="7">
+				<v-slider
+					v-model="shoreWidth"
+					color="primary"
+					density="compact"
+					hide-details
+					:max="maxBorder"
+					:min="minBorder"
+					step="0.5"
+				/>
+			</v-col>
+			<v-col class="d-flex justify-end"
+				cols="3"
+				md="2"
+				sm="2"
+			>
+				<v-chip color="primary" size="small" variant="tonal">
+					{{ hDistanceKm.toFixed(3) }} m
+				</v-chip>
+			</v-col>
+		</v-row>
 		<UD_Map
 			:country="activeCountry.code === 'FI' ? 'finland' : 'germany'"
 			:h-distance-meters="hDistanceMeters"
@@ -189,7 +201,7 @@
 		/>
 		<div class="eddie">
 			<p>
-				Die dargestellten Entfernungen sind nichnt maßstabsgerecht. Die Anzahl an Wasserflächen ist in der Realität viel größer.
+				Die dargestellten Entfernungen sind nicht maßstabsgerecht. Die Anzahl an Wasserflächen ist in der Realität viel größer.
 			</p>
 		</div>
 	</template>
@@ -412,15 +424,7 @@ function fmtTexNum( value, digits = 3 ) {
 
 <style scoped>
 .controls {
-	align-items: center;
-	display: flex;
-	gap: 12px;
-}
-
-.controls input {
-	accent-color: rgb(var(--v-theme-primary, 2, 132, 199));
-	flex: 1;
-	max-width: 340px;
+	margin-bottom: 8px;
 }
 
 .meta {

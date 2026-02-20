@@ -313,7 +313,7 @@ export const router = createRouter( {
 			meta:      {
 				difficulty: 2,
 				warning,
-				title:      "Baustatik #1",
+				title:      "Baustatik #1, Satz v. Steiner",
 				index:      true,
 				book:       1,
 				order:      180
@@ -343,6 +343,20 @@ export const router = createRouter( {
 				index:      true,
 				book:       1,
 				order:      200
+			}
+		},
+		{
+			path:      "/BD",
+			name:      "BD",
+			component: CatchAll,
+			meta:      {
+				difficulty: 2,
+				warning,
+				title:      "Baustatik #2, DIN vs. TGL",
+				index:      true,
+				book:       1,
+				order:      205,
+				wip
 			}
 		},
 		{
@@ -378,7 +392,7 @@ export const router = createRouter( {
 			meta:      {
 				warning,
 				difficulty: 3,
-				title:      "Baustatik #2",
+				title:      "Baustatik #3 Dynamik",
 				index:      true,
 				book:       1,
 				order:      230,
