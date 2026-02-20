@@ -86,7 +86,9 @@ const props = defineProps( { title: { type: String, default: "Die aktuell ausgea
 const route = useRoute();
 const router = useRouter();
 const TILE_SIZE_PX = 195;
-const commentBubbleIcon = "svg:M9,22A1,1 0 0,1 8,21V18H4A2,2 0 0,1 2,16V4A2,2 0 0,1 4,2H20A2,2 0 0,1 22,4V16A2,2 0 0,1 20,18H13L9,22M4,4V16H10V19.08L12.83,16H20V4H4Z";
+const commentBubbleIcon =
+	"svg:M9,22A1,1 0 0,1 8,21V18H4A2,2 0 0,1 2,16V4A2,2 0 0,1 4," +
+	"2H20A2,2 0 0,1 22,4V16A2,2 0 0,1 20,18H13L9,22M4,4V16H10V19.08L12.83,16H20V4H4Z";
 const pbUrl = inject( "pbUrl", "" );
 const pb = pbUrl ? new PocketBase( pbUrl ) : null;
 

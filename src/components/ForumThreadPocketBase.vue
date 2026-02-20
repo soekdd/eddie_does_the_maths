@@ -40,7 +40,6 @@
 			<v-textarea
 				v-model="newCommentBody"
 				auto-grow
-				counter
 				density="comfortable"
 				hide-details="auto"
 				label="Kommentar"
