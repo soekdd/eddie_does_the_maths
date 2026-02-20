@@ -56,6 +56,13 @@
 							</span>
 						</template>
 					</v-tooltip>
+					<span
+						v-if="tileCommentCount(it) > 0"
+						class="tile-comment-indicator"
+					>
+						<v-icon :icon="commentBubbleIcon" size="18" />
+						<span class="tile-comment-count">{{ tileCommentCountLabel(it) }}</span>
+					</span>
 					<span class="tile-title" :class="tileTitleClass(it)">{{ it.title }}</span>
 				</v-btn>
 			</div>
@@ -69,15 +76,26 @@
 </template>
 <script setup>
 import {
-	computed, ref, watch
+	computed, inject, ref, watch
 } from "vue";
 import { useRoute, useRouter } from "vue-router";
+import PocketBase from "pocketbase";
 
 const props = defineProps( { title: { type: String, default: "Die aktuell ausgearbeiteten Inhalte sind:" } } );
 
 const route = useRoute();
 const router = useRouter();
 const TILE_SIZE_PX = 195;
+const commentBubbleIcon = "svg:M9,22A1,1 0 0,1 8,21V18H4A2,2 0 0,1 2,16V4A2,2 0 0,1 4,2H20A2,2 0 0,1 22,4V16A2,2 0 0,1 20,18H13L9,22M4,4V16H10V19.08L12.83,16H20V4H4Z";
+const pbUrl = inject( "pbUrl", "" );
+const pb = pbUrl ? new PocketBase( pbUrl ) : null;
+
+if ( pb ) {
+	pb.autoCancellation( false );
+}
+
+const commentCountByForumKey = ref( {} );
+let commentCountRequestId = 0;
 
 const books = {
 	1: {
@@ -123,6 +141,17 @@ function normalizeDifficulty( value ) {
 	return normalized;
 }
 
+function toForumKey( value ) {
+	return String( value ?? "" ).trim()
+		.toUpperCase()
+		.slice( 0, 2 );
+}
+
+function escapeFilterString( value ) {
+	return `"${String( value ).replace( /\\/g, "\\\\" )
+		.replace( /"/g, "\\\"" )}"`;
+}
+
 const bookTabs = computed( () => Object.values( books )
 	.map( ( book ) => ( {
 		value: normalizeBookIndex( book?.index ),
@@ -145,6 +174,7 @@ const items = computed( () => {
 			to:         r.name ? { name: r.name } : r.path,
 			order:      Number.isFinite( r?.meta?.order ) ? Number( r.meta.order ) : null,
 			path:       r.path,
+			forumKey:   toForumKey( r.name ),
 			book:       normalizeBookIndex( r?.meta?.book ),
 			difficulty: normalizeDifficulty( r?.meta?.difficulty ),
 			warning:    r?.meta?.warning === true || typeof r?.meta?.warning === "string",
@@ -191,6 +221,61 @@ watch(
 
 		const preferredBook = normalizeBookIndex( routeBook );
 		activeBook.value = availableBooks.includes( preferredBook ) ? preferredBook : availableBooks[ 0 ];
+	}, { immediate: true }
+);
+
+async function refreshCommentCounts( nextItems ) {
+	if ( !pb ) {
+		commentCountByForumKey.value = {};
+		return;
+	}
+
+	const forumKeys = Array.from( new Set( nextItems.map( ( item ) => item.forumKey )
+		.filter( ( key ) => key.length > 0 ) ) );
+
+	if ( !forumKeys.length ) {
+		commentCountByForumKey.value = {};
+		return;
+	}
+
+	const requestId = ++commentCountRequestId;
+
+	try {
+		const filter = forumKeys.map( ( key ) => `forumKey = ${escapeFilterString( key )}` ).join( " || " );
+		const records = await pb.collection( "forum_comments" ).getFullList( {
+			filter,
+			fields: "forumKey"
+		} );
+
+		if ( requestId !== commentCountRequestId ) {
+			return;
+		}
+
+		const counts = {};
+
+		for ( const rec of records ) {
+			const forumKey = toForumKey( rec?.forumKey );
+
+			if ( !forumKey ) {
+				continue;
+			}
+
+			counts[ forumKey ] = ( counts[ forumKey ] ?? 0 ) + 1;
+		}
+
+		commentCountByForumKey.value = counts;
+	} catch ( err ) {
+		console.warn( "Kommentaranzahl konnte nicht geladen werden:", err );
+
+		if ( requestId === commentCountRequestId ) {
+			commentCountByForumKey.value = {};
+		}
+	}
+}
+
+watch(
+	items, ( nextItems ) => {
+		void refreshCommentCounts( nextItems );
 	}, { immediate: true }
 );
 
@@ -363,6 +448,15 @@ function tileStatusClass( item ) {
 
 	return "";
 }
+
+function tileCommentCount( item ) {
+	return commentCountByForumKey.value[ item.forumKey ] ?? 0;
+}
+
+function tileCommentCountLabel( item ) {
+	const count = tileCommentCount( item );
+	return count < 10 ? String( count ) : "9+";
+}
 </script>
 <style scoped>
 .contentIndexTabs :deep(.v-tab) {
@@ -522,6 +616,36 @@ function tileStatusClass( item ) {
 
 .tile-difficulty.is-wip {
   opacity: 0.5;
+}
+
+.tile-comment-indicator {
+  position: absolute;
+  top: 34px;
+  right: 10px;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  color: #fff;
+  text-shadow:
+    -1px -1px 0 rgba(0, 0, 0, 0.7),
+    1px -1px 0 rgba(0, 0, 0, 0.7),
+    -1px 1px 0 rgba(0, 0, 0, 0.7),
+    1px 1px 0 rgba(0, 0, 0, 0.7);
+}
+
+.tile-comment-count {
+  position: absolute;
+  top: 3px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.5rem;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  pointer-events: none;
 }
 
 .tile-title {

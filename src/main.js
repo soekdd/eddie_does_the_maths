@@ -78,12 +78,14 @@ const Root = {
 };
 
 const app = createApp( Root );
+const pbUrl = "https://pb.soek.de";
 
 // Global layout component so views don't need to import it explicitly.
 app.component( "AppFrame", AppFrame );
 // eslint-disable-next-line vue/multi-word-component-names
 app.component( "Katex", Katex );
 app.component( "ImageZoomer", ImageZoomer );
+app.provide( "pbUrl", pbUrl );
 
 app.use( router ).use( vuetify )
 	.mount( "#app" );
