@@ -14,6 +14,7 @@ import PG from "@/views/PG.vue";
 import AL from "@/views/AL.vue";
 import BA from "@/views/BA.vue";
 import BS from "@/views/BS.vue";
+import BD from "@/views/BD.vue";
 import SE from "@/views/SE.vue";
 import RD from "@/views/RD.vue";
 import SD from "@/views/SD.vue";
@@ -348,15 +349,14 @@ export const router = createRouter( {
 		{
 			path:      "/BD",
 			name:      "BD",
-			component: CatchAll,
+			component: BD,
 			meta:      {
 				difficulty: 2,
 				warning,
 				title:      "Baustatik #2, DIN vs. TGL",
 				index:      true,
 				book:       1,
-				order:      205,
-				wip
+				order:      205
 			}
 		},
 		{

@@ -8,7 +8,7 @@
 		@keydown="onKeydown"
 	>
 		<slot :alt="effectiveImgAlt" />
-		<!-- <span class="zoomerHint">{{ hint }}</span> -->
+		<span class="zoomerHint">{{ title }}</span>
 	</div>
 
 	<v-dialog

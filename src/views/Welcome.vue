@@ -9,7 +9,7 @@
 
 	<template #descriptionPart>
 		<figure class="exampleFigure">
-			<ImageZoomer title="Titelbild: Eddie rechnet">
+			<ImageZoomer title="Eddie">
 				<img loading="lazy" :src="welcomeImg" />
 			</ImageZoomer>
 		</figure>
