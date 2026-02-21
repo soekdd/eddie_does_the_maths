@@ -1,311 +1,674 @@
-<!-- BookPageCard.vue -->
 <template>
-<div class="book-page-card" :style="cssVars">
-	<!-- Andeutung der geöffneten linken Seite -->
-	<div aria-hidden="true" class="book-page-card__left-page-hint" />
+<div ref="canvasRef" class="canvas">
+	<svg
+		ref="svgRef"
+		class="scene"
+		:viewBox="viewBox"
+		xmlns="http://www.w3.org/2000/svg"
+		@pointerleave="stopDrag"
+		@pointermove="onPointerMove"
+		@pointerup="stopDrag"
+	>
+		<defs>
+			<linearGradient
+				:id="gid('g1')"
+				gradientUnits="userSpaceOnUse"
+				:x1="warpedGradients.g1.x1"
+				:x2="warpedGradients.g1.x2"
+				:y1="warpedGradients.g1.y1"
+				:y2="warpedGradients.g1.y2"
+			>
+				<stop offset="0" stop-color="rgb(145,145,145)" />
+				<stop offset="0.31" stop-color="rgb(145,145,145)" />
+				<stop offset="0.51" stop-color="rgb(92,92,92)" />
+				<stop offset="0.7" stop-color="rgb(145,145,145)" />
+				<stop offset="1" stop-color="rgb(145,145,145)" />
+			</linearGradient>
 
-	<!-- Sichtbare Kanten der darunterliegenden Seiten (rechts) -->
-	<div aria-hidden="true" class="book-page-card__stack" />
+			<linearGradient
+				:id="gid('g2')"
+				gradientUnits="userSpaceOnUse"
+				:x1="warpedGradients.g2.x1"
+				:x2="warpedGradients.g2.x2"
+				:y1="warpedGradients.g2.y1"
+				:y2="warpedGradients.g2.y2"
+			>
+				<stop offset="0" stop-color="rgb(146,146,149)" />
+				<stop offset="1" stop-color="rgb(185,185,185)" />
+			</linearGradient>
 
-	<!-- Rechte Buchseite -->
-	<div class="book-page-card__paper">
-		<!-- Dezenter Rahmen / Papier-Highlights -->
-		<svg
-			aria-hidden="true"
-			class="book-page-card__svg"
-			preserveAspectRatio="none"
-			viewBox="0 0 100 100"
+			<linearGradient
+				:id="gid('g3')"
+				gradientUnits="userSpaceOnUse"
+				:x1="warpedGradients.g3.x1"
+				:x2="warpedGradients.g3.x2"
+				:y1="warpedGradients.g3.y1"
+				:y2="warpedGradients.g3.y2"
+			>
+				<stop offset="0" stop-color="rgb(220,220,220)" />
+				<stop offset="0.07" stop-color="rgb(232,232,232)" />
+				<stop offset="0.39" stop-color="rgb(226,226,226)" />
+				<stop offset="0.5" stop-color="rgb(188,188,188)" />
+				<stop offset="0.64" stop-color="rgb(222,222,222)" />
+				<stop offset="0.95" stop-color="rgb(221,221,221)" />
+				<stop offset="1" stop-color="rgb(220,220,220)" />
+			</linearGradient>
+		</defs>
+		<!-- Geometrie (transform-frei) -->
+		<path :d="warpedPathD[0]" :fill="`url(#${gid('g1')})`" />
+		<path :d="warpedPathD[1]" :fill="`url(#${gid('g2')})`" />
+		<path :d="warpedPathD[2]" :fill="`url(#${gid('g3')})`" />
+		<path
+			:d="warpedPathD[3]"
+			fill="rgb(146,146,146)"
+			stroke="rgb(184,183,184)"
+			stroke-width="1"
+		/>
+
+		<!-- HTML-Slot innerhalb der SVG -->
+		<foreignObject
+			:height="Math.max(1, contentBox.height)"
+			style="padding: 0 2em;"
+			:width="contentBox.width"
+			:x="contentBox.x"
+			:y="contentBox.y"
 		>
-			<rect
-				fill="none"
-				height="97.6"
-				rx="4.2"
-				ry="4.2"
-				stroke="rgba(110, 92, 65, 0.18)"
-				stroke-width="0.6"
-				width="97.6"
-				x="1.2"
-				y="1.2"
-			/>
-			<path
-				d="M18,6 C50,2 82,3 94,7"
-				fill="none"
-				stroke="rgba(255,255,255,0.28)"
-				stroke-width="0.8"
-			/>
-			<path
-				d="M18,94 C50,98 82,97 94,93"
-				fill="none"
-				stroke="rgba(255,255,255,0.22)"
-				stroke-width="0.8"
-			/>
-			<path
-				d="M90,7 C95,26 95,74 90,93"
-				fill="none"
-				stroke="rgba(255,255,255,0.16)"
-				stroke-width="0.7"
-			/>
-		</svg>
-
-		<!-- Buchknick-Schatten / Lichtkante -->
-		<div aria-hidden="true" class="book-page-card__fold" />
-
-		<!-- Reservierte Knick-Spalte + Inhalt -->
-		<div class="book-page-card__layout">
-			<div aria-hidden="true" class="book-page-card__gutter-space" />
-			<div class="book-page-card__content">
-				<slot />
+			<div
+				ref="slotContentRef"
+				class="svg-html-slot"
+				:style="slotContentStyle"
+				xmlns="http://www.w3.org/1999/xhtml"
+			>
+				<slot name="inner">
+					<slot />
+				</slot>
 			</div>
-		</div>
-	</div>
+		</foreignObject>
+	</svg>
 </div>
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
+/*eslint-disable vue/max-len*/
+import {
+	computed,
+	getCurrentInstance,
+	reactive,
+	ref,
+	onMounted,
+	onBeforeUnmount,
+	nextTick
+} from "vue";
 
-const props = withDefaults( defineProps<{
-    padding?: string;
-    radius?: number;
-    stackWidth?: number;
-    gutterSpace?: number; // reservierter Bereich links (kein Slot-Inhalt)
-  }>(),
-{
-	padding:     "20px 22px",
-	radius:      18,
-	stackWidth:  14,
-	gutterSpace: 36
+type CornerKey = "lt" | "rt" | "lb" | "rb"
+type Pt = { x: number; y: number }
+type Seg = { cmd: "M" | "L" | "C" | "Z"; values: number[] }
+
+const uid = `metal-warp-${getCurrentInstance()?.uid ?? "0"}`;
+const gid = ( name: string ) => `${uid}-${name}`;
+
+/**
+ * Bereits transform-frei aufgelöste Pfade (aus deiner SVG abgeflacht).
+ * Alle group-transform und gradientTransform-Matrizen wurden vorgerechnet.
+ */
+const BASE_PATHS = [
+	// 1
+	"M17.8,545.117L17.8,520.378L463.613,513.21L516.673,529.591C516.223,530.944 497.094,534.374 452.49,531.57C369.834,526.373 62.99,545.117 62.99,545.117C32.751,543.121 17.8,545.117 17.8,545.117Z",
+	// 2
+	"M465.886,46.475L484.827,29.206L513.495,49.216L516.673,529.591L487.171,521.564L474.445,505.643L465.886,46.475Z",
+	// 3
+	"M17.8,32.245L17.8,525.813C17.8,525.813 16.684,527.483 24.507,529.164C32.731,530.931 42.797,536.042 42.797,536.042C42.797,536.042 341.305,519.639 437.052,520.363C482.997,520.711 487.172,521.564 487.172,521.564L485.463,24.011C461.991,34.084 409.028,27.24 367.529,25.059C278.556,20.381 55.656,28.558 37.453,43.53C34.751,29.395 17.8,32.245 17.8,32.245Z",
+	// 4
+	"M39.787,42.48L37.507,42.568L41.165,538.758L43.451,538.64L39.787,42.48Z"
+] as const;
+
+/**
+ * Bereits transform-frei aufgelöste Gradienten-Endpunkte.
+ */
+const BASE_GRADIENTS = {
+	g1: {
+		x1: -221.372, y1: 481.603, x2: 493.358, y2: 470.621
+	},
+	g2: {
+		x1: 463.788, y1: 280.314, x2: 385.331, y2: 290.162
+	},
+	g3: {
+		x1: -146.552, y1: 286.516, x2: 415.749, y2: 264.47
+	}
+};
+
+const BASE = {
+	minX:   16.684,
+	minY:   20.381,
+	maxX:   516.673,
+	maxY:   545.117,
+	splitX: ( 16.684 + 516.673 ) / 2,
+	splitY: ( 20.381 + 545.117 ) / 2
+} as const;
+
+const baseCorners = {
+	lt: { x: BASE.minX, y: BASE.minY },
+	rt: { x: BASE.maxX, y: BASE.minY },
+	lb: { x: BASE.minX, y: BASE.maxY },
+	rb: { x: BASE.maxX, y: BASE.maxY }
+} satisfies Record<CornerKey, Pt>;
+
+// 4 variable Stützpunkte (Quadranten-Anker)
+const corners = reactive<Record<CornerKey, Pt>>( {
+	lt: { ...baseCorners.lt },
+	rt: { ...baseCorners.rt },
+	lb: { ...baseCorners.lb },
+	rb: { ...baseCorners.rb }
 } );
 
-const cssVars = computed( () => ( {
-	"--bpc-padding":      props.padding,
-	"--bpc-radius":       `${props.radius}px`,
-	"--bpc-stack-width":  `${props.stackWidth}px`,
-	"--bpc-gutter-space": `${props.gutterSpace}px`
+const rectMode = ref( true );
+
+const INNER = {
+	padX: 18,
+	padY: 14
+};
+
+// Refs / ResizeObserver für responsive Breite + dynamische Slot-Höhe
+const svgRef = ref<SVGSVGElement | null>( null );
+const canvasRef = ref<HTMLElement | null>( null );
+const slotContentRef = ref<HTMLElement | null>( null );
+
+const canvasWidthPx = ref( 1 );
+const slotHeightPx = ref( 40 );
+
+let canvasRO: ResizeObserver | null = null;
+let slotRO: ResizeObserver | null = null;
+
+function measureSlotHeightPx() {
+	const el = slotContentRef.value;
+
+	if ( !el ) {
+		return;
+	}
+
+	const rectHeight = el.getBoundingClientRect().height;
+
+	if ( rectHeight > 0 ) {
+		slotHeightPx.value = Math.max( 1, rectHeight );
+		return;
+	}
+
+	slotHeightPx.value = Math.max(
+		1, el.scrollHeight, el.offsetHeight
+	);
+}
+
+onMounted( async() => {
+	await nextTick();
+	measureSlotHeightPx();
+
+	canvasRO = new ResizeObserver( ( entries ) => {
+		const e = entries[ 0 ];
+
+		if ( !e ) {
+			return;
+		}
+
+		canvasWidthPx.value = Math.max( 1, e.contentRect.width );
+		requestAnimationFrame( () => {
+			measureSlotHeightPx();
+		} );
+	} );
+
+	slotRO = new ResizeObserver( ( entries ) => {
+		const e = entries[ 0 ];
+
+		if ( !e ) {
+			return;
+		}
+
+		measureSlotHeightPx();
+	} );
+
+	if ( canvasRef.value ) {
+		canvasRO.observe( canvasRef.value );
+	}
+
+	if ( slotContentRef.value ) {
+		slotRO.observe( slotContentRef.value );
+	}
+} );
+
+onBeforeUnmount( () => {
+	canvasRO?.disconnect();
+	slotRO?.disconnect();
+} );
+
+function resetCorners() {
+	( [ "lt", "rt", "lb", "rb" ] as CornerKey[] ).forEach( ( k ) => {
+		corners[ k ].x = baseCorners[ k ].x;
+		corners[ k ].y = baseCorners[ k ].y;
+	} );
+}
+
+function syncRect( source: CornerKey ) {
+	if ( !rectMode.value ) {
+		return;
+	}
+
+	if ( source === "lt" ) {
+		corners.lb.x = corners.lt.x;
+		corners.rt.y = corners.lt.y;
+	} else if ( source === "rt" ) {
+		corners.rb.x = corners.rt.x;
+		corners.lt.y = corners.rt.y;
+	} else if ( source === "lb" ) {
+		corners.lt.x = corners.lb.x;
+		corners.rb.y = corners.lb.y;
+	} else if ( source === "rb" ) {
+		corners.rt.x = corners.rb.x;
+		corners.lb.y = corners.rb.y;
+	}
+}
+
+function quadrantOf( p: Pt ): CornerKey {
+	const left = p.x <= BASE.splitX;
+	const top = p.y <= BASE.splitY;
+
+	if ( left && top ) {
+		return "lt";
+	}
+
+	if ( !left && top ) {
+		return "rt";
+	}
+
+	if ( left && !top ) {
+		return "lb";
+	}
+
+	return "rb";
+}
+
+function warpPointWithCorners(
+	x: number, y: number, activeCorners: Record<CornerKey, Pt>
+): Pt {
+	const key = quadrantOf( { x, y } );
+	const dx = activeCorners[ key ].x - baseCorners[ key ].x;
+	const dy = activeCorners[ key ].y - baseCorners[ key ].y;
+	return { x: x + dx, y: y + dy };
+}
+
+// px pro SVG-Unit (nur über Breite, damit kein Kreisbezug entsteht)
+const currentOuterWidthSvg = computed( () => {
+	const left = Math.min( corners.lt.x, corners.lb.x );
+	const right = Math.max( corners.rt.x, corners.rb.x );
+	return Math.max( 1, right - left );
+} );
+
+const pxPerSvgUnit = computed( () => {
+	return canvasWidthPx.value / currentOuterWidthSvg.value;
+} );
+
+const foreignObjectScale = computed( () => {
+	// Nur nach unten korrigieren: übergroße Darstellung im foreignObject abfangen.
+	const inv = 1 / Math.max( 0.0001, pxPerSvgUnit.value );
+	return Math.min( 1, inv );
+} );
+
+const slotContentStyle = computed( () => {
+	const scale = foreignObjectScale.value;
+	return {
+		transform:       `scale(${scale})`,
+		transformOrigin: "top left",
+		width:           `${100 / scale}%`
+	};
+} );
+
+const slotHeightSvg = computed( () => {
+	return slotHeightPx.value / Math.max( 0.0001, pxPerSvgUnit.value );
+} );
+
+// 1) Slot-Inhalt -> 2) foreignObject-Höhe
+const foreignObjectHeightSvg = computed( () => {
+	return Math.max( 10, slotHeightSvg.value + 26 );
+} );
+
+const contentBottomTargetSvg = computed( () => {
+	const top = Math.min( corners.lt.y, corners.rt.y ) + INNER.padY;
+	return top + foreignObjectHeightSvg.value + 26;
+} );
+
+// Offset kann positiv oder negativ sein: unten wird auf FO-Unterkante ausgerichtet.
+const autoExtraBottom = computed( () => {
+	const rawBottom = Math.max( corners.lb.y, corners.rb.y );
+	return contentBottomTargetSvg.value - rawBottom;
+} );
+
+// Effektive Ecken: unten wird bei Bedarf automatisch verlängert
+const effectiveCorners = computed<Record<CornerKey, Pt>>( () => ( {
+	lt: { x: corners.lt.x, y: corners.lt.y },
+	rt: { x: corners.rt.x, y: corners.rt.y },
+	lb: { x: corners.lb.x, y: corners.lb.y + autoExtraBottom.value },
+	rb: { x: corners.rb.x, y: corners.rb.y + autoExtraBottom.value }
 } ) );
+
+function warpPoint( x: number, y: number ): Pt {
+	return warpPointWithCorners(
+		x, y, effectiveCorners.value
+	);
+}
+
+// --- SVG path parsing / serialization (absolute M/L/C/Z) ---
+function parsePath( d: string ): Seg[] {
+	const tokens = d.match( /[MLCZ]|-?\d+(?:\.\d+)?/g ) ?? [];
+	const segs: Seg[] = [];
+	let i = 0;
+
+	while ( i < tokens.length ) {
+		const t = tokens[ i++ ] as Seg["cmd"];
+
+		if ( t === "M" || t === "L" ) {
+			segs.push( { cmd: t, values: [ Number( tokens[ i++ ] ), Number( tokens[ i++ ] ) ] } );
+		} else if ( t === "C" ) {
+			segs.push( {
+				cmd:    "C",
+				values: [
+					Number( tokens[ i++ ] ),
+					Number( tokens[ i++ ] ),
+					Number( tokens[ i++ ] ),
+					Number( tokens[ i++ ] ),
+					Number( tokens[ i++ ] ),
+					Number( tokens[ i++ ] )
+				]
+			} );
+		} else if ( t === "Z" ) {
+			segs.push( { cmd: "Z", values: [] } );
+		} else {
+			throw new Error( `Unsupported path token: ${t}` );
+		}
+	}
+
+	return segs;
+}
+
+function serializePath( segs: Seg[] ): string {
+	return segs
+		.map( ( s ) => {
+			if ( s.cmd === "M" || s.cmd === "L" ) {
+				return `${s.cmd}${fmt( s.values[ 0 ] )},${fmt( s.values[ 1 ] )}`;
+			}
+
+			if ( s.cmd === "C" ) {
+				return `C${fmt( s.values[ 0 ] )},${fmt( s.values[ 1 ] )} ${fmt( s.values[ 2 ] )},${fmt( s.values[ 3 ] )} ${fmt( s.values[ 4 ] )},${fmt( s.values[ 5 ] )}`;
+			}
+
+			return "Z";
+		} )
+		.join( "" );
+}
+
+function warpSegs( segs: Seg[] ): Seg[] {
+	return segs.map( ( s ) => {
+		if ( s.cmd === "Z" ) {
+			return s;
+		}
+
+		const out: number[] = [];
+
+		for ( let i = 0; i < s.values.length; i += 2 ) {
+			const p = warpPoint( s.values[ i ], s.values[ i + 1 ] );
+			out.push( p.x, p.y );
+		}
+
+		return { cmd: s.cmd, values: out };
+	} );
+}
+
+function extractPoints( segs: Seg[] ): Pt[] {
+	const pts: Pt[] = [];
+
+	for ( const s of segs ) {
+		for ( let i = 0; i < s.values.length; i += 2 ) {
+			pts.push( { x: s.values[ i ], y: s.values[ i + 1 ] } );
+		}
+	}
+
+	return pts;
+}
+
+function fmt( n: number ) {
+	return Number( n.toFixed( 3 ) ).toString();
+}
+
+const parsedBase = BASE_PATHS.map( parsePath );
+const warpedSegs = computed( () => parsedBase.map( warpSegs ) );
+const warpedPathD = computed( () => warpedSegs.value.map( serializePath ) );
+
+const warpedGradients = computed( () => {
+	const mapGrad = ( g: { x1: number; y1: number; x2: number; y2: number } ) => {
+		const p1 = warpPoint( g.x1, g.y1 );
+		const p2 = warpPoint( g.x2, g.y2 );
+		return {
+			x1: p1.x, y1: p1.y, x2: p2.x, y2: p2.y
+		};
+	};
+
+	return {
+		g1: mapGrad( BASE_GRADIENTS.g1 ),
+		g2: mapGrad( BASE_GRADIENTS.g2 ),
+		g3: mapGrad( BASE_GRADIENTS.g3 )
+	};
+} );
+
+// Innenbox für foreignObject (Slot-Inhalt)
+const contentBox = computed( () => {
+	const ec = effectiveCorners.value;
+	const left = Math.min( ec.lt.x, ec.lb.x ) + INNER.padX;
+	const right = Math.max( ec.rt.x, ec.rb.x ) - INNER.padX;
+	const top = Math.min( ec.lt.y, ec.rt.y ) + INNER.padY + 6;
+
+	const width = Math.max( 10, right - left );
+	const height = foreignObjectHeightSvg.value;
+
+	return {
+		x: left, y: top, width, height
+	};
+} );
+
+const viewBoxParts = computed( () => {
+	const pts = warpedSegs.value.flatMap( extractPoints );
+
+	// Ecken / Handles berücksichtigen
+	const ec = effectiveCorners.value;
+	pts.push(
+		ec.lt, ec.rt, ec.lb, ec.rb
+	);
+
+	// Slot-Box berücksichtigen (damit Höhe mitwächst)
+	const cb = contentBox.value;
+	pts.push( { x: cb.x, y: cb.y },
+		{ x: cb.x + cb.width, y: cb.y + cb.height } );
+
+	const minX = Math.min( ...pts.map( ( p ) => p.x ) );
+	const minY = Math.min( ...pts.map( ( p ) => p.y ) );
+	const maxX = Math.max( ...pts.map( ( p ) => p.x ) );
+	const maxY = Math.max( ...pts.map( ( p ) => p.y ) );
+	const pad = 24;
+
+	return {
+		minX: minX,
+		minY: minY,
+		maxX: maxX,
+		maxY: maxY
+	};
+} );
+
+const viewBox = computed( () => {
+	const vb = viewBoxParts.value;
+	return `${fmt( vb.minX )} ${fmt( vb.minY )} ${fmt( vb.maxX - vb.minX )} ${fmt( vb.maxY - vb.minY )}`;
+} );
+
+// --- Interaktivität: Drag-Handles ---
+const dragging = ref<CornerKey | null>( null );
+
+function startDrag( key: CornerKey, e: PointerEvent ) {
+	dragging.value = key
+	;( e.currentTarget as Element )?.setPointerCapture?.( e.pointerId );
+}
+
+function stopDrag() {
+	dragging.value = null;
+}
+
+function toSvgPoint( e: PointerEvent ): Pt | null {
+	const svg = svgRef.value;
+
+	if ( !svg ) {
+		return null;
+	}
+
+	const ctm = svg.getScreenCTM();
+
+	if ( !ctm ) {
+		return null;
+	}
+
+	const p = new DOMPoint( e.clientX, e.clientY ).matrixTransform( ctm.inverse() );
+	return { x: p.x, y: p.y };
+}
+
+function onPointerMove( e: PointerEvent ) {
+	if ( !dragging.value ) {
+		return;
+	}
+
+	const p = toSvgPoint( e );
+
+	if ( !p ) {
+		return;
+	}
+
+	const k = dragging.value;
+	corners[ k ].x = p.x;
+
+	// Untere Ecken werden intern ohne autoExtra gespeichert
+	if ( k === "lb" || k === "rb" ) {
+		corners[ k ].y = p.y - autoExtraBottom.value;
+	} else {
+		corners[ k ].y = p.y;
+	}
+
+	syncRect( k );
+}
+
+const handleList = computed( () => {
+	const ec = effectiveCorners.value;
+	return [
+		{
+			key: "lt" as const, p: ec.lt, color: "#ff6b6b"
+		},
+		{
+			key: "rt" as const, p: ec.rt, color: "#4dabf7"
+		},
+		{
+			key: "lb" as const, p: ec.lb, color: "#ffd43b"
+		},
+		{
+			key: "rb" as const, p: ec.rb, color: "#51cf66"
+		}
+	];
+} );
 </script>
 
 <style scoped>
-.book-page-card {
-  position: relative;
-  display: block;
-  box-sizing: border-box;
-  isolation: isolate;
-
-  /* Platz rechts für sichtbare Seitenkanten */
-  padding-right: calc(var(--bpc-stack-width) + 3px);
-
-  /* links darf die angedeutete Gegenseite leicht herausragen */
-  margin-left: 10px;
+.svg-warp-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  font-family: system-ui, sans-serif;
 }
 
-/* Andeutung der geöffneten linken Seite */
-.book-page-card__left-page-hint {
-  position: absolute;
-  left: -14px;
-  top: 8px;
-  bottom: 8px;
-  width: calc(var(--bpc-gutter-space) + 10px);
-  z-index: 0;
-  pointer-events: none;
-
-  border-radius: 12px 0 0 12px;
-
-  background:
-    radial-gradient(
-      95% 120% at 100% 50%,
-      rgba(0, 0, 0, 0.16) 0%,
-      rgba(0, 0, 0, 0.08) 22%,
-      rgba(0, 0, 0, 0.00) 62%
-    ),
-    linear-gradient(
-      to right,
-      rgba(255, 255, 255, 0.24) 0%,
-      rgba(255, 255, 255, 0.10) 35%,
-      rgba(255, 255, 255, 0.00) 100%
-    ),
-    linear-gradient(to bottom, #fbf8ef, #f4efdf);
-
-  box-shadow:
-    -3px 2px 8px rgba(0, 0, 0, 0.05),
-    inset 1px 0 0 rgba(255, 255, 255, 0.35);
-
-  transform: perspective(240px) rotateY(12deg);
-  transform-origin: right center;
-  opacity: 0.9;
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
-/* Unterliegende Seiten rechts */
-.book-page-card__stack {
-  position: absolute;
-  top: 6px;
-  right: 0;
-  bottom: 6px;
-  width: var(--bpc-stack-width);
-  border-radius: 0 12px 12px 0;
-  z-index: 0;
-  pointer-events: none;
-
-  background:
-    linear-gradient(to left, rgba(0, 0, 0, 0.14), rgba(0, 0, 0, 0) 75%),
-    repeating-linear-gradient(
-      to bottom,
-      rgba(210, 198, 170, 0.96) 0px,
-      rgba(248, 244, 232, 0.96) 2px,
-      rgba(202, 190, 164, 0.96) 3px,
-      rgba(252, 250, 243, 0.96) 5px
-    );
-
-  box-shadow:
-    inset 1px 0 0 rgba(255, 255, 255, 0.45),
-    inset -1px 0 0 rgba(110, 95, 70, 0.10);
-
-  transform: translateX(1px);
+.toolbar button {
+  padding: 6px 10px;
+  cursor: pointer;
 }
 
-.book-page-card__stack::before,
-.book-page-card__stack::after {
-  content: "";
-  position: absolute;
-  top: 3px;
-  bottom: 3px;
-  border-radius: 0 10px 10px 0;
-  background:
-    linear-gradient(to left, rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0) 75%),
-    repeating-linear-gradient(
-      to bottom,
-      rgba(215, 205, 180, 0.90) 0px,
-      rgba(250, 247, 237, 0.90) 2px,
-      rgba(203, 193, 170, 0.90) 3px,
-      rgba(252, 250, 245, 0.90) 5px
-    );
-}
-.book-page-card__stack::before {
-  right: 3px;
-  width: calc(var(--bpc-stack-width) - 4px);
-  opacity: 0.95;
-}
-.book-page-card__stack::after {
-  right: 6px;
-  width: calc(var(--bpc-stack-width) - 7px);
-  opacity: 0.88;
-}
-
-/* Hauptseite (rechte Buchseite) */
-.book-page-card__paper {
-  position: relative;
-  z-index: 1;
-  min-height: 32px;
-  overflow: hidden;
-
-  border-radius:
-    var(--bpc-radius)
-    calc(var(--bpc-radius) + 6px)
-    calc(var(--bpc-radius) + 8px)
-    var(--bpc-radius);
-
-  /* Wichtig: rechte Seite bleibt hell */
-  background:
-    radial-gradient(140% 95% at 84% 48%, rgba(255, 255, 255, 0.74), rgba(255, 255, 255, 0) 60%),
-    linear-gradient(to bottom, #fffef9 0%, #fbf6ea 100%);
-
-  border: 1px solid rgba(110, 92, 65, 0.12);
-
-  box-shadow:
-    0 10px 22px rgba(0, 0, 0, 0.10),
-    0 2px 5px rgba(0, 0, 0, 0.06),
-    inset 0 1px 0 rgba(255, 255, 255, 0.75),
-    inset -8px 0 14px rgba(120, 100, 70, 0.05);
-}
-
-.book-page-card__svg {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
-  pointer-events: none;
-}
-
-/* Buchknick: schmaler dunkler Kern + Aufhellung, ohne die Seite "totzudunkeln" */
-.book-page-card__fold {
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: calc(var(--bpc-gutter-space) + 8px);
-  z-index: 2;
-  pointer-events: none;
-
-  background:
-    /* weiche Falte (sehr lokal) */
-    radial-gradient(
-      115% 90% at 0% 50%,
-      rgba(0, 0, 0, 0.20) 0%,
-      rgba(0, 0, 0, 0.10) 16%,
-      rgba(0, 0, 0, 0.04) 34%,
-      rgba(0, 0, 0, 0.00) 56%
-    ),
-    /* zusätzliche weiche lineare Falte */
-    linear-gradient(
-      to right,
-      rgba(0, 0, 0, 0.15) 0px,
-      rgba(0, 0, 0, 0.07) 8px,
-      rgba(0, 0, 0, 0.00) 18px
-    );
-}
-
-.book-page-card__fold::before {
-  /* dunkler Knick-Kern */
-  content: "";
-  position: absolute;
-  top: 3px;
-  bottom: 3px;
-  left: 1px;
-  width: 2px;
-  border-radius: 2px;
-  background: linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 0.10),
-    rgba(0, 0, 0, 0.26),
-    rgba(0, 0, 0, 0.10)
-  );
-  opacity: 0.9;
-}
-
-.book-page-card__fold::after {
-  /* Lichtkante rechts neben dem Knick */
-  content: "";
-  position: absolute;
-  top: 4px;
-  bottom: 4px;
-  left: 7px;
-  width: 1px;
-  background: linear-gradient(
-    to bottom,
-    rgba(255, 255, 255, 0.00),
-    rgba(255, 255, 255, 0.45),
-    rgba(255, 255, 255, 0.00)
-  );
-  opacity: 0.95;
-}
-
-/* Layout: links reservierte Knick-Spalte, rechts Slot-Inhalt */
-.book-page-card__layout {
-  position: relative;
-  z-index: 3;
+.grid {
   display: grid;
-  grid-template-columns: var(--bpc-gutter-space) minmax(0, 1fr);
-  min-height: 100%;
+  grid-template-columns: 280px 1fr;
+  gap: 12px;
+  align-items: start;
 }
 
-.book-page-card__gutter-space {
-  pointer-events: none;
+.panel {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 10px;
 }
 
-.book-page-card__content {
-  min-width: 0;
-  padding: var(--bpc-padding);
-  color: inherit;
+.panel h4 {
+  margin: 0 0 8px 0;
+}
+
+.row {
+  display: flex;
+  gap: 8px;
+  margin: 4px 0;
+}
+
+.row label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+}
+
+.row input[type='number'] {
+  width: 88px;
+}
+
+.row.split {
+  margin-top: 10px;
+  color: #666;
+}
+
+.canvas {
+  width: 100%;
+}
+
+.scene {
+  width: 100%;
+  height: auto; /* Höhe folgt viewBox-Verhältnis */
+  display: block;
+  touch-action: none;
+  user-select: none;
+}
+
+.handle {
+  cursor: grab;
+}
+
+.handle:active {
+  cursor: grabbing;
+}
+
+.svg-html-slot {
+  width: 100%;
+  box-sizing: border-box;
+  display: block;
+  overflow: visible;
+  color: #222;
+  font: 1.35 system-ui, sans-serif;
+}
+
+.svg-html-slot :deep(*) {
+  box-sizing: border-box;
+}
+
+.svg-html-slot :deep(h2),
+.svg-html-slot :deep(h3) {
+  color: #000 !important;
 }
 </style>

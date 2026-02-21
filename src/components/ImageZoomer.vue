@@ -2,9 +2,10 @@
 <div class="imageZoomer">
 	<div ref="activatorRef"
 		class="zoomerActivator"
-		role="button"
-		tabindex="0"
-		@click="open = true"
+		:class="{ noZoom: props.noZoom }"
+		:role="props.noZoom ? undefined : 'button'"
+		:tabindex="props.noZoom ? undefined : 0"
+		@click="openDialog"
 		@keydown="onKeydown"
 	>
 		<slot :alt="effectiveImgAlt" />
@@ -12,6 +13,7 @@
 	</div>
 
 	<v-dialog
+		v-if="!props.noZoom"
 		v-model="open"
 		:content-class="smAndDown ? 'zoomerDialogMobile' : undefined"
 		:fullscreen="smAndDown"
@@ -66,6 +68,7 @@ import { useDisplay } from "vuetify";
 const props = defineProps( {
 	title:    { type: String, default: "" },
 	imgAlt:   { type: String, default: "" },
+	noZoom:   { type: Boolean, default: false },
 	//hint:     { type: String, default: "Zum Zoomen klicken" },
 	maxWidth: { type: [ Number, String ], default: 1400 }
 } );
@@ -85,7 +88,19 @@ const effectiveImgAlt = computed( () => props.imgAlt || props.title || "" );
 
 let ro = null;
 
+function openDialog() {
+	if ( props.noZoom ) {
+		return;
+	}
+
+	open.value = true;
+}
+
 function onKeydown( e ) {
+	if ( props.noZoom ) {
+		return;
+	}
+
 	if ( e.key === "Enter" || e.key === " " ) {
 		e.preventDefault();
 		open.value = true;
@@ -259,6 +274,10 @@ onBeforeUnmount( () => stopObservers() );
   outline: none;
 }
 
+.zoomerActivator.noZoom {
+  cursor: default;
+}
+
 .zoomerActivator:focus-visible {
   border-radius: 14px;
   box-shadow: 0 0 0 3px rgba(var(--v-theme-primary), 0.35);
@@ -267,6 +286,7 @@ onBeforeUnmount( () => stopObservers() );
 .zoomerHint {
   position: absolute;
   right: 10px;
+  z-index:500;
   bottom: 10px;
   padding: 6px 10px;
   border-radius: 999px;

@@ -1,6 +1,7 @@
 <template>
 <AppFrame
 	:sub-chapter="{
+		'einleitung': 'Einleitung',
 		'poker': 'Poker',
 		'wahrscheinlichkeiten': 'Wahrscheinlichkeiten',
 		'bayes': 'Bayes',
@@ -8,13 +9,31 @@
 	}"
 	title="Eddie rechnet: Five Card Draw - 7 statistische Aufgaben"
 >
-
-	<template #descriptionPart>
+	<template #bookPart>
 		<figure class="exampleFigure">
 			<ImageZoomer title="Eddie zockt die Jungs ab">
 				<img loading="lazy" :src="titleImg" />
 			</ImageZoomer>
 		</figure>
+		<h3 id="einleitung">Joutsa, 6. Juli 1985</h3>
+		<div class="eddie"><p>Ich sitze zwischen den Jungs, als wäre ich nur harmlose Deko am Tisch.
+			Genau deshalb lassen sie mich so nah ran: Kleidchen, braver Blick, “ich kann das gar nicht”.
+			Und ja, die Regeln muss ich wirklich noch verstehen. Aber ein Blatt ist kein Mysterium.
+			Es ist Mathe. Welche Kombinationen möglich sind. Wie oft ich sie treffe. Wie wahrscheinlich
+			eine bestimmte Karte im Draw überhaupt noch im Deck liegt. Das folgt festen Gesetzen, und die
+			begreife ich schneller als Aaron “All-in” sagen kann.
+		</p><p>
+			Wir spielen Five-Card-Draw, ohne offene Karten. Heißt: Rechnen im Kopf, und der Rest ist Psychologie.
+			Ich achte auf Timing (zu schnelles Setzen ist oft Panik), auf Hände (zu viel Rumfummeln schreit Bluff),
+			auf Stimmen (plötzlich zu locker = gespielt). Und ich stelle Fragen, nur um zu sehen, wer ausweicht.
+		</p><p>
+			Hier zeige ich dir, wie du bei Five-Draw sauber rechnest – und unten kannst du ein
+			interaktives Blatt selbst ausprobieren.
+		</p>
+		</div>
+	</template>
+
+	<template #descriptionPart>
 		<h2 id="poker">Five Card Draw - Aufgabenblock</h2>
 		<div class="eddie">
 			<p>
@@ -30,14 +49,20 @@
 		</div>
 
 		<section class="task">
+			<figure class="exampleFigure">
+				<ImageZoomer no-zoom title="Beispielhand: Zwei Paare">
+					<PGHand
+						:cards="[
+							{ code: 'Ks', suit: 'Pik',   rank: 'Dame' },
+							{ code: 'Kd', suit: 'Herz',  rank: 'Dame' },
+						]"
+					/>
+				</ImageZoomer>
+			</figure>
 			<h3 id="wahrscheinlichkeiten">Aufgabe 1 - Das klassische Paar: Lohnt sich "3 ziehen"?</h3>
 			<div class="eddie">
 				<p>
-					<b>Situation:</b> Eddie hält nach dem Deal ein Paar (z.B.
-					<span class="miniPair">
-						<PokerCard mini rank="7" suit="Kreuz" />
-						<PokerCard mini rank="7" suit="Karo" />
-					</span>) und wirft die anderen drei Karten weg.
+					<b>Situation:</b> Eddie hält nach dem Deal ein Paar und wirft die anderen drei Karten weg.
 					Sie zieht <b>3 neue Karten</b>.
 				</p>
 				<p><b>Fragen:</b></p>
@@ -61,16 +86,22 @@
 		</section>
 
 		<section class="task">
+			<figure class="exampleFigure">
+				<ImageZoomer no-zoom  title="Beispielhand: Zwei Paare">
+					<PGHand
+						:cards="[
+							{ code: '4c', suit: 'Kreuz', rank: 4 },
+							{ code: '4h', suit: 'Herz',  rank: 4 },
+							{ code: 'Ks', suit: 'Pik',   rank: 'König' },
+							{ code: 'Kd', suit: 'Karo',  rank: 'König' }
+						]"
+					/>
+				</ImageZoomer>
+			</figure>
 			<h3>Aufgabe 2 - Zwei Paare: Zieh ich 1 Karte oder bleib ich stehen?</h3>
 			<div class="eddie">
 				<p>
-					<b>Situation:</b> Eddie hat zwei Paare (z.B.
-					<span class="miniPair">
-						<PokerCard mini rank="König" suit="Pik" />
-						<PokerCard mini rank="König" suit="Karo" />
-						<PokerCard mini rank="4" suit="Kreuz" />
-						<PokerCard mini rank="4" suit="Herz" />
-					</span> plus Kicker),
+					<b>Situation:</b> Eddie hat zwei Paare plus Kicker,
 					wirft den Kicker weg und zieht <b>1 Karte</b>.
 				</p>
 				<p><b>Frage:</b> Wie wahrscheinlich wird daraus ein Full House?</p>
@@ -207,6 +238,7 @@ import titleImg from "@/images/PG.webp";
 import eddieImg from "@/images/PG_Eddie.webp";
 import PG_Game from "./PG_Game.vue";
 import PokerCard from "./PG_Card.vue";
+import PGHand from "./PG_Hand.vue";
 </script>
 
 <style scoped>

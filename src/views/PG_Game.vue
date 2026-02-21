@@ -33,28 +33,11 @@
 		</div>
 	</div>
 
-	<div class="handStage">
-		<div class="hand">
-			<div
-				v-for="(c, idx) in cards"
-				:key="c.code"
-				class="cardWrap"
-				:class="{ hovered: hoveredCardIndex === idx, removable: canRemoveCard }"
-				:style="pose(idx, cards.length).wrapper"
-				@click="removeCardAt( idx )"
-				@mouseenter="hoveredCardIndex = idx"
-				@mouseleave="hoveredCardIndex = null"
-			>
-				<div class="cardHoverShell">
-					<PokerCard
-						:rank="c.rank"
-						:rotation="pose(idx, cards.length).rotation"
-						:suit="c.suit"
-					/>
-				</div>
-			</div>
-		</div>
-	</div>
+	<PGHand
+		:can-remove-card="canRemoveCard"
+		:cards="cards"
+		@remove-card="removeCardAt"
+	/>
 
 	<v-divider class="my-4" />
 
@@ -84,9 +67,11 @@
 					<PokerCard
 						v-for="c in option"
 						:key="`completion-${optionIndex}-${c.code}`"
+						class="completionMiniCard"
 						mini
 						:rank="c.rank"
 						:suit="c.suit"
+						@click.stop="addCompletionCard( c.code )"
 					/>
 				</span>
 			</template>
@@ -116,6 +101,7 @@ import {
 } from "vue";
 import { useDisplay } from "vuetify";
 import PokerCard from "./PG_Card.vue";
+import PGHand from "./PG_Hand.vue";
 import PokerSolver from "pokersolver";
 const { Hand } = PokerSolver as any;
 
@@ -126,7 +112,6 @@ const bestCompletionOptions = ref<string[][]>( [] ); // alle optimalen Ergänzun
 const solved = ref<any | null>( null );
 const note = ref<string>( "" );
 const selectedHandSize = ref<3 | 4 | 5>( 5 );
-const hoveredCardIndex = ref<number | null>( null );
 const { width } = useDisplay();
 const compactButtonLabels = computed( () => width.value <= 700 );
 
@@ -345,7 +330,6 @@ function evaluateWithPokerSolver( current: string[] ) {
 
 function newRandomHand( size: 3 | 4 | 5 = selectedHandSize.value ) {
 	selectedHandSize.value = size;
-	hoveredCardIndex.value = null;
 	const deck = shuffle( buildDeck() );
 	const hand = deck.slice( 0, size );
 	handCodes.value = hand;
@@ -360,26 +344,22 @@ function removeCardAt( index: number ) {
 	const next = handCodes.value.filter( ( _, idx ) => idx !== index );
 	handCodes.value = next;
 	selectedHandSize.value = 4;
-	hoveredCardIndex.value = null;
 	evaluateWithPokerSolver( next );
 }
 
-function pose( i: number, n: number ) {
-	const mid = ( n - 1 ) / 2;
-	const spread = 9; // Grad pro Schritt
-	const xStep = 34; // Pixel pro Schritt
-	const yStep = 6; // leichte Bogenform
-	const dx = ( i - mid ) * xStep;
-	const dy = Math.abs( i - mid ) * yStep;
-	const rot = ( i - mid ) * spread;
-	const isHovered = hoveredCardIndex.value === i;
-	return {
-		wrapper: {
-			transform: `translateX(calc(-50% + ${dx}px)) translateY(${dy}px)`,
-			zIndex:    isHovered ? 1000 + n : 100 + i
-		} as any,
-		rotation: rot
-	};
+function addCompletionCard( code: string ) {
+	if ( handCodes.value.length >= 5 ) {
+		return;
+	}
+
+	if ( handCodes.value.includes( code ) ) {
+		return;
+	}
+
+	const next = [ ...handCodes.value, code ];
+	handCodes.value = next;
+	selectedHandSize.value = Math.min( 5, next.length ) as 3 | 4 | 5;
+	evaluateWithPokerSolver( next );
 }
 
 const resultTitle = computed( () => {
@@ -405,49 +385,15 @@ onMounted( () => {
 </script>
 
 <style scoped>
-.handStage {
-  height: 190px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.hand {
-  position: relative;
-  width: 420px; /* genug Platz fürs Fächern */
-  height: 170px;
-}
-
-.cardWrap {
-  position: absolute;
-  left: 50%;
-  top: 0;
-  transform: translateX(-50%);
-}
-
-.cardWrap.removable {
-  cursor: pointer;
-}
-
-.cardHoverShell {
-  transform-origin: 50% 100%;
-  transition: transform 160ms ease, filter 160ms ease;
-}
-
-.cardWrap.hovered .cardHoverShell {
-  transform: scale(1.08);
-  filter: drop-shadow(0 10px 16px rgba(0, 0, 0, 0.32));
-}
-
-.mono {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-}
-
 .completionMiniCards {
   display: inline-flex;
   align-items: center;
   gap: 6px;
   vertical-align: middle;
+}
+
+.completionMiniCard {
+  cursor: pointer;
 }
 
 .completionOptions {

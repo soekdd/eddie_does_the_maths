@@ -9,14 +9,14 @@
 	}"
 	title="Eddie rechnet: Der Quanten-Hall-Effekt"
 >
-	<template #descriptionPart>
+	<template #bookPart>
 		<figure class="exampleFigure">
 			<ImageZoomer :title="`Eddie und Klaus von Klitzing`">
 				<img loading="lazy" :src="titleImg" />
 			</ImageZoomer>
 		</figure>
 
-		<h2 id="vorlesung">Teil 1 - Stockholm, 9. Dezember 1985</h2>
+		<h3 id="vorlesung">Stockholm, 9. Dezember 1985</h3>
 		<div class="eddie">
 			<p>
 				Der Saal ist schon voll, als ich reinkomme: nasse Mäntel, Wolle, gedämpftes Murmeln.
@@ -41,7 +41,8 @@
 				Ein Standard muss in vielen Laboren gleich gut funktionieren, nicht nur in einem perfekten Experiment.
 			</p>
 		</div>
-
+	</template>
+	<template #descriptionPart>
 		<h2 id="quantisierung" class="mt-8">Teil 2 - Die Mathematik der Stufen</h2>
 		<div class="eddie">
 			<p>
