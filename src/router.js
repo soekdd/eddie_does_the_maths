@@ -15,6 +15,7 @@ import AL from "@/views/AL.vue";
 import BA from "@/views/BA.vue";
 import BS from "@/views/BS.vue";
 import BD from "@/views/BD.vue";
+import BZ from "@/views/BZ.vue";
 import SE from "@/views/SE.vue";
 import RD from "@/views/RD.vue";
 import SD from "@/views/SD.vue";
@@ -388,15 +389,14 @@ export const router = createRouter( {
 		{
 			path:      "/BZ",
 			name:      "BZ",
-			component: CatchAll,
+			component: BZ,
 			meta:      {
 				warning,
-				difficulty: 3,
+				difficulty: 1,
 				title:      "Baustatik #3 Dynamik",
 				index:      true,
 				book:       1,
-				order:      230,
-				wip
+				order:      230
 			}
 		},
 		{

@@ -13,6 +13,15 @@
 	}"
 	title="Eddie rechnet: Baustatik #2 DIN vs. TGL"
 >
+	<template #bookPart>
+		<figure class="exampleFigure">
+			<ImageZoomer title="Eddie und Vidar albern über Sicherheitsbeiwerte">
+				<img alt="Eddie mit Stahlträger" loading="lazy" :src="titleImg" />
+			</ImageZoomer>
+		</figure>
+		<h2 id="system">Lorem ipsum dolor sit amet,</h2>
+		consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+	</template>
 	<template #descriptionPart>
 		<figure class="exampleFigure">
 			<ImageZoomer title="Eddie und Vidar albern über Sicherheitsbeiwerte">
@@ -148,8 +157,8 @@
 					hide-numeric
 					:tf="15"
 					:tw="8"
-					view-height="500"
-					view-width="450"
+					:view-height="500"
+					:view-width="450"
 				/>
 			</ImageZoomer>
 		</figure>
@@ -450,6 +459,7 @@
 <script setup>
 import {
 	computed,
+	h,
 	reactive
 } from "vue";
 

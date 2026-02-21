@@ -68,6 +68,9 @@
 				{{ warningMessage }}
 			</v-alert>
 
+			<Page v-if="showBookCard">
+				<slot name="bookPart" />
+			</Page>
 			<section class="card">
 				<slot name="descriptionPart" />
 			</section>
@@ -212,6 +215,7 @@ import impressumHtml from "./utils/disclaimer/impressum_de.html?raw";
 import privacyPolicyHtml from "./utils/disclaimer/privacy_policy_de.html?raw";
 import faviconPng from "./images/favicon.png";
 import ForumThreadPocketBase from "./components/ForumThreadPocketBase.vue";
+import Page from "./components/Page.vue";
 
 const props = defineProps( {
 	title:      { type: String, default: "" },
@@ -260,8 +264,10 @@ const routeIsWip = computed( () => route.meta?.wip === true );
 const showError = computed( () => !routeIsWip.value && Boolean( errorMessage.value ) );
 const showWarning = computed( () => !routeIsWip.value && Boolean( warningMessage.value ) );
 const hasInteractivePart = computed( () => Boolean( slots.interactivePart ) );
+const hasBookPart = computed( () => Boolean( slots.bookPart ) );
 const hasCalculationPart = computed( () => Boolean( slots.calculationPart ) );
 const hasSummaryPart = computed( () => Boolean( slots.summaryPart ) );
+const showBookCard = computed( () => hasBookPart.value );
 const showPartsCard = computed( () => hasInteractivePart.value || hasCalculationPart.value || hasSummaryPart.value );
 const showReportErrorDialog = ref( false );
 const showImpressumDialog = ref( false );

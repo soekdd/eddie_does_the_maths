@@ -49,8 +49,8 @@
 						hide-numeric
 						:tf="15"
 						:tw="8"
-						view-height="500"
-						view-width="450"
+						:view-height="500"
+						:view-width="450"
 					/>
 				</ImageZoomer>
 			</figure>
