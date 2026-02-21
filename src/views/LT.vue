@@ -11,12 +11,21 @@
 	title="Eddie rechnet: Laplace-Transformation"
 >
 
-	<template #descriptionPart>
+	<template #bookPart>
 		<figure class="exampleFigure">
 			<ImageZoomer title="Eddie und Zarah lösen Differentialgleichungen">
 				<img loading="lazy" :src="titleImg" />
 			</ImageZoomer>
 		</figure>
+		<h3 id="einleitung">Lorem ipsum dolor sit amet,</h3>
+		<div class="eddie">
+			<p>consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+			</p><p>consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+			</p>
+		</div>
+	</template>
+
+	<template #descriptionPart>
 		<h3>Differentialgleichungen - Klassischer Lösungsweg vs. Laplace-Transformation</h3>
 
 		<h2 id="streit" class="mt-8">1) Ein Streit mit Stil - Eddie vs. Zarah</h2>

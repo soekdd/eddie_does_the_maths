@@ -43,7 +43,7 @@
 		</div>
 	</template>
 	<template #descriptionPart>
-		<h2 id="quantisierung" class="mt-8">Teil 2 - Die Mathematik der Stufen</h2>
+		<h2 id="quantisierung" class="mt-8">Teil 1 - Die Mathematik der Stufen</h2>
 		<div class="eddie">
 			<p>
 				Wenn dich die Formel erschlägt: Das ist normal. Lies sie zuerst wie eine Legende zu einer Karte.
@@ -91,7 +91,7 @@
 			</div>
 		</div>
 
-		<h2 id="metrologie" class="mt-8">Teil 3 - Nobelpreis und Ohm in der Metrologie</h2>
+		<h2 id="metrologie" class="mt-8">Teil 2 - Nobelpreis und Ohm in der Metrologie</h2>
 		<div class="eddie">
 			<p>
 				Klaus von Klitzing erhielt 1985 den Nobelpreis für Physik für die Entdeckung des
@@ -107,7 +107,7 @@
 			</p>
 		</div>
 
-		<h2 id="ohmfrage" class="mt-8">Teil 4 - Eddies Frage nach dem "kleinstmöglichen Widerstand"</h2>
+		<h2 id="ohmfrage" class="mt-8">Teil 3 - Eddies Frage nach dem "kleinstmöglichen Widerstand"</h2>
 		<div class="eddie">
 			<p>
 				Hier stehen zwei unabhängige Kernaussagen nebeneinander:

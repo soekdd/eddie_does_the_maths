@@ -1,6 +1,7 @@
 <template>
 <AppFrame
 	:sub-chapter="{
+		einleitung:'Einleitung',
 		'frage': 'Fragestellung',
 		'formel': 'Formel',
 		'winkel': 'Winkelargument',
@@ -9,12 +10,29 @@
 	title="Eddie rechnet: Frühstückszettel #3 Uferaufdickung"
 >
 
-	<template #descriptionPart>
+	<template #bookPart>
 		<figure class="exampleFigure">
 			<ImageZoomer title="Eddie knobelt über Wasserflächen">
 				<img alt="Eddie und die Vasa" loading="lazy" :src="titleImg" />
 			</ImageZoomer>
 		</figure>
+		<h3 id="einleitung">Vaasa, 10. August 1985</h3>
+		<div class="eddie">
+			<p>Am dritten Tag sitzt Sini mir gegenüber, Kaffee dampft, und ich merke plötzlich: Meine Füße sind
+				fast still. Dafür fängt mein Kopf wieder an zu hüpfen. Der Zettel ist wellig ausgeschnitten wie
+				eine Wasserlinie, und die Frage ist so finnisch, dass sie eigentlich nach Wald riecht: Wie
+				wahrscheinlich ist es, dass ein zufälliger Punkt höchstens einen Kilometer vom Seeufer entfernt
+				liegt? Also: Wie „wassernah“ ist dieses Land wirklich, nicht gefühlt, sondern grob geschätzt?</p>
+			<p>Ich kritzle Finnland auf Küchenrolle, mache blaue Tupfer wie kleine Seen, und dann stelle ich mir
+				vor, ich würde jedem Ufer einen dicken Rand ausbreiten, wie eine Jacke, die man um Wasser legt.
+				Wenn der Rand groß genug ist, frisst er plötzlich riesige Flächen. Und genau da steckt die Idee.</p>
+			<p>Hier zeige ich dir, wie man mit Flächen und Uferlängen abschätzt, ohne sich in Details zu verlieren.
+				Unten kannst du die „Ufer-Aufdickung“ interaktiv selbst verschieben und sehen, wie schnell
+				Finnland zur Wasserkarte wird.</p>
+		</div>
+	</template>
+
+	<template #descriptionPart>
 		<h2 id="frage">Wie wahrscheinlich ist "maximal 100 m bis zum nächsten See"?</h2>
 		<div class="eddie">
 			<p>

@@ -1,6 +1,7 @@
 <template>
 <AppFrame
 	:sub-chapter="{
+		'einleitung': 'Einleitung',
 		'einfuhrungsbeispiel': 'Einführungsbeispiel',
 		'erklarung': 'Erklärung',
 		'rechner': 'Rechner',
@@ -10,12 +11,27 @@
 	title="Eddie rechnet: Lineare diophantische Gleichung"
 >
 
-	<template #descriptionPart>
+	<template #bookPart>
 		<figure class="exampleFigure">
-			<ImageZoomer title="Eddie träumt vom alten Griechenland">
+			<ImageZoomer title="Eddie auf dem Marktplatz in Tampere">
 				<img loading="lazy" :src="titleImg" />
 			</ImageZoomer>
 		</figure>
+		<h3 id="einleitung">Joutsenlampi, 5. Juli 1985</h3>
+		<div class="eddie">
+			<p>Der Volvo-Bus ruckelt über finnische Schlaglöcher, und ich sitze hinten wie auf glühenden Kohlen.
+				Fischer kritzelt seelenruhig in meinem Matheblock, ausgerechnet in dem Block, in dem mein ganzes
+				Leben zwischen den Seiten steckt. Ich lächle Edmilla-mäßig, außen harmlos, innen Herzrasen. Vorne
+				lauert Mielke schon in meinen Gedanken: „Edda…“  und ich weiß, jeder falsche Blick ist ein Risiko.</p>
+			<p>Fischer redet von diesen Bauernaufgaben: Geld, Kühe, Schweine. Alle stöhnen. Und dann schnipst
+				er die Seiten. Dicker. Zu dick. Für einen Moment blitzt das Siegel auf, und mir wird eiskalt. </p>
+			<p >Was er gerade an die Seite gekritzelt hat, ist aber genau mein Ding: Wie findet man alle Lösungen,
+				wenn nur ganze Zahlen erlaubt sind? Hier zeige ich, wie man so eine Gleichung knackt, wie man aus
+				einer Lösung viele macht und woran man merkt, ob es überhaupt eine gibt. </p>
+		</div>
+	</template>
+
+	<template #descriptionPart>
 		<h2 id="einfuhrungsbeispiel">Teil 1 — Einfaches Beispiel</h2>
 
 		<div class="eddie">

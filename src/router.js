@@ -82,7 +82,7 @@ export const router = createRouter( {
 			component: DG,
 			meta:      {
 				difficulty: 2,
-				title:      "Dio&shy;phan&shy;tische Gleichung #1",
+				title:      "Dio&shy;phan&shy;tische Gleichung",
 				index:      true,
 				book:       1,
 				order:      20
@@ -200,20 +200,6 @@ export const router = createRouter( {
 				index:      true,
 				book:       1,
 				order:      100
-			}
-		},
-		{
-			path:      "/DZ",
-			name:      "DZ",
-			component: CatchAll,
-			meta:      {
-				warning,
-				difficulty: 1,
-				title:      "Dio&shy;phan&shy;tische Gleichung #2",
-				index:      true,
-				book:       1,
-				order:      110,
-				wip
 			}
 		},
 		{

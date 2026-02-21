@@ -1,6 +1,7 @@
 <template>
 <AppFrame
 	:sub-chapter="{
+		einleitung:'Einleitung',
 		'aufgabe': 'Aufgabe',
 		'loesung': 'Lösung',
 		'zusammenfassung': 'Zusammenfassung',
@@ -8,13 +9,29 @@
 	}"
 	title="Eddie rechnet: Frühstückszettel #1 Fischpopulation"
 >
-
-	<template #descriptionPart>
+	<template #bookPart>
 		<figure class="exampleFigure">
 			<ImageZoomer title="Eddie rechnet zur Fischpopulation">
 				<img  loading="lazy" :src="titleImg" />
 			</ImageZoomer>
 		</figure>
+		<h3 id="einleitung">Vaasa, 8. August 1985</h3>
+		<div class="eddie">
+			<p>Ich sitze barfuß in Sinis Küche, die Beine hoch auf dem Stuhl, und tue so, als wären meine
+				Füße nur beleidigt und nicht kaputt. Vor mir liegt dieser erste Frühstückszettel, süß ausgeschnitten,
+				als wäre Mathe ein Keks. „Fischsee“, steht da, und ich muss grinsen: hundert Altfische am Anfang,
+				jedes Jahr kommen Junge dazu, am Ende sterben viele von den Alten, und die Jungen rutschen nach.
+				Das klingt nach Naturfilm, ist aber eigentlich ein Rhythmus, wie Atmen: mehr, weniger, mehr,
+				weniger. Und ich merke, wie schnell mein Kopf das Muster findet, während mein Körper noch
+				hinterherhumpelt.
+			</p>
+			<p>Hier zeige ich dir, wie man bei so einem See Schritt für Schritt mitzählt, wann das Ganze explodiert,
+				wann es sich beruhigt – und warum es am Ende eher nach „Sättigung“ aussieht als nach „Endlosparty“.
+			</p>
+		</div>
+	</template>
+
+	<template #descriptionPart>
 
 		<h2 id="aufgabe">Aufgabe: Entwicklung eines Fischbestandes</h2>
 		<div class="eddie">

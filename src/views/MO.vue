@@ -11,12 +11,41 @@
 	title="Eddie rechnet: IMO 1985 Aufgaben Übersicht"
 >
 
-	<template #descriptionPart>
+	<template #bookPart>
 		<figure class="exampleFigure">
 			<ImageZoomer title="Eddie am zweiten Wettkampftag">
 				<img loading="lazy" :src="titleImg" />
 			</ImageZoomer>
 		</figure>
+		<h3 id="einleitung">Joutsa, 4. Juli 1985</h3>
+		<div class="eddie">
+			<p>Joutsa, Klassenzimmer, alles geschniegelt: Tische in Reih und Glied, Uhren ticken
+				viel zu laut, und ich sitze da wie ein gespannter Flitzebogen. Heute bin ich noch
+				voll im Film. Ich will nicht nur gut sein – ich will zeigen, dass ich <em>die</em> Eddie bin.
+				Drei Aufgaben, drei Chancen, die Welt kurz auf Pause zu drücken und nur noch logisch zu atmen.</p><p>
+				Die erste ist so eine Geometrie-Falle: Kreise, ein Viereck, und irgendwo steckt eine Beziehung,
+				die man “sehen” muss, sonst rennt man im Kreis. Die zweite tut harmlos mit Farben und Zahlen,
+				aber die Regeln kleben alles zusammen, bis du kaum noch frei entscheiden kannst. Und die
+				dritte ist wie ein Rechen-Zaubertrick: Du baust etwas aus Bausteinen zusammen und musst beweisen,
+				dass eine bestimmte Eigenschaft nicht einfach verschwindet, nur weil man addiert.</p><p>
+				Ich bin wach, frech, überzeugt: Das hier ist mein Terrain.</p>
+		</div>
+		<h3>Joutsa, 5. Juli 1985</h3>
+		<div class="eddie">
+			<p>Gleicher Raum, gleiche Geräusche – aber ich bin nicht mehr dieselbe. Mein Kopf ist schon halb draußen,
+				bei Türen, Wegen, Blicken. Ich versuche zu lesen, doch die Gedanken rutschen weg wie Seife. Alles
+				in mir zählt nicht mehr Punkte, sondern Sekunden.</p><p>
+				Die Aufgaben fühlen sich plötzlich schwer an, obwohl sie es nicht “dürfen”. Erst geht’s um viele
+				Zahlen, die nur aus kleinen Prim-Bausteinen bestehen, und irgendwo soll man garantiert vier finden,
+				die zusammen etwas “perfekt Ganzes” ergeben. Dann wieder Geometrie: Dreieck, Kreise, Schnittpunkte
+				und am Ende muss eine Ecke genau rechtwinklig sein, als würde die Zeichnung das heimlich erzwingen.
+				Und zuletzt eine Zahlenfolge: Startest du falsch, kippt alles. Es soll genau <em>einen</em> Anfang geben,
+				der die Folge brav zwischen null und eins hält und trotzdem wachsen lässt.</p><p>
+				Ich weiß, wie man das angeht, aber ich fühle, wie mir die Klarheit durch die Finger rinnt.</p>
+		</div>
+	</template>
+
+	<template #descriptionPart>
 		<h2>IMO 1985 – Aufgaben</h2>
 		<p class="meta">
 			Nur die Aufgaben (keine Lösungen). Quelle:

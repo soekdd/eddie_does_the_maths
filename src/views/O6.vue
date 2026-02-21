@@ -1,6 +1,7 @@
 <template>
 <AppFrame
 	:sub-chapter="{
+		einleitung:'Einleitung',
 		rekursion: 'Rekursion',
 		monotonie: 'Monotonie',
 		'existenz-eindeutigkeit': 'Existenz & Eindeutigkeit'
@@ -8,12 +9,34 @@
 	title="Eddie rechnet: IMO 1985 Aufgabe B3"
 >
 
-	<template #descriptionPart>
+	<template #bookPart>
 		<figure class="exampleFigure">
 			<ImageZoomer title="Eddie denkt über die Aufgabe B3 der IMO 85 nach">
 				<img loading="lazy" :src="titleImg" />
 			</ImageZoomer>
 		</figure>
+		<h3 id="einleitung">Joutsa, 5. Juli 1985</h3>
+		<div class="eddie">
+			<p>Joutsa, dritter Wettkampftag. Mir ist, als hätte jemand Watte in meinen Kopf gestopft. Ich
+				lese den Text zweimal und merke: Ich verstehe ihn und gleichzeitig rutsche ich weg. Als
+				würde mein Gehirn auf einem nassen Bootssteg stehen.</p><p>
+				Hier geht es um eine Zahlenfolge. Du startest mit einer Zahl, und dann erzeugst du die
+				nächste aus der vorherigen, immer nach derselben Vorschrift. Wie ein Automat: du fütterst
+				ihn mit dem aktuellen Wert und bekommst den nächsten ausgespuckt.</p><p>
+				Das Gemeine ist: Je nachdem, womit du startest, benimmt sich diese Folge komplett anders.
+				Sie kann zu groß werden, sie kann falsch abbiegen, sie kann aus dem “sicheren Bereich”
+				rausfallen. Und die Aufgabe behauptet: Es gibt genau <strong>einen</strong> einzigen Startwert, d
+				er alles richtig macht. Dann bleibt die Folge immer zwischen null und eins und sie wächst
+				trotzdem Schritt für Schritt.<br data-end="6012" data-start="6009">
+				Das ist eigentlich wunderschön: eine einzige perfekte Startzahl, die genau die Balance trifft.
+				Aber ausgerechnet heute denke ich bei “einziger Startwert” nicht an Schönheit, sondern an
+				Risiko. An <em >nur eine Chance</em>.</p><p>
+				Hier erkläre ich das ganz schlicht: Warum fast alle Starts scheitern und warum genau
+				einer durchrutscht. Hoffe ich, dass auch ich heute durchkomme.</p>
+		</div>
+	</template>
+
+	<template #descriptionPart>
 
 		<h2 id="rekursion">Teil 1 — Aufgabenstellung</h2>
 		<div class="eddie">

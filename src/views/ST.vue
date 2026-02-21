@@ -8,12 +8,31 @@
 	title="Eddie rechnet: Spieltheorie am Busbahnhof"
 >
 
-	<template #descriptionPart>
+	<template #bookPart>
 		<figure class="exampleFigure">
 			<ImageZoomer title="Eddie muss sich entscheiden">
 				<img loading="lazy" :src="titleImg" />
 			</ImageZoomer>
 		</figure>
+		<h3 id="einleitung">Joutsenlampi, 4. Juli 1985</h3>
+		<div class="eddie">
+			<p>Joutsenlampi, Joutsenlampi. Ich sitze auf der Bettkante, die Luft klebt, und in meinem Kopf
+				fährt schon der Bus: rein, Fensterplatz, Helsinki, Freiheit. Klingt so schön einfach, dass
+				es gefährlich ist. Papas Stimme kommt sofort hinterher wie ein Zeigefinger:
+				<em>Hüte dich vor den einfachen Lösungen.</em> Also zwinge ich mich zu dem, was ich kann,
+				wenn alles andere wackelt: Ich baue mir im Kopf einen Entscheidungsbaum.</p>
+			<p>Nicht mit hübschen Kästchen auf Papier – eher wie mit Türen in einem dunklen Flur. Jede Tür
+				hat eine Chance, dass sie genau jetzt offen ist. Und hinter jeder Tür wartet nochmal eine
+				kleine Gemeinheit: falsches Ticket, falscher Fahrer, falscher Zufall, falscher Moment und
+				ganz am Ende vielleicht Mielke.</p>
+			<p>Ich schiebe die Pfeile hin und her, streiche Wege weg, bis mir klar wird: Wenn ich auf Glück
+				setze, verliere ich. Punkt.</p>
+			<p>Hier packe ich diese Mini-Rechnung Schritt für Schritt aus: Spieltheorie, Entscheidungsbäume
+				und wie man aus Bauchpanik wieder klare Entscheidungen macht.</p>
+		</div>
+	</template>
+
+	<template #descriptionPart>
 
 		<h2 id="entscheidungsbaum">Teil 1 — Worum’s geht (Kurzfassung)</h2>
 		<div class="eddie">

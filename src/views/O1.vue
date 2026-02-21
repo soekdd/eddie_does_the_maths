@@ -9,12 +9,28 @@
 	title="Eddie rechnet: IMO 1985 Aufgabe A1"
 >
 
-	<template #descriptionPart>
+	<template #bookPart>
 		<figure class="exampleFigure">
 			<ImageZoomer title="Eddie denkt über die Aufgabe A1 der IMO 85 nach">
 				<img loading="lazy" :src="titleImg" />
 			</ImageZoomer>
 		</figure>
+		<h3 id="einleitung">Joutsa, 4. Juli 1985</h3>
+		<div class="eddie">
+			<p>Der Raum riecht nach Papier, Holz und diesem dünnen Kaffee, den die Aufsicht heimlich schlürft.
+				Ich sitze gerade, Stift bereit, und ich hab dieses freche Gefühl: <em>Heute rechne ich sie alle an die Wand.</em>
+			</p><p>
+				Auf dem Blatt wartet eine Zeichnung, die aussieht wie “harmloses Geometrie-Gekritzel”, bis man merkt, dass
+				sie eine Falle ist. Es geht um ein Viereck, dessen Ecken auf einem Kreis liegen. Auf einer Seite sitzt der
+				Mittelpunkt eines zweiten Kreises, und dieser Kreis streift die anderen drei Seiten nur ganz leicht, wie mit
+				der Fingerspitze.</p><p>
+				Die Aufgabe will, dass ich zeige: Bestimmte Streckenlängen an diesem Viereck hängen zwingend zusammen,
+				als hätte die Figur eine versteckte Bilanz, die immer aufgeht.</p><p>
+				Hier nehme ich dich an die Hand: Was man in der Zeichnung “sehen” muss – ohne Zaubertricks, nur sauber hinschauen.</p>
+		</div>
+	</template>
+
+	<template #descriptionPart>
 		<h2 id="geometrie">Aufgabenstellung</h2>
 		<div class="eddie">
 			<p>

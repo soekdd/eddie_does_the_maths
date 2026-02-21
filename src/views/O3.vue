@@ -1,6 +1,7 @@
 <template>
 <AppFrame
 	:sub-chapter="{
+		einleitung:'Einleitung',
 		'binomialkoeffizienten': 'Binomialkoeffizienten',
 		'paritat': 'Parität',
 		'induktion': 'Induktion'
@@ -8,12 +9,30 @@
 	title="Eddie rechnet: IMO 1985 Aufgabe A3"
 >
 
-	<template #descriptionPart>
+	<template #bookPart>
 		<figure class="exampleFigure">
 			<ImageZoomer title="Eddie denkt über die Aufgabe A3 der IMO 85 nach">
 				<img loading="lazy" :src="titleImg" />
 			</ImageZoomer>
 		</figure>
+		<h3 id="einleitung">Joutsa, 4. Juli 1985</h3>
+		<div class="eddie">
+			<p>Ich grinse, als ich das Wort “Polynom” sehe. Das ist wie ein alter Bekannter.
+				Ich fühle mich wach, schnell, fast übermütig – als könnte ich mit einem Blick erkennen, wo der
+				Trick liegt.</p><p>
+				Die Aufgabe ist eigentlich eine Frage nach “gerade oder ungerade”, aber versteckt in einer ganzen
+				Familie von Ausdrücken. Stell dir vor, du hast Rechenausdrücke, die aus vielen Zahlen bestehen,
+				die an verschiedene “Stellen” gehören. Manche dieser Zahlen sind gerade, manche ungerade. Jetzt
+				nimmst du ein paar ganz besondere Ausdrücke, die alle nach dem gleichen Bauplan entstehen (so wie
+				beim Aufklappen von Klammern), und addierst sie.</p><p>
+				Was soll passieren? Du sollst beweisen, dass beim Addieren etwas nicht “weggezaubert” werden kann:
+				Die Anzahl der ungeraden Zahlen in dieser Liste wird nicht kleiner, als sie am Anfang schon war.</p><p>
+				Hier übersetze ich das in Bilder im Kopf: Muster, Schichten, und warum sich “ungerade” nicht so
+				leicht verstecken lässt.</p>
+		</div>
+	</template>
+
+	<template #descriptionPart>
 
 		<h2 id="binomialkoeffizienten">Teil 1 — Aufgabenstellung</h2>
 		<div class="eddie">

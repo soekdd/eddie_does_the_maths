@@ -1,33 +1,37 @@
 <template>
 <AppFrame
 	:sub-chapter="{
-		'kleine-einschlafubungen': 'Kleine Einschlafübungen',
-		'muster-statt-grubeln': 'Muster statt Grübeln'
+		'einleitung': 'Einleitung',
+		'muster': '12 Rituale für die Nacht',
+		'quiz': 'Quiz zum Üben',
 	}"
 	title="Eddie rechnet: Gute-Nacht-Rechenroutine"
 >
 
-	<template #descriptionPart>
+	<template #bookPart>
 		<figure class="exampleFigure">
 			<ImageZoomer title="Eddie kann nicht einschlafen">
 				<img loading="lazy" :src="titleImg" />
 			</ImageZoomer>
 		</figure>
-
-		<h2 id="muster-statt-grubeln">Worum geht's?</h2>
+		<h3 id="einleitung">Vaasaloppet, 29. Juli 1985</h3>
 		<div class="eddie">
-			<p>
-				Die Idee ist simpel: kurze, abgeschlossene Rechenmuster beruhigen den Kopf besser als
-				endloses Gedankenkreisen. Statt „noch schnell scrollen“ machst du zwei bis vier kleine
-				Mathe-Schritte und hörst dann bewusst auf.
-			</p>
-			<p>
-				Diese Seite nimmt die Inhalte aus <em>Gute-Nacht-Rechenroutine (Wanderhütte-Edition)</em>
-				auf und macht daraus Mini-Übungen für den Abend.
-			</p>
+			<p>Meine Brust brennt, der Regen hämmert aufs Dach, und jedes Husten klingt in meinem
+				Kopf wie: <em>Jetzt haben sie dich.</em> Ich liege in der Laavu wie ein nasser Sack,
+				starre ins Dunkel und merke, wie die Angst sofort anfängt, mir Geschichten zu erzählen.
+				Vom Ende, von Sackgassen mit nicht als dem Meer dahinter. Und ich, ganz klein, ganz allein.</p>
+			<p>Dann mache ich das, was mein Vater mir beigebracht hat: keine großen Gedanken, keine
+				Heldenpläne, nur kurze Rechenmuster. Zwei, drei, vier Mini-Schritte. Fertig. Stopp.
+				Als würde ich meinem Gehirn sagen: <em>Hier ist eine Schublade, da passt nur Ruhe rein.</em>
+				Das klingt banal, ist es auch. Genau deshalb wirkt’s. Es ist wie Atmen zählen, nur
+				mit Zahlen, die sich sauber schließen.</p>
+			<p>Hier findest du diese <em>Gute-Nacht-Rechenroutine (Wanderhütte-Edition)</em> als kleine
+				Abend-Übungen und unten ein interaktives Quiz zum Mitmachen, bis der Kopf endlich leiser wird.</p>
 		</div>
+	</template>
 
-		<h2 id="kleine-einschlafubungen" class="mt-8">Die 12 Rituale</h2>
+	<template #descriptionPart>
+		<h2 id="muster" class="mt-8">Die 12 Rituale</h2>
 		<div class="eddie">
 			<v-expansion-panels variant="accordion">
 				<v-expansion-panel v-for="item in routines" :key="item.id">
@@ -41,7 +45,7 @@
 	</template>
 
 	<template #interactivePart>
-		<h2>Mini-Übungsmodus</h2>
+		<h2 id="quiz">Mini-Übungsmodus</h2>
 		<div class="eddie d-flex flex-column ga-3">
 			<p>
 				Wähle einen Modus, rechne eine Aufgabe und höre nach einer richtigen Lösung auf.

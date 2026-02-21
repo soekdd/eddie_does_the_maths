@@ -1,6 +1,7 @@
 <template>
 <AppFrame
 	:sub-chapter="{
+		einleitung:'Einleitung',
 		'schubfachprinzip': 'Schubfachprinzip',
 		'paritatsvektoren': 'Paritätsvektoren',
 		'vierte-potenz': 'vierte Potenz'
@@ -8,12 +9,31 @@
 	title="Eddie rechnet: IMO 1985 Aufgabe B1"
 >
 
-	<template #descriptionPart>
+	<template #bookPart>
 		<figure class="exampleFigure">
 			<ImageZoomer title="Eddie denkt über die Aufgabe B1 der IMO 85 nach">
 				<img loading="lazy" :src="titleImg" />
 			</ImageZoomer>
 		</figure>
+		<h3 id="einleitung">Joutsa, 5. Juli 1985</h3>
+		<div class="eddie">
+			<p>Joutsa, dritter Wettkampftag. Der Stuhl knarzt, als würde er mich verraten wollen. Mein Herz klopft
+				zu laut für so einen stillen Raum. Ich starre auf die Aufgabe und merke, wie mein Kopf
+				gleichzeitig hier <em>und</em> schon ganz woanders ist. Bei Türen, Wegen, Zeiten. Fluchtplänen.</p><p>
+				Auf dem Papier geht es um eine große Menge verschiedener Zahlen. Alle diese Zahlen sind aus
+				kleinen Bausteinen zusammengesetzt. Sie dürfen nur durch bestimmte kleine Primzahlen teilbar
+				sein. Und jetzt kommt die Behauptung, die wie ein Zaubersatz klingt: In so einer riesigen
+				Sammlung findest du garantiert vier Zahlen, deren Produkt “perfekt” ist, so perfekt, dass
+				es genau zu einer vierten Potenz passt, also wie eine Zahl, die viermal mit sich selbst
+				multipliziert wurde.</p><p>
+				Ich weiß: Das ist eigentlich ein Sortier- und Schubladenproblem. Aber heute fühlt sich sogar
+				Sortieren an wie Nebel.</p><p>
+				Hier mache ich daraus wieder etwas Greifbares: Bausteine zählen, Muster bündeln, und warum
+				“vier” hier kein Zufall ist.</p>
+		</div>
+	</template>
+
+	<template #descriptionPart>
 
 		<h2>Teil 1 — Aufgabenstellung</h2>
 		<div class="eddie">

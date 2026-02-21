@@ -1,18 +1,38 @@
 <template>
 <AppFrame
 	:sub-chapter="{
+		einleitung:'Einleitung',
 		'depot-strategie': 'Depot-Strategie',
 		'vorstufe-plus-klassisches-mehrdepot-modell': 'Vorstufe + klassisches Mehrdepot-Modell'
 	}"
 	title="Eddie rechnet: Frühstückszettel #2 Das Rentier-Problem"
 >
 
-	<template #descriptionPart>
+	<template #bookPart>
 		<figure class="exampleFigure">
 			<ImageZoomer title="Eddie als Rentierführerin">
 				<img loading="lazy" :src="titleImg" />
 			</ImageZoomer>
 		</figure>
+		<h3 id="einleitung">Vaasa, 9. August 1985</h3>
+		<div class="eddie">
+			<p>Am zweiten Morgen bin ich schon wach, noch bevor Sini die Tür richtig zu hat. Neugier ist mein
+				Wecker. Der Zettel zeigt ein Rentier, das aussieht wie ein Hund mit Antennen und darunter die
+				fiese Frage: Wie weit komme ich in die Wildnis rein und wieder raus, wenn ich nur begrenzt
+				Essen tragen kann, aber unterwegs kleine Vorratsstapel anlegen darf? Das ist kein
+				„einfach laufen“-Problem. Das ist „schleppen, ablegen, umdrehen, nochmal schleppen, und dabei
+				nicht verhungern“.</p>
+			<p>Ich liege wieder mit den Beinen oben, die Mullstreifen enger, der Kopf freier. In meinem Heft
+				werden aus Rationen kleine Punkte, aus Wegen Pfeile, aus Umkehrpunkten Entscheidungen. Und ja:
+				Der Trick ist nicht Mut, sondern Ordnung. Nicht immer alles gleichzeitig wollen. Erst Depots
+				bauen, dann Strecke machen.</p>
+			<p>In Eddie rechnet zeige ich dir die clevere Depot-Logik für Five-Card-Draw-ähnliche Disziplin:
+				kalt rechnen, dann erst loslaufen. Und unten gibt’s ein interaktives Schema, mit dem du deine
+				eigene Strategie ausprobieren kannst.</p>
+		</div>
+	</template>
+
+	<template #descriptionPart>
 		<h2>Teil 1 — Aufgabe (Lappland-Version)</h2>
 		<div class="eddie">
 			<p>

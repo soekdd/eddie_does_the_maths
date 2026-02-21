@@ -15,7 +15,7 @@
 				<img loading="lazy" :src="titleImg" />
 			</ImageZoomer>
 		</figure>
-		<h3 id="einleitung">Joutsa, 6. Juli 1985</h3>
+		<h3 id="einleitung">Joutsenlampi, 4. Juli 1985</h3>
 		<div class="eddie"><p>Ich sitze zwischen den Jungs, als wäre ich nur harmlose Deko am Tisch.
 			Genau deshalb lassen sie mich so nah ran: Kleidchen, braver Blick, “ich kann das gar nicht”.
 			Und ja, die Regeln muss ich wirklich noch verstehen. Aber ein Blatt ist kein Mysterium.

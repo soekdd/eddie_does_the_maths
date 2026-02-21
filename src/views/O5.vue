@@ -1,6 +1,7 @@
 <template>
 <AppFrame
 	:sub-chapter="{
+		einleitung:'Einleitung',
 		'geometrie': 'Geometrie',
 		'potenzpunkte': 'Potenzpunkte',
 		'radikalachsen': 'Radikalachsen'
@@ -8,12 +9,30 @@
 	title="Eddie rechnet: IMO 1985 Aufgabe B2"
 >
 
-	<template #descriptionPart>
+	<template #bookPart>
 		<figure class="exampleFigure">
 			<ImageZoomer title="Eddie denkt über die Aufgabe B2 der IMO 85 nach">
 				<img loading="lazy" :src="titleImg" />
 			</ImageZoomer>
 		</figure>
+		<h3 id="einleitung">Joutsa, 5. Juli 1985</h3>
+		<p>Ich höre jeden Atemzug im Raum. Sogar das Umblättern klingt wie ein
+			Signal. Mein Blick springt ständig vom Blatt zur Tür, als würde sie gleich aufgehen.</p><p>
+			Die Aufgabe ist Geometrie, aber nicht die freundliche Sorte. Es geht um ein Dreieck, und durch
+			zwei seiner Ecken läuft ein Kreis mit einem Mittelpunkt, der extra genannt wird. Dieser Kreis
+			schneidet zwei Seiten des Dreiecks noch einmal in zwei neuen Punkten. Dann werden zwei weitere
+			Kreise gebaut, jeweils durch drei Punkte, und diese beiden Kreise treffen sich (natürlich) in
+			genau zwei Stellen. Eine davon ist eine Ecke des Dreiecks. Die andere ist der “mysteriöse” Punkt,
+			um den es geht.</p><p>
+			Und die ganze Aufgabe läuft auf eine einfache Aussage hinaus: Ein bestimmter Winkel muss genau ein
+			rechter Winkel sein. Also wie eine perfekte Ecke.</p><p>
+			Normalerweise liebe ich solche “Das muss 90 Grad sein!”-Momente. Heute fühlt es sich an, als müsste
+			ich mich zwingen, überhaupt in der Zeichnung zu bleiben.</p><p>
+			Hier führe ich dich durch die Idee und die Formeln: Welche Kreise hier “zusammenarbeiten” und warum
+			am Ende eine rechte Ecke rausfällt.</p>
+	</template>
+
+	<template #descriptionPart>
 
 		<h2 id="geometrie">Teil 1 — Aufgabenstellung</h2>
 		<div class="eddie">

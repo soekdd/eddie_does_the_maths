@@ -1,6 +1,7 @@
 <template>
 <AppFrame
 	:sub-chapter="{
+		einleitung:'Einleitung',
 		'entscheidungsbaum': 'Entscheidungsbaum',
 		'wahrscheinlichkeiten': 'Wahrscheinlichkeiten',
 		'rechner': 'Rechner'
@@ -8,12 +9,28 @@
 	title="Eddie rechnet: IMO 1985 Aufgabe A2"
 >
 
-	<template #descriptionPart>
+	<template #bookPart>
 		<figure class="exampleFigure">
 			<ImageZoomer title="Eddie denkt über die Aufgabe A2 der IMO 85 nach">
 				<img loading="lazy" :src="titleImg" />
 			</ImageZoomer>
 		</figure>
+		<h3 id="einleitung">Joutsa, 4. Juli 1985</h3>
+		<div class="eddie">
+			<p>Ich höre das Kratzen von dreißig Bleistiften gleichzeitig und finde es plötzlich beruhigend. Das ist
+				mein Element: Regeln lesen, Muster finden, fertig.</p><p>
+				Hier geht’s nicht um Linien und Kreise, sondern um eine Reihe von Zahlen, die man in zwei Farben
+				anstreicht. Klingt wie Kinderkram – aber die Aufgabe legt zwei fiese Regeln fest. Die erste sorgt
+				dafür, dass Zahlen, die “spiegelbildlich” zueinander stehen, dieselbe Farbe haben müssen. Die zweite
+				kettet noch mehr Zahlen zusammen: Sobald du eine Zahl anders färbst als eine ganz bestimmte
+				Lieblingszahl, zwingt dich die Regel, andere mit ihr gleich zu färben.</p><p>
+				Und dann kommt der eigentliche Punch: Du sollst zeigen, dass diese Regeln am Ende alles einfärben,
+				ohne dass du noch Wahlfreiheit hast. Egal wie du anfängst – du landest bei “alle gleich”.</p><p>
+				Hier zeige ich dir die einfache Logik dahinter, Schritt für Schritt, mit Formelkram.</p>
+		</div>
+	</template>
+
+	<template #descriptionPart>
 
 		<h2>Teil 1 — Aufgabenstellung</h2>
 		<div class="eddie">
