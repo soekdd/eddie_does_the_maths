@@ -7,7 +7,8 @@
 		loesen: 'Lösen',
 		stationen: 'Bonus-Stationen',
 		'eddies-rechnung': 'Eddies Rechnung',
-		'mit-t18': 'Mit T=18'
+		'mit-t18': 'Mit T=18',
+		'deine-grabplatte': 'Deine Grabplatte'
 	}"
 	title="Ich rechne: Diophantos' Grabplatte"
 >
@@ -19,24 +20,35 @@
 		</figure>
 		<h3 id="einleitung">Stockholm, 26. Oktober 1985</h3>
 		<div class="eddie">
-			<p>
-				Ich habe einen alten Zettel auf dem Tisch. Der Text klingt für mich
-				mehr wie ein Rätsel als wie ein Nachruf: Bruchteile eines Lebens,
-				ein Sohn, ein paar Jahre dazwischen und am Ende eine einzige Frage.
-			</p>
-			<p>
-				Genau mein Ding. Ich rechne das zuerst klassisch algebraisch für
-				Diophantos durch und übersetze danach meine eigene
-				„Grabplatten-Rechnung“ in saubere Gleichungen.
+
+			<p>Ich lehne mich am Fensterplatz zurück, während draußen die Stadt den Sonntag
+				weiteratmet. In der Rotunde ist es dagegen, als würde die Zeit in Ringen laufen:
+				leise Schritte, Papiergeruch, das dumpfe Klacken von Buchdeckeln. Genau hier
+				fühlen sich Zahlen nicht wie Schulstoff an, sondern wie Geschichten, die jemand
+				vor mir begonnen hat. Ich mag das. Geschichten kann man weiterführen. Man kann
+				sie sogar umschreiben.
+			</p><p>
+				Und Diophantos ist so einer, der mich dabei erwischt, wie ich kurz vergesse, wer ich gerade sein
+				muss. Nicht Eddie auf der Flucht, nicht Edmilla im Kostüm, nicht das Mädchen mit dem Hund, der
+				im Park den Schnee umgräbt. Sondern einfach ich mit einem Stift, einem Block und dieser nervigen
+				Sehnsucht nach Ordnung in allem, was gerade unordentlich ist.
+			</p><p>
+				Die Inschrift wirkt wie ein Spruch aus einem alten Rätselheft, nur dass hier niemand
+				„Lösung auf Seite 84“ drunterdruckt. Also mache ich das, was ich immer mache, wenn mir
+				etwas zu groß vorkommt: Ich zerlege es in Teile, bis es wieder in meine Hand passt.
 			</p>
 		</div>
 	</template>
 
 	<template #descriptionPart>
-		<h2 id="diophantos-raetsel">Ich lese das Grabplatten-Rätsel des Diophantos</h2>
+		<h2 id="diophantos-raetsel">Das Grabplatten-Rätsel des Diophantos</h2>
 		<div class="eddie">
-			<p>In der Originalfassung des Epitaphs lese ich:</p>
+			<p>Die Originalfassung des Epitaphs:</p>
 			<blockquote class="storyQuote">
+				<div class="plateHeader">
+					<div class="plateLead">Diophantos</div>
+					<div class="plateLeadSub">Epitaph</div>
+				</div>
 				Hier das Grabmal deckt Diophantos, ein Wunder zu schauen:
 				<br> Durch des Entschlafenen Kunst lehrt dich sein Alter der Stein.
 				<br> Knabe zu bleiben verlieh ein Sechstel des Lebens ein Gott ihm;
@@ -48,27 +60,27 @@
 				<br> Noch vier Jahre den Schmerz durch Kunde der Zahlen besänftigend,
 				<br> Langte am Ziele des Seins endlich er selber auch an.
 			</blockquote>
-			<p>Wenn ich den Pathos rausnehme und nur die Algebra behalte, steht da:</p>
+			<p>Nimmt man den Pathos heraus und behält nur die Algebra, steht da:</p>
 			<ul>
-				<li>Ich setze <Katex tex="\frac16" /> seiner Lebenszeit für die Kindheit.</li>
-				<li>Ich addiere weitere <Katex tex="\frac1{12}" /> bis zum Bartwuchs.</li>
-				<li>Ich addiere weitere <Katex tex="\frac17" /> bis zur Hochzeit.</li>
-				<li>Ich lese: <Katex tex="5" /> Jahre später bekommt er einen Sohn.</li>
+				<li><Katex tex="\frac16" /> seiner Lebenszeit für die Kindheit.</li>
+				<li>weitere <Katex tex="\frac1{12}" /> bis zum Bartwuchs.</li>
+				<li>weitere <Katex tex="\frac17" /> bis zur Hochzeit.</li>
+				<li><Katex tex="5" /> Jahre später bekommt er einen Sohn.</li>
 				<li>
-					Ich lese: Der Sohn lebt <Katex tex="\frac12" /> so lang wie der Vater
+					Der Sohn lebt <Katex tex="\frac12" /> so lang wie der Vater
 					(bezogen auf die Lebenszeit des Vaters).
 				</li>
 				<li>
-					Ich lese: <Katex tex="4" /> Jahre nach dem Tod des Sohnes stirbt
+					<Katex tex="4" /> Jahre nach dem Tod des Sohnes stirbt
 					Diophantos.
 				</li>
 			</ul>
 		</div>
 
-		<h2 id="in-formeln" class="mt-8">1) Ich überführe alles in Formeln</h2>
+		<h2 id="in-formeln" class="mt-8">1) In Formeln überführen</h2>
 		<div class="eddie">
 			<p>
-				Ich setze <Katex tex="x" /> als gesamte Lebensdauer von Diophantos
+				<Katex tex="x" /> als gesamte Lebensdauer von Diophantos
 				in Jahren.
 			</p>
 			<div class="kbox">
@@ -76,10 +88,10 @@
 			</div>
 		</div>
 
-		<h2 id="loesen" class="mt-8">2) Ich löse die Gleichung</h2>
+		<h2 id="loesen" class="mt-8">2) Lösen</h2>
 		<div class="eddie">
 			<p>
-				Ich nehme <Katex tex="84" /> als gemeinsamen Nenner der Brüche
+				Zuerst die Brüche zusammenfassen. Ein gemeinsamer Nenner ist  <Katex tex="84" />
 				(damit ist die Lösung fast schon da):
 			</p>
 			<div class="kbox">
@@ -96,26 +108,26 @@
 				<Katex as="div" display tex="\frac9{84}x=9" />
 				<Katex as="div" display tex="x=9\cdot\frac{84}{9}=84" />
 			</div>
-			<p><b>Ich komme damit auf 84 Jahre für Diophantos.</b></p>
+			<p><b>Diophantos wurde also 84 Jahre alt.</b></p>
 		</div>
 
-		<h2 id="stationen" class="mt-8">3) Bonus: Ich rechne die Stationen als konkrete Alterszahlen</h2>
+		<h2 id="stationen" class="mt-8">3) Bonus: Die Stationen als konkrete Alterszahlen</h2>
 		<div class="eddie">
 			<ul>
 				<li>
-					das Ende der Kindheit:
+					Ende der Kindheit:
 					<Katex tex="\frac16x=14" />
 				</li>
 				<li>
-					den Bartwuchs:
+					Bartwuchs:
 					<Katex tex="\left(\frac16+\frac1{12}\right)x=14+7=21" />
 				</li>
 				<li>
-					die Hochzeit:
+					Hochzeit:
 					<Katex tex="\left(\frac16+\frac1{12}+\frac17\right)x=14+7+12=33" />
 				</li>
 				<li>
-					die Geburt des Sohnes:
+					Geburt des Sohnes:
 					<Katex tex="33+5=38" />
 				</li>
 				<li>
@@ -135,12 +147,16 @@
 		<h2 id="eddies-rechnung" class="mt-8">Meine eigene „Meilenstein-Rechnung“</h2>
 		<div class="eddie">
 			<blockquote class="storyQuote">
-				Ein Drittel bin ich Kleinkind,<br>
+				<div class="plateHeader">
+					<div class="plateLead">Eddie</div>
+					<div class="plateLeadSub">Meilenstein-Rechnung</div>
+				</div>
+				Ein Drittel Kleinkind,<br>
 				vier Neuntel bin ich Schulkind,<br>
 				ein Sechstel bin ich Spezi der Zahlen,<br>
-				davon verbringe ich zwei Drittel als Edmilla getarnt.<br>
+				davon zwei Drittel als Edmilla getarnt. <br>
 				Zwei Monde bin ich frei.<br>
-				Den Rest bin ich auf der Flucht.
+				Den Rest auf der Flucht.
 			</blockquote>
 
 			<p>
@@ -178,7 +194,7 @@
 
 		<h2 id="mit-t18" class="mt-8">Wenn ich <Katex tex="T=18" /> setze</h2>
 		<div class="eddie">
-			<p>Wenn ich <Katex tex="T=18" /> setze, folgt:</p>
+			<p>Wenn ich <Katex tex="T=18" /> setze, folgt eine Fluchtzeit von:</p>
 			<div class="kbox">
 				<Katex as="div" display tex="T_{\text{Flucht}}=\frac1{18}\cdot 18-\frac16" />
 				<Katex as="div" display tex="=1-\frac16=\frac56" />
@@ -186,19 +202,74 @@
 			</div>
 		</div>
 	</template>
+
+	<template #interactivePart>
+		<h2 id="deine-grabplatte">4) Erstelle dein eigenes Grabplatten-Rätsel</h2>
+		<div class="eddie">
+			<p>
+				Lege deine Lebensstationen als Terme an. Die Gleichung wird automatisch aufgebaut
+				und die Alterswerte zu jeder Station werden im Stil einer Grabplatte berechnet.
+			</p>
+		</div>
+		<GD_Plate />
+	</template>
 </AppFrame>
 </template>
 
 <script setup>
 import titleImg from "@/images/GD.webp";
+import GD_Plate from "./GD_Plate.vue";
 </script>
 
 <style scoped>
 .storyQuote {
-	border-left: 4px solid rgba(var(--v-theme-primary, 25, 118, 210), 0.85);
-	background: rgba(var(--v-theme-primary, 25, 118, 210), 0.08);
-	border-radius: 10px;
-	margin: 0 0 14px;
-	padding: 10px 12px;
+	position: relative;
+	overflow: hidden;
+    text-align: center;
+	max-width: 35em;
+	margin: auto 14px;
+	padding: 16px 16px 14px;
+	border-radius: 16px;
+	border: 1px solid rgba(60, 45, 26, 0.5);
+	background:
+		radial-gradient(120% 100% at 0% 0%, rgba(255, 239, 215, 0.45), transparent 55%),
+		linear-gradient(150deg, #7a6651 0%, #ab957d 38%, #725d49 70%, #5d4a3a 100%);
+	box-shadow:
+		inset 0 1px 0 rgba(255, 248, 235, 0.28),
+		inset 0 -18px 22px rgba(35, 24, 14, 0.28),
+		0 10px 24px rgba(0, 0, 0, 0.24);
+	color: #1f1811;
+	font-family: "Cormorant Garamond", "Times New Roman", serif;
+	font-size: 1.05rem;
+	line-height: 1.35;
+}
+
+.storyQuote::before {
+	content: "";
+	position: absolute;
+	inset: 10px;
+	border: 1px solid rgba(65, 47, 29, 0.5);
+	border-radius: 12px;
+	pointer-events: none;
+}
+
+.plateHeader {
+	position: relative;
+	z-index: 1;
+	text-align: center;
+	margin-bottom: 10px;
+}
+
+.plateLead {
+	font-size: 1.35rem;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+}
+
+.plateLeadSub {
+	font-size: 0.95rem;
+	letter-spacing: 0.06em;
+	opacity: 0.84;
+	text-transform: uppercase;
 }
 </style>

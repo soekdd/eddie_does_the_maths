@@ -33,7 +33,7 @@
 	<template #descriptionPart>
 		<h2 id="muster" class="mt-8">Die 12 Rituale</h2>
 		<div class="eddie">
-			<v-expansion-panels variant="accordion">
+			<v-expansion-panels v-model="openRoutinePanel" variant="accordion">
 				<v-expansion-panel v-for="item in routines" :key="item.id">
 					<v-expansion-panel-title>{{ item.title }}</v-expansion-panel-title>
 					<v-expansion-panel-text class="d-flex flex-column ga-2">
@@ -196,6 +196,7 @@ const modes = [
 ];
 
 const mode = ref( "mix" );
+const openRoutinePanel = ref( 0 );
 const exercise = ref( null );
 const selectedOption = ref( "" );
 const revealSolution = ref( false );

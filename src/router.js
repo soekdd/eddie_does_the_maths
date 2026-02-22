@@ -16,6 +16,7 @@ import BA from "@/views/BA.vue";
 import BS from "@/views/BS.vue";
 import BD from "@/views/BD.vue";
 import BZ from "@/views/BZ.vue";
+import NV from "@/views/NV.vue";
 import SE from "@/views/SE.vue";
 import RD from "@/views/RD.vue";
 import SD from "@/views/SD.vue";
@@ -206,15 +207,14 @@ export const router = createRouter( {
 		{
 			path:      "/NV",
 			name:      "NV",
-			component: CatchAll,
+			component: NV,
 			meta:      {
 				warning,
 				difficulty: 1,
 				title:      "Navi&shy;gation im Wald",
 				index:      true,
 				book:       1,
-				order:      120,
-				wip
+				order:      120
 			}
 		},
 		{
@@ -391,7 +391,7 @@ export const router = createRouter( {
 			name:      "GD",
 			component: GD,
 			meta:      {
-				error,
+				warning,
 				difficulty: 1,
 				title:      "Diophantos Grab&shy;platte",
 				index:      true,
