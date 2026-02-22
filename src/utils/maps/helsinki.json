@@ -1,0 +1,465 @@
+{
+  "meta": {
+    "title": "Helsinki network (key points, schematic)",
+    "city": "Helsinki, Finland",
+    "nodes": 29,
+    "note": "30 key points (stations, terminals, hospitals, embassy, major places). Edges are schematic: roads/walk links and public transport links (tram/metro/commuter)."
+  },
+  "nodes": [
+    {
+      "id": "central_station",
+      "name": "Helsinki Central Station",
+      "lat": 60.1719,
+      "lon": 24.9414
+    },
+    {
+      "id": "rautatientori",
+      "name": "Rautatientori (Central Square)",
+      "lat": 60.1715,
+      "lon": 24.941
+    },
+    {
+      "id": "kauppatori",
+      "name": "Kauppatori (Market Square)",
+      "lat": 60.1675,
+      "lon": 24.952
+    },
+    {
+      "id": "senatsplatz",
+      "name": "Senatsplatz",
+      "lat": 60.1699,
+      "lon": 24.9525
+    },
+    {
+      "id": "helsinki_cathedral",
+      "name": "Helsinki Cathedral",
+      "lat": 60.1699,
+      "lon": 24.9524
+    },
+    {
+      "id": "uspenksi_cathedral",
+      "name": "Uspenski Cathedral",
+      "lat": 60.1693,
+      "lon": 24.9863
+    },
+    {
+      "id": "esplanadi_park",
+      "name": "Esplanadi Park",
+      "lat": 60.1688,
+      "lon": 24.9511
+    },
+    {
+      "id": "amosp_rex",
+      "name": "Amos Rex Museum",
+      "lat": 60.1685,
+      "lon": 24.9383
+    },
+    {
+      "id": "oodi_library",
+      "name": "Oodi Central Library",
+      "lat": 60.1712,
+      "lon": 24.9343
+    },
+    {
+      "id": "temppeliaukio_church",
+      "name": "Temppeliaukio Church (Rock Church)",
+      "lat": 60.186,
+      "lon": 24.9258
+    },
+    {
+      "id": "olympia_stadion",
+      "name": "Olympia Stadium",
+      "lat": 60.1829,
+      "lon": 24.9224
+    },
+    {
+      "id": "sibelius_monument",
+      "name": "Sibelius Monument",
+      "lat": 60.1811,
+      "lon": 24.9179
+    },
+    {
+      "id": "suomenlinna_fortress",
+      "name": "Suomenlinna Fortress",
+      "lat": 60.145,
+      "lon": 24.989
+    },
+    {
+      "id": "port_south_harbour",
+      "name": "South Harbour (Port)",
+      "lat": 60.1647,
+      "lon": 24.9583
+    },
+    {
+      "id": "west_terminal2",
+      "name": "West Harbour Terminal (West Terminal 2)",
+      "lat": 60.1739,
+      "lon": 24.932
+    },
+    {
+      "id": "olympia_terminal",
+      "name": "Olympia Terminal",
+      "lat": 60.1601,
+      "lon": 24.9515
+    },
+    {
+      "id": "katajanokka_terminal",
+      "name": "Katajanokka Ferry Terminal",
+      "lat": 60.166,
+      "lon": 24.9705
+    },
+    {
+      "id": "german_embassy",
+      "name": "Embassy of Germany",
+      "lat": 60.186,
+      "lon": 24.8671
+    },
+    {
+      "id": "meilahti_tower_hospital",
+      "name": "Meilahti Tower Hospital",
+      "lat": 60.1869,
+      "lon": 24.8726
+    },
+    {
+      "id": "eira_hospital",
+      "name": "Eira Hospital",
+      "lat": 60.1574,
+      "lon": 24.9372
+    },
+    {
+      "id": "kampin_kappeli",
+      "name": "Kamppi Chapel (Kampin kappeli)",
+      "lat": 60.1688,
+      "lon": 24.93
+    },
+    {
+      "id": "allass_sea_pool",
+      "name": "Allas Sea Pool",
+      "lat": 60.1615,
+      "lon": 24.9566
+    },
+    {
+      "id": "vanha_kauppahalli",
+      "name": "Vanha Kauppahalli (Old Market Hall)",
+      "lat": 60.1672,
+      "lon": 24.9509
+    },
+    {
+      "id": "stockmann_dept_store",
+      "name": "Stockmann Department Store",
+      "lat": 60.1695,
+      "lon": 24.9486
+    },
+    {
+      "id": "kaivopuisto_park",
+      "name": "Kaivopuisto Park",
+      "lat": 60.1515,
+      "lon": 24.9592
+    },
+    {
+      "id": "kiasma_museum",
+      "name": "Kiasma Museum of Contemporary Art",
+      "lat": 60.1706,
+      "lon": 24.9403
+    },
+    {
+      "id": "finnish_parliament",
+      "name": "Finnish Parliament House",
+      "lat": 60.1714,
+      "lon": 24.9412
+    },
+    {
+      "id": "national_museum_finland",
+      "name": "National Museum of Finland",
+      "lat": 60.1791,
+      "lon": 24.9309
+    },
+    {
+      "id": "design_museum_helsinki",
+      "name": "Design Museum Helsinki",
+      "lat": 60.167,
+      "lon": 24.944
+    }
+  ],
+  "networks": {
+    "roads": {
+      "edges": [
+        {
+          "from": "central_station",
+          "to": "rautatientori",
+          "route": "Core"
+        },
+        {
+          "from": "central_station",
+          "to": "kiasma_museum",
+          "route": "Core"
+        },
+        {
+          "from": "central_station",
+          "to": "finnish_parliament",
+          "route": "Core"
+        },
+        {
+          "from": "central_station",
+          "to": "stockmann_dept_store",
+          "route": "Core"
+        },
+        {
+          "from": "central_station",
+          "to": "amosp_rex",
+          "route": "Core"
+        },
+        {
+          "from": "central_station",
+          "to": "oodi_library",
+          "route": "Core"
+        },
+        {
+          "from": "kiasma_museum",
+          "to": "oodi_library",
+          "route": "Core"
+        },
+        {
+          "from": "finnish_parliament",
+          "to": "oodi_library",
+          "route": "Core"
+        },
+        {
+          "from": "stockmann_dept_store",
+          "to": "esplanadi_park",
+          "route": "Core"
+        },
+        {
+          "from": "esplanadi_park",
+          "to": "kauppatori",
+          "route": "Core"
+        },
+        {
+          "from": "kauppatori",
+          "to": "vanha_kauppahalli",
+          "route": "Core"
+        },
+        {
+          "from": "kauppatori",
+          "to": "senatsplatz",
+          "route": "Core"
+        },
+        {
+          "from": "senatsplatz",
+          "to": "helsinki_cathedral",
+          "route": "Core"
+        },
+        {
+          "from": "kauppatori",
+          "to": "allass_sea_pool",
+          "route": "Harbour"
+        },
+        {
+          "from": "allass_sea_pool",
+          "to": "port_south_harbour",
+          "route": "Harbour"
+        },
+        {
+          "from": "port_south_harbour",
+          "to": "olympia_terminal",
+          "route": "Harbour"
+        },
+        {
+          "from": "port_south_harbour",
+          "to": "katajanokka_terminal",
+          "route": "Harbour"
+        },
+        {
+          "from": "katajanokka_terminal",
+          "to": "uspenksi_cathedral",
+          "route": "Katajanokka"
+        },
+        {
+          "from": "design_museum_helsinki",
+          "to": "esplanadi_park",
+          "route": "Design District"
+        },
+        {
+          "from": "design_museum_helsinki",
+          "to": "kaivopuisto_park",
+          "route": "Design District"
+        },
+        {
+          "from": "kaivopuisto_park",
+          "to": "eira_hospital",
+          "route": "South"
+        },
+        {
+          "from": "kampin_kappeli",
+          "to": "amosp_rex",
+          "route": "Kamppi"
+        },
+        {
+          "from": "kampin_kappeli",
+          "to": "kiasma_museum",
+          "route": "Kamppi"
+        },
+        {
+          "from": "kampin_kappeli",
+          "to": "eira_hospital",
+          "route": "Kamppi–South"
+        },
+        {
+          "from": "west_terminal2",
+          "to": "kampin_kappeli",
+          "route": "Jätkäsaari"
+        },
+        {
+          "from": "west_terminal2",
+          "to": "central_station",
+          "route": "Jätkäsaari"
+        },
+        {
+          "from": "west_terminal2",
+          "to": "eira_hospital",
+          "route": "Jätkäsaari"
+        },
+        {
+          "from": "national_museum_finland",
+          "to": "central_station",
+          "route": "Töölö"
+        },
+        {
+          "from": "national_museum_finland",
+          "to": "olympia_stadion",
+          "route": "Töölö"
+        },
+        {
+          "from": "olympia_stadion",
+          "to": "sibelius_monument",
+          "route": "Töölö"
+        },
+        {
+          "from": "sibelius_monument",
+          "to": "temppeliaukio_church",
+          "route": "Töölö"
+        },
+        {
+          "from": "temppeliaukio_church",
+          "to": "national_museum_finland",
+          "route": "Töölö"
+        },
+        {
+          "from": "meilahti_tower_hospital",
+          "to": "german_embassy",
+          "route": "Meilahti"
+        },
+        {
+          "from": "meilahti_tower_hospital",
+          "to": "olympia_stadion",
+          "route": "Meilahti"
+        },
+        {
+          "from": "suomenlinna_fortress",
+          "to": "kauppatori",
+          "route": "Ferry access"
+        }
+      ]
+    },
+    "rails": {
+      "edges": [
+        {
+          "from": "west_terminal2",
+          "to": "central_station",
+          "route": "Tram 7/9",
+          "kind": "tram"
+        },
+        {
+          "from": "central_station",
+          "to": "kampin_kappeli",
+          "route": "Metro (Kamppi–Rautatientori)",
+          "kind": "metro"
+        },
+        {
+          "from": "central_station",
+          "to": "senatsplatz",
+          "route": "Metro (Rautatientori–University)",
+          "kind": "metro"
+        },
+        {
+          "from": "central_station",
+          "to": "olympia_terminal",
+          "route": "Tram (harbour)",
+          "kind": "tram"
+        },
+        {
+          "from": "central_station",
+          "to": "katajanokka_terminal",
+          "route": "Tram (Katajanokka)",
+          "kind": "tram"
+        },
+        {
+          "from": "kauppatori",
+          "to": "katajanokka_terminal",
+          "route": "Tram (Katajanokka)",
+          "kind": "tram"
+        },
+        {
+          "from": "kauppatori",
+          "to": "olympia_terminal",
+          "route": "Tram (harbour)",
+          "kind": "tram"
+        },
+        {
+          "from": "central_station",
+          "to": "kauppatori",
+          "route": "Tram (centre)",
+          "kind": "tram"
+        },
+        {
+          "from": "central_station",
+          "to": "design_museum_helsinki",
+          "route": "Tram (Design District)",
+          "kind": "tram"
+        },
+        {
+          "from": "central_station",
+          "to": "eira_hospital",
+          "route": "Tram (south)",
+          "kind": "tram"
+        },
+        {
+          "from": "central_station",
+          "to": "olympia_stadion",
+          "route": "Tram (Töölö)",
+          "kind": "tram"
+        },
+        {
+          "from": "central_station",
+          "to": "national_museum_finland",
+          "route": "Tram (Töölö)",
+          "kind": "tram"
+        },
+        {
+          "from": "central_station",
+          "to": "oodi_library",
+          "route": "Tram/walk",
+          "kind": "tram"
+        },
+        {
+          "from": "central_station",
+          "to": "kiasma_museum",
+          "route": "Tram/walk",
+          "kind": "tram"
+        },
+        {
+          "from": "central_station",
+          "to": "finnish_parliament",
+          "route": "Tram/walk",
+          "kind": "tram"
+        },
+        {
+          "from": "central_station",
+          "to": "rautatientori",
+          "route": "Station hub",
+          "kind": "commuter"
+        }
+      ]
+    }
+  }
+}

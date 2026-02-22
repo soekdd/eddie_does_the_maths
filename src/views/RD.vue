@@ -90,7 +90,7 @@
 		</div>
 	</template>
 
-	<template #interactivePart>
+	<template v-if="false" #interactivePart>
 		<h2>Interaktiver Rechner</h2>
 		<div class="eddie d-flex flex-column ga-3">
 			<v-sheet border class="pa-4" rounded="lg">
@@ -264,7 +264,7 @@
 		</div>
 	</template>
 
-	<template #calculationPart>
+	<template v-if="false" #calculationPart>
 		<h2>Tabellenansicht</h2>
 		<div class="eddie d-flex flex-column ga-3">
 			<template v-if="mode === 'light'">
@@ -321,39 +321,7 @@
 
 	<template #summaryPart>
 		<h2>Grafische Darstellung</h2>
-		<div class="eddie d-flex flex-column ga-3">
-			<template v-if="mode === 'light'">
-				<v-sheet v-if="!lightCalc.error"
-					border
-					class="pa-3"
-					rounded="lg"
-				>
-					<RD_Graph
-						:cap="CInput"
-						:cons="cInput"
-						:d0="lightCalc.D0"
-						:depot-x="xInput"
-						:dmax="lightCalc.Dmax"
-						:drop="dInput"
-						mode="light"
-						:ok="lightCalc.ok"
-						:shuttles="kInput"
-						:speed="vInput"
-						:warning="lightCalc.warning"
-					/>
-				</v-sheet>
-			</template>
-			<template v-else>
-				<v-sheet v-if="!classicCalc.error"
-					border
-					class="pa-3"
-					rounded="lg"
-				>
-					<h3>Stufen als SVG</h3>
-					<RD_Graph mode="classic" :rows="classicCalc.rows" />
-				</v-sheet>
-			</template>
-		</div>
+		<RD_Graph mode="classic" :rows="classicCalc.rows" />
 	</template>
 </AppFrame>
 </template>

@@ -1,0 +1,509 @@
+{
+  "meta": {
+    "title": "Finland network (schematic)",
+    "nodes": 30,
+    "note": "Nodes from Simplemaps Finland cities dataset (top 30 by population). Edges are a schematic of major highway (E-road / trunk) and rail corridors."
+  },
+  "nodes": [
+    {
+      "id": "helsinki",
+      "name": "Helsinki",
+      "lat": 60.1708,
+      "lon": 24.9375,
+      "population": 1360075
+    },
+    {
+      "id": "tampere",
+      "name": "Tampere",
+      "lat": 61.4981,
+      "lon": 23.76,
+      "population": 334112
+    },
+    {
+      "id": "espoo",
+      "name": "Espoo",
+      "lat": 60.2056,
+      "lon": 24.6556,
+      "population": 297132
+    },
+    {
+      "id": "turku",
+      "name": "Turku",
+      "lat": 60.45,
+      "lon": 22.2667,
+      "population": 252468
+    },
+    {
+      "id": "vantaa",
+      "name": "Vantaa",
+      "lat": 60.2944,
+      "lon": 25.0403,
+      "population": 214605
+    },
+    {
+      "id": "oulu",
+      "name": "Oulu",
+      "lat": 65.0142,
+      "lon": 25.4719,
+      "population": 208939
+    },
+    {
+      "id": "jyvaskyla",
+      "name": "Jyväskylä",
+      "lat": 62.2417,
+      "lon": 25.7417,
+      "population": 145887
+    },
+    {
+      "id": "kuopio",
+      "name": "Kuopio",
+      "lat": 62.8925,
+      "lon": 27.6783,
+      "population": 121557
+    },
+    {
+      "id": "lahti",
+      "name": "Lahti",
+      "lat": 60.9833,
+      "lon": 25.65,
+      "population": 118119
+    },
+    {
+      "id": "kouvola",
+      "name": "Kouvola",
+      "lat": 60.8681,
+      "lon": 26.7042,
+      "population": 85855
+    },
+    {
+      "id": "pori",
+      "name": "Pori",
+      "lat": 61.4833,
+      "lon": 21.8,
+      "population": 85363
+    },
+    {
+      "id": "joensuu",
+      "name": "Joensuu",
+      "lat": 62.6,
+      "lon": 29.75,
+      "population": 75514
+    },
+    {
+      "id": "lappeenranta",
+      "name": "Lappeenranta",
+      "lat": 61.0667,
+      "lon": 28.1833,
+      "population": 72650
+    },
+    {
+      "id": "hameenlinna",
+      "name": "Hämeenlinna",
+      "lat": 60.9944,
+      "lon": 24.4667,
+      "population": 68011
+    },
+    {
+      "id": "vaasa",
+      "name": "Vaasa",
+      "lat": 63.1,
+      "lon": 21.6167,
+      "population": 67619
+    },
+    {
+      "id": "seinajoki",
+      "name": "Seinäjoki",
+      "lat": 62.7917,
+      "lon": 22.8417,
+      "population": 64150
+    },
+    {
+      "id": "rovaniemi",
+      "name": "Rovaniemi",
+      "lat": 66.5,
+      "lon": 25.7333,
+      "population": 62420
+    },
+    {
+      "id": "mikkeli",
+      "name": "Mikkeli",
+      "lat": 61.689,
+      "lon": 27.272,
+      "population": 54621
+    },
+    {
+      "id": "salo",
+      "name": "Salo",
+      "lat": 60.3861,
+      "lon": 23.125,
+      "population": 52984
+    },
+    {
+      "id": "kotka",
+      "name": "Kotka",
+      "lat": 60.4667,
+      "lon": 26.9417,
+      "population": 50617
+    },
+    {
+      "id": "porvoo",
+      "name": "Porvoo",
+      "lat": 60.3944,
+      "lon": 25.6639,
+      "population": 49928
+    },
+    {
+      "id": "kokkola",
+      "name": "Kokkola",
+      "lat": 63.8367,
+      "lon": 23.1333,
+      "population": 47570
+    },
+    {
+      "id": "lohja",
+      "name": "Lohja",
+      "lat": 60.25,
+      "lon": 24.0667,
+      "population": 46785
+    },
+    {
+      "id": "hyvinkaa",
+      "name": "Hyvinkää",
+      "lat": 60.6333,
+      "lon": 24.85,
+      "population": 46739
+    },
+    {
+      "id": "kirkkonummi",
+      "name": "Kirkkonummi",
+      "lat": 60.1167,
+      "lon": 24.4333,
+      "population": 40722
+    },
+    {
+      "id": "jarvenpaa",
+      "name": "Järvenpää",
+      "lat": 60.475,
+      "lon": 25.0917,
+      "population": 40106
+    },
+    {
+      "id": "rauma",
+      "name": "Rauma",
+      "lat": 61.1333,
+      "lon": 21.5,
+      "population": 39809
+    },
+    {
+      "id": "tuusula",
+      "name": "Tuusula",
+      "lat": 60.4333,
+      "lon": 25.05,
+      "population": 38646
+    },
+    {
+      "id": "kajaani",
+      "name": "Kajaani",
+      "lat": 64.2311,
+      "lon": 27.7194,
+      "population": 36297
+    },
+    {
+      "id": "savonlinna",
+      "name": "Savonlinna",
+      "lat": 61.8681,
+      "lon": 28.8861,
+      "population": 35523
+    }
+  ],
+  "networks": {
+    "roads": {
+      "edges": [
+        {
+          "from": "helsinki",
+          "to": "espoo",
+          "route": "E18"
+        },
+        {
+          "from": "espoo",
+          "to": "kirkkonummi",
+          "route": "E18"
+        },
+        {
+          "from": "kirkkonummi",
+          "to": "lohja",
+          "route": "E18"
+        },
+        {
+          "from": "lohja",
+          "to": "salo",
+          "route": "E18"
+        },
+        {
+          "from": "salo",
+          "to": "turku",
+          "route": "E18"
+        },
+        {
+          "from": "helsinki",
+          "to": "hyvinkaa",
+          "route": "E12"
+        },
+        {
+          "from": "hyvinkaa",
+          "to": "hameenlinna",
+          "route": "E12"
+        },
+        {
+          "from": "hameenlinna",
+          "to": "tampere",
+          "route": "E12"
+        },
+        {
+          "from": "tampere",
+          "to": "seinajoki",
+          "route": "E12"
+        },
+        {
+          "from": "seinajoki",
+          "to": "vaasa",
+          "route": "E12"
+        },
+        {
+          "from": "helsinki",
+          "to": "lahti",
+          "route": "E75"
+        },
+        {
+          "from": "lahti",
+          "to": "jyvaskyla",
+          "route": "E75"
+        },
+        {
+          "from": "jyvaskyla",
+          "to": "oulu",
+          "route": "E75"
+        },
+        {
+          "from": "oulu",
+          "to": "rovaniemi",
+          "route": "E75"
+        },
+        {
+          "from": "turku",
+          "to": "rauma",
+          "route": "E8"
+        },
+        {
+          "from": "rauma",
+          "to": "pori",
+          "route": "E8"
+        },
+        {
+          "from": "pori",
+          "to": "vaasa",
+          "route": "E8"
+        },
+        {
+          "from": "vaasa",
+          "to": "kokkola",
+          "route": "E8"
+        },
+        {
+          "from": "kokkola",
+          "to": "oulu",
+          "route": "E8"
+        },
+        {
+          "from": "turku",
+          "to": "tampere",
+          "route": "E63"
+        },
+        {
+          "from": "tampere",
+          "to": "jyvaskyla",
+          "route": "E63"
+        },
+        {
+          "from": "jyvaskyla",
+          "to": "kuopio",
+          "route": "E63"
+        },
+        {
+          "from": "kuopio",
+          "to": "joensuu",
+          "route": "E63"
+        },
+        {
+          "from": "helsinki",
+          "to": "porvoo",
+          "route": "Hwy7"
+        },
+        {
+          "from": "porvoo",
+          "to": "kotka",
+          "route": "Hwy7"
+        },
+        {
+          "from": "kotka",
+          "to": "kouvola",
+          "route": "Hwy15"
+        },
+        {
+          "from": "kouvola",
+          "to": "lappeenranta",
+          "route": "Hwy6"
+        },
+        {
+          "from": "lappeenranta",
+          "to": "savonlinna",
+          "route": "Hwy14"
+        },
+        {
+          "from": "savonlinna",
+          "to": "joensuu",
+          "route": "Hwy14"
+        },
+        {
+          "from": "kouvola",
+          "to": "mikkeli",
+          "route": "Hwy5"
+        },
+        {
+          "from": "mikkeli",
+          "to": "kuopio",
+          "route": "Hwy5"
+        },
+        {
+          "from": "kuopio",
+          "to": "kajaani",
+          "route": "Hwy5"
+        },
+        {
+          "from": "kajaani",
+          "to": "oulu",
+          "route": "Hwy22"
+        }
+      ]
+    },
+    "rails": {
+      "edges": [
+        {
+          "from": "helsinki",
+          "to": "vantaa",
+          "route": "Main"
+        },
+        {
+          "from": "vantaa",
+          "to": "jarvenpaa",
+          "route": "Main"
+        },
+        {
+          "from": "jarvenpaa",
+          "to": "hyvinkaa",
+          "route": "Main"
+        },
+        {
+          "from": "hyvinkaa",
+          "to": "hameenlinna",
+          "route": "Main"
+        },
+        {
+          "from": "hameenlinna",
+          "to": "tampere",
+          "route": "Main"
+        },
+        {
+          "from": "tampere",
+          "to": "seinajoki",
+          "route": "Main"
+        },
+        {
+          "from": "seinajoki",
+          "to": "kokkola",
+          "route": "Main"
+        },
+        {
+          "from": "kokkola",
+          "to": "oulu",
+          "route": "Main"
+        },
+        {
+          "from": "oulu",
+          "to": "rovaniemi",
+          "route": "Main"
+        },
+        {
+          "from": "seinajoki",
+          "to": "vaasa",
+          "route": "Branch"
+        },
+        {
+          "from": "helsinki",
+          "to": "salo",
+          "route": "Turku line"
+        },
+        {
+          "from": "salo",
+          "to": "turku",
+          "route": "Turku line"
+        },
+        {
+          "from": "turku",
+          "to": "tampere",
+          "route": "Turku–Tampere"
+        },
+        {
+          "from": "helsinki",
+          "to": "lahti",
+          "route": "East"
+        },
+        {
+          "from": "lahti",
+          "to": "kouvola",
+          "route": "East"
+        },
+        {
+          "from": "kouvola",
+          "to": "lappeenranta",
+          "route": "Karelia line"
+        },
+        {
+          "from": "kouvola",
+          "to": "kotka",
+          "route": "Branch"
+        },
+        {
+          "from": "kouvola",
+          "to": "mikkeli",
+          "route": "Savonia"
+        },
+        {
+          "from": "mikkeli",
+          "to": "savonlinna",
+          "route": "Savonia"
+        },
+        {
+          "from": "tampere",
+          "to": "jyvaskyla",
+          "route": "Central"
+        },
+        {
+          "from": "jyvaskyla",
+          "to": "kuopio",
+          "route": "Central"
+        },
+        {
+          "from": "kuopio",
+          "to": "joensuu",
+          "route": "Karelia"
+        },
+        {
+          "from": "oulu",
+          "to": "kajaani",
+          "route": "Kainuu"
+        }
+      ]
+    }
+  }
+}

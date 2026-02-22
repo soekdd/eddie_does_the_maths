@@ -1,656 +1,908 @@
+<!-- JeepProblemDiagram.vue
+     Vue 3 + Vuetify 3, Single-File-Component
+
+     Visualisiert (idealisiert / kontinuierliches Depot-Modell) die Varianten:
+     1) One-way (maximale Reichweite)
+     2) Hin & zurück (max. Entfernung, wenn am Ende wieder Start erreicht werden soll)
+     3) Lieferung (Wie viel Starttreibstoff braucht man, um am Ziel noch Q zu haben?)
+
+     Diagramm:
+     X = Entfernung ab Start (km)
+     Y = Zeit (h), wächst nach unten (Sequenzdiagramm-Style)
+     Pfad = Zick-Zack-Linien (Pendelfahrten pro Phase)
+-->
 <template>
-<svg
-	:aria-label="ariaLabel"
-	class="rdGraph"
-	role="img"
-	:viewBox="viewBox"
-	xmlns="http://www.w3.org/2000/svg"
->
-	<rect class="bg"
-		:height="model.height"
-		:width="model.width"
-		x="0"
-		y="0"
-	/>
+<section>
+	<v-row class="rdg-layout" dense>
+		<v-col cols="12" md="4">
+			<v-card class="pa-3" variant="tonal">
+				<div class="text-h6 mb-3">Jeep-Problem – interaktiv</div>
 
-	<g v-if="model.kind === 'error'" class="msg">
-		<text x="20" y="34">{{ model.message }}</text>
-	</g>
+				<v-select
+					v-model="variant"
+					class="mb-2"
+					density="comfortable"
+					item-title="title"
+					item-value="value"
+					:items="variantItems"
+					label="Variante"
+				/>
 
-	<g v-else-if="model.kind === 'light'">
-		<g class="guide">
-			<line v-for="g in model.guides"
-				:key="`g-line-${g.id}`"
-				:x1="g.x"
-				:x2="g.x"
-				:y1="model.top - 10"
-				:y2="model.axisY"
-			/>
-			<text v-for="g in model.guides"
-				:key="`g-text-${g.id}`"
-				:text-anchor="g.anchor"
-				:x="g.labelX"
-				:y="model.top - 14"
-			>
-				{{ g.label }}
-			</text>
-		</g>
+				<v-divider class="my-2" />
 
-		<line class="axis"
-			:x1="model.left"
-			:x2="model.right"
-			:y1="model.axisY"
-			:y2="model.axisY"
-		/>
-		<text class="axisLabel"
-			:x="model.right"
-			:y="model.axisY + 30"
-		>
-			Distanz [km]
-		</text>
+				<div class="text-subtitle-2 mb-2">Fahrzeug & Einheiten</div>
 
-		<g class="tick">
-			<line v-for="t in model.ticks"
-				:key="`tick-mark-${t.id}`"
-				:x1="t.x"
-				:x2="t.x"
-				:y1="model.axisY"
-				:y2="model.axisY + 7"
-			/>
-			<text v-for="t in model.ticks"
-				:key="`tick-text-${t.id}`"
-				text-anchor="middle"
-				:x="t.x"
-				:y="model.axisY + 22"
-			>
-				{{ t.value }}
-			</text>
-		</g>
+				<v-text-field
+					v-model.number="tankCapacityL"
+					class="mb-2"
+					density="comfortable"
+					label="Tankkapazität (Liter)"
+					min="0.0001"
+					step="1"
+					type="number"
+				/>
 
-		<g v-for="row in model.rows" :key="row.id">
-			<text class="rowLabel"
-				text-anchor="end"
-				:x="model.left - 14"
-				:y="row.y + 5"
-			>
-				{{ row.label }}
-			</text>
+				<v-text-field
+					v-model.number="consumptionLperKm"
+					class="mb-2"
+					density="comfortable"
+					hint="z.B. 0.12 = 12L/100km"
+					label="Verbrauch (Liter / km)"
+					min="0.000001"
+					persistent-hint
+					step="0.001"
+					type="number"
+				/>
 
-			<line v-for="(seg, i) in row.segments"
-				:key="`${row.id}-seg-${i}`"
-				:class="seg.kind"
-				:x1="seg.x1"
-				:x2="seg.x2"
-				:y1="row.y"
-				:y2="row.y"
-			/>
+				<v-text-field
+					v-model.number="speedKmH"
+					class="mb-2"
+					density="comfortable"
+					label="Geschwindigkeit (km/h) – nur für Y-Achse"
+					min="0.0001"
+					step="1"
+					type="number"
+				/>
 
-			<circle class="point"
-				cx="model.left"
-				:cy="row.y"
-				r="3"
-			/>
-			<circle class="point"
-				:cx="model.depotX"
-				:cy="row.y"
-				r="3"
-			/>
-			<circle v-if="row.turnX !== null"
-				class="turnPoint"
-				:cx="row.turnX"
-				:cy="row.y"
-				r="3.5"
-			/>
-		</g>
+				<v-divider class="my-2" />
 
-		<g class="legend">
-			<line class="out"
-				:x1="model.left"
-				:x2="model.left + 44"
-				:y1="model.axisY + 42"
-				:y2="model.axisY + 42"
-			/>
-			<text :x="model.left + 52" :y="model.axisY + 46">Hinweg</text>
+				<div v-if="variant !== 'deliver'" class="text-subtitle-2 mb-2">Starttreibstoff</div>
 
-			<line class="back"
-				:x1="model.left + 140"
-				:x2="model.left + 184"
-				:y1="model.axisY + 42"
-				:y2="model.axisY + 42"
-			/>
-			<text :x="model.left + 192" :y="model.axisY + 46">Rueckweg</text>
-		</g>
+				<v-text-field
+					v-if="variant !== 'deliver'"
+					v-model.number="startFuelL"
+					class="mb-2"
+					density="comfortable"
+					label="Gesamt-Treibstoff am Start (Liter)"
+					min="0"
+					step="1"
+					type="number"
+				/>
 
-		<text v-if="model.trimmed"
-			class="note"
-			:x="model.left"
-			:y="model.axisY + 66"
-		>
-			Es werden die ersten {{ model.shownK }} von {{ model.k }} Shuttles gezeigt.
-		</text>
-		<text v-if="model.warning"
-			class="warn"
-			:x="model.left"
-			:y="model.axisY + 84"
-		>
-			{{ model.warning }}
-		</text>
-	</g>
+				<template v-else>
+					<div class="text-subtitle-2 mb-2">Lieferproblem</div>
 
-	<g v-else>
-		<text class="headline" :x="model.left" y="26">
-			Mehrdepot-Stufen bis Dm = {{ model.totalDistance }} km
-		</text>
+					<v-text-field
+						v-model.number="targetDistanceKm"
+						class="mb-2"
+						density="comfortable"
+						label="Zielentfernung (km)"
+						min="0"
+						step="1"
+						type="number"
+					/>
 
-		<line class="axis"
-			:x1="model.left"
-			:x2="model.right"
-			:y1="model.axisY"
-			:y2="model.axisY"
-		/>
-		<text class="axisLabel"
-			:x="model.right"
-			:y="model.axisY + 28"
-		>
-			Distanz [km]
-		</text>
+					<v-text-field
+						v-model.number="deliveredFuelL"
+						class="mb-2"
+						density="comfortable"
+						label="Treibstoff am Ziel (Liter)"
+						min="0"
+						step="1"
+						type="number"
+					/>
+				</template>
 
-		<g class="tick">
-			<line v-for="t in model.ticks"
-				:key="`ct-mark-${t.id}`"
-				:x1="t.x"
-				:x2="t.x"
-				:y1="model.axisY"
-				:y2="model.axisY + 7"
-			/>
-			<text v-for="t in model.ticks"
-				:key="`ct-text-${t.id}`"
-				text-anchor="middle"
-				:x="t.x"
-				:y="model.axisY + 22"
-			>
-				{{ t.value }}
-			</text>
-		</g>
+				<v-divider class="my-2" />
 
-		<g>
-			<line v-for="seg in model.segments"
-				:key="`seg-${seg.id}`"
-				:stroke="seg.color"
-				stroke-linecap="round"
-				stroke-width="10"
-				:x1="seg.x1"
-				:x2="seg.x2"
-				:y1="model.bandY"
-				:y2="model.bandY"
-			/>
-			<circle class="point"
-				:cx="model.left"
-				:cy="model.bandY"
-				r="3"
-			/>
-			<circle class="turnPoint"
-				:cx="model.right"
-				:cy="model.bandY"
-				r="3.5"
-			/>
-			<text v-for="seg in model.labels"
-				:key="`seg-label-${seg.id}`"
-				text-anchor="middle"
-				:x="seg.x"
-				:y="model.bandY - 14"
-			>
-				{{ seg.text }}
-			</text>
-		</g>
+				<div class="text-subtitle-2 mb-2">Visualisierung</div>
 
-		<g class="msg" :transform="`translate(${model.left}, ${model.bandY + 44})`">
-			<text y="0">Stufenbreiten entsprechen Delta x_j.</text>
-			<text y="18">Je hoehere Stufe, desto kleiner der Zugewinn.</text>
-			<text v-if="model.trimmed" y="36">
-				Es werden {{ model.shown }} von {{ model.total }} Stufen gezeigt.
-			</text>
-		</g>
-	</g>
-</svg>
+				<v-switch
+					v-model="showGrid"
+					class="mb-1"
+					density="comfortable"
+					label="Raster anzeigen"
+				/>
+				<v-switch
+					v-model="showPhaseMarkers"
+					class="mb-2"
+					density="comfortable"
+					label="Phasenmarken anzeigen"
+				/>
+
+				<!-- <v-slider
+					v-model="maxPolylinePoints"
+					density="comfortable"
+					label="Max. Punkte (Performance)"
+					:max="3000"
+					:min="200"
+					:step="100"
+					thumb-label
+				/> -->
+
+				<v-alert
+					v-if="warning"
+					class="mt-3"
+					density="comfortable"
+					type="warning"
+					variant="tonal"
+				>
+					{{ warning }}
+				</v-alert>
+			</v-card>
+			<v-divider class="my-3" />
+			<div class="text-caption text-medium-emphasis">
+				Modellannahme: Treibstoff ist kontinuierlich teilbar, Umfüllen/Depots sind verlustfrei,
+				und “optimal” wird hier über das klassische Phasen-Modell (harmonische Summen) angenähert.
+				Für Kanister/Integer-Restriktionen oder Depot-Limits müsste man extra Regeln ergänzen.
+			</div>
+		</v-col>
+
+		<v-col class="graph-col d-flex" cols="12" md="8">
+			<v-card class="pa-3 graph-card">
+				<div class="d-flex align-center justify-space-between flex-wrap ga-3">
+					<div>
+						<div class="text-h6">Fahrten (X = Entfernung, Y = Zeit)</div>
+						<div class="text-caption text-medium-emphasis">
+							Y wächst nach unten wie in einem Sequenzdiagramm.
+						</div>
+					</div>
+
+					<div class="text-caption text-right">
+						<div v-if="variant !== 'deliver'">
+							<b>Max. Entfernung:</b> {{ fmtKm(result.maxDistanceKm) }}
+							<span v-if="variant === 'roundtrip'"> (und zurück)</span>
+						</div>
+						<div v-else>
+							<b>Benötigter Starttreibstoff:</b> {{ fmtL(result.requiredStartFuelL) }}
+						</div>
+						<div>
+							<b>Gesamtfahrzeit:</b> {{ fmtH(result.totalTimeH) }}
+							&nbsp;·&nbsp;
+							<b>Gesamtfahrstrecke:</b> {{ fmtKm(result.totalTravelKm) }}
+						</div>
+					</div>
+				</div>
+
+				<div class="max90 svg-wrap mt-3">
+					<svg
+						aria-label="Jeep-Fahrten Diagramm"
+						class="max90"
+						preserveAspectRatio="xMidYMid meet"
+						role="img"
+						:viewBox="`0 0 ${svgW} ${svgH}`"
+						xmlns="http://www.w3.org/2000/svg"
+					>
+						<!-- Hintergrund -->
+						<rect fill="transparent"
+							:height="svgH"
+							:width="svgW"
+							x="0"
+							y="0"
+						/>
+
+						<!-- Grid -->
+						<g v-if="showGrid" opacity="0.35">
+							<g v-for="x in gridXTicks" :key="'gx' + x">
+								<line
+									stroke="currentColor"
+									stroke-width="1"
+									vector-effect="non-scaling-stroke"
+									:x1="mapX(x)"
+									:x2="mapX(x)"
+									:y1="plotTop"
+									:y2="plotBottom"
+								/>
+							</g>
+
+							<g v-for="t in gridYTicks" :key="'gy' + t">
+								<line
+									stroke="currentColor"
+									stroke-width="1"
+									vector-effect="non-scaling-stroke"
+									:x1="plotLeft"
+									:x2="plotRight"
+									:y1="mapY(t)"
+									:y2="mapY(t)"
+								/>
+							</g>
+						</g>
+
+						<!-- Achsen -->
+						<g opacity="0.9">
+							<line
+								stroke="currentColor"
+								stroke-width="2"
+								vector-effect="non-scaling-stroke"
+								:x1="plotLeft"
+								:x2="plotLeft"
+								:y1="plotTop"
+								:y2="plotBottom"
+							/>
+							<line
+								stroke="currentColor"
+								stroke-width="2"
+								vector-effect="non-scaling-stroke"
+								:x1="plotLeft"
+								:x2="plotRight"
+								:y1="plotTop"
+								:y2="plotTop"
+							/>
+							<text
+								fill="currentColor"
+								font-size="12"
+								:x="plotLeft"
+								:y="plotTop - 10"
+							>
+								Zeit (h) ↓
+							</text>
+							<text
+								fill="currentColor"
+								font-size="12"
+								:x="plotRight - 140"
+								:y="plotTop - 10"
+							>
+								Entfernung (km) →
+							</text>
+						</g>
+
+						<!-- Tick Labels -->
+						<g opacity="0.9">
+							<g v-for="x in labelXTicks" :key="'lx' + x">
+								<text
+									fill="currentColor"
+									font-size="11"
+									text-anchor="middle"
+									:x="mapX(x)"
+									:y="plotTop - 6"
+								>
+									{{ Math.round(x) }}
+								</text>
+							</g>
+
+							<g v-for="t in labelYTicks" :key="'ly' + t">
+								<text
+									fill="currentColor"
+									font-size="11"
+									text-anchor="end"
+									:x="plotLeft - 8"
+									:y="mapY(t) + 4"
+								>
+									{{ round1(t) }}
+								</text>
+							</g>
+						</g>
+
+						<!-- Phasenmarken -->
+						<g v-if="showPhaseMarkers" opacity="0.9">
+							<g v-for="x in phaseMarkersKm" :key="'pm' + x">
+								<line
+									opacity="0.5"
+									stroke="currentColor"
+									stroke-dasharray="4 4"
+									stroke-width="2"
+									vector-effect="non-scaling-stroke"
+									:x1="mapX(x)"
+									:x2="mapX(x)"
+									:y1="plotTop"
+									:y2="plotBottom"
+								/>
+							</g>
+						</g>
+
+						<!-- Pfad -->
+						<polyline
+							v-if="polylinePointsAttr"
+							fill="none"
+							opacity="0.95"
+							:points="polylinePointsAttr"
+							stroke="currentColor"
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							stroke-width="2.5"
+							vector-effect="non-scaling-stroke"
+						/>
+
+						<!-- Start/End Punkte -->
+						<g v-if="pathPoints.length >= 1" opacity="0.95">
+							<circle
+								:cx="mapX(pathPoints[0].xKm)"
+								:cy="mapY(pathPoints[0].tH)"
+								fill="currentColor"
+								r="4"
+							/>
+							<circle
+								:cx="mapX(pathPoints[pathPoints.length - 1].xKm)"
+								:cy="mapY(pathPoints[pathPoints.length - 1].tH)"
+								fill="currentColor"
+								r="4"
+							/>
+						</g>
+					</svg>
+				</div>
+			</v-card>
+		</v-col>
+	</v-row>
+</section>
 </template>
 
-<script setup>
-import { computed } from "vue";
+<script setup lang="ts">
+import { computed, ref } from "vue";
 
-const props = defineProps( {
-	mode: { type: String, default: "light" },
+type Variant = "oneway" | "roundtrip" | "deliver";
 
-	cap:      { type: [ Number, String ], default: null },
-	cons:     { type: [ Number, String ], default: null },
-	speed:    { type: [ Number, String ], default: null },
-	depotX:   { type: [ Number, String ], default: null },
-	drop:     { type: [ Number, String ], default: null },
-	shuttles: { type: [ Number, String ], default: null },
-	d0:       { type: [ Number, String ], default: null },
-	dmax:     { type: [ Number, String ], default: null },
-	ok:       { type: Boolean, default: true },
-	warning:  { type: String, default: "" },
+type Phase = {
+  k: number; // "aktive Tankladungen" (idealisiert)
+  f0: number; // Start-Fuel (in Tank-Einheiten)
+  f1: number; // End-Fuel   (in Tank-Einheiten)
+  rate: number; // Verbrauchsfaktor pro Distanz (idealisiert)
+  lengthNorm: number; // Distanz (normiert, Tank=1, Verbrauch=1)
+};
 
-	rows: {
-		type:    Array,
-		default: () => []
-	}
-} );
+type PathPoint = { xKm: number; tH: number };
 
-const palette = [
-	"#0f766e",
-	"#2563eb",
-	"#ea580c",
-	"#7c3aed",
-	"#0891b2",
-	"#16a34a",
-	"#dc2626",
-	"#1d4ed8"
+const variant = ref<Variant>( "oneway" );
+const variantItems = [
+	{ title: "1) One-way: maximale Reichweite", value: "oneway" },
+	{ title: "2) Hin & zurück: maximale Entfernung", value: "roundtrip" },
+	{ title: "3) Lieferung: Startfuel für Ziel + Rest", value: "deliver" }
 ];
 
-function toNumber( v ) {
-	if ( typeof v === "number" ) {
-		return Number.isFinite( v ) ? v : null;
-	}
+// Eingaben
+const tankCapacityL = ref( 60 );
+const consumptionLperKm = ref( 0.12 );
+const speedKmH = ref( 50 );
 
-	if ( typeof v !== "string" ) {
-		return null;
-	}
+const startFuelL = ref( 300 );
 
-	const s = v.trim().replace( ",", "." );
+const targetDistanceKm = ref( 300 );
+const deliveredFuelL = ref( 60 );
 
-	if ( !s ) {
-		return null;
-	}
+// Visual
+const showGrid = ref( true );
+const showPhaseMarkers = ref( true );
+const maxPolylinePoints = ref( 1600 );
 
-	const n = Number( s );
-	return Number.isFinite( n ) ? n : null;
+// SVG Layout
+const svgW = 500;
+const svgH = 920;
+
+const marginLeft = 70;
+const marginRight = 30;
+const marginTop = 10;
+const marginBottom = 5;
+
+const plotLeft = marginLeft;
+const plotRight = svgW - marginRight;
+const plotTop = marginTop;
+const plotBottom = svgH - marginBottom;
+
+// ---- Helpers ----
+const EPS = 1e-12;
+
+function clampNonNeg( n: number ) {
+	return Number.isFinite( n ) ? Math.max( 0, n ) : 0;
 }
 
-function toInt( v ) {
-	const n = toNumber( v );
-
-	if ( n === null ) {
-		return null;
-	}
-
-	return Math.trunc( n );
+function round1( n: number ) {
+	return Math.round( n * 10 ) / 10;
 }
 
-function fmt( n, digits = 1 ) {
-	if ( !Number.isFinite( n ) ) {
-		return "-";
+function fmtKm( km: number ) {
+	if ( !Number.isFinite( km ) ) {
+		return "—";
 	}
 
-	return Number( n ).toFixed( digits )
-		.replace( ".", "," );
+	if ( km >= 100 ) {
+		return `${Math.round( km )} km`;
+	}
+
+	if ( km >= 10 ) {
+		return `${round1( km )} km`;
+	}
+
+	return `${Math.round( km * 10 ) / 10} km`;
 }
 
-function uniqueByValue( list, tolerance ) {
-	const out = [];
-
-	for ( const item of list ) {
-		const found = out.some( ( x ) => Math.abs( x.value - item.value ) <= tolerance );
-
-		if ( !found ) {
-			out.push( item );
-		}
+function fmtH( h: number ) {
+	if ( !Number.isFinite( h ) ) {
+		return "—";
 	}
 
-	return out;
+	if ( h >= 10 ) {
+		return `${round1( h )} h`;
+	}
+
+	return `${Math.round( h * 60 )} min`;
 }
 
-const model = computed( () => {
-	if ( props.mode === "classic" ) {
-		return buildClassicModel();
+function fmtL( l: number ) {
+	if ( !Number.isFinite( l ) ) {
+		return "—";
 	}
 
-	return buildLightModel();
-} );
+	return `${Math.round( l )} L`;
+}
 
-const viewBox = computed( () => `0 0 ${model.value.width} ${model.value.height}` );
+/**
+ * Normiertes Phasenmodell:
+ *  - Tankkapazität = 1
+ *  - Verbrauch = 1 pro Distanz
+ *
+ * one-way: rate = (2k-1)
+ * roundtrip (max. Entfernung mit Rückkehr): rate = (2k)
+ *
+ * Phase läuft von f0 -> f1, wobei f1 = max(endFuel, k-1).
+ */
+function buildPhases(
+	startFuelUnits: number, endFuelUnits: number, mode: "oneway" | "roundtrip"
+): Phase[] {
+	const phases: Phase[] = [];
+	let f = startFuelUnits;
+	const endF = endFuelUnits;
 
-const ariaLabel = computed( () => {
-	if ( props.mode === "classic" ) {
-		return "Mehrdepot-Stufen";
+	if ( !( f > endF + EPS ) ) {
+		return phases;
 	}
 
-	return "Touren der Ein-Depot-Strategie";
-} );
+	// Sicherheitsbremse
+	let guard = 0;
 
-function buildLightModel() {
-	const cap = toNumber( props.cap );
-	const cons = toNumber( props.cons );
-	const speed = toNumber( props.speed );
-	const depotX = toNumber( props.depotX );
-	const drop = toNumber( props.drop );
-	const shuttles = toInt( props.shuttles );
-	const d0 = toNumber( props.d0 );
-	const dmax = toNumber( props.dmax );
+	while ( f > endF + EPS && guard++ < 5000 ) {
+		// ceil(f) mit leichter Korrektur, damit ganzzahlige Werte stabil sind:
+		const k = Math.ceil( f - 1e-9 );
+		const rate = mode === "oneway" ? 2 * k - 1 : 2 * k;
 
-	if (
-		cap === null || cons === null || speed === null || depotX === null ||
-		drop === null || shuttles === null || d0 === null || dmax === null
-	) {
-		return {
-			kind:    "error",
-			width:   920,
-			height:  170,
-			message: "Bitte gueltige Eingaben fuer die Light-Touren setzen."
-		};
-	}
+		const f1 = Math.max( endF, k - 1 );
+		const df = f - f1;
+		const lengthNorm = df / rate;
 
-	if ( cap <= 0 || cons <= 0 || speed <= 0 || depotX < 0 || drop < 0 || shuttles < 0 ) {
-		return {
-			kind:    "error",
-			width:   920,
-			height:  170,
-			message: "Die Touren brauchen positive Werte (x, d, k nicht negativ)."
-		};
-	}
-
-	const width = 920;
-	const left = 170;
-	const rightPad = 28;
-	const right = width - rightPad;
-	const top = 38;
-	const rowGap = 34;
-	const shownK = Math.min( shuttles, 12 );
-	const rowCount = shownK + 1;
-	const axisY = top + rowGap * rowCount + 14;
-	const height = axisY + 96;
-
-	const domainMax = Math.max(
-		1, d0, dmax, depotX
-	);
-	const pxPerKm = ( right - left ) / domainMax;
-	const toX = ( v ) => left + v * pxPerKm;
-
-	const baseGuides = [
-		{
-			id: "start", value: 0, label: "Start"
-		},
-		{
-			id: "depot", value: depotX, label: `Depot ${fmt( depotX )} km`
-		},
-		{
-			id: "d0", value: d0, label: `Ohne Depot ${fmt( d0 )} km`
-		},
-		{
-			id: "turn", value: dmax, label: `Wende ${fmt( dmax )} km`
-		}
-	];
-	const tolerance = domainMax * 0.005;
-	const guides = uniqueByValue( baseGuides, tolerance ).map( ( g, i ) => {
-		const x = toX( g.value );
-		const anchor = i % 2 === 0 ? "start" : "end";
-		const labelX = anchor === "start" ? x + 4 : x - 4;
-		return {
-			...g,
-			x,
-			anchor,
-			labelX
-		};
-	} );
-
-	const ticks = uniqueByValue( [
-		{ id: "t0", value: 0 },
-		{ id: "tx", value: depotX },
-		{ id: "td0", value: d0 },
-		{ id: "tdmax", value: dmax }
-	], tolerance ).sort( ( a, b ) => a.value - b.value )
-		.map( ( t ) => ( {
-			...t,
-			x:     toX( t.value ),
-			value: fmt( t.value )
-		} ) );
-
-	const rows = [];
-
-	for ( let i = 0; i < shownK; i++ ) {
-		const y = top + i * rowGap;
-		rows.push( {
-			id:       `shuttle-${i + 1}`,
-			label:    `Shuttle ${i + 1}`,
-			y,
-			turnX:    null,
-			segments: [
-				{
-					kind: "out", x1: left, x2: toX( depotX )
-				},
-				{
-					kind: "back", x1: toX( depotX ), x2: left
-				}
-			]
+		phases.push( {
+			k, f0: f, f1, rate, lengthNorm
 		} );
+		f = f1;
 	}
 
-	const finalY = top + shownK * rowGap;
-	rows.push( {
-		id:       "final",
-		label:    "Finale Tour",
-		y:        finalY,
-		turnX:    toX( dmax ),
-		segments: [
-			{
-				kind: "out", x1: left, x2: toX( depotX )
-			},
-			{
-				kind: "outStrong", x1: toX( depotX ), x2: toX( dmax )
-			},
-			{
-				kind: "backStrong", x1: toX( dmax ), x2: toX( depotX )
-			},
-			{
-				kind: "back", x1: toX( depotX ), x2: left
-			}
-		]
-	} );
-
-	return {
-		kind:    "light",
-		width,
-		height,
-		top,
-		left,
-		right,
-		axisY,
-		depotX:  toX( depotX ),
-		rows,
-		ticks,
-		guides,
-		k:       shuttles,
-		shownK,
-		trimmed: shuttles > shownK,
-		warning: props.ok ? "" : props.warning
-	};
+	return phases;
 }
 
-function buildClassicModel() {
-	const parsedRows = props.rows.map( ( row ) => ( {
-		j:     toInt( row?.j ),
-		term:  toNumber( row?.term ),
-		delta: toNumber( row?.delta ),
-		cum:   toNumber( row?.cum )
-	} ) ).filter( ( r ) =>
-		r.j !== null && r.j > 0 && r.term !== null && r.delta !== null && r.cum !== null );
+function distNormFor(
+	startFuelUnits: number, endFuelUnits: number, mode: "oneway" | "roundtrip"
+) {
+	return buildPhases(
+		startFuelUnits, endFuelUnits, mode
+	).reduce( ( a, p ) => a + p.lengthNorm, 0 );
+}
 
-	if ( !parsedRows.length ) {
-		return {
-			kind:    "error",
-			width:   920,
-			height:  180,
-			message: "Bitte gueltige Werte fuer das Mehrdepot-Modell setzen."
-		};
+/**
+ * Liefervariante: finde minimalen Startfuel (in Tank-Einheiten),
+ * so dass DistanzNorm(start -> end=q) = targetDistNorm.
+ * Monoton -> Binärsuche.
+ */
+function solveStartFuelUnitsForDelivery( targetDistNorm: number, endFuelUnits: number ): number {
+	const q = endFuelUnits;
+	const d = Math.max( 0, targetDistNorm );
+
+	let lo = q;
+	let hi = Math.max( q + 1, q + d * 2 + 2 );
+
+	let guard = 0;
+
+	while ( distNormFor(
+		hi, q, "oneway"
+	) < d && guard++ < 60 ) {
+		hi *= 2;
+
+		if ( hi > 1e9 ) {
+			break;
+		}
 	}
 
-	const shownRows = parsedRows.slice( 0, 18 );
-	const width = 920;
-	const left = 86;
-	const rightPad = 24;
-	const right = width - rightPad;
-	const bandY = 112;
-	const axisY = 188;
-	const height = 280;
-	const totalDistance = shownRows[ shownRows.length - 1 ].cum;
-	const domainMax = Math.max( 1, totalDistance );
-	const toX = ( v ) => left + ( right - left ) * v / domainMax ;
+	// Binärsuche
+	for ( let i = 0; i < 80; i++ ) {
+		const mid = ( lo + hi ) / 2;
+		const dm = distNormFor(
+			mid, q, "oneway"
+		);
 
-	const segments = [];
-	const labels = [];
-	let prev = 0;
+		if ( dm >= d ) {
+			hi = mid;
+		} else {
+			lo = mid;
+		}
+	}
 
-	shownRows.forEach( ( row, i ) => {
-		const x1 = toX( prev );
-		const x2 = toX( row.cum );
-		const mid = ( x1 + x2 ) / 2;
-		const segment = {
-			id:    `c-${row.j}`,
-			x1,
-			x2,
-			color: palette[ i % palette.length ]
-		};
-		segments.push( segment );
+	return hi;
+}
 
-		if ( x2 - x1 > 34 ) {
-			labels.push( {
-				id:   `lbl-${row.j}`,
-				x:    mid,
-				text: `j=${row.j}`
-			} );
+/**
+ * Erzeuge den “Zick-Zack”-Pfad:
+ * Pro Phase pendelt der Jeep (2k-1) mal zwischen x und x+L (L = Phasenlänge),
+ * endet vorne -> nächste Phase beginnt dort.
+ *
+ * Für roundtrip: am Ende wird ein “finaler Rückweg” (ein Segment) ergänzt,
+ * um wieder auf x=0 zu landen (das entspricht der zusätzlichen Traversierung,
+ * die im 2k-Phasenmodell gegenüber (2k-1) “fehlt”).
+ */
+function buildPathFromPhases(
+	phases: Phase[],
+	kmPerTankNormUnit: number,
+	speed: number,
+	doFinalReturn: boolean
+): PathPoint[] {
+	const pts: PathPoint[] = [];
+
+	let baseXKm = 0;
+	let curXKm = 0;
+	let tH = 0;
+
+	pts.push( { xKm: curXKm, tH } );
+
+	for ( const ph of phases ) {
+		const Lkm = ph.lengthNorm * kmPerTankNormUnit;
+		const segCount = Math.max( 1, 2 * ph.k - 1 );
+
+		// Pendel zwischen baseX und baseX+L
+		const left = baseXKm;
+		const right = baseXKm + Lkm;
+
+		for ( let s = 0; s < segCount; s++ ) {
+			const targetX = s % 2 === 0 ? right : left;
+			const dist = Math.abs( targetX - curXKm );
+			tH += dist / speed;
+			curXKm = targetX;
+			pts.push( { xKm: curXKm, tH } );
 		}
 
-		prev = row.cum;
-	} );
-
-	const tickValues = [ 0 ];
-	const step = Math.max( 1, Math.floor( shownRows.length / 4 ) );
-
-	for ( let i = step - 1; i < shownRows.length; i += step ) {
-		tickValues.push( shownRows[ i ].cum );
+		// Jetzt sind wir vorne (right), und die nächste Phase startet dort.
+		baseXKm = right;
 	}
 
-	tickValues.push( totalDistance );
+	if ( doFinalReturn && curXKm > 0 ) {
+		// final zurück nach 0 (ein “glatter” Rückweg)
+		const dist = curXKm;
+		tH += dist / speed;
+		curXKm = 0;
+		pts.push( { xKm: curXKm, tH } );
+	}
 
-	const ticks = uniqueByValue( tickValues.map( ( v, idx ) => ( { id: `cv-${idx}`, value: v } ) ),
-		domainMax * 0.002 ).sort( ( a, b ) => a.value - b.value )
-		.map( ( t ) => ( {
-			...t,
-			x:     toX( t.value ),
-			value: fmt( t.value )
-		} ) );
+	return pts;
+}
+
+// ---- Ergebnisberechnung ----
+const warning = computed( () => {
+	if ( !( tankCapacityL.value > 0 ) || !( consumptionLperKm.value > 0 ) || !( speedKmH.value > 0 ) ) {
+		return "Tankkapazität, Verbrauch und Geschwindigkeit müssen > 0 sein.";
+	}
+
+	if ( variant.value !== "deliver" && startFuelL.value < 0 ) {
+		return "Starttreibstoff darf nicht negativ sein.";
+	}
+
+	if ( variant.value === "deliver" ) {
+		if ( targetDistanceKm.value < 0 ) {
+			return "Zielentfernung darf nicht negativ sein.";
+		}
+
+		if ( deliveredFuelL.value < 0 ) {
+			return "Liefermenge darf nicht negativ sein.";
+		}
+	}
+
+	return "";
+} );
+
+const result = computed( () => {
+	const C = tankCapacityL.value;
+	const r = consumptionLperKm.value;
+	const v = speedKmH.value;
+
+	const kmPerTank = C / r; // wie weit komme ich mit einem vollen Tank (ohne Depot-Tricks)
+	const safeKmPerTank = Number.isFinite( kmPerTank ) && kmPerTank > 0 ? kmPerTank : 0;
+
+	if ( warning.value ) {
+		return {
+			maxDistanceKm:      0,
+			requiredStartFuelL: 0,
+			totalTimeH:         0,
+			totalTravelKm:      0,
+			phases:             [] as Phase[],
+			phaseMarkersKm:     [] as number[],
+			path:               [] as PathPoint[]
+		};
+	}
+
+	if ( variant.value === "deliver" ) {
+		const qUnits = clampNonNeg( deliveredFuelL.value ) / C;
+		const targetDistNorm = clampNonNeg( targetDistanceKm.value ) / safeKmPerTank;
+
+		const startUnits = solveStartFuelUnitsForDelivery( targetDistNorm, qUnits );
+		const phases = buildPhases(
+			startUnits, qUnits, "oneway"
+		);
+
+		const maxDistKm = phases.reduce( ( a, p ) => a + p.lengthNorm, 0 ) * safeKmPerTank;
+
+		const markers = [];
+		let cum = 0;
+
+		for ( const p of phases ) {
+			cum += p.lengthNorm * safeKmPerTank;
+			markers.push( cum );
+		}
+
+		const path = buildPathFromPhases(
+			phases, safeKmPerTank, v, false
+		);
+		const totalTimeH = path.length ? path[ path.length - 1 ].tH : 0;
+
+		// totale Fahrstrecke aus Pfad (Summe |dx|)
+		let totalTravelKm = 0;
+
+		for ( let i = 1; i < path.length; i++ ) {
+			totalTravelKm += Math.abs( path[ i ].xKm - path[ i - 1 ].xKm );
+		}
+
+		return {
+			maxDistanceKm:      maxDistKm,
+			requiredStartFuelL: startUnits * C,
+			totalTimeH,
+			totalTravelKm,
+			phases,
+			phaseMarkersKm:     markers,
+			path
+		};
+	}
+
+	// Varianten 1 und 2
+	const startUnits = clampNonNeg( startFuelL.value ) / C;
+
+	if ( variant.value === "oneway" ) {
+		const phases = buildPhases(
+			startUnits, 0, "oneway"
+		);
+		const maxDistKm = phases.reduce( ( a, p ) => a + p.lengthNorm, 0 ) * safeKmPerTank;
+
+		const markers = [];
+		let cum = 0;
+
+		for ( const p of phases ) {
+			cum += p.lengthNorm * safeKmPerTank;
+			markers.push( cum );
+		}
+
+		const path = buildPathFromPhases(
+			phases, safeKmPerTank, v, false
+		);
+		const totalTimeH = path.length ? path[ path.length - 1 ].tH : 0;
+
+		let totalTravelKm = 0;
+
+		for ( let i = 1; i < path.length; i++ ) {
+			totalTravelKm += Math.abs( path[ i ].xKm - path[ i - 1 ].xKm );
+		}
+
+		return {
+			maxDistanceKm:      maxDistKm,
+			requiredStartFuelL: 0,
+			totalTimeH,
+			totalTravelKm,
+			phases,
+			phaseMarkersKm:     markers,
+			path
+		};
+	}
+
+	// roundtrip: max. Entfernung (hin), wenn am Ende wieder Start erreicht werden soll
+	const phases = buildPhases(
+		startUnits, 0, "roundtrip"
+	);
+	const maxDistKm = phases.reduce( ( a, p ) => a + p.lengthNorm, 0 ) * safeKmPerTank;
+
+	const markers = [];
+	let cum = 0;
+
+	for ( const p of phases ) {
+		cum += p.lengthNorm * safeKmPerTank;
+		markers.push( cum );
+	}
+
+	// Outward-Zickzack (2k-1 pro Phase) + finaler Rückweg
+	const path = buildPathFromPhases(
+		phases, safeKmPerTank, v, true
+	);
+	const totalTimeH = path.length ? path[ path.length - 1 ].tH : 0;
+
+	let totalTravelKm = 0;
+
+	for ( let i = 1; i < path.length; i++ ) {
+		totalTravelKm += Math.abs( path[ i ].xKm - path[ i - 1 ].xKm );
+	}
 
 	return {
-		kind:          "classic",
-		width,
-		height,
-		left,
-		right,
-		axisY,
-		bandY,
-		totalDistance: fmt( totalDistance, 3 ),
-		segments,
-		labels,
-		ticks,
-		trimmed:       parsedRows.length > shownRows.length,
-		total:         parsedRows.length,
-		shown:         shownRows.length
+		maxDistanceKm:      maxDistKm,
+		requiredStartFuelL: 0,
+		totalTimeH,
+		totalTravelKm,
+		phases,
+		phaseMarkersKm:     markers,
+		path
 	};
+} );
+
+// ---- Pfad + Downsampling für SVG ----
+const phaseMarkersKm = computed( () => result.value.phaseMarkersKm );
+
+const pathPoints = computed<PathPoint[]>( () => {
+	const pts = result.value.path;
+
+	if ( pts.length <= maxPolylinePoints.value ) {
+		return pts;
+	}
+
+	// simple downsample: n-tes Element + letztes
+	const step = Math.ceil( pts.length / maxPolylinePoints.value );
+	const sampled: PathPoint[] = [];
+
+	for ( let i = 0; i < pts.length; i += step ) {
+		sampled.push( pts[ i ] );
+	}
+
+	if ( sampled[ sampled.length - 1 ] !== pts[ pts.length - 1 ] ) {
+		sampled.push( pts[ pts.length - 1 ] );
+	}
+
+	return sampled;
+} );
+
+// ---- Skalierung + Mapping in SVG ----
+const maxXKm = computed( () => Math.max( 1, result.value.maxDistanceKm || 1 ) );
+const maxTimeH = computed( () => {
+	const pts = pathPoints.value;
+	return Math.max( 1e-6, pts.length ? pts[ pts.length - 1 ].tH : 1e-6 );
+} );
+
+function mapX( xKm: number ) {
+	const span = plotRight - plotLeft;
+	return plotLeft + xKm / maxXKm.value * span;
 }
+
+function mapY( tH: number ) {
+	const span = plotBottom - plotTop;
+	return plotTop + tH / maxTimeH.value * span;
+}
+
+const polylinePointsAttr = computed( () => {
+	const pts = pathPoints.value;
+
+	if ( pts.length < 2 ) {
+		return "";
+	}
+
+	return pts.map( p => `${mapX( p.xKm ).toFixed( 2 )},${mapY( p.tH ).toFixed( 2 )}` ).join( " " );
+} );
+
+// ---- Ticks / Grid ----
+function niceStep( maxVal: number, targetTicks: number ) {
+	const raw = maxVal / Math.max( 1, targetTicks );
+	const pow = Math.pow( 10, Math.floor( Math.log10( raw ) ) );
+	const scaled = raw / pow;
+
+	let nice = 1;
+
+	if ( scaled <= 1 ) {
+		nice = 1;
+	} else if ( scaled <= 2 ) {
+		nice = 2;
+	} else if ( scaled <= 5 ) {
+		nice = 5;
+	} else {
+		nice = 10;
+	}
+
+	return nice * pow;
+}
+
+const gridXTicks = computed( () => {
+	const step = niceStep( maxXKm.value, 12 );
+	const ticks: number[] = [];
+
+	for ( let x = 0; x <= maxXKm.value + EPS; x += step ) {
+		ticks.push( x );
+	}
+
+	return ticks;
+} );
+const gridYTicks = computed( () => {
+	const step = niceStep( maxTimeH.value, 12 );
+	const ticks: number[] = [];
+
+	for ( let t = 0; t <= maxTimeH.value + EPS; t += step ) {
+		ticks.push( t );
+	}
+
+	return ticks;
+} );
+
+const labelXTicks = computed( () => {
+	const step = niceStep( maxXKm.value, 6 );
+	const ticks: number[] = [];
+
+	for ( let x = 0; x <= maxXKm.value + EPS; x += step ) {
+		ticks.push( x );
+	}
+
+	return ticks;
+} );
+const labelYTicks = computed( () => {
+	const step = niceStep( maxTimeH.value, 6 );
+	const ticks: number[] = [];
+
+	for ( let t = 0; t <= maxTimeH.value + EPS; t += step ) {
+		ticks.push( t );
+	}
+
+	return ticks;
+} );
 </script>
 
 <style scoped>
-.rdGraph {
-	display: block;
-	width: 100%;
-	height: auto;
+.rdg-layout {
+  height: 100%;
+  align-items: stretch;
 }
 
-.bg {
-	fill: var(--kbox-bg);
+.graph-col {
+  min-height: 0;
 }
 
-.axis {
-	stroke: var(--text);
-	stroke-width: 1.6;
+.graph-card {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
 }
 
-.axisLabel {
-	fill: var(--muted);
-	font-size: 12px;
-	text-anchor: end;
+.svg-wrap {
+  width: 100%;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
+  border-radius: 12px;
+  border: 1px solid rgba(127, 127, 127, 0.35);
+  padding: 6px;
+  display: flex;
 }
 
-.tick line {
-	stroke: var(--muted);
-	stroke-width: 1.2;
+.max90{
+	max-height: 90vh;
 }
 
-.tick text {
-	fill: var(--muted);
-	font-size: 11px;
+svg {
+  width: 100%;
+  height: 100%;
+  min-height: 360px;
+  display: block;
 }
 
-.guide line {
-	stroke: var(--line);
-	stroke-dasharray: 4 4;
-	stroke-width: 1;
-}
+@media (max-width: 960px) {
+  .rdg-layout {
+    height: auto;
+  }
 
-.guide text {
-	fill: var(--muted);
-	font-size: 11px;
-}
-
-.rowLabel {
-	fill: var(--text);
-	font-size: 12px;
-	font-family: var(--mono);
-}
-
-.point {
-	fill: var(--text);
-}
-
-.turnPoint {
-	fill: #dc2626;
-}
-
-.out {
-	stroke: #0f766e;
-	stroke-width: 4;
-	stroke-linecap: round;
-}
-
-.outStrong {
-	stroke: #2563eb;
-	stroke-width: 5;
-	stroke-linecap: round;
-}
-
-.back {
-	stroke: #b45309;
-	stroke-width: 4;
-	stroke-linecap: round;
-}
-
-.backStrong {
-	stroke: #dc2626;
-	stroke-width: 5;
-	stroke-linecap: round;
-}
-
-.legend text,
-.msg text,
-.note,
-.warn,
-.headline {
-	fill: var(--muted);
-	font-size: 12px;
-}
-
-.warn {
-	fill: #dc2626;
+  .graph-card {
+    height: auto;
+  }
 }
 </style>

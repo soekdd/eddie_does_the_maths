@@ -184,7 +184,7 @@ export const router = createRouter( {
 			name:      "FI",
 			component: FI,
 			meta:      {
-				error,
+				warning,
 				difficulty: 2,
 				title:      "Land&shy;karten Geo&shy;metrie",
 				index:      true,
@@ -248,7 +248,7 @@ export const router = createRouter( {
 			name:      "RD",
 			component: RD,
 			meta:      {
-				error,
+				warning,
 				difficulty: 2,
 				title:      "Rentier-Depot",
 				index:      true,

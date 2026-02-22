@@ -289,13 +289,13 @@ const selectedFormulaTex = computed( () => {
 			return String.raw`f(z)=z`;
 
 		case "powerN":
-			return String.raw`f(z)=z^{${powN.value}}`;
+			return String.raw`f(z)=z^{n}\quad\left(n=${powN.value}\right)`;
 
 		case "expScaled":
-			return String.raw`f(z)=\exp\!\left(${fmt( k.value )}z\right)`;
+			return String.raw`f(z)=\exp\!\left(kz\right)\quad\left(k=${fmt( k.value )}\right)`;
 
 		case "sinScaled":
-			return String.raw`f(z)=\sin\!\left(${fmt( k.value )}z\right)`;
+			return String.raw`f(z)=\sin\!\left(kz\right)\quad\left(k=${fmt( k.value )}\right)`;
 
 		case "mobius": {
 			const aTex = fmtComplex( A );
@@ -311,7 +311,9 @@ const selectedFormulaTex = computed( () => {
 			return String.raw`f(z)=z+\frac{1}{z}`;
 
 		case "weierstrass":
-			return String.raw`f(z)=z+${fmt( aParam.value )}\sin\!\left(${fmt( k.value )}z\right)`;
+			return String.raw`f(z)=z+a\sin\!\left(kz\right)\quad\left(a=${fmt( aParam.value )},\;k=${
+				fmt( k.value )
+			}\right)`;
 
 		default:
 			return String.raw`f(z)=z`;
