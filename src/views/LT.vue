@@ -1,7 +1,7 @@
 <template>
 <AppFrame
 	:sub-chapter="{
-		streit:             'Eddie vs. Zarah',
+		einleitung: 'Einleitung',
 		'warum-laplace':    'Warum Laplace?',
 		vorgehen:           'Vorgehen',
 		'beispielrechnung': 'Beispielrechnung',
@@ -17,10 +17,71 @@
 				<img loading="lazy" :src="titleImg" />
 			</ImageZoomer>
 		</figure>
-		<h3 id="einleitung">Lorem ipsum dolor sit amet,</h3>
+		<h3 id="einleitung">Stockholm, 27. Dezember 1985</h3>
 		<div class="eddie">
-			<p>consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-			</p><p>consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+			<p><b>Ort:</b> WG-Küche in Stockholm.</p>
+			<p>
+				Auf dem Tisch: Kaffee, kariertes Papier, ein Bleistiftstummel.
+				Unter dem Tisch schnarcht ein Hund, als würde er jede Mathe-Diskussion
+				grundsätzlich boykottieren.
+			</p>
+			<p>
+				Ich schiebe Zarah meinen Zettel rüber und tippe drauf, als wäre das
+				hier eine Gerichtsverhandlung.
+			</p>
+			<p>
+				<b>Ich (Eddie):</b> „Eine lineare Differentialgleichung erster Ordnung
+				löst man klassisch im Zeitbereich: trennen, integrieren, fertig.“
+			</p>
+			<p>
+				<b>Zarah:</b> „Oder Laplace: in den Bildbereich, algebraisch lösen,
+				rücktransformieren. Schnell und sauber.“
+			</p>
+			<p><b>Ich:</b> „Du flüchtest doch nur vor dem Integrieren.“</p>
+			<p>
+				<b>Zarah:</b> „Ich ersetze <em>leidende</em> Differentialgleichungen durch
+				<em>gehorsame</em> Gleichungen. Vor allem bei Schaltungen mit Sprüngen
+				und Impulsen spart das Nerven.“
+			</p>
+			<p>
+				<b>Ich:</b> „Ich will verstehen, <em>warum</em> etwas passiert, nicht nur
+				eine Zahl ausspucken.“
+			</p>
+			<p>
+				<b>Zarah:</b> „Und ich will, dass es am Ende funktioniert. Eleganz hilft
+				nicht, wenn der Motor trotzdem abbrennt.“
+			</p>
+			<p>
+				<b>Ich:</b> „Also: Zeitbereich ist Handarbeit und Intuition. Laplace ist
+				Werkzeugkasten und Abkürzung.“
+			</p>
+			<p>
+				<b>Zarah:</b> „Genau. Für lineare Systeme genial. Bei Nichtlinearität
+				braucht man wieder andere Methoden.“
+			</p>
+			<p>
+				Ich ziehe den Zettel zu mir zurück, trinke einen Schluck Kaffee und tue
+				so, als wäre ich nicht ein bisschen beeindruckt.
+			</p>
+			<p>
+				<b>Ich:</b> „Dann machen wir’s ordentlich: erst klassisch im Zeitbereich,
+				danach deine Laplace-Maschine.“
+			</p>
+			<p>
+				<b>Zarah:</b> „Deal. Und wenn du freiwillig rücktransformierst, gibt’s
+				zwei Kekse.“
+			</p>
+			<p>
+				Damit ist der Frieden kurz geschlossen. Denn jetzt schauen wir wirklich
+				hin.
+			</p>
+			<p>
+				In der folgenden Betrachtung gehen wir die Unterschiede zwischen dem
+				klassischen Lösen im Zeitbereich und der Laplace-Methode Schritt für
+				Schritt durch. Und im interaktiven Teil kannst du die
+				Laplace-Transformation <em>hin</em> und <em>zurück</em> selbst
+				ausprobieren, damit aus „klingt schlau“ endlich „hab ich verstanden“
+				wird.
 			</p>
 		</div>
 	</template>
@@ -28,36 +89,7 @@
 	<template #descriptionPart>
 		<h3>Differentialgleichungen - Klassischer Lösungsweg vs. Laplace-Transformation</h3>
 
-		<h2 id="streit" class="mt-8">1) Ein Streit mit Stil - Eddie vs. Zarah</h2>
-		<div class="eddie">
-			<blockquote class="storyQuote">
-				<p><b>Ort:</b> WG-Küche in Stockholm, Winter 1986.</p>
-				<p>Auf dem Tisch: Kaffee, kariertes Papier, ein Hund schnarcht unter dem Tisch.</p>
-			</blockquote>
-
-			<p>
-				<b>Eddie:</b>
-				„Also bitte. Eine lineare Differentialgleichung erster Ordnung löst man mit dem
-				<b>klassischen Lösungsansatz im Zeitbereich</b>. Trennen, integrieren, fertig.“
-			</p>
-
-			<p>
-				<b>Zarah:</b>
-				„Zeitbereich ist was für Romantiker. Ich nehm’ die Laplace-Transformation. Einmal ins
-				Frequenz- bzw. Bildbereich transformieren, algebraisch lösen, rücktransformieren - und gut.“
-			</p>
-
-			<p><b>Eddie:</b> „Du flüchtest doch nur vor dem Integrieren.“</p>
-			<p>
-				<b>Zarah:</b>
-				„Nein. Ich ersetze Differentialgleichungen durch Algebra. Das ist wie aus einem Sumpf in eine
-				gepflasterte Straße wechseln.“
-			</p>
-			<p><b>Eddie (grinsend):</b> „Feigling.“</p>
-			<p><b>Zarah:</b> „Pragmatikerin.“</p>
-		</div>
-
-		<h2 id="warum-laplace" class="mt-8">2) Warum funktioniert Laplace in der Elektrotechnik (fast) immer?</h2>
+		<h2 id="warum-laplace" class="mt-8">Teil 1. Warum funktioniert Laplace in der Elektrotechnik (fast) immer?</h2>
 		<div class="eddie">
 			<p>
 				In der Elektrotechnik treten fast ausschließlich
@@ -118,7 +150,7 @@
 			<p>Dort helfen meist nur numerische Verfahren.</p>
 		</div>
 
-		<h2 id="vorgehen" class="mt-8">3) Vorgehen bei der Laplace-Methode</h2>
+		<h2 id="vorgehen" class="mt-8">Teil 2. Vorgehen bei der Laplace-Methode</h2>
 		<div class="eddie">
 			<p>Gegeben eine Anfangswertaufgabe:</p>
 			<ol>

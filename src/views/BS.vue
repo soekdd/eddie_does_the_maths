@@ -2,6 +2,7 @@
 <template>
 <AppFrame
 	:sub-chapter="{
+		einleitung:'Einleitung',
 		ziel: 'Ziel',
 		steiner: 'Steiner',
 		fallen: 'Steiner-Fallen',
@@ -14,15 +15,25 @@
 >
 	<template #bookPart>
 		<figure class="exampleFigure">
-			<ImageZoomer title="Eddie zeigt Sini wie die Summe aller Kräfte null ist">
+			<ImageZoomer title="Eddie zeigt Sini wie die Summe aller Kräfte Null ist">
 				<img loading="lazy" :src="titleImg" />
 			</ImageZoomer>
 		</figure>
-		<h3 id="einleitung">Lorem ipsum dolor sit amet,</h3>
+		<h3 id="einleitung">Vaasa, 1. September 1985</h3>
 		<div class="eddie">
-			<p>consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-			</p><p>consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-			</p>
+			<p>Es ist der erste September, und plötzlich fühlt sich mein Bauch an wie ein Stundenplan: leer und
+				gleichzeitig voll. Sini macht einen falschen FDJ-Gruß, ich falle lachend fast vom Hocker. Aber
+				sobald das Kichern nachlässt, bleibt dieses miese Gefühl: <em>Du verlierst Zeit.</em></p>
+			<p>Also laufe ich allein zur Uni-Bibliothek. Hohe Regale, fremde Sprachen, Papiergeruch. Ich ziehe
+				einen dicken Band raus, <b>Technical Mechanics</b>, und klappe ihn auf, als wäre er ein
+				Rettungsring. Linien, Kästen, Querschnitte. Plötzlich ist mein Kopf wieder da, wach, hungrig.
+				Ich merke, wie gut es tut, wieder etwas zu verstehen, das nicht wegläuft.</p>
+			<p>Zwischen den
+				Seiten stolpere ich über den <b>Satz von Steiner</b>. Kein Zauber, eher ein Trick: Ein paar
+				saubere Schritte – und du weißt, wie fest eine Form wirklich ist, auch wenn sie kompliziert aussieht.</p>
+			<p>Genau darum geht’s jetzt hier: Wir schauen uns an, wie man damit einen <b>I-Träger</b>
+				sinnvoll dimensioniert. Unten wartet eine kleine Simulation, in der du selbst am Profil drehen kannst
+				und siehst, wie sich Stärke anfühlt, wenn man sie rechnen darf.</p>
 		</div>
 	</template>
 

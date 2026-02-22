@@ -20,6 +20,7 @@ import SE from "@/views/SE.vue";
 import RD from "@/views/RD.vue";
 import SD from "@/views/SD.vue";
 import FX from "@/views/FX.vue";
+import GD from "@/views/GD.vue";
 import UD from "@/views/UD.vue";
 import VA from "@/views/VA.vue";
 import QH from "@/views/QH.vue";
@@ -388,15 +389,14 @@ export const router = createRouter( {
 		{
 			path:      "/GD",
 			name:      "GD",
-			component: CatchAll,
+			component: GD,
 			meta:      {
-				warning,
+				error,
 				difficulty: 1,
 				title:      "Diophantos Grab&shy;platte",
 				index:      true,
 				book:       1,
-				order:      240,
-				wip
+				order:      240
 			}
 		},
 		{

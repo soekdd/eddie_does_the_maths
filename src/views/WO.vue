@@ -16,11 +16,22 @@
 				<img loading="lazy" :src="titleImg" />
 			</ImageZoomer>
 		</figure>
-		<h3 id="einleitung">Lorem ipsum dolor sit amet,</h3>
+		<h3 id="einleitung">Vaasa, 18. September 1985</h3>
 		<div class="eddie">
-			<p>consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-			</p><p>consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-			</p>
+			<p>Sini legt mir ihren Plan auf den Küchentisch wie eine Schatzkarte, nur dass der Schatz nicht
+				Gold ist, sondern <em>ein Ausgang</em>. Ich bin noch halb Schlaf, halb Panik, aber sobald die
+				Linien gerade sind, passiert was in mir: Das Zittern wird leiser. Chaos wird zu Geometrie.</p>
+			<p>Da ist der Personalausgang. Da sind die Zäune. Da sind die Kameras, kleine Kreise, die mich
+				anstarren, als hätten sie schon gewonnen. Und da ist dieser helle Streifen ohne Deckung, der
+				sich anfühlt wie ein Scheinwerfer direkt auf meinem Namen.</p>
+
+			<p>Sini sagt: <em>„Lauf doch einfach quer.“</em> Ich sage: <em>„Ja. Und werde gesehen.“</em> Also
+				mache ich das, was ich immer mache, wenn mir die Luft zu knapp wird: Ich rechne mir Mut zusammen und denke mir Risikopunkte aus.
+				Jeder Meter im Schatten zählt wenig Risikopunkte, jeder Meter im Licht zählt viel. Und plötzlich ist die
+				Frage nicht mehr <em>„Wo lang?“</em>, sondern <b>„Wo ist das Minimum?“</b></p>
+
+			<p>Hier zeige ich dir die genaue Wegoptimierung und unten kannst du den Punkt
+				selbst ermitteln und ausprobieren, wie sich Risiko und Strecke gegeneinander aufwiegen.</p>
 		</div>
 	</template>
 

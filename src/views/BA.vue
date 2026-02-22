@@ -1,24 +1,33 @@
 <template>
 <AppFrame
 	:sub-chapter="{
+		einleitung:'Einleitung',
 		'casar': 'Cäsar',
 		'vigenere': 'Vigenère',
 		'c64-emulator': 'C64 Emulator'
 	}"
 	title="Eddie rechnet: BASIC for runaways"
 >
-
 	<template #bookPart>
 		<figure class="exampleFigure">
 			<ImageZoomer title="Eddie am Karis C64">
 				<img loading="lazy" :src="titleImg" />
 			</ImageZoomer>
 		</figure>
-		<h3 id="einleitung">Lorem ipsum dolor sit amet,</h3>
+		<h3 id="einleitung">Vaasa, 11. August 1985</h3>
 		<div class="eddie">
-			<p>consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-			</p><p>consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-			</p>
+			<p>Die Buchstabenreihe <em>DXNZG.<wbr>EMIKN.<wbr>AOJUT.<wbr>CNNUT.<wbr>BXTLJ</em> liegt vor mir wie ein schlechter Witz,
+				nur dass keiner lacht. Am Küchentisch stapeln sich Radierkrümel, Kaffeeflecken und peinlich viele
+				Fehlversuche. Cäsar hab ich durchgeprügelt, Vigenère angeknabbert, Geburtstage verheizt und trotzdem
+				bleibt alles erst mal nur Buchstabensuppe.</p>
+			<p>Dann schleppt Jukka diese beige Kiste rein, und
+				auf dem Fernseher flackert <b>READY.</b> auf. Ich spüre sofort: Das ist kein Gerät, das ist ein Komplize.
+				BASIC ist wie Mathe mit Tasten: stumpf, ehrlich und schnell. Genau das brauche ich, wenn meine Finger
+				schon streiken.</p>
+			<p>Hier zeige ich dir, wie ich mit ein paar Zeilen C64-BASIC
+				systematisch entschlüssele: erst die einfachen Shifts, dann rotierende Schlüssel. Und wenn du nicht
+				nur lesen willst: Unten wartet
+				ein echter BASIC-Interpreter. Drücke <b>RUN</b>. Und der Buchstabensalat löst sich auf.</p>
 		</div>
 	</template>
 

@@ -130,7 +130,6 @@ export default [
 			"require-await":                                     "off",
 			semi:                                                [ "error", "always" ],
 			"space-before-function-paren":                       [ "error", "never" ],
-			"space-in-parens":                                   [ "error", "always" ],
 			"space-infix-ops":                                   [ "error", { int32Hint: false } ]
 		}
 	},

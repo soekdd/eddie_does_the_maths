@@ -1,6 +1,7 @@
 <template>
 <AppFrame
 	:sub-chapter="{
+		einleitung:'Einleitung',
 		'geometrie': 'Geometrie',
 		'tangenten': 'Tangenten',
 		'zyklisch': 'zyklisch',

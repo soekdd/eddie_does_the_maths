@@ -2,6 +2,7 @@
 <template>
 <AppFrame
 	:sub-chapter="{
+		einleitung: 'Einleitung',
 		impuls: 'Impuls vs. k',
 		idee: 'Idee',
 		rechenweg: 'Rechenweg',
@@ -16,11 +17,28 @@
 				<img alt="Eddie erklärt dynamische Lasten" loading="lazy" :src="titleImg" />
 			</ImageZoomer>
 		</figure>
-		<h3 id="einleitung">Lorem ipsum dolor sit amet,</h3>
+		<h3 id="einleitung">Stockholm, 28. Oktober 1985</h3>
 		<div class="eddie">
-			<p>consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-			</p><p>consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-			</p>
+			<p>Der Übersetzer hat weitere Abweichungen zwischen TGL und DIN gefunden und mich gebeten,
+				sie für ihn sauber durchzurechnen. Ich nicke, als wäre das eine normale Bitte. Als würde
+				ich nicht gerade davon leben, dass jemand mir Münzen hinwirft und ich dafür Ordnung in
+				Zahlen bringe. Auf dem Papier sieht alles gleich brav aus: eine Last ist eine Last. Aber
+				sobald etwas <em>in Bewegung</em> gerät, fängt die Welt an, anders zu ticken.</p>
+
+			<p>Ich stelle mir das ganz einfach vor: Ein dicker Mann lässt sich langsam in ein Sofa sinken.
+				Das ist schwer, ja, aber es passiert gemütlich, fast wie ein Seufzen. Und dann ein Kind,
+				das eine Arschbombe macht – nicht aufs Sofa, sondern auf den Fußboden. Viel leichter,
+				viel kleiner … und trotzdem knallt es, als hätte jemand kurz die Schwerkraft aufgedreht.
+				<b>Gleiche Masse</b> heißt eben nicht <b>gleiche Wirkung</b>, wenn Geschwindigkeit und Stopp plötzlich mitreden.</p>
+
+			<p>Genau hier setzen wir an: Die <em>TGL</em> unterscheidet bei solchen dynamischen
+				Lasten genauer und behandelt „langsam einsinken“ anders als „hart aufschlagen“. Die <em>DIN</em>
+				ist an der Stelle grober und setzt beides oft gleich. Unten kannst du den Unterschied im interaktiven
+				Teil selbst entdecken.</p>
+
+			<p>Draußen wartet schon Vidar auf mich. Heute werde ich im Café bezahlen, sage ich mir trotzig,
+				als wäre das die einfachste Rechnung der Welt.</p>
+
 		</div>
 	</template>
 

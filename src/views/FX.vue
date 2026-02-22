@@ -1,6 +1,7 @@
 <template>
 <AppFrame
 	:sub-chapter="{
+		einleitung: 'Einleitung',
 		'geschichte': 'Geschichte',
 		'basic-denke': 'BASIC-Denke',
 		'interaktiver-rechner': 'Interaktiver Rechner'
@@ -14,11 +15,20 @@
 				<img loading="lazy" :src="titleImg" />
 			</ImageZoomer>
 		</figure>
-		<h3 id="einleitung">Lorem ipsum dolor sit amet,</h3>
+		<h3 id="einleitung">Stockholm, 23. Oktober 1985</h3>
 		<div class="eddie">
-			<p>consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-			</p><p>consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-			</p>
+			<p>Ich sitze noch mit Herzklopfen am Tisch, als hätte ich gerade einen Alarm ausgelöst. Erst schreit er
+				mich an, ich wolle den Rechner klauen und im nächsten Moment starrt er auf seine Zahlen, als wären
+				sie ihm eben erst aufgefallen. Ich zeige nur auf die Stelle, wo er sich doppelt verrechnet. Ein
+				paar Sekunden Tastenklappern, dann dieser Blick: kalt, schwer, erwischt.</p>
+			<p>Und dann schiebt er ihn mir rüber. Einfach so. <b>Casio fx-7000G</b>. Wie neu. Als Geschenk.
+				Ein kleines Wunder, das in eine Jackentasche passt. Ich spüre das Kribbeln bis in die Fingerspitzen,
+				als würde mein Gehirn endlich was zu beißen bekommen. Matrixdisplay, Tasten wie kleine Versprechen,
+				und <em>programmierbar</em>: Basic, wie Karis Heimcomputer, nur eben auf Handflächengröße.</p>
+			<p>Bevor ich wieder an Flucht, Angst und graue Männer denken kann, halte ich dieses Ding fest wie einen
+				Schatz. Und genau hier schalten wir kurz um: Weg von der Szene, hin zum Werkzeug.</p>
+			<p>Unten zeige ich dir, was der fx-7000G wirklich kann, vor allem beim Programmieren. Es gibt sogar
+				eine Simulation, in der du selbst tippen, testen und rumspinnen kannst.</p>
 		</div>
 	</template>
 

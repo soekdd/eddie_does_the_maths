@@ -239,6 +239,10 @@ function isMemoryOutOfBoundsError( message: string ): boolean {
 	return /\b(memory(\s+access)?\s+out\s+of\s+bounds|wasm.*out\s+of\s+bounds)\b/i.test( message );
 }
 
+function isIgnorableGlobalError( message: string ): boolean {
+	return /\bResizeObserver loop (completed with undelivered notifications|limit exceeded)\b/i.test( message );
+}
+
 function requestHardRestart( reason: string ) {
 	if ( hardRestartRequested ) {
 		return;
@@ -265,7 +269,14 @@ function handleRuntimeError( error: unknown ): string {
 }
 
 function onGlobalError( event: ErrorEvent ) {
-	const message = handleRuntimeError( event.error ?? event.message );
+	const rawMessage = formatError( event.error ?? event.message );
+
+	if ( isIgnorableGlobalError( rawMessage ) ) {
+		event.preventDefault();
+		return;
+	}
+
+	const message = handleRuntimeError( rawMessage );
 
 	if ( isMemoryOutOfBoundsError( message ) ) {
 		event.preventDefault();
@@ -273,7 +284,14 @@ function onGlobalError( event: ErrorEvent ) {
 }
 
 function onUnhandledRejection( event: PromiseRejectionEvent ) {
-	const message = handleRuntimeError( event.reason );
+	const rawMessage = formatError( event.reason );
+
+	if ( isIgnorableGlobalError( rawMessage ) ) {
+		event.preventDefault();
+		return;
+	}
+
+	const message = handleRuntimeError( rawMessage );
 
 	if ( isMemoryOutOfBoundsError( message ) ) {
 		event.preventDefault();

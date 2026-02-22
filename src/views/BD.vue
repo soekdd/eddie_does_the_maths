@@ -19,11 +19,18 @@
 				<img alt="Eddie mit Stahlträger" loading="lazy" :src="titleImg" />
 			</ImageZoomer>
 		</figure>
-		<h3 id="einleitung">Lorem ipsum dolor sit amet,</h3>
+		<h3 id="einleitung">Stockholm, 23. Oktober 1985</h3>
 		<div class="eddie">
-			<p>consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-			</p><p>consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-			</p>
+			<p>Ich sitze in dieser viel zu sauberen Uni-Bibliothek und fühle mich trotzdem wie ein Fleck
+				auf frisch gewischtem Boden. Draußen pfeift der Wind über die Brücken, drinnen riecht alles
+				nach Holz und Papier. Ich schleiche, ich zähle Schritte, ich verstecke mich sogar vor Blicken.</p>
+			<p>Und dann sehe ich es: <b>Dresden</b>. Schwarz auf weiß. Ein Bauvorhaben, ein West-Architekt,
+				ein DDR-Hotel – und auf dem Tisch liegen <b>DIN</b> und <b>TGL</b> wie zwei Notenblätter fürs
+				gleiche Lied. Nur dass hier jemand die Sicherheitszuschläge nicht vergleicht, sondern einfach
+				zusammenmultipliziert. Wie drei Helme auf einmal. Warm, schwer, teuer – und leider Quatsch.</p>
+			<p>Bevor ich mich wieder in die Regale verkrieche, mache ich kurz mein Mathehirn an: <em>Was sagen
+				DIN und TGL wirklich – und wie groß wird der Fehler, wenn man’s falsch macht?</em> Unten kannst
+				du genau das in einer Simulation selbst ausprobieren: dieselbe Last, einmal nach DIN, einmal nach TGL.</p>
 		</div>
 	</template>
 	<template #descriptionPart>

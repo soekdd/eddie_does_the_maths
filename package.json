@@ -18,20 +18,20 @@
     "vuetify": "^3.6.0"
   },
   "devDependencies": {
-    "@stylistic/eslint-plugin": "latest",
-    "@typescript-eslint/parser": "latest",
+    "@stylistic/eslint-plugin": "5.8.0",
+    "@typescript-eslint/parser": "8.55.0",
     "@vitejs/plugin-vue": "^5.0.0",
-    "eslint": "^9.34.0",
-    "eslint-plugin-import": "latest",
-    "eslint-plugin-jsdoc": "latest",
-    "eslint-plugin-prefer-optional-chaining": "latest",
-    "eslint-plugin-svgo": "latest",
-    "eslint-plugin-vue": "latest",
-    "eslint-plugin-vuetify": "latest",
+    "eslint": "9.39.2",
+    "eslint-plugin-import": "2.32.0",
+    "eslint-plugin-jsdoc": "62.5.4",
+    "eslint-plugin-prefer-optional-chaining": "0.0.1",
+    "eslint-plugin-svgo": "0.11.3",
+    "eslint-plugin-vue": "10.7.0",
+    "eslint-plugin-vuetify": "2.5.3",
     "sass": "^1.77.0",
-    "typescript": "latest",
+    "typescript": "5.9.3",
     "vite": "^5.4.21",
     "vite-plugin-vuetify": "^2.0.0",
-    "vue-eslint-parser": "latest"
+    "vue-eslint-parser": "10.3.0"
   }
 }

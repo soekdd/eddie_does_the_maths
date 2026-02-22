@@ -15,11 +15,26 @@
 				<img loading="lazy" :src="titleImg" />
 			</ImageZoomer>
 		</figure>
-		<h3 id="einleitung">Lorem ipsum dolor sit amet,</h3>
+		<h3 id="einleitung">Stockholm, 26. Oktiber 1985</h3>
 		<div class="eddie">
-			<p>consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-			</p><p>consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-			</p>
+			<p>Ich stehe vor der <b>Vasa</b> und kann mich nicht entscheiden, ob ich wütend sein soll oder einfach
+				nur traurig. Vidar erzählt mir die Geschichte, und je mehr ich höre, desto klarer wird: Das war
+				kein „Unglück“. Das war ein Unfall mit Ansage. Ein Schiff, gebaut als schwimmendes Machtwort,
+				höher, schwerer bewaffnet, beeindruckender als alles, was vorher da war, weil ein König es so
+				wollte.</p>
+			<p>Und dann kommt dieser Teil, der mir den Magen zusammenzieht: <b>1628</b> ist sie
+				nicht mal richtig losgefahren. Sie ist noch im Hafen gesunken. Ein paar hundert Meter,
+				ein Windstoß, ein bisschen Welle – und aus dem Stolz wird ein Klotz, der einfach umkippt.
+				Vidar erzählt von Tests, bei denen man sie absichtlich zum Schwanken bringt, und alle sehen
+				dabei, wie instabil sie ist. Kanonen, die schon bei der Probe gefährlich nah ans Wasser rutschen.
+				Blicke, die sagen: <em>Das wird schiefgehen.</em></p> <p>Nur: Niemand stoppt es. Niemand will
+				der Erste sein, der „Stopp“ sagt. Zu viel Prestige, zu viel Angst, zu viel Arbeit, die
+				schon drinsteckt. Und genau das macht die Vasa für mich so brutal: Sie ist ein Denkmal
+				dafür, wie ein System lieber untergeht, als einen Fehler einzugestehen.</p>
+			<p>Hier schaue ich mir dann an, was hier eigentlich passiert: wie man erkennt, ob ein
+				Schiff „sicher“ im Wasser liegt, und warum manche Rümpfe bei der kleinsten Gelegenheit
+				kippen. Unten kannst du es in einer Simulation selbst ausprobieren und verschiedene
+				Schiffsrümpfe auf ihre Stabilität testen.</p>
 		</div>
 	</template>
 

@@ -176,8 +176,20 @@ const slotContentRef = ref<HTMLElement | null>( null );
 const canvasWidthPx = ref( 1 );
 const slotHeightPx = ref( 40 );
 
+const SIZE_EPSILON_PX = 0.5;
 let canvasRO: ResizeObserver | null = null;
 let slotRO: ResizeObserver | null = null;
+let slotMeasureFrameId: number | null = null;
+
+function setSlotHeight( nextHeightPx: number ) {
+	const next = Math.max( 1, nextHeightPx );
+
+	if ( Math.abs( slotHeightPx.value - next ) <= SIZE_EPSILON_PX ) {
+		return;
+	}
+
+	slotHeightPx.value = next;
+}
 
 function measureSlotHeightPx() {
 	const el = slotContentRef.value;
@@ -189,13 +201,22 @@ function measureSlotHeightPx() {
 	const rectHeight = el.getBoundingClientRect().height;
 
 	if ( rectHeight > 0 ) {
-		slotHeightPx.value = Math.max( 1, rectHeight );
+		setSlotHeight( rectHeight );
 		return;
 	}
 
-	slotHeightPx.value = Math.max(
-		1, el.scrollHeight, el.offsetHeight
-	);
+	setSlotHeight( Math.max( el.scrollHeight, el.offsetHeight ) );
+}
+
+function scheduleSlotMeasure() {
+	if ( slotMeasureFrameId !== null ) {
+		return;
+	}
+
+	slotMeasureFrameId = window.requestAnimationFrame( () => {
+		slotMeasureFrameId = null;
+		measureSlotHeightPx();
+	} );
 }
 
 onMounted( async() => {
@@ -209,10 +230,13 @@ onMounted( async() => {
 			return;
 		}
 
-		canvasWidthPx.value = Math.max( 1, e.contentRect.width );
-		requestAnimationFrame( () => {
-			measureSlotHeightPx();
-		} );
+		const nextWidth = Math.max( 1, e.contentRect.width );
+
+		if ( Math.abs( canvasWidthPx.value - nextWidth ) > SIZE_EPSILON_PX ) {
+			canvasWidthPx.value = nextWidth;
+		}
+
+		scheduleSlotMeasure();
 	} );
 
 	slotRO = new ResizeObserver( ( entries ) => {
@@ -222,7 +246,7 @@ onMounted( async() => {
 			return;
 		}
 
-		measureSlotHeightPx();
+		scheduleSlotMeasure();
 	} );
 
 	if ( canvasRef.value ) {
@@ -237,6 +261,11 @@ onMounted( async() => {
 onBeforeUnmount( () => {
 	canvasRO?.disconnect();
 	slotRO?.disconnect();
+
+	if ( slotMeasureFrameId !== null ) {
+		window.cancelAnimationFrame( slotMeasureFrameId );
+		slotMeasureFrameId = null;
+	}
 } );
 
 function resetCorners() {
@@ -642,7 +671,7 @@ const handleList = computed( () => {
   width: 100%;
   height: auto; /* Höhe folgt viewBox-Verhältnis */
   display: block;
-  touch-action: none;
+  touch-action: pan-y;
   user-select: none;
 }
 

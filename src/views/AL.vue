@@ -4,7 +4,8 @@
 	:sub-chapter="{
 		'analytical-engine': 'Analytical Engine',
 		'bernoulli-zahlen': 'Bernoulli-Zahlen',
-		'gcd': 'gcd'
+		'gcd': 'gcd',
+		'babbage':'Babbages Maschine'
 	}"
 	title="Eddie rechnet: Kartenspiele mit Ada Lovelace"
 >
@@ -15,11 +16,19 @@
 				<img loading="lazy" :src="titleImg" />
 			</ImageZoomer>
 		</figure>
-		<h3 id="einleitung">Lorem ipsum dolor sit amet,</h3>
+		<h3 id="einleitung">Vaasa, 16. September 1985</h3>
 		<div class="eddie">
-			<p>consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-			</p><p>consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-			</p>
+			<p>Ich sitze neben Sini auf der Bank, noch warm von ihrem Lachen, noch weich von dieser Umarmung,
+				bei der ich kurz vergesse, dass mein Leben aus Abfahrtszeiten und Fluchtwegen besteht. Und dann
+				rutscht mir dieser Satz raus: Dass mein Vater mich eigentlich „Ada“ nennen wollte. Sini ruft sofort,
+				„Ada? Nach Ada Lovelace? Ich bin kein Nerd wie du, aber von ihr habe ich schon gehört!“</p>
+			<p>Ada Lovelace ist so berühmt, weil sie etwas Unverschämtes gemacht hat: Sie denkt sich Programme aus, obwohl
+				es noch gar keinen Computer gibt. Sie schaut auf Charles Babbages Rechenmaschine – diese riesige Idee aus
+				Zahnrädern – und schreibt nicht nur „spannend“, sondern: <em>Damit kann man Schritte planen. Wiederholen.
+					Variieren.</em> Und sie sieht weiter als alle: Dass so eine Maschine später nicht nur Zahlen frisst,
+				sondern auch Musik, Texte, Muster.</p>
+			<p>In diesem Kapitel nehme ich dich genau da mit rein: Wer Ada war, was sie wirklich „programmiert“ hat
+				und du kannst Babbages Maschine online selbst anwerfen und ausprobieren.</p>
 		</div>
 	</template>
 
@@ -256,6 +265,7 @@
 	</template>
 
 	<template #interactivePart>
+		<h3 id="babbage">Babbages Maschine</h3>
 		<v-card class="pa-2">
 			<v-select
 				v-model="selectedProgram"

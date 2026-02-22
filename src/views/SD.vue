@@ -1,7 +1,7 @@
 <template>
 <AppFrame
 	:sub-chapter="{
-		'einleitung': 'Einleitung',
+		einleitung:'Einleitung',
 		'bits-zu-basen': 'Bits zu Basen',
 		'codons': 'Codons',
 		'vergleich': 'Vergleich',
@@ -17,31 +17,24 @@
 				<img loading="lazy" :src="titleImg" />
 			</ImageZoomer>
 		</figure>
-		<h3 id="einleitung">Lorem ipsum dolor sit amet,</h3>
+		<h3 id="einleitung">Vaasa, 12. August 1985</h3>
 		<div class="eddie">
-			<p>consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-			</p><p>consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-			</p>
+			<p>In Sinis Wohnung liegt dieses Genetikbuch rum, schwer wie ein Ziegelstein, und ich kann’s
+				natürlich nicht lassen: Ich schlage es auf. Und zack – mein Kopf macht wieder sein Ding.
+				Aus <em>Bio-Kram</em> wird ein System. Aus Bildern werden Regeln. Aus „Basen“ wird Code.</p>
+			<p>Plötzlich fühlt sich DNA nicht an wie irgendwas Schleimiges im Mikroskop, sondern wie e
+				in verdammt elegantes Speicherformat. Nicht geschniegelt wie ein Rechner – eher
+				dreckig-genial: eine Maschine, die im Wald geboren wurde und trotzdem stabil läuft.
+				Vier Zeichen, endlose Kombis. Und mittendrin ich, barfuß auf Sinis Dielen, mit
+				Buntstiften in der Hand und einer Idee, die gleichzeitig freaky und süß ist.</p>
+			<p>Hier zeige ich dir jetzt genau diesen Trick: Wie man Buchstaben in DNA übersetzt,
+				wie man daraus Wörter baut (ja, sogar Namen wie <em>PUNK</em> und <em>SAMI</em>),
+				und warum das mit Dreiergruppen so schön logisch ist. Unten kannst du ein eigenes „
+				Blatt“ anklicken, ausprobieren, vertauschen, basteln – bis aus Genetik plötzlich
+				ein Geschenk wird.</p>
 		</div>
 	</template>
-
 	<template #descriptionPart>
-
-		<h2 id="einleitung">Wenn das Leben Code schreibt</h2>
-		<div class="eddie">
-			<p>
-				In Sinis Wohnung liegt so ein Genetikbuch rum, schwer wie ein Ziegelstein,
-				und ich kann&rsquo;s nicht lassen: Ich schlage es auf. Und mein Kopf macht sofort,
-				was er immer macht: Alles wird zu Strukturen, zu Regeln, zu Code.
-			</p>
-			<p>
-				Plötzlich fühlt sich DNA nicht mehr an wie &bdquo;Bio-Kram&ldquo;, sondern wie ein
-				unglaublich elegantes Speicherformat. Nicht geschniegelt wie ein Rechner,
-				eher dreckig-genial: eine Maschine, die in einem Wald geboren wurde und
-				trotzdem stabil läuft.
-			</p>
-		</div>
-
 		<h2 id="bits-zu-basen" class="mt-8">Von Bits zu Basen: vier Zeichen statt zwei</h2>
 		<div class="eddie">
 			<p>
