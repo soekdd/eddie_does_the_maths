@@ -48,7 +48,7 @@
 
 			<p>Der Baum hat drei Ebenen:</p>
 			<ol>
-				<li><b>Bus-Situation</b>: Kommt ein Bus (Sueden/Norden) in meinem Zeitfenster?</li>
+				<li><b>Bus-Situation</b>: Kommt ein Bus (Süden/Norden) in meinem Zeitfenster?</li>
 				<li><b>Fahrer-Test</b>: Nimmt der Fahrer meine D‑Mark?</li>
 				<li><b>Verfolger-Risiko</b>: Erwischt er mich oder verpasst er mich?</li>
 			</ol>
@@ -89,21 +89,21 @@
 		</figure>
 		<div class="eddie">
 			<p>
-				Hier ist der typische Denkfehler: Ich habe zwei Chancen (Sueden <Katex tex="S" /> und Norden
+				Hier ist der typische Denkfehler: Ich habe zwei Chancen (Süden <Katex tex="S" /> und Norden
 				<Katex tex="N" />) und will die Wahrscheinlichkeit, dass <b>mindestens eine</b> davon eintritt:
 				<Katex tex="P(S\cup N)" />.
 			</p>
 
 			<p>
 				Wenn man einfach <Katex tex="p_S+p_N" /> rechnet, kann das schiefgehen, weil man den Fall
-				<i>„beide treten ein“</i> doppelt zaehlt. Im Extrem landet man sogar bei
+				<i>„beide treten ein“</i> doppelt zählt. Im Extrem landet man sogar bei
 				<Katex tex="p>100\\%" /> (z.B. <Katex tex="0{,}7+0{,}6=1{,}3" />).
 			</p>
 
 			<p>
-				Sauber geht es ueber das <b>Komplement</b>. Statt „mindestens ein Bus“ rechne ich „kein Bus aus
-				Sueden UND kein Bus aus Norden“. Wenn wir (wie im Modell) annehmen, dass die beiden Richtungen
-				unabhaengig sind, darf man diese Komplementwahrscheinlichkeiten multiplizieren:
+				Sauber geht es über das <b>Komplement</b>. Statt „mindestens ein Bus“ rechne ich „kein Bus aus
+				Süden UND kein Bus aus Norden“. Wenn wir (wie im Modell) annehmen, dass die beiden Richtungen
+				unabhängig sind, darf man diese Komplementwahrscheinlichkeiten multiplizieren:
 			</p>
 
 			<div class="kbox">
@@ -123,12 +123,12 @@
 			</p>
 
 			<p>
-				Warum ist bei kleinem <Katex tex="p" /> die Summe trotzdem (naeherungsweise) erlaubt? Weil die exakte
+				Warum ist bei kleinem <Katex tex="p" /> die Summe trotzdem (näherungsweise) erlaubt? Weil die exakte
 				Formel aus Teil 3 beim Ausmultiplizieren fast genau zur Summe wird:
 				<Katex tex="1-(1-p)^2 = 1-(1-2p+p^2)=2p-p^2" />.
 				Der Unterschied zur Addition <Katex tex="2p" /> ist also genau der kleine Korrekturterm
 				<Katex tex="p^2" />. Wenn <Katex tex="p" /> nur wenige Prozent ist, ist <Katex tex="p^2" /> noch viel
-				kleiner und die Naeherung passt sehr gut.
+				kleiner und die Näherung passt sehr gut.
 			</p>
 
 			<ul>
@@ -148,7 +148,7 @@
 
 			<p class="muted">
 				Wenn <Katex tex="p" /> klein ist, ist <Katex tex="p^2" /> noch viel kleiner. Dann darf man
-				naeherungsweise addieren:
+				näherungsweise addieren:
 				<Katex tex="p_{\text{ges}}\approx p_S+p_N" /> bzw. hier <Katex tex="p_{\text{ges}}\approx 2p" />.
 			</p>
 		</div>
@@ -156,7 +156,7 @@
 		<h2 class="mt-8">Teil 5 — Erfolgsformel</h2>
 		<div class="eddie">
 			<p>
-				Erst muss ueberhaupt ein Bus kommen (Sueden oder Norden), dann muss der Fahrer meine D‑Mark annehmen,
+				Erst muss überhaupt ein Bus kommen (Süden oder Norden), dann muss der Fahrer meine D‑Mark annehmen,
 				und dann darf mich der Verfolger nicht erwischen. Darum ist die Erfolgswahrscheinlichkeit:
 			</p>
 
@@ -223,8 +223,8 @@
 				</span>
 				<br />
 				<span class="muted">
-					Mit zwei Richtungen gilt exakt: <Katex tex="P(\text{Bus})=1-(1-p)^2" /> (und fuer kleines
-					<Katex tex="p" /> gilt naeherungsweise <Katex tex="P(\text{Bus})\approx 2p" />).
+					Mit zwei Richtungen gilt exakt: <Katex tex="P(\text{Bus})=1-(1-p)^2" /> (und für kleines
+					<Katex tex="p" /> gilt näherungsweise <Katex tex="P(\text{Bus})\approx 2p" />).
 				</span>
 			</p>
 		</v-card>
@@ -407,7 +407,7 @@ const calc = computed( () => {
 	}
 
 	if ( f < 0 || t < 0 ) {
-		return { ok: false, message: "Busse/Standszeit muessen >= 0 sein." };
+		return { ok: false, message: "Busse/Standszeit müssen >= 0 sein." };
 	}
 
 	if ( t > 60 ) {
@@ -415,13 +415,13 @@ const calc = computed( () => {
 	}
 
 	if ( ![ aa, rr ].every( in01 ) ) {
-		return { ok: false, message: "Werte muessen im Intervall [0,1] liegen." };
+		return { ok: false, message: "Werte müssen im Intervall [0,1] liegen." };
 	}
 
 	const pp = f * t / 60;
 
 	if ( pp > 1 ) {
-		return { ok: false, message: "f*t/60 ist > 1. Das waere mehr als 100% Bus-Zeit. Werte pruefen." };
+		return { ok: false, message: "f*t/60 ist > 1. Das wäre mehr als 100% Bus-Zeit. Werte prüfen." };
 	}
 
 	const issues = [];
@@ -462,7 +462,7 @@ const calc = computed( () => {
 
 const status = computed( () => {
 	if ( !calc.value.ok ) {
-		return { kind: "bad", text: "Eingaben pruefen" };
+		return { kind: "bad", text: "Eingaben prüfen" };
 	}
 
 	if ( calc.value.issues.length ) {

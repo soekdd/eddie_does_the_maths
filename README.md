@@ -11,7 +11,7 @@ Das hier ist eine kleine Vue/Vite-App, die Themen aus *Eddie rechnet* als intera
 ## Was drinsteckt
 
 - Vue 3 + Vite + Vuetify
-- KaTeX fuer Formeln (aus `node_modules`, Fonts werden beim Build mitgenommen)
+- KaTeX für Formeln (aus `node_modules`, Fonts werden beim Build mitgenommen)
 - Hash-Routing (`/#/...`), damit das Ding auch als statische Dateien funktioniert
 
 ## Entwickeln

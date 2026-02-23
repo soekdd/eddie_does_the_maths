@@ -82,7 +82,7 @@
 		<div class="eddie d-flex flex-column ga-3">
 			<p>
 				Wähle ein Werkzeug und probiere die jeweilige Methode direkt aus.
-				Alle vier Module sind so gebaut, dass du den Rechenweg Schritt fuer Schritt nachvollziehen kannst.
+				Alle vier Module sind so gebaut, dass du den Rechenweg Schritt für Schritt nachvollziehen kannst.
 			</p>
 			<v-select
 				v-model="interactiveMode"

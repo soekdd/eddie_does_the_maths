@@ -88,13 +88,13 @@
 			</div>
 
 			<p>
-				Mit der in der Mathematik ueblichen Konvention <Katex inline tex="B_1=-\frac12" />
+				Mit der in der Mathematik üblichen Konvention <Katex inline tex="B_1=-\frac12" />
 				beginnt die Folge z.B. so:
 			</p>
 
 			<div class="kbox">
 				<div class="mono"><Katex inline tex="B_0=1,\;B_1=-\frac12,\;B_2=\frac16,\;B_4=-\frac1{30},\;B_6=\frac1{42}" /></div>
-				<div class="mono">und fuer diese Konvention gilt: <Katex inline tex="B_3=B_5=B_7=\dots=0" />.</div>
+				<div class="mono">und für diese Konvention gilt: <Katex inline tex="B_3=B_5=B_7=\dots=0" />.</div>
 			</div>
 
 			<p>
@@ -105,7 +105,7 @@
 			</p>
 
 			<p>
-				Beispiel aus dem Emulator fuer <Katex inline tex="n=4" />:
+				Beispiel aus dem Emulator für <Katex inline tex="n=4" />:
 			</p>
 
 			<div class="kbox">

@@ -49,7 +49,7 @@
 			<p>
 				Die Daten waren für die Zeit stark: Matrix-Display mit <b>96x64 Pixel</b>,
 				<b>78 Zahlenspeicher</b>, <b>422 Zeichen Programmspeicher</b>.
-				Und der Preis von etwa <b>300 DM</b>&nbsp;(kaufkraftbereinigt, heute etwa 330 €) war fuer diese Funktionsfülle erstaunlich niedrig.
+				Und der Preis von etwa <b>300 DM</b>&nbsp;(kaufkraftbereinigt, heute etwa 330 €) war für diese Funktionsfülle erstaunlich niedrig.
 			</p>
 		</div>
 

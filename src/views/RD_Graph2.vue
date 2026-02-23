@@ -118,7 +118,7 @@
 				:y1="model.axisY + 42"
 				:y2="model.axisY + 42"
 			/>
-			<text :x="model.left + 192" :y="model.axisY + 46">Rueckweg</text>
+			<text :x="model.left + 192" :y="model.axisY + 46">Rückweg</text>
 		</g>
 
 		<text v-if="model.trimmed"
@@ -337,7 +337,7 @@ function buildLightModel() {
 			kind:    "error",
 			width:   920,
 			height:  170,
-			message: "Bitte gueltige Eingaben fuer die Light-Touren setzen."
+			message: "Bitte gültige Eingaben für die Light-Touren setzen."
 		};
 	}
 
@@ -481,7 +481,7 @@ function buildClassicModel() {
 			kind:    "error",
 			width:   920,
 			height:  180,
-			message: "Bitte gueltige Werte fuer das Mehrdepot-Modell setzen."
+			message: "Bitte gültige Werte für das Mehrdepot-Modell setzen."
 		};
 	}
 

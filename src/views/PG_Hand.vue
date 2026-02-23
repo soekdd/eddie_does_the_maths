@@ -37,9 +37,7 @@ type HandCard = {
 const props = withDefaults( defineProps<{
 	cards: HandCard[];
 	canRemoveCard?: boolean;
-}>(), {
-	canRemoveCard: false
-} );
+}>(), { canRemoveCard: false } );
 
 const emit = defineEmits<{
 	( e: "remove-card", index: number ): void;

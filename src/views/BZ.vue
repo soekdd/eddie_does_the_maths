@@ -154,13 +154,13 @@
 				<v-col cols="12" md="4">
 					<v-card class="compareCard pa-4" variant="outlined">
 						<Katex as="div" display :tex="`k_{\\text{ruhig}}=${kFmt( inputs.kRuhig, 1 )}`" />
-						<p class="cellNote">kleiner Zuschlag fuer ruhige Last</p>
+						<p class="cellNote">kleiner Zuschlag für ruhige Last</p>
 					</v-card>
 				</v-col>
 				<v-col cols="12" md="4">
 					<v-card class="compareCard pa-4" variant="outlined">
 						<Katex as="div" display :tex="`k_{\\text{knall}}=${kFmt( inputs.kKnall, 1 )}`" />
-						<p class="cellNote">groesserer Zuschlag fuer knallige Last</p>
+						<p class="cellNote">groesserer Zuschlag für knallige Last</p>
 					</v-card>
 				</v-col>
 				<v-col cols="12" md="4">
@@ -197,7 +197,7 @@
 			<v-row dense>
 				<v-col cols="12" md="4">
 					<v-card class="compareCard pa-4" variant="outlined">
-						<p>Schwer, aber gemuetlich.</p>
+						<p>Schwer, aber gemütlich.</p>
 					</v-card>
 				</v-col>
 				<v-col cols="12" md="4">
@@ -207,7 +207,7 @@
 				</v-col>
 				<v-col cols="12" md="4">
 					<v-card class="compareCard pa-4" variant="outlined">
-						<p>Ein Zuschlag fuer alles.</p>
+						<p>Ein Zuschlag für alles.</p>
 					</v-card>
 				</v-col>
 			</v-row>
@@ -219,15 +219,15 @@
 			</ul>
 		</div>
 
-		<h2 id="fazit" class="mt-8">Fazit (verstaendlich und ehrlich)</h2>
+		<h2 id="fazit" class="mt-8">Fazit</h2>
 		<div class="eddie">
 			<ul>
 				<li><strong>TGL-Denke:</strong> nicht nur „wie schwer“, sondern auch „wie passiert es?“</li>
-				<li><strong>DIN (damals):</strong> ein Zuschlag fuer alles, robust und einfach</li>
+				<li><strong>DIN (damals):</strong> ein Zuschlag für alles, robust und einfach</li>
 			</ul>
 			<p>
 				Kurz gesagt: TGL wirkt feiner (<Katex tex="\text{setzt sich}\neq \text{springt}" />),
-				DIN (damals) grober, dafuer leichter anzuwenden. Heute unterschiedet die DIN auch nach Lastcharakter.
+				DIN (damals) grober, dafür leichter anzuwenden. Heute unterschiedet die DIN auch nach Lastcharakter.
 			</p>
 		</div>
 	</template>

@@ -16,7 +16,7 @@
 		<h2 id="willkommen">Willkommen</h2>
 		<div class="eddie">
 			<p>
-				Hey, ich bin Eddie und wenn du mein Buch kennst, weißt du: Meine Flucht aus der DDR ist kein
+				Hey, ich bin Eddie, und wenn du mein Buch kennst, weißt du: Meine Flucht aus der DDR ist kein
 				Zufall, sondern ein Plan aus Papier, Mut und Mathe.
 			</p>
 			<p>
@@ -25,7 +25,14 @@
 			</p>
 			<p>
 				Genau darum gibt’s <strong>Eddie rechnet</strong>: damit du siehst, wie Mathe im echten Leben
-				plötzlich über Freiheit, Richtung und nächste Schritte entscheidet.
+				plötzlich über Freiheit, Richtung und die nächsten Schritte entscheidet.
+			</p>
+			<p>
+				In den einzelnen Kapiteln werden all die Situationen meiner Flucht aufgegriffen, in denen ich mich
+				mit Mathe irgendwie gerettet habe. Im Buch hätte das gestört, aber hier habe ich den Raum, meine
+				Gedanken und Rechnungen zu vertiefen. Damit du mir nicht nur beim Denken zusehen musst, gibt es am Ende jedes
+				Kapitels einen interaktiven Teil, in dem du die Rechnung selbst ausprobieren kannst. Steinalte
+				Computer werden wieder zum Leben erweckt, und noch ältere Segelschiffe werden sinken.
 			</p>
 			<p>Und nun viel Spaß....</p>
 
