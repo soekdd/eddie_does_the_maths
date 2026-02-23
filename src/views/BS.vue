@@ -100,9 +100,8 @@
 			</p>
 			<p>Rechteck-Formeln und Geometrie:</p>
 			<div class="kbox">
-				<Katex as="div" display tex="I_{x,\text{Rechteck}} = \frac{b\,h^3}{12}" />
-				<Katex as="div" display tex="A=b\,h" />
-				<Katex as="div" display tex="h_w = h - 2t_f" />
+				<Katex as="div" aligned display 
+				tex="I_{x,\text{Rechteck}} &= \frac{b\,h^3}{12}\\A&=b\,h\\h_w &= h - 2t_f" />
 			</div>
 			<div class="kbox">
 				<Katex as="div" display tex="I_x = 2\left(\frac{b_f t_f^3}{12}+b_f t_f\left(\frac{h}{2}-\frac{t_f}{2}\right)^2\right)+\frac{t_w(h-2t_f)^3}{12}" />
@@ -257,14 +256,13 @@
 		<h3 id="beispiel" class="mt-2">3) Beispielwerte</h3>
 		<div class="eddie">
 			<ul>
-				<li><Katex inline :tex="`h=${kFmt(h,0)}\\,\\text{mm}`" /></li>
+				<li><Katex aligned inline :tex="`h=${kFmt(h,0)}\\,\\text{mm}`" /></li>
 				<li><Katex inline :tex="`b_f=${kFmt(bf,0)}\\,\\text{mm}`" /></li>
 				<li><Katex inline :tex="`t_f=${kFmt(tf,0)}\\,\\text{mm}`" /></li>
 				<li><Katex inline :tex="`t_w=${kFmt(tw,0)}\\,\\text{mm}`" /></li>
 			</ul>
 			<div class="kbox">
-				<Katex as="div" display :tex="texZS" />
-				<Katex as="div" display :tex="texD" />
+				<Katex as="div" aligned display :tex="texZS + '\\\\' +  texD" />
 			</div>
 		</div>
 
@@ -272,11 +270,7 @@
 		<div class="eddie">
 			<h4>4.1 Flansche (mit Steiner)</h4>
 			<div class="kbox">
-				<Katex as="div" display :tex="texAf" />
-				<Katex as="div" display :tex="texIfs" />
-				<Katex as="div" display :tex="texAfd2" />
-				<Katex as="div" display :tex="texIf" />
-				<Katex as="div" display :tex="texIFlanges" />
+				<Katex as="div" aligned display :tex="texAf+ '\\\\' + texIfs+ '\\\\' + texAfd2+ '\\\\' + texIf+ '\\\\' + texIFlanges" />
 			</div>
 
 			<h4>4.2 Steg (ohne Steiner)</h4>
@@ -289,18 +283,15 @@
 		<h3 id="ergebnis" class="mt-8">5) Ergebnis</h3>
 		<div class="eddie">
 			<div class="kbox">
-				<Katex as="div" display :tex="texIx" />
-				<Katex as="div" display :tex="texIxCm4" />
+				<Katex aligned as="div" display :tex="texIx+ '\\\\' + texIxCm4" />
 			</div>
 		</div>
 
 		<h3 id="bonus" class="mt-8">6) Bonus: Widerstandsmoment</h3>
 		<div class="eddie">
 			<div class="kbox">
-				<Katex as="div" display tex="W_x = \frac{I_x}{c} = \frac{I_x}{h/2}" />
-				<Katex as="div" display :tex="texWx" />
-				<Katex as="div" display :tex="texWxCm3" />
-				<Katex as="div" display tex="\sigma_{\max}=\frac{M_{\max}}{W_x}" />
+				<Katex as="div" aligned display 
+					:tex="'W_x &= \\frac{I_x}{c} = \\frac{I_x}{h/2} \\\\' +  texWx + '\\\\' + texWxCm3 + '\\\\\\sigma_{\max}&=\\frac{M_{\\max}}{W_x}'" />
 			</div>
 		</div>
 	</template>
@@ -463,25 +454,25 @@ function w3Fmt(
 }
 
 const texZS = computed( () =>
-	`z_S = \\frac{h}{2} = \\frac{${kFmt( h.value, 0 )}}{2} = ${kFmt( zS.value, 1 )}\\,\\text{mm}` );
+	`z_S &= \\frac{h}{2} = \\frac{${kFmt( h.value, 0 )}}{2} &= ${kFmt( zS.value, 1 )}\\,\\text{mm}` );
 const texD = computed( () =>
-	`d = \\frac{h}{2} - \\frac{t_f}{2} = ${kFmt( zS.value, 1 )} - ${
-		kFmt( tf.value / 2, 1 )} = ${kFmt( d.value, 1 )}\\,\\text{mm}` );
+	`d &= \\frac{h}{2} - \\frac{t_f}{2} = ${kFmt( zS.value, 1 )} - ${
+		kFmt( tf.value / 2, 1 )} &= ${kFmt( d.value, 1 )}\\,\\text{mm}` );
 
 const texAf = computed( () =>
-	`A_f = b_f t_f = ${kFmt( bf.value, 0 )}\\cdot${kFmt( tf.value, 0 )} = ${kFmt( Af.value, 0 )}\\,\\text{mm}^2` );
+	`A_f &= b_f t_f = ${kFmt( bf.value, 0 )}\\cdot${kFmt( tf.value, 0 )} &= ${kFmt( Af.value, 0 )}\\,\\text{mm}^2` );
 const texIfs = computed( () => {
 	const factor = pickI4Factor( Ifs.value );
-	return `I_{x,f,S} = \\frac{b_f t_f^3}{12} = \\frac{${
-		kFmt( bf.value, 0 )}\\cdot ${kFmt( tf.value, 0 )}^3}{12} = ${
+	return `I_{x,f,S} &= \\frac{b_f t_f^3}{12} = \\frac{${
+		kFmt( bf.value, 0 )}\\cdot ${kFmt( tf.value, 0 )}^3}{12} &= ${
 		i4Fmt(
 			Ifs.value, factor, 0
 		)}\\,${i4Unit( factor )}`;
 } );
 const texAfd2 = computed( () => {
 	const factor = pickI4Factor( Afd2.value );
-	return `A_f d^2 = ${kFmt( Af.value, 0 )}\\cdot ${
-		kFmt( d.value, 1 )}^2 = ${i4Fmt(
+	return `A_f d^2 &= ${kFmt( Af.value, 0 )}\\cdot ${
+		kFmt( d.value, 1 )}^2 &= ${i4Fmt(
 		Afd2.value, factor, 2
 	)}\\,${i4Unit( factor )}`;
 } );
@@ -489,22 +480,22 @@ const texIf = computed( () => {
 	const factor = pickI4Factor(
 		Ifs.value, Afd2.value, If.value
 	);
-	return `I_{x,f} = I_{x,f,S} + A_f d^2 = ${
+	return `I_{x,f} &= I_{x,f,S} + A_f d^2 = ${
 		i4Fmt(
 			Ifs.value, factor, 0
 		)} + ${i4Fmt(
 		Afd2.value, factor, 2
-	)} = ${
+	)} &= ${
 		i4Fmt(
 			If.value, factor, 2
 		)}\\,${i4Unit( factor )}`;
 } );
 const texIFlanges = computed( () => {
 	const factor = pickI4Factor( If.value, iFlanges.value );
-	return `I_{x,\\text{Flansche}} = 2I_{x,f} = 2\\cdot ${
+	return `I_{x,\\text{Flansche}} &= 2I_{x,f} = 2\\cdot ${
 		i4Fmt(
 			If.value, factor, 2
-		)} = ${i4Fmt(
+		)} &= ${i4Fmt(
 		iFlanges.value, factor, 2
 	)}\\,${i4Unit( factor )}`;
 } );
@@ -522,7 +513,7 @@ const texIx = computed( () => {
 	const factor = pickI4Factor(
 		iFlanges.value, Iw.value, Ix.value
 	);
-	return `I_x = I_{x,\\text{Flansche}} + I_{x,w} = ${
+	return `I_x = I_{x,\\text{Flansche}} + I_{x,w} &= ${
 		i4Fmt(
 			iFlanges.value, factor, 2
 		)} + ${i4Fmt(
@@ -533,7 +524,7 @@ const texIx = computed( () => {
 } );
 const texIxCm4 = computed( () => {
 	const factor = pickI4Factor( Ix.value );
-	return `I_x = ${i4Fmt(
+	return `I_x &= ${i4Fmt(
 		Ix.value, factor, 2
 	)}\\,${i4Unit( factor )}`;
 } );
@@ -541,7 +532,7 @@ const texIxCm4 = computed( () => {
 const texWx = computed( () => {
 	const iFactor = pickI4Factor( Ix.value );
 	const wFactor = pickW3Factor( Wx.value );
-	return `W_x = \\frac{I_x}{h/2} = \\frac{${
+	return `W_x &= \\frac{I_x}{h/2} = \\frac{${
 		i4Fmt(
 			Ix.value, iFactor, 2
 		)}}{${kFmt( c.value, 1 )}} = ${
@@ -551,7 +542,7 @@ const texWx = computed( () => {
 } );
 const texWxCm3 = computed( () => {
 	const factor = pickW3Factor( Wx.value );
-	return `W_x = ${w3Fmt(
+	return `W_x &= ${w3Fmt(
 		Wx.value, factor, 2
 	)}\\,${w3Unit( factor )}`;
 } );

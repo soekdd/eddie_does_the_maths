@@ -111,13 +111,9 @@
 			<div class="kbox">
 				<Katex
 					as="div"
+					aligned
 					display
-					tex="A_0=-\frac{7}{18},\;A_1=4,\;A_3=14,\;A_5=\frac{28}{3}"
-				/>
-				<Katex
-					as="div"
-					display
-					tex="B_7=-\Bigl(-\frac{7}{18}+4\!\left(-\frac12\right)+14\!\left(\frac16\right)+\frac{28}{3}\!\left(-\frac1{30}\right)\Bigr)=\frac{11}{30}"
+					tex="A_0&=-\frac{7}{18},\;A_1=4,\;A_3=14,\;A_5=\frac{28}{3} \\ B_7&=-\Bigl(-\frac{7}{18}+4\!\left(-\frac12\right)+14\!\left(\frac16\right)+\frac{28}{3}\!\left(-\frac1{30}\right)\Bigr)=\frac{11}{30}"
 				/>
 			</div>
 		</div>
@@ -133,8 +129,7 @@
 			<h3>Schritt 1 - B1</h3>
 			<p>Für <Katex inline tex="m=1" /> gilt:</p>
 			<div class="kbox">
-				<Katex as="div" display tex="B_0 + 2B_1 = 0" />
-				<Katex as="div" display tex="B_1 = -\frac{B_0}{2} = -\frac12" />
+				<Katex as="div" aligned display tex="B_0 + 2B_1 &= 0 \\ B_1 &= -\frac{B_0}{2} = -\frac12" />
 			</div>
 			<p>
 				Im Store steht danach: <Katex inline tex="V[1]=B_1=-\frac12" />.
@@ -143,9 +138,7 @@
 			<h3>Schritt 2 - B2</h3>
 			<p>Für <Katex inline tex="m=2" />:</p>
 			<div class="kbox">
-				<Katex as="div" display tex="B_0 + 3B_1 + 3B_2 = 0" />
-				<Katex as="div" display tex="3B_2 = -B_0 - 3B_1" />
-				<Katex as="div" display tex="B_2=\frac{-B_0-3B_1}{3}=\frac16" />
+				<Katex as="div" aligned display tex="B_0 + 3B_1 + 3B_2 &= 0\\3B_2 &= -B_0 - 3B_1\\B_2&=\frac{-B_0-3B_1}{3}=\frac16" />
 			</div>
 			<p>
 				Im Store steht danach: <Katex inline tex="V[2]=B_2=\frac16" />.
