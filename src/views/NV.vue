@@ -93,14 +93,17 @@
 				:items="interactiveModes"
 				label="Interaktives Werkzeug"
 			/>
-			<component :is="activeInteractiveComponent" />
+			<NV_Schnitt v-if="interactiveMode === 'schnitt'" />
+			<NV_Azimut v-else-if="interactiveMode === 'azimut'" />
+			<NV_Zeit v-else-if="interactiveMode === 'zeit'" />
+			<NV_Bayes v-else />
 		</div>
 	</template>
 </AppFrame>
 </template>
 
 <script setup>
-import { computed, ref } from "vue";
+import { ref } from "vue";
 import titleImg from "@/images/NV.webp";
 import NV_Azimut from "./NV_Azimut.vue";
 import NV_Bayes from "./NV_Bayes.vue";
@@ -422,16 +425,6 @@ const interactiveModes = [
 const interactiveMode = ref( "schnitt" );
 const openLessonPanel = ref( 0 );
 
-const interactiveComponentMap = {
-	schnitt: NV_Schnitt,
-	azimut:  NV_Azimut,
-	zeit:    NV_Zeit,
-	bayes:   NV_Bayes
-};
-
-const activeInteractiveComponent = computed( () => {
-	return interactiveComponentMap[ interactiveMode.value ] ?? NV_Schnitt;
-} );
 </script>
 
 <style scoped>

@@ -17,21 +17,26 @@
 					<div>
 						<h1 v-if="titleText" class="titleRow">
 							<span>{{ titleText }}</span>
-							<v-tooltip
-								v-if="difficultyStars"
-								location="bottom"
-								:text="difficultyLabel"
-							>
-								<template #activator="{ props: tooltipProps }">
-									<span class="difficultyStars" :class="{ 'is-wip': routeIsWip }" v-bind="tooltipProps">
-										{{ difficultyStars }}
-									</span>
-								</template>
-							</v-tooltip>
+							<template v-if="difficultyStars">
+								<v-tooltip
+									v-if="hasMounted"
+									location="bottom"
+									:text="difficultyLabel"
+								>
+									<template #activator="{ props: tooltipProps }">
+										<span class="difficultyStars" :class="{ 'is-wip': routeIsWip }" v-bind="tooltipProps">
+											{{ difficultyStars }}
+										</span>
+									</template>
+								</v-tooltip>
+								<span v-else class="difficultyStars" :class="{ 'is-wip': routeIsWip }">
+									{{ difficultyStars }}
+								</span>
+							</template>
 						</h1>
 						<p v-if="subChapterEntries.length" class="sub">
 							<template v-for="( chapter, index ) in subChapterEntries" :key="chapter.id">
-								<router-link :to="{ path: route.path, hash: `#${chapter.id}` }">
+								<router-link :to="{ path: routePathForHashLinks, hash: `#${chapter.id}` }">
 									{{ chapter.label }}
 								</router-link>
 								<span v-if="index < subChapterEntries.length - 1"> • </span>
@@ -150,6 +155,7 @@
 	</v-main>
 
 	<v-dialog
+		v-if="hasMounted"
 		v-model="showReportErrorDialog"
 		content-class="legalDialogContent"
 		max-width="900"
@@ -168,6 +174,7 @@
 	</v-dialog>
 
 	<v-dialog
+		v-if="hasMounted"
 		v-model="showImpressumDialog"
 		content-class="legalDialogContent"
 		max-width="900"
@@ -186,6 +193,7 @@
 	</v-dialog>
 
 	<v-dialog
+		v-if="hasMounted"
 		v-model="showPrivacyDialog"
 		content-class="legalDialogContent"
 		max-width="900"
@@ -228,10 +236,11 @@ const props = defineProps( {
 const { width } = useDisplay();
 const slots = useSlots();
 const route = useRoute();
+const hasMounted = ref( false );
 
 // Vuetify's built-in "mobile" flag defaults to < lg (1280px), which is too wide for our
 // header-wrapping case. Match the app's existing "mobile-ish" breakpoint (see eddie.css).
-const isMobile = computed( () => width.value < 860 );
+const isMobile = computed( () => hasMounted.value ? width.value < 860 : false );
 const appBarHeight = computed( () => isMobile.value ? 108 : 72 );
 
 const errorMessage = computed( () => {
@@ -272,7 +281,19 @@ const showPartsCard = computed( () => hasInteractivePart.value || hasCalculation
 const showReportErrorDialog = ref( false );
 const showImpressumDialog = ref( false );
 const showPrivacyDialog = ref( false );
-const showHomeBadge = computed( () => route.path !== "/" );
+
+function normalizeRoutePathForLinks( path ) {
+	const normalized = String( path ?? "/" ).trim() || "/";
+
+	if ( normalized === "/" ) {
+		return "/";
+	}
+
+	return normalized.replace( /\/+$/u, "" ) || "/";
+}
+
+const routePathForHashLinks = computed( () => normalizeRoutePathForLinks( route.path ) );
+const showHomeBadge = computed( () => routePathForHashLinks.value !== "/" );
 const shortText = computed( () => {
 	const routeName = typeof route.name === "string" ? route.name : "";
 	const normalizedRouteName = routeName.trim().toUpperCase();
@@ -327,6 +348,20 @@ const subChapterEntries = computed( () => Object.entries( props.subChapter ?? {}
 const showFormalTitle = computed( () =>
 	Boolean( shortText.value || titleText.value || subChapterEntries.value.length ) );
 const buildDateRaw = String( import.meta.env.VITE_BUILD_DATE ?? "" ).trim();
+
+function pad2( value ) {
+	return String( value ).padStart( 2, "0" );
+}
+
+function formatUtcBuildDate( date ) {
+	const day = pad2( date.getUTCDate() );
+	const month = pad2( date.getUTCMonth() + 1 );
+	const year = date.getUTCFullYear();
+	const hours = pad2( date.getUTCHours() );
+	const minutes = pad2( date.getUTCMinutes() );
+	return `${day}.${month}.${year}, ${hours}:${minutes} GMT`;
+}
+
 const buildDateText = computed( () => {
 	if ( !buildDateRaw ) {
 		return "";
@@ -338,16 +373,12 @@ const buildDateText = computed( () => {
 		return buildDateRaw;
 	}
 
-	const formattedDate = new Intl.DateTimeFormat( "de-DE", {
-		dateStyle: "medium",
-		timeStyle: "short",
-		timeZone:  "UTC"
-	} ).format( parsedDate );
-
-	return `${formattedDate} GMT`;
+	return formatUtcBuildDate( parsedDate );
 } );
 
 onMounted( () => {
+	hasMounted.value = true;
+
 	if ( route.hash ) {
 		return;
 	}

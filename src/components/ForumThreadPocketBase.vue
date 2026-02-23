@@ -190,6 +190,7 @@
 	</div>
 
 	<v-dialog
+		v-if="clientReady"
 		v-model="showForumRulesDialog"
 		content-class="forumRulesDialogContent"
 		max-width="900"
@@ -252,6 +253,7 @@ const replyBody = ref( "" );
 const submittingReply = ref( false );
 const acceptedForumRules = ref( false );
 const showForumRulesDialog = ref( false );
+const clientReady = ref( false );
 
 const authorStorageKey = computed( () => `pb_forum_author_${props.collectionName}` );
 const forumRulesHtml = computed( () => netiquetteHtml.trim() || "<p>Forumsregeln sind derzeit nicht verfügbar.</p>" );
@@ -486,6 +488,8 @@ watch( authorName, ( val ) => {
 } );
 
 onMounted( async() => {
+	clientReady.value = true;
+
 	try {
 		authorName.value = localStorage.getItem( authorStorageKey.value ) || "";
 	} catch {

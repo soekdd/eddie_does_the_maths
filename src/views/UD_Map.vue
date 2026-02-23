@@ -58,7 +58,7 @@
  
 import {
 	computed,
-	getCurrentInstance
+	useId
 } from "vue";
 import countries from "../utils/ud_countries.mjs";
 
@@ -71,9 +71,7 @@ const props = defineProps( {
 	waterColor:         { type: String, default: null }
 } );
 
-
-const instance = getCurrentInstance();
-const landClipPathId = `ud-land-clip-${instance?.uid ?? 0}`;
+const landClipPathId = `ud-land-clip-${useId()}`;
 const THEME_SHORE_COLOR = "rgb(var(--v-theme-warning, 245, 158, 11))";
 const THEME_WATER_COLOR = "rgb(var(--v-theme-info, 37, 99, 235))";
 const resolvedShoreColor = computed( () => props.shoreColor || THEME_SHORE_COLOR );

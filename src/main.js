@@ -1,37 +1,44 @@
-import { createApp, h } from "vue";
+import { h, onMounted } from "vue";
 import { RouterView } from "vue-router";
+import { ViteSSG } from "vite-ssg";
 import { VApp } from "vuetify/components";
 import AppFrame from "@/App.vue";
 import ImageZoomer from "@/components/ImageZoomer.vue";
 import Katex from "@/components/Katex.vue";
+import RouteSeoHead from "@/components/RouteSeoHead.vue";
 import "katex/dist/katex.min.css";
-import { router } from "@/router.js";
+import { routes, scrollBehavior } from "@/router.js";
 import { vuetify } from "@/utils/vuetify";
 import "@/eddie.css";
 
-// URL conveniences:
-// - Rewrite "/?DG" -> "/#DG" (drops the query string)
-// - Rewrite "/#DG" -> "/#/DG" (Vue Router hash history format)
-{
+function rewriteLegacyShortcuts() {
 	const loc = globalThis.location;
 
-	if ( loc ) {
-		const shortQuery = loc.search.match( /^\?([A-Z0-9]{2})$/ )?.[ 1 ];
+	if ( !loc ) {
+		return;
+	}
 
-		if ( shortQuery ) {
-			loc.replace( `${loc.pathname}#${shortQuery}` );
-		}
+	const toTopicPath = ( code ) => {
+		const basePath = loc.pathname.endsWith( "/" ) ? loc.pathname.slice( 0, -1 ) : loc.pathname;
+		return `${basePath}/${code}`.replace( /\/{2,}/g, "/" );
+	};
 
-		const shortHash = loc.hash.match( /^#([A-Z0-9]{2})$/ )?.[ 1 ];
+	const shortQuery = loc.search.match( /^\?([A-Z0-9]{2})$/ )?.[ 1 ];
 
-		if ( shortHash ) {
-			loc.replace( `#/${shortHash}` );
-		}
+	if ( shortQuery ) {
+		loc.replace( toTopicPath( shortQuery ) );
+		return;
+	}
+
+	const shortHash = loc.hash.match( /^#\/?([A-Z0-9]{2})$/ )?.[ 1 ];
+
+	if ( shortHash ) {
+		loc.replace( toTopicPath( shortHash ) );
 	}
 }
 
-// Vuetify theme: follow system dark/light mode automatically.
-{
+// Keep the active theme synchronized with the OS preference.
+function setupThemeSync() {
 	const mql = globalThis.matchMedia?.( "(prefers-color-scheme: dark)" );
 	const nameFromSystem = () => mql?.matches ? "eddieDark" : "eddieLight";
 
@@ -71,21 +78,56 @@ import "@/eddie.css";
 }
 
 const Root = {
-	name:   "Root",
-	render: () => h(
-		VApp, null, { default: () => h( RouterView ) }
-	)
+	name: "Root",
+	setup() {
+		if ( !import.meta.env.SSR ) {
+			onMounted( () => {
+				setupThemeSync();
+			} );
+		}
+
+		const renderSafeRouterView = () => h(
+			RouterView,
+			null,
+			{
+				default: ( { Component } ) => ( Component ? h( Component ) : null )
+			}
+		);
+
+		return () => h(
+			VApp,
+			null,
+			{ default: () => [ h( RouteSeoHead ), renderSafeRouterView() ] }
+		);
+	}
 };
 
-const app = createApp( Root );
 const pbUrl = "https://pb.soek.de";
+const routerBase = import.meta.env.BASE_URL || "/";
 
-// Global layout component so views don't need to import it explicitly.
-app.component( "AppFrame", AppFrame );
-// eslint-disable-next-line vue/multi-word-component-names
-app.component( "Katex", Katex );
-app.component( "ImageZoomer", ImageZoomer );
-app.provide( "pbUrl", pbUrl );
+export const createApp = ViteSSG(
+	Root,
+	{
+		base: routerBase,
+		routes,
+		scrollBehavior
+	},
+	( { app, isClient } ) => {
+		app.use( vuetify );
 
-app.use( router ).use( vuetify )
-	.mount( "#app" );
+		// Global layout component so views don't need to import it explicitly.
+		app.component( "AppFrame", AppFrame );
+		// eslint-disable-next-line vue/multi-word-component-names
+		app.component( "Katex", Katex );
+		app.component( "ImageZoomer", ImageZoomer );
+		app.provide( "pbUrl", pbUrl );
+
+		if ( isClient ) {
+			rewriteLegacyShortcuts();
+		}
+	},
+	{
+		hydration: true,
+		useHead:   true
+	}
+);

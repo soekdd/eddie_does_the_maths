@@ -4,9 +4,7 @@
 		'einleitung': 'Einleitung',
 		'einfuhrungsbeispiel': 'Einführungsbeispiel',
 		'erklarung': 'Erklärung',
-		'rechner': 'Rechner',
-		'schritt-fur-schritt': 'Schritt-für-Schritt',
-		'losungstabelle': 'Lösungstabelle'
+		'rechner': 'Rechner'
 	}"
 	title="Eddie rechnet: Lineare diophantische Gleichung"
 >

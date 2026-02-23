@@ -45,17 +45,22 @@
 					>
 						<v-icon :icon="tileStatusIcon(it)" size="18" />
 					</span>
-					<v-tooltip
-						v-if="it.difficulty !== null"
-						location="bottom"
-						:text="difficultyLabel(it.difficulty)"
-					>
-						<template #activator="{ props: tooltipProps }">
-							<span class="tile-difficulty" :class="{ 'is-wip': it.wip }" v-bind="tooltipProps">
-								{{ difficultyStars(it.difficulty) }}
-							</span>
-						</template>
-					</v-tooltip>
+					<template v-if="it.difficulty !== null">
+						<v-tooltip
+							v-if="hasMounted"
+							location="bottom"
+							:text="difficultyLabel(it.difficulty)"
+						>
+							<template #activator="{ props: tooltipProps }">
+								<span class="tile-difficulty" :class="{ 'is-wip': it.wip }" v-bind="tooltipProps">
+									{{ difficultyStars(it.difficulty) }}
+								</span>
+							</template>
+						</v-tooltip>
+						<span v-else class="tile-difficulty" :class="{ 'is-wip': it.wip }">
+							{{ difficultyStars(it.difficulty) }}
+						</span>
+					</template>
 					<span
 						v-if="tileCommentCount(it) > 0"
 						class="tile-comment-indicator"
@@ -76,19 +81,17 @@
 </template>
 <script setup>
 import {
-	computed, inject, ref, watch
+	computed, inject, onMounted, ref, watch
 } from "vue";
-import { useRoute, useRouter } from "vue-router";
+import { useRoute } from "vue-router";
 import PocketBase from "pocketbase";
+import { routes as appRoutes } from "@/router.js";
 
 const props = defineProps( { title: { type: String, default: "Die aktuell ausgearbeiteten Inhalte sind:" } } );
 
 const route = useRoute();
-const router = useRouter();
 const TILE_SIZE_PX = 195;
-const commentBubbleIcon =
-	"svg:M9,22A1,1 0 0,1 8,21V18H4A2,2 0 0,1 2,16V4A2,2 0 0,1 4," +
-	"2H20A2,2 0 0,1 22,4V16A2,2 0 0,1 20,18H13L9,22M4,4V16H10V19.08L12.83,16H20V4H4Z";
+const commentBubbleIcon = "mdi-message-outline";
 const pbUrl = inject( "pbUrl", "" );
 const pb = pbUrl ? new PocketBase( pbUrl ) : null;
 
@@ -149,6 +152,16 @@ function toForumKey( value ) {
 		.slice( 0, 2 );
 }
 
+function normalizeRouteLinkPath( path ) {
+	const normalizedPath = String( path ?? "/" ).trim() || "/";
+
+	if ( normalizedPath === "/" ) {
+		return "/";
+	}
+
+	return normalizedPath.endsWith( "/" ) ? normalizedPath : `${normalizedPath}/`;
+}
+
 function escapeFilterString( value ) {
 	return `"${String( value ).replace( /\\/g, "\\\\" )
 		.replace( /"/g, "\\\"" )}"`;
@@ -163,17 +176,39 @@ const bookTabs = computed( () => Object.values( books )
 	.filter( ( tab ) => tab.value !== null && tab.short.trim() )
 	.sort( ( a, b ) => a.value - b.value ) );
 
-const activeBook = ref( null );
+function resolveActiveBook(
+	tabs, routeBook, currentBook
+) {
+	if ( !tabs.length ) {
+		return null;
+	}
+
+	const availableBooks = tabs.map( ( tab ) => tab.value );
+
+	if ( availableBooks.includes( currentBook ) ) {
+		return currentBook;
+	}
+
+	const preferredBook = normalizeBookIndex( routeBook );
+	return availableBooks.includes( preferredBook ) ? preferredBook : availableBooks[ 0 ];
+}
+
+const activeBook = ref( resolveActiveBook(
+	bookTabs.value, route?.meta?.book, null
+) );
+const hasMounted = ref( false );
+
+onMounted( () => {
+	hasMounted.value = true;
+} );
 
 const items = computed( () => {
-	const routes = router.getRoutes();
-
-	return routes
+	return appRoutes
 		.filter( ( r ) => r?.meta?.index === true && typeof r.meta?.title === "string" && r.meta.title.trim() )
 		.map( ( r ) => ( {
 			key:        String( r.name ?? r.path ),
 			title:      String( r.meta.title ).replace( /&shy;/gi, "\u00AD" ),
-			to:         r.name ? { name: r.name } : r.path,
+			to:         normalizeRouteLinkPath( r.path ),
 			order:      Number.isFinite( r?.meta?.order ) ? Number( r.meta.order ) : null,
 			path:       r.path,
 			forumKey:   toForumKey( r.name ),
@@ -187,7 +222,11 @@ const items = computed( () => {
 		} ) )
 		.sort( ( a, b ) => {
 			if ( a.order !== null && b.order !== null ) {
-				return a.order - b.order;
+				if ( a.order !== b.order ) {
+					return a.order - b.order;
+				}
+
+				return a.path.localeCompare( b.path, "en" );
 			}
 
 			if ( a.order !== null ) {
@@ -198,7 +237,8 @@ const items = computed( () => {
 				return 1;
 			}
 
-			return a.title.localeCompare( b.title, "de" );
+			const byTitle = a.title.localeCompare( b.title, "de" );
+			return byTitle !== 0 ? byTitle : a.path.localeCompare( b.path, "en" );
 		} );
 } );
 
@@ -210,20 +250,10 @@ watch(
 	[
 		bookTabs, () => route?.meta?.book
 	], ( [ tabs, routeBook ] ) => {
-		if ( !tabs.length ) {
-			activeBook.value = null;
-			return;
-		}
-
-		const availableBooks = tabs.map( ( tab ) => tab.value );
-
-		if ( availableBooks.includes( activeBook.value ) ) {
-			return;
-		}
-
-		const preferredBook = normalizeBookIndex( routeBook );
-		activeBook.value = availableBooks.includes( preferredBook ) ? preferredBook : availableBooks[ 0 ];
-	}, { immediate: true }
+		activeBook.value = resolveActiveBook(
+			tabs, routeBook, activeBook.value
+		);
+	}
 );
 
 async function refreshCommentCounts( nextItems ) {
@@ -429,11 +459,11 @@ function tileStatusIcon( item ) {
 	}
 
 	if ( item.error ) {
-		return "$error";
+		return "mdi-alert-circle-outline";
 	}
 
 	if ( item.warning ) {
-		return "$warning";
+		return "mdi-alert-outline";
 	}
 
 	return "";

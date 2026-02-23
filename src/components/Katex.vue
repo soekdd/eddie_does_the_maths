@@ -10,8 +10,12 @@ const props = defineProps( {
 } );
 
 const html = computed( () => katexHTML( props.tex, props.display ) );
+const safeAs = computed( () => {
+	const tag = typeof props.as === "string" ? props.as.trim() : "";
+	return tag || "span";
+} );
 </script>
 
 <template>
-<component :is="as" v-html="html" />
+<component :is="safeAs" v-html="html" />
 </template>

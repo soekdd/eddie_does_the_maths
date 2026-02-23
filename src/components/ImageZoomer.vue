@@ -13,16 +13,16 @@
 	</div>
 
 	<v-dialog
-		v-if="!props.noZoom"
+		v-if="!props.noZoom && hasMounted"
 		v-model="open"
-		:content-class="smAndDown ? 'zoomerDialogMobile' : undefined"
-		:fullscreen="smAndDown"
+		:content-class="effectiveSmAndDown ? 'zoomerDialogMobile' : undefined"
+		:fullscreen="effectiveSmAndDown"
 		:height="dialogHeight"
 		:max-width="dialogMaxWidth"
 		:width="dialogWidth"
 		@after-enter="fitToViewport"
 	>
-		<v-card class="zoomerCard" :class="{ fullscreen: smAndDown }">
+		<v-card class="zoomerCard" :class="{ fullscreen: effectiveSmAndDown }">
 			<v-card-title class="zoomerTitle">
 				<div class="zoomerTitleText">
 					{{ title || 'Zoom' }}
@@ -75,10 +75,12 @@ const props = defineProps( {
 
 const open = ref( false );
 const { smAndDown } = useDisplay();
+const hasMounted = ref( false );
+const effectiveSmAndDown = computed( () => hasMounted.value ? smAndDown.value : false );
 
-const dialogMaxWidth = computed( () => smAndDown.value ? undefined : props.maxWidth );
-const dialogWidth = computed( () => smAndDown.value ? undefined : "calc(100dvw - 48px)" );
-const dialogHeight = computed( () => smAndDown.value ? undefined : "calc(100dvh - 48px)" );
+const dialogMaxWidth = computed( () => effectiveSmAndDown.value ? undefined : props.maxWidth );
+const dialogWidth = computed( () => effectiveSmAndDown.value ? undefined : "calc(100dvw - 48px)" );
+const dialogHeight = computed( () => effectiveSmAndDown.value ? undefined : "calc(100dvh - 48px)" );
 
 const contentBoxRef = ref( null );
 const fitBoxRef = ref( null );
@@ -255,6 +257,7 @@ watch( effectiveImgAlt, async() => {
 } );
 
 onMounted( async() => {
+	hasMounted.value = true;
 	await nextTick();
 	applyAltEverywhere();
 } );

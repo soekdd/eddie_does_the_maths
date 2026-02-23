@@ -97,7 +97,7 @@
 		</v-col>
 	</v-row>
 
-	<v-dialog v-model="editorOpen" max-width="560">
+	<v-dialog v-if="hasMounted" v-model="editorOpen" max-width="560">
 		<v-card>
 			<v-card-title>
 				{{ editingIndex >= 0 ? "Term bearbeiten" : "Neuen Term erstellen" }}
@@ -158,6 +158,7 @@
 <script setup>
 import {
 	computed,
+	onMounted,
 	reactive,
 	ref
 } from "vue";
@@ -244,6 +245,7 @@ const terms = ref( [] );
 const editorOpen = ref( false );
 const editingIndex = ref( -1 );
 const draftError = ref( "" );
+const hasMounted = ref( false );
 let nextId = 1;
 
 const draft = reactive( {
@@ -251,6 +253,10 @@ const draft = reactive( {
 	fractionId:    FRACTION_OPTIONS[ 0 ].id,
 	constantYears: "5",
 	description:   ""
+} );
+
+onMounted( () => {
+	hasMounted.value = true;
 } );
 
 function fractionById( fractionId ) {
