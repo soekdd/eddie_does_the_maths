@@ -204,15 +204,10 @@
 		</v-sheet>
 
 		<div class="kbox mt-4">
-			<div class="mono"><Katex :tex="`N_{t+1}=\\frac{bN_t}{1+cN_t}`" /></div>
-			<div class="mono"><Katex :tex="`N_0=${fmtTex( graphN0, 0 )},\ b=${fmtTex( graphB, 3 )},\ c=${fmtTex( graphC, 4 )}`" /></div>
-			<div v-if="graphHasPositiveEquilibrium" class="mono">
-				<Katex :tex="`N^*=\\frac{b-1}{c}=${fmtTex( graphEquilibrium, 3 )}`" />
-			</div>
-			<div v-else class="mono">
-				<Katex tex="b\le 1\Rightarrow N^*=0\ (Aussterbe-Gleichgewicht)" />
-			</div>
-			<div class="mono">
+			<div class="mono"><Katex aligned :tex="`N_{t+1} &=\\frac{bN_t}{1+cN_t} \\\\
+N_0 &=${fmtTex( graphN0, 0 )},\ b=${fmtTex( graphB, 3 )},\ c=${fmtTex( graphC, 4 )}` + 						
+(graphHasPositiveEquilibrium ? `\\\\ N^*&=\\frac{b-1}{c}=${fmtTex( graphEquilibrium, 3 )}` : 'b\le 1\Rightarrow N^* &=0\ (Aussterbe-Gleichgewicht)')"/>		</div>				
+					<div class="mono">
 				Nach <b>{{ graphHorizon }}</b> Jahren: <b>N</b>={{ fmt( graphFinalPopulation, 3 ) }}.
 			</div>
 		</div>
@@ -222,17 +217,13 @@
 		<h2>Rechnung mit einem Beispielsatz</h2>
 		<div class="eddie">
 			<div class="kbox">
-				<Katex as="div" display :tex="texScenario" />
-				<Katex as="div" display :tex="texEquilibrium" />
+				<Katex as="div" aligned display :tex="texScenario + `\\\\` + texEquilibrium" />
 			</div>
 			<div class="kbox">
-				<Katex as="div" display :tex="`N_1=${fmtTex( n1, 3 )}`" />
-				<Katex as="div" display :tex="`N_2=${fmtTex( n2, 3 )}`" />
-				<Katex as="div" display :tex="`N_3=${fmtTex( n3, 3 )}`" />
+				<Katex as="div" aligned display :tex="`N_1 &=${fmtTex( n1, 3 )} \\\\ N_2 &=${fmtTex( n2, 3 )} \\\\ N_3 &=${fmtTex( n3, 3 )}`" />
 			</div>
 			<div class="kbox">
-				<Katex as="div" display :tex="`N_${graphHorizon}=${fmtTex( nT, 3 )}`" />
-				<Katex as="div" display :tex="`|N_${graphHorizon}-N^*|=${fmtTex( deltaToEquilibrium, 3 )}`" />
+				<Katex as="div" aligned display :tex="`N_${graphHorizon}&=${fmtTex( nT, 3 )} \\\\ |N_${graphHorizon}-N^*| &=${fmtTex( deltaToEquilibrium, 3 )}`" />
 			</div>
 			<p class="muted">
 				Man sieht: Die Population nähert sich dem stabilen Gleichgewicht schnell und ohne Oszillation.
@@ -292,20 +283,20 @@ const equilibrium = computed( () => graphEquilibrium.value );
 const deltaToEquilibrium = computed( () => Math.abs( nT.value - equilibrium.value ) );
 
 const texScenario = computed( () => [
-	`N_0=${fmtTex( graphN0.value, 0 )},`,
-	`\\ b=${fmtTex( graphB.value, 2 )},`,
-	`\\ c=${fmtTex( graphC.value, 3 )},`,
-	`\\ t=${graphHorizon.value}`
+	`N_0 &=${fmtTex( graphN0.value, 0 )},`,
+	`\\\\ b &=${fmtTex( graphB.value, 2 )},`,
+	`\\\\ c &=${fmtTex( graphC.value, 3 )},`,
+	`\\\\ t &=${graphHorizon.value}`,
 ].join( " " ) );
 const texEquilibrium = computed( () => {
 	if ( !graphHasPositiveEquilibrium.value ) {
-		return "b\\le 1\\Rightarrow N^*=0\\ (Aussterbe-Gleichgewicht)";
+		return "b\le 1\Rightarrow N^* &=0\\ (Aussterbe-Gleichgewicht)";
 	}
 
 	return [
-		`N^*=\\\\frac{b-1}{c}=\\\\frac{${fmtTex( graphB.value, 2 )}-1}{${fmtTex( graphC.value, 3 )}}`,
-		`=${fmtTex( equilibrium.value, 3 )}`
-	].join( "" );
+		`N^* &=\\frac{b-1}{c}=\\frac{${fmtTex( graphB.value, 2 )}-1}{${fmtTex( graphC.value, 3 )}}`,
+		`\\\\ &=${fmtTex( equilibrium.value, 3 )}`,
+	].join( " " );
 } );
 
 function simulateSeries(

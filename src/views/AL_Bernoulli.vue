@@ -251,27 +251,29 @@
 </template>
 
 <script setup>
-import { computed, ref } from "vue";
+import { computed, defineComponent, h, ref } from "vue";
 import katex from "katex";
 import "katex/dist/katex.min.css";
 
 // ---- KaTeX mini component ----
-const KaTeXBlock = {
-	props:    { tex: { type: String, required: true } },
-	computed: {
-		html() {
+const KaTeXBlock = defineComponent( {
+	name:  "KaTeXBlock",
+	props: { tex: { type: String, required: true } },
+	setup( props ) {
+		const html = computed( () => {
 			try {
-				return katex.renderToString( this.tex, {
+				return katex.renderToString( props.tex, {
 					throwOnError: false,
 					displayMode:  true
 				} );
 			} catch ( e ) {
 				return `<pre>${String( e )}</pre>`;
 			}
-		}
-	},
-	template: "<div v-html=\"html\" class=\"katex-wrap\"></div>"
-};
+		} );
+
+		return () => h( "div", { class: "katex-wrap", innerHTML: html.value } );
+	}
+} );
 
 // ---------- Rational arithmetic (BigInt) ----------
 const bigAbs = ( x ) => x < 0n ? -x : x;

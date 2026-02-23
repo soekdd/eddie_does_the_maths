@@ -1,22 +1,32 @@
 // eslint.config.mjs
+// import typescriptEslint, { parser } from "typescript-eslint";
+import {
+	defineConfigWithVueTs,
+	vueTsConfigs
+} from "@vue/eslint-config-typescript";
 import vue from "eslint-plugin-vue";
 import stylistic from "@stylistic/eslint-plugin";
 import vuetify from "eslint-plugin-vuetify";
 import jsdoc from "eslint-plugin-jsdoc";
+import tsPlugin from "@typescript-eslint/eslint-plugin";
+import tsParser from "@typescript-eslint/parser";
 import vueParser from "vue-eslint-parser";
 import importPlugin from "eslint-plugin-import";
 import preferOptionalChaining from "eslint-plugin-prefer-optional-chaining";
-import pluginSVGO, { parserPlain } from "eslint-plugin-svgo";
-import tsParser from "@typescript-eslint/parser";
+import pluginSVGO from "eslint-plugin-svgo";
+import { fileURLToPath } from "node:url";
+import path from "node:path";
+
+const __dirname = path.dirname( fileURLToPath( import.meta.url ) );
 
 export default [
-	...vue.configs[ "flat/essential" ],
+	...defineConfigWithVueTs( vue.configs[ "flat/essential" ],
+		vueTsConfigs.base ),
 	{
-		files:           [ "**/*.svg" ],
-		ignores:         [ "icons/*.svg" ],
-		languageOptions: { parser: parserPlain },
-		plugins:         { svgo: pluginSVGO },
-		rules:           {
+		files:   [ "**/*.svg" ],
+		ignores: [ "icons/*.svg" ],
+		plugins: { svgo: pluginSVGO },
+		rules:   {
 			  "svgo/svgo": [ "error", {
 				floatPrecision: 2,
 				multipass:      true,
@@ -39,7 +49,7 @@ export default [
 		}
 	},
 	{
-		files:           [ "**/*.mjs", "**/*.js", "**/*.vue" ],
+		files:           [ "**/*.mjs", "**/*.js", "**/*.ts", "**/*.vue" ],
 		ignores:         [ "public/**", "node_modules/**", "dist/**", "tsup.config.ts" ],
 		languageOptions: {
 			ecmaVersion: 2024,
@@ -63,6 +73,7 @@ export default [
 			"@stylistic/function-call-argument-newline": [ "error", "consistent" ],
 			"@stylistic/function-call-spacing":          [ "error", "never" ],
 			"@stylistic/space-in-parens":                [ "error", "always" ],
+			"@typescript-eslint/no-var-requires":        0,
 			"array-bracket-spacing":                     [ "error", "always" ],
 			"brace-style":                               [ "error", "1tbs", { allowSingleLine: false } ],
 			"comma-dangle":                              [ "error", "never" ],
@@ -130,6 +141,7 @@ export default [
 			"require-await":                                     "off",
 			semi:                                                [ "error", "always" ],
 			"space-before-function-paren":                       [ "error", "never" ],
+			"space-in-parens":                                   [ "error", "always" ],
 			"space-infix-ops":                                   [ "error", { int32Hint: false } ]
 		}
 	},
@@ -142,7 +154,7 @@ export default [
 			parser:        vueParser,
 			parserOptions: {
 				ecmaVersion: "latest",
-				parser:      tsParser,
+				parser:      tsParser, // oder "@babel/eslint-parser" für JS
 				sourceType:  "module"
 			},
 			sourceType: "module"
@@ -208,11 +220,32 @@ export default [
 			"vue/order-in-components":            2,
 			"vue/require-explicit-emits":         2,
 			"vue/this-in-template":               "off",
-			"vue/v-bind-style":                   [ "error", "shorthand", { sameNameShorthand: "ignore" } ],
+			"vue/v-bind-style":                   [ "error", "shorthand", { sameNameShorthand: "always" } ],
 			"vue/v-on-event-hyphenation":         [ "error", "always", { autofix: true } ],
 			"vue/valid-v-bind":                   "off",
 			"vue/valid-v-if":                     "error",
 			"vue/valid-v-slot":                   "off"
+		}
+	},
+	// overrides for TypeScript files
+	{
+		files:           [ "**/*.ts", "*.ts" ],
+		ignores:         [ "public/**", "node_modules/**", "dist/**" ],
+		languageOptions: {
+			parser:        tsParser,
+			parserOptions: {
+				project:         path.join( __dirname, "/tsconfig.json" ),
+				tsconfigRootDir: __dirname
+			}
+		},
+		plugins: { "@typescript-eslint": tsPlugin },
+		rules:   {
+			"@typescript-eslint/ban-types":               0,
+			"@typescript-eslint/no-explicit-any":         0,
+			"@typescript-eslint/no-this-alias":           0,
+			"@typescript-eslint/no-unsafe-function-type": 0,
+			"@typescript-eslint/no-unused-vars": 		       0,
+			"@typescript-eslint/prefer-optional-chain":   "error"
 		}
 	},
 	{
