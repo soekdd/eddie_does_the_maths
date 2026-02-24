@@ -33,7 +33,7 @@ const where = computed( () => route.fullPath || route.path || "" );
 	<template #footer>
 		<p class="muted">
 			Tipp: Wenn du eine URL mit Query-Shortcut nutzt (z.B. <code class="mono">?DG</code>), wird sie auf
-			<code class="mono">/#DG</code> umgeschrieben.
+			<code class="mono">/DG/</code> umgeschrieben.
 		</p>
 	</template>
 </AppFrame>

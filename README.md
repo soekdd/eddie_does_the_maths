@@ -27,7 +27,7 @@ npm run dev
 npm run build
 ```
 
-Output landet in `@/dist/`.
+Output landet standardmäßig in `@/dist/math/` (abhängig von `VITE_PUBLIC_BASE`).
 
 ## Neue Themen hinzufuegen (Checkliste)
 

@@ -2,10 +2,8 @@ import "vuetify/styles";
 import { createVuetify } from "vuetify";
 import { aliases, mdi } from "vuetify/iconsets/mdi-svg";
 
-const systemPrefersDark =
-  typeof window !== "undefined" && window.matchMedia?.( "(prefers-color-scheme: dark)" )?.matches;
-
 export const vuetify = createVuetify( {
+	ssr: true,
 	icons: {
 		defaultSet: "mdi",
 		aliases,
@@ -14,7 +12,8 @@ export const vuetify = createVuetify( {
 		}
 	},
 	theme: {
-		defaultTheme: systemPrefersDark ? "eddieDark" : "eddieLight",
+		// SSR-safe initial theme. System sync is applied on the client after hydration.
+		defaultTheme: "eddieLight",
 		themes:       {
 			eddieDark: {
 				dark:   true,

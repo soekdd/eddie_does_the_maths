@@ -92,7 +92,7 @@
 /*eslint-disable vue/max-len*/
 import {
 	computed,
-	getCurrentInstance,
+	useId,
 	reactive,
 	ref,
 	onMounted,
@@ -104,7 +104,7 @@ type CornerKey = "lt" | "rt" | "lb" | "rb"
 type Pt = { x: number; y: number }
 type Seg = { cmd: "M" | "L" | "C" | "Z"; values: number[] }
 
-const uid = `metal-warp-${getCurrentInstance()?.uid ?? "0"}`;
+const uid = `metal-warp-${useId()}`;
 const gid = ( name: string ) => `${uid}-${name}`;
 
 /**

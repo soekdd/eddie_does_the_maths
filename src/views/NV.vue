@@ -92,14 +92,17 @@
 				:items="interactiveModes"
 				label="Interaktives Werkzeug"
 			/>
-			<component :is="activeInteractiveComponent" />
+			<NV_Schnitt v-if="interactiveMode === 'schnitt'" />
+			<NV_Azimut v-else-if="interactiveMode === 'azimut'" />
+			<NV_Zeit v-else-if="interactiveMode === 'zeit'" />
+			<NV_Bayes v-else />
 		</div>
 	</template>
 </AppFrame>
 </template>
 
 <script setup>
-import { computed, ref } from "vue";
+import { ref, computed } from "vue";
 import titleImg from "@/images/NV.webp";
 import NV_Azimut from "./NV_Azimut.vue";
 import NV_Bayes from "./NV_Bayes.vue";
