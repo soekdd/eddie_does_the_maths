@@ -144,8 +144,8 @@
 import {
 	computed, onMounted, ref
 } from "vue";
-import giacFactoryAssetUrl from "../utils/giac/giacwasm.js?url";
-import giacWasmAssetUrl from "../utils/giac/giacwasm.wasm?url";
+import giacFactoryAssetUrl from "../utils/giac/giacggb.js?url";
+import giacWasmAssetUrl from "../utils/giac/giacggb.wasm?url";
 
 /**
  * Giac-WASM integration notes:
