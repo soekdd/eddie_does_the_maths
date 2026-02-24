@@ -1,32 +1,32 @@
 <template>
 <div class="contentIndex">
 	<p class="muted mb-2">{{ title }}</p>
-
-	<v-tabs
-		v-if="bookTabs.length"
-		v-model="activeBook"
-		align-tabs="center"
-		class="contentIndexTabs mb-4"
-		color="primary"
-		density="comfortable"
-		show-arrows
-	>
-		<v-tab
-			v-for="book in bookTabs"
-			:key="book.value"
-			:title="book.title"
-			:value="book.value"
-			v-html="book.short"
-		/>
-	</v-tabs>
-
+	<client-only>
+		<v-tabs
+			v-if="bookTabs.length"
+			v-model="activeBook"
+			align-tabs="center"
+			class="contentIndexTabs mb-4"
+			color="primary"
+			density="comfortable"
+			show-arrows
+		>
+			<v-tab
+				v-for="book in bookTabs"
+				:key="book.value"
+				:title="book.title"
+				:value="book.value"
+				v-html="book.short"
+			/>
+		</v-tabs>
+	</client-only>
 	<v-window v-if="bookTabs.length" v-model="activeBook" class="contentIndexWindow">
 		<v-window-item
 			v-for="book in bookTabs"
 			:key="book.value"
 			:value="book.value"
 		>
-			<div v-if="itemsByBook[book.value]?.length" class="contentIndexList">
+			<div 	v-if="itemsByBook[book.value]?.length" class="contentIndexList">
 				<v-btn
 					v-for="it in itemsByBook[book.value]"
 					:key="it.key"
@@ -83,6 +83,9 @@
 import {
 	computed, inject, onMounted, ref, watch
 } from "vue";
+import {
+	mdiAlertCircleOutline, mdiAlertOutline, mdiMessageOutline
+} from "@mdi/js";
 import { useRoute } from "vue-router";
 import PocketBase from "pocketbase";
 import { routes as appRoutes } from "@/router.js";
@@ -91,7 +94,7 @@ const props = defineProps( { title: { type: String, default: "Die aktuell ausgea
 
 const route = useRoute();
 const TILE_SIZE_PX = 195;
-const commentBubbleIcon = "mdi-message-outline";
+const commentBubbleIcon = mdiMessageOutline;
 const pbUrl = inject( "pbUrl", "" );
 const pb = pbUrl ? new PocketBase( pbUrl ) : null;
 
@@ -246,15 +249,13 @@ const itemsByBook = computed( () => Object.fromEntries( bookTabs.value.map( ( ta
 	tab.value, items.value.filter( ( item ) => item.book === tab.value )
 ] ) ) );
 
-watch(
-	[
-		bookTabs, () => route?.meta?.book
-	], ( [ tabs, routeBook ] ) => {
-		activeBook.value = resolveActiveBook(
-			tabs, routeBook, activeBook.value
-		);
-	}
-);
+/* watch( [
+	bookTabs, () => route?.meta?.book
+], ( [ tabs, routeBook ] ) => {
+	activeBook.value = resolveActiveBook(
+		tabs, routeBook, activeBook.value
+	);
+} ); */
 
 async function refreshCommentCounts( nextItems ) {
 	if ( !pb ) {
@@ -310,7 +311,6 @@ watch(
 		void refreshCommentCounts( nextItems );
 	}, { immediate: true }
 );
-
 async function detectImageTone( imageUrl ) {
 	if ( typeof window === "undefined" ) {
 		return "dark";
@@ -459,11 +459,11 @@ function tileStatusIcon( item ) {
 	}
 
 	if ( item.error ) {
-		return "mdi-alert-circle-outline";
+		return mdiAlertCircleOutline;
 	}
 
 	if ( item.warning ) {
-		return "mdi-alert-outline";
+		return mdiAlertOutline;
 	}
 
 	return "";

@@ -27,7 +27,28 @@ function normalizeBasePath( basePath ) {
 	return normalized;
 }
 
+function resolveBuildOutDir( normalizedBasePath ) {
+	const segments = String( normalizedBasePath || "/" )
+		.split( "/" )
+		.filter( ( segment ) => segment && segment !== "." && segment !== ".." );
+
+	return segments.length > 0 ? `dist/${segments.join( "/" )}` : "dist";
+}
+
 const appBase = normalizeBasePath( process.env.VITE_PUBLIC_BASE || "/" );
+const buildOutDir = resolveBuildOutDir( appBase );
+const isDebugNoMinify = [ "1", "true", "yes", "on" ].includes( String( process.env.VITE_DEBUG_NO_MINIFY || "" ).trim()
+	.toLowerCase() );
+const buildConfig = {
+	outDir: buildOutDir,
+	... isDebugNoMinify ?
+		{
+			cssMinify: false,
+			minify:    false,
+			sourcemap: true
+		} :
+		{}
+};
 const isConcretePath = ( path ) =>
 	typeof path === "string" &&
 	path.startsWith( "/" ) &&
@@ -35,9 +56,10 @@ const isConcretePath = ( path ) =>
 	!path.includes( "*" );
 
 export default defineConfig( {
-	base:       appBase,
-	define:     {
-		"import.meta.env.VITE_BUILD_DATE": JSON.stringify( buildDate ),
+	base:   appBase,
+	build:  buildConfig,
+	define: {
+		"import.meta.env.VITE_BUILD_DATE":       JSON.stringify( buildDate ),
 		__VUE_PROD_HYDRATION_MISMATCH_DETAILS__: true
 	},
 	plugins:    [ vue(), vuetify( { autoImport: true } ) ],

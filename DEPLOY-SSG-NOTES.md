@@ -8,7 +8,7 @@
 - Für andere Unterverzeichnisse: `VITE_PUBLIC_BASE=/dein-pfad/ npm run build`.
 
 ## Statische Auslieferung
-- Beim SSG-Build werden pro Route HTML-Dateien erzeugt (`dist/<route>/index.html`).
+- Beim SSG-Build werden pro Route HTML-Dateien erzeugt (`dist/<base>/<route>/index.html`, standardmäßig `dist/math/<route>/index.html`).
 - Hosting sollte den kompletten `dist`-Ordner unverändert ausliefern.
 
 ## Catch-all/Fallback

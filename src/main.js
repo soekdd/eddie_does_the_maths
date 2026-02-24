@@ -86,18 +86,10 @@ const Root = {
 			} );
 		}
 
-		const renderSafeRouterView = () => h(
-			RouterView,
-			null,
-			{
-				default: ( { Component } ) => ( Component ? h( Component ) : null )
-			}
-		);
-
 		return () => h(
 			VApp,
 			null,
-			{ default: () => [ h( RouteSeoHead ), renderSafeRouterView() ] }
+			{ default: () => [ h( RouteSeoHead ), h( RouterView ) ] }
 		);
 	}
 };
