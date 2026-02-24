@@ -44,6 +44,7 @@
 		<h2 id="diophantos-raetsel">Das Grabplatten-Rätsel des Diophantos</h2>
 		<div class="eddie">
 			<p>Die Originalfassung des Epitaphs:</p>
+			<div class="cContainer">
 			<blockquote class="storyQuote">
 				<div class="plateHeader">
 					<div class="plateLead">Diophantos</div>
@@ -60,6 +61,7 @@
 				<br> Noch vier Jahre den Schmerz durch Kunde der Zahlen besänftigend,
 				<br> Langte am Ziele des Seins endlich er selber auch an.
 			</blockquote>
+			</div>
 			<p>Nimmt man den Pathos heraus und behält nur die Algebra, steht da:</p>
 			<ul>
 				<li><Katex tex="\frac16" /> seiner Lebenszeit für die Kindheit.</li>
@@ -102,11 +104,12 @@
 				/>
 			</div>
 			<div class="kbox">
-				<Katex as="div" display tex="\left(\frac{14+7+12+42}{84}\right)x+9=x" />
-				<Katex as="div" display tex="\frac{75}{84}x+9=x" />
-				<Katex as="div" display tex="x-\frac{75}{84}x=9" />
-				<Katex as="div" display tex="\frac9{84}x=9" />
-				<Katex as="div" display tex="x=9\cdot\frac{84}{9}=84" />
+				<Katex
+					as="div"
+					display
+					aligned
+					tex="\left(\frac{14+7+12+42}{84}\right)x+9 &= x \\ \frac{75}{84}x+9 &= x \\ x-\frac{75}{84}x &= 9 \\ \frac9{84}x &= 9 \\ x &= 9\cdot\frac{84}{9}=84"
+				/>
 			</div>
 			<p><b>Diophantos wurde also 84 Jahre alt.</b></p>
 		</div>
@@ -146,6 +149,7 @@
 
 		<h2 id="eddies-rechnung" class="mt-8">Meine eigene „Meilenstein-Rechnung“</h2>
 		<div class="eddie">
+			<div class="cContainer">
 			<blockquote class="storyQuote">
 				<div class="plateHeader">
 					<div class="plateLead">Eddie</div>
@@ -158,21 +162,18 @@
 				Zwei Monde bin ich frei.<br>
 				Den Rest auf der Flucht.
 			</blockquote>
-
+			</div>
 			<p>
 				Ich interpretiere das als Aufteilung meiner Gesamtzeit
 				<Katex tex="T" />.
 			</p>
 			<div class="kbox">
-				<Katex as="div" display tex="T_{\text{klein}}=\frac13T" />
-				<Katex as="div" display tex="T_{\text{schule}}=\frac49T" />
-				<Katex as="div" display tex="T_{\text{zahlen}}=\frac16T" />
 				<Katex
 					as="div"
 					display
-					tex="T_{\text{Edmilla}}=\frac23\cdot T_{\text{zahlen}}=\frac23\cdot\frac16T=\frac19T"
+					aligned
+					tex="T_{\text{klein}} &= \frac13T \\ T_{\text{schule}} &= \frac49T \\ T_{\text{zahlen}} &= \frac16T \\ T_{\text{Edmilla}} &= \frac23\cdot T_{\text{zahlen}}=\frac23\cdot\frac16T=\frac19T \\ T_{\text{frei}} &= \frac{2}{12}=\frac16\;\text{Jahr}"
 				/>
-				<Katex as="div" display tex="T_{\text{frei}}=\frac{2}{12}=\frac16\;\text{Jahr}" />
 			</div>
 			<p>
 				Ich behandle die Edmilla-Zeit als Unterabschnitt der Zahlen-Phase,
@@ -180,9 +181,12 @@
 			</p>
 			<p>Den Rest auf der Flucht rechne ich dann so:</p>
 			<div class="kbox">
-				<Katex as="div" display tex="T_{\text{Flucht}}=T-\left(\frac13T+\frac49T+\frac16T+\frac16\right)" />
-				<Katex as="div" display tex="\frac13T+\frac49T+\frac16T=\frac{6}{18}T+\frac{8}{18}T+\frac{3}{18}T=\frac{17}{18}T" />
-				<Katex as="div" display tex="T_{\text{Flucht}}=T-\left(\frac{17}{18}T+\frac16\right)=\frac1{18}T-\frac16" />
+				<Katex
+					as="div"
+					display
+					aligned
+					tex="T_{\text{Flucht}} &= T-\left(\frac13T+\frac49T+\frac16T+\frac16\right) \\ \frac13T+\frac49T+\frac16T &= \frac{6}{18}T+\frac{8}{18}T+\frac{3}{18}T=\frac{17}{18}T \\ T_{\text{Flucht}} &= T-\left(\frac{17}{18}T+\frac16\right)=\frac1{18}T-\frac16"
+				/>
 			</div>
 			<p>
 				Damit habe ich meinen Text als Gleichungssystem sauber übersetzt.
@@ -196,9 +200,12 @@
 		<div class="eddie">
 			<p>Wenn ich <Katex tex="T=18" /> setze, folgt eine Fluchtzeit von:</p>
 			<div class="kbox">
-				<Katex as="div" display tex="T_{\text{Flucht}}=\frac1{18}\cdot 18-\frac16" />
-				<Katex as="div" display tex="=1-\frac16=\frac56" />
-				<Katex as="div" display tex="\frac56\approx 0{,}83\text{ Jahre}=10\text{ Monate}" />
+				<Katex
+					as="div"
+					display
+					aligned
+					tex="T_{\text{Flucht}} &= \frac1{18}\cdot 18-\frac16 \\ &= 1-\frac16=\frac56 \\ &= \frac56\approx 0{,}83\text{ Jahre}=10\text{ Monate}"
+				/>
 			</div>
 		</div>
 	</template>
@@ -222,7 +229,13 @@ import GD_Plate from "./GD_Plate.vue";
 </script>
 
 <style scoped>
+.cContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center; /* horizontal zentrieren */
+}
 .storyQuote {
+	min-width: 30em;
 	position: relative;
 	overflow: hidden;
     text-align: center;

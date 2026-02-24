@@ -118,9 +118,12 @@
 
 			<h4>2) Ableiten und Nullsetzen</h4>
 			<div class="kbox">
-				<Katex as="div" display tex="R'(x)=a+b\cdot\frac{x-\frac{L}{2}}{\sqrt{\left(\frac{L}{2}-x\right)^2+W^2}}" />
-				<Katex as="div" display tex="R'(x)=0" />
-				<Katex as="div" display tex="a=b\cdot\frac{\frac{L}{2}-x}{\sqrt{\left(\frac{L}{2}-x\right)^2+W^2}}" />
+				<Katex
+					as="div"
+					display
+					aligned
+					tex="R'(x) &= a+b\cdot\frac{x-\frac{L}{2}}{\sqrt{\left(\frac{L}{2}-x\right)^2+W^2}} \\ R'(x) &= 0 \\ a &= b\cdot\frac{\frac{L}{2}-x}{\sqrt{\left(\frac{L}{2}-x\right)^2+W^2}}"
+				/>
 			</div>
 			<p>Setze <Katex inline tex="u=\frac{L}{2}-x" /> (also <Katex inline tex="u\ge 0" />):</p>
 			<div class="kbox">
@@ -129,16 +132,21 @@
 
 			<h4>3) Quadrieren - Polynom 2. Ordnung</h4>
 			<div class="kbox">
-				<Katex as="div" display tex="a^2(u^2+W^2)=b^2u^2" />
-				<Katex as="div" display tex="a^2W^2=(b^2-a^2)u^2" />
-				<Katex as="div" display tex="u^2=\frac{a^2W^2}{b^2-a^2}" />
+				<Katex
+					as="div"
+					display
+					aligned
+					tex="a^2(u^2+W^2) &= b^2u^2 \\ a^2W^2 &= (b^2-a^2)u^2 \\ u^2 &= \frac{a^2W^2}{b^2-a^2}"
+				/>
 			</div>
 			<p>Zurück zu <Katex inline tex="x" />:</p>
 			<div class="kbox">
-				<Katex as="div" display tex="\left(\frac{L}{2}-x\right)^2=\frac{a^2W^2}{b^2-a^2}" />
-				<Katex as="div" display tex="x^2-Lx+\left(\frac{L^2}{4}-\frac{a^2W^2}{b^2-a^2}\right)=0" />
-				<Katex as="div" display tex="x^*=\frac{L}{2}-\frac{aW}{\sqrt{b^2-a^2}}" />
-				<Katex as="div" display tex="\text{mit }r=\frac{b}{a}: \quad x^*=\frac{L}{2}-\frac{W}{\sqrt{r^2-1}}" />
+				<Katex
+					as="div"
+					display
+					aligned
+					tex="\left(\frac{L}{2}-x\right)^2 &= \frac{a^2W^2}{b^2-a^2} \\ x^2-Lx+\left(\frac{L^2}{4}-\frac{a^2W^2}{b^2-a^2}\right) &= 0 \\ x^* &= \frac{L}{2}-\frac{aW}{\sqrt{b^2-a^2}} \\ \text{mit }r=\frac{b}{a}: \quad x^* &= \frac{L}{2}-\frac{W}{\sqrt{r^2-1}}"
+				/>
 			</div>
 
 			<h4>4) Jetzt mir konkreten Werten</h4>
@@ -147,17 +155,8 @@
 				<Katex
 					as="div"
 					display
-					tex="x^*=\frac{L}{2}-\frac{W}{\sqrt{r^2-1}}=35-\frac{30}{\sqrt{9-1}}=35-\frac{15\sqrt2}{2}\approx 24{,}39\,\text{m}"
-				/>
-				<Katex
-					as="div"
-					display
-					tex="u^*=\frac{L}{2}-x^*=35-\left(35-\frac{15\sqrt2}{2}\right)=\frac{15\sqrt2}{2}\approx 10{,}61\,\text{m}"
-				/>
-				<Katex
-					as="div"
-					display
-					tex="PB^*=\sqrt{\frac{225}{2}+900}=\sqrt{\frac{2025}{2}}=\frac{45\sqrt2}{2}\approx 31{,}82\,\text{m}"
+					aligned
+					tex="x^* &= \frac{L}{2}-\frac{W}{\sqrt{r^2-1}}=35-\frac{30}{\sqrt{9-1}}=35-\frac{15\sqrt2}{2}\approx 24{,}39\,\text{m} \\ u^* &= \frac{L}{2}-x^*=35-\left(35-\frac{15\sqrt2}{2}\right)=\frac{15\sqrt2}{2}\approx 10{,}61\,\text{m} \\ PB^* &= \sqrt{\frac{225}{2}+900}=\sqrt{\frac{2025}{2}}=\frac{45\sqrt2}{2}\approx 31{,}82\,\text{m}"
 				/>
 			</div>
 

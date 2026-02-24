@@ -148,9 +148,9 @@ function setRes( res ) {
 	c3 = document.getElementById( "canvas3" );
 
 
-	ctx1 = c1.getContext( "2d" );
-	ctx2 = c2.getContext( "2d" );
-	ctx3 = c3.getContext( "2d" );
+	ctx1 = c1.getContext( "2d", { willReadFrequently: true } );
+	ctx2 = c2.getContext( "2d", { willReadFrequently: true } );
+	ctx3 = c3.getContext( "2d", { willReadFrequently: true } );
 
 	c = c1;
 	ctx = ctx1;

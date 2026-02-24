@@ -97,7 +97,7 @@
 			<p>
 				Wenn man einfach <Katex tex="p_S+p_N" /> rechnet, kann das schiefgehen, weil man den Fall
 				<i>„beide treten ein“</i> doppelt zählt. Im Extrem landet man sogar bei
-				<Katex tex="p>100\\%" /> (z.B. <Katex tex="0{,}7+0{,}6=1{,}3" />).
+				<Katex tex="p>100\%" /> (z.B. <Katex tex="0{,}7+0{,}6=1{,}3" />).
 			</p>
 
 			<p>
@@ -110,7 +110,12 @@
 				<Katex
 					as="div"
 					display
-					tex="p_{\text{ges}}=P(S\cup N)=1-P(S^c\cap N^c)=1-P(S^c)\\P(N^c)=1-(1-p_S)(1-p_N)."
+					tex="\begin{aligned}
+p_{\text{ges}} &= P(S\cup N) \\
+&= 1-P(S^c\cap N^c) \\
+&= 1-P(S^c)P(N^c) \\
+&= 1-(1-p_S)(1-p_N)
+\end{aligned}"
 				/>
 			</div>
 		</div>

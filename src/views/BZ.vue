@@ -51,9 +51,12 @@
 				Streng genommen läuft die Rechnung über den Impuls:
 			</p>
 			<div class="kbox">
-				<Katex as="div" display tex="J=\int_{t_0}^{t_1}F(t)\,\mathrm{d}t=\Delta p=m(v_1-v_0)" />
-				<Katex as="div" display tex="\int_{t_0}^{t_1}\big(F_K(t)-m g\big)\,\mathrm{d}t=m(v_1-v_0)" />
-				<Katex as="div" display tex="F_{K,\mathrm{mittel}}=m g+\frac{m(v_1-v_0)}{\Delta t}" />
+				<Katex
+					as="div"
+					display
+					aligned
+					tex="J &= \int_{t_0}^{t_1}F(t)\,\mathrm{d}t=\Delta p=m(v_1-v_0) \\ \int_{t_0}^{t_1}\big(F_K(t)-m g\big)\,\mathrm{d}t &= m(v_1-v_0) \\ F_{K,\mathrm{mittel}} &= m g+\frac{m(v_1-v_0)}{\Delta t}"
+				/>
 			</div>
 			<p>
 				Damit sieht man sofort: kurze Abbremszeit <Katex tex="\Delta t" /> bedeutet große Kraftspitzen.
@@ -124,18 +127,23 @@
 			<v-row dense>
 				<v-col cols="12" md="4">
 					<v-card class="compareCard pa-4" variant="outlined">
-						
-						<Katex as="div" display tex="F_{k,M}=m_M\cdot g" />
-						<Katex as="div" display :tex="`F_{k,M}=${kFmt( inputs.mMkg, 0 )}\\cdot ${kFmt( inputs.gMs2, 2 )}\\,\\mathrm{N}=${kFmt( fkMN, 2 )}\\,\\mathrm{N}`" />
-						<Katex as="div" display :tex="`F_{k,M}\\approx ${kFmt( fkMkN, 2 )}\\,\\mathrm{kN}`" />
+						<Katex
+							as="div"
+							display
+							aligned
+							:tex="`F_{k,M} &= m_M\\cdot g \\\\ F_{k,M} &= ${kFmt( inputs.mMkg, 0 )}\\cdot ${kFmt( inputs.gMs2, 2 )}\\,\\mathrm{N}=${kFmt( fkMN, 2 )}\\,\\mathrm{N} \\\\ F_{k,M} &\\approx ${kFmt( fkMkN, 2 )}\\,\\mathrm{kN}`"
+						/>
 					</v-card>
 				</v-col>
 
 				<v-col cols="12" md="4">
 					<v-card class="compareCard pa-4" variant="outlined">
-						<Katex as="div" display tex="F_{k,K}=m_K\cdot g" />
-						<Katex as="div" display :tex="`F_{k,K}=${kFmt( inputs.mKkg, 0 )}\\cdot ${kFmt( inputs.gMs2, 2 )}\\,\\mathrm{N}=${kFmt( fkKN, 2 )}\\,\\mathrm{N}`" />
-						<Katex as="div" display :tex="`F_{k,K}\\approx ${kFmt( fkKkN, 2 )}\\,\\mathrm{kN}`" />
+						<Katex
+							as="div"
+							display
+							aligned
+							:tex="`F_{k,K} &= m_K\\cdot g \\\\ F_{k,K} &= ${kFmt( inputs.mKkg, 0 )}\\cdot ${kFmt( inputs.gMs2, 2 )}\\,\\mathrm{N}=${kFmt( fkKN, 2 )}\\,\\mathrm{N} \\\\ F_{k,K} &\\approx ${kFmt( fkKkN, 2 )}\\,\\mathrm{kN}`"
+						/>
 					</v-card>
 				</v-col>
 
@@ -144,8 +152,12 @@
 
 						<Katex as="div" display tex="F_k=m\cdot g" />
 						<p class="cellNote">ohne Trennung von „setzt“ und „springt“</p>
-						<Katex as="div" display :tex="`F_{k,M}\\approx ${kFmt( fkMkN, 2 )}\\,\\mathrm{kN}`" />
-						<Katex as="div" display :tex="`F_{k,K}\\approx ${kFmt( fkKkN, 2 )}\\,\\mathrm{kN}`" />
+						<Katex
+							as="div"
+							display
+							aligned
+							:tex="`F_{k,M} &\\approx ${kFmt( fkMkN, 2 )}\\,\\mathrm{kN} \\\\ F_{k,K} &\\approx ${kFmt( fkKkN, 2 )}\\,\\mathrm{kN}`"
+						/>
 					</v-card>
 				</v-col>
 			</v-row>
@@ -174,22 +186,32 @@
 			<v-row dense>
 				<v-col cols="12" md="4">
 					<v-card class="compareCard pa-4" variant="outlined">
-						
-						<Katex as="div" display tex="F_{d,M}=k_{\text{ruhig}}\,F_{k,M}" />
-						<Katex as="div" display :tex="`F_{d,M}\\approx ${kFmt( inputs.kRuhig, 1 )}\\cdot ${kFmt( fkMkN, 2 )}=${kFmt( fdM, 2 )}\\,\\mathrm{kN}`" />
+						<Katex
+							as="div"
+							display
+							aligned
+							:tex="`F_{d,M} &= k_{\\text{ruhig}}\\,F_{k,M} \\\\ F_{d,M} &\\approx ${kFmt( inputs.kRuhig, 1 )}\\cdot ${kFmt( fkMkN, 2 )}=${kFmt( fdM, 2 )}\\,\\mathrm{kN}`"
+						/>
 					</v-card>
 				</v-col>
 				<v-col cols="12" md="4">
 					<v-card class="compareCard pa-4" variant="outlined">
-						<Katex as="div" display tex="F_{d,K}=k_{\text{knall}}\,F_{k,K}" />
-						<Katex as="div" display :tex="`F_{d,K}\\approx ${kFmt( inputs.kKnall, 1 )}\\cdot ${kFmt( fkKkN, 2 )}=${kFmt( fdK, 2 )}\\,\\mathrm{kN}`" />
+						<Katex
+							as="div"
+							display
+							aligned
+							:tex="`F_{d,K} &= k_{\\text{knall}}\\,F_{k,K} \\\\ F_{d,K} &\\approx ${kFmt( inputs.kKnall, 1 )}\\cdot ${kFmt( fkKkN, 2 )}=${kFmt( fdK, 2 )}\\,\\mathrm{kN}`"
+						/>
 					</v-card>
 				</v-col>
 				<v-col cols="12" md="4">
 					<v-card class="compareCard pa-4" variant="outlined">
-						<Katex as="div" display tex="F_d=k_{\text{DIN}}\,F_k" />
-						<Katex as="div" display :tex="`F_{d,M}\\approx ${kFmt( inputs.kDIN, 1 )}\\cdot ${kFmt( fkMkN, 2 )}=${kFmt( fdDinM, 2 )}\\,\\mathrm{kN}`" />
-						<Katex as="div" display :tex="`F_{d,K}\\approx ${kFmt( inputs.kDIN, 1 )}\\cdot ${kFmt( fkKkN, 2 )}=${kFmt( fdDinK, 2 )}\\,\\mathrm{kN}`" />
+						<Katex
+							as="div"
+							display
+							aligned
+							:tex="`F_d &= k_{\\text{DIN}}\\,F_k \\\\ F_{d,M} &\\approx ${kFmt( inputs.kDIN, 1 )}\\cdot ${kFmt( fkMkN, 2 )}=${kFmt( fdDinM, 2 )}\\,\\mathrm{kN} \\\\ F_{d,K} &\\approx ${kFmt( inputs.kDIN, 1 )}\\cdot ${kFmt( fkKkN, 2 )}=${kFmt( fdDinK, 2 )}\\,\\mathrm{kN}`"
+						/>
 					</v-card>
 				</v-col>
 			</v-row>

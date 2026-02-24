@@ -41,11 +41,10 @@
 
 						<div v-if="item.formulas.length" class="kbox mb-3">
 							<Katex
-								v-for="(formula, fIdx) in item.formulas"
-								:key="`${item.id}-f-${fIdx}`"
 								as="div"
 								display
-								:tex="formula"
+								aligned
+								:tex="lessonFormulaBlock(item.formulas)"
 							/>
 						</div>
 
@@ -425,6 +424,38 @@ const interactiveModes = [
 const interactiveMode = ref( "schnitt" );
 const openLessonPanel = ref( 0 );
 
+const addAlignmentTab = ( formula ) => {
+	if ( formula.includes( "&" ) ) {
+		return formula;
+	}
+
+	const equalIndex = formula.indexOf( "=" );
+	const approxIndex = formula.indexOf( "\\approx" );
+
+	if ( equalIndex !== -1 && ( approxIndex === -1 || equalIndex < approxIndex ) ) {
+		return `${formula.slice( 0, equalIndex )}&=${formula.slice( equalIndex + 1 )}`;
+	}
+
+	if ( approxIndex !== -1 ) {
+		return formula.replace( "\\approx", "&\\approx" );
+	}
+
+	return formula;
+};
+
+const lessonFormulaBlock = ( formulas ) =>
+	formulas.map( addAlignmentTab ).join( " \\\\ " );
+
+const interactiveComponentMap = {
+	schnitt: NV_Schnitt,
+	azimut:  NV_Azimut,
+	zeit:    NV_Zeit,
+	bayes:   NV_Bayes
+};
+
+const activeInteractiveComponent = computed( () => {
+	return interactiveComponentMap[ interactiveMode.value ] ?? NV_Schnitt;
+} );
 </script>
 
 <style scoped>

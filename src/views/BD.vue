@@ -65,8 +65,7 @@
 		<div class="eddie">
 			<p>Das Eigengewicht pro Meter folgt aus der Querschnittsfläche <Katex tex="A" />:</p>
 			<div class="kbox">
-				<Katex as="div" display tex="q_g=\rho_{\text{Stahl}}\,g\,A" />
-				<Katex as="div" display tex="q_g\,[\mathrm{kN/m}]=\frac{\rho g}{1000}\,A" />
+				<Katex as="div" aligned display tex="q_g&=\rho_{\text{Stahl}}\,g\,A\\q_g\,[\mathrm{kN/m}]&=\frac{\rho g}{1000}\,A" />
 			</div>
 			<p>
 				mit <Katex tex="\rho_{\text{Stahl}}\approx 7850\,\mathrm{kg/m^3}" /> und
@@ -101,9 +100,7 @@
 
 			<h3>3.3 Biegemoment (maximal in Feldmitte)</h3>
 			<div class="kbox">
-				<Katex as="div" display tex="M_{P,\max}=\frac{P L}{4}" />
-				<Katex as="div" display tex="M_{g,\max}=\frac{q_g L^2}{8}" />
-				<Katex as="div" display tex="M_{k,\max}=\frac{P L}{4}+\frac{q_g L^2}{8}" />
+				<Katex as="div" aligned display tex="M_{P,\max}&=\frac{P L}{4}\\M_{g,\max}&=\frac{q_g L^2}{8}\\M_{k,\max}&=\frac{P L}{4}+\frac{q_g L^2}{8}" />
 			</div>
 		</div>
 
@@ -113,9 +110,8 @@
 				<v-col cols="12" md="6">
 					<h3>4.1 DIN-Ansatz: gleicher Faktor auf beide Lastanteile</h3>
 					<div class="kbox">
-						<Katex as="div" display tex="P_d=\gamma_{\text{DIN}}P" />
-						<Katex as="div" display tex="q_{g,d}=\gamma_{\text{DIN}}q_g" />
-						<Katex as="div" display tex="M_{Ed,\text{DIN}}=\gamma_{\text{DIN}}\left(\frac{P L}{4}+\frac{q_g L^2}{8}\right)" />
+						<Katex as="div" aligned display 
+							tex="P_d&=\gamma_{\text{DIN}}P\\q_{g,d}&=\gamma_{\text{DIN}}q_g\\M_{Ed,\text{DIN}}&=\gamma_{\text{DIN}}\left(\frac{P L}{4}+\frac{q_g L^2}{8}\right)" />
 					</div>
 					<p>
 						Dieser gleichfaktorige Ansatz in der DIN ist heute nicht mehr üblich.
@@ -124,9 +120,8 @@
 				<v-col cols="12" md="6">
 					<h3>4.2 TGL-Ansatz: Verkehrslast wie DIN, Eigengewicht niedriger</h3>
 					<div class="kbox">
-						<Katex as="div" display tex="P_d=\gamma_Q P" />
-						<Katex as="div" display tex="q_{g,d}=\gamma_G q_g,\qquad \gamma_G<\gamma_{\text{DIN}}" />
-						<Katex as="div" display tex="M_{Ed,\text{TGL}}=\gamma_Q\frac{P L}{4}+\gamma_G\frac{q_g L^2}{8}" />
+						<Katex as="div" aligned display 
+						tex="P_d&=\gamma_Q P\\q_{g,d}&=\gamma_G q_g,\qquad \gamma_G<\gamma_{\text{DIN}}\\M_{Ed,\text{TGL}}&=\gamma_Q\frac{P L}{4}+\gamma_G\frac{q_g L^2}{8}\\" />
 					</div>
 					<p>
 						Die Idee: Eigengewicht ist meist genauer bekannt als Verkehrslast und kann deshalb geringer faktorisiert werden.
@@ -146,9 +141,7 @@
 		<h2 id="nachweis" class="mt-8">5) Querschnittsnachweis über Widerstandsmoment <Katex tex="W" /></h2>
 		<div class="eddie">
 			<div class="kbox">
-				<Katex as="div" display tex="\sigma_{Ed}=\frac{M_{Ed}}{W}\le f_{yd}" />
-				<Katex as="div" display tex="W\ge W_{\text{erf}}=\frac{M_{Ed}}{f_{yd}}" />
-				<Katex as="div" display tex="f_{yd}=\frac{f_y}{\gamma_M}" />
+				<Katex as="div" aligned display tex="\sigma_{Ed}&=\frac{M_{Ed}}{W}\le f_{yd}\\W\ge W_{\text{erf}}&=\frac{M_{Ed}}{f_{yd}}\\f_{yd}&=\frac{f_y}{\gamma_M}" />
 			</div>
 			<p>
 				Die Gegenüberstellung DIN/TGL bleibt konsistent, solange <Katex tex="f_{yd}" /> identisch behandelt wird.
@@ -197,8 +190,7 @@
 
 			<h3>6.2 Eigengewicht aus Geometrie</h3>
 			<div class="kbox">
-				<Katex as="div" display tex="A = 2bt_f + t_w\,(h-2t_f)" />
-				<Katex as="div" display tex="q_g=\frac{\rho g}{1000}\,A\;[\mathrm{kN/m}]" />
+				<Katex as="div" aligned display tex="A &= 2bt_f + t_w\,(h-2t_f)\\q_g&=\frac{\rho g}{1000}\,A\;[\mathrm{kN/m}]" />
 			</div>
 
 			<v-row dense>
@@ -206,19 +198,12 @@
 					<h3>6.3 DIN-Entwurf (gleiches <Katex tex="\gamma" />)</h3>
 					<p>Praktisch gerundet: <Katex :tex="`t_f=${fmtMath( tfDinMm, 0 )}\\,\\mathrm{mm}`" />.</p>
 					<div class="kbox">
-						<Katex as="div" display :tex="texDinAreaEq" />
-						<Katex as="div" display :tex="texDinAreaVal" />
-						<Katex as="div" display :tex="texDinQgVal" />
-						<Katex as="div" display :tex="texDinMassVal" />
-						<Katex as="div" display :tex="texMP" />
-						<Katex as="div" display :tex="texDinMgVal" />
-						<Katex as="div" display :tex="texDinMed1" />
-						<Katex as="div" display :tex="texDinMed2" />
-						<Katex as="div" display :tex="texDinMed3" />
-						<Katex as="div" display tex="W_{\text{erf,DIN}}=\frac{M_{Ed,\text{DIN}}\cdot 10^6}{f_{yd}}" />
-						<Katex as="div" display :tex="texDinWReqVal" />
-						<Katex as="div" display :tex="texDinWReqRes" />
-						<Katex as="div" display :tex="texDinWRes" />
+						<Katex
+							as="div"
+							display
+							aligned
+							:tex="texDinDesignBlock"
+						/>
 					</div>
 					<p><strong>{{ isDinOk ? "DIN erfüllt." : "DIN nicht erfüllt." }}</strong></p>
 				</v-col>
@@ -226,19 +211,12 @@
 					<h3>6.4 TGL-Entwurf (Eigengewicht niedriger faktorisiert)</h3>
 					<p>Praktisch gerundet: <Katex :tex="`t_f=${fmtMath( tfTglMm, 0 )}\\,\\mathrm{mm}`" />.</p>
 					<div class="kbox">
-						<Katex as="div" display :tex="texTglAreaEq" />
-						<Katex as="div" display :tex="texTglAreaVal" />
-						<Katex as="div" display :tex="texTglQgVal" />
-						<Katex as="div" display :tex="texTglMassVal" />
-						<Katex as="div" display :tex="texMPOnly" />
-						<Katex as="div" display :tex="texTglMgVal" />
-						<Katex as="div" display :tex="texTglMed1" />
-						<Katex as="div" display :tex="texTglMed2" />
-						<Katex as="div" display :tex="texTglMed3" />
-						<Katex as="div" display tex="W_{\text{erf,TGL}}=\frac{M_{Ed,\text{TGL}}\cdot 10^6}{f_{yd}}" />
-						<Katex as="div" display :tex="texTglWReqVal" />
-						<Katex as="div" display :tex="texTglWReqRes" />
-						<Katex as="div" display :tex="texTglWRes" />
+						<Katex
+							as="div"
+							display
+							aligned
+							:tex="texTglDesignBlock"
+						/>
 					</div>
 					<p><strong>{{ isTglOk ? "TGL erfüllt." : "TGL nicht erfüllt." }}</strong></p>
 				</v-col>
@@ -446,11 +424,12 @@
 							display
 							:tex="`f_y=${fmtMath( materialBase.fyNmm2, 0 )}\\,\\mathrm{N/mm^2},\\quad \\gamma_M=${fmtMath( materialBase.gammaM, 1 )},\\quad \\rho=${fmtMath( materialBase.rhoSteel, 0 )}\\,\\mathrm{kg/m^3},\\quad g=${fmtMath( materialBase.gravityMs, 2 )}\\,\\mathrm{m/s^2}`"
 						/>
-						<Katex as="div" display :tex="`t_{f,\\text{DIN}}=${fmtMath( tfDinMm, 0 )}\\,\\mathrm{mm}`" />
-						<Katex as="div" display :tex="`t_{f,\\text{TGL}}=${fmtMath( tfTglMm, 0 )}\\,\\mathrm{mm}`" />
-						<Katex as="div" display :tex="`q_{g,\\text{DIN}}=${fmtMath( qgDinKNm, 3, true )}\\,\\mathrm{kN/m}`" />
-						<Katex as="div" display :tex="`q_{g,\\text{TGL}}=${fmtMath( qgTglKNm, 3, true )}\\,\\mathrm{kN/m}`" />
-						<Katex as="div" display :tex="`\\Delta t_f=${fmtMath( tfStepMm, 0 )}\\,\\mathrm{mm}\\;\\text{(Rundung)}`" />
+						<Katex
+							as="div"
+							display
+							aligned
+							:tex="texSectionSummaryBlock"
+						/>
 					</div>
 				</v-col>
 			</v-row>
@@ -743,6 +722,68 @@ const texTglWReqVal = computed( () =>
 const texTglWReqRes = computed( () =>
 	`W_{\\text{erf,TGL}}\\approx ${fmtMath( wReqTglCm3.value, 0 )}\\,\\mathrm{cm^3}` );
 const texTglWRes = computed( () => `W\\approx ${fmtMath( wTglCm3.value, 0 )}\\,\\mathrm{cm^3}` );
+
+const addAlignmentTab = ( formula ) => {
+	if ( formula.includes( "&" ) ) {
+		return formula;
+	}
+
+	const equalIndex = formula.indexOf( "=" );
+	const approxIndex = formula.indexOf( "\\approx" );
+
+	if ( equalIndex !== -1 && ( approxIndex === -1 || equalIndex < approxIndex ) ) {
+		return `${formula.slice( 0, equalIndex )}&=${formula.slice( equalIndex + 1 )}`;
+	}
+
+	if ( approxIndex !== -1 ) {
+		return formula.replace( "\\approx", "&\\approx" );
+	}
+
+	return formula;
+};
+
+const texAlignedBlock = ( formulas ) =>
+	formulas.map( addAlignmentTab ).join( " \\\\ " );
+
+const texDinDesignBlock = computed( () => texAlignedBlock( [
+	texDinAreaEq.value,
+	texDinAreaVal.value,
+	texDinQgVal.value,
+	texDinMassVal.value,
+	texMP.value,
+	texDinMgVal.value,
+	texDinMed1.value,
+	texDinMed2.value,
+	texDinMed3.value,
+	"W_{\\text{erf,DIN}}=\\frac{M_{Ed,\\text{DIN}}\\cdot 10^6}{f_{yd}}",
+	texDinWReqVal.value,
+	texDinWReqRes.value,
+	texDinWRes.value
+] ) );
+
+const texTglDesignBlock = computed( () => texAlignedBlock( [
+	texTglAreaEq.value,
+	texTglAreaVal.value,
+	texTglQgVal.value,
+	texTglMassVal.value,
+	texMPOnly.value,
+	texTglMgVal.value,
+	texTglMed1.value,
+	texTglMed2.value,
+	texTglMed3.value,
+	"W_{\\text{erf,TGL}}=\\frac{M_{Ed,\\text{TGL}}\\cdot 10^6}{f_{yd}}",
+	texTglWReqVal.value,
+	texTglWReqRes.value,
+	texTglWRes.value
+] ) );
+
+const texSectionSummaryBlock = computed( () => texAlignedBlock( [
+	`t_{f,\\text{DIN}}=${fmtMath( tfDinMm.value, 0 )}\\,\\mathrm{mm}`,
+	`t_{f,\\text{TGL}}=${fmtMath( tfTglMm.value, 0 )}\\,\\mathrm{mm}`,
+	`q_{g,\\text{DIN}}=${fmtMath( qgDinKNm.value, 3, true )}\\,\\mathrm{kN/m}`,
+	`q_{g,\\text{TGL}}=${fmtMath( qgTglKNm.value, 3, true )}\\,\\mathrm{kN/m}`,
+	`\\Delta t_f=${fmtMath( tfStepMm, 0 )}\\,\\mathrm{mm}\\;\\text{(Rundung)}`
+] ) );
 </script>
 
 <style scoped>

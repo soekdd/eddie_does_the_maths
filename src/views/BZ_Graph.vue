@@ -76,6 +76,7 @@
 				:height="imageSize"
 				:href="elefantImg"
 				preserveAspectRatio="xMidYMid meet"
+				:style="loadImgStyle"
 				:width="imageSize"
 				x="100"
 				y="58"
@@ -85,6 +86,7 @@
 				:height="imageSize"
 				:href="armadilloImg"
 				preserveAspectRatio="xMidYMid meet"
+				:style="loadImgStyle"
 				:width="imageSize"
 				x="600"
 				y="68"
@@ -147,6 +149,7 @@
 
 <script setup>
 import { computed } from "vue";
+import { useTheme } from "vuetify";
 import armadilloImg from "@/images/BZ_Armadillo.webp";
 import elefantImg from "@/images/BZ_Elefant.webp";
 const imageSize = 280;
@@ -186,6 +189,8 @@ const tiltDeg = computed( () => {
 } );
 
 const tiltTransform = computed( () => `rotate(${tiltDeg.value} 500 330)` );
+const theme = useTheme();
+const loadImgStyle = computed( () => theme.global.current.value.dark ? { filter: "invert(1)" } : null );
 
 function fmt( value ) {
 	return Number( value ).toFixed( 2 )

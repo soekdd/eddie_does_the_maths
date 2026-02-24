@@ -88,8 +88,12 @@
 				<Katex tex="\frac{h^2}{2}\varphi_i" />.
 			</p>
 			<div class="kbox">
-				<Katex as="div" display tex="A_{\text{Ecken}}=\frac{h^2}{2}\sum_i \varphi_i" />
-				<Katex as="div" display tex="\sum_i \varphi_i = 2\pi \;\Longrightarrow\; A_{\text{Ecken}}=\pi h^2" />
+				<Katex
+					as="div"
+					display
+					aligned
+					tex="A_{\text{Ecken}} &= \frac{h^2}{2}\sum_i \varphi_i \\ \sum_i \varphi_i &= 2\pi \;\Longrightarrow\; A_{\text{Ecken}}=\pi h^2"
+				/>
 			</div>
 			<p>
 				Für <Katex tex="n" /> getrennte Seen gilt entsprechend
@@ -113,8 +117,12 @@
 				eine einfache, gut interpretierbare Startformel.
 			</p>
 			<div class="kbox">
-				<Katex as="div" display tex="A_{\text{add}}(h)=h\cdot d+n\pi h^2" />
-				<Katex as="div" display tex="P_1(h)\approx\frac{A_{\text{add}}(h)}{A_{\text{Land}}}" />
+				<Katex
+					as="div"
+					display
+					aligned
+					tex="A_{\text{add}}(h) &= h\cdot d+n\pi h^2 \\ P_1(h) &\approx\frac{A_{\text{add}}(h)}{A_{\text{Land}}}"
+				/>
 			</div>
 			<p class="muted">
 				Diese Stufe zählt Überlappungen mehrfach. Darum ist sie für kleine
@@ -129,16 +137,24 @@
 				und auf Land begrenzt.
 			</p>
 			<div class="kbox">
-				<Katex as="div" display tex="A_{\text{wahr}}(h)=\left|\left((W\oplus B_h)\setminus W\right)\cap L\right|" />
-				<Katex as="div" display tex="P(h)=\frac{A_{\text{wahr}}(h)}{A_{\text{Land}}}" />
+				<Katex
+					as="div"
+					display
+					aligned
+					tex="A_{\text{wahr}}(h) &= \left|\left((W\oplus B_h)\setminus W\right)\cap L\right| \\ P(h) &= \frac{A_{\text{wahr}}(h)}{A_{\text{Land}}}"
+				/>
 			</div>
 			<p>
 				Wenn nur aggregierte Daten vorliegen (<Katex tex="n,d,A_{\text{Land}}" />), nutzen wir als
 				pragmatische zweite Stufe eine Überlappungs-Korrektur:
 			</p>
 			<div class="kbox">
-				<Katex as="div" display tex="P_2(h)=1-\exp\!\left(-\frac{A_{\text{add}}(h)}{A_{\text{Land}}}\right)" />
-				<Katex as="div" display tex="A_2(h)=A_{\text{Land}}\cdot P_2(h)" />
+				<Katex
+					as="div"
+					display
+					aligned
+					tex="P_2(h) &= 1-\exp\!\left(-\frac{A_{\text{add}}(h)}{A_{\text{Land}}}\right) \\ A_2(h) &= A_{\text{Land}}\cdot P_2(h)"
+				/>
 			</div>
 			<p>
 				Die Idee dahinter: Setze
@@ -149,9 +165,12 @@
 				<Katex tex="P_2=1-\exp(-\lambda)" />.
 			</p>
 			<div class="kbox">
-				<Katex as="div" display tex="P_1(h)=\lambda(h)" />
-				<Katex as="div" display tex="P_2(h)=K(\lambda)\,P_1(h)" />
-				<Katex as="div" display tex="K(\lambda)=\frac{1-\exp(-\lambda)}{\lambda}\le 1" />
+				<Katex
+					as="div"
+					display
+					aligned
+					tex="P_1(h) &= \lambda(h) \\ P_2(h) &= K(\lambda)\,P_1(h) \\ K(\lambda) &= \frac{1-\exp(-\lambda)}{\lambda}\le 1"
+				/>
 			</div>
 			<p class="muted">
 				Für kleine <Katex tex="\lambda" /> gilt
@@ -236,17 +255,8 @@
 				<Katex
 					as="div"
 					display
-					:tex="texCountryLakesCount"
-				/>
-				<Katex
-					as="div"
-					display
-					:tex="texCountryShoreline"
-				/>
-				<Katex
-					as="div"
-					display
-					:tex="texCountryLandArea"
+					aligned
+					:tex="texAlignedBlock([ texCountryLakesCount, texCountryShoreline, texCountryLandArea ])"
 				/>
 			</div>
 			<h3>Stufe 1: Additive Näherung</h3>
@@ -254,29 +264,16 @@
 				<Katex
 					as="div"
 					display
-					tex="A_{\text{add}}(h)=h\cdot d+n\pi h^2"
-				/>
-				<Katex
-					as="div"
-					display
-					:tex="texStage1Main"
-				/>
-				<Katex
-					as="div"
-					display
-					:tex="texStage1ProbMain"
+					aligned
+					:tex="texAlignedBlock([ 'A_{\\text{add}}(h)=h\\cdot d+n\\pi h^2', texStage1Main, texStage1ProbMain ])"
 				/>
 			</div>
 			<div class="kbox">
 				<Katex
 					as="div"
 					display
-					:tex="texStage1Stress"
-				/>
-				<Katex
-					as="div"
-					display
-					:tex="texStage1ProbStress"
+					aligned
+					:tex="texAlignedBlock([ texStage1Stress, texStage1ProbStress ])"
 				/>
 			</div>
 			<h3>Stufe 2: Überlappungskorrigierte Näherung</h3>
@@ -284,22 +281,8 @@
 				<Katex
 					as="div"
 					display
-					tex="P_2(h)=1-\exp\!\left(-\frac{A_{\text{add}}(h)}{A_{\text{Land}}}\right)"
-				/>
-				<Katex
-					as="div"
-					display
-					tex="A_2(h)=A_{\text{Land}}\cdot P_2(h)"
-				/>
-				<Katex
-					as="div"
-					display
-					:tex="texStage2Main"
-				/>
-				<Katex
-					as="div"
-					display
-					:tex="texStage2Stress"
+					aligned
+					:tex="texAlignedBlock([ 'P_2(h)=1-\\exp\\!\\left(-\\frac{A_{\\text{add}}(h)}{A_{\\text{Land}}}\\right)', 'A_2(h)=A_{\\text{Land}}\\cdot P_2(h)', texStage2Main, texStage2Stress ])"
 				/>
 			</div>
 		</div>
@@ -405,6 +388,28 @@ const texStage2Stress = computed( () => [
 	`${fmtNum( stressModel.value.poissonProbabilityPercent, 2 )}\\%,\\quad A_{2}=`,
 	`${fmtNum( stressModel.value.poissonAreaKm2, 3 )}\\ \\mathrm{km}^2`
 ].join( "" ) );
+
+const addAlignmentTab = ( formula ) => {
+	if ( formula.includes( "&" ) ) {
+		return formula;
+	}
+
+	const equalIndex = formula.indexOf( "=" );
+	const approxIndex = formula.indexOf( "\\approx" );
+
+	if ( equalIndex !== -1 && ( approxIndex === -1 || equalIndex < approxIndex ) ) {
+		return `${formula.slice( 0, equalIndex )}&=${formula.slice( equalIndex + 1 )}`;
+	}
+
+	if ( approxIndex !== -1 ) {
+		return formula.replace( "\\approx", "&\\approx" );
+	}
+
+	return formula;
+};
+
+const texAlignedBlock = ( formulas ) =>
+	formulas.map( addAlignmentTab ).join( " \\\\ " );
 
 function computeModelValues( hKm, country ) {
 	const addAreaKm2 = hKm * country.shorelineKm + country.lakesCount * Math.PI * hKm * hKm;

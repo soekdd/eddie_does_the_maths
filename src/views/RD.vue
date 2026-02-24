@@ -65,8 +65,8 @@
 			</p>
 
 			<div class="kbox">
-				<Katex as="div" display tex="\Delta x_j=\frac{vC}{2c}\cdot\frac{1}{2j-1}" />
-				<Katex as="div" display tex="D_m=\sum_{j=1}^{m}\Delta x_j=\frac{vC}{2c}\sum_{j=1}^{m}\frac{1}{2j-1}" />
+				<Katex as="div" aligned display 
+					tex="\Delta x_j&=\frac{vC}{2c}\cdot\frac{1}{2j-1} \\ D_m=\sum_{j=1}^{m}\Delta x_j&=\frac{vC}{2c}\sum_{j=1}^{m}\frac{1}{2j-1}" />
 			</div>
 
 			<p>

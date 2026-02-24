@@ -190,23 +190,33 @@
 
 					<h4>Homogene Gleichung</h4>
 					<div class="kbox">
-						<Katex as="div" display tex="y'_h + 2y_h = 0" />
-						<Katex as="div" display tex="y_h = Ce^{-2t}" />
+						<Katex
+							as="div"
+							display
+							aligned
+							tex="y'_h + 2y_h &= 0 \\ y_h &= Ce^{-2t}"
+						/>
 					</div>
 
 					<h4>Partikuläre Lösung</h4>
 					<p>Da rechte Seite konstant:</p>
 					<div class="kbox">
-						<Katex as="div" display tex="y_p = A" />
-						<Katex as="div" display tex="2A = 4" />
-						<Katex as="div" display tex="A = 2" />
+						<Katex
+							as="div"
+							display
+							aligned
+							tex="y_p &= A \\ 2A &= 4 \\ A &= 2"
+						/>
 					</div>
 
 					<h4>Gesamtlösung</h4>
 					<div class="kbox">
-						<Katex as="div" display tex="y(t) = Ce^{-2t} + 2" />
-						<Katex as="div" display tex="1 = C + 2" />
-						<Katex as="div" display tex="C = -1" />
+						<Katex
+							as="div"
+							display
+							aligned
+							tex="y(t) &= Ce^{-2t} + 2 \\ 1 &= C + 2 \\ C &= -1"
+						/>
 					</div>
 
 					<h4>Endlösung</h4>
@@ -225,16 +235,22 @@
 
 					<p>Laplace-Transformation:</p>
 					<div class="kbox">
-						<Katex as="div" display tex="sY(s) - y(0) + 2Y(s) = \frac{4}{s}" />
-						<Katex as="div" display tex="sY(s) - 1 + 2Y(s) = \frac{4}{s}" />
-						<Katex as="div" display tex="(s+2)Y(s) = \frac{4}{s} + 1" />
-						<Katex as="div" display tex="Y(s) = \frac{4}{s(s+2)} + \frac{1}{s+2}" />
+						<Katex
+							as="div"
+							display
+							aligned
+							tex="sY(s) - y(0) + 2Y(s) &= \frac{4}{s} \\ sY(s) - 1 + 2Y(s) &= \frac{4}{s} \\ (s+2)Y(s) &= \frac{4}{s} + 1 \\ Y(s) &= \frac{4}{s(s+2)} + \frac{1}{s+2}"
+						/>
 					</div>
 
 					<h4>Partialbruchzerlegung</h4>
 					<div class="kbox">
-						<Katex as="div" display tex="\frac{4}{s(s+2)} = \frac{2}{s} - \frac{2}{s+2}" />
-						<Katex as="div" display tex="Y(s) = \frac{2}{s} - \frac{1}{s+2}" />
+						<Katex
+							as="div"
+							display
+							aligned
+							tex="\frac{4}{s(s+2)} &= \frac{2}{s} - \frac{2}{s+2} \\ Y(s) &= \frac{2}{s} - \frac{1}{s+2}"
+						/>
 					</div>
 
 					<h4>Rücktransformation</h4>

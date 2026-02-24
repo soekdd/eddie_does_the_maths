@@ -50,11 +50,11 @@
 
 		<section class="task">
 			<figure class="exampleFigure">
-				<ImageZoomer no-zoom title="Beispielhand: Zwei Paare">
+				<ImageZoomer no-zoom title="Beispielhand: Ein Paare">
 					<PGHand
 						:cards="[
-							{ code: 'Ks', suit: 'Pik',   rank: 'Dame' },
-							{ code: 'Kd', suit: 'Herz',  rank: 'Dame' },
+							{ code: 'Ds', suit: 'Pik',   rank: 'Dame' },
+							{ code: 'Dh', suit: 'Herz',  rank: 'Dame' },
 						]"
 					/>
 				</ImageZoomer>
@@ -116,6 +116,18 @@
 		</section>
 
 		<section class="task">
+			<figure class="exampleFigure">
+				<ImageZoomer no-zoom title="Beispielhand: Vier zum Flush">
+					<PGHand
+						:cards="[
+							{ code: 'Kc', suit: 'Kreuz',   rank: '7' },
+							{ code: 'Kc', suit: 'Kreuz',  rank: '10' },
+							{ code: 'Kc', suit: 'Kreuz',   rank: 'Dame' },
+							{ code: 'Kc', suit: 'Kreuz',  rank: 'König' },
+						]"
+					/>
+				</ImageZoomer>
+			</figure>
 			<h3>Aufgabe 3 - Vier Karten zum Flush: Wie gut ist der 1-Karten-Draw?</h3>
 			<div class="eddie">
 				<p>
@@ -130,6 +142,19 @@
 		</section>
 
 		<section class="task">
+			<figure class="exampleFigure">
+				<ImageZoomer no-zoom title="Beispielhand: Open-ended Draw">
+					<PGHand
+						:cards="[
+							{ code: 'Kc', suit: 'Karo',   rank: '6' },
+							{ code: 'Kc', suit: 'Karo',  rank: '7' },
+							{ code: 'Kc', suit: 'Karo',   rank: '8' },
+							{ code: 'Kc', suit: 'Karo',  rank: '9' },
+						]"
+					/>
+				</ImageZoomer>
+			</figure>
+			
 			<h3>Aufgabe 4 - Vier Karten zur Strasse: Open-Ended vs. Gutshot</h3>
 			<div class="eddie">
 				<p>
@@ -141,8 +166,12 @@
 				</ul>
 				<div class="kbox">
 					<p class="mono">Auch hier gilt beim 1-Karten-Draw: <Katex inline tex="52-5=47" /> ziehbare Karten.</p>
-					<Katex as="div" display tex="P(\text{Straight, open-ended})=\frac{8}{47}\approx 17{,}02\%" />
-					<Katex as="div" display tex="P(\text{Straight, gutshot})=\frac{4}{47}\approx 8{,}51\%" />
+					<Katex
+						as="div"
+						display
+						aligned
+						tex="P(\text{Straight, open-ended}) &= \frac{8}{47}\approx 17{,}02\% \\ P(\text{Straight, gutshot}) &= \frac{4}{47}\approx 8{,}51\%"
+					/>
 				</div>
 			</div>
 		</section>
@@ -168,10 +197,12 @@
 					Gesucht ist <Katex inline tex="P(\text{Two Pair}\mid \text{zieht 1})" />.
 				</p>
 				<div class="kbox">
-					<Katex as="div" display tex="P(\text{Two Pair})=\frac{123{.}552}{2{.}598{.}960}\approx 4{,}754\%" />
-					<Katex as="div" display tex="N(\text{4-Flush})=4\cdot \binom{13}{4}\cdot 39=111{.}540" />
-					<Katex as="div" display tex="P(\text{4-Flush})=\frac{111{.}540}{2{.}598{.}960}\approx 4{,}292\%" />
-					<Katex as="div" display tex="P(\text{Two Pair}\mid 1)\approx 0{,}5255" />
+					<Katex
+						as="div"
+						display
+						aligned
+						tex="P(\text{Two Pair}) &= \frac{123{.}552}{2{.}598{.}960}\approx 4{,}754\% \\ N(\text{4-Flush}) &= 4\cdot \binom{13}{4}\cdot 39=111{.}540 \\ P(\text{4-Flush}) &= \frac{111{.}540}{2{.}598{.}960}\approx 4{,}292\% \\ P(\text{Two Pair}\mid 1) &\approx 0{,}5255"
+					/>
 				</div>
 				<p class="mono">Also: ca. 52,6% Two Pair vs. 47,4% 4-Flush.</p>
 			</div>
@@ -216,7 +247,6 @@
 					<li>Nutze diese Wahrscheinlichkeit für Linie A.</li>
 					<li>Linie B gewinnt nur über Folds.</li>
 					<li>Setze Pot, Bet und Calling-Range ein und vergleiche den EV.</li>
-					<li>Optional: Monte-Carlo-Simulation als Check.</li>
 				</ol>
 			</div>
 		</section>
