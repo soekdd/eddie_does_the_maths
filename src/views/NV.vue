@@ -102,7 +102,7 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import titleImg from "@/images/NV.webp";
 import NV_Azimut from "./NV_Azimut.vue";
 import NV_Bayes from "./NV_Bayes.vue";
