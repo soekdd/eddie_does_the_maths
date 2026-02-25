@@ -73,6 +73,17 @@
 				{{ warningMessage }}
 			</v-alert>
 
+			<v-alert
+				v-if="showCorrectorAlert"
+				border="start"
+				class="wipAlert"
+				:density="isMobile ? 'compact' : 'comfortable'"
+				type="success"
+				variant="tonal"
+			>
+				Dieses Kapitel wird aktuell von {{ correctorName }} geprüft.
+			</v-alert>
+
 			<Page v-if="showBookCard">
 				<slot name="bookPart" />
 			</Page>
@@ -115,6 +126,9 @@
 
 			<footer class="foot">
 				<slot name="footer" />
+				<div v-if="showCorrectedCredit" class="correctedCredit">
+					freundlicher Weise geprüft und korrigiert von {{ correctedName }}
+				</div>
 				<div class="legalRow">
 					<a class="legalLink" href="https://github.com/soekdd/eddie_does_the_maths">GitHub</a>
 					<span class="legalSep">·</span>
@@ -269,6 +283,19 @@ const warningMessage = computed( () => {
 	return "";
 } );
 
+function normalizeMetaPersonName( value ) {
+	if ( typeof value !== "string" ) {
+		return "";
+	}
+
+	return value.trim();
+}
+
+const correctorName = computed( () => normalizeMetaPersonName( route.meta?.corrector ) );
+const correctedName = computed( () => normalizeMetaPersonName( route.meta?.corrected ) );
+const showCorrectorAlert = computed( () => Boolean( correctorName.value ) );
+const showCorrectedCredit = computed( () => Boolean( correctedName.value ) );
+
 const routeIsWip = computed( () => route.meta?.wip === true );
 const showError = computed( () => !routeIsWip.value && Boolean( errorMessage.value ) );
 const showWarning = computed( () => !routeIsWip.value && Boolean( warningMessage.value ) );
@@ -393,6 +420,13 @@ onMounted( () => {
 <style scoped>
 .wipAlert {
   margin-top: 16px;
+}
+
+.correctedCredit {
+  margin-top: 12px;
+  font-size: 0.8rem;
+  opacity: 0.82;
+  text-align: right;
 }
 
 .legalRow {

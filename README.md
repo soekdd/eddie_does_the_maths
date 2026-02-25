@@ -1,7 +1,7 @@
 # Eddie rechnet (eddie_does_the_maths)
 
 <p align="center">
-  <img src="./src/images/welcome.webp" alt="Eddie rechnet" width="560" />
+  <img src="./cover.jpg" alt="Eddie rechnet" width="560" />
 </p>
 
 Mathe, aber in Eddie-Logik: kein trockenes Tafel-Gekrakel, sondern ein Plan. Mit Variablen. Und Auswegen.
