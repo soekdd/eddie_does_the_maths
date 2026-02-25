@@ -17,7 +17,7 @@
 		</figure>
 		<h3 id="einleitung">Joutsa, 5. Juli 1985</h3>
 		<div class="eddie">
-			<p>Joutsa, dritter Wettkampftag. Der Stuhl knarzt, als würde er mich verraten wollen. Mein Herz klopft
+			<p>Joutsa, zweiter Wettkampftag. Der Stuhl knarzt, als würde er mich verraten wollen. Mein Herz klopft
 				zu laut für so einen stillen Raum. Ich starre auf die Aufgabe und merke, wie mein Kopf
 				gleichzeitig hier <em>und</em> schon ganz woanders ist. Bei Türen, Wegen, Zeiten. Fluchtplänen.</p><p>
 				Auf dem Papier geht es um eine große Menge verschiedener Zahlen. Alle diese Zahlen sind aus

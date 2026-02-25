@@ -17,7 +17,7 @@
 		</figure>
 		<h3 id="einleitung">Joutsa, 5. Juli 1985</h3>
 		<div class="eddie">
-			<p>Joutsa, dritter Wettkampftag. Mir ist, als hätte jemand Watte in meinen Kopf gestopft. Ich
+			<p>Joutsa, zweiter Wettkampftag. Mir ist, als hätte jemand Watte in meinen Kopf gestopft. Ich
 				lese den Text zweimal und merke: Ich verstehe ihn und gleichzeitig rutsche ich weg. Als
 				würde mein Gehirn auf einem nassen Bootssteg stehen.</p><p>
 				Hier geht es um eine Zahlenfolge. Du startest mit einer Zahl, und dann erzeugst du die
