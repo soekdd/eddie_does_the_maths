@@ -1,6 +1,47 @@
 import "vuetify/styles";
+import { h } from "vue";
 import { createVuetify } from "vuetify";
+import { mdiAlertOutline, mdiFileEditOutline } from "@mdi/js";
 import { aliases, mdi } from "vuetify/iconsets/mdi-svg";
+
+const mdiNameToSvgPath = {
+	"mdi-alert-outline":     mdiAlertOutline,
+	"mdi-file-edit-outline": mdiFileEditOutline
+};
+
+function resolveMdiIconValue( icon ) {
+	if ( typeof icon !== "string" ) {
+		return icon;
+	}
+
+	const trimmed = icon.trim();
+
+	if ( !trimmed ) {
+		return trimmed;
+	}
+
+	// Alias values from mdi-svg start with "svg:".
+	if ( trimmed.startsWith( "svg:" ) ) {
+		return trimmed.slice( 4 );
+	}
+
+	// Support raw mdi names like "mdi-alert-outline" in any Vuetify component.
+	if ( trimmed.startsWith( "mdi-" ) ) {
+		return mdiNameToSvgPath[ trimmed ] ?? trimmed;
+	}
+
+	return trimmed;
+}
+
+const mdiExtended = {
+	component: ( props ) => h(
+		mdi.component,
+		{
+			...props,
+			icon: resolveMdiIconValue( props.icon )
+		}
+	)
+};
 
 export const vuetify = createVuetify( {
 	ssr: true,
@@ -8,7 +49,7 @@ export const vuetify = createVuetify( {
 		defaultSet: "mdi",
 		aliases,
 		sets: {
-			mdi
+			mdi: mdiExtended
 		}
 	},
 	theme: {
@@ -48,9 +89,6 @@ export const vuetify = createVuetify( {
 		VCard: {
 			rounded:   "lg",
 			elevation: 0
-		},
-		VAlert: {
-			icon: false
 		},
 		VTextField: {
 			variant:     "outlined",

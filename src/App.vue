@@ -17,7 +17,7 @@
 					<div>
 						<h1 v-if="titleText" class="titleRow">
 							<span>{{ titleText }}</span>
-							<template v-if="difficultyStars">
+							<template v-if="difficultyIcon">
 								<v-tooltip
 									v-if="hasMounted"
 									location="bottom"
@@ -25,12 +25,12 @@
 								>
 									<template #activator="{ props: tooltipProps }">
 										<span class="difficultyStars" :class="{ 'is-wip': routeIsWip }" v-bind="tooltipProps">
-											{{ difficultyStars }}
+											<v-icon :icon="difficultyIcon" size="18" />
 										</span>
 									</template>
 								</v-tooltip>
 								<span v-else class="difficultyStars" :class="{ 'is-wip': routeIsWip }">
-									{{ difficultyStars }}
+									<v-icon :icon="difficultyIcon" size="18" />
 								</span>
 							</template>
 						</h1>
@@ -39,8 +39,11 @@
 								<router-link :to="{ path: routePathForHashLinks, hash: `#${chapter.id}` }">
 									{{ chapter.label }}
 								</router-link>
-								<span v-if="index < subChapterEntries.length - 1"> • </span>
+								<span> • </span>
 							</template>
+							<router-link :to="{ path: routePathForHashLinks, hash: `#forum` }">
+								Forum
+							</router-link>
 						</p>
 					</div>
 				</template>
@@ -69,6 +72,7 @@
 				:density="isMobile ? 'compact' : 'comfortable'"
 				type="warning"
 				variant="tonal"
+				icon="mdi-alert-outline"
 			>
 				{{ warningMessage }}
 			</v-alert>
@@ -79,6 +83,7 @@
 				class="wipAlert"
 				:density="isMobile ? 'compact' : 'comfortable'"
 				type="success"
+				icon="mdi-file-edit-outline"
 				variant="tonal"
 			>
 				Dieses Kapitel wird aktuell von {{ correctorName }} geprüft.
@@ -118,7 +123,7 @@
 					</v-col>
 				</v-row>
 			</section>
-			<section class="card">
+			<section class="card" id="forum">
 				<ForumThreadPocketBase
 					:forum-key="shortText"
 				/>
@@ -232,6 +237,7 @@ import {
 } from "vue";
 import { useRoute } from "vue-router";
 import { useDisplay } from "vuetify";
+import { mdiHexagonSlice2, mdiHexagonSlice4, mdiHexagonSlice6 } from "@mdi/js";
 import reportErrorHTML from "./utils/disclaimer/report_errors_de.html?raw";
 import impressumHtml from "./utils/disclaimer/impressum_de.html?raw";
 import privacyPolicyHtml from "./utils/disclaimer/privacy_policy_de.html?raw";
@@ -335,17 +341,17 @@ const difficultyValue = computed( () => {
 
 	return asNumber;
 } );
-const difficultyStars = computed( () => {
+const difficultyIcon = computed( () => {
 	if ( difficultyValue.value === 1 ) {
-		return "★☆☆";
+		return mdiHexagonSlice2;
 	}
 
 	if ( difficultyValue.value === 2 ) {
-		return "★★☆";
+		return mdiHexagonSlice4;
 	}
 
 	if ( difficultyValue.value === 3 ) {
-		return "★★★";
+		return mdiHexagonSlice6;
 	}
 
 	return "";

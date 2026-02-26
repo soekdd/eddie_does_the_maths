@@ -51,22 +51,26 @@
 							location="bottom"
 							:text="difficultyLabel(it.difficulty)"
 						>
-							<template #activator="{ props: tooltipProps }">
-								<span class="tile-difficulty" :class="{ 'is-wip': it.wip }" v-bind="tooltipProps">
-									{{ difficultyStars(it.difficulty) }}
-								</span>
-							</template>
-						</v-tooltip>
-						<span v-else class="tile-difficulty" :class="{ 'is-wip': it.wip }">
-							{{ difficultyStars(it.difficulty) }}
-						</span>
+								<template #activator="{ props: tooltipProps }">
+									<span class="tile-difficulty" :class="{ 'is-wip': it.wip }" v-bind="tooltipProps">
+										<v-icon :icon="difficultyIcon(it.difficulty)" size="18" />
+									</span>
+								</template>
+							</v-tooltip>
+							<span v-else class="tile-difficulty" :class="{ 'is-wip': it.wip }">
+								<v-icon :icon="difficultyIcon(it.difficulty)" size="18" />
+							</span>
 					</template>
 					<span
 						v-if="tileCommentCount(it) > 0"
 						class="tile-comment-indicator"
 					>
-						<v-icon :icon="commentBubbleIcon" size="18" />
-						<span class="tile-comment-count">{{ tileCommentCountLabel(it) }}</span>
+						<v-icon
+							:icon="commentBubbleIcon"
+							:class="{ 'tile-comment-icon-recent': tileHasRecentComment(it) }"
+							size="18"
+						/>
+						<span :class="{ 'tile-comment-count':'tile-comment-count', 'tile-comment-count-recent': tileHasRecentComment(it) }">{{ tileCommentCountLabel(it) }}</span>
 					</span>
 					<span class="tile-title" :class="tileTitleClass(it)">{{ it.title }}</span>
 				</v-btn>
@@ -84,7 +88,8 @@ import {
 	computed, inject, onMounted, ref, watch
 } from "vue";
 import {
-	mdiAlertCircleOutline, mdiAlertOutline, mdiCheckCircle, mdiMessageOutline
+	mdiAlertCircleOutline, mdiFileEditOutline, mdiAlertOutline, mdiHexagonSlice2, mdiHexagonSlice4, mdiHexagonSlice6, mdiMessageOutline,
+	mdiCheckCircleOutline
 } from "@mdi/js";
 import { useRoute } from "vue-router";
 import PocketBase from "pocketbase";
@@ -94,6 +99,7 @@ const props = defineProps( { title: { type: String, default: "Die aktuell ausgea
 
 const route = useRoute();
 const TILE_SIZE_PX = 195;
+const RECENT_COMMENT_MAX_AGE_MS = 24 * 60 * 60 * 1000;
 const commentBubbleIcon = mdiMessageOutline;
 const pbUrl = inject( "pbUrl", "" );
 const pb = pbUrl ? new PocketBase( pbUrl ) : null;
@@ -103,6 +109,7 @@ if ( pb ) {
 }
 
 const commentCountByForumKey = ref( {} );
+const recentCommentByForumKey = ref( {} );
 let commentCountRequestId = 0;
 
 const books = {
@@ -176,6 +183,11 @@ function normalizeRouteLinkPath( path ) {
 function escapeFilterString( value ) {
 	return `"${String( value ).replace( /\\/g, "\\\\" )
 		.replace( /"/g, "\\\"" )}"`;
+}
+
+function parseIsoDateToTimestamp( value ) {
+	const timestamp = Date.parse( String( value ?? "" ) );
+	return Number.isFinite( timestamp ) ? timestamp : null;
 }
 
 const bookTabs = computed( () => Object.values( books )
@@ -270,6 +282,7 @@ const itemsByBook = computed( () => Object.fromEntries( bookTabs.value.map( ( ta
 async function refreshCommentCounts( nextItems ) {
 	if ( !pb ) {
 		commentCountByForumKey.value = {};
+		recentCommentByForumKey.value = {};
 		return;
 	}
 
@@ -278,6 +291,7 @@ async function refreshCommentCounts( nextItems ) {
 
 	if ( !forumKeys.length ) {
 		commentCountByForumKey.value = {};
+		recentCommentByForumKey.value = {};
 		return;
 	}
 
@@ -287,7 +301,7 @@ async function refreshCommentCounts( nextItems ) {
 		const filter = forumKeys.map( ( key ) => `forumKey = ${escapeFilterString( key )}` ).join( " || " );
 		const records = await pb.collection( "forum_comments" ).getFullList( {
 			filter,
-			fields: "forumKey"
+			fields: "forumKey,created"
 		} );
 
 		if ( requestId !== commentCountRequestId ) {
@@ -295,6 +309,8 @@ async function refreshCommentCounts( nextItems ) {
 		}
 
 		const counts = {};
+		const recentByForumKey = {};
+		const nowMs = Date.now();
 
 		for ( const rec of records ) {
 			const forumKey = toForumKey( rec?.forumKey );
@@ -304,14 +320,22 @@ async function refreshCommentCounts( nextItems ) {
 			}
 
 			counts[ forumKey ] = ( counts[ forumKey ] ?? 0 ) + 1;
+
+			const createdAtTs = parseIsoDateToTimestamp( rec?.created );
+
+			if ( createdAtTs !== null && nowMs - createdAtTs < RECENT_COMMENT_MAX_AGE_MS ) {
+				recentByForumKey[ forumKey ] = true;
+			}
 		}
 
 		commentCountByForumKey.value = counts;
+		recentCommentByForumKey.value = recentByForumKey;
 	} catch ( err ) {
 		console.warn( "Kommentaranzahl konnte nicht geladen werden:", err );
 
 		if ( requestId === commentCountRequestId ) {
 			commentCountByForumKey.value = {};
+			recentCommentByForumKey.value = {};
 		}
 	}
 }
@@ -431,17 +455,17 @@ function tileTitleClass( item ) {
 	return item.wip ? "tile-title-dark-wip" : "tile-title-dark";
 }
 
-function difficultyStars( difficulty ) {
+function difficultyIcon( difficulty ) {
 	if ( difficulty === 1 ) {
-		return "★☆☆";
+		return mdiHexagonSlice2;
 	}
 
 	if ( difficulty === 2 ) {
-		return "★★☆";
+		return mdiHexagonSlice4;
 	}
 
 	if ( difficulty === 3 ) {
-		return "★★★";
+		return mdiHexagonSlice6;
 	}
 
 	return "";
@@ -465,11 +489,11 @@ function difficultyLabel( difficulty ) {
 
 function tileStatusIcon( item ) {
 	if ( item.corrected ) {
-		return mdiCheckCircle;
+		return mdiCheckCircleOutline;
 	}
 
 	if ( item.corrector ) {
-		return mdiAlertOutline;
+		return mdiFileEditOutline;
 	}
 
 	if ( item.wip ) {
@@ -514,6 +538,10 @@ function tileCommentCount( item ) {
 function tileCommentCountLabel( item ) {
 	const count = tileCommentCount( item );
 	return count < 10 ? String( count ) : "9+";
+}
+
+function tileHasRecentComment( item ) {
+	return recentCommentByForumKey.value[ item.forumKey ] === true;
 }
 </script>
 <style scoped>
@@ -643,7 +671,7 @@ function tileCommentCountLabel( item ) {
   width: 26px;
   height: 26px;
   border-radius: 999px;
-  background: rgba(0, 0, 0, 0.48);
+  background: rgba(0, 0, 0, 0.28);
   z-index: 2;
 }
 
@@ -665,19 +693,22 @@ function tileCommentCountLabel( item ) {
 
 .tile-difficulty {
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 8px;
+  right: 8px;
   z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   cursor: help;
   color: rgb(var(--v-theme-warning));
   font-size: 0.92rem;
   font-weight: 800;
   letter-spacing: 0.06em;
-  text-shadow:
-    -1px -1px 0 rgba(0, 0, 0, 0.7),
-    1px -1px 0 rgba(0, 0, 0, 0.7),
-    -1px 1px 0 rgba(0, 0, 0, 0.7),
-    1px 1px 0 rgba(0, 0, 0, 0.7);
+  width: 26px;
+  height: 26px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.28);
+  z-index: 2;
 }
 
 .tile-difficulty.is-wip {
@@ -687,14 +718,14 @@ function tileCommentCountLabel( item ) {
 .tile-comment-indicator {
   position: absolute;
   top: 34px;
-  right: 10px;
+  right: 12px;
   z-index: 2;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   width: 18px;
   height: 18px;
-  color: #fff;
+  color: #ffffff70;
   text-shadow:
     -1px -1px 0 rgba(0, 0, 0, 0.7),
     1px -1px 0 rgba(0, 0, 0, 0.7),
@@ -703,6 +734,7 @@ function tileCommentCountLabel( item ) {
 }
 
 .tile-comment-count {
+  color: #ffffff70;
   position: absolute;
   top: 3px;
   left: 50%;
@@ -712,6 +744,10 @@ function tileCommentCountLabel( item ) {
   line-height: 1;
   letter-spacing: -0.02em;
   pointer-events: none;
+}
+
+.tile-comment-count-recent, .tile-comment-icon-recent {
+  color: #fff !important;
 }
 
 .tile-title {
