@@ -285,7 +285,6 @@ export const routes = [
 		name:      "BA",
 		component: BA,
 		meta:      {
-			warning,
 			difficulty: 1,
 			title:      "BASIC for Runaways",
 			index:      true,
@@ -298,7 +297,6 @@ export const routes = [
 		name:      "SD",
 		component: SD,
 		meta:      {
-			warning,
 			difficulty: 1,
 			title:      "Ich zeig dir deine DNA",
 			index:      true,
@@ -363,7 +361,6 @@ export const routes = [
 		name:      "FX",
 		component: FX,
 		meta:      {
-			warning,
 			difficulty: 1,
 			title:      "Mein fx-7000G",
 			index:      true,
@@ -402,7 +399,6 @@ export const routes = [
 		name:      "GD",
 		component: GD,
 		meta:      {
-			warning,
 			difficulty: 1,
 			title:      "Diophantos Grab&shy;platte",
 			index:      true,

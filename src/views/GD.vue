@@ -164,8 +164,8 @@
 			</blockquote>
 			</div>
 			<p>
-				Ich interpretiere das als Aufteilung meiner Gesamtzeit
-				<Katex tex="T" />.
+				Ich interpretiere das als Aufteilung meiner Lebenszeit
+				<Katex tex="T" /> bis zu meinem 18. Geburtstag.
 			</p>
 			<div class="kbox">
 				<Katex
@@ -196,7 +196,7 @@
 			</p>
 		</div>
 
-		<h2 id="mit-t18" class="mt-8">Wenn ich <Katex tex="T=18" /> setze</h2>
+		<h2 id="mit-t18" class="mt-8">Lösung</h2>
 		<div class="eddie">
 			<p>Wenn ich <Katex tex="T=18" /> setze, folgt eine Fluchtzeit von:</p>
 			<div class="kbox">
@@ -207,6 +207,7 @@
 					tex="T_{\text{Flucht}} &= \frac1{18}\cdot 18-\frac16 \\ &= 1-\frac16=\frac56 \\ &= \frac56\approx 0{,}83\text{ Jahre}=10\text{ Monate}"
 				/>
 			</div>
+			Das passt. 10 Monate habe ich gebraucht, um Westdeutschland zu erreichen.
 		</div>
 	</template>
 
