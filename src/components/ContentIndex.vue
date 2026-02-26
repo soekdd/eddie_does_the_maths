@@ -84,7 +84,7 @@ import {
 	computed, inject, onMounted, ref, watch
 } from "vue";
 import {
-	mdiAlertCircleOutline, mdiAlertOutline, mdiMessageOutline
+	mdiAlertCircleOutline, mdiAlertOutline, mdiCheckCircle, mdiMessageOutline
 } from "@mdi/js";
 import { useRoute } from "vue-router";
 import PocketBase from "pocketbase";
@@ -147,6 +147,14 @@ function normalizeDifficulty( value ) {
 	}
 
 	return normalized;
+}
+
+function normalizeMetaPersonName( value ) {
+	if ( typeof value !== "string" ) {
+		return "";
+	}
+
+	return value.trim();
 }
 
 function toForumKey( value ) {
@@ -220,6 +228,8 @@ const items = computed( () => {
 			warning:    r?.meta?.warning === true || typeof r?.meta?.warning === "string",
 			error:      r?.meta?.error === true || typeof r?.meta?.error === "string",
 			wip:        r?.meta?.wip === true,
+			corrector:  normalizeMetaPersonName( r?.meta?.corrector ),
+			corrected:  normalizeMetaPersonName( r?.meta?.corrected ),
 			imageKey:   String( r.name ?? "" ).toUpperCase(),
 			imageUrl:   imageByRouteName[ String( r.name ?? "" ).toUpperCase() ] ?? null
 		} ) )
@@ -454,6 +464,14 @@ function difficultyLabel( difficulty ) {
 }
 
 function tileStatusIcon( item ) {
+	if ( item.corrected ) {
+		return mdiCheckCircle;
+	}
+
+	if ( item.corrector ) {
+		return mdiAlertOutline;
+	}
+
 	if ( item.wip ) {
 		return "";
 	}
@@ -470,6 +488,14 @@ function tileStatusIcon( item ) {
 }
 
 function tileStatusClass( item ) {
+	if ( item.corrected ) {
+		return "tile-status-corrected";
+	}
+
+	if ( item.corrector ) {
+		return "tile-status-corrector";
+	}
+
 	if ( item.error ) {
 		return "tile-status-error";
 	}
@@ -627,6 +653,14 @@ function tileCommentCountLabel( item ) {
 
 .tile-status-error {
   color: rgb(var(--v-theme-error));
+}
+
+.tile-status-corrector {
+  color: rgb(var(--v-theme-success));
+}
+
+.tile-status-corrected {
+  color: rgb(var(--v-theme-success));
 }
 
 .tile-difficulty {
