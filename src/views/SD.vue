@@ -22,8 +22,8 @@
 			<p>In Sinis Wohnung liegt dieses Genetikbuch rum, schwer wie ein Ziegelstein, und ich kann’s
 				natürlich nicht lassen: Ich schlage es auf. Und zack – mein Kopf macht wieder sein Ding.
 				Aus <em>Bio-Kram</em> wird ein System. Aus Bildern werden Regeln. Aus „Basen“ wird Code.</p>
-			<p>Plötzlich fühlt sich DNA nicht an wie irgendwas Schleimiges im Mikroskop, sondern wie e
-				in verdammt elegantes Speicherformat. Nicht geschniegelt wie ein Rechner – eher
+			<p>Plötzlich fühlt sich DNA nicht an wie irgendwas Schleimiges im Mikroskop, sondern wie ein
+				verdammt elegantes Speicherformat. Nicht geschniegelt wie ein Rechner – eher
 				dreckig-genial: eine Maschine, die im Wald geboren wurde und trotzdem stabil läuft.
 				Vier Zeichen, endlose Kombis. Und mittendrin ich, barfuß auf Sinis Dielen, mit
 				Buntstiften in der Hand und einer Idee, die gleichzeitig freaky und süß ist.</p>
