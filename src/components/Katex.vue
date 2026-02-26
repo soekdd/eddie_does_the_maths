@@ -21,5 +21,7 @@ const safeAs = computed( () => {
 </script>
 
 <template>
-<component :is="safeAs" v-html="html" />
+	<client-only>
+		<component :is="safeAs" v-html="html" />
+	</client-only>
 </template>

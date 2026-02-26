@@ -117,7 +117,7 @@ export const routes = [
 		name:      "O1",
 		component: O1,
 		meta:      {
-			warning,
+			corrector:	"Kitaktus",
 			difficulty: 3,
 			title:      "IMO 1985 Aufgabe A1",
 			index:      true,
@@ -130,7 +130,7 @@ export const routes = [
 		name:      "O2",
 		component: O2,
 		meta:      {
-			warning,
+			corrector:	"Kitaktus",
 			difficulty: 3,
 			title:      "IMO 1985 Aufgabe A2",
 			index:      true,
@@ -233,7 +233,7 @@ export const routes = [
 		name:      "SE",
 		component: SE,
 		meta:      {
-			warning,
+			corrector:	"Kitaktus",
 			difficulty: 1,
 			title:      "Gute-Nacht-Rechen&shy;routine",
 			index:      true,

@@ -233,7 +233,6 @@
 <script setup>
 import { computed, defineComponent, h, ref } from "vue";
 import katex from "katex";
-import "katex/dist/katex.min.css";
 
 const KaTeXBlock = defineComponent( {
 	name:  "KaTeXBlock",

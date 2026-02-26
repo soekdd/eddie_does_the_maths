@@ -86,7 +86,7 @@
 					<v-expansion-panel-text class="d-flex flex-column ga-3">
 						<div>
 							Aus <Katex :tex="'\\gcd(n,k)=1'" /> folgt:
-							<Katex :tex="'0,\\ k,\\ 2k,\\dots,(n-1)k'" /> sind modulo <Katex :tex="'n'" /> alle verschieden.
+							<Katex :tex="'0,\\ k,\\ 2k,\\dots,(n-1)k'" /> sind modulo <Katex :tex="'n'" /> paarweise verschieden.
 						</div>
 						<div>
 							Also ist die Liste
@@ -94,14 +94,17 @@
 							modulo <Katex :tex="'n'" /> einfach eine Umordnung von
 							<Katex :tex="'1,2,\\dots,n-1'" />.
 						</div>
-						<v-sheet class="pa-3 rounded">
-							<div class="text-subtitle-2 mb-2">Warum „alle verschieden“?</div>
-							<div>
+						
+						<div class="text-subtitle-2 my-2">Warum „alle verschieden“?</div>
+						<div>
 								Wenn <Katex :tex="'ak\\equiv bk\\pmod n'" />, dann <Katex :tex="'(a-b)k\\equiv 0\\pmod n'" />.
 								Weil <Katex :tex="'k'" /> keinen gemeinsamen Teiler mit <Katex :tex="'n'" /> hat, muss
 								<Katex :tex="'a-b\\equiv 0\\pmod n'" /> gelten – also <Katex :tex="'a\\equiv b\\pmod n'" />.
-							</div>
-						</v-sheet>
+								
+						</div>
+						<div class="mt-2">
+							Für <Katex tex="0\le a,b\le n-1"/> folgt daraus <Katex tex="a=b"/>
+						</div>
 					</v-expansion-panel-text>
 				</v-expansion-panel>
 

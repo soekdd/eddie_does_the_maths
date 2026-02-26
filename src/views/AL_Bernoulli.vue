@@ -253,7 +253,6 @@
 <script setup>
 import { computed, defineComponent, h, ref } from "vue";
 import katex from "katex";
-import "katex/dist/katex.min.css";
 
 // ---- KaTeX mini component ----
 const KaTeXBlock = defineComponent( {

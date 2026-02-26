@@ -29,19 +29,13 @@ npm run build
 
 Output landet standardmäßig in `@/dist/math/` (abhängig von `VITE_PUBLIC_BASE`).
 
-## Neue Themen hinzufuegen (Checkliste)
+## Neue Themen hinzufügen (Checkliste)
 
 1. Neue View unter `eddie_does_the_maths/src/views/` anlegen.
 2. Route in `eddie_does_the_maths/src/router.js` eintragen.
 3. `meta: { title, index: true, order }` setzen, dann taucht es im Index auf.
-4. Formeln ueber `<Katex ... />` reinwerfen.
-
-## Troubleshooting
-
-- Seite leer? Du bist wahrscheinlich ohne Hash gelandet. Richtig ist `/#/DG` statt `/DG`.
-- Formeln sehen aus wie 1996? Check `eddie_does_the_maths/src/main.js`: `import 'katex/dist/katex.min.css'`.
-- Titel passt mobil nicht in die App-Bar? Eddie nimmt sich Platz. Guck in `eddie_does_the_maths/src/App.vue`.
-
+4. Formeln über `<Katex ... />` reinwerfen.
+5. 
 ## Lizenz
 
 Dieses Subprojekt `eddie_does_the_maths` steht unter der MIT-Lizenz.

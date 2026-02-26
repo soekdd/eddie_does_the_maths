@@ -178,7 +178,6 @@ import {
 	computed, nextTick, onBeforeUnmount, onMounted, ref, watch
 } from "vue";
 import katex from "katex";
-import "katex/dist/katex.min.css";
 import { ensureCbiLoaded } from "@/utils/cbi/cbi.mjs";
 
 type FinishCb = ( errorCode: number, message: string, programs?: any, where?: string, lineNum?: number ) => void;

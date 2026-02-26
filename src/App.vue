@@ -272,8 +272,8 @@ const errorMessage = computed( () => {
 
 const warningMessage = computed( () => {
 	if ( route.meta?.warning === true ) {
-		return "Hinweis: An diesem Inhalt wird noch gearbeitet. " +
-				"Texte, Grafiken und Rechenwege können sich noch ändern.";
+		return "Hinweis: Dieser Inhalt wurde noch nicht geprüft. " +
+				"Texte, Grafiken und Rechenwege können also noch Fehler beinhalten. Mithilfe ist erbeten.";
 	}
 
 	if ( typeof route.meta?.warning === "string" ) {

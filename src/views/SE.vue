@@ -132,7 +132,7 @@ const routines = [
 	{
 		id:    2,
 		title: "2. Paar-Summen bis 100",
-		text:  "Die alte Gauss-Trickaufgabe: 1+99, 2+98, 3+97. Jedes Paar gibt 100, und es sind genau 50 solcher Paare. Du brauchst nicht alle wirklich zu addieren, es reicht, das Muster zu erkennen. Das Schöne ist: Aus einem scheinbar endlosen Zählen wird eine einfache Abkürzung. Und während du dir denkst „50 mal 100 = 5000“, merkst du, wie sich dein Atem beruhigt. Der Gedanke ist abgeschlossen – Zeit zum Einschlafen."
+		text:  "Die alte Gauss-Trickaufgabe: 1+100, 2+99, 3+98. Jedes Paar gibt 101, und es sind genau 50 solcher Paare. Du brauchst nicht alle wirklich zu addieren, es reicht, das Muster zu erkennen. Das Schöne ist: Aus einem scheinbar endlosen Zählen wird eine einfache Abkürzung. Und während du dir denkst „50 mal 101 = 5050“, merkst du, wie sich dein Atem beruhigt. Der Gedanke ist abgeschlossen – Zeit zum Einschlafen."
 	},
 	{
 		id:    3,

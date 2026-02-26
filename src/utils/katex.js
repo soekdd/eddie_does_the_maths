@@ -11,8 +11,9 @@ function escapeHTML( s ) {
 
 export function katexHTML( tex, displayMode = false ) {
 	try {
-		return katex.renderToString( tex, { throwOnError: false, displayMode } );
-	} catch {
+		return katex.renderToString( tex, { throwOnError: true, displayMode } );
+	} catch(e) {
+		console.log("Katex Error",tex,e)
 		return `<code>${escapeHTML( tex )}</code>`;
 	}
 }
