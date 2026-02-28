@@ -82,7 +82,7 @@
 					<v-expansion-panel-title>
 						Schritt 1 – Spezialfall: i ist eine Zweierpotenz
 					</v-expansion-panel-title>
-					<v-expansion-panel-text class="d-flex flex-column ga-3">
+					<v-expansion-panel-text class="d-flex flex-column ga-3" eager>
 						<div>
 							Ist <Katex tex="i=2^t" />, dann sind in <Katex tex="(1+x)^i" /> alle inneren
 							Binomialkoeffizienten gerade. Ungerade bleiben nur die Ränder:
@@ -98,7 +98,7 @@
 					<v-expansion-panel-title>
 						Schritt 2 – Induktion über den größten Exponenten i_n
 					</v-expansion-panel-title>
-					<v-expansion-panel-text class="d-flex flex-column ga-3">
+					<v-expansion-panel-text class="d-flex flex-column ga-3" eager>
 						<div>
 							Wähle eine Zweierpotenz <Katex tex="m" /> mit
 							<Katex tex="m\le i_n < 2m" />.
@@ -115,7 +115,7 @@
 					<v-expansion-panel-title>
 						Schritt 3 – Fall i_1 \ge m
 					</v-expansion-panel-title>
-					<v-expansion-panel-text class="d-flex flex-column ga-3">
+					<v-expansion-panel-text class="d-flex flex-column ga-3" eager>
 						<div>
 							Dann kann man jeden Exponenten um <Katex tex="m" /> reduzieren:
 							<Katex tex="Q_{i_j}=(1+x)^mQ_{i_j-m}" />.
@@ -134,7 +134,7 @@
 					<v-expansion-panel-title>
 						Schritt 4 – Fall i_1 &lt; m
 					</v-expansion-panel-title>
-					<v-expansion-panel-text class="d-flex flex-column ga-3">
+					<v-expansion-panel-text class="d-flex flex-column ga-3" eager>
 						<div>
 							Splitte an der Grenze <Katex tex="m" />:
 							<Katex tex="Q=A+(1+x)^mB" />, wobei <Katex tex="\deg A,\deg B<m" />.

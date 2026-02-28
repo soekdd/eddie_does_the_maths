@@ -158,7 +158,7 @@
 					<v-expansion-panel-title>
 						Eddie-Flüstermodus: Was heißt „diophantisch“?
 					</v-expansion-panel-title>
-					<v-expansion-panel-text>
+					<v-expansion-panel-text eager>
 						Heißt im Kern: „Wir spielen das Ganze im Reich der ganzen Zahlen.“ Benannt nach Diophantos.
 						Ja, die Alten hatten auch schon Spaß daran, sich das Leben schwer zu machen.
 					</v-expansion-panel-text>
@@ -193,7 +193,7 @@
 		<v-card class="panel pa-3 mt-4" >
 			<h3>Grafik zu deinen Eingaben</h3>
 			<ImageZoomer :title="`Grafik: ${String(a)}x + ${String(b)}y = ${String(c)}`">
-				<DG_Graph :a="a" :b="b" :c="c" />
+				<DG_Graph :a :b :c />
 			</ImageZoomer>
 			<p class="mini muted">
 				Zeigt die positiven ganzzahligen Lösungen (nur wenn a und b das gleiche Vorzeichen haben).
@@ -238,7 +238,7 @@
 				<v-expansion-panels multiple variant="accordion">
 					<v-expansion-panel :value="0">
 						<v-expansion-panel-title>1) Lösbarkeitscheck</v-expansion-panel-title>
-						<v-expansion-panel-text>
+						<v-expansion-panel-text eager>
 							<div class="kbox">
 								<Katex
 									as="div"
@@ -254,7 +254,7 @@
 
 					<v-expansion-panel>
 						<v-expansion-panel-title>2) Erweiterter Euklid</v-expansion-panel-title>
-						<v-expansion-panel-text>
+						<v-expansion-panel-text eager>
 							<p class="muted">Wir suchen u,v mit au+bv=g.</p>
 							<div class="kbox">
 								<Katex
@@ -301,7 +301,7 @@
 
 					<v-expansion-panel :value="2">
 						<v-expansion-panel-title>3) Skalieren auf c</v-expansion-panel-title>
-						<v-expansion-panel-text>
+						<v-expansion-panel-text eager>
 							<p class="muted">Wenn au+bv=g, dann gilt (c/g)(au+bv)=c.</p>
 							<div class="kbox">
 								<Katex
@@ -324,7 +324,7 @@
 
 					<v-expansion-panel :value="3">
 						<v-expansion-panel-title>4) Allgemeine Lösung</v-expansion-panel-title>
-						<v-expansion-panel-text>
+						<v-expansion-panel-text eager>
 							<div class="kbox">
 								<Katex as="div" display :tex="`x=x_0+\\frac{b}{g}t=${fmt(steps.x0)}+${fmt(steps.dx)}t`" />
 							</div>

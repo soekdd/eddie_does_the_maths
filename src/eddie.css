@@ -319,6 +319,18 @@ h3 {
   line-height: 1.5;
 }
 
+@media screen {
+  /*
+   * Vuetify utility classes such as `d-flex` use `display: ... !important`.
+   * With eager expansion-panel content this can override v-show's inline
+   * `display: none;` unless we force hidden state back on screen.
+   */
+  .v-expansion-panel-text[style*="display: none"],
+  .v-expansion-panel-text[style*="display:none"] {
+    display: none !important;
+  }
+}
+
 @media print {
   .v-alert,
   .pageCard,
@@ -326,6 +338,15 @@ h3 {
   #interactiv,
   #forum {
     display: none !important;
+  }
+
+  /* Keep all expansion-panel content visible in print output. */
+  .v-expansion-panel-text,
+  .v-expansion-panel-text__wrapper {
+    display: block !important;
+    height: auto !important;
+    opacity: 1 !important;
+    visibility: visible !important;
   }
 
   .v-toolbar,

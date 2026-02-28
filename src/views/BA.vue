@@ -62,9 +62,12 @@
 				<div class="text-body-2">
 					Nach Z kommt wieder A. Mathematisch ist das Rechnen <em>modulo 26</em>.
 				</div>
-				<div class="mt-2"
-					v-html="katexBlock(String.raw`\text{Beispiel: } 25+3=28 \equiv 2 \pmod{26}\ \Rightarrow\ Z \xrightarrow{+3} C`)"
-				>
+				<div class="mt-2">
+					<Katex
+						as="div"
+						display
+						:tex="String.raw`\text{Beispiel: } 25+3=28 \equiv 2 \pmod{26}\ \Rightarrow\ Z \xrightarrow{+3} C`"
+					/>
 				</div>
 			</div>
 
@@ -84,13 +87,17 @@
 				Jeder Buchstabe wird um <span class="font-weight-medium">k</span> Stellen weitergeschoben.
 			</p>
 
-			<div class="kbox"
-				v-html="katexBlock(String.raw`
-				\textbf{Verschlüsselung:}\quad C \equiv P + k \pmod{26}
-				\\\\
-				\textbf{Entschlüsselung:}\quad P \equiv C - k \pmod{26}
-			`)"
-			></div>
+			<div class="kbox">
+				<Katex
+					as="div"
+					display
+					:tex="String.raw`
+						\textbf{Verschlüsselung:}\quad C \equiv P + k \pmod{26}
+						\\\\
+						\textbf{Entschlüsselung:}\quad P \equiv C - k \pmod{26}
+					`"
+				/>
+			</div>
 
 			<v-row>
 				<v-col cols="12" md="6">
@@ -145,12 +152,16 @@
 				Statt immer denselben Shift zu nehmen, hast du eine Folge von Shifts, die sich wiederholt.
 			</p>
 
-			<div class="kbox"
-				v-html="katexBlock(String.raw`
-				C_i \equiv P_i + K_i \pmod{26}
-				\\\\\text{wobei } K_i \text{ zyklisch aus dem Schlüssel kommt.}
-			`)"
-			></div>
+			<div class="kbox">
+				<Katex
+					as="div"
+					display
+					:tex="String.raw`
+						C_i \equiv P_i + K_i \pmod{26}
+						\\\\\text{wobei } K_i \text{ zyklisch aus dem Schlüssel kommt.}
+					`"
+				/>
+			</div>
 
 			<v-row>
 				<v-col cols="12" md="6">
@@ -241,15 +252,23 @@
 							Stell dir vor, du hast mehrere Cäsar-Chiffren, die sich abwechseln.
 							Wenn du die Periodenlänge kennst, zerfällt das Problem wieder in mehrere kleine Cäsar-Aufgaben.
 						</div>
-						<div class="mt-2"
-							v-html="katexBlock(String.raw`
-							\text{Wenn die Schlüssellänge } m \text{ bekannt ist,}`)"
-						></div>
-						<div v-html="katexBlock(String.raw`
-							\text{ dann: }
-							\{i \equiv 0 \pmod m\},\{i \equiv 1 \pmod m\},\dots
-						`)"
-						></div>
+						<div class="mt-2">
+							<Katex
+								as="div"
+								display
+								:tex="String.raw`\text{Wenn die Schlüssellänge } m \text{ bekannt ist,}`"
+							/>
+						</div>
+						<div>
+							<Katex
+								as="div"
+								display
+								:tex="String.raw`
+									\text{ dann: }
+									\{i \equiv 0 \pmod m\},\{i \equiv 1 \pmod m\},\dots
+								`"
+							/>
+						</div>
 					</div>
 				</v-col>
 			</v-row>
@@ -673,17 +692,6 @@ function handleHardRestart( payload: { reason: string } ) {
 	emulatorReady.value = false;
 	emulatorRunning.value = false;
 	emulatorKey.value += 1;
-}
-
-import katex from "katex";
-
-/** ===== KaTeX helper ===== */
-function katexBlock( tex: string ) {
-	return katex.renderToString( tex, {
-		displayMode:  true,
-		throwOnError: false,
-		strict:       "ignore"
-	} );
 }
 
 /** ===== Crypto helpers (A=0..Z=25) ===== */

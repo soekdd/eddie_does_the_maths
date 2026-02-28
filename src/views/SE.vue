@@ -36,7 +36,7 @@
 			<v-expansion-panels v-model="openRoutinePanel" variant="accordion">
 				<v-expansion-panel v-for="item in routines" :key="item.id">
 					<v-expansion-panel-title>{{ item.title }}</v-expansion-panel-title>
-					<v-expansion-panel-text class="d-flex flex-column ga-2">
+					<v-expansion-panel-text class="d-flex flex-column ga-2" eager>
 						<div>{{ item.text }}</div>
 					</v-expansion-panel-text>
 				</v-expansion-panel>

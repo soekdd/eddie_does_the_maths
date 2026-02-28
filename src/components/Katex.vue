@@ -10,8 +10,36 @@ const props = defineProps( {
 	as:      { type: String, default: "span" }
 } );
 
-const html = computed( () => katexHTML( props.aligned ?
-	"\\begin{aligned}" + props.tex + "\\end{aligned}" : props.tex, props.display ) );
+function encodeBase64Utf8( value ) {
+	if ( typeof value !== "string" ) {
+		return "";
+	}
+
+	if ( typeof Buffer !== "undefined" ) {
+		return Buffer.from( value, "utf8" ).toString( "base64" );
+	}
+
+	if ( typeof TextEncoder !== "undefined" && typeof btoa === "function" ) {
+		let binary = "";
+
+		for ( const byte of new TextEncoder().encode( value ) ) {
+			binary += String.fromCharCode( byte );
+		}
+
+		return btoa( binary );
+	}
+
+	return "";
+}
+
+const sourceTex = computed( () => props.tex );
+const renderTex = computed( () => props.aligned ?
+	`\\begin{aligned}${sourceTex.value}\\end{aligned}` : sourceTex.value );
+const sourceTexB64 = computed( () => encodeBase64Utf8( sourceTex.value ) );
+const renderTexB64 = computed( () => encodeBase64Utf8( renderTex.value ) );
+const displayFlag = computed( () => props.display ? "1" : "0" );
+const alignedFlag = computed( () => props.aligned ? "1" : "0" );
+const html = computed( () => katexHTML( renderTex.value, props.display ) );
 
 const safeAs = computed( () => {
 	const tag = typeof props.as === "string" ? props.as.trim() : "";
@@ -21,7 +49,16 @@ const safeAs = computed( () => {
 </script>
 
 <template>
-	<client-only>
-		<component :is="safeAs" v-html="html" />
-	</client-only>
+<client-only>
+	<component
+		:is="safeAs"
+		:data-katex-aligned="alignedFlag"
+		:data-katex-display="displayFlag"
+		:data-katex-render-tex="renderTex"
+		:data-katex-render-tex-b64="renderTexB64"
+		:data-katex-tex="sourceTex"
+		:data-katex-tex-b64="sourceTexB64"
+		v-html="html"
+	/>
+</client-only>
 </template>

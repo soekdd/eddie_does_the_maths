@@ -83,7 +83,7 @@
 					<v-expansion-panel-title>
 						Schritt 1 – Die Vielfachen von k bilden alle Reste modulo n
 					</v-expansion-panel-title>
-					<v-expansion-panel-text class="d-flex flex-column ga-3">
+					<v-expansion-panel-text class="d-flex flex-column ga-3" eager>
 						<div>
 							Aus <Katex :tex="'\\gcd(n,k)=1'" /> folgt:
 							<Katex :tex="'0,\\ k,\\ 2k,\\dots,(n-1)k'" /> sind modulo <Katex :tex="'n'" /> paarweise verschieden.
@@ -97,9 +97,9 @@
 						
 						<div class="text-subtitle-2 my-2">Warum „alle verschieden“?</div>
 						<div>
-								Wenn <Katex :tex="'ak\\equiv bk\\pmod n'" />, dann <Katex :tex="'(a-b)k\\equiv 0\\pmod n'" />.
-								Weil <Katex :tex="'k'" /> keinen gemeinsamen Teiler mit <Katex :tex="'n'" /> hat, muss
-								<Katex :tex="'a-b\\equiv 0\\pmod n'" /> gelten – also <Katex :tex="'a\\equiv b\\pmod n'" />.
+							Wenn <Katex :tex="'ak\\equiv bk\\pmod n'" />, dann <Katex :tex="'(a-b)k\\equiv 0\\pmod n'" />.
+							Weil <Katex :tex="'k'" /> keinen gemeinsamen Teiler mit <Katex :tex="'n'" /> hat, muss
+							<Katex :tex="'a-b\\equiv 0\\pmod n'" /> gelten – also <Katex :tex="'a\\equiv b\\pmod n'" />.
 								
 						</div>
 						<div class="mt-2">
@@ -112,7 +112,7 @@
 					<v-expansion-panel-title>
 						Schritt 2 – Zwei aufeinanderfolgende „k-Sprünge“ haben dieselbe Farbe
 					</v-expansion-panel-title>
-					<v-expansion-panel-text class="d-flex flex-column ga-3">
+					<v-expansion-panel-text class="d-flex flex-column ga-3" eager>
 						<div>
 							Nimm zwei aufeinanderfolgende Sprungwerte:
 							<Katex :tex="'r\\equiv ik\\pmod n'" /> und <Katex :tex="'s\\equiv (i+1)k\\pmod n'" />.
@@ -151,7 +151,7 @@
 					<v-expansion-panel-title>
 						Schritt 3 – Damit sind alle Zahlen in M gleichfarbig
 					</v-expansion-panel-title>
-					<v-expansion-panel-text class="d-flex flex-column ga-3">
+					<v-expansion-panel-text class="d-flex flex-column ga-3" eager>
 						<div>
 							Die Reste <Katex :tex="'k,2k,\\dots,(n-1)k\\ (\\bmod n)'" /> sind (bis auf Reihenfolge) genau
 							<Katex :tex="'1,2,\\dots,n-1'" />.
@@ -266,7 +266,7 @@
 			<v-expansion-panels class="mt-2" variant="accordion">
 				<v-expansion-panel>
 					<v-expansion-panel-title>Warum haben Nachbarn in der Kette dieselbe Farbe? (Details)</v-expansion-panel-title>
-					<v-expansion-panel-text class="d-flex flex-column ga-3">
+					<v-expansion-panel-text class="d-flex flex-column ga-3" eager>
 						<div class="text-body-2">
 							Für jedes <Katex :tex="'i=1\\dots n-2'" /> vergleiche <Katex :tex="'r=ik\\bmod n'" /> und
 							<Katex :tex="'s=(i+1)k\\bmod n'" />. Entweder ist <Katex :tex="'s=r+k'" /> oder <Katex :tex="'s=r+k-n'" />.

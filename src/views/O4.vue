@@ -111,7 +111,7 @@
 			<v-expansion-panels variant="accordion">
 				<v-expansion-panel>
 					<v-expansion-panel-title>Stufe A: Aus Zahlen werden viele Quadrat-Paare</v-expansion-panel-title>
-					<v-expansion-panel-text class="d-flex flex-column ga-3">
+					<v-expansion-panel-text class="d-flex flex-column ga-3" eager>
 						<div>
 							Schreibe jede Zahl als
 							<Katex tex="x=p_1^{r_1}\cdots p_n^{r_n}" />
@@ -140,7 +140,7 @@
 
 				<v-expansion-panel>
 					<v-expansion-panel-title>Stufe B: Aus Quadrat-Paaren entsteht eine vierte Potenz</v-expansion-panel-title>
-					<v-expansion-panel-text class="d-flex flex-column ga-3">
+					<v-expansion-panel-text class="d-flex flex-column ga-3" eager>
 						<div>
 							Nimm zwei Quadrat-Paare:
 							<Katex tex="ab=u^2" /> und <Katex tex="cd=v^2" />.
@@ -164,7 +164,7 @@
 
 				<v-expansion-panel>
 					<v-expansion-panel-title>Mini-Beispiel (korrigiert geprüft)</v-expansion-panel-title>
-					<v-expansion-panel-text class="d-flex flex-column ga-3">
+					<v-expansion-panel-text class="d-flex flex-column ga-3" eager>
 						<div>
 							Betrachte
 							<Katex tex="\{6,24,54,216,8,75\}" />.

@@ -34,16 +34,16 @@
 			<v-expansion-panels v-model="openLessonPanel" variant="accordion">
 				<v-expansion-panel v-for="item in lessons" :key="item.id">
 					<v-expansion-panel-title>{{ item.title }}</v-expansion-panel-title>
-					<v-expansion-panel-text class="lessonBody">
+					<v-expansion-panel-text class="lessonBody" eager>
 						<p v-for="(paragraph, pIdx) in item.text" :key="`${item.id}-p-${pIdx}`">
 							{{ paragraph }}
 						</p>
 
 						<div v-if="item.formulas.length" class="kbox mb-3">
 							<Katex
+								aligned
 								as="div"
 								display
-								aligned
 								:tex="lessonFormulaBlock(item.formulas)"
 							/>
 						</div>
