@@ -10,8 +10,7 @@ import jsdoc from "eslint-plugin-jsdoc";
 import tsPlugin from "@typescript-eslint/eslint-plugin";
 import tsParser from "@typescript-eslint/parser";
 import vueParser from "vue-eslint-parser";
-import preferOptionalChaining from "eslint-plugin-prefer-optional-chaining";
-import pluginSVGO from "eslint-plugin-svgo";
+import pluginSVGO from "./node_modules/eslint-plugin-svgo/dist/index.mjs";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
 
@@ -61,9 +60,8 @@ export default [
 			sourceType: "module"
 		},
 		plugins: {
-			"@stylistic":               stylistic,
-			jsdoc,
-			"prefer-optional-chaining": preferOptionalChaining
+			"@stylistic": stylistic,
+			jsdoc
 		},
 		rules: {
 			"@stylistic/function-call-argument-newline": [ "error", "consistent" ],
@@ -131,14 +129,13 @@ export default [
 					blankLine: "always", next: "*", prev: "block-like"
 				}
 			],
-			"prefer-optional-chaining/prefer-optional-chaining": "error",
-			"quote-props":                                       [ "error", "as-needed" ],
-			quotes:                                              [ "error", "double" ],
-			"require-await":                                     "off",
-			semi:                                                [ "error", "always" ],
-			"space-before-function-paren":                       [ "error", "never" ],
-			"space-in-parens":                                   [ "error", "always" ],
-			"space-infix-ops":                                   [ "error", { int32Hint: false } ]
+			"quote-props":                 [ "error", "as-needed" ],
+			quotes:                        [ "error", "double" ],
+			"require-await":               "off",
+			semi:                          [ "error", "always" ],
+			"space-before-function-paren": [ "error", "never" ],
+			"space-in-parens":             [ "error", "always" ],
+			"space-infix-ops":             [ "error", { int32Hint: false } ]
 		}
 	},
 	// overrides for Vue files
