@@ -2,9 +2,12 @@
 <AppFrame
 	:sub-chapter="{
 		einleitung:'Einleitung',
+		'aufgabenstellung': 'Aufgabenstellung',
+		'crashkurs': 'Quadrat vs. 4. Potenz',
+		'paritatsvektoren': 'Paritätsvektor',
+		'allgemein': 'Allgemeine Schranke',
 		'schubfachprinzip': 'Schubfachprinzip',
-		'paritatsvektoren': 'Paritätsvektoren',
-		'vierte-potenz': 'vierte Potenz'
+		'beispiel': 'Mini-Beispiel'
 	}"
 	title="Eddie rechnet: IMO 1985 Aufgabe B1"
 >
@@ -34,154 +37,222 @@
 	</template>
 
 	<template #descriptionPart>
-
-		<h2>Teil 1 — Aufgabenstellung</h2>
+		<h2 id="aufgabenstellung">Teil 1 — Aufgabenstellung</h2>
 		<div class="eddie">
 			<p>
 				Gegeben sei eine Menge <Katex tex="M" /> aus <b>1985 verschiedenen positiven ganzen Zahlen</b>.
 				Keine dieser Zahlen besitzt einen Primteiler größer als <Katex tex="23" />.
+				Alle Primfaktoren liegen also in
+				<Katex tex="\{2,3,5,7,11,13,17,19,23\}" />.
 			</p>
 			<p>
-				Zu zeigen ist: In <Katex tex="M" /> gibt es eine Teilmenge mit <b>4 Elementen</b>,
-				deren Produkt eine <b>vierte Potenz</b> einer ganzen Zahl ist.
+				Zu zeigen ist: In <Katex tex="M" /> gibt es <b>vier verschiedene Zahlen</b> <Katex tex="a,b,c,d" />,
+				deren Produkt eine vierte Potenz ist:
 			</p>
 			<div class="kbox">
-				<Katex as="div" display tex="\exists\ a,b,c,d\in M:\quad abcd = t^4\ \text{für ein}\ t\in\mathbb{Z}." />
+				<Katex
+					as="div"
+					display
+					tex="\exists\,a,b,c,d\in M\ \text{paarweise verschieden}:\quad abcd=t^4\ \text{für ein}\ t\in\mathbb Z."
+				/>
 			</div>
 		</div>
 
-		<h2 id="vierte-potenz" class="mt-8">Teil 2 — Mini-Crashkurs: Was muss eine vierte Potenz erfüllen?</h2>
+		<h2 id="crashkurs" class="mt-8">Teil 2 — Mini-Crashkurs: Wann Quadrat? Wann vierte Potenz?</h2>
 		<div class="eddie">
 			<p>
-				Die erlaubten Primzahlen sind genau
-				<Katex tex="2,3,5,7,11,13,17,19,23" />.
-				Das entspricht <Katex tex="n=9" /> Primzahlachsen.
-			</p>
-			<p>
-				Für eine Zahl
-				<Katex tex="x=\prod_{j=1}^9 p_j^{e_j}" />
-				gilt:
+				Sei <Katex tex="p_1,\dots,p_n" /> die Liste der erlaubten Primzahlen. Hier ist
 			</p>
 			<div class="kbox">
-				<Katex as="div" display tex="x\text{ ist Quadrat }\Longleftrightarrow e_j\equiv 0\pmod 2\ \forall j." />
-				<Katex as="div" display tex="x\text{ ist vierte Potenz }\Longleftrightarrow e_j\equiv 0\pmod 4\ \forall j." />
+				<Katex
+					as="div"
+					display
+					tex="(p_1,\dots,p_9)=(2,3,5,7,11,13,17,19,23),\quad \text{also } n=9."
+				/>
 			</div>
-			<p>
-				Der Beweis arbeitet deshalb in zwei Schichten: erst Parität modulo <Katex tex="2" />,
-				dann nochmal Parität auf der Ebene der Quadratwurzeln.
-			</p>
+			<p>Jede Zahl <Katex tex="x" /> lässt sich eindeutig schreiben als</p>
+			<div class="kbox">
+				<Katex as="div" display tex="x=\prod_{j=1}^{n} p_j^{e_j}\quad \text{mit } e_j\in\mathbb N_0." />
+			</div>
+			<p>Dann gilt:</p>
+			<ul>
+				<li>
+					<Katex tex="x" /> ist ein Quadrat genau dann, wenn alle Exponenten gerade sind:
+					<Katex tex="e_j\equiv 0 \pmod 2\ \text{für alle }j." />
+				</li>
+				<li>
+					<Katex tex="x" /> ist eine vierte Potenz genau dann, wenn alle Exponenten durch
+					<Katex tex="4" /> teilbar sind:
+					<Katex tex="e_j\equiv 0 \pmod 4\ \text{für alle }j." />
+				</li>
+			</ul>
+			<p>Die Grundidee des Beweises ist daher zweistufig:</p>
+			<ol>
+				<li>Zuerst sorgen wir dafür, dass Exponenten gerade werden (Quadrat).</li>
+				<li>Dann sorgen wir dafür, dass die Exponenten der Quadrat-Wurzeln wieder gerade sind.</li>
+			</ol>
 		</div>
 
 		<h2 id="paritatsvektoren" class="mt-8">Teil 3 — Quadratfreier Kern und Paritätsvektor</h2>
 		<div class="eddie">
 			<p>
-				Eine anschauliche Sicht (wie im Kapiteltext): Zerlege jede Zahl als
-				<Katex tex="x=q\cdot r^2" />, wobei <Katex tex="q" /> quadratfrei ist.
-				Gleichwertig dazu kann man den <b>Paritätsvektor</b>
-				<Katex tex="\varepsilon(x)=(e_1,\dots,e_9)\bmod 2" />
-				verwenden.
+				Für jedes <Katex tex="x" /> betrachten wir nur, welche Primzahlen mit ungeradem Exponenten vorkommen.
 			</p>
-			<p>
-				Beide Sichtweisen codieren dieselbe Information:
-				Welche Primzahlen mit ungeradem Exponenten auftreten.
-				Davon gibt es höchstens
-				<Katex tex="2^9=512" /> Klassen.
-			</p>
+			<h3>(A) Quadratfreier Kern</h3>
+			<p>Man kann <Katex tex="x" /> eindeutig zerlegen als</p>
 			<div class="kbox">
-				<Katex as="div" display tex="\varepsilon(x)=\varepsilon(y)\Longrightarrow xy\text{ ist ein Quadrat}." />
+				<Katex as="div" display tex="x=q\cdot r^2," />
 			</div>
+			<p>
+				wobei <Katex tex="q" /> quadratfrei ist.
+				Dann enthält <Katex tex="q" /> genau die Primzahlen, die in <Katex tex="x" /> ungerade oft vorkommen.
+			</p>
+
+			<h3>(B) Paritätsvektor</h3>
+			<p>Definiere</p>
+			<div class="kbox">
+				<Katex as="div" display tex="\varepsilon(x)=(e_1,\dots,e_n)\bmod 2\in\{0,1\}^n." />
+			</div>
+			<p>Dieser Vektor speichert: Exponent ungerade (=1) oder gerade (=0).</p>
+			<p><b>Wichtiger Merksatz:</b></p>
+			<div class="kbox">
+				<Katex as="div" display tex="\varepsilon(x)=\varepsilon(y)\quad\Longrightarrow\quad xy\ \text{ist ein Quadrat}." />
+			</div>
+			<p>
+				Denn dann ist in <Katex tex="xy" /> jeder Exponent <Katex tex="e_j(x)+e_j(y)" /> gerade.
+				Es gibt insgesamt nur <Katex tex="2^n" /> Paritätsklassen.
+			</p>
 		</div>
 
-		<h2 class="mt-8">Teil 4 — Warum 1985 sicher reicht</h2>
+		<h2 id="allgemein" class="mt-8">Teil 4 — Warum 1985 sicher reicht (allgemeinere Aussage)</h2>
 		<div class="eddie">
+			<p>Wir zeigen die stärkere Behauptung:</p>
 			<p>
-				Für allgemeines <Katex tex="n" /> reicht
-				<Katex tex="3\cdot 2^n + 1" />.
-				Bei <Katex tex="n=9" /> also
-				<Katex tex="3\cdot 2^9+1=1537" />.
-				Da <Katex tex="1985\ge 1537" />, sind wir über der Garantieschwelle.
+				Wichtig: Es ist weiterhin dieselbe Menge <Katex tex="M" /> wie in der Aufgabenstellung;
+				wir benutzen ab hier nur noch die schwächere Information, dass
+				<Katex tex="|M|\ge 3\cdot 2^n+1" />.
+			</p>
+			<p>
+				Angenommen, alle Zahlen in <Katex tex="M" /> haben ihre Primteiler in
+				<Katex tex="\{p_1,\dots,p_n\}" />. Gilt
 			</p>
 			<div class="kbox">
-				<Katex as="div" display tex="3\cdot 2^9 + 1 = 1537\le 1985." />
+				<Katex as="div" display tex="|M|\ge 3\cdot 2^n+1," />
 			</div>
+			<p>
+				dann gibt es <Katex tex="a,b,c,d\in M" /> paarweise verschieden und ein
+				<Katex tex="t\in\mathbb Z" /> mit
+			</p>
+			<div class="kbox">
+				<Katex as="div" display tex="abcd=t^4." />
+			</div>
+			<p>Für unsere Aufgabe ist <Katex tex="n=9" />. Also:</p>
+			<div class="kbox">
+				<Katex
+					aligned
+					as="div"
+					display
+					tex="3\cdot 2^9+1&=3\cdot 512+1=1537\\|M|=1985&\ge 1537."
+				/>
+			</div>
+			<p>Damit folgt das IMO-Ergebnis direkt aus der allgemeinen Behauptung.</p>
+			<p>
+				Ab hier benutzen wir nur noch die Schranke <Katex tex="|M|\ge 3\cdot 2^n+1" />;
+				die konkrete Zahl <Katex tex="1985" /> ist nur ein Spezialfall davon.
+			</p>
 		</div>
 
-		<h2 id="schubfachprinzip" class="mt-8">Teil 5 — Herleitung Schritt für Schritt</h2>
+		<h2 id="schubfachprinzip" class="mt-8">Teil 5 — Herleitung Schritt für Schritt (zweimal Schubfachprinzip)</h2>
 		<div class="eddie">
-			<v-expansion-panels variant="accordion">
-				<v-expansion-panel>
-					<v-expansion-panel-title>Stufe A: Aus Zahlen werden viele Quadrat-Paare</v-expansion-panel-title>
-					<v-expansion-panel-text class="d-flex flex-column ga-3" eager>
-						<div>
-							Schreibe jede Zahl als
-							<Katex tex="x=p_1^{r_1}\cdots p_n^{r_n}" />
-							und betrachte nur die Paritäten von
-							<Katex tex="(r_1,\dots,r_n)\bmod 2" />.
-						</div>
-						<div>
-							Es gibt nur <Katex tex="2^n" /> Klassen. Zwei Zahlen in derselben Klasse haben
-							im Produkt überall gerade Exponenten, also ein Quadrat.
-						</div>
-						<div class="kbox">
-							<Katex as="div" display tex="x\sim y\Rightarrow xy=s^2." />
-						</div>
-						<div>
-							Sei <Katex tex="c_v" /> die Anzahl Zahlen in Klasse <Katex tex="v" />.
-							Dann entstehen insgesamt
-							<Katex tex="P=\sum_v \left\lfloor c_v/2\right\rfloor" />
-							Quadrat-Paare.
-						</div>
-						<div class="kbox">
-							<Katex as="div" display tex="\left\lfloor c_v/2\right\rfloor \ge (c_v-1)/2\Rightarrow P\ge \frac{|M|-2^n}{2}." />
-							<Katex as="div" display tex="|M|=3\cdot 2^n+1\Rightarrow P\ge 2^n+1." />
-						</div>
-					</v-expansion-panel-text>
-				</v-expansion-panel>
+			<p>
+				Schubfachprinzip: Verteilt man mehr Objekte als es Schubfächer gibt,
+				dann enthält mindestens ein Schubfach mindestens zwei Objekte.
+			</p>
+			<h3>Stufe A — Wir bilden viele disjunkte Quadrat-Paare</h3>
+			<p>
+				Ordne jede Zahl <Katex tex="x\in M" /> nach ihrem Paritätsvektor
+				<Katex tex="\varepsilon(x)\in\{0,1\}^n" />.
+				Sei <Katex tex="c_v" /> die Anzahl der Zahlen in Klasse <Katex tex="v" />.
+			</p>
+			<p>
+				In jeder Klasse können wir paarweise zusammenfassen (1. mit 2., 3. mit 4., ...).
+				Das ergibt in Klasse <Katex tex="v" /> genau <Katex tex="\left\lfloor c_v/2\right\rfloor" />
+				disjunkte Quadrat-Paare.
+				Jedes so gebildete Paar <Katex tex="(a,b)" /> hat ein Quadrat als Produkt, denn
+				<Katex tex="\varepsilon(a)=\varepsilon(b)" /> und damit ist <Katex tex="ab" /> ein Quadrat.
+			</p>
+			<p>Insgesamt also:</p>
+			<div class="kbox">
+				<Katex as="div" display tex="P=\sum_v\left\lfloor \frac{c_v}{2}\right\rfloor." />
+			</div>
+			<p>Mit <Katex tex="\left\lfloor c_v/2\right\rfloor\ge (c_v-1)/2" /> folgt:</p>
+			<div class="kbox">
+				<Katex
+					aligned
+					as="div"
+					display
+					tex="P&\ge \sum_v\frac{c_v-1}{2}\\&=\frac{\sum_v c_v-\sum_v 1}{2}\\&=\frac{|M|-2^n}{2}."
+				/>
+			</div>
+			<p>Setzen wir <Katex tex="|M|\ge 3\cdot 2^n+1" /> ein, dann:</p>
+			<div class="kbox">
+				<Katex
+					aligned
+					as="div"
+					display
+					tex="P&\ge \frac{(3\cdot 2^n+1)-2^n}{2}\\&=2^n+\frac12\\&\Rightarrow P\ge 2^n+1."
+				/>
+			</div>
+			<p>Da <Katex tex="P" /> eine ganze Zahl ist, folgt daraus <Katex tex="P\ge 2^n+1" />.</p>
+			<p><b>Ergebnis von Stufe A:</b> Mindestens <Katex tex="2^n+1" /> disjunkte Paare <Katex tex="(a,b)" /> mit <Katex tex="ab=u^2" />.</p>
 
-				<v-expansion-panel>
-					<v-expansion-panel-title>Stufe B: Aus Quadrat-Paaren entsteht eine vierte Potenz</v-expansion-panel-title>
-					<v-expansion-panel-text class="d-flex flex-column ga-3" eager>
-						<div>
-							Nimm zwei Quadrat-Paare:
-							<Katex tex="ab=u^2" /> und <Katex tex="cd=v^2" />.
-							Kodiere nun die Parität der Exponenten von <Katex tex="u" /> und <Katex tex="v" />
-							wieder modulo <Katex tex="2" />.
-						</div>
-						<div>
-							Unter den <Katex tex="P\ge 2^n+1" /> Paaren gibt es also (Schubfachprinzip) zwei Paare
-							mit gleicher Wurzel-Parität.
-							Damit ist <Katex tex="uv" /> ein Quadrat, also <Katex tex="uv=s^2" />.
-						</div>
-						<div class="kbox">
-							<Katex as="div" display tex="abcd=(u^2)(v^2)=(uv)^2=(s^2)^2=s^4." />
-						</div>
-						<div>
-							Wichtig: Zwei beliebige Quadrate ergeben nur wieder ein Quadrat.
-							Die zusätzliche Paritätsgleichheit der Wurzeln ist genau der Schritt zur vierten Potenz.
-						</div>
-					</v-expansion-panel-text>
-				</v-expansion-panel>
+			<h3 class="mt-6">Stufe B — Aus zwei passenden Quadrat-Paaren wird eine vierte Potenz</h3>
+			<p>
+				Jedes Paar liefert ein Quadrat <Katex tex="ab=u^2" />
+				(mit <Katex tex="u\in\mathbb Z" />, weil <Katex tex="ab" /> ein Quadrat ist).
+				Für <Katex tex="u" /> schreiben wir
+			</p>
+			<div class="kbox">
+				<Katex as="div" display tex="u=\prod_{j=1}^n p_j^{f_j},\qquad \varepsilon(u)=(f_1,\dots,f_n)\bmod 2\in\{0,1\}^n." />
+			</div>
+			<p>
+				Es gibt nur <Katex tex="2^n" /> mögliche Wurzel-Paritäten, aber mindestens
+				<Katex tex="P\ge 2^n+1" /> Paare.
+				Also existieren zwei verschiedene Paare <Katex tex="(a,b)\neq(c,d)" /> mit
+				<Katex tex="ab=u^2,\ cd=v^2" /> und <Katex tex="\varepsilon(u)=\varepsilon(v)" />.
+			</p>
+			<p>
+				Dann ist nach dem Merksatz aus Teil 3 das Produkt <Katex tex="uv" /> ein Quadrat,
+				also <Katex tex="uv=s^2" />, und damit:
+			</p>
+			<div class="kbox">
+				<Katex as="div" display tex="abcd=(u^2)(v^2)=(uv)^2=(s^2)^2=s^4." />
+			</div>
+			<p>
+				Wichtig: Die Paare aus Stufe A sind disjunkt, also haben zwei verschiedene Paare
+				keine gemeinsame Zahl. Damit sind <Katex tex="a,b,c,d" /> automatisch vier verschiedene Elemente.
+			</p>
+			<p>Damit ist die Behauptung bewiesen.</p>
+		</div>
 
-				<v-expansion-panel>
-					<v-expansion-panel-title>Mini-Beispiel (korrigiert geprüft)</v-expansion-panel-title>
-					<v-expansion-panel-text class="d-flex flex-column ga-3" eager>
-						<div>
-							Betrachte
-							<Katex tex="\{6,24,54,216,8,75\}" />.
-							Für die ersten vier Zahlen gilt jeweils
-							<Katex tex="x=6\cdot r^2" /> mit
-							<Katex tex="r\in\{1,2,3,6\}" />.
-						</div>
-						<div class="kbox">
-							<Katex as="div" display tex="6\cdot24\cdot54\cdot216=36^4." />
-						</div>
-						<div>
-							Das ist ein gutes Anschauungsbeispiel, aber der eigentliche IMO-Beweis läuft
-							über die zwei Schubfach-Stufen oben und nicht über eine spezielle Zahlenwahl.
-						</div>
-					</v-expansion-panel-text>
-				</v-expansion-panel>
-			</v-expansion-panels>
+		<h2 id="beispiel" class="mt-8">Teil 6 — Mini-Beispiel (nur zur Anschauung)</h2>
+		<div class="eddie">
+			<p>Betrachte</p>
+			<div class="kbox">
+				<Katex as="div" display tex="\{6,24,54,216,8,75\}." />
+			</div>
+			<p>
+				Für die ersten vier Zahlen gilt jeweils <Katex tex="x=6\cdot r^2" />
+				(mit gleichem quadratfreiem Kern <Katex tex="6" />).
+				Hier erhält man sogar:
+			</p>
+			<div class="kbox">
+				<Katex as="div" display tex="6\cdot24\cdot54\cdot216=36^4." />
+			</div>
+			<p>
+				Das Beispiel zeigt das Prinzip. Der IMO-Beweis oben funktioniert jedoch rein mit den
+				zwei Schubfach-Schritten und braucht kein geschicktes Ausprobieren.
+			</p>
 		</div>
 	</template>
 
@@ -204,7 +275,7 @@
 					type="number"
 				/>
 				<v-btn color="primary" variant="flat" @click="runConstruction">
-					Konstruieren & prüfen
+					Prüfen
 				</v-btn>
 				<v-btn variant="tonal" @click="randomExample">
 					Zufallsgröße

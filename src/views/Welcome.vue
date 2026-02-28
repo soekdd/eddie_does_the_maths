@@ -1,5 +1,6 @@
 <template>
 <AppFrame
+	nomd
 	:sub-chapter="{
 		'willkommen': 'Willkommen',
 		'ubersicht': 'Übersicht'

@@ -31,141 +31,169 @@
 	</template>
 
 	<template #descriptionPart>
-
 		<h2>Teil 1 — Aufgabenstellung</h2>
 		<div class="eddie">
 			<p class="muted"><i>IMO 1985 – Aufgabe A2: „Am Ende hat alles eine Farbe“</i></p>
-
-			<v-alert type="info" variant="tonal">
-				<strong>Eddie:</strong> Das ist so eine Aufgabe, die erst „bunt“ aussieht – und dann merkst du:
-				Die Regeln machen aus dem ganzen Set eine einzige riesige Farb-Familie. Einmal verbunden, immer verbunden.
-			</v-alert>
-
 			<p>
-				Seien <Katex :tex="'n\\ \\text{und}\\ k'" /> teilerfremde positive ganze Zahlen mit <Katex :tex="'k&lt;n'" />.
-				Die Menge <Katex :tex="'M=\\{1,2,3,\\dots,n-1\\}'" /> werde so gefärbt, dass jede Zahl entweder <em>blau</em>
-				oder <em>weiß</em> ist.
+				Seien <Katex tex="n\ \text{und}\ k" /> teilerfremde positive ganze Zahlen mit <Katex tex="k<n" />.
+				Die Menge
 			</p>
-
-			<v-sheet class="pa-3 rounded">
-				<div class="d-flex flex-column ga-2">
-					<div>
-						<strong>Regel (Spiegel):</strong> Für jedes <Katex :tex="'i\\in M'" /> haben <Katex :tex="'i'" /> und
-						<Katex :tex="'n-i'" /> die <strong>gleiche</strong> Farbe.
-					</div>
-					<div>
-						<strong>Regel (Abstand zu k):</strong> Für jedes <Katex :tex="'i\\in M'" /> mit <Katex :tex="'i\\neq k'" /> haben
-						<Katex :tex="'i'" /> und <Katex :tex="'|i-k|'" /> die <strong>gleiche</strong> Farbe.
-					</div>
-				</div>
-			</v-sheet>
-
-			<p><strong>Zu zeigen:</strong> Alle Zahlen in <Katex :tex="'M'" /> müssen dieselbe Farbe haben.</p>
+			<div class="kbox">
+				<Katex as="div" display tex="M=\{1,2,3,\dots,n-1\}" />
+			</div>
+			<p>werde so gefärbt, dass jede Zahl entweder <b>blau</b> oder <b>weiß</b> ist.</p>
+			<p><b>Regel 1 (Spiegel):</b> Für jedes <Katex tex="i\in M" /> haben <Katex tex="i" /> und <Katex tex="n-i" /> dieselbe Farbe.</p>
+			<p>
+				<b>Regel 2 (Abstand zu <Katex tex="k" />):</b>
+				Für jedes <Katex tex="i\in M" /> mit <Katex tex="i\neq k" />
+				haben <Katex tex="i" /> und <Katex tex="|i-k|" /> dieselbe Farbe.
+			</p>
+			<p><b>Zu zeigen:</b> Alle Zahlen in <Katex tex="M" /> müssen dieselbe Farbe haben.</p>
 		</div>
 
-		<h2 id="wahrscheinlichkeiten" class="mt-8">Teil 2 — Eddies Idee</h2>
+		<h2 id="wahrscheinlichkeiten" class="mt-8">Teil 2 — Idee (ein Rundgang, der alle besucht)</h2>
 		<div class="eddie">
 			<p>
-				Stell dir vor, du gehst nicht „1,2,3,…“ entlang, sondern du springst in Schritten von <Katex :tex="'k'" />
-				(modulo <Katex :tex="'n'" />). Weil <Katex :tex="'\\gcd(n,k)=1'" /> gilt, triffst du dabei <em>alle</em> Zahlen
-				<Katex :tex="'1\\ldots n-1'" /> genau einmal – in irgendeiner Reihenfolge.
+				Stell dir die Zahlen <Katex tex="0,1,2,\dots,n-1" /> wie Punkte auf einer Uhr vor
+				(Rechnen modulo <Katex tex="n" />):
 			</p>
-			<v-alert type="success" variant="tonal">
-				<strong>Merksatz:</strong> Teilerfremd heißt hier: Die „k-Sprung“-Route besucht jeden Knoten. Wenn außerdem
-				jeder Sprung die Farbe nicht ändern darf, dann ist am Ende alles gleichfarbig.
-			</v-alert>
+			<ul>
+				<li>Nach <Katex tex="n-1" /> kommt wieder <Katex tex="0" />.</li>
+				<li><Katex tex="x\bmod n" /> bedeutet: Wir schauen nur auf den Rest beim Teilen durch <Katex tex="n" />.</li>
+			</ul>
+			<p>Jetzt machen wir einen Rundgang in Sprüngen der Länge <Katex tex="k" />:</p>
+			<div class="kbox">
+				<Katex as="div" display tex="k,\;2k,\;3k,\;\dots,\;(n-1)k \quad (\bmod n)." />
+			</div>
+			<p>
+				Warum ist das spannend? Weil <Katex tex="\gcd(n,k)=1" /> genau heißt, dass
+				die Sprünge so günstig sind, dass man dabei alle Reste <Katex tex="1,2,\dots,n-1" />
+				trifft (nur in anderer Reihenfolge).
+			</p>
+			<p>
+				Und wenn wir zeigen, dass jede zwei aufeinanderfolgenden besuchten Zahlen dieselbe Farbe haben,
+				dann haben am Ende alle dieselbe Farbe.
+			</p>
 		</div>
 
-		<h2 id="entscheidungsbaum" class="mt-8">Teil 3 — Beweis in drei Schritten</h2>
+		<h2 id="entscheidungsbaum" class="mt-8">Teil 3 — Beweis in klaren Schritten</h2>
 		<div class="eddie">
-			<v-expansion-panels variant="accordion">
-				<v-expansion-panel>
-					<v-expansion-panel-title>
-						Schritt 1 – Die Vielfachen von k bilden alle Reste modulo n
-					</v-expansion-panel-title>
-					<v-expansion-panel-text class="d-flex flex-column ga-3" eager>
-						<div>
-							Aus <Katex :tex="'\\gcd(n,k)=1'" /> folgt:
-							<Katex :tex="'0,\\ k,\\ 2k,\\dots,(n-1)k'" /> sind modulo <Katex :tex="'n'" /> paarweise verschieden.
-						</div>
-						<div>
-							Also ist die Liste
-							<Katex :tex="'k,\\ 2k,\\dots,(n-1)k'" />
-							modulo <Katex :tex="'n'" /> einfach eine Umordnung von
-							<Katex :tex="'1,2,\\dots,n-1'" />.
-						</div>
-						
-						<div class="text-subtitle-2 my-2">Warum „alle verschieden“?</div>
-						<div>
-							Wenn <Katex :tex="'ak\\equiv bk\\pmod n'" />, dann <Katex :tex="'(a-b)k\\equiv 0\\pmod n'" />.
-							Weil <Katex :tex="'k'" /> keinen gemeinsamen Teiler mit <Katex :tex="'n'" /> hat, muss
-							<Katex :tex="'a-b\\equiv 0\\pmod n'" /> gelten – also <Katex :tex="'a\\equiv b\\pmod n'" />.
-								
-						</div>
-						<div class="mt-2">
-							Für <Katex tex="0\le a,b\le n-1"/> folgt daraus <Katex tex="a=b"/>
-						</div>
-					</v-expansion-panel-text>
-				</v-expansion-panel>
+			<h3>Schritt 1 — Die <Katex tex="k" />-Sprünge treffen alle Zahlen <Katex tex="1,\dots,n-1" /></h3>
+			<p>Behauptung: Die Reste</p>
+			<div class="kbox">
+				<Katex as="div" display tex="k,\;2k,\;3k,\;\dots,\;(n-1)k \quad (\bmod n)" />
+			</div>
+			<p>sind (bis auf Reihenfolge) genau die Zahlen <Katex tex="1,2,\dots,n-1" />.</p>
+			<p><b>Begründung:</b> Angenommen, zwei Sprünge landen auf demselben Rest:</p>
+			<div class="kbox">
+				<Katex as="div" display tex="ak \equiv bk \pmod n." />
+			</div>
+			<p>Dann gilt</p>
+			<div class="kbox">
+				<Katex as="div" display tex="(a-b)k \equiv 0 \pmod n," />
+			</div>
+			<p>
+				also teilt <Katex tex="n" /> das Produkt <Katex tex="(a-b)k" />.
+				Weil <Katex tex="n" /> und <Katex tex="k" /> teilerfremd sind, folgt
+			</p>
+			<div class="kbox">
+				<Katex as="div" display tex="a-b \equiv 0 \pmod n." />
+			</div>
+			<p>
+				Für <Katex tex="0\le a,b\le n-1" /> bedeutet das <Katex tex="a=b" />.
+				Also sind alle Reste verschieden — und damit eine Umordnung von <Katex tex="1,\dots,n-1" />.
+			</p>
 
-				<v-expansion-panel>
-					<v-expansion-panel-title>
-						Schritt 2 – Zwei aufeinanderfolgende „k-Sprünge“ haben dieselbe Farbe
-					</v-expansion-panel-title>
-					<v-expansion-panel-text class="d-flex flex-column ga-3" eager>
-						<div>
-							Nimm zwei aufeinanderfolgende Sprungwerte:
-							<Katex :tex="'r\\equiv ik\\pmod n'" /> und <Katex :tex="'s\\equiv (i+1)k\\pmod n'" />.
-							Dann gilt stets <Katex :tex="'s\\equiv r+k\\pmod n'" />.
-						</div>
+			<h3 class="mt-6">Schritt 2 — Zwei aufeinanderfolgende Sprünge haben dieselbe Farbe</h3>
+			<p>
+				Für <Katex tex="i=1,2,\dots,n-1" /> sei <Katex tex="r_i" /> der Rest von <Katex tex="ik" />
+				modulo <Katex tex="n" />, als Zahl in <Katex tex="\{0,1,\dots,n-1\}" />.
+				Aus Schritt 1 wissen wir:
+				<Katex tex="r_1,\dots,r_{n-1}" /> sind genau <Katex tex="1,\dots,n-1" /> (kein <Katex tex="0" />).
+			</p>
+			<p>Vergleiche zwei Nachbarn <Katex tex="r_i" /> und <Katex tex="r_{i+1}" />. Weil</p>
+			<div class="kbox">
+				<Katex as="div" display tex="(i+1)k=ik+k" />
+			</div>
+			<p>gilt modulo <Katex tex="n" />:</p>
+			<div class="kbox">
+				<Katex as="div" display tex="r_{i+1}\equiv r_i+k \pmod n." />
+			</div>
+			<p>Das heißt: entweder kein Überlauf oder Überlauf.</p>
 
-						<v-sheet class="pa-3 rounded">
-							<div class="text-subtitle-2 mb-2">Fallunterscheidung (genau wie im Original, nur mit Eddie-Lampe)</div>
+			<h4>Fall A: Kein Überlauf</h4>
+			<p>Dann ist</p>
+			<div class="kbox">
+				<Katex as="div" display tex="r_{i+1}=r_i+k." />
+			</div>
+			<p>Also</p>
+			<div class="kbox">
+				<Katex as="div" display tex="r_i=r_{i+1}-k=|r_{i+1}-k|." />
+			</div>
+			<p>
+				Da außerdem <Katex tex="r_{i+1}\neq k" /> gilt
+				(denn aus <Katex tex="r_{i+1}=k" /> würde
+				<Katex tex="(i+1)k\equiv k\pmod n" /> folgen, also
+				<Katex tex="ik\equiv 0\pmod n" />. Dann teilt <Katex tex="n" /> das Produkt
+				<Katex tex="ik" />. Wegen <Katex tex="\gcd(n,k)=1" /> muss daraus
+				<Katex tex="n\mid i" /> folgen – das ist für <Katex tex="1\le i\le n-2" /> unmöglich.),
+				dürfen wir Regel 2 anwenden:
+				<Katex tex="r_{i+1}" /> und <Katex tex="|r_{i+1}-k|=r_i" /> haben dieselbe Farbe.
+			</p>
 
-							<div class="d-flex flex-column ga-2">
-								<div>
-									<strong>Fall A:</strong> <Katex :tex="'s=r+k'" /> (also kein Überlauf über <Katex :tex="'n'" />).<br />
-									Dann ist <Katex :tex="'r=s-k=|s-k|'" />. Da <Katex :tex="'s\\neq k'" /> (sonst käme ein 0-Rest vor),
-									erzwingt die Regel „Abstand zu k“: <Katex :tex="'s'" /> und <Katex :tex="'|s-k|=r'" /> sind gleichfarbig.
-								</div>
+			<h4>Fall B: Überlauf</h4>
+			<p>Dann ist</p>
+			<div class="kbox">
+				<Katex as="div" display tex="r_{i+1}=r_i+k-n \quad\Rightarrow\quad r_i=r_{i+1}+n-k." />
+			</div>
+			<p>Setze</p>
+			<div class="kbox">
+				<Katex as="div" display tex="t:=k-r_{i+1}." />
+			</div>
+			<p>
+				In diesem Fall ist <Katex tex="r_{i+1}<k" />, also <Katex tex="t>0" /> und
+				<Katex tex="|r_{i+1}-k|=k-r_{i+1}=t" />.
+			</p>
+			<p>Jetzt kommen die Regeln:</p>
+			<ul>
+				<li>Aus Regel 1 folgt: <Katex tex="t" /> und <Katex tex="n-t" /> haben dieselbe Farbe.</li>
+				<li>Aber <Katex tex="n-t=n-(k-r_{i+1})=r_{i+1}+n-k=r_i" />.</li>
+			</ul>
+			<p>Also hat <Katex tex="r_i" /> dieselbe Farbe wie <Katex tex="t" />.</p>
+			<p>
+				Und aus Regel 2 folgt (weil <Katex tex="r_{i+1}\neq k" />):
+				<Katex tex="r_{i+1}" /> hat dieselbe Farbe wie <Katex tex="|r_{i+1}-k|=t" />.
+			</p>
+			<p>
+				Damit sind sowohl <Katex tex="r_i" /> als auch <Katex tex="r_{i+1}" /> gleichfarbig zu <Katex tex="t" />,
+				also auch zueinander gleichfarbig.
+			</p>
+			<p>
+				<b>Zwischenergebnis:</b> Für alle <Katex tex="i=1,2,\dots,n-2" />
+				haben <Katex tex="r_i" /> und <Katex tex="r_{i+1}" /> dieselbe Farbe.
+			</p>
 
-								<div>
-									<strong>Fall B:</strong> <Katex :tex="'s=r+k-n'" /> (Überlauf).<br />
-									Dann ist <Katex :tex="'r=s+n-k=n-(k-s)'" />.
-									Mit der Spiegel-Regel haben <Katex :tex="'n-(k-s)'" /> und <Katex :tex="'k-s'" /> dieselbe Farbe,
-									also <Katex :tex="'r'" /> und <Katex :tex="'k-s'" />.
-									Und mit der Abstand-Regel haben <Katex :tex="'s'" /> und <Katex :tex="'|s-k|=k-s'" /> dieselbe Farbe.
-									Also ist <Katex :tex="'r'" /> gleichfarbig zu <Katex :tex="'s'" />.
-								</div>
-							</div>
-						</v-sheet>
+			<h3 class="mt-6">Schritt 3 — Dann sind alle Zahlen gleichfarbig</h3>
+			<p>
+				Die Folge <Katex tex="r_1,r_2,\dots,r_{n-1}" /> enthält (aus Schritt 1) jede Zahl aus
+				<Katex tex="M=\{1,\dots,n-1\}" /> genau einmal.
+			</p>
+			<p>
+				Aus Schritt 2 wissen wir: Jede Nachbarzahl hat dieselbe Farbe.
+				Also hat die ganze Kette dieselbe Farbe — und damit haben alle Zahlen in <Katex tex="M" /> dieselbe Farbe.
+			</p>
+			<div class="kbox">
+				<Katex as="div" display tex="\boxed{\text{Alle Zahlen in }M\text{ sind gleichfarbig.}}" />
+			</div>
+		</div>
 
-						<div>
-							Ergebnis: Für jedes <Katex :tex="'i=1,2,\\dots,n-2'" /> haben die beiden aufeinanderfolgenden Reste
-							<Katex :tex="'ik\\ (\\bmod n)'" /> und <Katex :tex="'(i+1)k\\ (\\bmod n)'" /> dieselbe Farbe.
-						</div>
-					</v-expansion-panel-text>
-				</v-expansion-panel>
-
-				<v-expansion-panel>
-					<v-expansion-panel-title>
-						Schritt 3 – Damit sind alle Zahlen in M gleichfarbig
-					</v-expansion-panel-title>
-					<v-expansion-panel-text class="d-flex flex-column ga-3" eager>
-						<div>
-							Die Reste <Katex :tex="'k,2k,\\dots,(n-1)k\\ (\\bmod n)'" /> sind (bis auf Reihenfolge) genau
-							<Katex :tex="'1,2,\\dots,n-1'" />.
-						</div>
-						<div>
-							Weil in dieser Kette jede Nachbarzahl dieselbe Farbe hat, sind <em>alle</em> Glieder gleichfarbig.
-							Und damit: <Katex :tex="'1,2,\\dots,n-1'" /> haben alle dieselbe Farbe.
-						</div>
-						<v-alert type="success" variant="tonal">
-							<strong>Fertig.</strong> Keine Chance für „zwei Lager“ – die Regeln kleben alles zusammen.
-						</v-alert>
-					</v-expansion-panel-text>
-				</v-expansion-panel>
-			</v-expansion-panels>
+		<h2 class="mt-8">Teil 4 — Kurz gesagt</h2>
+		<div class="eddie">
+			<ul>
+				<li>Teilerfremd (<Katex tex="\gcd(n,k)=1" />) sorgt dafür, dass die <Katex tex="k" />-Sprünge alle Zahlen besuchen.</li>
+				<li>Die beiden Regeln sorgen dafür, dass bei jedem Sprung die Farbe gleich bleibt (direkt oder über den Spiegel).</li>
+				<li>Wenn alle auf einer Route miteinander verbunden sind, kann es am Ende nur eine Farbe geben.</li>
+			</ul>
 		</div>
 	</template>
 

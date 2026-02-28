@@ -2,9 +2,10 @@
 <AppFrame
 	:sub-chapter="{
 		einleitung:'Einleitung',
-		'binomialkoeffizienten': 'Binomialkoeffizienten',
-		'paritat': 'Parität',
-		'induktion': 'Induktion'
+		'aufgabenstellung': 'Aufgabenstellung',
+		'kernidee': 'Kernidee',
+		'beweisidee': 'Beweisidee',
+		'einordnung': 'Einordnung'
 	}"
 	title="Eddie rechnet: IMO 1985 Aufgabe A3"
 >
@@ -33,128 +34,233 @@
 	</template>
 
 	<template #descriptionPart>
-
-		<h2 id="binomialkoeffizienten">Teil 1 — Aufgabenstellung</h2>
+		<h2 id="aufgabenstellung">Teil 1 — Aufgabenstellung</h2>
 		<div class="eddie">
 			<p>
 				Für ein Polynom <Katex tex="P(x)=a_0+a_1x+\dots+a_kx^k" /> mit ganzzahligen Koeffizienten
 				bezeichne <Katex tex="o(P)" /> die Anzahl der <b>ungeraden</b> Koeffizienten.
-				Für <Katex tex="i=0,1,2,\dots" /> sei
-				<Katex tex="Q_i(x)=(1+x)^i" />.
+				Für <Katex tex="i=0,1,2,\dots" /> sei <Katex tex="Q_i(x)=(1+x)^i" />.
 			</p>
-
 			<p>
-				Zu zeigen ist: Für ganze Zahlen
-				<Katex tex="0\le i_1 < i_2 < \dots < i_n" /> gilt
+				Zu zeigen ist: Für ganze Zahlen <Katex tex="0\le i_1 < i_2 < \dots < i_n" /> gilt
+			</p>
+			<div class="kbox">
+				<Katex
+					as="div"
+					display
+					tex="o\!\left(Q_{i_1}+Q_{i_2}+\dots+Q_{i_n}\right)\ge o\!\left(Q_{i_1}\right)."
+				/>
+			</div>
+			<p>
+				In Worten: Wenn wir mehrere dieser Polynome addieren, hat die Summe mindestens so viele
+				ungerade Koeffizienten wie schon der erste Summand <Katex tex="Q_{i_1}" /> allein.
+			</p>
+		</div>
+
+		<h2 id="kernidee" class="mt-8">Teil 2 — Kernidee (nur „ungerade/gerade“ zählt)</h2>
+		<div class="eddie">
+			<p>
+				Wir interessieren uns <b>nur</b> dafür, ob ein Koeffizient ungerade oder gerade ist.
+				Dafür reicht es, alles modulo 2 zu betrachten.
+			</p>
+			<ul>
+				<li>ungerade <Katex tex="\equiv 1 \pmod 2" /></li>
+				<li>gerade <Katex tex="\equiv 0 \pmod 2" /></li>
+			</ul>
+			<p>
+				Beim Addieren gilt modulo 2:
+				<Katex tex="1+1\equiv 0" />, <Katex tex="1+0\equiv 1" />.
+				Das ist ein „entweder-oder“: Der Koeffizient der Summe ist genau dann ungerade,
+				wenn genau einer der beiden Koeffizienten ungerade ist.
+			</p>
+			<section>
+				<figure class="exampleFigure">
+					<ImageZoomer title="Sierpinski-Muster aus dem Pascalschen Dreieck modulo 2">
+						<O3_Graph
+							:cell-size="8.5"
+							:padding="8"
+							:rows="64"
+							:show-legend="false"
+						/>
+					</ImageZoomer>
+				</figure>
+
+				<h3>Ein Bild, das man kennen darf: Pascalsches Dreieck modulo 2</h3>
+				<p>Die Binomialkoeffizienten erfüllen:</p>
+				<div class="kbox">
+					<Katex as="div" display tex="\binom{i}{r}=\binom{i-1}{r-1}+\binom{i-1}{r}." />
+				</div>
+				<p>
+					Modulo 2 heißt das: Ein Eintrag ist ungerade genau dann, wenn die beiden darüber
+					verschiedene Parität haben. So entsteht ein auffälliges dreieckiges Muster
+					(man sieht es gut, wenn man das Pascalsche Dreieck nur nach ungerade/gerade färbt).
+				</p>
+
+				<h3>Zwei Rechenregeln für <Katex tex="(1+x)^i \pmod 2" /></h3>
+				<p><b>Lemma 1 (Verdoppeln):</b></p>
+				<div class="kbox">
+					<Katex as="div" display tex="(1+x)^{2t}\equiv (1+x^2)^t \pmod 2." />
+				</div>
+				<p>
+					Warum? <Katex tex="(1+x)^{2t}=\bigl((1+x)^2\bigr)^t" /> und
+					<Katex tex="(1+x)^2=1+2x+x^2\equiv 1+x^2\pmod 2" />.
+				</p>
+
+				<p><b>Lemma 2 (Verdoppeln + 1):</b></p>
+				<div class="kbox">
+					<Katex
+						as="div"
+						display
+						tex="(1+x)^{2t+1}=(1+x)\,(1+x)^{2t}\equiv (1+x)\,(1+x^2)^t\pmod 2."
+					/>
+				</div>
+			</section>
+			<h3>Damit kann man <Katex tex="o(Q_i)" /> ohne Spezialwissen bestimmen</h3>
+			<p>
+				Schreibe <Katex tex="i" /> in Binärdarstellung und sei <Katex tex="s_2(i)" />
+				die Anzahl der Einsen. Dann gilt:
+			</p>
+			<div class="kbox">
+				<Katex as="div" display tex="o(Q_i)=2^{\,s_2(i)}." />
+			</div>
+			<ul>
+				<li>
+					Aus Lemma 1 folgt <Katex tex="o(Q_{2t})=o(Q_t)" />:
+					Bei <Katex tex="(1+x^2)^t" /> bleiben nur Lücken in den Exponenten,
+					die Anzahl ungerader Koeffizienten bleibt gleich.
+				</li>
+				<li>
+					Aus Lemma 2 folgt <Katex tex="o(Q_{2t+1})=2\,o(Q_t)" />:
+					Multiplikation mit <Katex tex="(1+x)" /> kopiert jeden ungeraden Koeffizienten
+					einmal nach links und einmal nach rechts; hier überlappen sich die Kopien nicht,
+					weil <Katex tex="(1+x^2)^t" /> nur gerade Exponenten hat und
+					<Katex tex="x\,(1+x^2)^t" /> nur ungerade Exponenten.
+				</li>
+			</ul>
+			<p>
+				Liest man <Katex tex="i" /> binär von links nach rechts, bedeutet jede 0: Anzahl bleibt,
+				jede 1: Anzahl verdoppelt sich. Also wird genau <Katex tex="s_2(i)" />-mal verdoppelt.
+			</p>
+		</div>
+
+		<h2 id="beweisidee" class="mt-8">Teil 3 — Beweisidee (Induktion mit einem „2er-Fenster“)</h2>
+		<div class="eddie">
+			<p>
+				Wir beweisen die Aussage per Induktion über den größten Exponenten <Katex tex="i_n" />.
 			</p>
 
+			<h3>Schritt 1 — Spezialfall: <Katex tex="m" /> ist eine Zweierpotenz</h3>
+			<p>
+				Sei <Katex tex="m=2^t" />. Dann gilt modulo 2:
+			</p>
 			<div class="kbox">
-				<Katex as="div" display tex="o\!\left(Q_{i_1}+Q_{i_2}+\dots+Q_{i_n}\right)\ge o\!\left(Q_{i_1}\right)." />
+				<Katex as="div" display tex="(1+x)^m \equiv 1+x^m \pmod 2." />
+			</div>
+			<p>
+				Wenn <Katex tex="A(x)" /> nur Potenzen <Katex tex="x^0,\dots,x^{m-1}" /> enthält
+				(also <Katex tex="\deg A < m" />), dann:
+			</p>
+			<div class="kbox">
+				<Katex
+					aligned
+					as="div"
+					display
+					:tex="texStep1Block"
+				/>
+			</div>
+			<p>
+				Grund: <Katex tex="A" /> und <Katex tex="x^mA" /> liegen in verschiedenen Exponentenbereichen
+				und können sich nicht gegenseitig auslöschen.
+			</p>
+
+			<h3>Schritt 2 — Induktionsschritt: wähle ein Fenster <Katex tex="[m,2m)" /></h3>
+			<p>
+				Wähle eine Zweierpotenz <Katex tex="m" /> mit <Katex tex="m\le i_n < 2m" />
+				(z.B. die größte Zweierpotenz, die nicht größer als <Katex tex="i_n" /> ist).
+				Dann liegen alle Exponenten entweder unter <Katex tex="m" /> oder in
+				<Katex tex="[m,2m)" />.
+			</p>
+
+			<h3>Fall A — <Katex tex="i_1\ge m" /></h3>
+			<p>
+				Setze <Katex tex="A(x):=\sum_{j=1}^n Q_{i_j-m}(x)" />.
+				Dann ist <Katex tex="\deg A<m" /> und
+			</p>
+			<div class="kbox">
+				<Katex as="div" display tex="\sum_{j=1}^n Q_{i_j}(x)=(1+x)^mA(x)." />
+			</div>
+			<p>Damit folgt:</p>
+			<div class="kbox">
+				<Katex
+					aligned
+					as="div"
+					display
+					:tex="texFallABlock"
+				/>
+			</div>
+			<p>
+				Also reduziert sich alles auf <Katex tex="o(A)\ge o(Q_{i_1-m})" />,
+				wieder mit dem Faktor 2 aus zwei nicht überlappenden Exponentenbereichen,
+				und das ist die Induktionsannahme.
+			</p>
+
+			<h3>Fall B — <Katex tex="i_1<m" /></h3>
+			<p>
+				Splitte:
+				<Katex as="div" display tex="A(x):=\sum_{i_j<m}Q_{i_j}(x),\qquad B(x):=\sum_{i_j\ge m}Q_{i_j-m}(x)." />
+			</p>
+			<p>Dann:</p>
+			<div class="kbox">
+				<Katex as="div" display tex="\sum_{j=1}^n Q_{i_j}(x)=A(x)+(1+x)^mB(x)." />
+			</div>
+			<p>
+				Mit <Katex tex="(1+x)^m\equiv 1+x^m\pmod 2" /> gilt:
+			</p>
+			<div class="kbox">
+				<Katex as="div" display tex="A+(1+x)^mB\equiv A+(1+x^m)B=(A+B)+x^mB." />
+			</div>
+			<p>Damit kann man direkt zählen:</p>
+			<div class="kbox">
+				<Katex as="div" display tex="o\bigl(A+(1+x)^mB\bigr)=o(A+B)+o(B)." />
+			</div>
+			<p>
+				Außerdem gilt <Katex tex="o(A+B)+o(B)\ge o(A)" />:
+				Betrachte einen Exponenten <Katex tex="r<m" /> mit Koeffizienten <Katex tex="a_r" />
+				in <Katex tex="A" /> und <Katex tex="b_r" /> in <Katex tex="B" />.
+				Modulo 2 gilt <Katex tex="a_r \equiv (a_r+b_r)+b_r" />.
+				Ist <Katex tex="a_r" /> ungerade, dann ist mindestens einer der beiden Koeffizienten
+				in <Katex tex="A+B" /> oder <Katex tex="B" /> ungerade; daher deckt
+				<Katex tex="o(A+B)+o(B)" /> alle ungeraden Koeffizienten von <Katex tex="A" /> ab.
+				Damit:
+			</p>
+			<div class="kbox">
+				<Katex
+					aligned
+					as="div"
+					display
+					:tex="texFallBBlock"
+				/>
+			</div>
+			<p>Also insgesamt:</p>
+			<div class="kbox">
+				<Katex as="div" display tex="o\!\left(\sum_{j=1}^n Q_{i_j}\right)\ge o(Q_{i_1})." />
 			</div>
 		</div>
 
-		<h2 id="paritat" class="mt-8">Teil 2 — Kernidee (Parität statt Größe)</h2>
+		<h2 id="einordnung" class="mt-8">Teil 4 — Was wurde „schwer“ gemacht und was nicht?</h2>
 		<div class="eddie">
 			<p>
-				Wir schauen nur auf <b>ungerade/gerade</b> (also Modulo 2). Die exakten Größen der
-				Binomialkoeffizienten sind zweitrangig.
+				Die Schwierigkeit steckt hier nicht in einem Spezialtheorem, sondern in zwei gut erklärbaren Ideen:
 			</p>
-
-			<ul>
-				<li>In <Katex tex="Q_i=(1+x)^i" /> ist der Koeffizient bei <Katex tex="x^r" /> gleich <Katex tex="\binom{i}{r}" />.</li>
+			<ol>
+				<li>Modulo 2 denken (ungerade/gerade statt Zahlenwerte).</li>
 				<li>
-					Für die Parität gilt (Lucas in Basis 2):
-					<Katex tex="\binom{i}{r}" /> ist ungerade genau dann, wenn jede 1-Bit-Stelle von
-					<Katex tex="r" /> auch in <Katex tex="i" /> eine 1 ist.
+					Zweierpotenzen als Trennlinie:
+					<Katex tex="(1+x)^{2^t}\equiv 1+x^{2^t}\pmod 2" />
+					erzeugt eine saubere Zerlegung in zwei nicht überlappende Blöcke.
 				</li>
-				<li>
-					Daraus folgt sofort:
-					<Katex tex="o(Q_i)=2^{s_2(i)}" />, wobei <Katex tex="s_2(i)" /> die Anzahl der 1-Bits von
-					<Katex tex="i" /> ist.
-				</li>
-			</ul>
-		</div>
-
-		<h2 id="induktion" class="mt-8">Teil 3 — Beweisidee (Induktion mit 2er-Fenster)</h2>
-		<div class="eddie">
-			<v-expansion-panels variant="accordion">
-				<v-expansion-panel>
-					<v-expansion-panel-title>
-						Schritt 1 – Spezialfall: i ist eine Zweierpotenz
-					</v-expansion-panel-title>
-					<v-expansion-panel-text class="d-flex flex-column ga-3" eager>
-						<div>
-							Ist <Katex tex="i=2^t" />, dann sind in <Katex tex="(1+x)^i" /> alle inneren
-							Binomialkoeffizienten gerade. Ungerade bleiben nur die Ränder:
-							<Katex tex="1" /> und <Katex tex="x^i" />.
-						</div>
-						<div class="kbox">
-							<Katex as="div" display tex="(1+x)^{2^t}\equiv 1+x^{2^t}\pmod 2." />
-						</div>
-					</v-expansion-panel-text>
-				</v-expansion-panel>
-
-				<v-expansion-panel>
-					<v-expansion-panel-title>
-						Schritt 2 – Induktion über den größten Exponenten i_n
-					</v-expansion-panel-title>
-					<v-expansion-panel-text class="d-flex flex-column ga-3" eager>
-						<div>
-							Wähle eine Zweierpotenz <Katex tex="m" /> mit
-							<Katex tex="m\le i_n < 2m" />.
-							Dann betrachtet man die zwei Fälle <Katex tex="i_1\ge m" /> und <Katex tex="i_1<m" />.
-						</div>
-						<div>
-							Die Idee ist, die Summe so zu zerlegen, dass in beiden Fällen ein kleineres Problem entsteht,
-							auf das die Induktionsannahme angewendet werden kann.
-						</div>
-					</v-expansion-panel-text>
-				</v-expansion-panel>
-
-				<v-expansion-panel>
-					<v-expansion-panel-title>
-						Schritt 3 – Fall i_1 \ge m
-					</v-expansion-panel-title>
-					<v-expansion-panel-text class="d-flex flex-column ga-3" eager>
-						<div>
-							Dann kann man jeden Exponenten um <Katex tex="m" /> reduzieren:
-							<Katex tex="Q_{i_j}=(1+x)^mQ_{i_j-m}" />.
-						</div>
-						<div class="kbox">
-							<Katex as="div" display tex="(1+x)^m\equiv 1+x^m\pmod 2 \Rightarrow o\big((1+x)^mA\big)=2o(A)." />
-						</div>
-						<div>
-							Mit der Induktionsannahme für die reduzierten Exponenten folgt direkt die gewünschte
-							Ungleichung.
-						</div>
-					</v-expansion-panel-text>
-				</v-expansion-panel>
-
-				<v-expansion-panel>
-					<v-expansion-panel-title>
-						Schritt 4 – Fall i_1 &lt; m
-					</v-expansion-panel-title>
-					<v-expansion-panel-text class="d-flex flex-column ga-3" eager>
-						<div>
-							Splitte an der Grenze <Katex tex="m" />:
-							<Katex tex="Q=A+(1+x)^mB" />, wobei <Katex tex="\deg A,\deg B<m" />.
-						</div>
-						<div class="kbox">
-							<Katex as="div" display tex="o(Q)=o\big(A+(1+x)^mB\big)=o(A+B)+o(B)." />
-						</div>
-						<div>
-							Jetzt nutzt man nur Parität:
-							<Katex tex="o(A+B)+o(B)\ge o(A)" />,
-							weil ein Koeffizient von <Katex tex="A" /> nur dann ungerade ist, wenn genau einer der
-							beiden zugehörigen Koeffizienten in <Katex tex="A+B" /> und <Katex tex="B" /> ungerade ist.
-						</div>
-						<div>
-							Zusammen mit Induktion für <Katex tex="A" /> folgt
-							<Katex tex="o(Q)\ge o(Q_{i_1})" />.
-						</div>
-					</v-expansion-panel-text>
-				</v-expansion-panel>
-			</v-expansion-panels>
+			</ol>
+			<p>Alles andere sind Induktion und direkte Paritäts-Logik.</p>
 		</div>
 	</template>
 
@@ -303,10 +409,17 @@
 <script setup>
 import { ref } from "vue";
 import titleImg from "@/images/O3.webp";
+import O3_Graph from "./O3_Graph.vue";
 
 const inputExponents = ref( "1, 3, 4, 7" );
 const error = ref( "" );
 const result = ref( null );
+const texStep1Block = "(1+x)^mA&\\equiv (1+x^m)A=A+x^mA\\\\" +
+	"o\\bigl((1+x)^mA\\bigr)&=2\\,o(A).";
+const texFallABlock = "o\\!\\left(\\sum_{j=1}^n Q_{i_j}\\right)&=o\\bigl((1+x)^mA\\bigr)=2\\,o(A)\\\\" +
+	"o(Q_{i_1})&=o\\bigl((1+x)^mQ_{i_1-m}\\bigr)=2\\,o(Q_{i_1-m}).";
+const texFallBBlock = "o\\!\\left(\\sum_{j=1}^n Q_{i_j}\\right)&=o(A+B)+o(B)\\ge o(A)\\\\" +
+	"o(A)&\\ge o(Q_{i_1})\\quad\\text{(Induktionsannahme auf }A\\text{)}.";
 
 function popcount( n ) {
 	let x = n;

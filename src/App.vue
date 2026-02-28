@@ -95,6 +95,7 @@
 			<section class="card" if="description">
 				<div class="descriptionPartHeader">
 					<MarkdownDownload
+						v-if="!nomd"
 						button-label="Download als Markdown"
 						:file-name="descriptionMarkdownFileName"
 						target-id="descriptionPartMarkdownSource"
@@ -259,6 +260,7 @@ import Page from "./components/Page.vue";
 
 const props = defineProps( {
 	title:      { type: String, default: "" },
+	nomd:       { type: Boolean, default: false },
 	subChapter: {
 		type:    Object,
 		default: () => ( {} )
