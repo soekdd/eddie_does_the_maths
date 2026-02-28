@@ -54,7 +54,7 @@ function randomN() {
 	return 5 + Math.floor( Math.random() * 7 );
 }
 
-const n = ref( randomN() );
+const n = ref( 11 );
 
 function reroll() {
 	let nextN = randomN();
@@ -320,14 +320,30 @@ function geometryBounds( squares ) {
 }
 
 const orientationMatrices = [
-	{ a: 1, b: 0, c: 0, d: 1 },
-	{ a: 0, b: -1, c: 1, d: 0 },
-	{ a: -1, b: 0, c: 0, d: -1 },
-	{ a: 0, b: 1, c: -1, d: 0 },
-	{ a: -1, b: 0, c: 0, d: 1 },
-	{ a: 1, b: 0, c: 0, d: -1 },
-	{ a: 0, b: 1, c: 1, d: 0 },
-	{ a: 0, b: -1, c: -1, d: 0 }
+	{
+		a: 1, b: 0, c: 0, d: 1
+	},
+	{
+		a: 0, b: -1, c: 1, d: 0
+	},
+	{
+		a: -1, b: 0, c: 0, d: -1
+	},
+	{
+		a: 0, b: 1, c: -1, d: 0
+	},
+	{
+		a: -1, b: 0, c: 0, d: 1
+	},
+	{
+		a: 1, b: 0, c: 0, d: -1
+	},
+	{
+		a: 0, b: 1, c: 1, d: 0
+	},
+	{
+		a: 0, b: -1, c: -1, d: 0
+	}
 ];
 
 function transformPoint( point, matrix ) {
@@ -351,8 +367,8 @@ function transformSquare( square, matrix ) {
 
 	return {
 		...square,
-		x: minX,
-		y: minY,
+		x:    minX,
+		y:    minY,
 		size: maxX - minX
 	};
 }
@@ -377,7 +393,7 @@ function orientGeometry( squares, points ) {
 			secondLargest.x + secondLargest.size === bounds.maxX;
 
 		return {
-			matches: largestOnLeft && secondOnTopRight,
+			matches:   largestOnLeft && secondOnTopRight,
 			landscape: bounds.width >= bounds.height
 		};
 	}

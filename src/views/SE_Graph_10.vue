@@ -49,7 +49,7 @@ function randomN() {
 	return 5 + Math.floor( Math.random() * 6 );
 }
 
-const n = ref( randomN() );
+const n = ref( 6 );
 
 function reroll() {
 	n.value = randomN();

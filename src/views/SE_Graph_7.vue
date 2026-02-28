@@ -52,8 +52,8 @@ function randomRange2to5() {
 	return 2 + Math.floor( Math.random() * 4 );
 }
 
-const x = ref( randomRange2to5() );
-const y = ref( randomRange2to5() );
+const x = ref( 4 );
+const y = ref( 5 );
 
 function reroll() {
 	x.value = randomRange2to5();
