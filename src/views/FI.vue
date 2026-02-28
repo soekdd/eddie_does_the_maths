@@ -28,7 +28,7 @@
 	</template>
 
 	<template #descriptionPart>
-		<h2 id="beschreibung">In 4 Schritten zur versteckten Karte</h2>
+		<h2 id="beschreibung">Teil 1 - In 4 Schritten zur versteckten Karte</h2>
 		<div class="eddie d-flex flex-column ga-6">
 			<section>
 				<figure class="exampleFigure">
@@ -42,7 +42,7 @@
 						/>
 					</ImageZoomer>
 				</figure>
-				<h3>Schritt 1: Maßstabgerechte Grunddarstellung</h3>
+				<h3>Schritt 1.1 - Maßstabgerechte Grunddarstellung</h3>
 				<p>
 					Wir starten mit einer normalen, maßstabgerechten Netzwerk-Karte: Städte als Knotenpunkte,
 					Verbindungen als Linien. Entscheidend ist der Linienstil, denn er codiert schon hier die Art der
@@ -72,7 +72,7 @@
 						/>
 					</ImageZoomer>
 				</figure>
-				<h3>Schritt 2: Namen durch festen Code ersetzen</h3>
+				<h3>Schritt 1.2 - Namen durch festen Code ersetzen</h3>
 				<p>
 					Als Nächstes entfernen wir Klartext-Namen und nutzen stattdessen einen zweibuchstabigen Code pro
 					Stadt. Der Code ist nicht zufällig, sondern folgt einer festen, nachvollziehbaren Regel. Bei
@@ -97,7 +97,7 @@
 						/>
 					</ImageZoomer>
 				</figure>
-				<h3>Schritt 3: Holomorphe Transformation</h3>
+				<h3>Schritt 1.3 - Holomorphe Transformation</h3>
 				<p>
 					Jetzt kommt der eigentliche geometrische Schlüssel: Wir transformieren alle Knoten in der komplexen
 					Ebene durch eine holomorphe Abbildung. Der große Vorteil: lokal bleiben Winkel erhalten
@@ -156,10 +156,21 @@
 						/>
 					</ImageZoomer>
 				</figure>
-				<h3>Schritt 4: Ablenkung</h3>
+				<h3>Schritt 1.4 - Ablenkung</h3>
 				<p>Nun schadet es nicht, noch ein wenig für Ablenkung zu sorgen. Ein paar Dreiecke ausfüllen,
 					einen Kreis durch die 3 größten Städte konstruieren und ein paar (fast) rechte Winkel einzeichnen.</p>
-				<p><b>Und verschwunden ist die Karte und fertig ist die Geometrieaufgabe.</b></p>
+				<EddieComment subtitle="Und verschwunden ist die Karte und fertig ist die Geometrieaufgabe.">
+					<p>
+						Der Trick ist nicht Zauberei, sondern Geometrie mit Ansage:
+						Die holomorphe Abbildung bleibt lokal winkeltreu (konform),
+						also bleiben Kreuzungswinkel und Richtungen interpretierbar.
+					</p>
+					<p>
+						Gleichzeitig darf die Abbildung lokal drehen und skalieren.
+						Für Außenstehende sieht das chaotisch aus, intern bleibt die Struktur aber konsistent
+						und rechnerisch nachvollziehbar.
+					</p>
+				</EddieComment>
 			</section>
 		</div>
 	</template>
@@ -193,6 +204,7 @@
 
 <script setup>
 import { ref } from "vue";
+import EddieComment from "@/components/EddieComment.vue";
 import titleImg from "@/images/FI.webp";
 import FINetwork from "./FI_Network.vue";
 import FIMap from "./FI_Map.vue";

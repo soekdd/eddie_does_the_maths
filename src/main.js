@@ -6,6 +6,7 @@ import AppFrame from "@/App.vue";
 import ImageZoomer from "@/components/ImageZoomer.vue";
 import Katex from "@/components/Katex.vue";
 import RouteSeoHead from "@/components/RouteSeoHead.vue";
+import EddieComment from "@/components/EddieComment.vue";
 import "katex/dist/katex.min.css";
 import { routes, scrollBehavior } from "@/router.js";
 import { vuetify } from "@/utils/vuetify";
@@ -111,6 +112,7 @@ export const createApp = ViteSSG(
 		app.component( "AppFrame", AppFrame );
 		// eslint-disable-next-line vue/multi-word-component-names
 		app.component( "Katex", Katex );
+		app.component( "EddieComment", EddieComment );
 		app.component( "ImageZoomer", ImageZoomer );
 		app.provide( "pbUrl", pbUrl );
 

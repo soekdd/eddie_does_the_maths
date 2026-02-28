@@ -33,9 +33,8 @@
 	</template>
 
 	<template #descriptionPart>
-
-		<h2 id="geometrie">Teil 1 — Aufgabenstellung</h2>
 		<div class="eddie">
+			<h2>Teil 1 - Aufgabenstellung</h2>
 			<p>
 				Ein Kreis mit Mittelpunkt <Katex tex="O" /> geht durch die Punkte <Katex tex="A" /> und
 				<Katex tex="C" /> des Dreiecks <Katex tex="ABC" />.
@@ -43,51 +42,285 @@
 				<Katex tex="K" /> bzw. <Katex tex="N" />.
 			</p>
 			<p>
-				Die Umkreise von <Katex tex="ABC" /> und <Katex tex="KBN" /> schneiden sich genau in
-				<Katex tex="B" /> und <Katex tex="M" />.
-				Zu zeigen ist:
+				Die Umkreise von <Katex tex="ABC" /> und <Katex tex="KBN" /> schneiden sich
+				(neben <Katex tex="B" />) in einem zweiten Punkt <Katex tex="M" />.
 			</p>
+			<p>Zu zeigen ist:</p>
 			<div class="kbox">
 				<Katex as="div" display tex="\angle OMB = 90^\circ." />
 			</div>
 		</div>
 
-		<h2 id="radikalachsen" class="mt-8">Teil 2 — Beweisidee</h2>
+		<h2 id="radikalachsen" class="mt-8">Teil 2 - Zwei Werkzeuge, die wir brauchen (Power + Radikalachse)</h2>
 		<div class="eddie">
+			<h3>2.1 Potenz (Power) eines Punktes zu einem Kreis</h3>
 			<p>
-				Die Lösung geht über <b>Radikalachsen</b> und <b>Potenzen</b>:
+				Für einen Kreis <Katex tex="\omega" /> und einen Punkt <Katex tex="P" /> (nicht unbedingt auf dem Kreis)
+				heißt die Potenz von <Katex tex="P" /> bezüglich <Katex tex="\omega" />:
 			</p>
-			<ol>
+			<div class="kbox">
+				<Katex as="div" display tex="\operatorname{Pow}_{\omega}(P)." />
+			</div>
+			<p>Zwei praktische Rechenregeln:</p>
+			<p><b>(A) Sekantenformel:</b></p>
+			<p>
+				Schneidet eine Gerade durch <Katex tex="P" /> den Kreis <Katex tex="\omega" /> in
+				<Katex tex="U" /> und <Katex tex="V" />, dann gilt
+			</p>
+			<div class="kbox">
+				<Katex as="div" display tex="\operatorname{Pow}_{\omega}(P)=PU\cdot PV." />
+			</div>
+			<p><b>(B) Mittelpunktformel:</b></p>
+			<p>
+				Hat <Katex tex="\omega" /> Mittelpunkt <Katex tex="S" /> und Radius <Katex tex="r" />, dann gilt
+			</p>
+			<div class="kbox">
+				<Katex as="div" display tex="\operatorname{Pow}_{\omega}(P)=PS^2-r^2." />
+			</div>
+			<p>Beide Formeln liefern dieselbe Zahl.</p>
+
+			<h3 class="mt-6">2.2 Radikalachse (Radical axis)</h3>
+			<p>
+				Für zwei Kreise <Katex tex="\omega_1,\omega_2" /> ist die Radikalachse die Menge aller Punkte
+				<Katex tex="P" /> mit
+			</p>
+			<div class="kbox">
+				<Katex as="div" display tex="\operatorname{Pow}_{\omega_1}(P)=\operatorname{Pow}_{\omega_2}(P)." />
+			</div>
+			<p>Diese Menge ist immer eine Gerade.</p>
+			<p>Wichtigster Spezialfall:</p>
+			<ul>
 				<li>
-					Die drei Radikalachsen der drei Kreispaare sind konkurrent.
-					Nenne den Schnittpunkt <Katex tex="X" />.
-					Dann liegen <Katex tex="X" /> auf <Katex tex="BM" />, <Katex tex="AC" />, <Katex tex="NK" />.
+					Schneiden sich <Katex tex="\omega_1" /> und <Katex tex="\omega_2" /> in zwei Punkten,
+					dann ist ihre Radikalachse die Gerade durch diese beiden Schnittpunkte.
 				</li>
+			</ul>
+			<p>Noch ein Fakt (für ganz am Ende):</p>
+			<ul>
 				<li>
-					Mit Potenzgleichungen erhält man:
-					<Katex tex="XM\cdot XB = XK\cdot XN = XO^2-ON^2" /> und
-					<Katex tex="BM\cdot BX = BN\cdot BC = BO^2-ON^2" />.
+					Die Radikalachse zweier Kreise steht senkrecht zur Verbindungslinie ihrer Mittelpunkte.
 				</li>
-				<li>
-					Subtrahieren liefert
-					<Katex tex="XO^2-BO^2 = XM^2-BM^2" />;
-					daraus folgt geometrisch
-					<Katex tex="OM\perp XB" />.
-					Da <Katex tex="X,B,M" /> kollinear sind, ist
-					<Katex tex="OM\perp MB" />.
-				</li>
-			</ol>
+			</ul>
 		</div>
 
-		<h2 id="potenzpunkte" class="mt-8">Teil 3 — Formelblock aus der Lösung</h2>
+		<h2 class="mt-8">Teil 3 - Die drei Kreise in der Aufgabe</h2>
 		<div class="eddie">
+			<p>Wir benennen:</p>
+			<ul>
+				<li>
+					<Katex tex="\omega" />: der Kreis mit Mittelpunkt <Katex tex="O" /> durch <Katex tex="A" />
+					und <Katex tex="C" />. Sein Radius ist
+					<Katex tex="R=OA=OC=OK=ON" />.
+				</li>
+				<li><Katex tex="\Gamma" />: der Umkreis von <Katex tex="ABC" />.</li>
+				<li><Katex tex="\gamma" />: der Umkreis von <Katex tex="KBN" />.</li>
+			</ul>
+			<p>Dann gelten sofort drei Radikalachsen:</p>
+			<ol>
+				<li>
+					<Katex tex="\omega" /> und <Katex tex="\Gamma" /> schneiden sich in
+					<Katex tex="A" /> und <Katex tex="C" /> <Katex tex="\Rightarrow" /> Radikalachse ist
+					<Katex tex="AC" />.
+				</li>
+				<li>
+					<Katex tex="\omega" /> und <Katex tex="\gamma" /> schneiden sich in
+					<Katex tex="K" /> und <Katex tex="N" /> <Katex tex="\Rightarrow" /> Radikalachse ist
+					<Katex tex="KN" />.
+				</li>
+				<li>
+					<Katex tex="\Gamma" /> und <Katex tex="\gamma" /> schneiden sich in
+					<Katex tex="B" /> und <Katex tex="M" /> <Katex tex="\Rightarrow" /> Radikalachse ist
+					<Katex tex="BM" />.
+				</li>
+			</ol>
+			<p>
+				Diese drei Radikalachsen schneiden sich in einem Punkt (dem Radikalzentrum).
+				Nenne diesen Punkt
+			</p>
 			<div class="kbox">
-				<Katex as="div" display tex="XM\cdot XB = XK\cdot XN = XO^2-ON^2" />
-				<Katex as="div" display tex="BM\cdot BX = BN\cdot BC = BO^2-ON^2" />
-				<Katex as="div" display tex="XO^2-BO^2 = XM^2-BM^2" />
-				<Katex as="div" display tex="\Rightarrow\ OM\perp MB\ \Rightarrow\ \angle OMB=90^\circ" />
+				<Katex as="div" display tex="X := AC \cap KN \cap BM." />
+			</div>
+			<p>Damit gilt besonders: <Katex tex="B,X,M" /> liegen auf einer Geraden.</p>
+		</div>
+
+		<h2 class="mt-8">Teil 4 - Ein Schlüsselschritt: <Katex tex="X,M,N,C" /> liegen auf einem Kreis</h2>
+		<div class="eddie">
+			<p>Wir zeigen:</p>
+			<div class="kbox">
+				<Katex as="div" display tex="X,M,N,C \text{ liegen auf einem Kreis.}" />
+			</div>
+			<p>Dazu zeigen wir die Winkelgleichheit</p>
+			<div class="kbox">
+				<Katex as="div" display tex="\angle XMN = \angle XCN." />
+			</div>
+			<p>
+				In den folgenden Gleichungen verstehen wir Winkel als Winkel zwischen Geraden
+				(also ohne Richtung; Winkel werden modulo <Katex tex="180^\circ" /> betrachtet).
+			</p>
+			<p>Jetzt die Winkelkette:</p>
+			<ul>
+				<li>
+					Weil <Katex tex="B,X,M" /> auf einer Geraden liegen, sind die Geraden
+					<Katex tex="MX" /> und <Katex tex="MB" /> dieselbe Gerade; daher ist
+					<Katex tex="\angle XMN=\angle BMN" />.
+				</li>
+				<li>
+					Weil <Katex tex="B,K,M,N" /> auf dem Kreis <Katex tex="\gamma" /> liegen, gilt
+					<Katex tex="\angle BMN=\angle BKN" />.
+				</li>
+				<li>
+					Weil <Katex tex="A,K,B" /> auf einer Geraden liegen, sind die Geraden
+					<Katex tex="BK" /> und <Katex tex="AK" /> dieselbe Gerade.
+					Daher ist der Winkel zwischen <Katex tex="BK" /> und <Katex tex="KN" /> gleich dem Winkel
+					zwischen <Katex tex="AK" /> und <Katex tex="KN" />; kurz:
+					<Katex tex="\angle BKN=\angle AKN" />.
+				</li>
+				<li>
+					Weil <Katex tex="A,C,K,N" /> auf dem Kreis <Katex tex="\omega" /> liegen, gilt
+					<Katex tex="\angle AKN=\angle ACN" />.
+				</li>
+				<li>
+					Weil <Katex tex="X" /> auf <Katex tex="AC" /> liegt, ist
+					<Katex tex="\angle ACN=\angle XCN" />.
+				</li>
+			</ul>
+			<div class="kbox">
+				<Katex as="div" display tex="\angle XMN=\angle BMN=\angle BKN=\angle AKN=\angle ACN=\angle XCN." />
+			</div>
+			<p>Damit ist <Katex tex="X,M,N,C" /> zyklisch.</p>
+		</div>
+
+		<h2 id="potenzpunkte" class="mt-8">Teil 5 - Die Power-Gleichungen (jetzt wird gerechnet)</h2>
+		<div class="eddie">
+			<h3>5.1 Eine Gleichung aus dem Radikalzentrum <Katex tex="X" /></h3>
+			<p>
+				Da <Katex tex="X" /> auf <Katex tex="BM" /> liegt und <Katex tex="B,M" /> auf
+				<Katex tex="\Gamma" /> liegen, ist
+			</p>
+			<div class="kbox">
+				<Katex as="div" display tex="\operatorname{Pow}_{\Gamma}(X)=XB\cdot XM." />
+			</div>
+			<p>
+				Da <Katex tex="X" /> aber auch auf der Radikalachse von <Katex tex="\Gamma" /> und
+				<Katex tex="\omega" /> liegt (das ist <Katex tex="AC" />), gilt
+			</p>
+			<div class="kbox">
+				<Katex as="div" display tex="\operatorname{Pow}_{\Gamma}(X)=\operatorname{Pow}_{\omega}(X)." />
+				<Katex as="div" display tex="\operatorname{Pow}_{\omega}(X)=XO^2-R^2=XO^2-ON^2." />
+				<Katex as="div" display tex="XB\cdot XM = XO^2-ON^2." />
+			</div>
+			<p><Katex tex="\text{(1)}" /></p>
+
+			<h3 class="mt-6">5.2 Eine zweite Gleichung über den Kreis durch <Katex tex="X,M,N,C" /></h3>
+			<p>Aus Teil 4 wissen wir: Es gibt einen Kreis durch <Katex tex="X,M,N,C" />. Nenne ihn <Katex tex="\sigma" />.</p>
+			<p>Dann ist die Potenz von <Katex tex="B" /> bezüglich <Katex tex="\sigma" /> auf zwei Geraden berechenbar:</p>
+			<ul>
+				<li>
+					Auf der Geraden <Katex tex="BM" /> schneidet <Katex tex="\sigma" /> in
+					<Katex tex="M" /> und <Katex tex="X" />, also
+					<Katex tex="\operatorname{Pow}_{\sigma}(B)=BM\cdot BX" />.
+				</li>
+				<li>
+					Auf der Geraden <Katex tex="BC" /> schneidet <Katex tex="\sigma" /> in
+					<Katex tex="C" /> und <Katex tex="N" />, also
+					<Katex tex="\operatorname{Pow}_{\sigma}(B)=BC\cdot BN" />.
+				</li>
+			</ul>
+			<div class="kbox">
+				<Katex as="div" display tex="BM\cdot BX = BC\cdot BN." />
+			</div>
+			<p><Katex tex="\text{(2)}" /></p>
+			<p>
+				Aber <Katex tex="C" /> und <Katex tex="N" /> liegen auch auf <Katex tex="\omega" />, also ist
+				<Katex tex="BC\cdot BN" /> gleichzeitig die Potenz von <Katex tex="B" /> bezüglich <Katex tex="\omega" />.
+				Mit der Mittelpunktformel:
+			</p>
+			<div class="kbox">
+				<Katex as="div" display tex="BC\cdot BN=\operatorname{Pow}_{\omega}(B)=BO^2-R^2=BO^2-ON^2." />
+				<Katex as="div" display tex="BM\cdot BX = BO^2-ON^2." />
+			</div>
+			<p><Katex tex="\text{(3)}" /></p>
+		</div>
+
+		<h2 class="mt-8">Teil 6 - Der Schluss: daraus folgt der rechte Winkel</h2>
+		<div class="eddie">
+			<p>Wir ziehen (3) von (1) ab:</p>
+			<div class="kbox">
+				<Katex as="div" display tex="(XB\cdot XM) - (BM\cdot BX) = (XO^2-ON^2) - (BO^2-ON^2)," />
+				<Katex as="div" display tex="XB\cdot XM - BM\cdot BX = XO^2-BO^2." />
+			</div>
+			<p><Katex tex="\text{(4)}" /></p>
+			<p>
+				Jetzt kommt ein kurzer Trick mit gerichteten Strecken auf der Geraden <Katex tex="BM" />.
+				Wir rechnen auf der Geraden <Katex tex="BM" /> wie auf einer Zahlengeraden (mit Vorzeichen).
+				Dabei gilt stets <Katex tex="BM = BX + XM" />; umgestellt ist das
+				<Katex tex="BX = BM - XM" /> (mit Vorzeichen).
+				Entsprechend gilt dann auch <Katex tex="XB = XM - BM" />.
+			</p>
+			<div class="kbox">
+				<Katex as="div" display tex="BX = BM - XM \quad\text{(als gerichtete Strecken)}." />
+			</div>
+			<p>Dann ist</p>
+			<div class="kbox">
+				<Katex as="div" display tex="BM\cdot BX = BM(BM - XM)=BM^2 - BM\cdot XM," />
+				<Katex as="div" display tex="XM\cdot XB = XM(XM - BM)=XM^2 - BM\cdot XM." />
+			</div>
+			<p>Subtrahieren ergibt:</p>
+			<div class="kbox">
+				<Katex as="div" display tex="XM\cdot XB - BM\cdot BX = XM^2 - BM^2." />
+			</div>
+			<p>Setze das in (4) ein:</p>
+			<div class="kbox">
+				<Katex as="div" display tex="XM^2 - BM^2 = XO^2 - BO^2," />
+				<Katex as="div" display tex="XO^2 - XM^2 = BO^2 - BM^2." />
+			</div>
+			<p><Katex tex="\text{(5)}" /></p>
+
+			<h3 class="mt-6">6.1 Was bedeutet (5) geometrisch?</h3>
+			<p>Betrachte zwei Kreise:</p>
+			<ul>
+				<li>Kreis <Katex tex="\tau" /> mit Mittelpunkt <Katex tex="O" /> und Radius <Katex tex="OB" />,</li>
+				<li>Kreis <Katex tex="\upsilon" /> mit Mittelpunkt <Katex tex="M" /> und Radius <Katex tex="MB" />.</li>
+			</ul>
+			<p>
+				Dann hat ein Punkt <Katex tex="P" /> auf ihrer Radikalachse genau dann gleiche Potenzen, wenn
+			</p>
+			<div class="kbox">
+				<Katex as="div" display tex="PO^2-OB^2 = PM^2-MB^2 \Longleftrightarrow PO^2-PM^2 = OB^2-MB^2." />
+			</div>
+			<p>
+				Gleichung (5) sagt genau: Die Punkte <Katex tex="P=X" /> und <Katex tex="P=B" /> erfüllen diese Bedingung.
+				Also liegen <Katex tex="B" /> und <Katex tex="X" /> auf der Radikalachse der Kreise <Katex tex="\tau" />
+				und <Katex tex="\upsilon" />. Diese Radikalachse ist die Gerade <Katex tex="BX" />.
+			</p>
+			<p>
+				Aber: Die Radikalachse zweier Kreise steht senkrecht zur Verbindungslinie ihrer Mittelpunkte,
+				hier also senkrecht auf <Katex tex="OM" />. Damit:
+			</p>
+			<div class="kbox">
+				<Katex as="div" display tex="BX \perp OM." />
+			</div>
+			<p>
+				Und weil <Katex tex="B,X,M" /> auf einer Geraden liegen, ist
+				<Katex tex="BX" /> dieselbe Gerade wie <Katex tex="BM" />. Also:
+			</p>
+			<div class="kbox">
+				<Katex as="div" display tex="BM \perp OM \Rightarrow \angle OMB = 90^\circ." />
+				<Katex as="div" display tex="\boxed{\angle OMB = 90^\circ.}" />
 			</div>
 		</div>
+		<EddieComment subtitle="Die großen Ideen sind:">
+			<ol>
+				<li>Radikalachsen: drei Paare von Kreisen, drei Geraden, ein Schnittpunkt <Katex tex="X" />.</li>
+				<li>Ein zyklisches Viereck <Katex tex="X,M,N,C" /> per Winkelkette.</li>
+				<li>Potenzrechnungen auf passenden Geraden (Produkt von Strecken).</li>
+				<li>
+					Am Ende zeigt eine Gleichung, dass <Katex tex="BX" /> die Radikalachse zweier Kreise mit
+					Mittelpunkten <Katex tex="O" /> und <Katex tex="M" /> ist - und damit automatisch senkrecht auf
+					<Katex tex="OM" />.
+				</li>
+			</ol>
+		</EddieComment>
 	</template>
 
 	<template #interactivePart>
@@ -191,6 +424,12 @@
 				<div class="mono">Kollinearität(X,B,M) = {{ fmt(result.collinearity, 10) }}</div>
 			</v-sheet>
 		</div>
+	</template>
+	<template #footer>
+		<p class="muted">
+			Quelle der Aufgabenstellung/Lösungsskizze:
+			<a href="https://prase.cz/kalva/imo/isoln/isoln855.html">IMO 1985 B2 (ISL solutions, prase.cz)</a>
+		</p>
 	</template>
 </AppFrame>
 </template>

@@ -44,7 +44,7 @@
 
 	<template #descriptionPart>
 
-		<h2 id="impuls">1) Eigentlich müsste man dynamische Lasten über Impuls rechnen</h2>
+		<h2 id="impuls">Teil 1 - Eigentlich müsste man dynamische Lasten über Impuls rechnen</h2>
 		<div class="eddie">
 			<p>
 				Bei einem Stoß ist die Last nicht nur „Gewicht“, sondern vor allem ein zeitlicher Kraftverlauf.
@@ -52,9 +52,9 @@
 			</p>
 			<div class="kbox">
 				<Katex
+					aligned
 					as="div"
 					display
-					aligned
 					tex="J &= \int_{t_0}^{t_1}F(t)\,\mathrm{d}t=\Delta p=m(v_1-v_0) \\ \int_{t_0}^{t_1}\big(F_K(t)-m g\big)\,\mathrm{d}t &= m(v_1-v_0) \\ F_{K,\mathrm{mittel}} &= m g+\frac{m(v_1-v_0)}{\Delta t}"
 				/>
 			</div>
@@ -75,7 +75,7 @@
 			</p>
 		</div>
 
-		<h2 id="idee" class="mt-8">2) Dynamische Lasten - anschaulich gedacht (TGL vs. DIN damals)</h2>
+		<h2 id="idee" class="mt-8">Teil 2 - Dynamische Lasten - anschaulich gedacht (TGL vs. DIN damals)</h2>
 		<div class="eddie">
 			<h3>Idee in einem Bild</h3>
 			<ul>
@@ -94,7 +94,7 @@
 			</p>
 		</div>
 
-		<h2 id="rechenweg" class="mt-8">Gemeinsame Eingaben für alle Rechenwege:</h2>
+		<h2 id="rechenweg" class="mt-8">Teil 3 - Gemeinsame Eingaben für alle Rechenwege</h2>
 		<div class="eddie">
 			<ul>
 				<li><Katex :tex="`m_M=${kFmt( inputs.mMkg, 0 )}\\,\\mathrm{kg}`" /></li>
@@ -104,7 +104,7 @@
 					<Katex :tex="`k_{\\text{ruhig}}=${kFmt( inputs.kRuhig, 1 )},\\quad k_{\\text{knall}}=${kFmt( inputs.kKnall, 1 )},\\quad k_{\\text{DIN}}=${kFmt( inputs.kDIN, 1 )}`" />
 				</li>
 			</ul>
-			<h3 id="beispiel" class="mt-4">Rechenweg und Zahlenbeispiel</h3>
+			<h3 id="beispiel" class="mt-4">Schritt 3.1 - Rechenweg und Zahlenbeispiel</h3>
 
 			<v-row class="mb-2" dense>
 				<v-col cols="12" md="4">
@@ -128,9 +128,9 @@
 				<v-col cols="12" md="4">
 					<v-card class="compareCard pa-4" variant="outlined">
 						<Katex
+							aligned
 							as="div"
 							display
-							aligned
 							:tex="`F_{k,M} &= m_M\\cdot g \\\\ F_{k,M} &= ${kFmt( inputs.mMkg, 0 )}\\cdot ${kFmt( inputs.gMs2, 2 )}\\,\\mathrm{N}=${kFmt( fkMN, 2 )}\\,\\mathrm{N} \\\\ F_{k,M} &\\approx ${kFmt( fkMkN, 2 )}\\,\\mathrm{kN}`"
 						/>
 					</v-card>
@@ -139,9 +139,9 @@
 				<v-col cols="12" md="4">
 					<v-card class="compareCard pa-4" variant="outlined">
 						<Katex
+							aligned
 							as="div"
 							display
-							aligned
 							:tex="`F_{k,K} &= m_K\\cdot g \\\\ F_{k,K} &= ${kFmt( inputs.mKkg, 0 )}\\cdot ${kFmt( inputs.gMs2, 2 )}\\,\\mathrm{N}=${kFmt( fkKN, 2 )}\\,\\mathrm{N} \\\\ F_{k,K} &\\approx ${kFmt( fkKkN, 2 )}\\,\\mathrm{kN}`"
 						/>
 					</v-card>
@@ -153,9 +153,9 @@
 						<Katex as="div" display tex="F_k=m\cdot g" />
 						<p class="cellNote">ohne Trennung von „setzt“ und „springt“</p>
 						<Katex
+							aligned
 							as="div"
 							display
-							aligned
 							:tex="`F_{k,M} &\\approx ${kFmt( fkMkN, 2 )}\\,\\mathrm{kN} \\\\ F_{k,K} &\\approx ${kFmt( fkKkN, 2 )}\\,\\mathrm{kN}`"
 						/>
 					</v-card>
@@ -187,9 +187,9 @@
 				<v-col cols="12" md="4">
 					<v-card class="compareCard pa-4" variant="outlined">
 						<Katex
+							aligned
 							as="div"
 							display
-							aligned
 							:tex="`F_{d,M} &= k_{\\text{ruhig}}\\,F_{k,M} \\\\ F_{d,M} &\\approx ${kFmt( inputs.kRuhig, 1 )}\\cdot ${kFmt( fkMkN, 2 )}=${kFmt( fdM, 2 )}\\,\\mathrm{kN}`"
 						/>
 					</v-card>
@@ -197,9 +197,9 @@
 				<v-col cols="12" md="4">
 					<v-card class="compareCard pa-4" variant="outlined">
 						<Katex
+							aligned
 							as="div"
 							display
-							aligned
 							:tex="`F_{d,K} &= k_{\\text{knall}}\\,F_{k,K} \\\\ F_{d,K} &\\approx ${kFmt( inputs.kKnall, 1 )}\\cdot ${kFmt( fkKkN, 2 )}=${kFmt( fdK, 2 )}\\,\\mathrm{kN}`"
 						/>
 					</v-card>
@@ -207,9 +207,9 @@
 				<v-col cols="12" md="4">
 					<v-card class="compareCard pa-4" variant="outlined">
 						<Katex
+							aligned
 							as="div"
 							display
-							aligned
 							:tex="`F_d &= k_{\\text{DIN}}\\,F_k \\\\ F_{d,M} &\\approx ${kFmt( inputs.kDIN, 1 )}\\cdot ${kFmt( fkMkN, 2 )}=${kFmt( fdDinM, 2 )}\\,\\mathrm{kN} \\\\ F_{d,K} &\\approx ${kFmt( inputs.kDIN, 1 )}\\cdot ${kFmt( fkKkN, 2 )}=${kFmt( fdDinK, 2 )}\\,\\mathrm{kN}`"
 						/>
 					</v-card>
@@ -241,7 +241,7 @@
 			</ul>
 		</div>
 
-		<h2 id="fazit" class="mt-8">Fazit</h2>
+		<h2 id="fazit" class="mt-8">Teil 4 - Fazit</h2>
 		<div class="eddie">
 			<ul>
 				<li><strong>TGL-Denke:</strong> nicht nur „wie schwer“, sondern auch „wie passiert es?“</li>
@@ -338,8 +338,8 @@
 
 			<BZ_Graph
 				class="mt-4"
-				:fd-k="fdK"
-				:fd-m="fdM"
+				:fd-k
+				:fd-m
 			/>
 		</div>
 	</template>

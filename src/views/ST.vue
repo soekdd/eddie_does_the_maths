@@ -190,11 +190,16 @@ p_{\text{ges}} &= P(S\cup N) \\
 				</div>
 			</div>
 
-			<ul>
-				<li>Ich sehe sofort, welche Kante am meisten weh tut (p, a oder r).</li>
-				<li>Wenn ich “Bus” killen will: <code class="mono">p=0</code>. Wenn ich “Fahrer” killen will: <code class="mono">a=0</code>.</li>
-				<li>Und wenn ich “Mielke” kleiner machen will: <code class="mono">r</code> runter.</li>
-			</ul>
+			<EddieComment subtitle="Kurzdiagnose">
+				<ul>
+					<li>Ich sehe sofort, welche Kante am meisten weh tut (p, a oder r).</li>
+					<li>
+						Wenn ich “Bus” killen will: <code class="mono">p=0</code>.
+						Wenn ich “Fahrer” killen will: <code class="mono">a=0</code>.
+					</li>
+					<li>Und wenn ich “Mielke” kleiner machen will: <code class="mono">r</code> runter.</li>
+				</ul>
+			</EddieComment>
 		</div>
 	</template>
 	
@@ -314,6 +319,7 @@ p_{\text{ges}} &= P(S\cup N) \\
 
 <script setup>
 import { computed, ref } from "vue";
+import EddieComment from "@/components/EddieComment.vue";
 import ST_Graph from "./ST_Graph.vue";
 import titleImg from "@/images/ST.webp";
 

@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/max-len -->
 <template>
 <AppFrame
 	:sub-chapter="{
@@ -33,7 +34,7 @@
 	</template>
 
 	<template #descriptionPart>
-		<h2 id="frage">Wie wahrscheinlich ist "maximal 100 m bis zum nächsten See"?</h2>
+		<h2 id="frage">Teil 1 - Wie wahrscheinlich ist "maximal 100 m bis zum nächsten See"?</h2>
 		<div class="eddie">
 			<p>
 				Wir wählen zufällig einen Punkt auf der Landfläche (ohne Seen).
@@ -47,7 +48,7 @@
 			</p>
 		</div>
 
-		<h2 id="formel" class="mt-8">Formel für die Uferfläche</h2>
+		<h2 id="formel" class="mt-8">Teil 2 - Formel für die Uferfläche</h2>
 		<UD_Graph/>
 		<div class="eddie">
 			<p>
@@ -79,7 +80,7 @@
 			</p>
 		</div>
 
-		<h2 id="winkel" class="mt-8">Warum konkav/konvex egal ist</h2>
+		<h2 id="winkel" class="mt-8">Teil 3 - Warum konkav/konvex egal ist</h2>
 		<div class="eddie">
 			<p>
 				Sei <Katex tex="\varphi_i" /> der signierte Außendrehwinkel an Ecke <Katex tex="i" />
@@ -89,9 +90,9 @@
 			</p>
 			<div class="kbox">
 				<Katex
+					aligned
 					as="div"
 					display
-					aligned
 					tex="A_{\text{Ecken}} &= \frac{h^2}{2}\sum_i \varphi_i \\ \sum_i \varphi_i &= 2\pi \;\Longrightarrow\; A_{\text{Ecken}}=\pi h^2"
 				/>
 			</div>
@@ -108,9 +109,9 @@
 			</div>
 		</div>
 
-		<h2 class="mt-8">Zweistufige Betrachtung</h2>
+		<h2 class="mt-8">Teil 4 - Zweistufige Betrachtung</h2>
 		<div class="eddie">
-			<h3>Stufe 1: Additive Näherung</h3>
+			<h3>Schritt 4.1 - Stufe 1: Additive Näherung</h3>
 			<p>
 				Im ersten Schritt addieren wir alle lokalen Beiträge unabhängig voneinander:
 				Rechteckanteile entlang der Ufer plus Eckanteile. Für viele getrennte Seen ergibt das
@@ -118,9 +119,9 @@
 			</p>
 			<div class="kbox">
 				<Katex
+					aligned
 					as="div"
 					display
-					aligned
 					tex="A_{\text{add}}(h) &= h\cdot d+n\pi h^2 \\ P_1(h) &\approx\frac{A_{\text{add}}(h)}{A_{\text{Land}}}"
 				/>
 			</div>
@@ -130,7 +131,7 @@
 				aber unplausibel werden.
 			</p>
 
-			<h3>Stufe 2: Minkowski-orientierte Korrektur</h3>
+			<h3>Schritt 4.2 - Stufe 2: Minkowski-orientierte Korrektur</h3>
 			<p>
 				Mathematisch ist die gesuchte Uferfläche die Vereinigungsfläche einer Aufdickung
 				aller Wasserflächen um den Radius <Katex tex="h" />, abzüglich der Wasserflächen selbst
@@ -138,9 +139,9 @@
 			</p>
 			<div class="kbox">
 				<Katex
+					aligned
 					as="div"
 					display
-					aligned
 					tex="A_{\text{wahr}}(h) &= \left|\left((W\oplus B_h)\setminus W\right)\cap L\right| \\ P(h) &= \frac{A_{\text{wahr}}(h)}{A_{\text{Land}}}"
 				/>
 			</div>
@@ -150,9 +151,9 @@
 			</p>
 			<div class="kbox">
 				<Katex
+					aligned
 					as="div"
 					display
-					aligned
 					tex="P_2(h) &= 1-\exp\!\left(-\frac{A_{\text{add}}(h)}{A_{\text{Land}}}\right) \\ A_2(h) &= A_{\text{Land}}\cdot P_2(h)"
 				/>
 			</div>
@@ -166,9 +167,9 @@
 			</p>
 			<div class="kbox">
 				<Katex
+					aligned
 					as="div"
 					display
-					aligned
 					tex="P_1(h) &= \lambda(h) \\ P_2(h) &= K(\lambda)\,P_1(h) \\ K(\lambda) &= \frac{1-\exp(-\lambda)}{\lambda}\le 1"
 				/>
 			</div>
@@ -232,9 +233,9 @@
 		</v-row>
 		<UD_Map
 			:country="activeCountry.code === 'FI' ? 'finland' : 'germany'"
-			:h-distance-meters="hDistanceMeters"
+			:h-distance-meters
 			:probability-percent="mainModel.poissonProbabilityPercent"
-			:shore-width="shoreWidth"
+			:shore-width
 		/>
 		<div class="eddie">
 			<p>
@@ -253,35 +254,35 @@
 			</p>
 			<div id="werteLand" class="kbox">
 				<Katex
+					aligned
 					as="div"
 					display
-					aligned
 					:tex="texAlignedBlock([ texCountryLakesCount, texCountryShoreline, texCountryLandArea ])"
 				/>
 			</div>
-			<h3>Stufe 1: Additive Näherung</h3>
+			<h3>Schritt 4.1 - Stufe 1: Additive Näherung</h3>
 			<div class="kbox">
 				<Katex
+					aligned
 					as="div"
 					display
-					aligned
 					:tex="texAlignedBlock([ 'A_{\\text{add}}(h)=h\\cdot d+n\\pi h^2', texStage1Main, texStage1ProbMain ])"
 				/>
 			</div>
 			<div class="kbox">
 				<Katex
+					aligned
 					as="div"
 					display
-					aligned
 					:tex="texAlignedBlock([ texStage1Stress, texStage1ProbStress ])"
 				/>
 			</div>
 			<h3>Stufe 2: Überlappungskorrigierte Näherung</h3>
 			<div class="kbox">
 				<Katex
+					aligned
 					as="div"
 					display
-					aligned
 					:tex="texAlignedBlock([ 'P_2(h)=1-\\exp\\!\\left(-\\frac{A_{\\text{add}}(h)}{A_{\\text{Land}}}\\right)', 'A_2(h)=A_{\\text{Land}}\\cdot P_2(h)', texStage2Main, texStage2Stress ])"
 				/>
 			</div>

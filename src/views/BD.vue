@@ -34,7 +34,7 @@
 		</div>
 	</template>
 	<template #descriptionPart>
-		<h2 id="system">Punktlast mittig + Eigengewicht auf beidseitig gelenkig gelagertem Stahlträger</h2>
+		<h2 id="system">Teil 1 - Punktlast mittig + Eigengewicht auf beidseitig gelenkig gelagertem Stahlträger</h2>
 		<div class="eddie">
 			<p>
 				Wir betrachten einen einfach gelagerten Träger (beidseitig drehbar/gelenkig)
@@ -61,11 +61,15 @@
 			</p>
 		</div>
 
-		<h2 id="eigengewicht" class="mt-8">2) Eigengewicht als Streckenlast <Katex tex="q_g" /></h2>
+		<h2 id="eigengewicht" class="mt-8">Teil 2 - Eigengewicht als Streckenlast <Katex tex="q_g" /></h2>
 		<div class="eddie">
 			<p>Das Eigengewicht pro Meter folgt aus der Querschnittsfläche <Katex tex="A" />:</p>
 			<div class="kbox">
-				<Katex as="div" aligned display tex="q_g&=\rho_{\text{Stahl}}\,g\,A\\q_g\,[\mathrm{kN/m}]&=\frac{\rho g}{1000}\,A" />
+				<Katex aligned
+					as="div"
+					display
+					tex="q_g&=\rho_{\text{Stahl}}\,g\,A\\q_g\,[\mathrm{kN/m}]&=\frac{\rho g}{1000}\,A"
+				/>
 			</div>
 			<p>
 				mit <Katex tex="\rho_{\text{Stahl}}\approx 7850\,\mathrm{kg/m^3}" /> und
@@ -85,43 +89,53 @@
 				<BD_Graph v-bind="graphProps" reduced />
 			</ImageZoomer>
 		</figure>
-		<h2 id="schnittgroessen" class="mt-8">3) Schnittgrößen (charakteristisch) für Punktlast + Gleichlast</h2>
+		<h2 id="schnittgroessen" class="mt-8">Teil 3 - Schnittgrößen (charakteristisch) für Punktlast + Gleichlast</h2>
 		<div class="eddie">
-			<h3>3.1 Auflagerreaktionen</h3>
+			<h3>Schritt 3.1 - Auflagerreaktionen</h3>
 			<p>Aus Symmetrie folgt:</p>
 			<div class="kbox">
 				<Katex as="div" display tex="R_A=R_B=\frac{P}{2}+\frac{q_g L}{2}" />
 			</div>
 
-			<h3>3.2 Querkraft (maximal am Auflager)</h3>
+			<h3>Schritt 3.2 - Querkraft (maximal am Auflager)</h3>
 			<div class="kbox">
 				<Katex as="div" display tex="V_{k,\max}=\frac{P}{2}+\frac{q_g L}{2}" />
 			</div>
 
-			<h3>3.3 Biegemoment (maximal in Feldmitte)</h3>
+			<h3>Schritt 3.3 - Biegemoment (maximal in Feldmitte)</h3>
 			<div class="kbox">
-				<Katex as="div" aligned display tex="M_{P,\max}&=\frac{P L}{4}\\M_{g,\max}&=\frac{q_g L^2}{8}\\M_{k,\max}&=\frac{P L}{4}+\frac{q_g L^2}{8}" />
+				<Katex aligned
+					as="div"
+					display
+					tex="M_{P,\max}&=\frac{P L}{4}\\M_{g,\max}&=\frac{q_g L^2}{8}\\M_{k,\max}&=\frac{P L}{4}+\frac{q_g L^2}{8}"
+				/>
 			</div>
 		</div>
 
-		<h2 id="sicherheitsansatz" class="mt-8">4) Sicherheitsansatz der Einwirkungen: DIN vs. TGL</h2>
+		<h2 id="sicherheitsansatz" class="mt-8">Teil 4 - Sicherheitsansatz der Einwirkungen: DIN vs. TGL</h2>
 		<div class="eddie">
 			<v-row dense>
 				<v-col cols="12" md="6">
-					<h3>4.1 DIN-Ansatz: gleicher Faktor auf beide Lastanteile</h3>
+					<h3>Schritt 4.1 - DIN-Ansatz: gleicher Faktor auf beide Lastanteile</h3>
 					<div class="kbox">
-						<Katex as="div" aligned display 
-							tex="P_d&=\gamma_{\text{DIN}}P\\q_{g,d}&=\gamma_{\text{DIN}}q_g\\M_{Ed,\text{DIN}}&=\gamma_{\text{DIN}}\left(\frac{P L}{4}+\frac{q_g L^2}{8}\right)" />
+						<Katex aligned
+							as="div"
+							display
+							tex="P_d&=\gamma_{\text{DIN}}P\\q_{g,d}&=\gamma_{\text{DIN}}q_g\\M_{Ed,\text{DIN}}&=\gamma_{\text{DIN}}\left(\frac{P L}{4}+\frac{q_g L^2}{8}\right)"
+						/>
 					</div>
 					<p>
 						Dieser gleichfaktorige Ansatz in der DIN ist heute nicht mehr üblich.
 					</p>
 				</v-col>
 				<v-col cols="12" md="6">
-					<h3>4.2 TGL-Ansatz: Verkehrslast wie DIN, Eigengewicht niedriger</h3>
+					<h3>Schritt 4.2 - TGL-Ansatz: Verkehrslast wie DIN, Eigengewicht niedriger</h3>
 					<div class="kbox">
-						<Katex as="div" aligned display 
-						tex="P_d&=\gamma_Q P\\q_{g,d}&=\gamma_G q_g,\qquad \gamma_G<\gamma_{\text{DIN}}\\M_{Ed,\text{TGL}}&=\gamma_Q\frac{P L}{4}+\gamma_G\frac{q_g L^2}{8}\\" />
+						<Katex aligned
+							as="div"
+							display
+							tex="P_d&=\gamma_Q P\\q_{g,d}&=\gamma_G q_g,\qquad \gamma_G<\gamma_{\text{DIN}}\\M_{Ed,\text{TGL}}&=\gamma_Q\frac{P L}{4}+\gamma_G\frac{q_g L^2}{8}\\"
+						/>
 					</div>
 					<p>
 						Die Idee: Eigengewicht ist meist genauer bekannt als Verkehrslast und kann deshalb geringer faktorisiert werden.
@@ -129,7 +143,7 @@
 				</v-col>
 			</v-row>
 
-			<h3>4.3 Mathematischer Kernausdruck</h3>
+			<h3>Schritt 4.3 - Mathematischer Kernausdruck</h3>
 			<div class="kbox">
 				<Katex as="div" display tex="M_{Ed,\text{DIN}}-M_{Ed,\text{TGL}}=(\gamma_{\text{DIN}}-\gamma_G)\,\frac{q_g L^2}{8}" />
 			</div>
@@ -138,10 +152,14 @@
 			</p>
 		</div>
 
-		<h2 id="nachweis" class="mt-8">5) Querschnittsnachweis über Widerstandsmoment <Katex tex="W" /></h2>
+		<h2 id="nachweis" class="mt-8">Teil 5 - Querschnittsnachweis über Widerstandsmoment <Katex tex="W" /></h2>
 		<div class="eddie">
 			<div class="kbox">
-				<Katex as="div" aligned display tex="\sigma_{Ed}&=\frac{M_{Ed}}{W}\le f_{yd}\\W\ge W_{\text{erf}}&=\frac{M_{Ed}}{f_{yd}}\\f_{yd}&=\frac{f_y}{\gamma_M}" />
+				<Katex aligned
+					as="div"
+					display
+					tex="\sigma_{Ed}&=\frac{M_{Ed}}{W}\le f_{yd}\\W\ge W_{\text{erf}}&=\frac{M_{Ed}}{f_{yd}}\\f_{yd}&=\frac{f_y}{\gamma_M}"
+				/>
 			</div>
 			<p>
 				Die Gegenüberstellung DIN/TGL bleibt konsistent, solange <Katex tex="f_{yd}" /> identisch behandelt wird.
@@ -160,9 +178,9 @@
 				/>
 			</ImageZoomer>
 		</figure>
-		<h2 id="zahlenbeispiel" class="mt-8">6) Zahlenbeispiel</h2>
+		<h2 id="zahlenbeispiel" class="mt-8">Teil 6 - Zahlenbeispiel</h2>
 		<div class="eddie">
-			<h3>6.1 Gewählte Parameter</h3>
+			<h3>Schritt 6.1 - Gewählte Parameter</h3>
 			<ul>
 				<li><Katex :tex="`L=${fmtMath( inputs.Lm, 0 )}\\,\\mathrm{m}`" /></li>
 				<li><Katex :tex="`P=${fmtMath( inputs.PkN, 0 )}\\,\\mathrm{kN}`" /> (Punktlast in Feldmitte)</li>
@@ -188,33 +206,37 @@
 				/>
 			</div>
 
-			<h3>6.2 Eigengewicht aus Geometrie</h3>
+			<h3>Schritt 6.2 - Eigengewicht aus Geometrie</h3>
 			<div class="kbox">
-				<Katex as="div" aligned display tex="A &= 2bt_f + t_w\,(h-2t_f)\\q_g&=\frac{\rho g}{1000}\,A\;[\mathrm{kN/m}]" />
+				<Katex aligned
+					as="div"
+					display
+					tex="A &= 2bt_f + t_w\,(h-2t_f)\\q_g&=\frac{\rho g}{1000}\,A\;[\mathrm{kN/m}]"
+				/>
 			</div>
 
 			<v-row dense>
 				<v-col cols="12" md="6">
-					<h3>6.3 DIN-Entwurf (gleiches <Katex tex="\gamma" />)</h3>
+					<h3>Schritt 6.3 - DIN-Entwurf (gleiches <Katex tex="\gamma" />)</h3>
 					<p>Praktisch gerundet: <Katex :tex="`t_f=${fmtMath( tfDinMm, 0 )}\\,\\mathrm{mm}`" />.</p>
 					<div class="kbox">
 						<Katex
+							aligned
 							as="div"
 							display
-							aligned
 							:tex="texDinDesignBlock"
 						/>
 					</div>
 					<p><strong>{{ isDinOk ? "DIN erfüllt." : "DIN nicht erfüllt." }}</strong></p>
 				</v-col>
 				<v-col cols="12" md="6">
-					<h3>6.4 TGL-Entwurf (Eigengewicht niedriger faktorisiert)</h3>
+					<h3>Schritt 6.4 - TGL-Entwurf (Eigengewicht niedriger faktorisiert)</h3>
 					<p>Praktisch gerundet: <Katex :tex="`t_f=${fmtMath( tfTglMm, 0 )}\\,\\mathrm{mm}`" />.</p>
 					<div class="kbox">
 						<Katex
+							aligned
 							as="div"
 							display
-							aligned
 							:tex="texTglDesignBlock"
 						/>
 					</div>
@@ -222,7 +244,7 @@
 				</v-col>
 			</v-row>
 
-			<h3>6.5 Sichtbares Ergebnis</h3>
+			<h3>Schritt 6.5 - Sichtbares Ergebnis</h3>
 			<ul>
 				<li>DIN benötigt in dieser Konstellation: <Katex :tex="`t_f=${fmtMath( tfDinMm, 0 )}\\,\\mathrm{mm}`" /></li>
 				<li>TGL erlaubt: <Katex :tex="`t_f=${fmtMath( tfTglMm, 0 )}\\,\\mathrm{mm}`" /></li>
@@ -234,16 +256,16 @@
 			</p>
 		</div>
 
-		<h2 id="bewertung" class="mt-8">7) Abschließende Bewertung</h2>
+		<h2 id="bewertung" class="mt-8">Teil 7 - Abschließende Bewertung</h2>
 		<div class="eddie">
-			<h3>7.1 Warum der TGL-Gedanke plausibel wirkt</h3>
+			<h3>Schritt 7.1 - Warum der TGL-Gedanke plausibel wirkt</h3>
 			<p>
 				Eigengewicht ist oft besser bekannt (kleinere Streuung) als Verkehrslast.
 				Daher ist ein kleinerer Zuschlag für <Katex tex="G" /> und ein größerer für
 				<Katex tex="Q" /> aus probabilistischer Sicht nachvollziehbar.
 			</p>
 
-			<h3>7.2 Warum rechnerisch schwächere Bauteile herauskommen</h3>
+			<h3>Schritt 7.2 - Warum rechnerisch schwächere Bauteile herauskommen</h3>
 			<div class="kbox">
 				<Katex as="div" display tex="\Delta M_{Ed}=(\gamma_{\text{DIN}}-\gamma_G)\,\frac{q_g L^2}{8}" />
 			</div>
@@ -252,7 +274,7 @@
 				Damit werden kleinere Profile bzw. dünnere Flansche zulässig. Wie im interaktiven Teil sichtbar, führt das gelegentlich zu einem leichteren Träger. Ingesamt ist der Unterschied aber moderat (hier ca. 10% weniger Eigengewicht).
 			</p>
 
-			<h3>7.3 Sicherheitsphilosophischer Haken</h3>
+			<h3>Schritt 7.3 - Sicherheitsphilosophischer Haken</h3>
 			<p>
 				Schwächer bedeutet nicht automatisch unsicher, solange Last- und Widerstandsseite konsistent kalibriert sind.
 				Wenn jedoch nur der Eigengewichtsfaktor reduziert wird und alles andere gleich bleibt,
@@ -425,9 +447,9 @@
 							:tex="`f_y=${fmtMath( materialBase.fyNmm2, 0 )}\\,\\mathrm{N/mm^2},\\quad \\gamma_M=${fmtMath( materialBase.gammaM, 1 )},\\quad \\rho=${fmtMath( materialBase.rhoSteel, 0 )}\\,\\mathrm{kg/m^3},\\quad g=${fmtMath( materialBase.gravityMs, 2 )}\\,\\mathrm{m/s^2}`"
 						/>
 						<Katex
+							aligned
 							as="div"
 							display
-							aligned
 							:tex="texSectionSummaryBlock"
 						/>
 					</div>
@@ -780,8 +802,12 @@ const texTglDesignBlock = computed( () => texAlignedBlock( [
 const texSectionSummaryBlock = computed( () => texAlignedBlock( [
 	`t_{f,\\text{DIN}}=${fmtMath( tfDinMm.value, 0 )}\\,\\mathrm{mm}`,
 	`t_{f,\\text{TGL}}=${fmtMath( tfTglMm.value, 0 )}\\,\\mathrm{mm}`,
-	`q_{g,\\text{DIN}}=${fmtMath( qgDinKNm.value, 3, true )}\\,\\mathrm{kN/m}`,
-	`q_{g,\\text{TGL}}=${fmtMath( qgTglKNm.value, 3, true )}\\,\\mathrm{kN/m}`,
+	`q_{g,\\text{DIN}}=${fmtMath(
+		qgDinKNm.value, 3, true
+	)}\\,\\mathrm{kN/m}`,
+	`q_{g,\\text{TGL}}=${fmtMath(
+		qgTglKNm.value, 3, true
+	)}\\,\\mathrm{kN/m}`,
 	`\\Delta t_f=${fmtMath( tfStepMm, 0 )}\\,\\mathrm{mm}\\;\\text{(Rundung)}`
 ] ) );
 </script>

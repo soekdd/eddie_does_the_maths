@@ -39,7 +39,7 @@
 
 	<template #descriptionPart>
 
-		<h2 id="ziel">Flächenträgheitsmoment mit dem Satz von Steiner am Beispiel eines Doppelt-T-Träger (I-Profil): </h2>
+		<h2 id="ziel">Teil 1 - Flächenträgheitsmoment mit dem Satz von Steiner am Beispiel eines Doppelt-T-Träger (I-Profil)</h2>
 		<div class="eddie">
 			<p>
 				<b>Ziel:</b> Wir berechnen das <b>zweite Flächenträgheitsmoment</b> eines Doppelt-T-Querschnitts
@@ -50,7 +50,7 @@
 			</p>
 		</div>
 
-		<h3 id="steiner" class="mt-8">1) Der Satz von Steiner: Was er aussagt und wie man ihn nutzt</h3>
+		<h2 id="steiner" class="mt-8">Teil 2 - Der Satz von Steiner: Was er aussagt und wie man ihn nutzt</h2>
 		<div class="eddie">
 			<p>
 				Das Flächenträgheitsmoment misst nicht nur, wie viel Fläche vorhanden ist, sondern vor allem, in
@@ -100,8 +100,11 @@
 			</p>
 			<p>Rechteck-Formeln und Geometrie:</p>
 			<div class="kbox">
-				<Katex as="div" aligned display 
-				tex="I_{x,\text{Rechteck}} &= \frac{b\,h^3}{12}\\A&=b\,h\\h_w &= h - 2t_f" />
+				<Katex aligned
+					as="div"
+					display
+					tex="I_{x,\text{Rechteck}} &= \frac{b\,h^3}{12}\\A&=b\,h\\h_w &= h - 2t_f"
+				/>
 			</div>
 			<div class="kbox">
 				<Katex as="div" display tex="I_x = 2\left(\frac{b_f t_f^3}{12}+b_f t_f\left(\frac{h}{2}-\frac{t_f}{2}\right)^2\right)+\frac{t_w(h-2t_f)^3}{12}" />
@@ -112,7 +115,7 @@
 			</p>
 		</div>
 
-		<h3 id="fallen" class="mt-8">2) Typische Fehlerquellen (Steiner-Fallen)</h3>
+		<h2 id="fallen" class="mt-8">Teil 3 - Typische Fehlerquellen (Steiner-Fallen)</h2>
 		<div class="eddie">
 			<ul>
 				<li>Falsches <Katex inline tex="d" />: Abstand immer zwischen Schwerpunktachsen, nicht zwischen Kanten.</li>
@@ -217,11 +220,11 @@
 				</v-slider>
 			</v-card>
 			<BS_Graph
-				:bf="bf"
+				:bf
 				class="mt-4"
-				:h="h"
-				:tf="tf"
-				:tw="tw"
+				:h
+				:tf
+				:tw
 			/>
 			<v-alert v-if="matchingProfiles.length"
 				class="mt-3"
@@ -262,7 +265,11 @@
 				<li><Katex inline :tex="`t_w=${kFmt(tw,0)}\\,\\text{mm}`" /></li>
 			</ul>
 			<div class="kbox">
-				<Katex as="div" aligned display :tex="texZS + '\\\\' +  texD" />
+				<Katex aligned
+					as="div"
+					display
+					:tex="texZS + '\\\\' +  texD"
+				/>
 			</div>
 		</div>
 
@@ -270,7 +277,11 @@
 		<div class="eddie">
 			<h4>4.1 Flansche (mit Steiner)</h4>
 			<div class="kbox">
-				<Katex as="div" aligned display :tex="texAf+ '\\\\' + texIfs+ '\\\\' + texAfd2+ '\\\\' + texIf+ '\\\\' + texIFlanges" />
+				<Katex aligned
+					as="div"
+					display
+					:tex="texAf+ '\\\\' + texIfs+ '\\\\' + texAfd2+ '\\\\' + texIf+ '\\\\' + texIFlanges"
+				/>
 			</div>
 
 			<h4>4.2 Steg (ohne Steiner)</h4>
@@ -283,15 +294,22 @@
 		<h3 id="ergebnis" class="mt-8">5) Ergebnis</h3>
 		<div class="eddie">
 			<div class="kbox">
-				<Katex aligned as="div" display :tex="texIx+ '\\\\' + texIxCm4" />
+				<Katex aligned
+					as="div"
+					display
+					:tex="texIx+ '\\\\' + texIxCm4"
+				/>
 			</div>
 		</div>
 
 		<h3 id="bonus" class="mt-8">6) Bonus: Widerstandsmoment</h3>
 		<div class="eddie">
 			<div class="kbox">
-				<Katex as="div" aligned display 
-					:tex="'W_x &= \\frac{I_x}{c} = \\frac{I_x}{h/2} \\\\' +  texWx + '\\\\' + texWxCm3 + '\\\\\\sigma_{\max}&=\\frac{M_{\\max}}{W_x}'" />
+				<Katex aligned
+					as="div"
+					display
+					:tex="'W_x &= \\frac{I_x}{c} = \\frac{I_x}{h/2} \\\\' +  texWx + '\\\\' + texWxCm3 + '\\\\\\sigma_{\max}&=\\frac{M_{\\max}}{W_x}'"
+				/>
 			</div>
 		</div>
 	</template>

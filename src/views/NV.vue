@@ -69,10 +69,10 @@
 				</v-expansion-panel>
 			</v-expansion-panels>
 
-			<p class="muted mt-4">
-				Hinweis: Die Faustregeln nutzen Nordhalbkugel-Annahmen. Bei Uhrentricks
+			<EddieComment subtitle="Hinweis">
+				Die Faustregeln nutzen Nordhalbkugel-Annahmen. Bei Uhrentricks
 				im Sommer ggf. eine Stunde korrigieren. Alle Werte sind Näherungen.
-			</p>
+			</EddieComment>
 		</div>
 	</template>
 
@@ -108,6 +108,7 @@ import NV_Azimut from "./NV_Azimut.vue";
 import NV_Bayes from "./NV_Bayes.vue";
 import NV_Schnitt from "./NV_Schnitt.vue";
 import NV_Zeit from "./NV_Zeit.vue";
+import EddieComment from "@/components/EddieComment.vue";
 
 const lessons = [
 	{

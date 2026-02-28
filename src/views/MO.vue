@@ -46,7 +46,7 @@
 	</template>
 
 	<template #descriptionPart>
-		<h2>IMO 1985 – Aufgaben</h2>
+		<h2>Teil 1 - IMO 1985 - Aufgaben</h2>
 		<p class="meta">
 			Nur die Aufgaben (keine Lösungen). Quelle:
 			<a href="https://prase.cz/kalva/imo/imo85.html" rel="noreferrer" target="_blank">
@@ -56,7 +56,7 @@
 
 		<section class="problem">
 			<div class="problem-head">
-				<h3 id="a1">A1</h3>
+				<h3 id="a1">Schritt 1.1 - A1</h3>
 				<RouterLink class="task-link" to="/O1">Zur Aufgabe A1</RouterLink>
 			</div>
 			<p>
@@ -69,7 +69,7 @@
 
 		<section class="problem">
 			<div class="problem-head">
-				<h3 id="a2">A2</h3>
+				<h3 id="a2">Schritt 1.2 - A2</h3>
 				<RouterLink class="task-link" to="/O2">Zur Aufgabe A2</RouterLink>
 			</div>
 			<p>
@@ -95,7 +95,7 @@
 
 		<section class="problem">
 			<div class="problem-head">
-				<h3 id="a3">A3</h3>
+				<h3 id="a3">Schritt 1.3 - A3</h3>
 				<RouterLink class="task-link" to="/O3">Zur Aufgabe A3</RouterLink>
 			</div>
 			<p>
@@ -116,7 +116,7 @@
 
 		<section class="problem">
 			<div class="problem-head">
-				<h3 id="b1">B1</h3>
+				<h3 id="b1">Schritt 1.4 - B1</h3>
 				<RouterLink class="task-link" to="/O4">Zur Aufgabe B1</RouterLink>
 			</div>
 			<p>
@@ -132,7 +132,7 @@
 
 		<section class="problem">
 			<div class="problem-head">
-				<h3 id="b2">B2</h3>
+				<h3 id="b2">Schritt 1.5 - B2</h3>
 				<RouterLink class="task-link" to="/O5">Zur Aufgabe B2</RouterLink>
 			</div>
 			<p>
@@ -151,7 +151,7 @@
 
 		<section class="problem">
 			<div class="problem-head">
-				<h3 id="b3">B3</h3>
+				<h3 id="b3">Schritt 1.6 - B3</h3>
 				<RouterLink class="task-link" to="/O6">Zur Aufgabe B3</RouterLink>
 			</div>
 			<p>

@@ -65,8 +65,11 @@
 			</p>
 
 			<div class="kbox">
-				<Katex as="div" aligned display 
-					tex="\Delta x_j&=\frac{vC}{2c}\cdot\frac{1}{2j-1} \\ D_m=\sum_{j=1}^{m}\Delta x_j&=\frac{vC}{2c}\sum_{j=1}^{m}\frac{1}{2j-1}" />
+				<Katex aligned
+					as="div"
+					display
+					tex="\Delta x_j&=\frac{vC}{2c}\cdot\frac{1}{2j-1} \\ D_m=\sum_{j=1}^{m}\Delta x_j&=\frac{vC}{2c}\sum_{j=1}^{m}\frac{1}{2j-1}"
+				/>
 			</div>
 
 			<p>
@@ -91,7 +94,7 @@
 	</template>
 
 	<template v-if="false" #interactivePart>
-		<h2>Interaktiver Rechner</h2>
+		<h2>Teil 5 - Interaktiver Rechner</h2>
 		<div class="eddie d-flex flex-column ga-3">
 			<v-sheet border class="pa-4" rounded="lg">
 				<v-select
@@ -265,7 +268,7 @@
 	</template>
 
 	<template v-if="false" #calculationPart>
-		<h2>Tabellenansicht</h2>
+		<h2>Teil 6 - Tabellenansicht</h2>
 		<div class="eddie d-flex flex-column ga-3">
 			<template v-if="mode === 'light'">
 				<v-sheet border class="pa-3" rounded="lg">
@@ -320,7 +323,7 @@
 	</template>
 
 	<template #summaryPart>
-		<h2>Grafische Darstellung</h2>
+		<h2>Teil 7 - Grafische Darstellung</h2>
 		<RD_Graph mode="classic" :rows="classicCalc.rows" />
 	</template>
 </AppFrame>

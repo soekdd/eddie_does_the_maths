@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/max-len -->
 <template>
 <AppFrame
 	:sub-chapter="{
@@ -34,7 +35,7 @@
 	</template>
 
 	<template #descriptionPart>
-		<h2 id="poker">Five Card Draw - Aufgabenblock</h2>
+		<h2 id="poker">Teil 1 - Five Card Draw: Aufgabenblock</h2>
 		<div class="eddie">
 			<p>
 				Im <b>Five Card Draw</b> (5 Karten aus einem 52er-Deck, Reihenfolge egal) lassen sich
@@ -59,7 +60,7 @@
 					/>
 				</ImageZoomer>
 			</figure>
-			<h3 id="wahrscheinlichkeiten">Aufgabe 1 - Das klassische Paar: Lohnt sich "3 ziehen"?</h3>
+			<h3 id="wahrscheinlichkeiten">Schritt 1.1 - Aufgabe 1: Das klassische Paar - Lohnt sich "3 ziehen"?</h3>
 			<div class="eddie">
 				<p>
 					<b>Situation:</b> Eddie hält nach dem Deal ein Paar und wirft die anderen drei Karten weg.
@@ -98,7 +99,7 @@
 					/>
 				</ImageZoomer>
 			</figure>
-			<h3>Aufgabe 2 - Zwei Paare: Zieh ich 1 Karte oder bleib ich stehen?</h3>
+			<h3>Schritt 1.2 - Aufgabe 2: Zwei Paare - Zieh ich 1 Karte oder bleib ich stehen?</h3>
 			<div class="eddie">
 				<p>
 					<b>Situation:</b> Eddie hat zwei Paare plus Kicker,
@@ -128,7 +129,7 @@
 					/>
 				</ImageZoomer>
 			</figure>
-			<h3>Aufgabe 3 - Vier Karten zum Flush: Wie gut ist der 1-Karten-Draw?</h3>
+			<h3>Schritt 1.3 - Aufgabe 3: Vier Karten zum Flush - Wie gut ist der 1-Karten-Draw?</h3>
 			<div class="eddie">
 				<p>
 					<b>Situation:</b> Eddie hat 4 Karten einer Farbe und zieht <b>1 Karte</b>.
@@ -155,7 +156,7 @@
 				</ImageZoomer>
 			</figure>
 			
-			<h3>Aufgabe 4 - Vier Karten zur Strasse: Open-Ended vs. Gutshot</h3>
+			<h3>Schritt 1.4 - Aufgabe 4: Vier Karten zur Strasse - Open-Ended vs. Gutshot</h3>
 			<div class="eddie">
 				<p>
 					<b>Situation:</b> Eddie hat 4 Karten zur Strasse und zieht <b>1 Karte</b>.
@@ -167,9 +168,9 @@
 				<div class="kbox">
 					<p class="mono">Auch hier gilt beim 1-Karten-Draw: <Katex inline tex="52-5=47" /> ziehbare Karten.</p>
 					<Katex
+						aligned
 						as="div"
 						display
-						aligned
 						tex="P(\text{Straight, open-ended}) &= \frac{8}{47}\approx 17{,}02\% \\ P(\text{Straight, gutshot}) &= \frac{4}{47}\approx 8{,}51\%"
 					/>
 				</div>
@@ -182,7 +183,7 @@
 					<img loading="lazy" :src="eddieImg" />
 				</ImageZoomer>
 			</figure>
-			<h3 id="bayes">Aufgabe 5 - Bayes aus Ziehzahl: Gegner zieht 1 Karte</h3>
+			<h3 id="bayes">Schritt 1.5 - Aufgabe 5: Bayes aus Ziehzahl - Gegner zieht 1 Karte</h3>
 			<div class="eddie">
 				<p>
 					<b>Modellannahme (vereinfacht):</b>
@@ -198,9 +199,9 @@
 				</p>
 				<div class="kbox">
 					<Katex
+						aligned
 						as="div"
 						display
-						aligned
 						tex="P(\text{Two Pair}) &= \frac{123{.}552}{2{.}598{.}960}\approx 4{,}754\% \\ N(\text{4-Flush}) &= 4\cdot \binom{13}{4}\cdot 39=111{.}540 \\ P(\text{4-Flush}) &= \frac{111{.}540}{2{.}598{.}960}\approx 4{,}292\% \\ P(\text{Two Pair}\mid 1) &\approx 0{,}5255"
 					/>
 				</div>
@@ -209,7 +210,7 @@
 		</section>
 
 		<section class="task">
-			<h3>Aufgabe 6 - Bluff-Mathe: Wie oft muss er funktionieren?</h3>
+			<h3>Schritt 1.6 - Aufgabe 6: Bluff-Mathe - Wie oft muss er funktionieren?</h3>
 			<div class="eddie">
 				<p>
 					<b>Situation:</b> Nach dem Draw ist der Pot <Katex inline tex="P" />.
@@ -224,7 +225,7 @@
 		</section>
 
 		<section class="task">
-			<h3 id="ev">Aufgabe 7 - EV statt Bauchgefühl: Welche Linie ist besser?</h3>
+			<h3 id="ev">Schritt 1.7 - Aufgabe 7: EV statt Bauchgefühl - Welche Linie ist besser?</h3>
 			<div class="eddie">
 				<p>
 					<b>Situation:</b> Eddie hat ein Paar und kann wählen:
@@ -250,6 +251,21 @@
 				</ol>
 			</div>
 		</section>
+
+		<EddieComment class="mt-4" subtitle="Real Talk vom Pokertisch">
+			<p>
+				Mathematik ist beim Poker Pflicht, aber nie die ganze Geschichte.
+				Die Zahlen zeigen dir gute Linien, doch gespielt wird gegen Menschen.
+			</p>
+			<p>
+				Psychologie, Schauspieltalent, Intuition und Beobachtungsgabe zählen genauso:
+				Wer wirkt plötzlich unsicher? Wer overacted Stärke? Wer verändert sein Timing?
+			</p>
+			<p class="muted">
+				Kurz: Rechne sauber, aber lies immer auch die Person auf der anderen Seite.
+			</p>
+		</EddieComment>
+
 	</template>
 	<template #interactivePart>
 		<PG_Game/>
@@ -266,6 +282,7 @@
 <script setup>
 import titleImg from "@/images/PG.webp";
 import eddieImg from "@/images/PG_Eddie.webp";
+import EddieComment from "@/components/EddieComment.vue";
 import PG_Game from "./PG_Game.vue";
 import PokerCard from "./PG_Card.vue";
 import PGHand from "./PG_Hand.vue";

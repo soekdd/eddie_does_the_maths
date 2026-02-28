@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/max-len -->
 <template>
 <AppFrame
 	:sub-chapter="{
@@ -41,26 +42,26 @@
 	</template>
 
 	<template #descriptionPart>
-		<h2 id="diophantos-raetsel">Das Grabplatten-Rätsel des Diophantos</h2>
+		<h2 id="diophantos-raetsel">Teil 1 - Das Grabplatten-Rätsel des Diophantos</h2>
 		<div class="eddie">
 			<p>Die Originalfassung des Epitaphs:</p>
 			<div class="cContainer">
-			<blockquote class="storyQuote">
-				<div class="plateHeader">
-					<div class="plateLead">Diophantos</div>
-					<div class="plateLeadSub">Epitaph</div>
-				</div>
-				Hier das Grabmal deckt Diophantos, ein Wunder zu schauen:
-				<br> Durch des Entschlafenen Kunst lehrt dich sein Alter der Stein.
-				<br> Knabe zu bleiben verlieh ein Sechstel des Lebens ein Gott ihm;
-				<br> Fügend das Zwölftel hinzu, ließ er ihm sprossen die Wang.
-				<br> Steckte ihm drauf auch nach dem Siebtel die Fackel der Hochzeit,
-				<br> Und fünf Jahre nachher teilt' er ein Söhnlein ihm zu.
-				<br> Weh! unglückliches Kind, so geliebt! Halb hatt' es des Vaters
-				<br> Alter erreicht, da nahm's Hades, der schaurige, allzufrüh.
-				<br> Noch vier Jahre den Schmerz durch Kunde der Zahlen besänftigend,
-				<br> Langte am Ziele des Seins endlich er selber auch an.
-			</blockquote>
+				<blockquote class="storyQuote">
+					<div class="plateHeader">
+						<div class="plateLead">Diophantos</div>
+						<div class="plateLeadSub">Epitaph</div>
+					</div>
+					Hier das Grabmal deckt Diophantos, ein Wunder zu schauen:
+					<br> Durch des Entschlafenen Kunst lehrt dich sein Alter der Stein.
+					<br> Knabe zu bleiben verlieh ein Sechstel des Lebens ein Gott ihm;
+					<br> Fügend das Zwölftel hinzu, ließ er ihm sprossen die Wang.
+					<br> Steckte ihm drauf auch nach dem Siebtel die Fackel der Hochzeit,
+					<br> Und fünf Jahre nachher teilt' er ein Söhnlein ihm zu.
+					<br> Weh! unglückliches Kind, so geliebt! Halb hatt' es des Vaters
+					<br> Alter erreicht, da nahm's Hades, der schaurige, allzufrüh.
+					<br> Noch vier Jahre den Schmerz durch Kunde der Zahlen besänftigend,
+					<br> Langte am Ziele des Seins endlich er selber auch an.
+				</blockquote>
 			</div>
 			<p>Nimmt man den Pathos heraus und behält nur die Algebra, steht da:</p>
 			<ul>
@@ -79,7 +80,7 @@
 			</ul>
 		</div>
 
-		<h2 id="in-formeln" class="mt-8">1) In Formeln überführen</h2>
+		<h2 id="in-formeln" class="mt-8">Teil 2 - In Formeln überführen</h2>
 		<div class="eddie">
 			<p>
 				<Katex tex="x" /> als gesamte Lebensdauer von Diophantos
@@ -90,7 +91,7 @@
 			</div>
 		</div>
 
-		<h2 id="loesen" class="mt-8">2) Lösen</h2>
+		<h2 id="loesen" class="mt-8">Teil 3 - Lösen</h2>
 		<div class="eddie">
 			<p>
 				Zuerst die Brüche zusammenfassen. Ein gemeinsamer Nenner ist  <Katex tex="84" />
@@ -105,16 +106,16 @@
 			</div>
 			<div class="kbox">
 				<Katex
+					aligned
 					as="div"
 					display
-					aligned
 					tex="\left(\frac{14+7+12+42}{84}\right)x+9 &= x \\ \frac{75}{84}x+9 &= x \\ x-\frac{75}{84}x &= 9 \\ \frac9{84}x &= 9 \\ x &= 9\cdot\frac{84}{9}=84"
 				/>
 			</div>
 			<p><b>Diophantos wurde also 84 Jahre alt.</b></p>
 		</div>
 
-		<h2 id="stationen" class="mt-8">3) Bonus: Die Stationen als konkrete Alterszahlen</h2>
+		<h2 id="stationen" class="mt-8">Teil 4 - Bonus: Die Stationen als konkrete Alterszahlen</h2>
 		<div class="eddie">
 			<ul>
 				<li>
@@ -147,21 +148,21 @@
 			</ul>
 		</div>
 
-		<h2 id="eddies-rechnung" class="mt-8">Meine eigene „Meilenstein-Rechnung“</h2>
+		<h2 id="eddies-rechnung" class="mt-8">Teil 5 - Meine eigene „Meilenstein-Rechnung“</h2>
 		<div class="eddie">
 			<div class="cContainer">
-			<blockquote class="storyQuote">
-				<div class="plateHeader">
-					<div class="plateLead">Eddie</div>
-					<div class="plateLeadSub">Meilenstein-Rechnung</div>
-				</div>
-				Ein Drittel Kleinkind,<br>
-				vier Neuntel bin ich Schulkind,<br>
-				ein Sechstel bin ich Spezi der Zahlen,<br>
-				davon zwei Drittel als Edmilla getarnt. <br>
-				Zwei Monde bin ich frei.<br>
-				Den Rest auf der Flucht.
-			</blockquote>
+				<blockquote class="storyQuote">
+					<div class="plateHeader">
+						<div class="plateLead">Eddie</div>
+						<div class="plateLeadSub">Meilenstein-Rechnung</div>
+					</div>
+					Ein Drittel Kleinkind,<br>
+					vier Neuntel bin ich Schulkind,<br>
+					ein Sechstel bin ich Spezi der Zahlen,<br>
+					davon zwei Drittel als Edmilla getarnt. <br>
+					Zwei Monde bin ich frei.<br>
+					Den Rest auf der Flucht.
+				</blockquote>
 			</div>
 			<p>
 				Ich interpretiere das als Aufteilung meiner Lebenszeit
@@ -169,9 +170,9 @@
 			</p>
 			<div class="kbox">
 				<Katex
+					aligned
 					as="div"
 					display
-					aligned
 					tex="T_{\text{klein}} &= \frac13T \\ T_{\text{schule}} &= \frac49T \\ T_{\text{zahlen}} &= \frac16T \\ T_{\text{Edmilla}} &= \frac23\cdot T_{\text{zahlen}}=\frac23\cdot\frac16T=\frac19T \\ T_{\text{frei}} &= \frac{2}{12}=\frac16\;\text{Jahr}"
 				/>
 			</div>
@@ -182,9 +183,9 @@
 			<p>Den Rest auf der Flucht rechne ich dann so:</p>
 			<div class="kbox">
 				<Katex
+					aligned
 					as="div"
 					display
-					aligned
 					tex="T_{\text{Flucht}} &= T-\left(\frac13T+\frac49T+\frac16T+\frac16\right) \\ \frac13T+\frac49T+\frac16T &= \frac{6}{18}T+\frac{8}{18}T+\frac{3}{18}T=\frac{17}{18}T \\ T_{\text{Flucht}} &= T-\left(\frac{17}{18}T+\frac16\right)=\frac1{18}T-\frac16"
 				/>
 			</div>
@@ -196,14 +197,14 @@
 			</p>
 		</div>
 
-		<h2 id="mit-t18" class="mt-8">Lösung</h2>
+		<h2 id="mit-t18" class="mt-8">Teil 6 - Lösung</h2>
 		<div class="eddie">
 			<p>Wenn ich <Katex tex="T=18" /> setze, folgt eine Fluchtzeit von:</p>
 			<div class="kbox">
 				<Katex
+					aligned
 					as="div"
 					display
-					aligned
 					tex="T_{\text{Flucht}} &= \frac1{18}\cdot 18-\frac16 \\ &= 1-\frac16=\frac56 \\ &= \frac56\approx 0{,}83\text{ Jahre}=10\text{ Monate}"
 				/>
 			</div>

@@ -33,7 +33,7 @@
 	</template>
 
 	<template #descriptionPart>
-		<h2>Kartenspiel mit Ada</h2>
+		<h2>Teil 1 - Kartenspiel mit Ada</h2>
 		<div class="eddie">
 			<p>
 				Heute rechne ich wie Ada. Ada wollte mit Hilfe von Charles Babbages Rechenmaschine
@@ -41,7 +41,7 @@
 			</p>
 		</div>
 
-		<h2 id="analytical-engine">Teil 1 — Was ist Adas "Computer"?</h2>
+		<h2 id="analytical-engine">Teil 2 - Was ist Adas "Computer"?</h2>
 		<div class="eddie">
 			<p>
 				Adas Maschine heisst <b>Analytical Engine</b>. Sie wurde historisch nie vollständig gebaut,
@@ -66,7 +66,7 @@
 			</p>
 		</div>
 
-		<h2 id="bernoulli-zahlen">Teil 2 — Was sind Bernoulli-Zahlen?</h2>
+		<h2 id="bernoulli-zahlen">Teil 3 - Was sind Bernoulli-Zahlen?</h2>
 		<div class="eddie">
 			<p>
 				Bernoulli-Zahlen <Katex inline tex="B_0,B_1,B_2,\dots" /> sind eine spezielle Zahlenfolge,
@@ -110,15 +110,15 @@
 
 			<div class="kbox">
 				<Katex
-					as="div"
 					aligned
+					as="div"
 					display
 					tex="A_0&=-\frac{7}{18},\;A_1=4,\;A_3=14,\;A_5=\frac{28}{3} \\ B_7&=-\Bigl(-\frac{7}{18}+4\!\left(-\frac12\right)+14\!\left(\frac16\right)+\frac{28}{3}\!\left(-\frac1{30}\right)\Bigr)=\frac{11}{30}"
 				/>
 			</div>
 		</div>
 
-		<h2>Teil 3 — Ich "programmiere" Ada: B0, B1, B2</h2>
+		<h2>Teil 4 - Ich "programmiere" Ada: B0, B1, B2</h2>
 		<div class="eddie">
 			<h3>Schritt 0 - Startwert</h3>
 			<p>
@@ -129,7 +129,11 @@
 			<h3>Schritt 1 - B1</h3>
 			<p>Für <Katex inline tex="m=1" /> gilt:</p>
 			<div class="kbox">
-				<Katex as="div" aligned display tex="B_0 + 2B_1 &= 0 \\ B_1 &= -\frac{B_0}{2} = -\frac12" />
+				<Katex aligned
+					as="div"
+					display
+					tex="B_0 + 2B_1 &= 0 \\ B_1 &= -\frac{B_0}{2} = -\frac12"
+				/>
 			</div>
 			<p>
 				Im Store steht danach: <Katex inline tex="V[1]=B_1=-\frac12" />.
@@ -138,14 +142,18 @@
 			<h3>Schritt 2 - B2</h3>
 			<p>Für <Katex inline tex="m=2" />:</p>
 			<div class="kbox">
-				<Katex as="div" aligned display tex="B_0 + 3B_1 + 3B_2 &= 0\\3B_2 &= -B_0 - 3B_1\\B_2&=\frac{-B_0-3B_1}{3}=\frac16" />
+				<Katex aligned
+					as="div"
+					display
+					tex="B_0 + 3B_1 + 3B_2 &= 0\\3B_2 &= -B_0 - 3B_1\\B_2&=\frac{-B_0-3B_1}{3}=\frac16"
+				/>
 			</div>
 			<p>
 				Im Store steht danach: <Katex inline tex="V[2]=B_2=\frac16" />.
 			</p>
 		</div>
 
-		<h2>Historischer Druckfehler: der erste Bug?</h2>
+		<h2>Teil 5 - Historischer Druckfehler: der erste Bug?</h2>
 		<div class="eddie">
 			<p>
 				In Adas gedruckter <i>Note G</i> gibt es eine bekannte vertauschte Division.
@@ -161,7 +169,7 @@
 			</div>
 		</div>
 
-		<h2>Warum das mehr ist als Zahlenspielerei</h2>
+		<h2>Teil 6 - Warum das mehr ist als Zahlenspielerei</h2>
 		<div class="eddie">
 			<p>
 				Bernoulli-Zahlen stecken in Summenformeln wie
@@ -173,7 +181,7 @@
 			</p>
 		</div>
 
-		<h2>Noch mal in superkurz</h2>
+		<h2>Teil 7 - Noch mal in superkurz</h2>
 		<div class="eddie">
 			<ul>
 				<li><b>Store:</b> nummerierte Fächer <Katex inline tex="V[i]" /></li>
@@ -187,7 +195,7 @@
 			</ul>
 		</div>
 
-		<h2 id="gcd" class="mt-2">Teil 4 — Eddie kürzt Brüche mit Ada</h2>
+		<h2 id="gcd" class="mt-2">Teil 8 - Eddie kürzt Brüche mit Ada</h2>
 		<div class="eddie">
 			<p>
 				Brüche kürzen geht über den grössten gemeinsamen Teiler:
@@ -201,7 +209,7 @@
 			</div>
 		</div>
 
-		<h2>Algorithmus in Worten</h2>
+		<h2>Teil 9 - Algorithmus in Worten</h2>
 		<div class="eddie">
 			<ol>
 				<li>Nimm zwei Zahlen <Katex inline tex="a" /> und <Katex inline tex="b" />.</li>
@@ -217,36 +225,36 @@
 			</ol>
 		</div>
 
-		<h2>Jetzt in Karten: gcd(48,18)</h2>
+		<h2>Teil 10 - Jetzt in Karten: gcd(48,18)</h2>
 		<div class="eddie">
-			<h3>Start</h3>
+			<h3>Schritt 10.1 - Start</h3>
 			<p>
 				Zahlkarte <b>48</b> in <b>V[a]</b>, Zahlkarte <b>18</b> in <b>V[b]</b>.
 			</p>
 
-			<h3>Schleife 1</h3>
+			<h3>Schritt 10.2 - Schleife 1</h3>
 			<div class="kbox">
 				<Katex as="div" display tex="48 \div 18 \Rightarrow r=12,\; a:=18,\; b:=12" />
 			</div>
 
-			<h3>Schleife 2</h3>
+			<h3>Schritt 10.3 - Schleife 2</h3>
 			<div class="kbox">
 				<Katex as="div" display tex="18 \div 12 \Rightarrow r=6,\; a:=12,\; b:=6" />
 			</div>
 
-			<h3>Schleife 3</h3>
+			<h3>Schritt 10.4 - Schleife 3</h3>
 			<div class="kbox">
 				<Katex as="div" display tex="12 \div 6 \Rightarrow r=0,\; a:=6,\; b:=0" />
 			</div>
 
-			<h3>Ende</h3>
+			<h3>Schritt 10.5 - Ende</h3>
 			<p>
 				Da <Katex inline tex="b=0" />, gilt:
 				<Katex inline tex="\gcd(48,18)=6" />.
 			</p>
 		</div>
 
-		<h2>Was wir gelernt haben</h2>
+		<h2>Teil 11 - Was wir gelernt haben</h2>
 		<div class="eddie">
 			<ul>
 				<li>Lochkarten können Schleifen abbilden.</li>

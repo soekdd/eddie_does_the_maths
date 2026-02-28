@@ -153,17 +153,12 @@
 				Lösungen.
 			</p>
 
-			<v-expansion-panels class="hintPanel" variant="accordion">
-				<v-expansion-panel>
-					<v-expansion-panel-title>
-						Eddie-Flüstermodus: Was heißt „diophantisch“?
-					</v-expansion-panel-title>
-					<v-expansion-panel-text eager>
-						Heißt im Kern: „Wir spielen das Ganze im Reich der ganzen Zahlen.“ Benannt nach Diophantos.
-						Ja, die Alten hatten auch schon Spaß daran, sich das Leben schwer zu machen.
-					</v-expansion-panel-text>
-				</v-expansion-panel>
-			</v-expansion-panels>
+			<EddieComment subtitle="Was heißt „diophantisch“?">
+				<p>
+					Heißt im Kern: „Wir spielen das Ganze im Reich der ganzen Zahlen.“ Benannt nach Diophantos.
+					Ja, die Alten hatten auch schon Spaß daran, sich das Leben schwer zu machen.
+				</p>
+			</EddieComment>
 		</div>
 	</template>
 
@@ -412,6 +407,7 @@ import {
 	computed, reactive, ref, watch
 } from "vue";
 import DG_Graph from "./DG_Graph.vue";
+import EddieComment from "@/components/EddieComment.vue";
 import ImageZoomer from "@/components/ImageZoomer.vue";
 import Katex from "@/components/Katex.vue";
 import {

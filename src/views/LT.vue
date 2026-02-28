@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/max-len -->
 <template>
 <AppFrame
 	:sub-chapter="{
@@ -87,9 +88,9 @@
 	</template>
 
 	<template #descriptionPart>
-		<h3>Differentialgleichungen - Klassischer Lösungsweg vs. Laplace-Transformation</h3>
+		<h2>Teil 1 - Differentialgleichungen - Klassischer Lösungsweg vs. Laplace-Transformation</h2>
 
-		<h2 id="warum-laplace" class="mt-8">Teil 1. Warum funktioniert Laplace in der Elektrotechnik (fast) immer?</h2>
+		<h2 id="warum-laplace" class="mt-8">Teil 2 - Warum funktioniert Laplace in der Elektrotechnik (fast) immer?</h2>
 		<div class="eddie">
 			<p>
 				In der Elektrotechnik treten fast ausschließlich
@@ -150,7 +151,7 @@
 			<p>Dort helfen meist nur numerische Verfahren.</p>
 		</div>
 
-		<h2 id="vorgehen" class="mt-8">Teil 2. Vorgehen bei der Laplace-Methode</h2>
+		<h2 id="vorgehen" class="mt-8">Teil 3 - Vorgehen bei der Laplace-Methode</h2>
 		<div class="eddie">
 			<p>Gegeben eine Anfangswertaufgabe:</p>
 			<ol>
@@ -173,7 +174,7 @@
 			</ol>
 		</div>
 
-		<h2 id="beispielrechnung" class="mt-8">4) Beispielrechnung</h2>
+		<h2 id="beispielrechnung" class="mt-8">Teil 4 - Beispielrechnung</h2>
 		<div class="eddie">
 			<p>Gegeben:</p>
 			<div class="kbox">
@@ -191,9 +192,9 @@
 					<h4>Homogene Gleichung</h4>
 					<div class="kbox">
 						<Katex
+							aligned
 							as="div"
 							display
-							aligned
 							tex="y'_h + 2y_h &= 0 \\ y_h &= Ce^{-2t}"
 						/>
 					</div>
@@ -202,9 +203,9 @@
 					<p>Da rechte Seite konstant:</p>
 					<div class="kbox">
 						<Katex
+							aligned
 							as="div"
 							display
-							aligned
 							tex="y_p &= A \\ 2A &= 4 \\ A &= 2"
 						/>
 					</div>
@@ -212,9 +213,9 @@
 					<h4>Gesamtlösung</h4>
 					<div class="kbox">
 						<Katex
+							aligned
 							as="div"
 							display
-							aligned
 							tex="y(t) &= Ce^{-2t} + 2 \\ 1 &= C + 2 \\ C &= -1"
 						/>
 					</div>
@@ -236,9 +237,9 @@
 					<p>Laplace-Transformation:</p>
 					<div class="kbox">
 						<Katex
+							aligned
 							as="div"
 							display
-							aligned
 							tex="sY(s) - y(0) + 2Y(s) &= \frac{4}{s} \\ sY(s) - 1 + 2Y(s) &= \frac{4}{s} \\ (s+2)Y(s) &= \frac{4}{s} + 1 \\ Y(s) &= \frac{4}{s(s+2)} + \frac{1}{s+2}"
 						/>
 					</div>
@@ -246,9 +247,9 @@
 					<h4>Partialbruchzerlegung</h4>
 					<div class="kbox">
 						<Katex
+							aligned
 							as="div"
 							display
-							aligned
 							tex="\frac{4}{s(s+2)} &= \frac{2}{s} - \frac{2}{s+2} \\ Y(s) &= \frac{2}{s} - \frac{1}{s+2}"
 						/>
 					</div>
@@ -261,7 +262,7 @@
 			</div>
 		</div>
 
-		<h2 id="fazit" class="mt-8">Fazit</h2>
+		<h2 id="fazit" class="mt-8">Teil 5 - Fazit</h2>
 		<div class="eddie">
 			<p>Beide Wege führen zur gleichen Lösung.</p>
 

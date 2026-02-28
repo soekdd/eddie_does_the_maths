@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/max-len -->
 <template>
 <AppFrame
 	:sub-chapter="{
@@ -37,9 +38,9 @@
 
 	<template #descriptionPart>
 
-		<h2>Eddie und die optimale Querung - Matheaufgabe mit klarem Optimum</h2>
+		<h2>Teil 1 - Eddie und die optimale Querung - Matheaufgabe mit klarem Optimum</h2>
 
-		<h3 id="setting-geometrie" class="mt-8">Setting und Geometrie</h3>
+		<h2 id="setting-geometrie" class="mt-8">Teil 2 - Setting und Geometrie</h2>
 		<div class="eddie">
 			<p>Der überwachte Hof ist rechteckig:</p>
 			<ul>
@@ -71,7 +72,7 @@
 			</p>
 		</div>
 
-		<h3 id="risiko-modell" class="mt-8">Risiko-Modell</h3>
+		<h2 id="risiko-modell" class="mt-8">Teil 3 - Risiko-Modell</h2>
 		<div class="eddie">
 			<ul>
 				<li>Im Schatten: 1 Risikopunkt pro Meter</li>
@@ -92,7 +93,7 @@
 			</p>
 		</div>
 
-		<h3 id="aufgabe" class="mt-8">Aufgabe</h3>
+		<h2 id="aufgabe" class="mt-8">Teil 4 - Aufgabe</h2>
 		<div class="eddie">
 			<p>
 				Finde den Wert <Katex inline tex="x" />, für den Eddie die Querung beginnt,
@@ -100,9 +101,9 @@
 			</p>
 		</div>
 
-		<h3 id="loesung" class="mt-8">Lösung</h3>
+		<h2 id="loesung" class="mt-8">Teil 5 - Lösung</h2>
 		<div class="eddie">
-			<h4>1) Gesamtrisiko als Funktion</h4>
+			<h3>Schritt 5.1 - Gesamtrisiko als Funktion</h3>
 			<p>Zunächst rein symbolisch mit <Katex inline tex="L,W,a,b" />.</p>
 			<p>Schatten-Strecke: <Katex inline tex="x" /></p>
 			<p>
@@ -116,12 +117,12 @@
 				<Katex as="div" display tex="R(x)=a\,x+b\sqrt{\left(\frac{L}{2}-x\right)^2+W^2}" />
 			</div>
 
-			<h4>2) Ableiten und Nullsetzen</h4>
+			<h3>Schritt 5.2 - Ableiten und Nullsetzen</h3>
 			<div class="kbox">
 				<Katex
+					aligned
 					as="div"
 					display
-					aligned
 					tex="R'(x) &= a+b\cdot\frac{x-\frac{L}{2}}{\sqrt{\left(\frac{L}{2}-x\right)^2+W^2}} \\ R'(x) &= 0 \\ a &= b\cdot\frac{\frac{L}{2}-x}{\sqrt{\left(\frac{L}{2}-x\right)^2+W^2}}"
 				/>
 			</div>
@@ -130,37 +131,37 @@
 				<Katex as="div" display tex="a=b\cdot\frac{u}{\sqrt{u^2+W^2}}" />
 			</div>
 
-			<h4>3) Quadrieren - Polynom 2. Ordnung</h4>
+			<h3>Schritt 5.3 - Quadrieren - Polynom 2. Ordnung</h3>
 			<div class="kbox">
 				<Katex
+					aligned
 					as="div"
 					display
-					aligned
 					tex="a^2(u^2+W^2) &= b^2u^2 \\ a^2W^2 &= (b^2-a^2)u^2 \\ u^2 &= \frac{a^2W^2}{b^2-a^2}"
 				/>
 			</div>
 			<p>Zurück zu <Katex inline tex="x" />:</p>
 			<div class="kbox">
 				<Katex
+					aligned
 					as="div"
 					display
-					aligned
 					tex="\left(\frac{L}{2}-x\right)^2 &= \frac{a^2W^2}{b^2-a^2} \\ x^2-Lx+\left(\frac{L^2}{4}-\frac{a^2W^2}{b^2-a^2}\right) &= 0 \\ x^* &= \frac{L}{2}-\frac{aW}{\sqrt{b^2-a^2}} \\ \text{mit }r=\frac{b}{a}: \quad x^* &= \frac{L}{2}-\frac{W}{\sqrt{r^2-1}}"
 				/>
 			</div>
 
-			<h4>4) Jetzt mir konkreten Werten</h4>
+			<h3>Schritt 5.4 - Jetzt mit konkreten Werten</h3>
 			<p>Jetzt mit <Katex inline tex="L=70,\;W=30,\;a=1,\;b=3\;(r=3)" />:</p>
 			<div class="kbox">
 				<Katex
+					aligned
 					as="div"
 					display
-					aligned
 					tex="x^* &= \frac{L}{2}-\frac{W}{\sqrt{r^2-1}}=35-\frac{30}{\sqrt{9-1}}=35-\frac{15\sqrt2}{2}\approx 24{,}39\,\text{m} \\ u^* &= \frac{L}{2}-x^*=35-\left(35-\frac{15\sqrt2}{2}\right)=\frac{15\sqrt2}{2}\approx 10{,}61\,\text{m} \\ PB^* &= \sqrt{\frac{225}{2}+900}=\sqrt{\frac{2025}{2}}=\frac{45\sqrt2}{2}\approx 31{,}82\,\text{m}"
 				/>
 			</div>
 
-			<h4 id="interpretation">5) Interpretation (für die Szene)</h4>
+			<h3 id="interpretation">Schritt 5.5 - Interpretation (für die Szene)</h3>
 			<p>
 				Eddie schleicht rund <Katex inline tex="24{,}39\,\text{m}" /> entlang der Containerkante
 				und sprintet dann die letzte Diagonale.

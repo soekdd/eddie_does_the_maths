@@ -31,9 +31,8 @@
 	</template>
 
 	<template #descriptionPart>
-		<h2 id="geometrie">IMO 1985 - Aufgabe A1 (Eddie rechnet)</h2>
 		<div class="eddie">
-			<h3>Teil 1 - Aufgabenstellung</h3>
+			<h2>Teil 1 - Aufgabenstellung</h2>
 			<p>
 				Wir haben ein <b>zyklisches Viereck</b> <Katex tex="ABCD" />. Das bedeutet:
 				Die Punkte <Katex tex="A,B,C,D" /> liegen auf einem gemeinsamen Kreis (Umkreis).
@@ -267,9 +266,7 @@
 			</div>
 		</div>
 
-		<h2>Mini-Eddie-Kommentar</h2>
-		<div class="eddie">
-			<p>Das sieht erst nach Magie aus, ist aber eigentlich nur:</p>
+		<EddieComment subtitle="Das sieht erst nach Magie aus, ist aber eigentlich nur:">
 			<ol>
 				<li>Tangenten geben Streckengleichheiten (<Katex tex="CN=CM,\ DL=DM" />).</li>
 				<li>Zyklisch liefert feste Winkelbeziehungen (Gegenwinkel ergänzen sich).</li>
@@ -279,7 +276,7 @@
 				</li>
 				<li>Dann ist es nur noch Buchhaltung.</li>
 			</ol>
-		</div>
+		</EddieComment>
 	</template>
 
 	<template #interactivePart>

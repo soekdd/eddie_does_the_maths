@@ -5,7 +5,7 @@
 		'aufgabenstellung': 'Aufgabenstellung',
 		'kernidee': 'Kernidee',
 		'beweisidee': 'Beweisidee',
-		'einordnung': 'Einordnung'
+		'eddieComment': 'Einordnung'
 	}"
 	title="Eddie rechnet: IMO 1985 Aufgabe A3"
 >
@@ -246,9 +246,7 @@
 				<Katex as="div" display tex="o\!\left(\sum_{j=1}^n Q_{i_j}\right)\ge o(Q_{i_1})." />
 			</div>
 		</div>
-
-		<h2 id="einordnung" class="mt-8">Teil 4 — Was wurde „schwer“ gemacht und was nicht?</h2>
-		<div class="eddie">
+		<EddieComment subtitle="Was wurde „schwer“ gemacht und was nicht?">
 			<p>
 				Die Schwierigkeit steckt hier nicht in einem Spezialtheorem, sondern in zwei gut erklärbaren Ideen:
 			</p>
@@ -261,7 +259,7 @@
 				</li>
 			</ol>
 			<p>Alles andere sind Induktion und direkte Paritäts-Logik.</p>
-		</div>
+		</EddieComment>
 	</template>
 
 	<template #interactivePart>

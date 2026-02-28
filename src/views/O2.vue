@@ -187,14 +187,13 @@
 			</div>
 		</div>
 
-		<h2 class="mt-8">Teil 4 — Kurz gesagt</h2>
-		<div class="eddie">
-			<ul>
+		<EddieComment subtitle="Kurz gesagt">
+			<ol>
 				<li>Teilerfremd (<Katex tex="\gcd(n,k)=1" />) sorgt dafür, dass die <Katex tex="k" />-Sprünge alle Zahlen besuchen.</li>
 				<li>Die beiden Regeln sorgen dafür, dass bei jedem Sprung die Farbe gleich bleibt (direkt oder über den Spiegel).</li>
 				<li>Wenn alle auf einer Route miteinander verbunden sind, kann es am Ende nur eine Farbe geben.</li>
-			</ul>
-		</div>
+			</ol>
+		</EddieComment>
 	</template>
 
 	<template #interactivePart>

@@ -249,10 +249,13 @@
 			<div class="kbox">
 				<Katex as="div" display tex="6\cdot24\cdot54\cdot216=36^4." />
 			</div>
-			<p>
-				Das Beispiel zeigt das Prinzip. Der IMO-Beweis oben funktioniert jedoch rein mit den
-				zwei Schubfach-Schritten und braucht kein geschicktes Ausprobieren.
-			</p>
+			<EddieComment subtitle="Mini-Eddie-Kommentar">
+				<p>
+					Nettes Warm-up, oder? Das Beispiel zeigt die Idee zum Anfassen,
+					aber der eigentliche IMO-Beweis läuft oben ganz sauber über die
+					zwei Schubfach-Schritte - ohne Ratespiel und ohne Glückstreffer.
+				</p>
+			</EddieComment>
 		</div>
 	</template>
 
@@ -370,11 +373,18 @@
 			</v-sheet>
 		</div>
 	</template>
+	<template #footer>
+		<p class="muted">
+			Quelle der Aufgabenstellung/Lösungsskizze:
+			<a href="https://prase.cz/kalva/imo/isoln/isoln854.html">IMO 1985 B1 (ISL solutions, prase.cz)</a>
+		</p>
+	</template>
 </AppFrame>
 </template>
 
 <script setup>
 import { ref } from "vue";
+import EddieComment from "@/components/EddieComment.vue";
 import titleImg from "@/images/O4.webp";
 
 const PRIMES = [ 2, 3, 5, 7, 11, 13, 17, 19, 23 ];

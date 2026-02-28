@@ -35,7 +35,7 @@
 		</div>
 	</template>
 	<template #descriptionPart>
-		<h2 id="bits-zu-basen" class="mt-8">Von Bits zu Basen: vier Zeichen statt zwei</h2>
+		<h2 id="bits-zu-basen" class="mt-8">Teil 1 - Von Bits zu Basen: vier Zeichen statt zwei</h2>
 		<div class="eddie">
 			<p>
 				Computer lieben zwei Zustände: 0 und 1.
@@ -64,7 +64,7 @@
 			</p>
 		</div>
 
-		<h2 id="codons" class="mt-8">Codons sind wie Opcodes</h2>
+		<h2 id="codons" class="mt-8">Teil 2 - Codons sind wie Opcodes</h2>
 		<div class="eddie">
 			<p>
 				Drei Basen hintereinander ergeben ein Codon, also einen Mini-Befehl
@@ -80,7 +80,7 @@
 			</p>
 		</div>
 
-		<h2 class="mt-8">Aminosäuren, Proteine, Gene</h2>
+		<h2 class="mt-8">Teil 3 - Aminosäuren, Proteine, Gene</h2>
 		<div class="eddie">
 			<p>
 				Aminosäuren sind Bausteine. Ketten daraus werden Proteine.
@@ -94,7 +94,7 @@
 			</p>
 		</div>
 
-		<h2 id="vergleich" class="mt-8">Vergleichstabelle: Informatik vs. Genetik</h2>
+		<h2 id="vergleich" class="mt-8">Teil 4 - Vergleichstabelle: Informatik vs. Genetik</h2>
 		<div class="tableScroller mt-3">
 			<v-table density="compact">
 				<thead>
@@ -114,7 +114,7 @@
 			</v-table>
 		</div>
 
-		<h2 id="frameshift" class="mt-8">Fehler, die sich wie Albträume anfühlen: Frameshift</h2>
+		<h2 id="frameshift" class="mt-8">Teil 5 - Fehler, die sich wie Albträume anfühlen: Frameshift</h2>
 		<div class="eddie">
 			<p>
 				Wenn in DNA eine Base eingefügt oder gelöscht wird,
@@ -131,8 +131,7 @@
 			</p>
 		</div>
 
-		<h2 id="warum" class="mt-8">Warum mich das so packt</h2>
-		<div class="eddie">
+		<EddieComment id="warum" subtitle="Warum mich das so packt">
 			<p>
 				Genetik beantwortet die große Frage:
 				Wie macht man aus Materie ein System, das sich selbst kopiert,
@@ -145,12 +144,9 @@
 			</p>
 			<p>
 				Jedes Mal, wenn ich auf eine Doppelhelix schaue, denke ich:
-				Das ist keine Bio-Kette. Das ist ein uralter Text. Und er läuft.
+				Das ist keine Molekül-Kette. Das ist ein uraltes Programm. Und es läuft.
 			</p>
-			<p class="muted">
-				Und ja: darunter kannst du aus einem beliebigen String einen nerdigen DNA-Text bauen.
-			</p>
-		</div>
+		</EddieComment>
 	</template>
 
 	<template #interactivePart>
@@ -230,6 +226,7 @@
 <script setup>
 import { computed, ref } from "vue";
 
+import EddieComment from "@/components/EddieComment.vue";
 import SD_DNA from "./SD_DNA.vue";
 import titleImg from "@/images/SD.webp";
 import samiImg from "@/images/SD_SAMI.webp";

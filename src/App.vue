@@ -36,12 +36,18 @@
 						</h1>
 						<p v-if="subChapterEntries.length" class="sub">
 							<template v-for="( chapter ) in subChapterEntries" :key="chapter.id">
-								<router-link :to="{ path: routePathForHashLinks, hash: `#${chapter.id}` }">
+								<router-link
+									:to="{ path: routePathForHashLinks, hash: `#${chapter.id}` }"
+									@click="handleHashLinkClick( `#${chapter.id}` )"
+								>
 									{{ chapter.label }}
 								</router-link>
 								<span> • </span>
 							</template>
-							<router-link :to="{ path: routePathForHashLinks, hash: `#forum` }">
+							<router-link
+								:to="{ path: routePathForHashLinks, hash: '#forum' }"
+								@click="handleHashLinkClick( '#forum' )"
+							>
 								Forum
 							</router-link>
 						</p>
@@ -243,7 +249,7 @@
 </template>
 <script setup>
 import {
-	computed, onMounted, ref, useSlots
+	computed, nextTick, onMounted, ref, useSlots, watch
 } from "vue";
 import { useRoute } from "vue-router";
 import { useDisplay } from "vuetify";
@@ -329,18 +335,8 @@ const showReportErrorDialog = ref( false );
 const showImpressumDialog = ref( false );
 const showPrivacyDialog = ref( false );
 
-function normalizeRoutePathForLinks( path ) {
-	const normalized = String( path ?? "/" ).trim() || "/";
-
-	if ( normalized === "/" ) {
-		return "/";
-	}
-
-	return normalized.replace( /\/+$/u, "" ) || "/";
-}
-
-const routePathForHashLinks = computed( () => normalizeRoutePathForLinks( route.path ) );
-const showHomeBadge = computed( () => routePathForHashLinks.value !== "/" );
+const routePathForHashLinks = computed( () => route.path );
+const showHomeBadge = computed( () => route.path !== "/" );
 const shortText = computed( () => {
 	const routeName = typeof route.name === "string" ? route.name : "";
 	const normalizedRouteName = routeName.trim().toUpperCase();
@@ -434,10 +430,75 @@ const buildDateText = computed( () => {
 	return formatUtcBuildDate( parsedDate );
 } );
 
+function getHashId( hash ) {
+	if ( typeof hash !== "string" || !hash.startsWith( "#" ) ) {
+		return "";
+	}
+
+	const raw = hash.slice( 1 );
+
+	if ( !raw ) {
+		return "";
+	}
+
+	try {
+		return decodeURIComponent( raw );
+	} catch {
+		return raw;
+	}
+}
+
+function scrollToHashId( hash, behavior = "smooth" ) {
+	if ( typeof window === "undefined" || typeof document === "undefined" ) {
+		return false;
+	}
+
+	const targetId = getHashId( hash );
+
+	if ( !targetId ) {
+		return false;
+	}
+
+	const target = document.getElementById( targetId );
+
+	if ( !target ) {
+		return false;
+	}
+
+	target.scrollIntoView( {
+		block:  "start",
+		inline: "nearest",
+		behavior
+	} );
+	return true;
+}
+
+function handleHashLinkClick( hash ) {
+	if ( hash === route.hash ) {
+		scrollToHashId( hash, "smooth" );
+	}
+}
+
+watch(
+	() => route.hash,
+	async( hash ) => {
+		if ( !hasMounted.value || !hash ) {
+			return;
+		}
+
+		await nextTick();
+		scrollToHashId( hash, "smooth" );
+	},
+	{ flush: "post" }
+);
+
 onMounted( () => {
 	hasMounted.value = true;
 
 	if ( route.hash ) {
+		nextTick( () => {
+			scrollToHashId( route.hash, "auto" );
+		} );
 		return;
 	}
 
@@ -518,10 +579,18 @@ onMounted( () => {
   text-decoration: none;
 }
 
+.homeBadgeLink.badge {
+  overflow: visible;
+}
+
 .homeBadgeIcon {
+  display: block;
   width: 24px;
   height: 24px;
+  box-sizing: border-box;
   object-fit: contain;
+  object-position: center;
+  padding: 1.5px;
 }
 
 .titleRow {
@@ -547,6 +616,16 @@ onMounted( () => {
 	display: flex;
 	justify-content: flex-end;
 	margin-bottom: 8px;
+}
+
+#forum {
+	scroll-margin-top: 96px;
+}
+
+@media (max-width: 860px) {
+	#forum {
+		scroll-margin-top: 132px;
+	}
 }
 
 @media print {

@@ -33,7 +33,7 @@
 
 	<template #descriptionPart>
 
-		<h2 id="aufgabe">Aufgabe: Entwicklung eines Fischbestandes</h2>
+		<h2 id="aufgabe">Teil 1 - Aufgabe: Entwicklung eines Fischbestandes</h2>
 		<div class="eddie">
 			<p>
 				In einem abgeschlossenen See lebt eine Fischpopulation.
@@ -72,9 +72,9 @@
 			</ul>
 		</div>
 
-		<h2 id="loesung" class="mt-8">Lösung</h2>
+		<h2 id="loesung" class="mt-8">Teil 2 - Lösung</h2>
 		<div class="eddie">
-			<h3>a) Rekursionsgleichung</h3>
+			<h3>Schritt 2.1 - Rekursionsgleichung</h3>
 			<p>
 				Im Jahr <Katex tex="t" /> gibt es <Katex tex="N_t" /> fortpflanzungsfähige Fische.
 				Diese erzeugen im Mittel <Katex tex="bN_t" /> Jungfische.
@@ -90,7 +90,7 @@
 		</div>
 
 		<div class="eddie">
-			<h3>b) Gleichgewichte</h3>
+			<h3>Schritt 2.2 - Gleichgewichte</h3>
 			<p>
 				Ein Gleichgewicht erfüllt <Katex tex="N_{t+1}=N_t=N^*" />.
 			</p>
@@ -116,7 +116,7 @@
 		</div>
 
 		<div class="eddie">
-			<h3>c) Langfristiges Verhalten</h3>
+			<h3>Schritt 2.3 - Langfristiges Verhalten</h3>
 			<p><b>Fall 1:</b> <Katex tex="b\le 1" /></p>
 			<ul>
 				<li>Jeder Fisch erzeugt im Mittel höchstens einen überlebenden Nachkommen.</li>
@@ -134,7 +134,7 @@
 			<p>Unbegrenztes Wachstum tritt in diesem Modell nicht auf.</p>
 		</div>
 
-		<h2 id="zusammenfassung" class="mt-8">Zusammenfassung</h2>
+		<h2 id="zusammenfassung" class="mt-8">Teil 3 - Zusammenfassung</h2>
 		<div class="eddie">
 			<ul>
 				<li>Für <Katex tex="b\le 1" /> stirbt die Population aus.</li>
@@ -204,10 +204,13 @@
 		</v-sheet>
 
 		<div class="kbox mt-4">
-			<div class="mono"><Katex aligned :tex="`N_{t+1} &=\\frac{bN_t}{1+cN_t} \\\\
-N_0 &=${fmtTex( graphN0, 0 )},\ b=${fmtTex( graphB, 3 )},\ c=${fmtTex( graphC, 4 )}` + 						
-(graphHasPositiveEquilibrium ? `\\\\ N^*&=\\frac{b-1}{c}=${fmtTex( graphEquilibrium, 3 )}` : 'b\le 1\Rightarrow N^* &=0\ (Aussterbe-Gleichgewicht)')"/>		</div>				
-					<div class="mono">
+			<div class="mono"><Katex aligned
+				:tex="`N_{t+1} &=\\frac{bN_t}{1+cN_t} \\\\
+N_0 &=${fmtTex( graphN0, 0 )},\ b=${fmtTex( graphB, 3 )},\ c=${fmtTex( graphC, 4 )}` +
+					(graphHasPositiveEquilibrium ? `\\\\ N^*&=\\frac{b-1}{c}=${fmtTex( graphEquilibrium, 3 )}`
+						: 'b\le 1\Rightarrow N^* &=0\ (Aussterbe-Gleichgewicht)')"
+			/>		</div>
+			<div class="mono">
 				Nach <b>{{ graphHorizon }}</b> Jahren: <b>N</b>={{ fmt( graphFinalPopulation, 3 ) }}.
 			</div>
 		</div>
@@ -217,13 +220,25 @@ N_0 &=${fmtTex( graphN0, 0 )},\ b=${fmtTex( graphB, 3 )},\ c=${fmtTex( graphC, 4
 		<h2>Rechnung mit einem Beispielsatz</h2>
 		<div class="eddie">
 			<div class="kbox">
-				<Katex as="div" aligned display :tex="texScenario + `\\\\` + texEquilibrium" />
+				<Katex aligned
+					as="div"
+					display
+					:tex="texScenario + `\\\\` + texEquilibrium"
+				/>
 			</div>
 			<div class="kbox">
-				<Katex as="div" aligned display :tex="`N_1 &=${fmtTex( n1, 3 )} \\\\ N_2 &=${fmtTex( n2, 3 )} \\\\ N_3 &=${fmtTex( n3, 3 )}`" />
+				<Katex aligned
+					as="div"
+					display
+					:tex="`N_1 &=${fmtTex( n1, 3 )} \\\\ N_2 &=${fmtTex( n2, 3 )} \\\\ N_3 &=${fmtTex( n3, 3 )}`"
+				/>
 			</div>
 			<div class="kbox">
-				<Katex as="div" aligned display :tex="`N_${graphHorizon}&=${fmtTex( nT, 3 )} \\\\ |N_${graphHorizon}-N^*| &=${fmtTex( deltaToEquilibrium, 3 )}`" />
+				<Katex aligned
+					as="div"
+					display
+					:tex="`N_${graphHorizon}&=${fmtTex( nT, 3 )} \\\\ |N_${graphHorizon}-N^*| &=${fmtTex( deltaToEquilibrium, 3 )}`"
+				/>
 			</div>
 			<p class="muted">
 				Man sieht: Die Population nähert sich dem stabilen Gleichgewicht schnell und ohne Oszillation.
@@ -286,7 +301,7 @@ const texScenario = computed( () => [
 	`N_0 &=${fmtTex( graphN0.value, 0 )},`,
 	`\\\\ b &=${fmtTex( graphB.value, 2 )},`,
 	`\\\\ c &=${fmtTex( graphC.value, 3 )},`,
-	`\\\\ t &=${graphHorizon.value}`,
+	`\\\\ t &=${graphHorizon.value}`
 ].join( " " ) );
 const texEquilibrium = computed( () => {
 	if ( !graphHasPositiveEquilibrium.value ) {
@@ -295,7 +310,7 @@ const texEquilibrium = computed( () => {
 
 	return [
 		`N^* &=\\frac{b-1}{c}=\\frac{${fmtTex( graphB.value, 2 )}-1}{${fmtTex( graphC.value, 3 )}}`,
-		`\\\\ &=${fmtTex( equilibrium.value, 3 )}`,
+		`\\\\ &=${fmtTex( equilibrium.value, 3 )}`
 	].join( " " );
 } );
 

@@ -259,6 +259,15 @@
 				also <Katex tex="x_1=y_1" />.
 			</p>
 		</div>
+
+		<EddieComment subtitle="Fazit mit Grinsen">
+			<p>
+				Am Ende ist es fast schon frech schön: unendlich viele Startwerte probieren,
+				aber nur einer trifft exakt die Spur zwischen „zu klein“ und „zu groß“.
+				Wenn der sitzt, marschiert die Folge brav aufwärts und bleibt trotzdem unter 1.
+				Ein mathematischer Präzisionsstart.
+			</p>
+		</EddieComment>
 	</template>
 
 	<template #interactivePart>
@@ -391,6 +400,7 @@
 
 <script setup>
 import { ref } from "vue";
+import EddieComment from "@/components/EddieComment.vue";
 import titleImg from "@/images/O6.webp";
 
 const EPS = 1e-13;

@@ -34,7 +34,7 @@
 
 	<template #descriptionPart>
 
-		<h2 id="geschichte">Teil 1 — Warum der fx-7000G spannend ist</h2>
+		<h2 id="geschichte">Teil 1 - Warum der fx-7000G spannend ist</h2>
 		<div class="eddie">
 			<p>
 				Stell dir 1985 vor: Du bist ein Kind in der DDR, Computer kennst du nur aus der Ferne,
@@ -53,7 +53,7 @@
 			</p>
 		</div>
 
-		<h2 id="basic-denke" class="mt-8">Teil 2 — Eddie-Workflow auf dem Rechner</h2>
+		<h2 id="basic-denke" class="mt-8">Teil 2 - Eddie-Workflow auf dem Rechner</h2>
 		<div class="eddie">
 			<p>Wenn ich mit dem fx-7000G arbeite, nutze ich immer denselben Ablauf:</p>
 			<ol>
@@ -67,7 +67,7 @@
 			</p>
 		</div>
 
-		<h2 class="mt-8">Teil 3 — BASIC in 6 Zeilen</h2>
+		<h2 class="mt-8">Teil 3 - BASIC in 6 Zeilen</h2>
 		<div class="eddie">
 			<p>
 				Das hier ist ein Mini-Muster: Eingabe lesen, Quadrat und Wurzel ausgeben.
@@ -81,7 +81,7 @@
 			</p>
 		</div>
 
-		<h2>Teil 5 — Eddie-Spickzettel</h2>
+		<h2>Teil 4 - Eddie-Spickzettel</h2>
 		<div class="eddie d-flex flex-column ga-3">
 			<v-sheet border class="pa-3" rounded="lg">
 				<div class="text-subtitle-1 font-weight-medium mb-2">Schneller Start</div>
