@@ -40,8 +40,11 @@ function rewriteLegacyShortcuts() {
 
 // Keep the active theme synchronized with the OS preference.
 function setupThemeSync() {
-	const mql = globalThis.matchMedia?.( "(prefers-color-scheme: dark)" );
-	const nameFromSystem = () => mql?.matches ? "eddieDark" : "eddieLight";
+	const darkModeMql = globalThis.matchMedia?.( "(prefers-color-scheme: dark)" );
+	const printMql = globalThis.matchMedia?.( "print" );
+	const win = typeof window !== "undefined" ? window : null;
+	let isPrinting = false;
+	const nameFromSystem = () => darkModeMql?.matches ? "eddieDark" : "eddieLight";
 
 	const apply = () => {
 		const nameRef = vuetify.theme?.global?.name;
@@ -50,30 +53,71 @@ function setupThemeSync() {
 			return;
 		}
 
-		const next = nameFromSystem();
+		const next = isPrinting ? "eddieLight" : nameFromSystem();
 
 		if ( nameRef.value !== next ) {
 			nameRef.value = next;
 		}
 	};
 
+	const onBeforePrint = () => {
+		isPrinting = true;
+		apply();
+	};
+
+	const onAfterPrint = () => {
+		isPrinting = false;
+		apply();
+	};
+
+	const onPrintModeChange = ( event ) => {
+		isPrinting = Boolean( event?.matches );
+		apply();
+	};
+
 	apply();
 
-	if ( mql ) {
+	if ( darkModeMql ) {
 		const onChange = () => apply();
 
-		if ( mql.addEventListener ) {
-			mql.addEventListener( "change", onChange );
+		if ( darkModeMql.addEventListener ) {
+			darkModeMql.addEventListener( "change", onChange );
 		} else {
-			mql.addListener( onChange );
+			darkModeMql.addListener( onChange );
 		}
 
 		import.meta.hot?.dispose( () => {
-			if ( mql.removeEventListener ) {
-				mql.removeEventListener( "change", onChange );
+			if ( darkModeMql.removeEventListener ) {
+				darkModeMql.removeEventListener( "change", onChange );
 			} else {
-				mql.removeListener( onChange );
+				darkModeMql.removeListener( onChange );
 			}
+		} );
+	}
+
+	if ( printMql ) {
+		if ( printMql.addEventListener ) {
+			printMql.addEventListener( "change", onPrintModeChange );
+		} else {
+			printMql.addListener( onPrintModeChange );
+		}
+
+		import.meta.hot?.dispose( () => {
+			if ( printMql.removeEventListener ) {
+				printMql.removeEventListener( "change", onPrintModeChange );
+			} else {
+				printMql.removeListener( onPrintModeChange );
+			}
+		} );
+	}
+
+	if ( win ) {
+		win.addEventListener( "beforeprint", onBeforePrint );
+		win.addEventListener( "afterprint", onAfterPrint );
+
+		import.meta.hot?.dispose( () => {
+			win.removeEventListener( "beforeprint", onBeforePrint );
+			win.removeEventListener( "afterprint", onAfterPrint );
 		} );
 	}
 }

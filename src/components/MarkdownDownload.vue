@@ -1,9 +1,9 @@
 <template>
 <v-btn
+	:append-icon="mdiDownload"
 	density="comfortable"
 	:disabled="isBusy"
 	:loading="isBusy"
-	:prepend-icon="mdiDownload"
 	size="small"
 	style="margin: -1em"
 	variant="text"
@@ -21,7 +21,7 @@ import { mdiDownload } from "@mdi/js";
 const props = defineProps( {
 	targetId:    { type: String, required: true },
 	fileName:    { type: String, default: "description" },
-	buttonLabel: { type: String, default: "Download als Markdown" }
+	buttonLabel: { type: String, default: "Markdown" }
 } );
 
 const isBusy = ref( false );

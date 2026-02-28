@@ -4,8 +4,66 @@ import vue from "@vitejs/plugin-vue";
 import { defineConfig } from "vite";
 import vuetify from "vite-plugin-vuetify";
 import { explicitDynamicRoutes } from "./src/ssg-routes.js";
+import fs from "node:fs";
 
-const buildDate = String( process.env.VITE_BUILD_DATE || "" ).trim();
+const buildDate = String( process.env.VITE_BULD_DATE || "" ).trim();
+
+// vite.config.js
+
+function sfcMtimePlugin( opts = {} ) {
+	const ISO = opts.isoName ?? "__VITE_SFC_MTIME_ISO__";
+	const MS = opts.msName ?? "__VITE_SFC_MTIME_MS__";
+
+	const hasScriptSetup = /<script\b[^>]*\bsetup\b[^>]*>/i;
+
+	return {
+		name:    "sfc-mtime-inject",
+		enforce: "pre", // vor @vitejs/plugin-vue laufen lassen
+		transform( code, id ) {
+			const [ file, query = "" ] = id.split( "?", 2 );
+
+			// nur "echte" .vue Dateien, nicht die internen ?vue&type=... Requests
+			if ( !file.endsWith( ".vue" ) ) {
+				return null;
+			}
+
+			if ( query.includes( "vue" ) ) {
+				return null;
+			}
+
+			// doppelte Injektion vermeiden
+			if ( code.includes( ISO ) || code.includes( MS ) ) {
+				return null;
+			}
+
+			let stat;
+
+			try {
+				stat = fs.statSync( file );
+			} catch {
+				return null;
+			}
+
+			const iso = stat.mtime.toISOString();
+			const ms = Math.floor( stat.mtimeMs );
+
+			const injected = `\nconst ${ISO} = ${JSON.stringify( iso )};\nconst ${MS} = ${ms};\n`;
+
+			if ( hasScriptSetup.test( code ) ) {
+				// in vorhandenes <script setup> direkt rein
+				return code.replace( hasScriptSetup, ( m ) => `${m}${injected}` );
+			}
+
+			// sonst ein neues <script setup> vor <template> einfügen (oder an den Anfang)
+			if ( /<template\b/i.test( code ) ) {
+				return code.replace( /<template\b/i,
+					`<script setup>${injected}</script>\n\n<template` );
+			}
+
+			return `<script setup>${injected}</script>\n\n${code}`;
+		}
+	};
+}
 
 function normalizeBasePath( basePath ) {
 	const asString = String( basePath || "/" ).trim();
@@ -62,11 +120,15 @@ export default defineConfig( {
 		"import.meta.env.VITE_BUILD_DATE":       JSON.stringify( buildDate ),
 		__VUE_PROD_HYDRATION_MISMATCH_DETAILS__: true
 	},
-	plugins:    [ vue(), vuetify( { autoImport: true } ) ],
+	plugins:    [ sfcMtimePlugin(), vue(), vuetify( { autoImport: true } ) ],
 	resolve:    { alias: { "@": fileURLToPath( new URL( "./src", import.meta.url ) ) } },
 	ssr:        { noExternal: [ "vuetify" ] },
 	ssgOptions: {
 		dirStyle: "nested",
+		async onFinished() {
+      		const { generatePdfs } = await import( "./src/utils/generate-pdfs.mjs" );
+      		await generatePdfs();
+    	},
 		includedRoutes( paths, routeRecords ) {
 			const concreteFromRouter = ( routeRecords ?? [] )
 				.map( ( route ) => route?.path )

@@ -54,6 +54,7 @@
 					</div>
 				</template>
 				<slot v-else name="title" />
+				{{vueDate}}
 			</div>
 		</v-container>
 	</v-app-bar>
@@ -99,10 +100,18 @@
 				<slot name="bookPart" />
 			</Page>
 			<section class="card" if="description">
-				<div class="descriptionPartHeader">
+				<div v-if="!nomd" class="descriptionPartHeader">
+					<v-btn
+						:append-icon="mdiDownload"
+						density="comfortable"
+						size="small"
+						style="margin: -1em 0"
+						variant="text"
+						@click="downloadPDF"
+					>
+						PDF
+					</v-btn>
 					<MarkdownDownload
-						v-if="!nomd"
-						button-label="Download als Markdown"
 						:file-name="descriptionMarkdownFileName"
 						target-id="descriptionPartMarkdownSource"
 					/>
@@ -254,7 +263,7 @@ import {
 import { useRoute } from "vue-router";
 import { useDisplay } from "vuetify";
 import {
-	mdiHexagonSlice2, mdiHexagonSlice4, mdiHexagonSlice6
+	mdiDownload, mdiHexagonSlice2, mdiHexagonSlice4, mdiHexagonSlice6
 } from "@mdi/js";
 import reportErrorHTML from "./utils/disclaimer/report_errors_de.html?raw";
 import impressumHtml from "./utils/disclaimer/impressum_de.html?raw";
@@ -267,6 +276,7 @@ import Page from "./components/Page.vue";
 const props = defineProps( {
 	title:      { type: String, default: "" },
 	nomd:       { type: Boolean, default: false },
+	vueDate:    { type: String, default: null },
 	subChapter: {
 		type:    Object,
 		default: () => ( {} )
@@ -402,9 +412,54 @@ const descriptionMarkdownFileName = computed( () => {
 	return parts.join( "-" );
 } );
 const buildDateRaw = String( import.meta.env.VITE_BUILD_DATE ?? "" ).trim();
+const appBasePath = normalizeBasePath( import.meta.env.BASE_URL || "/" );
 
 function pad2( value ) {
 	return String( value ).padStart( 2, "0" );
+}
+
+function normalizeBasePath( basePath ) {
+	const asString = String( basePath || "/" ).trim();
+
+	if ( !asString || asString === "/" ) {
+		return "/";
+	}
+
+	let normalized = asString;
+
+	if ( !normalized.startsWith( "/" ) ) {
+		normalized = `/${normalized}`;
+	}
+
+	if ( !normalized.endsWith( "/" ) ) {
+		normalized = `${normalized}/`;
+	}
+
+	return normalized;
+}
+
+function routePdfSlug( routePath ) {
+	const segments = String( routePath || "" )
+		.split( "/" )
+		.filter( Boolean );
+
+	return segments.length > 0 ? segments[ 0 ] : "index";
+}
+
+function downloadPDF() {
+	if ( typeof window === "undefined" ) {
+		return;
+	}
+
+	const pdfSlug = routePdfSlug( route.path );
+	const pdfPath = `${appBasePath}pdf/${encodeURIComponent( pdfSlug )}.pdf`;
+	const opened = window.open(
+		pdfPath, "_blank", "noopener,noreferrer"
+	);
+
+	if ( opened ) {
+		opened.opener = null;
+	}
 }
 
 function formatUtcBuildDate( date ) {

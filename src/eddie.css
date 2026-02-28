@@ -332,6 +332,11 @@ h3 {
 }
 
 @media print {
+  .exampleFigure {
+    float: right !important;
+    width: 30vw !important;
+  }
+
   .v-alert,
   .pageCard,
   .legalRow,
