@@ -6,12 +6,10 @@ import {
 } from "@vue/eslint-config-typescript";
 import vue from "eslint-plugin-vue";
 import stylistic from "@stylistic/eslint-plugin";
-import vuetify from "eslint-plugin-vuetify";
 import jsdoc from "eslint-plugin-jsdoc";
 import tsPlugin from "@typescript-eslint/eslint-plugin";
 import tsParser from "@typescript-eslint/parser";
 import vueParser from "vue-eslint-parser";
-import importPlugin from "eslint-plugin-import";
 import preferOptionalChaining from "eslint-plugin-prefer-optional-chaining";
 import pluginSVGO from "eslint-plugin-svgo";
 import { fileURLToPath } from "node:url";
@@ -64,10 +62,8 @@ export default [
 		},
 		plugins: {
 			"@stylistic":               stylistic,
-			importPlugin,
 			jsdoc,
-			"prefer-optional-chaining": preferOptionalChaining,
-			vuetify
+			"prefer-optional-chaining": preferOptionalChaining
 		},
 		rules: {
 			"@stylistic/function-call-argument-newline": [ "error", "consistent" ],
