@@ -44,7 +44,7 @@
 				Für jede reelle Startzahl <Katex tex="x_1" /> wird eine Folge durch
 			</p>
 			<div class="kbox">
-				<Katex as="div" display tex="x_{n+1}=x_n\left(x_n+\frac1n\right),\quad n=1,2,3,\dots" />
+				<Katex as="div" display tex="x_{n+1}=x_n\left(x_n+\frac{1}{n}\right),\quad n=1,2,3,\dots" />
 			</div>
 			<p>
 				definiert. Zu zeigen ist: Es gibt <b>genau einen</b> Startwert <Katex tex="x_1" />, für den
@@ -69,27 +69,27 @@
 		<h2 id="monotonie" class="mt-8">Teil 2 — Umformulierung mit Hilfsfunktionen</h2>
 		<div class="eddie">
 			<p>
-				Für den Beweis verwenden wir eine indexsaubere Schreibweise:
+				Für den Beweis führen wir zuerst Hilfsfunktionen (Iterationsfunktionen) ein:
 			</p>
 			<div class="kbox">
-				<Katex as="div" display tex="T_1(x)=x,\qquad T_{n+1}(x)=T_n(x)\left(T_n(x)+\frac1n\right)\quad(n\ge1)." />
+				<Katex as="div" display tex="f_n(t):=t\left(t+\frac{1}{n}\right),\qquad n\ge1." />
+			</div>
+			<div class="kbox">
+				<Katex as="div" display tex="T_1(x):=x,\qquad T_{n+1}(x):=f_n\!\left(T_n(x)\right)." />
 			</div>
 			<p>
 				Damit gilt bei Startwert <Katex tex="x_1=x" /> stets <Katex tex="x_n=T_n(x)" />.
-				Die Stufenfunktion <Katex tex="\varphi_n(t)=t\left(t+\frac1n\right)" /> ist auf
-				<Katex tex="[0,1]" /> streng wachsend, also ist jede Komposition <Katex tex="T_n" /> streng wachsend.
 			</p>
 			<div class="kbox">
-				<Katex as="div" display tex="T_n(0)=0,\qquad T_1(1)=1,\qquad T_n(1)>1\ \text{für}\ n\ge2." />
+				<Katex as="div" display tex="f_n'(t)=2t+\frac1n>0\quad\text{für }t\in[0,1]." />
 			</div>
 			<p>
-				Erläuterung:
-				„Streng wachsend“ heißt hier, dass ein größerer Startwert in jedem Schritt zu einem größeren
-				Folgenwert führt.
-				Die Reihenfolge zweier Startwerte kann unterwegs also nicht vertauscht werden.
-				Außerdem geben die Werte bei 0 und 1 eine grobe Orientierung:
-				Der gesuchte Startwert liegt zwischen diesen Randfällen.
+				Damit ist jede Funktion <Katex tex="f_n" /> auf <Katex tex="[0,1]" /> stetig und streng wachsend.
+				Als Komposition solcher Funktionen ist auch jede Funktion <Katex tex="T_n" /> stetig und streng wachsend.
 			</p>
+			<div class="kbox">
+				<Katex as="div" display tex="T_n(0)=0,\qquad T_1(1)=1,\qquad T_n(1)>1\ \text{für }n\ge2." />
+			</div>
 		</div>
 
 		<h2 id="existenz-eindeutigkeit" class="mt-8">Teil 3 — Existenz über Intervallschachtelung</h2>
@@ -100,80 +100,76 @@
 				Dann folgt für jedes feste <Katex tex="n" />:
 			</p>
 			<div class="kbox">
-				<Katex as="div" display tex="0<x_n<x_n\!\left(x_n+\frac1n\right)=x_{n+1}<1." />
+				<Katex as="div" display tex="0<x_n<x_n\!\left(x_n+\frac{1}{n}\right)=x_{n+1}<1\quad\Longrightarrow\quad 1-\frac{1}{n}<x_n<1." />
 			</div>
 			<p>
-				Da <Katex tex="x_n>0" />, dürfen wir durch <Katex tex="x_n" /> teilen:
+				Das ist die notwendige Richtung.
+				Umgekehrt nehmen wir an, dass für alle <Katex tex="n\ge1" /> gilt
+				<Katex tex="1-\frac{1}{n}<x_n<1" />.
+				Dann ist <Katex tex="x_n>0" /> für alle <Katex tex="n" />.
 			</p>
 			<div class="kbox">
-				<Katex as="div" display tex="1<x_n+\frac1n\quad\Longrightarrow\quad 1-\frac1n<x_n<1." />
+				<Katex as="div" display tex="x_{n+1}-x_n=x_n\!\left(x_n+\frac{1}{n}-1\right)>0\quad\Longrightarrow\quad x_n<x_{n+1}." />
 			</div>
 			<p>
-				Jeder gültige Startwert muss also für jedes <Katex tex="n" /> die Schranke
-				<Katex tex="1-\frac1n<T_n(x_1)<1" /> erfüllen.
-				Diese Bedingung kodieren wir als Intervallschachtelung.
-			</p>
-			<p>
-				Erläuterung:
-				Wir wissen jetzt, was für jeden guten Startwert gelten muss.
-				Dazu führen wir zwei Grenzwerte ein:
-				<Katex tex="a_n" /> ist der Startwert, bei dem man nach <Katex tex="n" /> Schritten
-				gerade den linken Rand <Katex tex="1-\frac1n" /> trifft.
-				<Katex tex="b_n" /> ist der Startwert, bei dem man nach <Katex tex="n" /> Schritten
-				genau den rechten Rand <Katex tex="1" /> trifft.
-			</p>
-			<p>
-				Definiere für jedes <Katex tex="n\ge1" /> die Zahlen <Katex tex="a_n,b_n\in(0,1)" /> durch:
+				Außerdem liefert die Annahme mit Index <Katex tex="n+1" /> direkt
+				<Katex tex="x_{n+1}<1" />.
+				Daher gilt für alle <Katex tex="n\ge1" />:
 			</p>
 			<div class="kbox">
-				<Katex as="div" display tex="T_n(a_n)=1-\frac1n,\qquad T_n(b_n)=1." />
+				<Katex as="div" display tex="0<x_n<x_{n+1}<1\ \Longleftrightarrow\ 1-\frac{1}{n}<x_n<1." />
+			</div>
+			<p>
+				Damit dürfen wir äquivalent nach einem Startwert mit
+				<Katex tex="1-\frac{1}{n}<T_n(x_1)<1" /> für alle <Katex tex="n" /> suchen.
+			</p>
+			<p>
+				Für <Katex tex="n=1" /> genügt die Grundbedingung <Katex tex="0<x_1<1" />; wir setzen daher
+				<Katex tex="a_1:=0" /> und <Katex tex="b_1:=1" />.
+				Für jedes <Katex tex="n\ge2" /> definieren wir <Katex tex="a_n,b_n\in(0,1)" /> durch:
+			</p>
+			<div class="kbox">
+				<Katex as="div" display tex="T_n(a_n)=1-\frac{1}{n},\qquad T_n(b_n)=1." />
 			</div>
 			<p>
 				Wegen Stetigkeit und strenger Monotonie von <Katex tex="T_n" /> sind <Katex tex="a_n,b_n" />
-				eindeutig bestimmt, und es gilt:
+				eindeutig bestimmt und es gilt <Katex tex="a_n<b_n" />.
 			</p>
-			<div class="kbox">
-				<Katex as="div" display tex="a_n<b_n\qquad(\text{da }1-\tfrac1n<1)." />
-			</div>
 			<p>
-				Jetzt die Monotoniebeweise:
+				Jetzt die Monotoniebeweise (für <Katex tex="n\ge2" />):
 			</p>
 			<ul>
 				<li>
 					<em><Katex tex="(a_n)" /> ist streng wachsend.</em>
 					<div class="kbox">
-						<Katex as="div" display tex="T_{n+1}(a_n)=T_n(a_n)\!\left(T_n(a_n)+\frac1n\right)." />
+						<Katex as="div" display tex="T_{n+1}(a_n)=T_n(a_n)\!\left(T_n(a_n)+\frac{1}{n}\right)." />
 					</div>
 					<div class="kbox">
-						<Katex as="div" display tex="T_{n+1}(a_n)=\left(1-\frac1n\right)\!\left(1-\frac1n+\frac1n\right)=1-\frac1n." />
-					</div>
-					<div class="kbox">
-						<Katex as="div" display tex="T_{n+1}(a_{n+1})=1-\frac1{n+1},\qquad 1-\frac1n<1-\frac1{n+1}." />
+						<Katex as="div" display tex="T_{n+1}(a_n)=\left(1-\frac{1}{n}\right)\!\left(1-\frac{1}{n}+\frac{1}{n}\right)=1-\frac{1}{n}" />
+						<Katex as="div" display tex="<1-\frac{1}{n+1}=T_{n+1}(a_{n+1})." />
 					</div>
 					Da <Katex tex="T_{n+1}" /> streng wachsend ist, folgt <Katex tex="a_n<a_{n+1}" />.
-					Der linke Rand wandert also nach rechts.
 				</li>
 				<li>
 					<em><Katex tex="(b_n)" /> ist streng fallend.</em>
 					<div class="kbox">
-						<Katex as="div" display tex="T_{n+1}(b_n)=T_n(b_n)\!\left(T_n(b_n)+\frac1n\right)=1\!\left(1+\frac1n\right)>1." />
+						<Katex as="div" display tex="T_{n+1}(b_n)=T_n(b_n)\!\left(T_n(b_n)+\frac{1}{n}\right)=1\!\left(1+\frac{1}{n}\right)>1." />
 					</div>
 					<div class="kbox">
 						<Katex as="div" display tex="T_{n+1}(b_n)>1=T_{n+1}(b_{n+1})." />
 					</div>
 					Wegen der strengen Monotonie von <Katex tex="T_{n+1}" /> folgt <Katex tex="b_{n+1}<b_n" />.
-					Der rechte Rand wandert also nach links.
 				</li>
 			</ul>
 			<p>
-				Damit sind die Intervalle <Katex tex="[a_n,b_n]" /> geschachtelt:
+				Damit sind die abgeschlossenen Intervalle <Katex tex="I_n=[a_n,b_n]" />
+				(für <Katex tex="n\ge2" />) geschachtelt:
 			</p>
 			<div class="kbox">
-				<Katex as="div" display tex="a_1<a_2<\dots<b_2<b_1." />
+				<Katex as="div" display tex="a_2<a_3<\dots<b_3<b_2,\qquad I_{n+1}\subset I_n\ (n\ge2)." />
 			</div>
 			<p>
-				Der Schnitt aller <Katex tex="[a_n,b_n]" /> ist daher nichtleer.
-				Mindestens ein Startwert überlebt also alle Bedingungen gleichzeitig.
+				Nach dem Intervallschachtelungsprinzip ist <Katex tex="\bigcap_{n\ge2}I_n" /> nichtleer.
 				Die Existenz ist damit gezeigt.
 			</p>
 		</div>
@@ -181,19 +177,10 @@
 		<h2 class="mt-8">Teil 4 — Eindeutigkeit (mit Distanzbeweis)</h2>
 		<div class="eddie">
 			<p>
-				Bis hierhin ist nur gezeigt: Es gibt mindestens einen passenden Startwert.
-				Die Aufgabe verlangt aber <em>genau einen</em>.
-				Dafür müssen wir zeigen, dass die erlaubten Intervalle aus Teil 3 so eng werden,
-				dass am Ende nur ein Punkt übrig bleibt.
-			</p>
-			<p>
-				Wir fixieren nun ein bestimmtes <Katex tex="n" /> und betrachten das zugehörige Intervall
-				<Katex tex="[a_n,b_n]" />.
-			</p>
-			<p>
-				Der Grund dafür:
-				Wir wollen die Breite <Katex tex="b_n-a_n" /> dieses einen Intervalls abschätzen.
-				Wenn wir zeigen, dass diese Breite für große <Katex tex="n" /> gegen 0 geht,
+				Für die Eindeutigkeit müssen wir zeigen, dass die Intervalllängen gegen 0 gehen.
+				Wir fixieren ein <Katex tex="n\ge2" /> und betrachten das zugehörige Intervall
+				<Katex tex="I_n=[a_n,b_n]" />, dessen Länge <Katex tex="b_n-a_n" /> wir abschätzen wollen.
+				Wenn wir zeigen, dass diese Länge für große <Katex tex="n" /> gegen 0 geht,
 				folgt die Eindeutigkeit.
 			</p>
 			<p>
@@ -202,94 +189,74 @@
 			<div class="kbox">
 				<Katex as="div" display tex="u_k:=T_k(a_n),\qquad v_k:=T_k(b_n),\qquad d_k:=v_k-u_k." />
 			</div>
-			<p>
-				Dabei ist <Katex tex="d_k" /> genau der Abstand der beiden „Randbahnen“
-				nach <Katex tex="k" /> Schritten.
-				Insbesondere gilt am Anfang und am Ende:
-			</p>
 			<div class="kbox">
-				<Katex as="div" display tex="d_1=b_n-a_n,\qquad d_n=T_n(b_n)-T_n(a_n)=1-\left(1-\frac1n\right)=\frac1n." />
+				<Katex as="div" display tex="d_1=b_n-a_n,\qquad d_n=T_n(b_n)-T_n(a_n)=1-\left(1-\frac{1}{n}\right)=\frac{1}{n}." />
 			</div>
 			<p>
-				Die Strategie ist jetzt klar:
-				Wir zeigen für jedes <Katex tex="k<n" /> die lokale Ungleichung
+				Für <Katex tex="k=1,\dots,n-1" /> rechnen wir explizit:
+			</p>
+			<div class="kbox">
+				<Katex as="div" display tex="v_{k+1}-u_{k+1}=v_k\!\left(v_k+\frac1k\right)-u_k\!\left(u_k+\frac1k\right)." />
+			</div>
+			<div class="kbox">
+				<Katex as="div" display tex="=(v_k-u_k)\!\left(u_k+v_k+\frac1k\right)=d_k\!\left(u_k+v_k+\frac1k\right)." />
+			</div>
+			<p>
+				Nun zeigen wir, dass der Faktor streng größer als 1 ist:
+			</p>
+			<div class="kbox">
+				<Katex as="div" display tex="d_k>0\quad\text{(da }a_n<b_n\text{ und }T_k\text{ streng wachsend ist).}" />
+			</div>
+			<div class="kbox">
+				<Katex as="div" display tex="b_n>a_k\ \Longrightarrow\ v_k=T_k(b_n)>T_k(a_k)=1-\frac{1}{k}." />
+			</div>
+			<div class="kbox">
+				<Katex as="div" display tex="v_k+\frac{1}{k}>1\ \Longrightarrow\ u_k+v_k+\frac{1}{k}>1." />
+			</div>
+			<p>
+				Damit folgt für alle <Katex tex="k=1,\dots,n-1" />:
 				<Katex tex="d_{k+1}>d_k" />.
-				Dann wachsen die Abstände mit jedem Schritt.
-				Da der letzte Abstand bereits <Katex tex="\frac1n" /> ist, muss der erste Abstand
-				<Katex tex="d_1=b_n-a_n" /> kleiner als <Katex tex="\frac1n" /> sein.
-			</p>
-			<p>
-				Wir zeigen <Katex tex="d_{k+1}>d_k" /> für <Katex tex="k=1,\dots,n-1" />.
-				Aus der Rekursion folgt:
 			</p>
 			<div class="kbox">
-				<Katex as="div" display tex="d_{k+1}=v_k\!\left(v_k+\frac1k\right)-u_k\!\left(u_k+\frac1k\right)." />
+				<Katex as="div" display tex="d_1<d_2<\dots<d_n=\frac{1}{n}." />
 			</div>
 			<div class="kbox">
-				<Katex as="div" display tex="d_{k+1}=(v_k-u_k)\!\left(u_k+v_k+\frac1k\right)=d_k\!\left(u_k+v_k+\frac1k\right)." />
+				<Katex as="div" display tex="0<b_n-a_n=d_1<\frac{1}{n}\xrightarrow[n\to\infty]{}0." />
 			</div>
 			<p>
-				Für <Katex tex="d_{k+1}>d_k" /> brauchen wir jetzt genau zwei Fakten:
-				erstens <Katex tex="d_k>0" />, zweitens
-				<Katex tex="u_k+v_k+\frac1k>1" />.
-			</p>
-			<div class="kbox">
-				<Katex as="div" display tex="a_n<b_n,\ T_k\ \text{streng wachsend}\ \Longrightarrow\ u_k=T_k(a_n)<T_k(b_n)=v_k." />
-			</div>
-			<div class="kbox">
-				<Katex as="div" display tex="d_k=v_k-u_k>0." />
-			</div>
-			<p>
-				Da <Katex tex="a_k<a_n<b_n" /> (weil <Katex tex="(a_n)" /> wächst), gilt mit strenger Monotonie von
-				<Katex tex="T_k" />:
-			</p>
-			<div class="kbox">
-				<Katex as="div" display tex="v_k=T_k(b_n)>T_k(a_k)=1-\frac1k\quad\Longrightarrow\quad u_k+v_k+\frac1k>1." />
-			</div>
-			<p>
-				Also ist der Faktor in
-				<Katex tex="d_{k+1}=d_k\!\left(u_k+v_k+\frac1k\right)" /> echt größer als 1,
-				und wegen <Katex tex="d_k>0" /> folgt tatsächlich <Katex tex="d_{k+1}>d_k" />.
-				Die Abstände sind also streng wachsend:
-			</p>
-			<div class="kbox">
-				<Katex as="div" display tex="d_1<d_2<\dots<d_n=\frac1n." />
-			</div>
-			<div class="kbox">
-				<Katex as="div" display tex="0<b_n-a_n=d_1<\frac1n\xrightarrow[n\to\infty]{}0." />
-			</div>
-			<p>
-				Damit ist die Intervallbreite kontrolliert:
-				Jedes Intervall <Katex tex="[a_n,b_n]" /> hat Breite kleiner als <Katex tex="\frac1n" />,
-				also gehen die Breiten gegen 0.
-				Genau das ist der entscheidende Eindeutigkeitsschritt.
+				Die Intervalllängen der geschachtelten Intervalle gehen also gegen 0.
+				Daher besteht <Katex tex="\bigcap_{n\ge2}I_n" /> aus genau einem Punkt, nenne ihn
+				<Katex tex="x^*" />.
 			</p>
 			<p>
-				Die geschachtelten Intervalle schrumpfen auf genau einen Punkt <Katex tex="x^*" />.
-				Dann gilt für jedes <Katex tex="n" />:
+				Weil die Intervalle geschachtelt sind, gilt
+				<Katex tex="a_n<a_{n+1}\le x^*" /> und <Katex tex="x^*\le b_{n+1}<b_n" />.
+				Also liegt <Katex tex="x^*" /> für jedes <Katex tex="n\ge2" /> strikt im Inneren:
+				<Katex tex="a_n<x^*<b_n" />.
+				Mit der strengen Monotonie von <Katex tex="T_n" /> folgt dann:
 			</p>
 			<div class="kbox">
-				<Katex as="div" display tex="a_n<x^*<b_n\quad\Longrightarrow\quad 1-\frac1n<T_n(x^*)<1." />
+				<Katex as="div" display tex="1-\frac{1}{n}=T_n(a_n)<T_n(x^*)<T_n(b_n)=1\quad(n\ge2)." />
 			</div>
 			<p>
-				Mit <Katex tex="x_n=T_n(x^*)" /> folgt:
+				Für <Katex tex="n=1" /> gilt zusätzlich
+				<Katex tex="a_1=0<a_2\le x^*\le b_2<b_1=1" />, also <Katex tex="0<x^*<1" />.
+				Mit der Äquivalenz aus Teil 3 folgt damit:
 			</p>
 			<div class="kbox">
-				<Katex as="div" display tex="1-\frac1n<x_n<1,\qquad x_{n+1}-x_n=x_n\!\left(x_n+\frac1n-1\right)>0,\qquad 0<x_n<x_{n+1}<1." />
+				<Katex as="div" display tex="x_n=T_n(x^*)\quad\Longrightarrow\quad 0<x_n<x_{n+1}<1\ \text{für alle }n." />
 			</div>
 			<p>
 				Zum Schluss die formale Eindeutigkeit:
-				Haben <Katex tex="x_1,y_1" /> beide die Eigenschaft, dann liegen sie für jedes
-				<Katex tex="n" /> im gleichen Intervall <Katex tex="(a_n,b_n)" />.
-				Ihr Abstand ist also höchstens die Intervallbreite.
+				Haben <Katex tex="x_1" /> und <Katex tex="y_1" /> die Eigenschaft, dann liegen beide für jedes
+				<Katex tex="n\ge2" /> in <Katex tex="(a_n,b_n)" />.
 			</p>
 			<div class="kbox">
-				<Katex as="div" display tex="|x_1-y_1|<b_n-a_n<\frac1n\quad\text{für alle }n\quad\Longrightarrow\quad x_1=y_1." />
+				<Katex as="div" display tex="|x_1-y_1|\le b_n-a_n<\frac1n\quad(n\ge2)." />
 			</div>
 			<p>
-				In einfachen Worten:
-				Die erlaubte Startzone wird immer enger, bis nichts mehr „nebeneinander“ Platz hat.
-				Deshalb kann nur ein einziger Startwert übrig bleiben.
+				Da dies für alle <Katex tex="n\ge2" /> gilt, folgt <Katex tex="|x_1-y_1|=0" />,
+				also <Katex tex="x_1=y_1" />.
 			</p>
 		</div>
 	</template>

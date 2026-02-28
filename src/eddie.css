@@ -318,3 +318,36 @@ h3 {
   font-size: 13px;
   line-height: 1.5;
 }
+
+@media print {
+  .v-alert,
+  .pageCard,
+  .legalRow,
+  #interactiv,
+  #forum {
+    display: none !important;
+  }
+
+  .v-toolbar,
+  .v-app-bar {
+    position: relative !important;
+    top: auto !important;
+  }
+
+  .v-main {
+    --v-layout-top: 0px !important;
+    padding-top: 0 !important;
+  }
+
+  html,
+  body,
+  .frame,
+  .v-application,
+  .v-application__wrap,
+  .v-main,
+  .v-main__scroller {
+    height: auto !important;
+    min-height: 0 !important;
+    overflow: visible !important;
+  }
+}

@@ -35,7 +35,7 @@
 							</template>
 						</h1>
 						<p v-if="subChapterEntries.length" class="sub">
-							<template v-for="( chapter, index ) in subChapterEntries" :key="chapter.id">
+							<template v-for="( chapter ) in subChapterEntries" :key="chapter.id">
 								<router-link :to="{ path: routePathForHashLinks, hash: `#${chapter.id}` }">
 									{{ chapter.label }}
 								</router-link>
@@ -70,9 +70,9 @@
 				border="start"
 				class="wipAlert"
 				:density="isMobile ? 'compact' : 'comfortable'"
+				icon="mdi-alert-outline"
 				type="warning"
 				variant="tonal"
-				icon="mdi-alert-outline"
 			>
 				{{ warningMessage }}
 			</v-alert>
@@ -82,8 +82,8 @@
 				border="start"
 				class="wipAlert"
 				:density="isMobile ? 'compact' : 'comfortable'"
-				type="success"
 				icon="mdi-file-edit-outline"
+				type="success"
 				variant="tonal"
 			>
 				Dieses Kapitel wird aktuell von {{ correctorName }} geprüft.
@@ -92,11 +92,11 @@
 			<Page v-if="showBookCard">
 				<slot name="bookPart" />
 			</Page>
-			<section class="card">
+			<section class="card" if="description">
 				<slot name="descriptionPart" />
 			</section>
 
-			<section v-if="showPartsCard" class="card">
+			<section v-if="showPartsCard" id="interactiv" class="card">
 				<v-row class="gridRow" dense>
 					<v-col
 						v-if="hasInteractivePart"
@@ -123,7 +123,7 @@
 					</v-col>
 				</v-row>
 			</section>
-			<section class="card" id="forum">
+			<section id="forum" class="card">
 				<ForumThreadPocketBase
 					:forum-key="shortText"
 				/>
@@ -237,7 +237,9 @@ import {
 } from "vue";
 import { useRoute } from "vue-router";
 import { useDisplay } from "vuetify";
-import { mdiHexagonSlice2, mdiHexagonSlice4, mdiHexagonSlice6 } from "@mdi/js";
+import {
+	mdiHexagonSlice2, mdiHexagonSlice4, mdiHexagonSlice6
+} from "@mdi/js";
 import reportErrorHTML from "./utils/disclaimer/report_errors_de.html?raw";
 import impressumHtml from "./utils/disclaimer/impressum_de.html?raw";
 import privacyPolicyHtml from "./utils/disclaimer/privacy_policy_de.html?raw";
