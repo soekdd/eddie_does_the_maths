@@ -3,7 +3,7 @@ import { fileURLToPath, URL } from "node:url";
 import vue from "@vitejs/plugin-vue";
 import { defineConfig } from "vite";
 import vuetify from "vite-plugin-vuetify";
-import { explicitDynamicRoutes } from "./src/ssg-routes.js";
+import { explicitDynamicRoutes } from "./src/utils/ssg-routes.js";
 import fs from "node:fs";
 
 const buildDate = String( process.env.VITE_BULD_DATE || "" ).trim();
