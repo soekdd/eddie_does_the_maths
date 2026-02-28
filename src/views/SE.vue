@@ -37,6 +37,11 @@
 				<v-expansion-panel v-for="item in routines" :key="item.id">
 					<v-expansion-panel-title>{{ item.title }}</v-expansion-panel-title>
 					<v-expansion-panel-text class="d-flex flex-column ga-2" eager>
+						<figure v-if="item.graph" class="exampleFigure">
+							<ImageZoomer no-zoom>
+								<component :is="item.graph"/>
+							</ImageZoomer>
+						</figure>
 						<div>{{ item.text }}</div>
 					</v-expansion-panel-text>
 				</v-expansion-panel>
@@ -122,6 +127,9 @@
 /* eslint-disable vue/max-len */
 import { computed, ref } from "vue";
 import titleImg from "@/images/SE.webp";
+import SEGraph10 from "./SE_Graph_10.vue";
+import SEGraph7 from "./SE_Graph_7.vue";
+import SEGraph3 from "./SE_Graph_3.vue";
 
 const routines = [
 	{
@@ -136,6 +144,7 @@ const routines = [
 	},
 	{
 		id:    3,
+		graph: SEGraph3,
 		title: "3. Fibonacci-Schlafleiter",
 		text:  "Die Fibonacci-Zahlen beginnen harmlos: 1, 1, 2, 3, 5, 8 … Immer addiert man die letzten beiden, um die nächste zu bekommen. Stell dir die Reihe als Leiter vor, deren Sprossen immer ein kleines bisschen weiter auseinanderliegen. Bis 21 kommst du locker hoch, danach wird’s anstrengend. Also hörst du bei 21 auf und stellst dir vor, wie du dich auf dieser Sprosse einfach hinlegst. Von hier aus kannst du in den Schlaf rutschen."
 	},
@@ -156,6 +165,7 @@ const routines = [
 	},
 	{
 		id:    7,
+		graph: SEGraph7,
 		title: "7. Bretter im Dach – Rechteckzahlen",
 		text:  "Schau an die Dachbalken der Hütte. Stell dir vor, sie bilden ein Gitter mit vier Reihen und drei Spalten. Wie viele Rechtecke kannst du darin finden? Das klingt riesig, aber es gibt einen Trick: Du wählst zwei horizontale Linien und zwei vertikale Linien aus – und schon ist ein Rechteck bestimmt. Mit fünf Linien horizontal und vier vertikal gibt das 10×6=60 Rechtecke. 60 klingt ordentlich, vollständig – danach ist der Gedanke abgeschlossen."
 	},
@@ -171,6 +181,7 @@ const routines = [
 	},
 	{
 		id:    10,
+		graph: SEGraph10,
 		title: "10. Wald-Markierungen (Kombinatorik-Bild)",
 		text:  "Stell dir sechs Bäume im Kreis vor. Du verbindest jeden Baum mit jedem anderen durch eine Linie. Am Ende hast du 15 Verbindungen – das kannst du dir wie ein Netz aus Spinnfäden vorstellen. Zuerst ist es wirr, aber dann merkst du: Es sind genau so viele, wie es sein sollen, nicht mehr und nicht weniger. Und wenn du magst, kannst du die Linien langsam im Kopf ausradieren. Zurück bleiben nur die Bäume und die Stille."
 	},
