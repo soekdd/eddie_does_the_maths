@@ -151,20 +151,20 @@ export async function generatePdfs() {
 				( route === "/" ? "index" : route.replace( /\//g, "__" ).replace( /^__/, "" ) ) + ".pdf" );
 
 			// preferCSSPageSize + printBackground sind die beiden wichtigsten Optionen. :contentReference[oaicite:3]{index=3}
-				await page.pdf( {
-					path:              filePath,
-					printBackground:   true,
-					preferCSSPageSize: true,
-					margin:            {
-						top:    "12mm",
-						right:  "12mm",
-						bottom: "12mm",
-						left:   "12mm"
-					}
-					// alternativ/zusätzlich:
-					// format: 'A4',
-					// margin: { top: '12mm', right: '12mm', bottom: '12mm', left: '12mm' },
-				} );
+			await page.pdf( {
+				path:              filePath,
+				printBackground:   true,
+				preferCSSPageSize: true,
+				margin:            {
+					top:    "12mm",
+					right:  "12mm",
+					bottom: "12mm",
+					left:   "12mm"
+				}
+				// alternativ/zusätzlich:
+				// format: 'A4',
+				// margin: { top: '12mm', right: '12mm', bottom: '12mm', left: '12mm' },
+			} );
 
 			await page.close();
 			console.log(
