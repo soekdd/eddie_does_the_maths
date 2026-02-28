@@ -93,7 +93,16 @@
 				<slot name="bookPart" />
 			</Page>
 			<section class="card" if="description">
-				<slot name="descriptionPart" />
+				<div class="descriptionPartHeader">
+					<MarkdownDownload
+						button-label="Download als Markdown"
+						:file-name="descriptionMarkdownFileName"
+						target-id="descriptionPartMarkdownSource"
+					/>
+				</div>
+				<div id="descriptionPartMarkdownSource">
+					<slot name="descriptionPart" />
+				</div>
 			</section>
 
 			<section v-if="showPartsCard" id="interactiv" class="card">
@@ -245,6 +254,7 @@ import impressumHtml from "./utils/disclaimer/impressum_de.html?raw";
 import privacyPolicyHtml from "./utils/disclaimer/privacy_policy_de.html?raw";
 import faviconPng from "./images/favicon.png";
 import ForumThreadPocketBase from "./components/ForumThreadPocketBase.vue";
+import MarkdownDownload from "./components/MarkdownDownload.vue";
 import Page from "./components/Page.vue";
 
 const props = defineProps( {
@@ -382,6 +392,17 @@ const subChapterEntries = computed( () => Object.entries( props.subChapter ?? {}
 	.filter( ( entry ) => entry.id && entry.label ) );
 const showFormalTitle = computed( () =>
 	Boolean( shortText.value || titleText.value || subChapterEntries.value.length ) );
+const descriptionMarkdownFileName = computed( () => {
+	const parts = [ shortText.value, titleText.value ]
+		.map( ( value ) => String( value ?? "" ).trim() )
+		.filter( Boolean );
+
+	if ( !parts.length ) {
+		return "beschreibung";
+	}
+
+	return parts.join( "-" );
+} );
 const buildDateRaw = String( import.meta.env.VITE_BUILD_DATE ?? "" ).trim();
 
 function pad2( value ) {
@@ -518,5 +539,17 @@ onMounted( () => {
 
 .difficultyStars.is-wip {
   opacity: 0.5;
+}
+
+.descriptionPartHeader {
+	display: flex;
+	justify-content: flex-end;
+	margin-bottom: 8px;
+}
+
+@media print {
+	.descriptionPartHeader {
+		display: none;
+	}
 }
 </style>
