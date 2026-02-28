@@ -1,11 +1,11 @@
 <template>
-<AppFrame
-	:sub-chapter="{
+<AppFrame  :sub-chapter="{
 		einleitung: 'Einleitung',
 		lektionen: '9 Navigations-Lektionen',
 		interaktiv: 'Interaktiv'
 	}"
 	title="Eddie rechnet: Navigation im Wald"
+	:vue-date="__VITE_SFC_MTIME_MS__"
 >
 	<template #bookPart>
 		<figure class="exampleFigure">

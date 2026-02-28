@@ -1,6 +1,5 @@
 <template>
-<AppFrame
-	:sub-chapter="{
+<AppFrame  :sub-chapter="{
 		einleitung:'Einleitung',
 		'aufgabe': 'Aufgabe',
 		'loesung': 'Lösung',
@@ -8,6 +7,7 @@
 		'simulation': 'Simulation'
 	}"
 	title="Eddie rechnet: Frühstückszettel #1 Fischpopulation"
+	:vue-date="__VITE_SFC_MTIME_MS__"
 >
 	<template #bookPart>
 		<figure class="exampleFigure">

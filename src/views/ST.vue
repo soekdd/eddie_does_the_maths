@@ -1,11 +1,11 @@
 <template>
-<AppFrame
-	:sub-chapter="{
+<AppFrame  :sub-chapter="{
 		'entscheidungsbaum': 'Entscheidungsbaum',
 		'wahrscheinlichkeiten': 'Wahrscheinlichkeiten',
 		'rechner': 'Rechner'
 	}"
 	title="Eddie rechnet: Spieltheorie am Busbahnhof"
+	:vue-date="__VITE_SFC_MTIME_MS__"
 >
 
 	<template #bookPart>

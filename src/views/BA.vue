@@ -1,12 +1,12 @@
 <template>
-<AppFrame
-	:sub-chapter="{
+<AppFrame  :sub-chapter="{
 		einleitung:'Einleitung',
 		'casar': 'Cäsar',
 		'vigenere': 'Vigenère',
 		'c64-emulator': 'C64 Emulator'
 	}"
 	title="Eddie rechnet: BASIC for runaways"
+	:vue-date="__VITE_SFC_MTIME_MS__"
 >
 	<template #bookPart>
 		<figure class="exampleFigure">
@@ -395,25 +395,19 @@
 </AppFrame>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import {
 	ref, computed, watch
 } from "vue";
 import BAEmulator from "./BA_Emulator.vue";
 import titleImg from "@/images/BA.webp";
-type BasicProgram = { id: string; name: string; source: string };
-type BAEmulatorExpose = {
-	runProgram: ( source: string ) => Promise<void>;
-	clearScreen: () => void;
-	softReset: () => void;
-};
 
 const emulatorKey = ref( 0 );
-const emulatorRef = ref<BAEmulatorExpose | null>( null );
+const emulatorRef = ref( null );
 const emulatorReady = ref( false );
 const emulatorRunning = ref( false );
 const encodedHAMMessage = "OJUTXTLJNNUTXNZGMIKN";
-const programs: BasicProgram[] = [
+const programs = [
 	{
 		id:     "hello",
 		name:   "Hello World",
@@ -682,12 +676,12 @@ function resetProgramRuntime() {
 	emulatorRef.value?.softReset();
 }
 
-function handleEmulatorStateChange( payload: { ready: boolean; running: boolean } ) {
+function handleEmulatorStateChange( payload ) {
 	emulatorReady.value = payload.ready;
 	emulatorRunning.value = payload.running;
 }
 
-function handleHardRestart( payload: { reason: string } ) {
+function handleHardRestart( payload ) {
 	console.error( "BA_Emulator hard restart:", payload?.reason ?? payload );
 	emulatorReady.value = false;
 	emulatorRunning.value = false;
@@ -697,24 +691,24 @@ function handleHardRestart( payload: { reason: string } ) {
 /** ===== Crypto helpers (A=0..Z=25) ===== */
 const ALPH = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-function normAZ( s: string ): string {
+function normAZ( s ) {
 	// nur A-Z behalten
 	return s.toUpperCase().replace( /[^A-Z]/g, "" );
 }
 
-function ch2n( ch: string ): number {
+function ch2n( ch ) {
 	return ALPH.indexOf( ch );
 }
 
-function n2ch( n: number ): string {
+function n2ch( n ) {
 	const x = ( n % 26 + 26 ) % 26;
 	return ALPH[ x ];
 }
 
-function caesarEncrypt( plain: string, k: number ) {
+function caesarEncrypt( plain, k ) {
 	const p = normAZ( plain );
 	let cipher = "";
-	const rows: Array<{ p: string; pn: number; cn: number; c: string }> = [];
+	const rows = [];
 
 	for ( const ch of p ) {
 		const pn = ch2n( ch );
@@ -731,12 +725,12 @@ function caesarEncrypt( plain: string, k: number ) {
 	};
 }
 
-function vigenereEncryptWord( plain: string, key: string ) {
+function vigenereEncryptWord( plain, key ) {
 	const p = normAZ( plain );
 	const k0 = normAZ( key );
 	const keyRep = Array.from( { length: p.length }, ( _, i ) => k0[ i % k0.length ] );
 	let cipher = "";
-	const rows: Array<{ i: number; p: string; k: string; c: string }> = [];
+	const rows = [];
 
 	for ( let i = 0; i < p.length; i++ ) {
 		const pn = ch2n( p[ i ] );
@@ -754,10 +748,10 @@ function vigenereEncryptWord( plain: string, key: string ) {
 	};
 }
 
-function vigenereEncryptNumbers( plain: string, shifts: number[] ) {
+function vigenereEncryptNumbers( plain, shifts ) {
 	const p = normAZ( plain );
 	let cipher = "";
-	const rows: Array<{ i: number; p: string; shift: number; c: string }> = [];
+	const rows = [];
 
 	for ( let i = 0; i < p.length; i++ ) {
 		const pn = ch2n( p[ i ] );

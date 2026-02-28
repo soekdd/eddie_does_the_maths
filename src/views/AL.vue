@@ -1,13 +1,13 @@
 <!-- eslint-disable vue/max-len -->
 <template>
-<AppFrame
-	:sub-chapter="{
+<AppFrame  :sub-chapter="{
 		'analytical-engine': 'Analytical Engine',
 		'bernoulli-zahlen': 'Bernoulli-Zahlen',
 		'gcd': 'gcd',
 		'babbage':'Babbages Maschine'
 	}"
 	title="Eddie rechnet: Kartenspiele mit Ada Lovelace"
+	:vue-date="__VITE_SFC_MTIME_MS__"
 >
 
 	<template #bookPart>

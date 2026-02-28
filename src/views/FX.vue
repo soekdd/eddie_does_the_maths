@@ -1,12 +1,12 @@
 <template>
-<AppFrame
-	:sub-chapter="{
+<AppFrame  :sub-chapter="{
 		einleitung: 'Einleitung',
 		'geschichte': 'Geschichte',
 		'basic-denke': 'BASIC-Denke',
 		'interaktiver-rechner': 'Interaktiver Rechner'
 	}"
 	title="Eddie rechnet: Der fx-7000G"
+	:vue-date="__VITE_SFC_MTIME_MS__"
 >
 
 	<template #bookPart>

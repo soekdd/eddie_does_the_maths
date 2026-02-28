@@ -1,12 +1,12 @@
 <template>
-<AppFrame
-	:sub-chapter="{
+<AppFrame  :sub-chapter="{
 		einleitung:'Einleitung',
 		'geometrie': 'Geometrie',
 		'potenzpunkte': 'Potenzpunkte',
 		'radikalachsen': 'Radikalachsen'
 	}"
 	title="Eddie rechnet: IMO 1985 Aufgabe B2"
+	:vue-date="__VITE_SFC_MTIME_MS__"
 >
 
 	<template #bookPart>

@@ -1,9 +1,9 @@
 <template>
-<AppFrame
-	:sub-chapter="{
+<AppFrame  :sub-chapter="{
 		
 	}"
 	title="Eddie rechnet: Landkarten Geometrie"
+	:vue-date="__VITE_SFC_MTIME_MS__"
 >
 
 	<template #bookPart>

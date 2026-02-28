@@ -1,7 +1,6 @@
 <!-- eslint-disable vue/max-len -->
 <template>
-<AppFrame
-	:sub-chapter="{
+<AppFrame  :sub-chapter="{
 		einleitung: 'Einleitung',
 		impuls: 'Impuls vs. k',
 		idee: 'Idee',
@@ -10,6 +9,7 @@
 		fazit: 'Fazit'
 	}"
 	title="Eddie rechnet: Baustatik #3 Dynamische Lasten"
+	:vue-date="__VITE_SFC_MTIME_MS__"
 >
 	<template #bookPart>
 		<figure class="exampleFigure">

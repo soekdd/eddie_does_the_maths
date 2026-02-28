@@ -1,7 +1,6 @@
 <!-- eslint-disable vue/max-len -->
 <template>
-<AppFrame
-	:sub-chapter="{
+<AppFrame  :sub-chapter="{
 		einleitung:'Einleitung',
 		ziel: 'Ziel',
 		steiner: 'Steiner',
@@ -12,6 +11,7 @@
 		bonus: 'Bonus'
 	}"
 	title="Eddie rechnet: Baustatik #1, Satz von Steiner"
+	:vue-date="__VITE_SFC_MTIME_MS__"
 >
 	<template #bookPart>
 		<figure class="exampleFigure">

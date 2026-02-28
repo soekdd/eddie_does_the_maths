@@ -1,7 +1,6 @@
 <!-- eslint-disable vue/max-len -->
 <template>
-<AppFrame
-	:sub-chapter="{
+<AppFrame  :sub-chapter="{
 		'setting-geometrie': 'Setting',
 		'risiko-modell': 'Risiko-Modell',
 		aufgabe: 'Aufgabe',
@@ -10,6 +9,7 @@
 		interaction: 'Interaktion'
 	}"
 	title="Eddie rechnet: Optimale Querung"
+	:vue-date="__VITE_SFC_MTIME_MS__"
 >
 	<template #bookPart>
 		<figure class="exampleFigure">

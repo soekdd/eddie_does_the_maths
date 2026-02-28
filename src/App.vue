@@ -54,7 +54,6 @@
 					</div>
 				</template>
 				<slot v-else name="title" />
-				{{vueDate}}
 			</div>
 		</v-container>
 	</v-app-bar>
@@ -119,6 +118,7 @@
 				<div id="descriptionPartMarkdownSource">
 					<slot name="descriptionPart" />
 				</div>
+				<div class="lastUpdate">letzte Änderung: {{fileDate}}</div>
 			</section>
 
 			<section v-if="showPartsCard" id="interactiv" class="card">
@@ -276,7 +276,7 @@ import Page from "./components/Page.vue";
 const props = defineProps( {
 	title:      { type: String, default: "" },
 	nomd:       { type: Boolean, default: false },
-	vueDate:    { type: String, default: null },
+	vueDate:    { type: Number || String, default: null },
 	subChapter: {
 		type:    Object,
 		default: () => ( {} )
@@ -292,7 +292,7 @@ const hasMounted = ref( false );
 // header-wrapping case. Match the app's existing "mobile-ish" breakpoint (see eddie.css).
 const isMobile = computed( () => hasMounted.value ? width.value < 860 : false );
 const appBarHeight = computed( () => isMobile.value ? 108 : 72 );
-
+const fileDate = computed( () => new Date( props.vueDate ).toLocaleString( "de-DE" ) );
 const errorMessage = computed( () => {
 	if ( route.meta?.error === true ) {
 		return "Achtung: Dieser Inhalt ist bekanntermaßen noch fehlerhaft. " +
@@ -345,7 +345,17 @@ const showReportErrorDialog = ref( false );
 const showImpressumDialog = ref( false );
 const showPrivacyDialog = ref( false );
 
-const routePathForHashLinks = computed( () => route.path );
+function normalizePathForHashLinks( pathValue ) {
+	const asString = String( pathValue || "/" ).trim();
+
+	if ( asString === "/" ) {
+		return "/";
+	}
+
+	return asString.endsWith( "/" ) ? asString : `${asString}/`;
+}
+
+const routePathForHashLinks = computed( () => normalizePathForHashLinks( route.path ) );
 const showHomeBadge = computed( () => route.path !== "/" );
 const shortText = computed( () => {
 	const routeName = typeof route.name === "string" ? route.name : "";

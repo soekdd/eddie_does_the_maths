@@ -1,12 +1,12 @@
 <template>
-<AppFrame
-	:sub-chapter="{
+<AppFrame  :sub-chapter="{
 		einleitung:'Einleitung',
 		'entscheidungsbaum': 'Entscheidungsbaum',
 		'wahrscheinlichkeiten': 'Wahrscheinlichkeiten',
 		'rechner': 'Rechner'
 	}"
 	title="Eddie rechnet: IMO 1985 Aufgabe A2"
+	:vue-date="__VITE_SFC_MTIME_MS__"
 >
 
 	<template #bookPart>

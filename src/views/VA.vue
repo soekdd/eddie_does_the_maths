@@ -1,6 +1,5 @@
 <template>
-<AppFrame
-	:sub-chapter="{
+<AppFrame  :sub-chapter="{
 		gleichgewicht: 'Gleichgewicht',
 		metazentrum: 'Metazentrum',
 		windmoment: 'Windmoment',
@@ -8,6 +7,7 @@
 		interaktiv: 'Interaktiv'
 	}"
 	title="Eddie rechnet: Warum die Vasa sinken musste"
+	:vue-date="__VITE_SFC_MTIME_MS__"
 >
 	<template #bookPart>
 		<figure class="exampleFigure">

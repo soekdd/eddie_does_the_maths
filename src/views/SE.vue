@@ -1,11 +1,11 @@
 <template>
-<AppFrame
-	:sub-chapter="{
+<AppFrame  :sub-chapter="{
 		'einleitung': 'Einleitung',
 		'muster': '12 Rituale für die Nacht',
 		'quiz': 'Quiz zum Üben',
 	}"
 	title="Eddie rechnet: Gute-Nacht-Rechenroutine"
+	:vue-date="__VITE_SFC_MTIME_MS__"
 >
 
 	<template #bookPart>

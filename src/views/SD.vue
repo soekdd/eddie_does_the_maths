@@ -1,6 +1,5 @@
 <template>
-<AppFrame
-	:sub-chapter="{
+<AppFrame  :sub-chapter="{
 		einleitung:'Einleitung',
 		'bits-zu-basen': 'Bits zu Basen',
 		'codons': 'Codons',
@@ -10,6 +9,7 @@
 		'gift-code': 'String zu DNA'
 	}"
 	title="Eddie rechnet: Ich zeig dir deine DNA"
+	:vue-date="__VITE_SFC_MTIME_MS__"
 >
 	<template #bookPart>
 		<figure class="exampleFigure">

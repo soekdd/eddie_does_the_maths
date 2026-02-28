@@ -1,7 +1,6 @@
 <!-- eslint-disable vue/max-len -->
 <template>
-<AppFrame
-	:sub-chapter="{
+<AppFrame  :sub-chapter="{
 		einleitung: 'Einleitung',
 		'diophantos-raetsel': 'Diophantos-Rätsel',
 		'in-formeln': 'In Formeln',
@@ -12,6 +11,7 @@
 		'deine-grabplatte': 'Deine Grabplatte'
 	}"
 	title="Ich rechne: Diophantos' Grabplatte"
+	:vue-date="__VITE_SFC_MTIME_MS__"
 >
 	<template #bookPart>
 		<figure class="exampleFigure">

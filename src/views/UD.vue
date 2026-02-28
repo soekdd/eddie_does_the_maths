@@ -1,7 +1,6 @@
 <!-- eslint-disable vue/max-len -->
 <template>
-<AppFrame
-	:sub-chapter="{
+<AppFrame  :sub-chapter="{
 		einleitung:'Einleitung',
 		'frage': 'Fragestellung',
 		'formel': 'Formel',
@@ -9,6 +8,7 @@
 		'finnland': 'Länderbeispiel'
 	}"
 	title="Eddie rechnet: Frühstückszettel #3 Uferaufdickung"
+	:vue-date="__VITE_SFC_MTIME_MS__"
 >
 
 	<template #bookPart>

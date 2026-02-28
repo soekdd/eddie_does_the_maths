@@ -9,7 +9,7 @@ const where = computed( () => route.fullPath || route.path || "" );
 </script>
 
 <template>
-<AppFrame
+<AppFrame  :vue-date="__VITE_SFC_MTIME_MS__"
 	:sub-chapter="{
 		'dieses-thema-ist-noch-nicht-ausgearbeitet': 'Dieses Thema ist noch nicht ausgearbeitet'
 	}"

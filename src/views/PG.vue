@@ -1,7 +1,6 @@
 <!-- eslint-disable vue/max-len -->
 <template>
-<AppFrame
-	:sub-chapter="{
+<AppFrame  :sub-chapter="{
 		'einleitung': 'Einleitung',
 		'poker': 'Poker',
 		'wahrscheinlichkeiten': 'Wahrscheinlichkeiten',
@@ -9,6 +8,7 @@
 		'ev': 'EV'
 	}"
 	title="Eddie rechnet: Five Card Draw - 7 statistische Aufgaben"
+	:vue-date="__VITE_SFC_MTIME_MS__"
 >
 	<template #bookPart>
 		<figure class="exampleFigure">

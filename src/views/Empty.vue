@@ -1,5 +1,5 @@
 <template>
-<AppFrame
+<AppFrame  :vue-date="__VITE_SFC_MTIME_MS__"
 	:sub-chapter="{
 		'entscheidungsbaum': 'Entscheidungsbaum',
 		'wahrscheinlichkeiten': 'Wahrscheinlichkeiten',

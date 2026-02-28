@@ -1,6 +1,5 @@
 <template>
-<AppFrame
-	:sub-chapter="{
+<AppFrame  :sub-chapter="{
 		einleitung:'Einleitung',
 		'aufgabenstellung': 'Aufgabenstellung',
 		'kernidee': 'Kernidee',
@@ -8,6 +7,7 @@
 		'eddieComment': 'Einordnung'
 	}"
 	title="Eddie rechnet: IMO 1985 Aufgabe A3"
+	:vue-date="__VITE_SFC_MTIME_MS__"
 >
 
 	<template #bookPart>

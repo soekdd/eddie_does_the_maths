@@ -1,7 +1,6 @@
 <!-- eslint-disable vue/max-len -->
 <template>
-<AppFrame
-	:sub-chapter="{
+<AppFrame  :sub-chapter="{
 		einleitung: 'Einleitung',
 		eigengewicht: 'Eigengewicht',
 		schnittgroessen: 'Schnittgrößen',
@@ -12,6 +11,7 @@
 		interaktiv: 'Interaktiv'
 	}"
 	title="Eddie rechnet: Baustatik #2 DIN vs. TGL"
+	:vue-date="__VITE_SFC_MTIME_MS__"
 >
 	<template #bookPart>
 		<figure class="exampleFigure">

@@ -1,11 +1,11 @@
 <template>
-<AppFrame
-	nomd
+<AppFrame  nomd
 	:sub-chapter="{
 		'willkommen': 'Willkommen',
 		'ubersicht': 'Übersicht'
 	}"
 	title="Eddie rechnet"
+	:vue-date="__VITE_SFC_MTIME_MS__"
 >
 
 	<template #descriptionPart>

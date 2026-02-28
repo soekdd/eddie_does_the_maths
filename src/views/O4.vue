@@ -1,6 +1,5 @@
 <template>
-<AppFrame
-	:sub-chapter="{
+<AppFrame  :sub-chapter="{
 		einleitung:'Einleitung',
 		'aufgabenstellung': 'Aufgabenstellung',
 		'crashkurs': 'Quadrat vs. 4. Potenz',
@@ -10,6 +9,7 @@
 		'beispiel': 'Mini-Beispiel'
 	}"
 	title="Eddie rechnet: IMO 1985 Aufgabe B1"
+	:vue-date="__VITE_SFC_MTIME_MS__"
 >
 
 	<template #bookPart>

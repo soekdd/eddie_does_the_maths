@@ -15,6 +15,9 @@ function sfcMtimePlugin( opts = {} ) {
 	const MS = opts.msName ?? "__VITE_SFC_MTIME_MS__";
 
 	const hasScriptSetup = /<script\b[^>]*\bsetup\b[^>]*>/i;
+	const hasInjectedConst = ( code ) =>
+		new RegExp( `\\bconst\\s+${ISO}\\s*=` ).test( code ) ||
+		new RegExp( `\\bconst\\s+${MS}\\s*=` ).test( code );
 
 	return {
 		name:    "sfc-mtime-inject",
@@ -31,8 +34,8 @@ function sfcMtimePlugin( opts = {} ) {
 				return null;
 			}
 
-			// doppelte Injektion vermeiden
-			if ( code.includes( ISO ) || code.includes( MS ) ) {
+			// doppelte Injektion vermeiden (nur wenn echte const-Definition bereits existiert)
+			if ( hasInjectedConst( code ) ) {
 				return null;
 			}
 

@@ -1,12 +1,12 @@
 <template>
-<AppFrame
-	:sub-chapter="{
+<AppFrame  :sub-chapter="{
 		einleitung:'Einleitung',
 		rekursion: 'Rekursion',
 		monotonie: 'Monotonie',
 		'existenz-eindeutigkeit': 'Existenz & Eindeutigkeit'
 	}"
 	title="Eddie rechnet: IMO 1985 Aufgabe B3"
+	:vue-date="__VITE_SFC_MTIME_MS__"
 >
 
 	<template #bookPart>

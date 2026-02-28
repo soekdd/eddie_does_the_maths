@@ -1,7 +1,6 @@
 <!-- eslint-disable vue/max-len -->
 <template>
-<AppFrame
-	:sub-chapter="{
+<AppFrame  :sub-chapter="{
 		einleitung: 'Einleitung',
 		'warum-laplace':    'Warum Laplace?',
 		vorgehen:           'Vorgehen',
@@ -10,6 +9,7 @@
 		interactivePart:'Laplace-Transformator'
 	}"
 	title="Eddie rechnet: Laplace-Transformation"
+	:vue-date="__VITE_SFC_MTIME_MS__"
 >
 
 	<template #bookPart>

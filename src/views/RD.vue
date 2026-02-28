@@ -1,11 +1,11 @@
 <template>
-<AppFrame
-	:sub-chapter="{
+<AppFrame  :sub-chapter="{
 		einleitung:'Einleitung',
 		'depot-strategie': 'Depot-Strategie',
 		'vorstufe-plus-klassisches-mehrdepot-modell': 'Vorstufe + klassisches Mehrdepot-Modell'
 	}"
 	title="Eddie rechnet: Frühstückszettel #2 Das Rentier-Problem"
+	:vue-date="__VITE_SFC_MTIME_MS__"
 >
 
 	<template #bookPart>

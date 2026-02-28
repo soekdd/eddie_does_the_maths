@@ -1,6 +1,5 @@
 <template>
-<AppFrame
-	:sub-chapter="{
+<AppFrame  :sub-chapter="{
 		vorlesung: 'Stockholm 1985',
 		quantisierung: 'Quantisierung',
 		metrologie: 'Metrologie',
@@ -8,6 +7,7 @@
 		ohmfrage: 'Eddies Frage'
 	}"
 	title="Eddie rechnet: Der Quanten-Hall-Effekt"
+	:vue-date="__VITE_SFC_MTIME_MS__"
 >
 	<template #bookPart>
 		<figure class="exampleFigure">

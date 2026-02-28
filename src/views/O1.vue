@@ -1,6 +1,5 @@
 <template>
-<AppFrame
-	:sub-chapter="{
+<AppFrame  :sub-chapter="{
 		einleitung:'Einleitung',
 		'geometrie': 'Geometrie',
 		'tangenten': 'Tangenten',
@@ -8,6 +7,7 @@
 		'kongruenz': 'Kongruenz'
 	}"
 	title="Eddie rechnet: IMO 1985 Aufgabe A1"
+	:vue-date="__VITE_SFC_MTIME_MS__"
 >
 	<template #bookPart>
 		<figure class="exampleFigure">

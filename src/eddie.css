@@ -319,6 +319,14 @@ h3 {
   line-height: 1.5;
 }
 
+.lastUpdate {
+  width: 100%;
+  text-align: right;
+  opacity: 0.5;
+  font-size: small;
+  margin-top: 0.5em;
+}
+
 @media screen {
   /*
    * Vuetify utility classes such as `d-flex` use `display: ... !important`.

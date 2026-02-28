@@ -1,12 +1,12 @@
 <template>
-<AppFrame
-	:sub-chapter="{
+<AppFrame  :sub-chapter="{
 		'einleitung': 'Einleitung',
 		'einfuhrungsbeispiel': 'Einführungsbeispiel',
 		'erklarung': 'Erklärung',
 		'rechner': 'Rechner'
 	}"
 	title="Eddie rechnet: Lineare diophantische Gleichung"
+	:vue-date="__VITE_SFC_MTIME_MS__"
 >
 
 	<template #bookPart>
