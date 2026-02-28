@@ -34,23 +34,19 @@ function resolveMdiIconValue( icon ) {
 }
 
 const mdiExtended = {
-	component: ( props ) => h(
-		mdi.component,
+	component: ( props ) => h( mdi.component,
 		{
 			...props,
 			icon: resolveMdiIconValue( props.icon )
-		}
-	)
+		} )
 };
 
 export const vuetify = createVuetify( {
-	ssr: true,
+	ssr:   true,
 	icons: {
 		defaultSet: "mdi",
 		aliases,
-		sets: {
-			mdi: mdiExtended
-		}
+		sets:       { mdi: mdiExtended }
 	},
 	theme: {
 		// SSR-safe initial theme. System sync is applied on the client after hydration.

@@ -150,7 +150,7 @@
 			</v-alert>
 
 			<image-zoomer :title="`IMO85/5`">
-				<O5_Graph :result="result" />
+				<O5_Graph :result />
 			</image-zoomer>
 		</div>
 	</template>

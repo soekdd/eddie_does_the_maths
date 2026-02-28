@@ -9,7 +9,6 @@
 	}"
 	title="Eddie rechnet: IMO 1985 Aufgabe A1"
 >
-
 	<template #bookPart>
 		<figure class="exampleFigure">
 			<ImageZoomer title="Eddie denkt über die Aufgabe A1 der IMO 85 nach">
@@ -32,158 +31,254 @@
 	</template>
 
 	<template #descriptionPart>
-		<h2 id="geometrie">Aufgabenstellung</h2>
+		<h2 id="geometrie">IMO 1985 - Aufgabe A1 (Eddie rechnet)</h2>
 		<div class="eddie">
+			<h3>Teil 1 - Aufgabenstellung</h3>
 			<p>
-				Ein Kreis hat seinen Mittelpunkt auf der Seite <Katex tex="AB" /> eines <b>zyklischen</b>
-				Vierecks <Katex tex="ABCD" /> (also: <Katex tex="A,B,C,D" /> liegen auf einem gemeinsamen
-				Umkreis). Die drei anderen Seiten <Katex tex="BC" />, <Katex tex="CD" /> und <Katex tex="DA" />
-				sind Tangenten an diesen Kreis.
+				Wir haben ein <b>zyklisches Viereck</b> <Katex tex="ABCD" />. Das bedeutet:
+				Die Punkte <Katex tex="A,B,C,D" /> liegen auf einem gemeinsamen Kreis (Umkreis).
 			</p>
-
-			<p class="muted">Zu zeigen ist die simple Längenformel:</p>
+			<p>
+				Auf der Seite <Katex tex="AB" /> liegt ein Punkt <Katex tex="O" />.
+				Um <Katex tex="O" /> liegt ein Kreis (der "Innenkreis"), der die drei Seiten
+				<Katex tex="BC,\quad CD,\quad DA" /> berührt
+				(also an jeder dieser Geraden tangential ist).
+			</p>
+			<p>Zu zeigen ist die Längenformel</p>
 			<div class="kbox">
-				<Katex as="div" display tex="\boxed{AD + BC = AB}" />
+				<Katex as="div" display tex="\boxed{AD + BC = AB.}" />
 			</div>
-
-			<div class="exampleClear"></div>
 		</div>
 
-		<h2>Was man sich sofort feststellt:</h2>
+		<h2>Teil 2 - Bild im Kopf und Notation</h2>
 		<div class="eddie">
-			<p>
-				Die Aufgabe wirkt wie Geometrie-Zauberei, ist aber eigentlich “Buchhaltung” mit Strecken:
-			</p>
+			<p>Der Innenkreis berührt</p>
 			<ul>
-				<li><b>Tangenten</b> liefern Gleichheiten wie <Katex tex="DL=DM" /> und <Katex tex="CN=CM" />.</li>
-				<li><b>Mittelpunkt auf</b> <Katex tex="AB" /> liefert Winkelhalbierenden-Ideen.</li>
-				<li><b>Zyklisch</b> liefert <Katex tex="\angle DAB + \angle DCB = 180^\circ" />.</li>
+				<li>die Seite <Katex tex="AD" /> im Punkt <Katex tex="L" />,</li>
+				<li>die Seite <Katex tex="CD" /> im Punkt <Katex tex="M" />,</li>
+				<li>die Seite <Katex tex="BC" /> im Punkt <Katex tex="N" />.</li>
 			</ul>
-			<p class="muted">
-				Der Trick im Beweis ist, eine “fremde” Strecke per Kongruenz in eine “passende” Strecke zu
-				verwandeln und dann <Katex tex="AB" /> als Summe zu zerlegen.
-			</p>
-		</div>
-		<h2>Lösung</h2>
-		<div class="eddie">
-			<h3>0) Notation: Berührpunkte und Mittelpunkt</h3>
 			<p>
-				Der Tangentialkreis berührt
-				<Katex tex="AD" /> in <Katex tex="L" />,
-				<Katex tex="CD" /> in <Katex tex="M" />,
-				<Katex tex="BC" /> in <Katex tex="N" />.
 				Sein Mittelpunkt ist <Katex tex="O" /> und liegt auf <Katex tex="AB" />.
 			</p>
+			<p class="muted">
+				Man kann sich das so vorstellen: Der Innenkreis "klemmt" zwischen den drei Seiten
+				<Katex tex="AD,CD,BC" />, und sein Mittelpunkt landet genau auf <Katex tex="AB" />.
+			</p>
+		</div>
 
-			<p><b>Tangenten-Merksätze:</b></p>
+		<h2 id="tangenten">Teil 3 - Drei Merksätze (die wir ständig benutzen)</h2>
+		<div class="eddie">
+			<h3>(1) Radius steht senkrecht auf Tangente</h3>
+			<p>Wenn eine Gerade eine Kreis-Tangente ist, dann steht der Radius im Berührpunkt senkrecht darauf:</p>
+			<div class="kbox">
+				<Katex as="div" display tex="OL\perp AD,\quad OM\perp CD,\quad ON\perp BC." />
+			</div>
+
+			<h3 class="mt-6">(2) Tangenten von einem Punkt sind gleich lang</h3>
+			<p>
+				Von einem gemeinsamen Außenpunkt sind die beiden Tangenten an denselben Kreis gleich lang:
+			</p>
+			<ul>
+				<li>
+					Von <Katex tex="C" /> aus gehen die Tangenten über <Katex tex="BC" /> (Berührpunkt <Katex tex="N" />)
+					und <Katex tex="CD" /> (Berührpunkt <Katex tex="M" />): <Katex tex="CN=CM" />.
+				</li>
+				<li>
+					Von <Katex tex="D" /> aus gehen die Tangenten über <Katex tex="DA" /> (Berührpunkt <Katex tex="L" />)
+					und <Katex tex="DC" /> (Berührpunkt <Katex tex="M" />): <Katex tex="DL=DM \Rightarrow MD=DL" />.
+				</li>
+			</ul>
+
+			<h3 class="mt-6">(3) Zyklisch heißt: Gegenwinkel ergänzen sich zu <Katex tex="180^\circ" /></h3>
+			<div class="kbox">
+				<Katex as="div" display tex="\angle DAB+\angle DCB=180^\circ,\qquad \angle ABC+\angle ADC=180^\circ." />
+			</div>
+		</div>
+
+		<h2>Teil 4 - Der Plan (Buchhaltung mit Strecken)</h2>
+		<div class="eddie">
+			<p>Wir wollen am Ende <Katex tex="AB" /> zerlegen:</p>
+			<div class="kbox">
+				<Katex as="div" display tex="AB=AO+OB." />
+			</div>
+			<p>
+				Wenn wir zeigen können
+				<Katex tex="AO=AL+MC" /> und <Katex tex="OB=BN+MD" />,
+				dann folgt sofort
+			</p>
+			<div class="kbox">
+				<Katex as="div" display tex="AB=(AL+MC)+(BN+MD)=AL+BN+MC+MD." />
+			</div>
+			<p>Und dann ersetzen wir mit Tangenten-Gleichheiten:</p>
+			<div class="kbox">
+				<Katex as="div" display tex="MC=CN,\quad MD=DL," />
+				<Katex as="div" display tex="AL+DL=AD,\quad BN+CN=BC." />
+			</div>
+			<p>Dann steht automatisch da:</p>
+			<div class="kbox">
+				<Katex as="div" display tex="AB=AD+BC." />
+			</div>
+			<p>Es bleibt also nur noch, die beiden Zerlegungen von <Katex tex="AO" /> und <Katex tex="OB" /> zu beweisen.</p>
+		</div>
+
+		<h2 id="zyklisch">Teil 5 - Zerlegung von <Katex tex="AO" />: Wir bauen ein passendes rechtwinkliges Dreieck</h2>
+		<div class="eddie">
+			<h3>Schritt 5.1 - Punkt <Katex tex="X" /> konstruieren</h3>
+			<p>
+				Wir wählen auf der Geraden <Katex tex="AD" /> hinter <Katex tex="D" /> einen Punkt <Katex tex="X" /> so, dass
+				<Katex tex="AX=AO" />. Dann ist <Katex tex="\triangle AOX" /> gleichschenklig mit <Katex tex="AO=AX" />.
+			</p>
+
+			<h3 class="mt-6">Schritt 5.2 - Ein Winkel aus dem gleichschenkligen Dreieck</h3>
+			<p>
+				Im Dreieck <Katex tex="AOX" /> ist der Winkel bei <Katex tex="A" />:
+				<Katex tex="\angle XAO = \angle DAO = \angle DAB" />
+				(weil <Katex tex="X" /> auf der Geraden <Katex tex="AD" /> liegt und <Katex tex="O" /> auf <Katex tex="AB" />).
+			</p>
+			<p>
+				Da <Katex tex="\triangle AOX" /> gleichschenklig ist, sind die Basiswinkel bei <Katex tex="O" /> und <Katex tex="X" /> gleich:
+			</p>
+			<div class="kbox">
+				<Katex as="div" display tex="\angle OXA = \angle AOX = \frac{180^\circ-\angle DAB}{2}=90^\circ-\frac{\angle DAB}{2}." />
+			</div>
+			<p>
+				Wichtig: <Katex tex="A,L,D,X" /> liegen auf einer Geraden, also ist <Katex tex="\angle OXL=\angle OXA" />.
+			</p>
+
+			<h3 class="mt-6">Schritt 5.3 - Ein Winkel aus dem zyklischen Viereck und der Winkelhalbierenden</h3>
+			<p>
+				Weil der Innenkreis die Geraden <Katex tex="BC" /> und <Katex tex="CD" /> berührt, hat der Mittelpunkt
+				<Katex tex="O" /> zu beiden Geraden denselben Abstand (nämlich den Radius). Deshalb liegt <Katex tex="O" />
+				auf der Winkelhalbierenden bei <Katex tex="C" />. Also halbiert <Katex tex="CO" /> den Winkel
+				<Katex tex="\angle DCB" />, und damit gilt:
+			</p>
+			<div class="kbox">
+				<Katex as="div" display tex="\angle OCM=\frac{\angle DCB}{2}" />
+			</div>
+			<p>(denn <Katex tex="CM" /> liegt auf <Katex tex="CD" />)</p>
+			<p>Aus der Zyklik (Merksatz (3)) folgt:</p>
+			<div class="kbox">
+				<Katex as="div" display tex="\angle DCB = 180^\circ-\angle DAB \Rightarrow \frac{\angle DCB}{2}=90^\circ-\frac{\angle DAB}{2}." />
+			</div>
+			<p>
+				Also haben wir
+				<Katex tex="\angle OCM = 90^\circ-\frac{\angle DAB}{2} = \angle OXL" />.
+			</p>
+
+			<h3 class="mt-6">Schritt 5.4 - Kongruenz zweier rechtwinkliger Dreiecke</h3>
+			<p>Betrachte die Dreiecke <Katex tex="\triangle OLX" /> und <Katex tex="\triangle OMC" />.</p>
+			<ul>
+				<li><Katex tex="\angle OLX=90^\circ" /> (weil <Katex tex="OL\perp AD" /> und <Katex tex="X\in AD" />),</li>
+				<li><Katex tex="\angle OMC=90^\circ" /> (weil <Katex tex="OM\perp CD" />),</li>
+				<li><Katex tex="OL=OM" /> (beides Radien des Innenkreises),</li>
+				<li><Katex tex="\angle OXL=\angle OCM" /> (gerade gezeigt).</li>
+			</ul>
+			<p>
+				Damit sind die Dreiecke kongruent (deckungsgleich; entsprechende Seiten sind gleich lang),
+				denn in zwei rechtwinkligen Dreiecken genügen eine Kathete und ein spitzer Winkel. Also:
+			</p>
+			<div class="kbox">
+				<Katex as="div" display tex="LX=MC." />
+			</div>
+
+			<h3 class="mt-6">Schritt 5.5 - Jetzt die Längen buchen</h3>
+			<p>Auf der Geraden <Katex tex="AD" /> gilt (weil <Katex tex="A-L-X" /> in dieser Reihenfolge liegen):</p>
+			<div class="kbox">
+				<Katex as="div" display tex="AX = AL + LX." />
+			</div>
+			<p>Mit <Katex tex="AX=AO" /> und <Katex tex="LX=MC" /> folgt:</p>
+			<div class="kbox">
+				<Katex as="div" display tex="\boxed{AO = AL + MC.}" />
+			</div>
+		</div>
+
+		<h2 id="kongruenz">Teil 6 - Zerlegung von <Katex tex="OB" />: dasselbe Spiel auf der anderen Seite</h2>
+		<div class="eddie">
+			<h3>Schritt 6.1 - Punkt <Katex tex="Y" /> konstruieren</h3>
+			<p>
+				Wir wählen auf der Geraden <Katex tex="BC" /> hinter <Katex tex="C" /> einen Punkt <Katex tex="Y" /> so, dass
+				<Katex tex="BY=BO" />. Dann ist <Katex tex="\triangle BOY" /> gleichschenklig.
+			</p>
+
+			<h3 class="mt-6">Schritt 6.2 - Winkel bei <Katex tex="Y" /> aus dem gleichschenkligen Dreieck</h3>
+			<p>
+				Der Winkel bei <Katex tex="B" /> im Dreieck <Katex tex="BOY" /> ist
+				<Katex tex="\angle YBO = \angle CBO = \angle ABC" />
+				(weil <Katex tex="Y" /> auf <Katex tex="BC" /> liegt und <Katex tex="O" /> auf <Katex tex="BA" />).
+			</p>
+			<p>Daher sind die Basiswinkel bei <Katex tex="O" /> und <Katex tex="Y" />:</p>
+			<div class="kbox">
+				<Katex as="div" display tex="\angle OYB = \frac{180^\circ-\angle ABC}{2}=90^\circ-\frac{\angle ABC}{2}." />
+			</div>
+			<p>Da <Katex tex="Y,N,B" /> auf einer Geraden liegen, ist <Katex tex="\angle OYN = \angle OYB" />.</p>
+
+			<h3 class="mt-6">Schritt 6.3 - Winkel bei <Katex tex="D" /> über Winkelhalbierende und Zyklik</h3>
+			<p>
+				Weil der Innenkreis die Geraden <Katex tex="DA" /> und <Katex tex="DC" /> berührt, liegt <Katex tex="O" />
+				auf der Winkelhalbierenden bei <Katex tex="D" />. Also:
+			</p>
+			<div class="kbox">
+				<Katex as="div" display tex="\angle ODM = \frac{\angle ADC}{2}" />
+			</div>
+			<p>(denn <Katex tex="DM" /> liegt auf <Katex tex="DC" />)</p>
+			<p>Aus der Zyklik gilt:</p>
+			<div class="kbox">
+				<Katex as="div" display tex="\angle ABC+\angle ADC=180^\circ \Rightarrow \frac{\angle ADC}{2}=90^\circ-\frac{\angle ABC}{2}." />
+			</div>
+			<p>Damit:</p>
+			<div class="kbox">
+				<Katex as="div" display tex="\angle ODM = 90^\circ-\frac{\angle ABC}{2} = \angle OYN." />
+			</div>
+
+			<h3 class="mt-6">Schritt 6.4 - Kongruenz und Längenbuchhaltung</h3>
+			<p>Betrachte <Katex tex="\triangle ONY" /> und <Katex tex="\triangle OMD" />:</p>
+			<ul>
+				<li><Katex tex="\angle ONY=90^\circ" /> (weil <Katex tex="ON\perp BC" />),</li>
+				<li><Katex tex="\angle OMD=90^\circ" /> (weil <Katex tex="OM\perp CD" />),</li>
+				<li><Katex tex="ON=OM" /> (Radien),</li>
+				<li><Katex tex="\angle OYN=\angle ODM" /> (gerade gezeigt).</li>
+			</ul>
+			<p>Also sind die Dreiecke kongruent, somit:</p>
+			<div class="kbox">
+				<Katex as="div" display tex="NY=MD." />
+			</div>
+			<p>Auf der Geraden <Katex tex="BC" /> gilt (Reihenfolge <Katex tex="B-N-C-Y" />):</p>
+			<div class="kbox">
+				<Katex as="div" display tex="BY=BN+NY." />
+			</div>
+			<p>Mit <Katex tex="BY=BO" /> und <Katex tex="NY=MD" /> folgt:</p>
+			<div class="kbox">
+				<Katex as="div" display tex="\boxed{OB = BN + MD.}" />
+			</div>
+		</div>
+
+		<h2>Teil 7 - Finale Rechnung (jetzt nur noch einsetzen)</h2>
+		<div class="eddie">
+			<p>Aus Teil 5 und 6:</p>
+			<div class="kbox">
+				<Katex as="div" display tex="AB=AO+OB=(AL+MC)+(BN+MD)." />
+			</div>
+			<p>Mit den Tangenten-Gleichheiten (Merksatz (2)):</p>
+			<div class="kbox">
+				<Katex as="div" display tex="MC=CN,\quad MD=DL," />
+				<Katex as="div" display tex="AB = AL + CN + BN + DL = (AL+DL) + (BN+CN) = AD + BC." />
+				<Katex as="div" display tex="\boxed{AD+BC=AB.}" />
+			</div>
+		</div>
+
+		<h2>Mini-Eddie-Kommentar</h2>
+		<div class="eddie">
+			<p>Das sieht erst nach Magie aus, ist aber eigentlich nur:</p>
 			<ol>
+				<li>Tangenten geben Streckengleichheiten (<Katex tex="CN=CM,\ DL=DM" />).</li>
+				<li>Zyklisch liefert feste Winkelbeziehungen (Gegenwinkel ergänzen sich).</li>
 				<li>
-					Radius steht senkrecht auf Tangente:
-					<Katex tex="OL\perp AD,\; OM\perp CD,\; ON\perp BC" />.
+					Mit zwei gut gewählten Punkten <Katex tex="X" /> und <Katex tex="Y" /> baut man zwei Kongruenzen,
+					die genau die fehlenden Strecken umetikettieren.
 				</li>
-				<li>
-					Tangenten von einem Außenpunkt sind gleich lang:
-					<Katex tex="DL=DM" /> und <Katex tex="CN=CM" />.
-				</li>
+				<li>Dann ist es nur noch Buchhaltung.</li>
 			</ol>
-
-			<h3>1) Der Trick: Punkt X auf der Verlängerung von AD</h3>
-			<p>
-				Nimm auf dem Strahl <Katex tex="AD" /> (jenseits von <Katex tex="D" />) einen Punkt
-				<Katex tex="X" /> so, dass
-				<Katex tex="AX=AO" />.
-				Damit bauen wir gleich zwei rechtwinklige Dreiecke, die sich sauber vergleichen lassen.
-			</p>
-
-			<h3 id="tangenten">2) Winkelhalbierenden aus Tangenten: CO und DO</h3>
-			<p class="muted">
-				Weil der Kreis zwei Geraden tangiert, ist der Abstand des Mittelpunkts zu beiden Geraden gleich
-				(nämlich der Radius). Damit liegt <Katex tex="O" /> auf der Winkelhalbierenden.
-			</p>
-			<div class="kbox">
-				<Katex
-					as="div"
-					display
-					tex="\angle OCM=\angle NCO,\quad \angle OCM=\frac{\angle DCB}{2}."
-				/>
-				<Katex
-					as="div"
-					display
-					tex="\angle ODL=\angle MDC,\quad \angle ODL=\frac{\angle CDA}{2}."
-				/>
-			</div>
-
-			<h3 id="zyklisch">3) Zyklisch: Gegenwinkel sind Supplementwinkel</h3>
-			<div class="kbox">
-				<Katex as="div" display tex="\angle DAB + \angle DCB = 180^\circ." />
-				<Katex as="div" display tex="\frac{\angle DCB}{2}=90^\circ-\frac{\angle DAB}{2}." />
-			</div>
-
-			<h3 id="kongruenz">4) Kongruenz: Dreiecke O L X und O M C</h3>
-			<p>Wir vergleichen die rechtwinkligen Dreiecke <Katex tex="\triangle OLX" /> und <Katex tex="\triangle OMC" />:</p>
-			<ul>
-				<li><Katex tex="\angle OLX = 90^\circ" /> (weil <Katex tex="OL\perp AD" /> und <Katex tex="X\in AD" />)</li>
-				<li><Katex tex="\angle OMC = 90^\circ" /> (weil <Katex tex="OM\perp CD" /> und <Katex tex="C,M\in CD" />)</li>
-				<li><Katex tex="OL=OM" /> (Radien)</li>
-			</ul>
-
-			<p class="muted">
-				Der entscheidende Winkel-Transfer ist:
-				<Katex tex="\angle OXL = \angle OCM" />.
-				(Das kommt aus den Winkelhalbierenden + der Halbwinkelbeziehung aus dem zyklischen Viereck.)
-			</p>
-
-			<div class="kbox">
-				<Katex as="div" display tex="\triangle OLX \cong \triangle OMC \;\Rightarrow\; LX=MC." />
-			</div>
-
-			<h3>5) Längen zerlegen: AO = AL + MC</h3>
-			<p>
-				Auf der Geraden <Katex tex="AD" /> gilt <Katex tex="AX = AL + LX" />.
-				Aber <Katex tex="AX=AO" /> (Konstruktion) und <Katex tex="LX=MC" /> (Kongruenz), also:
-			</p>
-			<div class="kbox">
-				<Katex as="div" display tex="AO = AL + MC." />
-			</div>
-
-			<h3>6) Spiegelbildlich: OB = BN + MD</h3>
-			<p>
-				Analog auf der rechten Seite bekommt man:
-			</p>
-			<div class="kbox">
-				<Katex as="div" display tex="OB = BN + MD." />
-			</div>
-
-			<h3>7) Tangenten-Gleichheiten einsetzen</h3>
-			<p>
-				Wir benutzen die zwei Lego-Steine:
-				<Katex tex="MC=CN" /> und <Katex tex="MD=DL" />.
-			</p>
-
-			<h3>8) Finale: AB auseinanderziehen</h3>
-			<p>
-				Weil <Katex tex="O" /> auf <Katex tex="AB" /> liegt, gilt <Katex tex="AB=AO+OB" />.
-				Setze die Zerlegungen ein und ersetze per Tangenten-Gleichheit:
-			</p>
-			<div class="kbox">
-				<Katex as="div" display tex="AB=(AL+MC)+(BN+MD)=AL+CN+BN+DL." />
-				<Katex as="div" display tex="AL+DL=AD,\quad CN+BN=BC." />
-				<Katex as="div" display tex="\boxed{AB=AD+BC}." />
-			</div>
-
-			<h3>Mini-Eddie-Kommentar: Warum das so gut ist</h3>
-			<p>
-				Das ist IMO-Geometrie, aber vom Prinzip her ganz trocken:
-			</p>
-			<ul>
-				<li>Tangenten geben dir harte Streckengleichheiten (<Katex tex="DL=DM" />, <Katex tex="CN=CM" />).</li>
-				<li>Der Mittelpunkt als gleicher Abstand zu zwei Geraden gibt Winkelhalbierenden.</li>
-				<li>Zyklisch gibt dir die saubere Winkelbeziehung.</li>
-			</ul>
-			<p class="muted">
-				Danach ist es nur noch: eine Kongruenz bauen, zwei Summen schreiben, zwei Male ersetzen,
-				fertig.
-			</p>
 		</div>
 	</template>
 

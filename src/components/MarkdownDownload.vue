@@ -3,7 +3,7 @@
 	density="comfortable"
 	:disabled="isBusy"
 	:loading="isBusy"
-	prepend-icon="mdi-download"
+	:prepend-icon="mdiDownload"
 	size="small"
 	style="margin: -1em"
 	variant="text"
@@ -17,7 +17,7 @@
 import { ref } from "vue";
 import TurndownService from "turndown";
 import { gfm } from "turndown-plugin-gfm";
-
+import { mdiDownload } from "@mdi/js";
 const props = defineProps( {
 	targetId:    { type: String, required: true },
 	fileName:    { type: String, default: "description" },

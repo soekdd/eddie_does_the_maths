@@ -280,14 +280,73 @@
 			</div>
 
 			<v-sheet class="pa-3 rounded">
+				<div class="text-subtitle-2 mb-2">Sprung-Reihenfolge</div>
 				<div class="d-flex flex-wrap ga-2">
 					<v-chip v-for="(x, idx) in chain"
 						:key="idx"
+						:color="idx < visitedStepCount ? 'primary' : undefined"
 						size="small"
-						variant="tonal"
+						:variant="idx < visitedStepCount ? 'flat' : 'tonal'"
 					>
 						{{ x }}
 					</v-chip>
+				</div>
+			</v-sheet>
+
+			<v-sheet class="pa-3 rounded">
+				<div class="text-subtitle-2 mb-2">Sortierte Sicht (blau = bereits besucht)</div>
+				<div class="d-flex flex-wrap ga-2">
+					<v-chip v-for="x in sortedTargets"
+						:key="`sorted-${x}`"
+						:color="visitedTargetSet.has( x ) ? 'primary' : undefined"
+						size="small"
+						:variant="visitedTargetSet.has( x ) ? 'flat' : 'tonal'"
+					>
+						{{ x }}
+					</v-chip>
+				</div>
+				<div class="d-flex flex-wrap align-center ga-2 mt-3">
+					<v-btn
+						:disabled="!chain.length"
+						size="small"
+						variant="flat"
+						@click="startAnimation"
+					>
+						{{ visitedStepCount >= chain.length ? "Neu starten" : "Start" }}
+					</v-btn>
+					<!-- <v-btn
+						:disabled="!isAnimating"
+						size="small"
+						variant="outlined"
+						@click="pauseAnimation"
+					>
+						Pause
+					</v-btn>
+					<v-btn
+						:disabled="isAnimating || !chain.length || visitedStepCount >= chain.length"
+						size="small"
+						variant="outlined"
+						@click="stepAnimation"
+					>
+						Schritt
+					</v-btn> -->
+					<v-btn
+						:disabled="!chain.length && visitedStepCount === 0"
+						size="small"
+						variant="tonal"
+						@click="resetAnimation"
+					>
+						Zurücksetzen
+					</v-btn>
+					<span class="text-caption">
+						{{ visitedStepCount }}/{{ chain.length }} Schritte
+					</span>
+					<span v-if="currentVisitedValue !== null" class="text-caption">
+						aktuell: {{ currentVisitedValue }}
+					</span>
+					<!-- <span class="text-caption">
+						besucht: {{ visitedTargetCount }}/{{ sortedTargets.length }}
+					</span> -->
 				</div>
 			</v-sheet>
 
@@ -331,7 +390,9 @@
 </template>
 
 <script setup>
-import { computed, ref } from "vue";
+import {
+	computed, onBeforeUnmount, ref, watch
+} from "vue";
 import titleImg from "@/images/O2.webp";
 
 /** --- Interaktivteil --- */
@@ -339,6 +400,10 @@ const n = ref( 10 );
 const k = ref( 3 );
 const error = ref( "" );
 const result = ref( null );
+const ANIMATION_STEP_MS = 500;
+const canUseAnimationTimer = typeof window !== "undefined";
+const visitedStepCount = ref( 0 );
+const animationTimerId = ref( null );
 
 const chain = computed( () => {
 	const nn = Number( n.value );
@@ -356,6 +421,41 @@ const chain = computed( () => {
 
 	return out;
 } );
+
+const sortedTargets = computed( () => {
+	const nn = Number( n.value );
+
+	if ( !Number.isInteger( nn ) || nn < 2 ) {
+		return [];
+	}
+
+	return Array.from( { length: nn - 1 }, ( _, idx ) => idx + 1 );
+} );
+
+const visitedTargetSet = computed( () => {
+	const set = new Set();
+	const limit = Math.min( visitedStepCount.value, chain.value.length );
+
+	for ( let idx = 0; idx < limit; idx++ ) {
+		const value = chain.value[ idx ];
+
+		if ( Number.isInteger( value ) && value >= 1 ) {
+			set.add( value );
+		}
+	}
+
+	return set;
+} );
+
+const visitedTargetCount = computed( () => visitedTargetSet.value.size );
+const currentVisitedValue = computed( () => {
+	if ( visitedStepCount.value <= 0 || visitedStepCount.value > chain.value.length ) {
+		return null;
+	}
+
+	return chain.value[ visitedStepCount.value - 1 ];
+} );
+const isAnimating = computed( () => animationTimerId.value !== null );
 
 const transitions = computed( () => {
 	const nn = Number( n.value );
@@ -398,6 +498,61 @@ const transitions = computed( () => {
 
 	return out;
 } );
+
+function stopAnimation() {
+	if ( !canUseAnimationTimer ) {
+		return;
+	}
+
+	if ( animationTimerId.value !== null ) {
+		window.clearInterval( animationTimerId.value );
+		animationTimerId.value = null;
+	}
+}
+
+function resetAnimation() {
+	stopAnimation();
+	visitedStepCount.value = 0;
+}
+
+function stepAnimation() {
+	if ( !chain.value.length ) {
+		return;
+	}
+
+	if ( visitedStepCount.value < chain.value.length ) {
+		visitedStepCount.value += 1;
+	}
+}
+
+function startAnimation() {
+	if ( !chain.value.length ) {
+		resetAnimation();
+		return;
+	}
+
+	if ( visitedStepCount.value >= chain.value.length ) {
+		visitedStepCount.value = 0;
+	}
+
+	if ( !canUseAnimationTimer ) {
+		return;
+	}
+
+	stopAnimation();
+	animationTimerId.value = window.setInterval( () => {
+		if ( visitedStepCount.value < chain.value.length ) {
+			visitedStepCount.value += 1;
+			return;
+		}
+
+		stopAnimation();
+	}, ANIMATION_STEP_MS );
+}
+
+function pauseAnimation() {
+	stopAnimation();
+}
 
 function mod( a, m ) {
 	const r = a % m;
@@ -530,6 +685,19 @@ function randomCoprime() {
 	k.value = kk;
 	runCheck();
 }
+
+watch(
+	chain,
+	() => {
+		resetAnimation();
+		startAnimation();
+	},
+	{ immediate: true }
+);
+
+onBeforeUnmount( () => {
+	stopAnimation();
+} );
 
 // Initialer Check
 runCheck();
