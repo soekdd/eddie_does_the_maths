@@ -35,7 +35,7 @@
 	</template>
 
 	<template #descriptionPart>
-		<h2 id="poker">Teil 1 - Five Card Draw: Aufgabenblock</h2>
+		<h2 id="poker">Five Card Draw: Aufgabenblock</h2>
 		<div class="eddie">
 			<p>
 				Im <b>Five Card Draw</b> (5 Karten aus einem 52er-Deck, Reihenfolge egal) lassen sich

@@ -46,7 +46,7 @@
 	</template>
 
 	<template #descriptionPart>
-		<h2>Teil 1 - IMO 1985 - Aufgaben</h2>
+		<h2>IMO 1985 - Aufgaben</h2>
 		<p class="meta">
 			Nur die Aufgaben (keine Lösungen). Quelle:
 			<a href="https://prase.cz/kalva/imo/imo85.html" rel="noreferrer" target="_blank">

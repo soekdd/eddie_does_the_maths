@@ -28,7 +28,7 @@
 	</template>
 
 	<template #descriptionPart>
-		<h2 id="beschreibung">Teil 1 - In 4 Schritten zur versteckten Karte</h2>
+		<h2 id="beschreibung">In 4 Schritten zur versteckten Karte</h2>
 		<div class="eddie d-flex flex-column ga-6">
 			<section>
 				<figure class="exampleFigure">
