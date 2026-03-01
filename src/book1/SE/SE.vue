@@ -35,7 +35,11 @@
 		<div class="eddie">
 			<v-expansion-panels v-model="openRoutinePanel" variant="accordion">
 				<v-expansion-panel v-for="item in routines" :key="item.id">
-					<v-expansion-panel-title>{{ item.title }}</v-expansion-panel-title>
+					<v-expansion-panel-title>{{ item.title }}<v-icon  v-if="item.graph"
+						class="ml-4"
+						:icon="mdiImageFilterBlackWhite"
+						size="18"
+					/></v-expansion-panel-title>
 					<v-expansion-panel-text class="d-flex flex-column ga-2" eager>
 						<figure v-if="item.graph" class="exampleFigure">
 							<ImageZoomer no-zoom>
@@ -126,10 +130,16 @@
 <script setup>
 /* eslint-disable vue/max-len */
 import { computed, ref } from "vue";
+import { mdiImageFilterBlackWhite } from "@mdi/js";
 import titleImg from "./SE.webp";
-import SEGraph10 from "./SE_Graph_10.vue";
-import SEGraph7 from "./SE_Graph_7.vue";
+import SEGraph2 from "./SE_Graph_2.vue";
 import SEGraph3 from "./SE_Graph_3.vue";
+import SEGraph6 from "./SE_Graph_6.vue";
+import SEGraph7 from "./SE_Graph_7.vue";
+import SEGraph8 from "./SE_Graph_8.vue";
+import SEGraph9 from "./SE_Graph_9.vue";
+import SEGraph10 from "./SE_Graph_10.vue";
+import SEGraph11 from "./SE_Graph11.vue";
 
 const routines = [
 	{
@@ -139,6 +149,7 @@ const routines = [
 	},
 	{
 		id:    2,
+		graph: SEGraph2,
 		title: "2. Paar-Summen bis 100",
 		text:  "Die alte Gauss-Trickaufgabe: 1+100, 2+99, 3+98. Jedes Paar gibt 101, und es sind genau 50 solcher Paare. Du brauchst nicht alle wirklich zu addieren, es reicht, das Muster zu erkennen. Das Schöne ist: Aus einem scheinbar endlosen Zählen wird eine einfache Abkürzung. Und während du dir denkst „50 mal 101 = 5050“, merkst du, wie sich dein Atem beruhigt. Der Gedanke ist abgeschlossen – Zeit zum Einschlafen."
 	},
@@ -160,6 +171,7 @@ const routines = [
 	},
 	{
 		id:    6,
+		graph: SEGraph6,
 		title: "6. Prim-Picknick",
 		text:  "Primzahlen sind wie die unteilbaren Beeren im Wald – sie lassen sich nur durch sich selbst und durch 1 „pflücken“. Fang bei 2 an: 2, 3, 5, 7, 11, 13. Sag sie langsam und stell dir kleine Körbchen vor, in die du sie legst. Ganz wichtig: Die 1 kommt nicht ins Körbchen, sie gehört nicht dazu. Nach einer Handvoll Primzahlen hörst du auf – das Spiel ist nicht unendlich. Die Körbchen stehen nun da, und du darfst die Augen schließen."
 	},
@@ -171,11 +183,13 @@ const routines = [
 	},
 	{
 		id:    8,
+		graph: SEGraph8,
 		title: "8. Grauzahl-Gähnen (Gray Code)",
 		text:  "Der Gray Code ist eine Reihenfolge von Binärzahlen, bei der sich immer nur eine Ziffer ändert. Fang mit 0000 an, dann 0001, 0011, 0010, 0110. Stell dir vor, du schaltest kleine Lampen an und aus, aber nie mehr als eine gleichzeitig. Das ergibt ein gleichmäßiges, fast hypnotisches Blinken. Nach vier oder fünf Schritten reicht es völlig, du musst nicht alle durchgehen. Das „Flip-Flop“ beruhigt den Kopf – Zeit für ein Gähnen."
 	},
 	{
 		id:    9,
+		graph: SEGraph9,
 		title: "9. Quadratsummen-Atemzug",
 		text:  "Zähle im Kopf die ersten Quadratzahlen: 1²=1, 2²=4, 3²=9, 4²=16. Zusammen sind das 30. Sag es dir beim Einatmen und Ausatmen, als ob du die Zahlen an der Hüttenwand aufmalst. Wenn du magst, denk an die Formel, die solche Summen in einem Zug berechnet – aber zwing dich nicht. Wichtig ist nur: Die Reihe hat ein klares Ende, und mit ihm dein Gedankengang. Fertig, Augen zu."
 	},
@@ -187,6 +201,7 @@ const routines = [
 	},
 	{
 		id:    11,
+		graph: SEGraph11,
 		title: "11. Euler-Spaziergang",
 		text:  "Stell dir die Hütte als Punkte und Verbindungen vor: Türen, Fenster, Balken. Ein „Spaziergang“ bedeutet, jede Verbindung genau einmal zu gehen. Mach dir eine kleine Regel: maximal drei Schritte, dann ist Schluss. So bleibst du im Leichten, im Überschaubaren. Du kannst dich dabei wie auf einem Brettspiel fühlen, das nach drei Zügen automatisch endet. Und wenn es endet, ist das dein Signal: Schlafenszeit."
 	},
