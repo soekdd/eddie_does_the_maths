@@ -410,7 +410,7 @@ import DG_Graph from "./DG_Graph.vue";
 import Katex from "@/components/Katex.vue";
 import {
 	egcdWithSteps, fmt, gcd, parseIntStrict
-} from "@/utils/diophantine";
+} from "./DG_diophantine";
 import titleImg from "./DG.webp";
 
 const example = {

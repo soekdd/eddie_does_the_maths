@@ -320,10 +320,10 @@
 import { computed, ref } from "vue";
 
 import titleImg from "./BS.webp";
-import DR from "@/utils/DR.mjs";
+import BS from "./BS_DR.mjs";
 import BS_Graph from "./BS_Graph.vue";
 
-const allProfiles = Object.values( DR.series ).flat();
+const allProfiles = Object.values( BS.series ).flat();
 
 function uniqueSorted( values ) {
 	return [ ...new Set( values ) ].sort( ( a, b ) => a - b );
@@ -349,10 +349,10 @@ const bf = computed( () => bfValues[ bfIndex.value ] );
 const tf = computed( () => tfValues[ tfIndex.value ] );
 const tw = computed( () => twValues[ twIndex.value ] );
 
-const seriesItems = Object.keys( DR.series );
+const seriesItems = Object.keys( BS.series );
 const selectedSeriesKey = ref( seriesItems[ 0 ] );
 
-const profilesInSelectedSeries = computed( () => DR.series[ selectedSeriesKey.value ] ?? [] );
+const profilesInSelectedSeries = computed( () => BS.series[ selectedSeriesKey.value ] ?? [] );
 const profileItems = computed( () =>
 	profilesInSelectedSeries.value.map( ( profile ) => profile.designation ) );
 

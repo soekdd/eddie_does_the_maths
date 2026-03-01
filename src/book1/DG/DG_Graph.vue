@@ -203,7 +203,7 @@
 <script setup>
 import { computed } from "vue";
 
-import { gcd, parseIntStrict } from "@/utils/diophantine";
+import { gcd, parseIntStrict } from "./DG_diophantine";
 
 const props = defineProps( {
 	a: { type: [ Number, String ], required: true },

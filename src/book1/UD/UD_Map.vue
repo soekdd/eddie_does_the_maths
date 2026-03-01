@@ -60,7 +60,7 @@ import {
 	computed,
 	useId
 } from "vue";
-import countries from "../../utils/ud_countries.mjs";
+import countries from "./UD_countries";
 
 const props = defineProps( {
 	country:            { type: String, default: "finland" },

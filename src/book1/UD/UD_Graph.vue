@@ -25,7 +25,7 @@
 	</div>
 
 	<svg
-		:aria-label="ariaLabel"
+		:aria-label
 		class="canvas"
 		role="img"
 		viewBox="0 0 640 420"
