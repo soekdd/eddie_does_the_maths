@@ -101,9 +101,9 @@
 
 					<v-window-item value="trace">
 						<v-textarea
-							:model-value="traceText"
 							auto-grow
 							label="Karten-Log"
+							:model-value="traceText"
 							readonly
 							rows="16"
 						/>

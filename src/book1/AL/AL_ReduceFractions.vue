@@ -1,15 +1,15 @@
 <template>
 <ALCalculation
-	:deck="deck"
+	:deck
 	deck-line-title="Note-G"
-	:error="error"
+	:error
 	:formula-tex="programTex"
 	formula-title="Programm (Euklid-Stil)"
-	:running="running"
+	:running
 	:subtitle="'Ada-streng: <b>Data / Working / Result</b>-Spalten und Euklid-Loop.'"
-	:tab="tab"
+	:tab
 	title="Ada-Karten: Brüche kürzen"
-	:trace-text="traceText"
+	:trace-text
 	@reset="reset"
 	@run="run"
 	@update:tab="tab = $event"

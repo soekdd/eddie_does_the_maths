@@ -1,15 +1,15 @@
 <template>
 <ALCalculation
-	:deck="deck"
-	:error="error"
+	:deck
+	:error
 	formula-tex="x_{k+1}=\frac{1}{2}\left(x_k+\frac{N}{x_k}\right)\\
 \text{Start }x_0>0,\;\text{dann }x_k\to\sqrt{N}"
 	formula-title="Formel (Heron/Newton)"
-	:running="running"
+	:running
 	:subtitle="'Heron/Newton-Iteration mit Karten für <b>DIV, ADD, DIV</b>.'"
-	:tab="tab"
+	:tab
 	title="Ada-Karten: Quadratwurzel"
-	:trace-text="traceText"
+	:trace-text
 	@reset="reset"
 	@run="run"
 	@update:tab="tab = $event"

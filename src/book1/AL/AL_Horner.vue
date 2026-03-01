@@ -1,14 +1,14 @@
 <template>
 <ALCalculation
-	:deck="deck"
-	:error="error"
-	:formula-tex="formulaTex"
+	:deck
+	:error
+	:formula-tex
 	formula-title="Formel (Horner)"
-	:running="running"
+	:running
 	:subtitle="'Kartenfolge für <b>MUL/ADD</b> in einer Horner-Schleife.'"
-	:tab="tab"
+	:tab
 	title="Ada-Karten: Polynom mit Horner"
-	:trace-text="traceText"
+	:trace-text
 	@reset="reset"
 	@run="run"
 	@update:tab="tab = $event"

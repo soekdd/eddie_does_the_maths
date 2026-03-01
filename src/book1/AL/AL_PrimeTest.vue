@@ -1,14 +1,14 @@
 <template>
 <ALCalculation
-	:deck="deck"
-	:error="error"
-	:formula-tex="formulaTex"
+	:deck
+	:error
+	:formula-tex
 	formula-title="Formel (Resttest)"
-	:running="running"
+	:running
 	:subtitle="'Trial Division über Restbildung mit <b>DIV/MUL/SUB</b>.'"
-	:tab="tab"
+	:tab
 	title="Ada-Karten: Primzahltest"
-	:trace-text="traceText"
+	:trace-text
 	@reset="reset"
 	@run="run"
 	@update:tab="tab = $event"

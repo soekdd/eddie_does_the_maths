@@ -1,15 +1,15 @@
 <template>
 <ALCalculation
-	:deck="deck"
+	:deck
 	deck-line-title="Note-G"
-	:error="error"
-	:formula-tex="formulaTex"
+	:error
+	:formula-tex
 	formula-title="Formel (Note-G-Stil)"
-	:running="running"
+	:running
 	:subtitle="'Ada-streng: <b>Data / Working / Result</b>-Spalten und Loop für Sektion <b>13…23</b>.'"
-	:tab="tab"
+	:tab
 	title="Ada-Karten (Note G) Emulator"
-	:trace-text="traceText"
+	:trace-text
 	@reset="reset"
 	@run="run"
 	@update:tab="tab = $event"
@@ -167,9 +167,7 @@
 </template>
 
 <script setup>
-import {
-	computed, ref
-} from "vue";
+import { computed, ref } from "vue";
 
 import ALCalculation from "./AL_Calculation.vue";
 
