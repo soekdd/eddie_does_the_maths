@@ -31,7 +31,7 @@ Output landet standardmäßig in `@/dist/math/` (abhängig von `VITE_PUBLIC_BASE
 
 ## Neue Themen hinzufügen (Checkliste)
 
-1. Neue View unter `eddie_does_the_maths/src/views/` anlegen.
+1. Neues Thema unter `eddie_does_the_maths/src/book<n>/` anlegen.
 2. Route in `eddie_does_the_maths/src/router.js` eintragen.
 3. `meta: { title, index: true, order }` setzen, dann taucht es im Index auf.
 4. Formeln über `<Katex ... />` reinwerfen.

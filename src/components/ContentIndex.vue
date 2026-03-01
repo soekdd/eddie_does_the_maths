@@ -51,26 +51,28 @@
 							location="bottom"
 							:text="difficultyLabel(it.difficulty)"
 						>
-								<template #activator="{ props: tooltipProps }">
-									<span class="tile-difficulty" :class="{ 'is-wip': it.wip }" v-bind="tooltipProps">
-										<v-icon :icon="difficultyIcon(it.difficulty)" size="18" />
-									</span>
-								</template>
-							</v-tooltip>
-							<span v-else class="tile-difficulty" :class="{ 'is-wip': it.wip }">
-								<v-icon :icon="difficultyIcon(it.difficulty)" size="18" />
-							</span>
+							<template #activator="{ props: tooltipProps }">
+								<span class="tile-difficulty" :class="{ 'is-wip': it.wip }" v-bind="tooltipProps">
+									<v-icon :icon="difficultyIcon(it.difficulty)" size="18" />
+								</span>
+							</template>
+						</v-tooltip>
+						<span v-else class="tile-difficulty" :class="{ 'is-wip': it.wip }">
+							<v-icon :icon="difficultyIcon(it.difficulty)" size="18" />
+						</span>
 					</template>
 					<span
 						v-if="tileCommentCount(it) > 0"
 						class="tile-comment-indicator"
 					>
 						<v-icon
-							:icon="commentBubbleIcon"
 							:class="{ 'tile-comment-icon-recent': tileHasRecentComment(it) }"
+							:icon="commentBubbleIcon"
 							size="18"
 						/>
-						<span :class="{ 'tile-comment-count':'tile-comment-count', 'tile-comment-count-recent': tileHasRecentComment(it) }">{{ tileCommentCountLabel(it) }}</span>
+						<span :class="{ 'tile-comment-count':'tile-comment-count', 'tile-comment-count-recent':
+							tileHasRecentComment(it) }"
+						>{{ tileCommentCountLabel(it) }}</span>
 					</span>
 					<span class="tile-title" :class="tileTitleClass(it)">{{ it.title }}</span>
 				</v-btn>
@@ -88,8 +90,8 @@ import {
 	computed, inject, onMounted, ref, watch
 } from "vue";
 import {
-	mdiAlertCircleOutline, mdiFileEditOutline, mdiAlertOutline, mdiHexagonSlice2, mdiHexagonSlice4, mdiHexagonSlice6, mdiMessageOutline,
-	mdiCheckCircleOutline
+	mdiAlertCircleOutline, mdiFileEditOutline, mdiAlertOutline, mdiHexagonSlice2, mdiHexagonSlice4, mdiHexagonSlice6,
+	mdiMessageOutline, mdiCheckCircleOutline
 } from "@mdi/js";
 import { useRoute } from "vue-router";
 import PocketBase from "pocketbase";
@@ -125,7 +127,7 @@ const books = {
 	}
 };
 
-const imageModules = import.meta.glob( "@/images/*.webp", { eager: true, import: "default" } );
+const imageModules = import.meta.glob( [ "@/images/*.webp", "@/book1/*/*.webp" ], { eager: true, import: "default" } );
 const imageByRouteName = Object.entries( imageModules ).reduce( ( acc, [ path, url ] ) => {
 	const file = path.split( "/" ).pop()
 		?.replace( /\.webp$/i, "" )
@@ -345,6 +347,7 @@ watch(
 		void refreshCommentCounts( nextItems );
 	}, { immediate: true }
 );
+
 async function detectImageTone( imageUrl ) {
 	if ( typeof window === "undefined" ) {
 		return "dark";
