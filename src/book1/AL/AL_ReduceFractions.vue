@@ -1,244 +1,143 @@
 <template>
-<v-container class="py-6" fluid>
-	<v-row>
-		<v-col cols="12" md="5">
-			<v-card class="pa-4" rounded="xl">
-				<v-card-title class="text-h6">Ada-Karten: Brüche kürzen</v-card-title>
-				<v-card-subtitle>
-					Ada-streng: <b>Data / Working / Result</b>-Spalten und Euklid-Loop.
-				</v-card-subtitle>
+<ALCalculation
+	:deck="deck"
+	deck-line-title="Note-G"
+	:error="error"
+	:formula-tex="programTex"
+	formula-title="Programm (Euklid-Stil)"
+	:running="running"
+	:subtitle="'Ada-streng: <b>Data / Working / Result</b>-Spalten und Euklid-Loop.'"
+	:tab="tab"
+	title="Ada-Karten: Brüche kürzen"
+	:trace-text="traceText"
+	@reset="reset"
+	@run="run"
+	@update:tab="tab = $event"
+>
+	<template #intro>
+		<template v-if="result">
+			Ergebnis für
+			<code>{{ result.numIn }}/{{ result.denIn }}</code>:
+			<b><Katex :tex="result.reducedTex" /></b>
+			mit <Katex :tex="`\\gcd(${result.absNumIn},${result.absDenIn})=${result.gcd}`" />.
+		</template>
+		<template v-else>
+			Gib Zähler und Nenner ein und führe das Kartenprogramm aus.
+		</template>
+	</template>
 
-				<v-divider class="my-4" />
+	<template #inputs>
+		<v-col cols="12" sm="6">
+			<v-text-field
+				v-model="numerator"
+				density="comfortable"
+				label="Zähler z (ganzzahlig)"
+				placeholder="48"
+			/>
+		</v-col>
+		<v-col cols="12" sm="6">
+			<v-text-field
+				v-model="denominator"
+				density="comfortable"
+				label="Nenner n (ganzzahlig)"
+				placeholder="18"
+			/>
+		</v-col>
+	</template>
 
-				<v-row dense>
-					<v-col cols="12">
-						<v-alert class="mb-2"
-							density="compact"
-							type="info"
-							variant="tonal"
-						>
-							<template v-if="result">
-								Ergebnis für
-								<code>{{ result.numIn }}/{{ result.denIn }}</code>:
-								<b><Katex :tex="result.reducedTex" /></b>
-								mit <Katex :tex="`\\gcd(${result.absNumIn},${result.absDenIn})=${result.gcd}`" />.
-							</template>
-							<template v-else>
-								Gib Zähler und Nenner ein und führe das Kartenprogramm aus.
-							</template>
-						</v-alert>
-					</v-col>
+	<template #warning>
+		Nenner <Katex tex="n" /> darf nicht <code>0</code> sein. Bei negativem Nenner wird das
+		Vorzeichen nach oben gezogen, damit <Katex tex="n>0" /> bleibt.
+	</template>
 
-					<v-col cols="12" sm="6">
-						<v-text-field
-							v-model="numerator"
-							density="comfortable"
-							label="Zähler z (ganzzahlig)"
-							placeholder="48"
-						/>
-					</v-col>
-					<v-col cols="12" sm="6">
-						<v-text-field
-							v-model="denominator"
-							density="comfortable"
-							label="Nenner n (ganzzahlig)"
-							placeholder="18"
-						/>
-					</v-col>
+	<template #formulaNote>
+		Das Kartenprogramm berechnet erst <Katex tex="g=\gcd(z,n)" /> und teilt dann
+		<Katex tex="z'=\frac{z}{g},\;n'=\frac{n}{g}" />.
+	</template>
 
-					<v-col cols="12">
-						<v-alert density="compact" type="warning" variant="tonal">
-							Nenner <Katex tex="n" /> darf nicht <code>0</code> sein. Bei negativem Nenner wird das
-							Vorzeichen nach oben gezogen, damit <Katex tex="n>0" /> bleibt.
-						</v-alert>
-					</v-col>
-
-					<v-col class="d-flex ga-2" cols="12">
-						<v-btn color="primary"
-							:loading="running"
-							rounded="xl"
-							@click="run"
-						>
-							Ausführen
-						</v-btn>
-						<v-btn rounded="xl" variant="tonal" @click="reset">
-							Reset
-						</v-btn>
-					</v-col>
-				</v-row>
-			</v-card>
-
-			<v-card class="pa-4 mt-4" rounded="xl">
-				<v-card-title class="text-h6">Programm (Euklid-Stil)</v-card-title>
-				<v-card-text>
-					<KaTeXBlock :tex="programTex" />
-					<div class="text-body-2 mt-3">
-						Das Kartenprogramm berechnet erst <Katex tex="g=\gcd(z,n)" /> und teilt dann
-						<Katex tex="z'=\frac{z}{g},\;n'=\frac{n}{g}" />.
+	<template #result>
+		<v-row v-if="result" dense>
+			<v-col cols="12" md="6">
+				<v-card class="pa-4" rounded="xl" variant="tonal">
+					<div class="text-caption mb-1">Gekürzter Bruch</div>
+					<div class="text-h5 font-weight-bold">
+						{{ result.numOut }}/{{ result.denOut }}
 					</div>
-				</v-card-text>
-			</v-card>
-		</v-col>
+					<div class="mt-2">
+						<Katex as="div" :display="true" :tex="result.reducedTex" />
+					</div>
+				</v-card>
+			</v-col>
 
-		<v-col cols="12" md="7">
-			<v-card class="pa-4" rounded="xl">
-				<v-card-title class="text-h6">Ergebnis</v-card-title>
+			<v-col cols="12" md="6">
+				<v-card class="pa-4" rounded="xl" variant="tonal">
+					<div class="text-caption mb-1">ggT und Dezimalwert</div>
+					<div class="text-h6 font-weight-medium">
+						<Katex :tex="`g=${result.gcd}`" />
+					</div>
+					<div class="text-h6 font-weight-medium mt-1">
+						{{ result.decimal }}
+					</div>
+					<div class="text-caption mt-2">
+						(auf 6 Nachkommastellen gerundet)
+					</div>
+				</v-card>
+			</v-col>
 
-				<v-divider class="my-4" />
+			<v-col cols="12">
+				<v-chip class="me-2" color="green" variant="tonal">
+					Loops: {{ result.iterations }}
+				</v-chip>
+				<v-chip variant="tonal">
+					Karten: {{ deck?.length ?? 0 }}
+				</v-chip>
+			</v-col>
+		</v-row>
+	</template>
 
-				<div v-if="error" class="mb-3">
-					<v-alert density="comfortable" type="error" variant="tonal">
-						{{ error }}
-					</v-alert>
-				</div>
-
-				<v-row v-if="result" dense>
-					<v-col cols="12" md="6">
-						<v-card class="pa-4" rounded="xl" variant="tonal">
-							<div class="text-caption mb-1">Gekürzter Bruch</div>
-							<div class="text-h5 font-weight-bold">
-								{{ result.numOut }}/{{ result.denOut }}
-							</div>
-							<div class="mt-2">
-								<KaTeXBlock :tex="result.reducedTex" />
-							</div>
-						</v-card>
-					</v-col>
-
-					<v-col cols="12" md="6">
-						<v-card class="pa-4" rounded="xl" variant="tonal">
-							<div class="text-caption mb-1">ggT und Dezimalwert</div>
-							<div class="text-h6 font-weight-medium">
-								<Katex :tex="`g=${result.gcd}`" />
-							</div>
-							<div class="text-h6 font-weight-medium mt-1">
-								{{ result.decimal }}
-							</div>
-							<div class="text-caption mt-2">
-								(auf 6 Nachkommastellen gerundet)
-							</div>
-						</v-card>
-					</v-col>
-
-					<v-col cols="12">
-						<v-chip class="me-2" color="green" variant="tonal">
-							Loops: {{ result.iterations }}
-						</v-chip>
-						<v-chip variant="tonal">
-							Karten: {{ deck?.length ?? 0 }}
-						</v-chip>
-					</v-col>
-				</v-row>
-
-				<v-divider class="my-4" />
-
-				<v-tabs v-model="tab" color="primary">
-					<v-tab value="deck">Kartendeck</v-tab>
-					<v-tab value="trace">Trace</v-tab>
-					<v-tab value="store">Store-Snapshot</v-tab>
-				</v-tabs>
-
-				<v-window v-model="tab" class="mt-3">
-					<v-window-item value="deck">
-						<v-table density="compact">
-							<thead>
-								<tr>
-									<th style="width: 70px;">#</th>
-									<th style="width: 90px;">Note-G</th>
-									<th>Label</th>
-									<th style="width: 110px;">Op</th>
-									<th style="width: 150px;">Ziel</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr v-for="(c, i) in deck" :key="i">
-									<td>{{ i + 1 }}</td>
-									<td><code>L{{ c.line }}</code></td>
-									<td>{{ c.label || "" }}</td>
-									<td><code>{{ c.op }}</code></td>
-									<td>
-										<code v-if="Array.isArray(c.dest)">{{ c.dest.map((d) => "V" + d).join(", ") }}</code>
-										<code v-else>V{{ c.dest }}</code>
-									</td>
-								</tr>
-							</tbody>
-						</v-table>
-					</v-window-item>
-
-					<v-window-item value="trace">
-						<v-textarea
-							v-model="traceText"
-							auto-grow
-							label="Karten-Log"
-							readonly
-							rows="16"
-						/>
-					</v-window-item>
-
-					<v-window-item value="store">
-						<v-row dense>
-							<v-col v-for="section in storeLayout"
-								:key="section.key"
-								cols="12"
-								md="4"
-							>
-								<v-card class="pa-2" rounded="lg" variant="tonal">
-									<div class="text-subtitle-2 px-2 py-1">{{ section.title }}</div>
-									<v-table density="compact">
-										<thead>
-											<tr>
-												<th>Spalte</th>
-												<th>Rolle</th>
-												<th class="text-right">Wert</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr v-for="entry in section.entries" :key="`${section.key}-${entry.col}`">
-												<td><code>V{{ entry.col }}</code></td>
-												<td>{{ entry.label }}</td>
-												<td class="mono text-right">{{ storeView(entry.col) }}</td>
-											</tr>
-										</tbody>
-									</v-table>
-								</v-card>
-							</v-col>
-						</v-row>
-						<v-alert class="mt-3"
-							density="compact"
-							type="info"
-							variant="tonal"
-						>
-							Das Programm nutzt den Euklid-Loop (L4…L9), danach werden Zähler und Nenner durch den ggT geteilt.
-						</v-alert>
-					</v-window-item>
-				</v-window>
-			</v-card>
-		</v-col>
-	</v-row>
-</v-container>
+	<template #store>
+		<v-row dense>
+			<v-col v-for="section in storeLayout"
+				:key="section.key"
+				cols="12"
+				md="4"
+			>
+				<v-card class="pa-2" rounded="lg" variant="tonal">
+					<div class="text-subtitle-2 px-2 py-1">{{ section.title }}</div>
+					<v-table density="compact">
+						<thead>
+							<tr>
+								<th>Spalte</th>
+								<th>Rolle</th>
+								<th class="text-right">Wert</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr v-for="entry in section.entries" :key="`${section.key}-${entry.col}`">
+								<td><code>V{{ entry.col }}</code></td>
+								<td>{{ entry.label }}</td>
+								<td class="mono text-right">{{ storeView(entry.col) }}</td>
+							</tr>
+						</tbody>
+					</v-table>
+				</v-card>
+			</v-col>
+		</v-row>
+		<v-alert class="mt-3"
+			density="compact"
+			type="info"
+			variant="tonal"
+		>
+			Das Programm nutzt den Euklid-Loop (L4…L9), danach werden Zähler und Nenner durch den ggT geteilt.
+		</v-alert>
+	</template>
+</ALCalculation>
 </template>
 
 <script setup>
-import { computed, defineComponent, h, ref } from "vue";
-import katex from "katex";
-const KaTeXBlock = defineComponent( {
-	name:  "KaTeXBlock",
-	props: { tex: { type: String, required: true } },
-	setup( props ) {
-		const html = computed( () => {
-			try {
-				return katex.renderToString( props.tex, {
-					throwOnError: false,
-					displayMode:  true
-				} );
-			} catch ( e ) {
-				return `<pre>${String( e )}</pre>`;
-			}
-		} );
+import { ref } from "vue";
 
-		return () => h( "div", { class: "katex-wrap", innerHTML: html.value } );
-	}
-} );
+import ALCalculation from "./AL_Calculation.vue";
 
 const bigAbs = ( x ) => x < 0n ? -x : x;
 
@@ -584,9 +483,3 @@ async function run() {
 	}
 }
 </script>
-
-<style scoped>
-.katex-wrap :deep(.katex-display) {
-  margin: 0.25rem 0;
-}
-</style>

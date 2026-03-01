@@ -1,278 +1,177 @@
 <template>
-<v-container class="py-6" fluid>
-	<v-row>
-		<v-col cols="12" md="5">
-			<v-card class="pa-4" rounded="xl">
-				<v-card-title class="text-h6">Ada-Karten (Note G) Emulator</v-card-title>
-				<v-card-subtitle>
-					Ada-streng: <b>Data / Working / Result</b>-Spalten und Loop für Sektion <b>13…23</b>.
-				</v-card-subtitle>
+<ALCalculation
+	:deck="deck"
+	deck-line-title="Note-G"
+	:error="error"
+	:formula-tex="formulaTex"
+	formula-title="Formel (Note-G-Stil)"
+	:running="running"
+	:subtitle="'Ada-streng: <b>Data / Working / Result</b>-Spalten und Loop für Sektion <b>13…23</b>.'"
+	:tab="tab"
+	title="Ada-Karten (Note G) Emulator"
+	:trace-text="traceText"
+	@reset="reset"
+	@run="run"
+	@update:tab="tab = $event"
+>
+	<template #intro>
+		<template v-if="result">
+			Aktuelle Ausführung liefert für <code>n={{ n }}</code>
+			(also <Katex :tex="`B_{${2 * n - 1}}`" />)
+			<b><Katex :tex="toKaTeXFrac(result.frac)" /></b>.
+		</template>
+		<template v-else>
+			Führe den Emulator aus, um das Ergebnis für <code>n</code> zu sehen.
+		</template>
+	</template>
 
-				<v-divider class="my-4" />
-
-				<v-row dense>
-					<v-col cols="12">
-						<v-alert class="mb-2"
-							density="compact"
-							type="info"
-							variant="tonal"
-						>
-							<template v-if="result">
-								Aktuelle Ausführung liefert für <code>n={{ n }}</code>
-								(also <Katex :tex="`B_{${2 * n - 1}}`" />)
-								<b><Katex :tex="toKaTeXFrac(result.frac)" /></b>.
-							</template>
-							<template v-else>
-								Führe den Emulator aus, um das Ergebnis für <code>n</code> zu sehen.
-							</template>
-						</v-alert>
-					</v-col>
-
-					<v-col cols="12">
-						<v-text-field
-							v-model.number="n"
-							density="comfortable"
-							label="n (für B(2n-1); Note-G Demo: n=4 → B7)"
-							min="2"
-							step="1"
-							type="number"
-						/>
-					</v-col>
-
-					<v-col cols="12">
-						<v-expansion-panels variant="accordion">
-							<v-expansion-panel>
-								<v-expansion-panel-title>Bernoulli-Startwerte (für Note-G-Demo)</v-expansion-panel-title>
-								<v-expansion-panel-text>
-									<v-row dense>
-										<v-col cols="12">
-											<KaTeXBlock :tex="`B_1 = -\\frac{1}{2},\\; B_3 = \\frac{1}{6},\\; B_5 = -\\frac{1}{30}`" />
-										</v-col>
-
-										<v-col cols="12" sm="4">
-											<v-text-field
-												v-model="B1"
-												density="comfortable"
-												label="B1 (als Bruch)"
-												placeholder="-1/2"
-											/>
-										</v-col>
-										<v-col cols="12" sm="4">
-											<v-text-field
-												v-model="B3"
-												density="comfortable"
-												label="B3 (als Bruch)"
-												placeholder="1/6"
-											/>
-										</v-col>
-										<v-col cols="12" sm="4">
-											<v-text-field
-												v-model="B5"
-												density="comfortable"
-												label="B5 (als Bruch)"
-												placeholder="-1/30"
-											/>
-										</v-col>
-
-										<v-col cols="12">
-											<v-alert density="compact" type="warning" variant="tonal">
-												Für echte <Katex tex="B_{2n-1}" /> braucht man alle vorherigen ungeraden Bernoulli-Zahlen.
-												Diese GUI ist absichtlich “Note-G-nah”: sie rechnet exemplarisch mit <Katex tex="B_1,B_3,B_5" />.
-											</v-alert>
-										</v-col>
-									</v-row>
-								</v-expansion-panel-text>
-							</v-expansion-panel>
-						</v-expansion-panels>
-					</v-col>
-
-					<v-col class="d-flex ga-2" cols="12">
-						<v-btn color="primary"
-							:loading="running"
-							rounded="xl"
-							@click="run"
-						>
-							Ausführen
-						</v-btn>
-						<v-btn rounded="xl" variant="tonal" @click="reset">
-							Reset
-						</v-btn>
-					</v-col>
-				</v-row>
-			</v-card>
-
-			<v-card class="pa-4 mt-4" rounded="xl">
-				<v-card-title class="text-h6">Formel (Note-G-Stil)</v-card-title>
-				<v-card-text>
-					<KaTeXBlock
-						:tex="formulaTex"
-					/>
-					<div class="text-body-2 mt-3">
-						Dabei sind <Katex tex="A_0, A_1, A_3, A_5" /> die “mechanischen” Koeffizienten aus Produkten/Divisionen,
-						so wie es die Karten sauber abspulen können.
-					</div>
-				</v-card-text>
-			</v-card>
+	<template #inputs>
+		<v-col cols="12">
+			<v-text-field
+				v-model.number="n"
+				density="comfortable"
+				label="n (für B(2n-1); Note-G Demo: n=4 → B7)"
+				min="2"
+				step="1"
+				type="number"
+			/>
 		</v-col>
 
-		<v-col cols="12" md="7">
-			<v-card class="pa-4" rounded="xl">
-				<v-card-title class="text-h6">Ergebnis</v-card-title>
-
-				<v-divider class="my-4" />
-
-				<div v-if="error" class="mb-3">
-					<v-alert density="comfortable" type="error" variant="tonal">
-						{{ error }}
-					</v-alert>
-				</div>
-
-				<v-row v-if="result" dense>
-					<v-col cols="12" md="6">
-						<v-card class="pa-4" rounded="xl" variant="tonal">
-							<div class="text-caption mb-1">Ausgabe (Bruch)</div>
-							<div class="text-h5 font-weight-bold">
-								{{ result.frac }}
-							</div>
-							<div class="mt-2">
-								<KaTeXBlock :tex="`B_{${2*n-1}} = ${toKaTeXFrac(result.frac)}`" />
-							</div>
-						</v-card>
-					</v-col>
-
-					<v-col cols="12" md="6">
-						<v-card class="pa-4" rounded="xl" variant="tonal">
-							<div class="text-caption mb-1">Dezimal (nur Anzeige)</div>
-							<div class="text-h6 font-weight-medium">
-								{{ result.decimal }}
-							</div>
-							<div class="text-caption mt-2">
-								(exakt gerechnet; auf 6 Nachkommastellen gerundet)
-							</div>
-						</v-card>
-					</v-col>
-
-					<v-col cols="12">
-						<v-chip class="me-2" color="green" variant="tonal">
-							Korrigiert
-						</v-chip>
-						<v-chip variant="tonal">
-							Karten: {{ deck?.length ?? 0 }}
-						</v-chip>
-					</v-col>
-				</v-row>
-
-				<v-divider class="my-4" />
-
-				<v-tabs v-model="tab" color="primary">
-					<v-tab value="deck">Kartendeck</v-tab>
-					<v-tab value="trace">Trace</v-tab>
-					<v-tab value="store">Store-Snapshot</v-tab>
-				</v-tabs>
-
-				<v-window v-model="tab" class="mt-3">
-					<v-window-item value="deck">
-						<v-table density="compact">
-							<thead>
-								<tr>
-									<th style="width: 70px;">#</th>
-									<th style="width: 90px;">Note-G</th>
-									<th>Label</th>
-									<th style="width: 110px;">Op</th>
-									<th style="width: 150px;">Ziel</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr v-for="(c, i) in deck" :key="i">
-									<td>{{ i + 1 }}</td>
-									<td><code>L{{ c.line }}</code></td>
-									<td>{{ c.label || '' }}</td>
-									<td><code>{{ c.op }}</code></td>
-									<td>
-										<code v-if="Array.isArray(c.dest)">{{ c.dest.map(d => 'V'+d).join(', ') }}</code>
-										<code v-else>V{{ c.dest }}</code>
-									</td>
-								</tr>
-							</tbody>
-						</v-table>
-					</v-window-item>
-
-					<v-window-item value="trace">
-						<v-textarea
-							v-model="traceText"
-							auto-grow
-							label="Karten-Log"
-							readonly
-							rows="16"
-						/>
-					</v-window-item>
-
-					<v-window-item value="store">
+		<v-col cols="12">
+			<v-expansion-panels variant="accordion">
+				<v-expansion-panel>
+					<v-expansion-panel-title>Bernoulli-Startwerte (für Note-G-Demo)</v-expansion-panel-title>
+					<v-expansion-panel-text>
 						<v-row dense>
-							<v-col v-for="section in storeLayout"
-								:key="section.key"
-								cols="12"
-								md="4"
-							>
-								<v-card class="pa-2" rounded="lg" variant="tonal">
-									<div class="text-subtitle-2 px-2 py-1">{{ section.title }}</div>
-									<v-table density="compact">
-										<thead>
-											<tr>
-												<th>Spalte</th>
-												<th>Rolle</th>
-												<th class="text-right">Wert</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr v-for="entry in section.entries" :key="`${section.key}-${entry.col}`">
-												<td><code>V{{ entry.col }}</code></td>
-												<td>{{ entry.label }}</td>
-												<td class="mono text-right">{{ storeView(entry.col) }}</td>
-											</tr>
-										</tbody>
-									</v-table>
-								</v-card>
+							<v-col cols="12">
+								<Katex as="div" :display="true" :tex="'B_1 = -\\frac{1}{2},\\; B_3 = \\frac{1}{6},\\; B_5 = -\\frac{1}{30}'" />
+							</v-col>
+
+							<v-col cols="12" sm="4">
+								<v-text-field
+									v-model="B1"
+									density="comfortable"
+									label="B1 (als Bruch)"
+									placeholder="-1/2"
+								/>
+							</v-col>
+							<v-col cols="12" sm="4">
+								<v-text-field
+									v-model="B3"
+									density="comfortable"
+									label="B3 (als Bruch)"
+									placeholder="1/6"
+								/>
+							</v-col>
+							<v-col cols="12" sm="4">
+								<v-text-field
+									v-model="B5"
+									density="comfortable"
+									label="B5 (als Bruch)"
+									placeholder="-1/30"
+								/>
+							</v-col>
+
+							<v-col cols="12">
+								<v-alert density="compact" type="warning" variant="tonal">
+									Für echte <Katex tex="B_{2n-1}" /> braucht man alle vorherigen ungeraden Bernoulli-Zahlen.
+									Diese GUI ist absichtlich “Note-G-nah”: sie rechnet exemplarisch mit <Katex tex="B_1,B_3,B_5" />.
+								</v-alert>
 							</v-col>
 						</v-row>
-						<v-alert class="mt-3"
-							density="compact"
-							type="info"
-							variant="tonal"
-						>
-							Das Store-Layout folgt nun Data/Working/Result; die Sektion 13…23 wird als Schleife erzeugt.
-						</v-alert>
-					</v-window-item>
-				</v-window>
-			</v-card>
+					</v-expansion-panel-text>
+				</v-expansion-panel>
+			</v-expansion-panels>
 		</v-col>
-	</v-row>
-</v-container>
+	</template>
+
+	<template #formulaNote>
+		Dabei sind <Katex tex="A_0, A_1, A_3, A_5" /> die “mechanischen” Koeffizienten aus Produkten/Divisionen,
+		so wie es die Karten sauber abspulen können.
+	</template>
+
+	<template #result>
+		<v-row v-if="result" dense>
+			<v-col cols="12" md="6">
+				<v-card class="pa-4" rounded="xl" variant="tonal">
+					<div class="text-caption mb-1">Ausgabe (Bruch)</div>
+					<div class="text-h5 font-weight-bold">
+						{{ result.frac }}
+					</div>
+					<div class="mt-2">
+						<Katex as="div" :display="true" :tex="`B_{${2*n-1}} = ${toKaTeXFrac(result.frac)}`" />
+					</div>
+				</v-card>
+			</v-col>
+
+			<v-col cols="12" md="6">
+				<v-card class="pa-4" rounded="xl" variant="tonal">
+					<div class="text-caption mb-1">Dezimal (nur Anzeige)</div>
+					<div class="text-h6 font-weight-medium">
+						{{ result.decimal }}
+					</div>
+					<div class="text-caption mt-2">
+						(exakt gerechnet; auf 6 Nachkommastellen gerundet)
+					</div>
+				</v-card>
+			</v-col>
+
+			<v-col cols="12">
+				<v-chip class="me-2" color="green" variant="tonal">
+					Korrigiert
+				</v-chip>
+				<v-chip variant="tonal">
+					Karten: {{ deck?.length ?? 0 }}
+				</v-chip>
+			</v-col>
+		</v-row>
+	</template>
+
+	<template #store>
+		<v-row dense>
+			<v-col v-for="section in storeLayout"
+				:key="section.key"
+				cols="12"
+				md="4"
+			>
+				<v-card class="pa-2" rounded="lg" variant="tonal">
+					<div class="text-subtitle-2 px-2 py-1">{{ section.title }}</div>
+					<v-table density="compact">
+						<thead>
+							<tr>
+								<th>Spalte</th>
+								<th>Rolle</th>
+								<th class="text-right">Wert</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr v-for="entry in section.entries" :key="`${section.key}-${entry.col}`">
+								<td><code>V{{ entry.col }}</code></td>
+								<td>{{ entry.label }}</td>
+								<td class="mono text-right">{{ storeView(entry.col) }}</td>
+							</tr>
+						</tbody>
+					</v-table>
+				</v-card>
+			</v-col>
+		</v-row>
+		<v-alert class="mt-3"
+			density="compact"
+			type="info"
+			variant="tonal"
+		>
+			Das Store-Layout folgt nun Data/Working/Result; die Sektion 13…23 wird als Schleife erzeugt.
+		</v-alert>
+	</template>
+</ALCalculation>
 </template>
 
 <script setup>
-import { computed, defineComponent, h, ref } from "vue";
-import katex from "katex";
+import {
+	computed, ref
+} from "vue";
 
-// ---- KaTeX mini component ----
-const KaTeXBlock = defineComponent( {
-	name:  "KaTeXBlock",
-	props: { tex: { type: String, required: true } },
-	setup( props ) {
-		const html = computed( () => {
-			try {
-				return katex.renderToString( props.tex, {
-					throwOnError: false,
-					displayMode:  true
-				} );
-			} catch ( e ) {
-				return `<pre>${String( e )}</pre>`;
-			}
-		} );
-
-		return () => h( "div", { class: "katex-wrap", innerHTML: html.value } );
-	}
-} );
+import ALCalculation from "./AL_Calculation.vue";
 
 // ---------- Rational arithmetic (BigInt) ----------
 const bigAbs = ( x ) => x < 0n ? -x : x;
@@ -709,9 +608,3 @@ async function run() {
 	}
 }
 </script>
-
-<style scoped>
-.katex-wrap :deep(.katex-display) {
-  margin: 0.25rem 0;
-}
-</style>

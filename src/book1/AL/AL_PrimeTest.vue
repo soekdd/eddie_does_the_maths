@@ -1,245 +1,145 @@
 <template>
-<v-container class="py-6" fluid>
-	<v-row>
-		<v-col cols="12" md="5">
-			<v-card class="pa-4" rounded="xl">
-				<v-card-title class="text-h6">Ada-Karten: Primzahltest</v-card-title>
-				<v-card-subtitle>
-					Trial Division über Restbildung mit <b>DIV/MUL/SUB</b>.
-				</v-card-subtitle>
+<ALCalculation
+	:deck="deck"
+	:error="error"
+	:formula-tex="formulaTex"
+	formula-title="Formel (Resttest)"
+	:running="running"
+	:subtitle="'Trial Division über Restbildung mit <b>DIV/MUL/SUB</b>.'"
+	:tab="tab"
+	title="Ada-Karten: Primzahltest"
+	:trace-text="traceText"
+	@reset="reset"
+	@run="run"
+	@update:tab="tab = $event"
+>
+	<template #intro>
+		<template v-if="result">
+			<span v-if="result.isPrime">
+				<code>{{ result.n }}</code> ist <b>prim</b>.
+			</span>
+			<span v-else>
+				<code>{{ result.n }}</code> ist <b>nicht prim</b>; kleinster Teiler: <b>{{ result.divisor }}</b>.
+			</span>
+		</template>
+		<template v-else>
+			Gib eine ganze Zahl <Katex tex="n\ge 2" /> ein.
+		</template>
+	</template>
 
-				<v-divider class="my-4" />
+	<template #inputs>
+		<v-col cols="12">
+			<v-text-field
+				v-model="nInput"
+				density="comfortable"
+				label="n (ganzzahlig)"
+				placeholder="91"
+			/>
+		</v-col>
+	</template>
 
-				<v-row dense>
-					<v-col cols="12">
-						<v-alert class="mb-2"
-							density="compact"
-							type="info"
-							variant="tonal"
-						>
-							<template v-if="result">
-								<span v-if="result.isPrime">
-									<code>{{ result.n }}</code> ist <b>prim</b>.
-								</span>
-								<span v-else>
-									<code>{{ result.n }}</code> ist <b>nicht prim</b>; kleinster Teiler: <b>{{ result.divisor }}</b>.
-								</span>
-							</template>
-							<template v-else>
-								Gib eine ganze Zahl <Katex tex="n\ge 2" /> ein.
-							</template>
-						</v-alert>
-					</v-col>
+	<template #warning>
+		Geprüft werden Teiler <Katex tex="d=2,3,\dots,\lfloor\sqrt{n}\rfloor" />.
+	</template>
 
-					<v-col cols="12">
-						<v-text-field
-							v-model="nInput"
-							density="comfortable"
-							label="n (ganzzahlig)"
-							placeholder="91"
-						/>
-					</v-col>
+	<template #formulaNote>
+		Ein Teiler liegt vor, wenn der Rest <Katex tex="r" /> gleich 0 ist.
+	</template>
 
-					<v-col cols="12">
-						<v-alert density="compact" type="warning" variant="tonal">
-							Geprüft werden Teiler <Katex tex="d=2,3,\dots,\lfloor\sqrt{n}\rfloor" />.
-						</v-alert>
-					</v-col>
-
-					<v-col class="d-flex ga-2" cols="12">
-						<v-btn color="primary"
-							:loading="running"
-							rounded="xl"
-							@click="run"
-						>
-							Ausführen
-						</v-btn>
-						<v-btn rounded="xl" variant="tonal" @click="reset">
-							Reset
-						</v-btn>
-					</v-col>
-				</v-row>
-			</v-card>
-
-			<v-card class="pa-4 mt-4" rounded="xl">
-				<v-card-title class="text-h6">Formel (Resttest)</v-card-title>
-				<v-card-text>
-					<KaTeXBlock :tex="formulaTex" />
-					<div class="text-body-2 mt-3">
-						Ein Teiler liegt vor, wenn der Rest <Katex tex="r" /> gleich 0 ist.
+	<template #result>
+		<v-row v-if="result" dense>
+			<v-col cols="12" md="6">
+				<v-card class="pa-4" rounded="xl" variant="tonal">
+					<div class="text-caption mb-1">Klassifikation</div>
+					<div class="text-h5 font-weight-bold">
+						{{ result.isPrime ? "Prim" : "Komposit" }}
 					</div>
-				</v-card-text>
-			</v-card>
-		</v-col>
+					<div class="text-body-2 mt-2">
+						{{ result.description }}
+					</div>
+				</v-card>
+			</v-col>
 
-		<v-col cols="12" md="7">
-			<v-card class="pa-4" rounded="xl">
-				<v-card-title class="text-h6">Ergebnis</v-card-title>
+			<v-col cols="12" md="6">
+				<v-card class="pa-4" rounded="xl" variant="tonal">
+					<div class="text-caption mb-1">Prüfdetails</div>
+					<div class="text-body-1">Geprüfte Teiler: {{ result.checks }}</div>
+					<div class="text-body-1">Grenze: {{ result.bound }}</div>
+					<div v-if="!result.isPrime" class="text-body-1">Erster Teiler: {{ result.divisor }}</div>
+				</v-card>
+			</v-col>
 
-				<v-divider class="my-4" />
+			<v-col cols="12">
+				<v-chip class="me-2" color="green" variant="tonal">
+					Checks: {{ result.checks }}
+				</v-chip>
+				<v-chip variant="tonal">Karten: {{ deck?.length ?? 0 }}</v-chip>
+			</v-col>
+		</v-row>
+	</template>
 
-				<div v-if="error" class="mb-3">
-					<v-alert density="comfortable" type="error" variant="tonal">
-						{{ error }}
-					</v-alert>
-				</div>
+	<template #store>
+		<v-row dense>
+			<v-col cols="12" md="4">
+				<v-card class="pa-2" rounded="lg" variant="tonal">
+					<div class="text-subtitle-2 px-2 py-1">Data columns</div>
+					<v-table density="compact">
+						<tbody>
+							<tr><td><code>V1</code></td><td>0</td><td class="mono text-right">{{ storeView(1) }}</td></tr>
+							<tr><td><code>V2</code></td><td>1</td><td class="mono text-right">{{ storeView(2) }}</td></tr>
+							<tr><td><code>V3</code></td><td>n</td><td class="mono text-right">{{ storeView(3) }}</td></tr>
+							<tr><td><code>V5</code></td><td>2</td><td class="mono text-right">{{ storeView(5) }}</td></tr>
+						</tbody>
+					</v-table>
+				</v-card>
+			</v-col>
 
-				<v-row v-if="result" dense>
-					<v-col cols="12" md="6">
-						<v-card class="pa-4" rounded="xl" variant="tonal">
-							<div class="text-caption mb-1">Klassifikation</div>
-							<div class="text-h5 font-weight-bold">
-								{{ result.isPrime ? "Prim" : "Komposit" }}
-							</div>
-							<div class="text-body-2 mt-2">
-								{{ result.description }}
-							</div>
-						</v-card>
-					</v-col>
+			<v-col cols="12" md="4">
+				<v-card class="pa-2" rounded="lg" variant="tonal">
+					<div class="text-subtitle-2 px-2 py-1">Working columns</div>
+					<v-table density="compact">
+						<tbody>
+							<tr><td><code>V11</code></td><td>d</td><td class="mono text-right">{{ storeView(11) }}</td></tr>
+							<tr><td><code>V12</code></td><td>d²</td><td class="mono text-right">{{ storeView(12) }}</td></tr>
+							<tr><td><code>V13</code></td><td>q=floor(n/d)</td>
+								<td class="mono text-right">{{ storeView(13) }}</td></tr>
+							<tr><td><code>V14</code></td><td>q*d</td><td class="mono text-right">{{ storeView(14) }}</td></tr>
+							<tr><td><code>V15</code></td><td>r</td><td class="mono text-right">{{ storeView(15) }}</td></tr>
+							<tr><td><code>V16</code></td><td>Checks</td><td class="mono text-right">{{ storeView(16) }}</td></tr>
+						</tbody>
+					</v-table>
+				</v-card>
+			</v-col>
 
-					<v-col cols="12" md="6">
-						<v-card class="pa-4" rounded="xl" variant="tonal">
-							<div class="text-caption mb-1">Prüfdetails</div>
-							<div class="text-body-1">Geprüfte Teiler: {{ result.checks }}</div>
-							<div class="text-body-1">Grenze: {{ result.bound }}</div>
-							<div v-if="!result.isPrime" class="text-body-1">Erster Teiler: {{ result.divisor }}</div>
-						</v-card>
-					</v-col>
+			<v-col cols="12" md="4">
+				<v-card class="pa-2" rounded="lg" variant="tonal">
+					<div class="text-subtitle-2 px-2 py-1">Result columns</div>
+					<v-table density="compact">
+						<tbody>
+							<tr><td><code>V21</code></td><td>Primflag (1/0)</td>
+								<td class="mono text-right">{{ storeView(21) }}</td></tr>
+							<tr><td><code>V22</code></td><td>Teiler</td><td class="mono text-right">{{ storeView(22) }}</td></tr>
+						</tbody>
+					</v-table>
+				</v-card>
+			</v-col>
+		</v-row>
 
-					<v-col cols="12">
-						<v-chip class="me-2" color="green" variant="tonal">
-							Checks: {{ result.checks }}
-						</v-chip>
-						<v-chip variant="tonal">Karten: {{ deck?.length ?? 0 }}</v-chip>
-					</v-col>
-				</v-row>
-
-				<v-divider class="my-4" />
-
-				<v-tabs v-model="tab" color="primary">
-					<v-tab value="deck">Kartendeck</v-tab>
-					<v-tab value="trace">Trace</v-tab>
-					<v-tab value="store">Store-Snapshot</v-tab>
-				</v-tabs>
-
-				<v-window v-model="tab" class="mt-3">
-					<v-window-item value="deck">
-						<v-table density="compact">
-							<thead>
-								<tr>
-									<th style="width: 70px;">#</th>
-									<th style="width: 90px;">Line</th>
-									<th>Label</th>
-									<th style="width: 110px;">Op</th>
-									<th style="width: 150px;">Ziel</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr v-for="(c, i) in deck" :key="i">
-									<td>{{ i + 1 }}</td>
-									<td><code>L{{ c.line }}</code></td>
-									<td>{{ c.label || "" }}</td>
-									<td><code>{{ c.op }}</code></td>
-									<td><code>V{{ c.dest }}</code></td>
-								</tr>
-							</tbody>
-						</v-table>
-					</v-window-item>
-
-					<v-window-item value="trace">
-						<v-textarea
-							v-model="traceText"
-							auto-grow
-							label="Karten-Log"
-							readonly
-							rows="16"
-						/>
-					</v-window-item>
-
-					<v-window-item value="store">
-						<v-row dense>
-							<v-col cols="12" md="4">
-								<v-card class="pa-2" rounded="lg" variant="tonal">
-									<div class="text-subtitle-2 px-2 py-1">Data columns</div>
-									<v-table density="compact">
-										<tbody>
-											<tr><td><code>V1</code></td><td>0</td><td class="mono text-right">{{ storeView(1) }}</td></tr>
-											<tr><td><code>V2</code></td><td>1</td><td class="mono text-right">{{ storeView(2) }}</td></tr>
-											<tr><td><code>V3</code></td><td>n</td><td class="mono text-right">{{ storeView(3) }}</td></tr>
-											<tr><td><code>V5</code></td><td>2</td><td class="mono text-right">{{ storeView(5) }}</td></tr>
-										</tbody>
-									</v-table>
-								</v-card>
-							</v-col>
-
-							<v-col cols="12" md="4">
-								<v-card class="pa-2" rounded="lg" variant="tonal">
-									<div class="text-subtitle-2 px-2 py-1">Working columns</div>
-									<v-table density="compact">
-										<tbody>
-											<tr><td><code>V11</code></td><td>d</td><td class="mono text-right">{{ storeView(11) }}</td></tr>
-											<tr><td><code>V12</code></td><td>d²</td><td class="mono text-right">{{ storeView(12) }}</td></tr>
-											<tr><td><code>V13</code></td><td>q=floor(n/d)</td>
-												<td class="mono text-right">{{ storeView(13) }}</td></tr>
-											<tr><td><code>V14</code></td><td>q*d</td><td class="mono text-right">{{ storeView(14) }}</td></tr>
-											<tr><td><code>V15</code></td><td>r</td><td class="mono text-right">{{ storeView(15) }}</td></tr>
-											<tr><td><code>V16</code></td><td>Checks</td><td class="mono text-right">{{ storeView(16) }}</td></tr>
-										</tbody>
-									</v-table>
-								</v-card>
-							</v-col>
-
-							<v-col cols="12" md="4">
-								<v-card class="pa-2" rounded="lg" variant="tonal">
-									<div class="text-subtitle-2 px-2 py-1">Result columns</div>
-									<v-table density="compact">
-										<tbody>
-											<tr><td><code>V21</code></td><td>Primflag (1/0)</td>
-												<td class="mono text-right">{{ storeView(21) }}</td></tr>
-											<tr><td><code>V22</code></td><td>Teiler</td><td class="mono text-right">{{ storeView(22) }}</td></tr>
-										</tbody>
-									</v-table>
-								</v-card>
-							</v-col>
-						</v-row>
-
-						<v-alert class="mt-3"
-							density="compact"
-							type="info"
-							variant="tonal"
-						>
-							Rest wird wie bei Euklid berechnet: <code>r = n - floor(n/d)*d</code>.
-						</v-alert>
-					</v-window-item>
-				</v-window>
-			</v-card>
-		</v-col>
-	</v-row>
-</v-container>
+		<v-alert class="mt-3"
+			density="compact"
+			type="info"
+			variant="tonal"
+		>
+			Rest wird wie bei Euklid berechnet: <code>r = n - floor(n/d)*d</code>.
+		</v-alert>
+	</template>
+</ALCalculation>
 </template>
 
 <script setup>
-import { computed, defineComponent, h, ref } from "vue";
-import katex from "katex";
+import { ref } from "vue";
 
-const KaTeXBlock = defineComponent( {
-	name:  "KaTeXBlock",
-	props: { tex: { type: String, required: true } },
-	setup( props ) {
-		const html = computed( () => {
-			try {
-				return katex.renderToString( props.tex, {
-					throwOnError: false,
-					displayMode:  true
-				} );
-			} catch ( e ) {
-				return `<pre>${String( e )}</pre>`;
-			}
-		} );
-
-		return () => h( "div", { class: "katex-wrap", innerHTML: html.value } );
-	}
-} );
+import ALCalculation from "./AL_Calculation.vue";
 
 class IntVM {
 	constructor( { storeSize = 96, trace = false } = {} ) {
@@ -485,9 +385,3 @@ async function run() {
 	}
 }
 </script>
-
-<style scoped>
-.katex-wrap :deep(.katex-display) {
-  margin: 0.25rem 0;
-}
-</style>

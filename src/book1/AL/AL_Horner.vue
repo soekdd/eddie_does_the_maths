@@ -1,257 +1,157 @@
 <template>
-<v-container class="py-6" fluid>
-	<v-row>
-		<v-col cols="12" md="5">
-			<v-card class="pa-4" rounded="xl">
-				<v-card-title class="text-h6">Ada-Karten: Polynom mit Horner</v-card-title>
-				<v-card-subtitle>
-					Kartenfolge für <b>MUL/ADD</b> in einer Horner-Schleife.
-				</v-card-subtitle>
+<ALCalculation
+	:deck="deck"
+	:error="error"
+	:formula-tex="formulaTex"
+	formula-title="Formel (Horner)"
+	:running="running"
+	:subtitle="'Kartenfolge für <b>MUL/ADD</b> in einer Horner-Schleife.'"
+	:tab="tab"
+	title="Ada-Karten: Polynom mit Horner"
+	:trace-text="traceText"
+	@reset="reset"
+	@run="run"
+	@update:tab="tab = $event"
+>
+	<template #intro>
+		<template v-if="result">
+			<Katex :tex="result.evalTex" />
+		</template>
+		<template v-else>
+			Gib Koeffizienten und einen Wert für <Katex tex="x" /> ein.
+		</template>
+	</template>
 
-				<v-divider class="my-4" />
-
-				<v-row dense>
-					<v-col cols="12">
-						<v-alert class="mb-2"
-							density="compact"
-							type="info"
-							variant="tonal"
-						>
-							<template v-if="result">
-								<Katex :tex="result.evalTex" />
-							</template>
-							<template v-else>
-								Gib Koeffizienten und einen Wert für <Katex tex="x" /> ein.
-							</template>
-						</v-alert>
-					</v-col>
-
-					<v-col cols="12">
-						<v-text-field
-							v-model="coeffInput"
-							density="comfortable"
-							label="Koeffizienten (höchster Grad → konstant)"
-							placeholder="2, -3, 0, 5"
-						/>
-					</v-col>
-
-					<v-col cols="12">
-						<v-text-field
-							v-model="xInput"
-							density="comfortable"
-							label="x (ganzzahlig)"
-							placeholder="4"
-						/>
-					</v-col>
-
-					<v-col cols="12">
-						<v-alert density="compact" type="warning" variant="tonal">
-							Beispiel: <code>2,-3,0,5</code> bedeutet
-							<Katex tex="p(x)=2x^3-3x^2+0x+5" />.
-						</v-alert>
-					</v-col>
-
-					<v-col class="d-flex ga-2" cols="12">
-						<v-btn color="primary"
-							:loading="running"
-							rounded="xl"
-							@click="run"
-						>
-							Ausführen
-						</v-btn>
-						<v-btn rounded="xl" variant="tonal" @click="reset">
-							Reset
-						</v-btn>
-					</v-col>
-				</v-row>
-			</v-card>
-
-			<v-card class="pa-4 mt-4" rounded="xl">
-				<v-card-title class="text-h6">Formel (Horner)</v-card-title>
-				<v-card-text>
-					<KaTeXBlock :tex="formulaTex" />
-					<div class="text-body-2 mt-3">
-						Statt Potenzen direkt zu bilden, verwendet das Kartenprogramm nur Multiplikation und Addition.
-					</div>
-				</v-card-text>
-			</v-card>
+	<template #inputs>
+		<v-col cols="12">
+			<v-text-field
+				v-model="coeffInput"
+				density="comfortable"
+				label="Koeffizienten (höchster Grad → konstant)"
+				placeholder="2, -3, 0, 5"
+			/>
 		</v-col>
 
-		<v-col cols="12" md="7">
-			<v-card class="pa-4" rounded="xl">
-				<v-card-title class="text-h6">Ergebnis</v-card-title>
-
-				<v-divider class="my-4" />
-
-				<div v-if="error" class="mb-3">
-					<v-alert density="comfortable" type="error" variant="tonal">
-						{{ error }}
-					</v-alert>
-				</div>
-
-				<v-row v-if="result" dense>
-					<v-col cols="12" md="6">
-						<v-card class="pa-4" rounded="xl" variant="tonal">
-							<div class="text-caption mb-1">Polynomwert</div>
-							<div class="text-h5 font-weight-bold">{{ result.value }}</div>
-							<div class="mt-2"><KaTeXBlock :tex="result.evalTex" /></div>
-						</v-card>
-					</v-col>
-
-					<v-col cols="12" md="6">
-						<v-card class="pa-4" rounded="xl" variant="tonal">
-							<div class="text-caption mb-1">Details</div>
-							<div class="text-body-1">Grad: {{ result.degree }}</div>
-							<div class="text-body-1">x = {{ result.x }}</div>
-							<div class="text-caption mt-2">Koeffizienten: {{ result.coefficients }}</div>
-						</v-card>
-					</v-col>
-
-					<v-col cols="12">
-						<v-chip class="me-2" color="green" variant="tonal">
-							Horner-Schritte: {{ result.hornerSteps }}
-						</v-chip>
-						<v-chip variant="tonal">Karten: {{ deck?.length ?? 0 }}</v-chip>
-					</v-col>
-				</v-row>
-
-				<v-divider class="my-4" />
-
-				<v-tabs v-model="tab" color="primary">
-					<v-tab value="deck">Kartendeck</v-tab>
-					<v-tab value="trace">Trace</v-tab>
-					<v-tab value="store">Store-Snapshot</v-tab>
-				</v-tabs>
-
-				<v-window v-model="tab" class="mt-3">
-					<v-window-item value="deck">
-						<v-table density="compact">
-							<thead>
-								<tr>
-									<th style="width: 70px;">#</th>
-									<th style="width: 90px;">Line</th>
-									<th>Label</th>
-									<th style="width: 110px;">Op</th>
-									<th style="width: 150px;">Ziel</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr v-for="(c, i) in deck" :key="i">
-									<td>{{ i + 1 }}</td>
-									<td><code>L{{ c.line }}</code></td>
-									<td>{{ c.label || "" }}</td>
-									<td><code>{{ c.op }}</code></td>
-									<td><code>V{{ c.dest }}</code></td>
-								</tr>
-							</tbody>
-						</v-table>
-					</v-window-item>
-
-					<v-window-item value="trace">
-						<v-textarea
-							v-model="traceText"
-							auto-grow
-							label="Karten-Log"
-							readonly
-							rows="16"
-						/>
-					</v-window-item>
-
-					<v-window-item value="store">
-						<v-row dense>
-							<v-col cols="12" md="4">
-								<v-card class="pa-2" rounded="lg" variant="tonal">
-									<div class="text-subtitle-2 px-2 py-1">Data columns</div>
-									<v-table density="compact">
-										<tbody>
-											<tr>
-												<td><code>V1</code></td>
-												<td>Konstante 0</td>
-												<td class="mono text-right">{{ storeView(1) }}</td>
-											</tr>
-											<tr>
-												<td><code>V3</code></td>
-												<td>x</td>
-												<td class="mono text-right">{{ storeView(3) }}</td>
-											</tr>
-											<tr v-for="entry in coeffStoreEntries" :key="entry.col">
-												<td><code>V{{ entry.col }}</code></td>
-												<td>{{ entry.label }}</td>
-												<td class="mono text-right">{{ storeView(entry.col) }}</td>
-											</tr>
-										</tbody>
-									</v-table>
-								</v-card>
-							</v-col>
-
-							<v-col cols="12" md="4">
-								<v-card class="pa-2" rounded="lg" variant="tonal">
-									<div class="text-subtitle-2 px-2 py-1">Working columns</div>
-									<v-table density="compact">
-										<tbody>
-											<tr>
-												<td><code>V11</code></td>
-												<td>Horner-Akkumulator y</td>
-												<td class="mono text-right">{{ storeView(11) }}</td>
-											</tr>
-										</tbody>
-									</v-table>
-								</v-card>
-							</v-col>
-
-							<v-col cols="12" md="4">
-								<v-card class="pa-2" rounded="lg" variant="tonal">
-									<div class="text-subtitle-2 px-2 py-1">Result columns</div>
-									<v-table density="compact">
-										<tbody>
-											<tr>
-												<td><code>V21</code></td>
-												<td>p(x)</td>
-												<td class="mono text-right">{{ storeView(21) }}</td>
-											</tr>
-										</tbody>
-									</v-table>
-								</v-card>
-							</v-col>
-						</v-row>
-
-						<v-alert class="mt-3"
-							density="compact"
-							type="info"
-							variant="tonal"
-						>
-							Jede Koeffizientenkarte erzeugt genau zwei Mill-Operationen: <code>MUL</code>, dann <code>ADD</code>.
-						</v-alert>
-					</v-window-item>
-				</v-window>
-			</v-card>
+		<v-col cols="12">
+			<v-text-field
+				v-model="xInput"
+				density="comfortable"
+				label="x (ganzzahlig)"
+				placeholder="4"
+			/>
 		</v-col>
-	</v-row>
-</v-container>
+	</template>
+
+	<template #warning>
+		Beispiel: <code>2,-3,0,5</code> bedeutet
+		<Katex tex="p(x)=2x^3-3x^2+0x+5" />.
+	</template>
+
+	<template #formulaNote>
+		Statt Potenzen direkt zu bilden, verwendet das Kartenprogramm nur Multiplikation und Addition.
+	</template>
+
+	<template #result>
+		<v-row v-if="result" dense>
+			<v-col cols="12" md="6">
+				<v-card class="pa-4" rounded="xl" variant="tonal">
+					<div class="text-caption mb-1">Polynomwert</div>
+					<div class="text-h5 font-weight-bold">{{ result.value }}</div>
+					<div class="mt-2"><Katex as="div" :display="true" :tex="result.evalTex" /></div>
+				</v-card>
+			</v-col>
+
+			<v-col cols="12" md="6">
+				<v-card class="pa-4" rounded="xl" variant="tonal">
+					<div class="text-caption mb-1">Details</div>
+					<div class="text-body-1">Grad: {{ result.degree }}</div>
+					<div class="text-body-1">x = {{ result.x }}</div>
+					<div class="text-caption mt-2">Koeffizienten: {{ result.coefficients }}</div>
+				</v-card>
+			</v-col>
+
+			<v-col cols="12">
+				<v-chip class="me-2" color="green" variant="tonal">
+					Horner-Schritte: {{ result.hornerSteps }}
+				</v-chip>
+				<v-chip variant="tonal">Karten: {{ deck?.length ?? 0 }}</v-chip>
+			</v-col>
+		</v-row>
+	</template>
+
+	<template #store>
+		<v-row dense>
+			<v-col cols="12" md="4">
+				<v-card class="pa-2" rounded="lg" variant="tonal">
+					<div class="text-subtitle-2 px-2 py-1">Data columns</div>
+					<v-table density="compact">
+						<tbody>
+							<tr>
+								<td><code>V1</code></td>
+								<td>Konstante 0</td>
+								<td class="mono text-right">{{ storeView(1) }}</td>
+							</tr>
+							<tr>
+								<td><code>V3</code></td>
+								<td>x</td>
+								<td class="mono text-right">{{ storeView(3) }}</td>
+							</tr>
+							<tr v-for="entry in coeffStoreEntries" :key="entry.col">
+								<td><code>V{{ entry.col }}</code></td>
+								<td>{{ entry.label }}</td>
+								<td class="mono text-right">{{ storeView(entry.col) }}</td>
+							</tr>
+						</tbody>
+					</v-table>
+				</v-card>
+			</v-col>
+
+			<v-col cols="12" md="4">
+				<v-card class="pa-2" rounded="lg" variant="tonal">
+					<div class="text-subtitle-2 px-2 py-1">Working columns</div>
+					<v-table density="compact">
+						<tbody>
+							<tr>
+								<td><code>V11</code></td>
+								<td>Horner-Akkumulator y</td>
+								<td class="mono text-right">{{ storeView(11) }}</td>
+							</tr>
+						</tbody>
+					</v-table>
+				</v-card>
+			</v-col>
+
+			<v-col cols="12" md="4">
+				<v-card class="pa-2" rounded="lg" variant="tonal">
+					<div class="text-subtitle-2 px-2 py-1">Result columns</div>
+					<v-table density="compact">
+						<tbody>
+							<tr>
+								<td><code>V21</code></td>
+								<td>p(x)</td>
+								<td class="mono text-right">{{ storeView(21) }}</td>
+							</tr>
+						</tbody>
+					</v-table>
+				</v-card>
+			</v-col>
+		</v-row>
+
+		<v-alert class="mt-3"
+			density="compact"
+			type="info"
+			variant="tonal"
+		>
+			Jede Koeffizientenkarte erzeugt genau zwei Mill-Operationen: <code>MUL</code>, dann <code>ADD</code>.
+		</v-alert>
+	</template>
+</ALCalculation>
 </template>
 
 <script setup>
-import { computed, defineComponent, h, ref } from "vue";
-import katex from "katex";
+import { ref } from "vue";
 
-const KaTeXBlock = defineComponent( {
-	name:  "KaTeXBlock",
-	props: { tex: { type: String, required: true } },
-	setup( props ) {
-		const html = computed( () => {
-			try {
-				return katex.renderToString( props.tex, {
-					throwOnError: false,
-					displayMode:  true
-				} );
-			} catch ( e ) {
-				return `<pre>${String( e )}</pre>`;
-			}
-		} );
-
-		return () => h( "div", { class: "katex-wrap", innerHTML: html.value } );
-	}
-} );
+import ALCalculation from "./AL_Calculation.vue";
 
 class IntVM {
 	constructor( { storeSize = 96, trace = false } = {} ) {
@@ -531,9 +431,3 @@ async function run() {
 	}
 }
 </script>
-
-<style scoped>
-.katex-wrap :deep(.katex-display) {
-  margin: 0.25rem 0;
-}
-</style>

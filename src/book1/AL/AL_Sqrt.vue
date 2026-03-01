@@ -1,254 +1,155 @@
 <template>
-<v-container class="py-6" fluid>
-	<v-row>
-		<v-col cols="12" md="5">
-			<v-card class="pa-4" rounded="xl">
-				<v-card-title class="text-h6">Ada-Karten: Quadratwurzel</v-card-title>
-				<v-card-subtitle>
-					Heron/Newton-Iteration mit Karten für <b>DIV, ADD, DIV</b>.
-				</v-card-subtitle>
+<ALCalculation
+	:deck="deck"
+	:error="error"
+	formula-tex="x_{k+1}=\frac{1}{2}\left(x_k+\frac{N}{x_k}\right)\\
+\text{Start }x_0>0,\;\text{dann }x_k\to\sqrt{N}"
+	formula-title="Formel (Heron/Newton)"
+	:running="running"
+	:subtitle="'Heron/Newton-Iteration mit Karten für <b>DIV, ADD, DIV</b>.'"
+	:tab="tab"
+	title="Ada-Karten: Quadratwurzel"
+	:trace-text="traceText"
+	@reset="reset"
+	@run="run"
+	@update:tab="tab = $event"
+>
+	<template #intro>
+		<template v-if="result">
+			Nach {{ result.iterations }} Iterationen:
+			<b><Katex :tex="`x\\approx${toKaTeXFrac(result.approxFrac)}`" /></b>
+		</template>
+		<template v-else>
+			Wähle <Katex tex="N" />, Startwert <Katex tex="x_0" /> und Iterationszahl.
+		</template>
+	</template>
 
-				<v-divider class="my-4" />
-
-				<v-row dense>
-					<v-col cols="12">
-						<v-alert class="mb-2"
-							density="compact"
-							type="info"
-							variant="tonal"
-						>
-							<template v-if="result">
-								Nach {{ result.iterations }} Iterationen:
-								<b><Katex :tex="`x\\approx${toKaTeXFrac(result.approxFrac)}`" /></b>
-							</template>
-							<template v-else>
-								Wähle <Katex tex="N" />, Startwert <Katex tex="x_0" /> und Iterationszahl.
-							</template>
-						</v-alert>
-					</v-col>
-
-					<v-col cols="12" sm="6">
-						<v-text-field
-							v-model="nInput"
-							density="comfortable"
-							label="N (ganzzahlig, >0)"
-							placeholder="2"
-						/>
-					</v-col>
-
-					<v-col cols="12" sm="6">
-						<v-text-field
-							v-model="iterInput"
-							density="comfortable"
-							label="Iterationen"
-							placeholder="6"
-						/>
-					</v-col>
-
-					<v-col cols="12">
-						<v-text-field
-							v-model="x0Input"
-							density="comfortable"
-							label="Startwert x0 (Bruch erlaubt, z.B. 1 oder 3/2)"
-							placeholder="1"
-						/>
-					</v-col>
-
-					<v-col cols="12">
-						<v-alert density="compact" type="warning" variant="tonal">
-							Iterationsformel: <Katex tex="x_{k+1}=\frac{1}{2}\left(x_k+\frac{N}{x_k}\right)" />.
-						</v-alert>
-					</v-col>
-
-					<v-col class="d-flex ga-2" cols="12">
-						<v-btn color="primary"
-							:loading="running"
-							rounded="xl"
-							@click="run"
-						>
-							Ausführen
-						</v-btn>
-						<v-btn rounded="xl" variant="tonal" @click="reset">
-							Reset
-						</v-btn>
-					</v-col>
-				</v-row>
-			</v-card>
-
-			<v-card class="pa-4 mt-4" rounded="xl">
-				<v-card-title class="text-h6">Formel (Heron/Newton)</v-card-title>
-				<v-card-text>
-					<KaTeXBlock :tex="formulaTex" />
-					<div class="text-body-2 mt-3">
-						Mit jedem Durchlauf nähert sich <Katex tex="x_k" /> der Wurzel <Katex tex="\sqrt{N}" /> an.
-					</div>
-				</v-card-text>
-			</v-card>
+	<template #inputs>
+		<v-col cols="12" sm="6">
+			<v-text-field
+				v-model="nInput"
+				density="comfortable"
+				label="N (ganzzahlig, >0)"
+				placeholder="2"
+			/>
 		</v-col>
 
-		<v-col cols="12" md="7">
-			<v-card class="pa-4" rounded="xl">
-				<v-card-title class="text-h6">Ergebnis</v-card-title>
-
-				<v-divider class="my-4" />
-
-				<div v-if="error" class="mb-3">
-					<v-alert density="comfortable" type="error" variant="tonal">
-						{{ error }}
-					</v-alert>
-				</div>
-
-				<v-row v-if="result" dense>
-					<v-col cols="12" md="6">
-						<v-card class="pa-4" rounded="xl" variant="tonal">
-							<div class="text-caption mb-1">Näherung</div>
-							<div class="text-h5 font-weight-bold">{{ result.approxFrac }}</div>
-							<div class="mt-2"><KaTeXBlock :tex="result.evalTex" /></div>
-						</v-card>
-					</v-col>
-
-					<v-col cols="12" md="6">
-						<v-card class="pa-4" rounded="xl" variant="tonal">
-							<div class="text-caption mb-1">Dezimal & Fehler</div>
-							<div class="text-h6 font-weight-medium">{{ result.approxDecimal }}</div>
-							<div class="text-body-2 mt-1">Fehler: {{ result.errorDecimal }}</div>
-							<div class="text-caption mt-2">(auf 6 Nachkommastellen gerundet)</div>
-						</v-card>
-					</v-col>
-
-					<v-col cols="12">
-						<v-chip class="me-2" color="green" variant="tonal">
-							Iterationen: {{ result.iterations }}
-						</v-chip>
-						<v-chip variant="tonal">Karten: {{ deck?.length ?? 0 }}</v-chip>
-					</v-col>
-				</v-row>
-
-				<v-divider class="my-4" />
-
-				<v-tabs v-model="tab" color="primary">
-					<v-tab value="deck">Kartendeck</v-tab>
-					<v-tab value="trace">Trace</v-tab>
-					<v-tab value="store">Store-Snapshot</v-tab>
-				</v-tabs>
-
-				<v-window v-model="tab" class="mt-3">
-					<v-window-item value="deck">
-						<v-table density="compact">
-							<thead>
-								<tr>
-									<th style="width: 70px;">#</th>
-									<th style="width: 90px;">Line</th>
-									<th>Label</th>
-									<th style="width: 110px;">Op</th>
-									<th style="width: 150px;">Ziel</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr v-for="(c, i) in deck" :key="i">
-									<td>{{ i + 1 }}</td>
-									<td><code>L{{ c.line }}</code></td>
-									<td>{{ c.label || "" }}</td>
-									<td><code>{{ c.op }}</code></td>
-									<td><code>V{{ c.dest }}</code></td>
-								</tr>
-							</tbody>
-						</v-table>
-					</v-window-item>
-
-					<v-window-item value="trace">
-						<v-textarea
-							v-model="traceText"
-							auto-grow
-							label="Karten-Log"
-							readonly
-							rows="16"
-						/>
-					</v-window-item>
-
-					<v-window-item value="store">
-						<v-row dense>
-							<v-col cols="12" md="4">
-								<v-card class="pa-2" rounded="lg" variant="tonal">
-									<div class="text-subtitle-2 px-2 py-1">Data columns</div>
-									<v-table density="compact">
-										<tbody>
-											<tr><td><code>V1</code></td><td>0</td><td class="mono text-right">{{ storeView(1) }}</td></tr>
-											<tr><td><code>V2</code></td><td>2</td><td class="mono text-right">{{ storeView(2) }}</td></tr>
-											<tr><td><code>V3</code></td><td>N</td><td class="mono text-right">{{ storeView(3) }}</td></tr>
-											<tr><td><code>V4</code></td><td>x0</td><td class="mono text-right">{{ storeView(4) }}</td></tr>
-											<tr><td><code>V5</code></td><td>1</td><td class="mono text-right">{{ storeView(5) }}</td></tr>
-										</tbody>
-									</v-table>
-								</v-card>
-							</v-col>
-
-							<v-col cols="12" md="4">
-								<v-card class="pa-2" rounded="lg" variant="tonal">
-									<div class="text-subtitle-2 px-2 py-1">Working columns</div>
-									<v-table density="compact">
-										<tbody>
-											<tr><td><code>V11</code></td><td>x_k</td><td class="mono text-right">{{ storeView(11) }}</td></tr>
-											<tr><td><code>V12</code></td><td>N/x_k</td><td class="mono text-right">{{ storeView(12) }}</td></tr>
-											<tr><td><code>V13</code></td><td>Summe</td><td class="mono text-right">{{ storeView(13) }}</td></tr>
-											<tr><td><code>V14</code></td><td>x_{k+1}</td><td class="mono text-right">{{ storeView(14) }}</td></tr>
-											<tr><td><code>V16</code></td><td>Loopzähler</td><td class="mono text-right">{{ storeView(16) }}</td></tr>
-										</tbody>
-									</v-table>
-								</v-card>
-							</v-col>
-
-							<v-col cols="12" md="4">
-								<v-card class="pa-2" rounded="lg" variant="tonal">
-									<div class="text-subtitle-2 px-2 py-1">Result columns</div>
-									<v-table density="compact">
-										<tbody>
-											<tr><td><code>V21</code></td><td>Näherung</td><td class="mono text-right">{{ storeView(21) }}</td></tr>
-											<tr><td><code>V22</code></td><td>x^2</td><td class="mono text-right">{{ storeView(22) }}</td></tr>
-											<tr><td><code>V23</code></td><td>x^2-N</td><td class="mono text-right">{{ storeView(23) }}</td></tr>
-										</tbody>
-									</v-table>
-								</v-card>
-							</v-col>
-						</v-row>
-
-						<v-alert class="mt-3"
-							density="compact"
-							type="info"
-							variant="tonal"
-						>
-							Ein Iterationszyklus ist exakt: <code>DIV</code> → <code>ADD</code> → <code>DIV</code>.
-						</v-alert>
-					</v-window-item>
-				</v-window>
-			</v-card>
+		<v-col cols="12" sm="6">
+			<v-text-field
+				v-model="iterInput"
+				density="comfortable"
+				label="Iterationen"
+				placeholder="6"
+			/>
 		</v-col>
-	</v-row>
-</v-container>
+
+		<v-col cols="12">
+			<v-text-field
+				v-model="x0Input"
+				density="comfortable"
+				label="Startwert x0 (Bruch erlaubt, z.B. 1 oder 3/2)"
+				placeholder="1"
+			/>
+		</v-col>
+	</template>
+
+	<template #warning>
+		Iterationsformel: <Katex tex="x_{k+1}=\frac{1}{2}\left(x_k+\frac{N}{x_k}\right)" />.
+	</template>
+
+	<template #formulaNote>
+		Mit jedem Durchlauf nähert sich <Katex tex="x_k" /> der Wurzel <Katex tex="\sqrt{N}" /> an.
+	</template>
+
+	<template #result>
+		<v-row v-if="result" dense>
+			<v-col cols="12" md="6">
+				<v-card class="pa-4" rounded="xl" variant="tonal">
+					<div class="text-caption mb-1">Näherung</div>
+					<div class="text-h5 font-weight-bold">{{ result.approxFrac }}</div>
+					<div class="mt-2"><Katex as="div" :display="true" :tex="result.evalTex" /></div>
+				</v-card>
+			</v-col>
+
+			<v-col cols="12" md="6">
+				<v-card class="pa-4" rounded="xl" variant="tonal">
+					<div class="text-caption mb-1">Dezimal & Fehler</div>
+					<div class="text-h6 font-weight-medium">{{ result.approxDecimal }}</div>
+					<div class="text-body-2 mt-1">Fehler: {{ result.errorDecimal }}</div>
+					<div class="text-caption mt-2">(auf 6 Nachkommastellen gerundet)</div>
+				</v-card>
+			</v-col>
+
+			<v-col cols="12">
+				<v-chip class="me-2" color="green" variant="tonal">
+					Iterationen: {{ result.iterations }}
+				</v-chip>
+				<v-chip variant="tonal">Karten: {{ deck?.length ?? 0 }}</v-chip>
+			</v-col>
+		</v-row>
+	</template>
+
+	<template #store>
+		<v-row dense>
+			<v-col cols="12" md="4">
+				<v-card class="pa-2" rounded="lg" variant="tonal">
+					<div class="text-subtitle-2 px-2 py-1">Data columns</div>
+					<v-table density="compact">
+						<tbody>
+							<tr><td><code>V1</code></td><td>0</td><td class="mono text-right">{{ storeView(1) }}</td></tr>
+							<tr><td><code>V2</code></td><td>2</td><td class="mono text-right">{{ storeView(2) }}</td></tr>
+							<tr><td><code>V3</code></td><td>N</td><td class="mono text-right">{{ storeView(3) }}</td></tr>
+							<tr><td><code>V4</code></td><td>x0</td><td class="mono text-right">{{ storeView(4) }}</td></tr>
+							<tr><td><code>V5</code></td><td>1</td><td class="mono text-right">{{ storeView(5) }}</td></tr>
+						</tbody>
+					</v-table>
+				</v-card>
+			</v-col>
+
+			<v-col cols="12" md="4">
+				<v-card class="pa-2" rounded="lg" variant="tonal">
+					<div class="text-subtitle-2 px-2 py-1">Working columns</div>
+					<v-table density="compact">
+						<tbody>
+							<tr><td><code>V11</code></td><td>x_k</td><td class="mono text-right">{{ storeView(11) }}</td></tr>
+							<tr><td><code>V12</code></td><td>N/x_k</td><td class="mono text-right">{{ storeView(12) }}</td></tr>
+							<tr><td><code>V13</code></td><td>Summe</td><td class="mono text-right">{{ storeView(13) }}</td></tr>
+							<tr><td><code>V14</code></td><td>x_{k+1}</td><td class="mono text-right">{{ storeView(14) }}</td></tr>
+							<tr><td><code>V16</code></td><td>Loopzähler</td><td class="mono text-right">{{ storeView(16) }}</td></tr>
+						</tbody>
+					</v-table>
+				</v-card>
+			</v-col>
+
+			<v-col cols="12" md="4">
+				<v-card class="pa-2" rounded="lg" variant="tonal">
+					<div class="text-subtitle-2 px-2 py-1">Result columns</div>
+					<v-table density="compact">
+						<tbody>
+							<tr><td><code>V21</code></td><td>Näherung</td><td class="mono text-right">{{ storeView(21) }}</td></tr>
+							<tr><td><code>V22</code></td><td>x^2</td><td class="mono text-right">{{ storeView(22) }}</td></tr>
+							<tr><td><code>V23</code></td><td>x^2-N</td><td class="mono text-right">{{ storeView(23) }}</td></tr>
+						</tbody>
+					</v-table>
+				</v-card>
+			</v-col>
+		</v-row>
+
+		<v-alert class="mt-3"
+			density="compact"
+			type="info"
+			variant="tonal"
+		>
+			Ein Iterationszyklus ist exakt: <code>DIV</code> → <code>ADD</code> → <code>DIV</code>.
+		</v-alert>
+	</template>
+</ALCalculation>
 </template>
 
 <script setup>
-import { computed, defineComponent, h, ref } from "vue";
-import katex from "katex";
+import { ref } from "vue";
 
-const KaTeXBlock = defineComponent( {
-	name:  "KaTeXBlock",
-	props: { tex: { type: String, required: true } },
-	setup( props ) {
-		const html = computed( () => {
-			try {
-				return katex.renderToString( props.tex, {
-					throwOnError: false,
-					displayMode:  true
-				} );
-			} catch ( e ) {
-				return `<pre>${String( e )}</pre>`;
-			}
-		} );
-
-		return () => h( "div", { class: "katex-wrap", innerHTML: html.value } );
-	}
-} );
+import ALCalculation from "./AL_Calculation.vue";
 
 const bigAbs = ( x ) => x < 0n ? -x : x;
 
@@ -591,9 +492,3 @@ async function run() {
 	}
 }
 </script>
-
-<style scoped>
-.katex-wrap :deep(.katex-display) {
-  margin: 0.25rem 0;
-}
-</style>
