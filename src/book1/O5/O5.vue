@@ -50,16 +50,21 @@
 				<Katex as="div" display tex="\angle OMB = 90^\circ." />
 			</div>
 		</div>
+		<figure class="exampleFigure">
+			<image-zoomer>
+				<O5Graph :result />
+			</image-zoomer>
+		</figure>
 
-		<h2 id="radikalachsen" class="mt-8">Teil 2 - Zwei Werkzeuge, die wir brauchen (Power + Radikalachse)</h2>
+		<h2 id="radikalachsen" class="mt-8">Teil 2 - Zwei Werkzeuge, die wir brauchen (Potenz + Radikalachse)</h2>
 		<div class="eddie">
-			<h3>2.1 Potenz (Power) eines Punktes zu einem Kreis</h3>
+			<h3>2.1 Potenz eines Punktes zu einem Kreis</h3>
 			<p>
 				Für einen Kreis <Katex tex="\omega" /> und einen Punkt <Katex tex="P" /> (nicht unbedingt auf dem Kreis)
 				heißt die Potenz von <Katex tex="P" /> bezüglich <Katex tex="\omega" />:
 			</p>
 			<div class="kbox">
-				<Katex as="div" display tex="\operatorname{Pow}_{\omega}(P)." />
+				<Katex as="div" display tex="\operatorname{Pot}_{\omega}(P)." />
 			</div>
 			<p>Zwei praktische Rechenregeln:</p>
 			<p><b>(A) Sekantenformel:</b></p>
@@ -68,14 +73,14 @@
 				<Katex tex="U" /> und <Katex tex="V" />, dann gilt
 			</p>
 			<div class="kbox">
-				<Katex as="div" display tex="\operatorname{Pow}_{\omega}(P)=PU\cdot PV." />
+				<Katex as="div" display tex="\operatorname{Pot}_{\omega}(P)=PU\cdot PV." />
 			</div>
 			<p><b>(B) Mittelpunktformel:</b></p>
 			<p>
 				Hat <Katex tex="\omega" /> Mittelpunkt <Katex tex="S" /> und Radius <Katex tex="r" />, dann gilt
 			</p>
 			<div class="kbox">
-				<Katex as="div" display tex="\operatorname{Pow}_{\omega}(P)=PS^2-r^2." />
+				<Katex as="div" display tex="\operatorname{Pot}_{\omega}(P)=PS^2-r^2." />
 			</div>
 			<p>Beide Formeln liefern dieselbe Zahl.</p>
 
@@ -85,7 +90,7 @@
 				<Katex tex="P" /> mit
 			</p>
 			<div class="kbox">
-				<Katex as="div" display tex="\operatorname{Pow}_{\omega_1}(P)=\operatorname{Pow}_{\omega_2}(P)." />
+				<Katex as="div" display tex="\operatorname{Pot}_{\omega_1}(P)=\operatorname{Pot}_{\omega_2}(P)." />
 			</div>
 			<p>Diese Menge ist immer eine Gerade.</p>
 			<p>Wichtigster Spezialfall:</p>
@@ -190,7 +195,7 @@
 			<p>Damit ist <Katex tex="X,M,N,C" /> zyklisch.</p>
 		</div>
 
-		<h2 id="potenzpunkte" class="mt-8">Teil 5 - Die Power-Gleichungen (jetzt wird gerechnet)</h2>
+		<h2 id="potenzpunkte" class="mt-8">Teil 5 - Die Potenzgleichungen (jetzt wird gerechnet)</h2>
 		<div class="eddie">
 			<h3>5.1 Eine Gleichung aus dem Radikalzentrum <Katex tex="X" /></h3>
 			<p>
@@ -198,15 +203,15 @@
 				<Katex tex="\Gamma" /> liegen, ist
 			</p>
 			<div class="kbox">
-				<Katex as="div" display tex="\operatorname{Pow}_{\Gamma}(X)=XB\cdot XM." />
+				<Katex as="div" display tex="\operatorname{Pot}_{\Gamma}(X)=XB\cdot XM." />
 			</div>
 			<p>
 				Da <Katex tex="X" /> aber auch auf der Radikalachse von <Katex tex="\Gamma" /> und
 				<Katex tex="\omega" /> liegt (das ist <Katex tex="AC" />), gilt
 			</p>
 			<div class="kbox">
-				<Katex as="div" display tex="\operatorname{Pow}_{\Gamma}(X)=\operatorname{Pow}_{\omega}(X)." />
-				<Katex as="div" display tex="\operatorname{Pow}_{\omega}(X)=XO^2-R^2=XO^2-ON^2." />
+				<Katex as="div" display tex="\operatorname{Pot}_{\Gamma}(X)=\operatorname{Pot}_{\omega}(X)." />
+				<Katex as="div" display tex="\operatorname{Pot}_{\omega}(X)=XO^2-R^2=XO^2-ON^2." />
 				<Katex as="div" display tex="XB\cdot XM = XO^2-ON^2." />
 			</div>
 			<p><Katex tex="\text{(1)}" /></p>
@@ -218,12 +223,12 @@
 				<li>
 					Auf der Geraden <Katex tex="BM" /> schneidet <Katex tex="\sigma" /> in
 					<Katex tex="M" /> und <Katex tex="X" />, also
-					<Katex tex="\operatorname{Pow}_{\sigma}(B)=BM\cdot BX" />.
+					<Katex tex="\operatorname{Pot}_{\sigma}(B)=BM\cdot BX" />.
 				</li>
 				<li>
 					Auf der Geraden <Katex tex="BC" /> schneidet <Katex tex="\sigma" /> in
 					<Katex tex="C" /> und <Katex tex="N" />, also
-					<Katex tex="\operatorname{Pow}_{\sigma}(B)=BC\cdot BN" />.
+					<Katex tex="\operatorname{Pot}_{\sigma}(B)=BC\cdot BN" />.
 				</li>
 			</ul>
 			<div class="kbox">
@@ -236,7 +241,7 @@
 				Mit der Mittelpunktformel:
 			</p>
 			<div class="kbox">
-				<Katex as="div" display tex="BC\cdot BN=\operatorname{Pow}_{\omega}(B)=BO^2-R^2=BO^2-ON^2." />
+				<Katex as="div" display tex="BC\cdot BN=\operatorname{Pot}_{\omega}(B)=BO^2-R^2=BO^2-ON^2." />
 				<Katex as="div" display tex="BM\cdot BX = BO^2-ON^2." />
 			</div>
 			<p><Katex tex="\text{(3)}" /></p>
@@ -383,7 +388,7 @@
 			</v-alert>
 
 			<image-zoomer :title="`IMO85/5`">
-				<O5_Graph :result />
+				<O5Graph :result />
 			</image-zoomer>
 		</div>
 	</template>
@@ -437,7 +442,7 @@
 <script setup>
 import { ref } from "vue";
 
-import O5_Graph from "./O5_Graph.vue";
+import O5Graph from "./O5_Graph.vue";
 import titleImg from "./O5.webp";
 
 const R = 1;

@@ -278,11 +278,11 @@
 				label="Programm auswählen"
 			/>
 		</v-card>
-		<AL_Bernoulli v-if="selectedProgram === 'bernoulli'" />
-		<AL_ReduceFractions v-else-if="selectedProgram === 'reduceFractions'" />
-		<AL_Horner v-else-if="selectedProgram === 'horner'" />
-		<AL_Sqrt v-else-if="selectedProgram === 'sqrt'" />
-		<AL_PrimeTest v-else />
+		<ALBernoulli v-if="selectedProgram === 'bernoulli'" />
+		<ALReduceFractions v-else-if="selectedProgram === 'reduceFractions'" />
+		<ALHorner v-else-if="selectedProgram === 'horner'" />
+		<ALSqrt v-else-if="selectedProgram === 'sqrt'" />
+		<ALPrimeTest v-else />
 	</template>
 </AppFrame>
 </template>
@@ -290,11 +290,11 @@
 <script setup>
 import { ref } from "vue";
 import titleImg from "./AL.webp";
-import AL_Bernoulli from "./AL_Bernoulli.vue";
-import AL_ReduceFractions from "./AL_ReduceFractions.vue";
-import AL_Horner from "./AL_Horner.vue";
-import AL_Sqrt from "./AL_Sqrt.vue";
-import AL_PrimeTest from "./AL_PrimeTest.vue";
+import ALBernoulli from "./AL_Bernoulli.vue";
+import ALReduceFractions from "./AL_ReduceFractions.vue";
+import ALHorner from "./AL_Horner.vue";
+import ALSqrt from "./AL_Sqrt.vue";
+import ALPrimeTest from "./AL_PrimeTest.vue";
 
 const selectedProgram = ref( "bernoulli" );
 const programOptions = [

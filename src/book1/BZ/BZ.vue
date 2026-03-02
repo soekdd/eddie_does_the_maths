@@ -336,7 +336,7 @@
 				</v-row>
 			</v-card>
 
-			<BZ_Graph
+			<BZGraph
 				class="mt-4"
 				:fd-k
 				:fd-m
@@ -349,7 +349,7 @@
 <script setup>
 import { computed, reactive } from "vue";
 import titleImg from "./BZ.webp";
-import BZ_Graph from "./BZ_Graph.vue";
+import BZGraph from "./BZ_Graph.vue";
 
 const inputs = reactive( {
 	mMkg:   120,

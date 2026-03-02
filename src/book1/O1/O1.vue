@@ -43,6 +43,11 @@
 				<Katex tex="BC,\quad CD,\quad DA" /> berührt
 				(also an jeder dieser Geraden tangential ist).
 			</p>
+			<figure class="exampleFigure">
+				<image-zoomer>
+					<O1Graph notitle/>
+				</image-zoomer>
+			</figure>
 			<p>Zu zeigen ist die Längenformel</p>
 			<div class="kbox">
 				<Katex as="div" display tex="\boxed{AD + BC = AB.}" />
@@ -296,7 +301,7 @@
 			</div>
 		</div>
 		<image-zoomer :title="`IMO85/1`">
-			<O1_Graph ref="graphRef" />
+			<O1Graph ref="graphRef" />
 		</image-zoomer>
 	</template>
 
@@ -312,7 +317,7 @@
 <script setup>
 import { computed, ref } from "vue";
 
-import O1_Graph from "./O1_Graph.vue";
+import O1Graph from "./O1_Graph.vue";
 import titleImg from "./O1.webp";
 
 const graphRef = ref( null );

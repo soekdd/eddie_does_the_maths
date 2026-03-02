@@ -92,10 +92,10 @@
 				:items="interactiveModes"
 				label="Interaktives Werkzeug"
 			/>
-			<NV_Schnitt v-if="interactiveMode === 'schnitt'" />
-			<NV_Azimut v-else-if="interactiveMode === 'azimut'" />
-			<NV_Zeit v-else-if="interactiveMode === 'zeit'" />
-			<NV_Bayes v-else />
+			<NVSchnitt v-if="interactiveMode === 'schnitt'" />
+			<NVAzimut v-else-if="interactiveMode === 'azimut'" />
+			<NVZeit v-else-if="interactiveMode === 'zeit'" />
+			<NVBayes v-else />
 		</div>
 	</template>
 </AppFrame>
@@ -104,10 +104,10 @@
 <script setup>
 import { ref, computed } from "vue";
 import titleImg from "./NV.webp";
-import NV_Azimut from "./NV_Azimut.vue";
-import NV_Bayes from "./NV_Bayes.vue";
-import NV_Schnitt from "./NV_Schnitt.vue";
-import NV_Zeit from "./NV_Zeit.vue";
+import NVAzimut from "./NV_Azimut.vue";
+import NVBayes from "./NV_Bayes.vue";
+import NVSchnitt from "./NV_Schnitt.vue";
+import NVZeit from "./NV_Zeit.vue";
 
 const lessons = [
 	{
@@ -447,14 +447,14 @@ const lessonFormulaBlock = ( formulas ) =>
 	formulas.map( addAlignmentTab ).join( " \\\\ " );
 
 const interactiveComponentMap = {
-	schnitt: NV_Schnitt,
-	azimut:  NV_Azimut,
-	zeit:    NV_Zeit,
-	bayes:   NV_Bayes
+	schnitt: NVSchnitt,
+	azimut:  NVAzimut,
+	zeit:    NVZeit,
+	bayes:   NVBayes
 };
 
 const activeInteractiveComponent = computed( () => {
-	return interactiveComponentMap[ interactiveMode.value ] ?? NV_Schnitt;
+	return interactiveComponentMap[ interactiveMode.value ] ?? NVSchnitt;
 } );
 </script>
 

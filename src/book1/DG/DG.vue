@@ -98,7 +98,7 @@
 
 		<figure class="exampleFigure">
 			<ImageZoomer :title="`Grafik: ${example.a}k + ${example.b}s = ${example.c}`">
-				<DG_Graph
+				<DGGraph
 					:a="example.a"
 					:b="example.b"
 					:c="example.c"
@@ -188,7 +188,7 @@
 		<v-card class="panel pa-3 mt-4" >
 			<h3>Grafik zu deinen Eingaben</h3>
 			<ImageZoomer :title="`Grafik: ${String(a)}x + ${String(b)}y = ${String(c)}`">
-				<DG_Graph :a :b :c />
+				<DGGraph :a :b :c />
 			</ImageZoomer>
 			<p class="mini muted">
 				Zeigt die positiven ganzzahligen Lösungen (nur wenn a und b das gleiche Vorzeichen haben).
@@ -406,7 +406,7 @@
 import {
 	computed, reactive, ref, watch
 } from "vue";
-import DG_Graph from "./DG_Graph.vue";
+import DGGraph from "./DG_Graph.vue";
 import Katex from "@/components/Katex.vue";
 import {
 	egcdWithSteps, fmt, gcd, parseIntStrict

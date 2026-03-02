@@ -49,7 +49,7 @@
 		</div>
 
 		<h2 id="formel" class="mt-8">Teil 2 - Formel für die Uferfläche</h2>
-		<UD_Graph/>
+		<UDGraph/>
 		<div class="eddie">
 			<p>
 				Bezeichne mit <Katex tex="d" /> die gesamte Uferlänge und mit <Katex tex="h" /> die Uferbreite.
@@ -231,7 +231,7 @@
 				</v-chip>
 			</v-col>
 		</v-row>
-		<UD_Map
+		<UDMap
 			:country="activeCountry.code === 'FI' ? 'finland' : 'germany'"
 			:h-distance-meters
 			:probability-percent="mainModel.poissonProbabilityPercent"
@@ -302,8 +302,8 @@ import {
 	ref
 } from "vue";
 import titleImg from "./UD.webp";
-import UD_Graph from "./UD_Graph.vue";
-import UD_Map from "./UD_Map.vue";
+import UDGraph from "./UD_Graph.vue";
+import UDMap from "./UD_Map.vue";
 
 const COUNTRY_DATA = [
 	{

@@ -86,7 +86,7 @@
 		</div>
 		<figure class="exampleFigure">
 			<ImageZoomer title="Einfache Punktlast + Eigengewicht">
-				<BD_Graph v-bind="graphProps" reduced />
+				<BDGraph v-bind="graphProps" reduced />
 			</ImageZoomer>
 		</figure>
 		<h2 id="schnittgroessen" class="mt-8">Teil 3 - Schnittgrößen (charakteristisch) für Punktlast + Gleichlast</h2>
@@ -167,7 +167,7 @@
 		</div>
 		<figure class="exampleFigure">
 			<ImageZoomer title="Dimmensionierung eines I-Trägers">
-				<BS_Graph
+				<BSGraph
 					:bf="100"
 					:h="200"
 					hide-numeric
@@ -457,7 +457,7 @@
 			</v-row>
 		</v-sheet>
 
-		<BD_Graph class="mt-4" v-bind="graphProps" />
+		<BDGraph class="mt-4" v-bind="graphProps" />
 	</template>
 </AppFrame>
 </template>
@@ -470,8 +470,8 @@ import {
 } from "vue";
 
 import titleImg from "./BD.webp";
-import BD_Graph from "./BD_Graph.vue";
-import BS_Graph from "../BS/BS_Graph.vue";
+import BDGraph from "./BD_Graph.vue";
+import BSGraph from "../BS/BS_Graph.vue";
 
 const inputs = reactive( {
 	Lm:       25,

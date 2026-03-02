@@ -63,7 +63,7 @@
 			</div>
 			<figure class="exampleFigure">
 				<ImageZoomer title="Doppelt-T-Träger">
-					<BS_Graph
+					<BSGraph
 						:bf="100"
 						:h="200"
 						hide-numeric
@@ -219,7 +219,7 @@
 					<template #thumb-label>{{ formatMm( tw ) }}</template>
 				</v-slider>
 			</v-card>
-			<BS_Graph
+			<BSGraph
 				:bf
 				class="mt-4"
 				:h
@@ -321,7 +321,7 @@ import { computed, ref } from "vue";
 
 import titleImg from "./BS.webp";
 import BS from "./BS_DR.mjs";
-import BS_Graph from "./BS_Graph.vue";
+import BSGraph from "./BS_Graph.vue";
 
 const allProfiles = Object.values( BS.series ).flat();
 

@@ -324,7 +324,7 @@
 
 	<template #summaryPart>
 		<h2>Teil 7 - Grafische Darstellung</h2>
-		<RD_Graph mode="classic" :rows="classicCalc.rows" />
+		<RDGraph mode="classic" :rows="classicCalc.rows" />
 	</template>
 </AppFrame>
 </template>
@@ -332,7 +332,7 @@
 <script setup>
 import { computed, ref } from "vue";
 import titleImg from "./RD.webp";
-import RD_Graph from "./RD_Graph.vue";
+import RDGraph from "./RD_Graph.vue";
 
 const mode = ref( "classic" );
 const modeItems = [

@@ -184,12 +184,12 @@
 	</template>
 	<template #interactivePart>
 		<h2 id="interaction">Interaktiv</h2>
-		<WO_Graph/>
+		<WOGraph/>
 	</template>
 </AppFrame>
 </template>
 
 <script setup>
 import titleImg from "./WO.webp";
-import WO_Graph from "./WO_Graph.vue";
+import WOGraph from "./WO_Graph.vue";
 </script>

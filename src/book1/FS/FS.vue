@@ -246,7 +246,7 @@ N_0 &=${fmtTex( graphN0, 0 )},\ b=${fmtTex( graphB, 3 )},\ c=${fmtTex( graphC, 4
 		</div>
 	</template>
 	<template #summaryPart>
-		<FS_Graph
+		<FSGraph
 			:b="graphB"
 			:c="graphC"
 			:horizon="graphHorizon"
@@ -261,7 +261,7 @@ N_0 &=${fmtTex( graphN0, 0 )},\ b=${fmtTex( graphB, 3 )},\ c=${fmtTex( graphC, 4
 <script setup>
 import { computed, ref } from "vue";
 
-import FS_Graph from "./FS_Graph.vue";
+import FSGraph from "./FS_Graph.vue";
 import titleImg from "./FS.webp";
 
 const graphN0Input = ref( 4 );

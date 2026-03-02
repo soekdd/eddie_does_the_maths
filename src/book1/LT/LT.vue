@@ -306,7 +306,7 @@
 	</template>
 
 	<template #summaryPart>
-		<LT_Transform id="interactivePart"/>
+		<LTTransform id="interactivePart"/>
 	</template>
 
 	<template #footer>
@@ -319,7 +319,7 @@
 
 <script setup>
 import titleImg from "./LT.webp";
-import LT_Transform from "./LT_Transform.vue";
+import LTTransform from "./LT_Transform.vue";
 </script>
 
 <style scoped>

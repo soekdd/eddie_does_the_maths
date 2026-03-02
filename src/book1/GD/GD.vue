@@ -220,14 +220,14 @@
 				und die Alterswerte zu jeder Station werden im Stil einer Grabplatte berechnet.
 			</p>
 		</div>
-		<GD_Plate />
+		<GDPlate />
 	</template>
 </AppFrame>
 </template>
 
 <script setup>
 import titleImg from "./GD.webp";
-import GD_Plate from "./GD_Plate.vue";
+import GDPlate from "./GD_Plate.vue";
 </script>
 
 <style scoped>

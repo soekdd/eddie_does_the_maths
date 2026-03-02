@@ -76,7 +76,7 @@
 			<section>
 				<figure class="exampleFigure">
 					<ImageZoomer title="Sierpinski-Muster aus dem Pascalschen Dreieck modulo 2">
-						<O3_Graph
+						<O3Graph
 							:cell-size="8.5"
 							:padding="8"
 							:rows="64"
@@ -407,7 +407,7 @@
 <script setup>
 import { ref } from "vue";
 import titleImg from "./O3.webp";
-import O3_Graph from "./O3_Graph.vue";
+import O3Graph from "./O3_Graph.vue";
 
 const inputExponents = ref( "1, 3, 4, 7" );
 const error = ref( "" );

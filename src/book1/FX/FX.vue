@@ -126,7 +126,7 @@
 				Tipp: Starte mit dem Demo-Programm, ändere dann nur eine Zeile und beobachte den Effekt.
 			</v-alert>
 		</div>
-		<FX_7000G />
+		<FX7000G />
 	</template>
 
 	<template #footer>
@@ -138,7 +138,7 @@
 </template>
 
 <script setup>
-import FX_7000G from "./FX_7000G.vue";
+import FX7000G from "./FX_7000G.vue";
 import titleImg from "./FX.webp";
 
 const miniProgram = [

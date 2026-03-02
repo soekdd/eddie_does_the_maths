@@ -268,7 +268,7 @@
 
 	</template>
 	<template #interactivePart>
-		<PG_Game/>
+		<PGGame/>
 	</template>
 
 	<template #footer>
@@ -282,7 +282,7 @@
 <script setup>
 import titleImg from "./PG.webp";
 import eddieImg from "./PG_Eddie.webp";
-import PG_Game from "./PG_Game.vue";
+import PGGame from "./PG_Game.vue";
 import PGHand from "./PG_Hand.vue";
 </script>
 

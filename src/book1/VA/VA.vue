@@ -97,7 +97,7 @@
 		<h2 id="metazentrum" class="mt-8">Teil 2 — Schwerpunkt, Auftriebspunkt, Metazentrum</h2>
 		<figure class="exampleFigure">
 			<ImageZoomer title="Schwerpunkt, Auftriebspunkt, Metazentrum">
-				<VA_Ship nolegend zoom="2"/>
+				<VAShip nolegend zoom="2"/>
 			</ImageZoomer>
 		</figure>
 		<div class="eddie">
@@ -375,7 +375,7 @@
 
 	<template #calculationPart>
 		<ImageZoomer title="Segelschiff Simulation">
-			<VA_Ship
+			<VAShip
 				:beam="calc.beam"
 				:bm="calc.bm"
 				:depth="calc.depth"
@@ -403,7 +403,7 @@ import {
 	computed, reactive, ref, watch
 } from "vue";
 import titleImg from "./VA.webp";
-import VA_Ship from "./VA_Ship.vue";
+import VAShip from "./VA_Ship.vue";
 
 const RHO_WATER = 1025;
 const G = 9.81;

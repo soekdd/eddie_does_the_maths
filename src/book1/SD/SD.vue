@@ -216,7 +216,7 @@
 	<template #calculationPart>
 
 		<ImageZoomer title="Ich zeig dir deine DNA">
-			<SD_DNA v-if="canEncode" :dna="dnaCompact"/>
+			<SDDNA v-if="canEncode" :dna="dnaCompact"/>
 		</ImageZoomer>
 
 	</template>
@@ -226,7 +226,7 @@
 <script setup>
 import { computed, ref } from "vue";
 
-import SD_DNA from "./SD_DNA.vue";
+import SDDNA from "./SD_DNA.vue";
 import titleImg from "./SD.webp";
 import samiImg from "./SD_SAMI.webp";
 

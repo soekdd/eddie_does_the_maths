@@ -11,7 +11,9 @@ const srcDir = path.join( projectRoot, "src" );
 const viewsDir = path.join( srcDir, "views" );
 const imagesDir = path.join( srcDir, "images" );
 const book1Dir = path.join( srcDir, "book1" );
-const contentIndexPath = path.join( srcDir, "components", "ContentIndex.vue" );
+const contentIndexPath = path.join(
+	srcDir, "components", "ContentIndex.vue"
+);
 
 function exists( filePath ) {
 	return fs.existsSync( filePath );
@@ -27,9 +29,7 @@ function listFiles( dirPath ) {
 		.map( ( entry ) => entry.name );
 }
 
-function walkFiles(
-	rootPath, out = []
-) {
+function walkFiles( rootPath, out = [] ) {
 	if ( !exists( rootPath ) ) {
 		return out;
 	}
@@ -48,9 +48,7 @@ function walkFiles(
 	return out;
 }
 
-function moveFile(
-	fromPath, toPath
-) {
+function moveFile( fromPath, toPath ) {
 	if ( !exists( fromPath ) ) {
 		return false;
 	}
@@ -65,9 +63,7 @@ function moveFile(
 	return true;
 }
 
-function rewriteImports(
-	source, codes
-) {
+function rewriteImports( source, codes ) {
 	let result = source;
 
 	for ( const code of codes ) {
@@ -80,9 +76,7 @@ function rewriteImports(
 	return result;
 }
 
-function rewriteMovedFileRelativeImages(
-	source, code
-) {
+function rewriteMovedFileRelativeImages( source, code ) {
 	return source.split( `../images/${code}` )
 		.join( `./${code}` );
 }
@@ -90,9 +84,10 @@ function rewriteMovedFileRelativeImages(
 function rewriteMovedFileCrossCodeVueImports(
 	source, currentCode, codeSet
 ) {
-	return source.replace(
-		/(\.\/|\.\.\/)([A-Z0-9]{2}[^"'`\n/]*\.vue)/g,
-		( match, _relativePrefix, vueFileName ) => {
+	return source.replace( /(\.\/|\.\.\/)([A-Z0-9]{2}[^"'`\n/]*\.vue)/g,
+		(
+			match, _relativePrefix, vueFileName
+		) => {
 			const targetCode = vueFileName.slice( 0, 2 );
 
 			if ( targetCode === currentCode || !codeSet.has( targetCode ) ) {
@@ -100,8 +95,7 @@ function rewriteMovedFileCrossCodeVueImports(
 			}
 
 			return `@/book1/${targetCode}/${vueFileName}`;
-		}
-	);
+		} );
 }
 
 function rewriteMovedFileRelativeUtils( source ) {
@@ -116,10 +110,8 @@ function updateContentIndex( source ) {
 		return source;
 	}
 
-	return source.replace(
-		imageGlobRe,
-		"import.meta.glob( [ \"@/images/*.webp\", \"@/book1/*/*.webp\" ], { eager: true, import: \"default\" } )"
-	);
+	return source.replace( imageGlobRe,
+		"import.meta.glob( [ \"@/images/*.webp\", \"@/book1/*/*.webp\" ], { eager: true, import: \"default\" } )" );
 }
 
 const rootViewFiles = listFiles( viewsDir )
@@ -127,11 +119,11 @@ const rootViewFiles = listFiles( viewsDir )
 	.sort();
 
 const rootViewCodes = rootViewFiles.map( ( fileName ) => fileName.slice( 0, 2 ) );
-const book1Codes = exists( book1Dir )
-	? fs.readdirSync( book1Dir, { withFileTypes: true } )
+const book1Codes = exists( book1Dir ) ?
+	fs.readdirSync( book1Dir, { withFileTypes: true } )
 		.filter( ( entry ) => entry.isDirectory() && /^[A-Z0-9]{2}$/.test( entry.name ) )
-		.map( ( entry ) => entry.name )
-	: [];
+		.map( ( entry ) => entry.name ) :
+	[];
 
 const codes = Array.from( new Set( [
 	...rootViewCodes,
@@ -161,7 +153,9 @@ for ( const code of rootViewCodes ) {
 		}
 
 		const fromPath = path.join( viewsDir, fileName );
-		const toPath = path.join( book1Dir, code, fileName );
+		const toPath = path.join(
+			book1Dir, code, fileName
+		);
 
 		if ( moveFile( fromPath, toPath ) ) {
 			movedViews += 1;
@@ -178,7 +172,9 @@ for ( const code of rootViewCodes ) {
 		}
 
 		const fromPath = path.join( imagesDir, fileName );
-		const toPath = path.join( book1Dir, code, fileName );
+		const toPath = path.join(
+			book1Dir, code, fileName
+		);
 
 		if ( moveFile( fromPath, toPath ) ) {
 			movedImages += 1;
@@ -200,7 +196,9 @@ for ( const filePath of textFiles ) {
 
 		if ( filePath.startsWith( movedDir ) ) {
 			updated = rewriteMovedFileRelativeImages( updated, code );
-			updated = rewriteMovedFileCrossCodeVueImports( updated, code, codeSet );
+			updated = rewriteMovedFileCrossCodeVueImports(
+				updated, code, codeSet
+			);
 			updated = rewriteMovedFileRelativeUtils( updated );
 			break;
 		}
@@ -211,7 +209,9 @@ for ( const filePath of textFiles ) {
 	}
 
 	if ( updated !== source ) {
-		fs.writeFileSync( filePath, updated, "utf8" );
+		fs.writeFileSync(
+			filePath, updated, "utf8"
+		);
 		rewrittenFiles += 1;
 	}
 }

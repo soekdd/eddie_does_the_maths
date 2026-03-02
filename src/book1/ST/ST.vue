@@ -80,7 +80,7 @@
 		<h2 class="mt-8">Teil 3 — Warum man Wahrscheinlichkeiten nicht addieren darf</h2>
 		<figure class="exampleFigure">
 			<ImageZoomer title="Entscheidungsbaum">
-				<ST_Graph a="0.8"
+				<STGraph a="0.8"
 					bus-per-hour="1"
 					r="0.2"
 					stand-minutes="5"
@@ -242,7 +242,7 @@ p_{\text{ges}} &= P(S\cup N) \\
 		<v-card class="panel pa-3 mt-4">
 			<h3>Baum zu deinen Eingaben</h3>
 			<ImageZoomer :title="graphTitle">
-				<ST_Graph
+				<STGraph
 					:a
 					:bus-per-hour
 					:r
@@ -319,7 +319,7 @@ p_{\text{ges}} &= P(S\cup N) \\
 
 <script setup>
 import { computed, ref } from "vue";
-import ST_Graph from "./ST_Graph.vue";
+import STGraph from "./ST_Graph.vue";
 import titleImg from "./ST.webp";
 
 // Vereinfachtes Modell:

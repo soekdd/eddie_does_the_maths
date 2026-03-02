@@ -33,7 +33,9 @@ const appBase = normalizeBasePath( process.env.VITE_PUBLIC_BASE || "/math/" );
 const baseSegments = appBase.split( "/" ).filter( Boolean );
 const buildOutDir = baseSegments.length > 0 ? path.join( distRootDir, ...baseSegments ) : distRootDir;
 const outDir = path.join( buildOutDir, "pdf" );
-const cacheDir = path.join( distRootDir, ".pdf-cache", ...baseSegments );
+const cacheDir = path.join(
+	distRootDir, ".pdf-cache", ...baseSegments
+);
 const navigationTimeoutMs = Number.parseInt( process.env.PDF_NAV_TIMEOUT_MS || "120000", 10 );
 
 function pdfFileNameFromRoute( route ) {
@@ -63,7 +65,9 @@ async function statIfFile( filePath ) {
 	}
 }
 
-async function shouldGeneratePdf( sourceVuePath, pdfOutPath, pdfCachePath ) {
+async function shouldGeneratePdf(
+	sourceVuePath, pdfOutPath, pdfCachePath
+) {
 	if ( !sourceVuePath ) {
 		return { shouldGenerate: false, reason: "no source Vue mapping" };
 	}
@@ -207,7 +211,9 @@ export async function generatePdfs() {
 			const filePath = path.join( outDir, pdfFileName );
 			const cachePath = path.join( cacheDir, pdfFileName );
 			const sourceVuePath = resolveSourceVueForPdfFile( pdfFileName );
-			const decision = await shouldGeneratePdf( sourceVuePath, filePath, cachePath );
+			const decision = await shouldGeneratePdf(
+				sourceVuePath, filePath, cachePath
+			);
 
 			if ( !decision.shouldGenerate ) {
 				if ( decision.reusePdfPath ) {
@@ -249,7 +255,7 @@ export async function generatePdfs() {
 			// preferCSSPageSize + printBackground sind die beiden wichtigsten Optionen. :contentReference[oaicite:3]{index=3}
 			await page.pdf( {
 				path:              filePath,
-				printBackground:   true,
+				printBackground:   false,
 				preferCSSPageSize: true,
 				margin:            {
 					top:    "12mm",
