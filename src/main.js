@@ -2,7 +2,7 @@ import { h, onMounted } from "vue";
 import { RouterView } from "vue-router";
 import { ViteSSG } from "vite-ssg";
 import { VApp } from "vuetify/components";
-import AppFrame from "@/App.vue";
+import AppFrame from "@/components/App.vue";
 import ImageZoomer from "@/components/ImageZoomer.vue";
 import Katex from "@/components/Katex.vue";
 import RouteSeoHead from "@/components/RouteSeoHead.vue";

@@ -34,8 +34,8 @@
 	</div>
 
 	<PGHand
-		:can-remove-card="canRemoveCard"
-		:cards="cards"
+		:can-remove-card
+		:cards
 		@remove-card="removeCardAt"
 	/>
 

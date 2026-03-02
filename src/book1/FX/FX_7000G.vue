@@ -178,7 +178,7 @@ import {
 	computed, nextTick, onBeforeUnmount, onMounted, ref, watch
 } from "vue";
 import katex from "katex";
-import { ensureCbiLoaded } from "@/utils/cbi/cbi.mjs";
+import { ensureCbiLoaded } from "./cbi/cbi.mjs";
 
 type FinishCb = ( errorCode: number, message: string, programs?: any, where?: string, lineNum?: number ) => void;
 
@@ -1482,7 +1482,8 @@ function isEditableKeyboardTarget( target: EventTarget | null ): boolean {
 		return false;
 	}
 
-	if ( target.closest( "input, textarea, select, [contenteditable=''], [contenteditable='true'], [role='textbox']" ) ) {
+	if ( target.closest( "input, textarea, select, [contenteditable='']," +
+		" [contenteditable='true'], [role='textbox']" ) ) {
 		return true;
 	}
 

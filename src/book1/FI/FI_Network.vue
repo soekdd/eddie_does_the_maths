@@ -249,9 +249,9 @@
 import {
 	computed, ref, watch
 } from "vue";
-import finlandData from "../../utils/maps/finland.json";
-import helsinkiData from "../../utils/maps/helsinki.json";
-import swedenData from "../../utils/maps/sweden.json";
+import finlandData from "./maps/finland.json";
+import helsinkiData from "./maps/helsinki.json";
+import swedenData from "./maps/sweden.json";
 
 type Node = {
 	id: string;

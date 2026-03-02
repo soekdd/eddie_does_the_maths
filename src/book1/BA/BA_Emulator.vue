@@ -79,9 +79,9 @@
 import {
 	computed, onBeforeUnmount, onMounted, ref, watch
 } from "vue";
-import cbmbasicFactoryAssetUrl from "../../utils/cbmbasic/cbmbasic.mjs?url";
-import cbmbasicWasmAssetUrl from "../../utils/cbmbasic/cbmbasic.wasm?url";
-import CbmbasicWorker from "../../utils/cbmbasic/cbmbasic.worker.ts?worker";
+import cbmbasicFactoryAssetUrl from "./cbmbasic/cbmbasic.mjs?url";
+import cbmbasicWasmAssetUrl from "./cbmbasic/cbmbasic.wasm?url";
+import CbmbasicWorker from "./cbmbasic/cbmbasic.worker.ts?worker";
 
 const DEFAULT_CBMBASIC_FACTORY_URL = cbmbasicFactoryAssetUrl;
 const DEFAULT_WASM_URL = cbmbasicWasmAssetUrl;

@@ -3,7 +3,7 @@
 	<div class="controls">
 		<div class="flex">
 			<label class="btn">
-				Upload
+				Upload einer eigenen Karte
 				<input accept="image/*"
 					hidden
 					type="file"
@@ -201,7 +201,8 @@ const assetModules = import.meta.glob( "./FI_*.webp", {
 	import: "default"
 } ) as Record<string, string>;
 
-const assetKeys = Object.keys( assetModules ).sort();
+const assetKeys = Object.keys( assetModules ).sort()
+	.reverse();
 const selectedAssetKey = ref<string>( "" );
 
 /** ---------- Complex minimal ---------- */

@@ -265,13 +265,13 @@ import { useDisplay } from "vuetify";
 import {
 	mdiDownload, mdiHexagonSlice2, mdiHexagonSlice4, mdiHexagonSlice6
 } from "@mdi/js";
-import reportErrorHTML from "./utils/disclaimer/report_errors_de.html?raw";
-import impressumHtml from "./utils/disclaimer/impressum_de.html?raw";
-import privacyPolicyHtml from "./utils/disclaimer/privacy_policy_de.html?raw";
-import faviconPng from "./images/favicon.png";
-import ForumThreadPocketBase from "./components/ForumThreadPocketBase.vue";
-import MarkdownDownload from "./components/MarkdownDownload.vue";
-import Page from "./components/Page.vue";
+import reportErrorHTML from "../utils/disclaimer/report_errors_de.html?raw";
+import impressumHtml from "../utils/disclaimer/impressum_de.html?raw";
+import privacyPolicyHtml from "../utils/disclaimer/privacy_policy_de.html?raw";
+import faviconPng from "../images/favicon.png";
+import ForumThreadPocketBase from "./ForumThreadPocketBase.vue";
+import MarkdownDownload from "./MarkdownDownload.vue";
+import Page from "./Page.vue";
 
 const props = defineProps( {
 	title:      { type: String, default: "" },

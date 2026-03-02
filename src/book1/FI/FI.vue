@@ -53,11 +53,6 @@
 					<li><b>Dünne Linie</b>: nur Straße</li>
 					<li><b>Gestrichelte Linie</b>: nur Bahn</li>
 				</ul>
-				<p>
-					Im Code wird das aus zwei Kantenmengen (<code>roads</code>, <code>rails</code>) zu einer gemeinsamen
-					Kante zusammengeführt. Je nachdem, ob beide oder nur eine vorhanden ist, bekommt die Kante eine andere
-					CSS-Klasse.
-				</p>
 			</section>
 
 			<section>
