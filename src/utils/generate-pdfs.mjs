@@ -33,7 +33,79 @@ const appBase = normalizeBasePath( process.env.VITE_PUBLIC_BASE || "/math/" );
 const baseSegments = appBase.split( "/" ).filter( Boolean );
 const buildOutDir = baseSegments.length > 0 ? path.join( distRootDir, ...baseSegments ) : distRootDir;
 const outDir = path.join( buildOutDir, "pdf" );
+const cacheDir = path.join( distRootDir, ".pdf-cache", ...baseSegments );
 const navigationTimeoutMs = Number.parseInt( process.env.PDF_NAV_TIMEOUT_MS || "120000", 10 );
+
+function pdfFileNameFromRoute( route ) {
+	return ( route === "/" ? "index" : route.replace( /\//g, "__" ).replace( /^__/, "" ) ) + ".pdf";
+}
+
+function resolveSourceVueForPdfFile( pdfFileName ) {
+	const slug = path.basename( pdfFileName, ".pdf" );
+
+	// mapping is only defined for <XX>.pdf -> src/book1/<XX>/<XX>.vue
+	if ( !slug || slug === "index" || slug.includes( "__" ) || slug.includes( "/" ) || slug.includes( "\\" ) ) {
+		return null;
+	}
+
+	return path.join(
+		projectRoot, "src", "book1", slug, `${slug}.vue`
+	);
+}
+
+async function statIfFile( filePath ) {
+	try {
+		const stat = await fsp.stat( filePath );
+
+		return stat.isFile() ? stat : null;
+	} catch {
+		return null;
+	}
+}
+
+async function shouldGeneratePdf( sourceVuePath, pdfOutPath, pdfCachePath ) {
+	if ( !sourceVuePath ) {
+		return { shouldGenerate: false, reason: "no source Vue mapping" };
+	}
+
+	let sourceStat;
+
+	try {
+		sourceStat = await fsp.stat( sourceVuePath );
+	} catch {
+		return { shouldGenerate: false, reason: `source Vue missing (${path.relative( projectRoot, sourceVuePath )})` };
+	}
+
+	if ( !sourceStat.isFile() ) {
+		return { shouldGenerate: false, reason: `source is not a file (${path.relative( projectRoot, sourceVuePath )})` };
+	}
+
+	const outPdfStat = await statIfFile( pdfOutPath );
+	const cachePdfStat = await statIfFile( pdfCachePath );
+
+	let freshestPdfPath = null;
+	let freshestPdfStat = null;
+
+	if ( outPdfStat ) {
+		freshestPdfPath = pdfOutPath;
+		freshestPdfStat = outPdfStat;
+	}
+
+	if ( cachePdfStat && ( !freshestPdfStat || cachePdfStat.mtimeMs > freshestPdfStat.mtimeMs ) ) {
+		freshestPdfPath = pdfCachePath;
+		freshestPdfStat = cachePdfStat;
+	}
+
+	if ( freshestPdfStat && sourceStat.mtimeMs <= freshestPdfStat.mtimeMs ) {
+		return {
+			shouldGenerate: false,
+			reason:         `up-to-date (source <= pdf mtime: ${path.relative( projectRoot, sourceVuePath )})`,
+			reusePdfPath:   freshestPdfPath
+		};
+	}
+
+	return { shouldGenerate: true };
+}
 
 function routeFromHtmlFile( rel ) {
 	// rel is like: "index.html" or "foo/index.html" or "foo.html"
@@ -131,6 +203,34 @@ export async function generatePdfs() {
 
 	try {
 		for ( const route of routes ) {
+			const pdfFileName = pdfFileNameFromRoute( route );
+			const filePath = path.join( outDir, pdfFileName );
+			const cachePath = path.join( cacheDir, pdfFileName );
+			const sourceVuePath = resolveSourceVueForPdfFile( pdfFileName );
+			const decision = await shouldGeneratePdf( sourceVuePath, filePath, cachePath );
+
+			if ( !decision.shouldGenerate ) {
+				if ( decision.reusePdfPath ) {
+					if ( decision.reusePdfPath !== filePath ) {
+						await fsp.mkdir( path.dirname( filePath ), { recursive: true } );
+						await fsp.copyFile( decision.reusePdfPath, filePath );
+					}
+
+					const outPdfStat = await statIfFile( filePath );
+					const cachePdfStat = await statIfFile( cachePath );
+
+					if ( outPdfStat && ( !cachePdfStat || outPdfStat.mtimeMs > cachePdfStat.mtimeMs ) ) {
+						await fsp.mkdir( cacheDir, { recursive: true } );
+						await fsp.copyFile( filePath, cachePath );
+					}
+				}
+
+				console.log(
+					"PDF SKIP:", route, "->", path.relative( projectRoot, filePath ), `(${decision.reason})`
+				);
+				continue;
+			}
+
 			const url = baseUrl + routeToBasePath( route );
 			const page = await browser.newPage();
 			console.log( "PDF URL:", url );
@@ -145,10 +245,6 @@ export async function generatePdfs() {
 
 			// CSS media type auf print (zulässige Werte: screen/print/null). :contentReference[oaicite:2]{index=2}
 			await page.emulateMediaType( "print" );
-
-			const filePath = path.join( outDir,
-				// /foo/bar -> foo__bar.pdf
-				( route === "/" ? "index" : route.replace( /\//g, "__" ).replace( /^__/, "" ) ) + ".pdf" );
 
 			// preferCSSPageSize + printBackground sind die beiden wichtigsten Optionen. :contentReference[oaicite:3]{index=3}
 			await page.pdf( {
@@ -165,6 +261,9 @@ export async function generatePdfs() {
 				// format: 'A4',
 				// margin: { top: '12mm', right: '12mm', bottom: '12mm', left: '12mm' },
 			} );
+
+			await fsp.mkdir( cacheDir, { recursive: true } );
+			await fsp.copyFile( filePath, cachePath );
 
 			await page.close();
 			console.log(
