@@ -249,7 +249,7 @@
 			</ul>
 			<p>
 				Kurz gesagt: TGL wirkt feiner (<Katex tex="\text{setzt sich}\neq \text{springt}" />),
-				DIN (damals) grober, dafür leichter anzuwenden. Heute unterschiedet die DIN auch nach Lastcharakter.
+				DIN (damals) grober, dafür leichter anzuwenden. Heute unterscheidet auch die DIN nach Lastcharakter.
 			</p>
 		</div>
 	</template>
