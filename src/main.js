@@ -1,4 +1,6 @@
-import { h, onMounted } from "vue";
+import {
+	h, nextTick, onMounted
+} from "vue";
 import { RouterView } from "vue-router";
 import { ViteSSG } from "vite-ssg";
 import { VApp } from "vuetify/components";
@@ -122,6 +124,52 @@ function setupThemeSync() {
 	}
 }
 
+function scrollPageToTop() {
+	if ( typeof window === "undefined" || typeof document === "undefined" ) {
+		return;
+	}
+
+	window.scrollTo( 0, 0 );
+	document.documentElement.scrollTop = 0;
+	document.body.scrollTop = 0;
+
+	const scrollingElement = document.scrollingElement;
+
+	if ( scrollingElement ) {
+		scrollingElement.scrollTop = 0;
+	}
+
+	const mainScroller = document.querySelector( ".v-main__scroller" );
+
+	if ( mainScroller instanceof HTMLElement ) {
+		mainScroller.scrollTop = 0;
+	}
+}
+
+function installScrollReset( router ) {
+	if ( typeof window === "undefined" ) {
+		return;
+	}
+
+	if ( "scrollRestoration" in window.history ) {
+		window.history.scrollRestoration = "manual";
+	}
+
+	router.afterEach( (
+		to, from, failure
+	) => {
+		if ( failure || to.hash || to.path === from.path ) {
+			return;
+		}
+
+		void nextTick( () => {
+			window.requestAnimationFrame( () => {
+				scrollPageToTop();
+			} );
+		} );
+	} );
+}
+
 const Root = {
 	name: "Root",
 	setup() {
@@ -149,7 +197,9 @@ export const createApp = ViteSSG(
 		routes,
 		scrollBehavior
 	},
-	( { app, isClient } ) => {
+	( {
+		app, router, isClient
+	} ) => {
 		app.use( vuetify );
 
 		// Global layout component so views don't need to import it explicitly.
@@ -162,6 +212,7 @@ export const createApp = ViteSSG(
 
 		if ( isClient ) {
 			rewriteLegacyShortcuts();
+			installScrollReset( router );
 		}
 	},
 	{

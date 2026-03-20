@@ -106,7 +106,6 @@ export const routes = [
 		name:      "MO",
 		component: MO,
 		meta:      {
-			warning,
 			difficulty: 3,
 			title:      "IMO 1985 Aufgaben 1-6",
 			index:      false
@@ -117,7 +116,6 @@ export const routes = [
 		name:      "O1",
 		component: O1,
 		meta:      {
-			corrector:	 "Kitaktus",
 			difficulty: 3,
 			title:      "IMO 1985 Aufgabe A1",
 			index:      true,
@@ -130,7 +128,6 @@ export const routes = [
 		name:      "O2",
 		component: O2,
 		meta:      {
-			corrector:	 "Kitaktus",
 			difficulty: 3,
 			title:      "IMO 1985 Aufgabe A2",
 			index:      true,
@@ -143,7 +140,6 @@ export const routes = [
 		name:      "O3",
 		component: O3,
 		meta:      {
-			corrector:	 "Kitaktus",
 			difficulty: 3,
 			title:      "IMO 1985 Aufgabe A3",
 			index:      true,
@@ -156,7 +152,6 @@ export const routes = [
 		name:      "O4",
 		component: O4,
 		meta:      {
-			corrector:	 "Kitaktus",
 			difficulty: 3,
 			title:      "IMO 1985 Aufgabe B1",
 			index:      true,
@@ -169,7 +164,6 @@ export const routes = [
 		name:      "O5",
 		component: O5,
 		meta:      {
-			corrector:	 "Kitaktus",
 			difficulty: 3,
 			title:      "IMO 1985 Aufgabe B2",
 			index:      true,
@@ -182,7 +176,6 @@ export const routes = [
 		name:      "O6",
 		component: O6,
 		meta:      {
-			corrector:	 "Kitaktus",
 			difficulty: 3,
 			title:      "IMO 1985 Aufgabe B3",
 			index:      true,
@@ -195,7 +188,6 @@ export const routes = [
 		name:      "FI",
 		component: FI,
 		meta:      {
-			warning,
 			difficulty: 2,
 			title:      "Land&shy;karten Geo&shy;metrie",
 			index:      true,
@@ -220,7 +212,6 @@ export const routes = [
 		name:      "NV",
 		component: NV,
 		meta:      {
-			warning,
 			difficulty: 1,
 			title:      "Navi&shy;gation im Wald",
 			index:      true,
@@ -233,7 +224,6 @@ export const routes = [
 		name:      "SE",
 		component: SE,
 		meta:      {
- 			corrector:	 "Kitaktus",
 			difficulty: 1,
 			title:      "Gute-Nacht-Rechen&shy;routine",
 			index:      true,
@@ -246,7 +236,6 @@ export const routes = [
 		name:      "FS",
 		component: FS,
 		meta:      {
-			warning,
 			difficulty: 2,
 			title:      "Fischsee",
 			index:      true,
@@ -259,7 +248,6 @@ export const routes = [
 		name:      "RD",
 		component: RD,
 		meta:      {
-			warning,
 			difficulty: 2,
 			title:      "Rentier-Depot",
 			index:      true,
@@ -272,7 +260,6 @@ export const routes = [
 		name:      "UD",
 		component: UD,
 		meta:      {
-			warning,
 			difficulty: 3,
 			title:      "Minkow&shy;skis Ufer&shy;auf&shy;dickung",
 			index:      true,
@@ -310,7 +297,6 @@ export const routes = [
 		component: BS,
 		meta:      {
 			difficulty: 2,
-			warning,
 			title:      "Baustatik #1, Satz v. Steiner",
 			index:      true,
 			book:       1,
@@ -322,7 +308,6 @@ export const routes = [
 		name:      "AL",
 		component: AL,
 		meta:      {
-			warning,
 			difficulty: 2,
 			title:      "Karten&shy;spiel mit Ada Lovelace",
 			index:      true,
@@ -335,7 +320,6 @@ export const routes = [
 		name:      "WO",
 		component: WO,
 		meta:      {
-			warning,
 			difficulty: 2,
 			title:      "Weg&shy;optimierung",
 			index:      true,
@@ -349,7 +333,6 @@ export const routes = [
 		component: BD,
 		meta:      {
 			difficulty: 2,
-			warning,
 			title:      "Baustatik #2, DIN vs. TGL",
 			index:      true,
 			book:       1,
@@ -373,7 +356,6 @@ export const routes = [
 		name:      "VA",
 		component: VA,
 		meta:      {
-			warning,
 			difficulty: 2,
 			title:      "Warum die Vasa sinken musste",
 			index:      true,
@@ -386,7 +368,6 @@ export const routes = [
 		name:      "BZ",
 		component: BZ,
 		meta:      {
-			warning,
 			difficulty: 1,
 			title:      "Baustatik #3 Dynamik",
 			index:      true,
@@ -411,7 +392,6 @@ export const routes = [
 		name:      "QH",
 		component: QH,
 		meta:      {
-			warning,
 			difficulty: 2,
 			title:      "Der Quanten-Hall-Effekt",
 			index:      true,
@@ -424,7 +404,6 @@ export const routes = [
 		name:      "LT",
 		component: LT,
 		meta:      {
-			warning,
 			difficulty: 3,
 			title:      "Laplace-Trans&shy;formation",
 			index:      true,
@@ -437,7 +416,6 @@ export const routes = [
 		name:      "ZR",
 		component: CatchAll,
 		meta:      {
-			warning,
 			difficulty: 2,
 			title:      "Atomare Zerfalls&shy;reihen",
 			index:      true,
@@ -451,7 +429,6 @@ export const routes = [
 		name:      "AW",
 		component: CatchAll,
 		meta:      {
-			warning,
 			difficulty: 2,
 			title:      "Aus&shy;sage&shy;wahrs&shy;cheinlichkeit",
 			index:      true,
@@ -464,7 +441,6 @@ export const routes = [
 		name:      "KK",
 		component: CatchAll,
 		meta:      {
-			warning,
 			difficulty: 2,
 			title:      "Spaß mit Kugel&shy;koordinaten",
 			index:      true,
