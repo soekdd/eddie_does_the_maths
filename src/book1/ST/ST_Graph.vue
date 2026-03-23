@@ -1,6 +1,6 @@
 <!-- eslint-disable vue/max-len -->
 <template>
-<svg :aria-label="ariaLabel"
+<svg :aria-label
 	class="stGraph"
 	height="100%"
 	role="img"
@@ -19,14 +19,14 @@
 				transform="matrix(0.770109,-0.637913,0.637913,0.770109,663.477571,599.836719)"
 				x="0px"
 				y="0px"
-			>Fahrer nimmt</text>
+			>{{ t( "graph.labels.driverTakes" ) }}</text>
 		</g>
 		<g>
 			<text style="font-family:'ArialMT', 'Arial', sans-serif;font-size:33.333px;fill:var(--graph-ink);"
 				transform="matrix(0.770109,-0.637913,0.637913,0.770109,680.069552,640.202168)"
 				x="0px"
 				y="0px"
-			>nur Fin-Markka</text>
+			>{{ t( "graph.labels.onlyFinMarkka" ) }}</text>
 		</g>
 	</g>
 	<g>
@@ -173,14 +173,14 @@
 				transform="matrix(1,0,0,1,154.2973,807.947)"
 				x="0px"
 				y="0px"
-			>Bus kommt</text>
+			>{{ t( "graph.labels.busArrives" ) }}</text>
 		</g>
 		<g>
 			<text style="font-family:'ArialMT', 'Arial', sans-serif;font-size:33.333px;fill:var(--graph-ink);"
 				transform="matrix(1,0,0,1,157.0153,849.617)"
 				x="0px"
 				y="0px"
-			>gen Süden</text>
+			>{{ t( "graph.labels.toSouth" ) }}</text>
 		</g>
 	</g>
 	<g>
@@ -189,14 +189,14 @@
 				transform="matrix(0.950665,-0.310219,0.310219,0.950665,415.457761,446.245192)"
 				x="0px"
 				y="0px"
-			>Kein Bus</text>
+			>{{ t( "graph.labels.noBus" ) }}</text>
 		</g>
 		<g>
 			<text style="font-family:'ArialMT', 'Arial', sans-serif;font-size:33.333px;fill:var(--graph-ink);"
 				transform="matrix(0.950665,-0.310219,0.310219,0.950665,408.996725,492.186008)"
 				x="0px"
 				y="0px"
-			>gen Norden</text>
+			>{{ t( "graph.labels.toNorth" ) }}</text>
 		</g>
 	</g>
 	<g>
@@ -205,14 +205,14 @@
 				transform="matrix(0.707725,-0.706488,0.706488,0.707725,136.281257,675.130243)"
 				x="0px"
 				y="0px"
-			>Kein Bus</text>
+			>{{ t( "graph.labels.noBus" ) }}</text>
 		</g>
 		<g>
 			<text style="font-family:'ArialMT', 'Arial', sans-serif;font-size:33.333px;fill:var(--graph-ink);"
 				transform="matrix(0.707725,-0.706488,0.706488,0.707725,155.865541,714.458989)"
 				x="0px"
 				y="0px"
-			>gen Süden</text>
+			>{{ t( "graph.labels.toSouth" ) }}</text>
 		</g>
 	</g>
 	<g>
@@ -221,14 +221,14 @@
 				transform="matrix(0.84,0.545195,-0.545195,0.84,656.587123,714.270666)"
 				x="0px"
 				y="0px"
-			>Fahrer nimmt</text>
+			>{{ t( "graph.labels.driverTakes" ) }}</text>
 		</g>
 		<g>
 			<text style="font-family:'ArialMT', 'Arial', sans-serif;font-size:33.333px;fill:var(--graph-ink);"
 				transform="matrix(0.84,0.545195,-0.545195,0.84,671.145095,773.445643)"
 				x="0px"
 				y="0px"
-			>D-Mark</text>
+			>{{ t( "graph.labels.dMark" ) }}</text>
 		</g>
 	</g>
 	<g>
@@ -237,14 +237,14 @@
 				transform="matrix(0.84,0.545195,-0.545195,0.84,656.587123,714.270666)"
 				x="0px"
 				y="0px"
-			>Fahrer nimmt</text>
+			>{{ t( "graph.labels.driverTakes" ) }}</text>
 		</g>
 		<g>
 			<text style="font-family:'ArialMT', 'Arial', sans-serif;font-size:33.333px;fill:var(--graph-ink);"
 				transform="matrix(0.84,0.545195,-0.545195,0.84,671.145095,773.445643)"
 				x="0px"
 				y="0px"
-			>D-Mark</text>
+			>{{ t( "graph.labels.dMark" ) }}</text>
 		</g>
 	</g>
 	<g>
@@ -253,14 +253,14 @@
 				transform="matrix(0.449002,-0.893531,0.893531,0.449002,944.202831,736.237131)"
 				x="0px"
 				y="0px"
-			>Mielke</text>
+			>{{ t( "graph.labels.mielke" ) }}</text>
 		</g>
 		<g>
 			<text style="font-family:'ArialMT', 'Arial', sans-serif;font-size:33.333px;fill:var(--graph-ink);"
 				transform="matrix(0.449002,-0.893531,0.893531,0.449002,962.705701,792.221583)"
 				x="0px"
 				y="0px"
-			>schnappt zu</text>
+			>{{ t( "graph.labels.snapsUp" ) }}</text>
 		</g>
 	</g>
 	<g>
@@ -269,14 +269,14 @@
 				transform="matrix(0.974353,0.225025,-0.225025,0.974353,822.996207,924.020904)"
 				x="0px"
 				y="0px"
-			>Mielke verpasst</text>
+			>{{ t( "graph.labels.mielkeMisses" ) }}</text>
 		</g>
 		<g>
 			<text style="font-family:'ArialMT', 'Arial', sans-serif;font-size:33.333px;fill:var(--graph-ink);"
 				transform="matrix(0.974353,0.225025,-0.225025,0.974353,892.143498,982.757184)"
 				x="0px"
 				y="0px"
-			>mich</text>
+			>{{ t( "graph.labels.me" ) }}</text>
 		</g>
 	</g>
 	<g>
@@ -285,14 +285,14 @@
 				transform="matrix(0.797588,0.603202,-0.603202,0.797588,452.818337,534.137108)"
 				x="0px"
 				y="0px"
-			>Bus kommt</text>
+			>{{ t( "graph.labels.busArrives" ) }}</text>
 		</g>
 		<g>
 			<text style="font-family:'ArialMT', 'Arial', sans-serif;font-size:33.333px;fill:var(--graph-ink);"
 				transform="matrix(0.797588,0.603202,-0.603202,0.797588,424.691157,565.10999)"
 				x="0px"
 				y="0px"
-			>gen Norden</text>
+			>{{ t( "graph.labels.toNorth" ) }}</text>
 		</g>
 	</g>
 	<g>
@@ -305,28 +305,28 @@
 				transform="matrix(1.000001,0,0,1.000001,1304.668534,513.048375)"
 				x="0px"
 				y="0px"
-			>Misserfolg</text>
+			>{{ t( "graph.labels.failure" ) }}</text>
 		</g>
 		<g>
 			<text style="font-family:'ArialMT', 'Arial', sans-serif;font-size:64px;fill:var(--graph-ink);"
 				transform="matrix(1.000001,0,0,1.000001,1523.724433,378.745043)"
 				x="0px"
 				y="0px"
-			>{{model.failure}}%</text>
+			>{{ formatPercentLabel( model.failure ) }}</text>
 		</g>
 		<g>
 			<text style="font-family:'ArialMT', 'Arial', sans-serif;font-size:64px;fill:var(--graph-ink);"
 				transform="matrix(1.000001,0,0,1.000001,1523.724433,973.296043)"
 				x="0px"
 				y="0px"
-			>{{model.freedom}}%</text>
+			>{{ formatPercentLabel( model.freedom ) }}</text>
 		</g>
 		<g>
 			<text style="font-family:'ArialMT', 'Arial', sans-serif;font-size:45.833px;fill:var(--graph-ink);"
 				transform="matrix(1.000001,0,0,1.000001,1304.310463,826.772432)"
 				x="0px"
 				y="0px"
-			>Freiheit</text>
+			>{{ t( "graph.labels.freedom" ) }}</text>
 		</g>
 	</g>
 </svg>
@@ -334,6 +334,9 @@
 
 <script setup>
 import { computed } from "vue";
+import { useI18n } from "@/i18n.mjs";
+
+const { t, locale } = useI18n( "book1/ST" );
 
 const props = defineProps( {
 	busPerHour:   { type: [ Number, String ], required: true },
@@ -368,58 +371,90 @@ function in01( n ) {
 
 function fmtPct( n, digits = 0 ) {
 	if ( !Number.isFinite( n ) ) {
-		return "–";
+		return "-";
 	}
 
-	return `${( n * 100 ).toFixed( digits ).replace( ".", "," )}%`;
+	return new Intl.NumberFormat( locale.value === "de" ? "de-DE" : "en-US", {
+		style:                 "percent",
+		minimumFractionDigits: digits,
+		maximumFractionDigits: digits
+	} ).format( n );
+}
+
+function formatPercentLabel( value ) {
+	if ( !Number.isFinite( value ) ) {
+		return "-";
+	}
+
+	return `${new Intl.NumberFormat( locale.value === "de" ? "de-DE" : "en-US", {
+		minimumFractionDigits: 1,
+		maximumFractionDigits: 1
+	} ).format( value )}%`;
 }
 
 const model = computed( () => {
-	const f = parseMaybeFloat( props.busPerHour );
-	const t = parseMaybeFloat( props.standMinutes );
-	const aa = parseMaybeFloat( props.a );
-	const rr = parseMaybeFloat( props.r );
+	const frequency = parseMaybeFloat( props.busPerHour );
+	const dwellMinutes = parseMaybeFloat( props.standMinutes );
+	const acceptance = parseMaybeFloat( props.a );
+	const risk = parseMaybeFloat( props.r );
 
 	// p per direction (Sued/Nord) from f (buses/h per direction) and t (stand minutes).
-	const dd = f === null || t === null ? null : f * t;
+	const dd = frequency === null || dwellMinutes === null ? null : frequency * dwellMinutes;
 	const ndd = 60 - dd ;
-	const naa = 1 - aa ;
-	const nrr = 1 - rr ;
-	const paa = Math.round( aa * 100 );
+	const naa = 1 - acceptance ;
+	const nrr = 1 - risk ;
+	const paa = Math.round( acceptance * 100 );
 	const pnaa = Math.round( naa * 100 );
-	const prr = Math.round( rr * 100 );
+	const prr = Math.round( risk * 100 );
 	const pnrr = Math.round( nrr * 100 );
 
 	const fix = {
-		dd, aa, rr, ndd, naa, nrr, paa, pnaa, prr, pnrr
+		dd,
+		aa: acceptance,
+		rr: risk,
+		ndd,
+		naa,
+		nrr,
+		paa,
+		pnaa,
+		prr,
+		pnrr
 	};
 
 	// Return parsed values even on invalid input so template/debug can still show them.
-	if ( [ f, t, aa, rr ].some( ( n ) => n === null ) ) {
+	if ( [
+		frequency,
+		dwellMinutes,
+		acceptance,
+		risk
+	].some( ( n ) => n === null ) ) {
 		return {
-			ok: false, ...fix, message: "Bitte Zahlen eingeben. Tipp: 0,65 geht auch."
+			ok: false, ...fix, message: t( "errors.enterNumbers" )
 		};
 	}
 
-	if ( f < 0 || t < 0 ) {
+	if ( frequency < 0 || dwellMinutes < 0 ) {
 		return {
-			ok: false, ...fix, message: "Busse/Standszeit muessen >= 0 sein."
+			ok: false, ...fix, message: t( "errors.nonNegative" )
 		};
 	}
 
-	if ( t > 60 ) {
+	if ( dwellMinutes > 60 ) {
 		return {
-			ok: false, ...fix, message: "Standzeit muss <= 60 Minuten sein (wir rechnen \"pro Stunde\")."
+			ok: false, ...fix, message: t( "errors.maxMinutes" )
 		};
 	}
 
-	if ( ![ aa, rr ].every( in01 ) ) {
+	if ( ![
+		acceptance,
+		risk
+	].every( in01 ) ) {
 		return {
-			ok: false, ...fix, message: "a und r muessen im Intervall [0,1] liegen."
+			ok: false, ...fix, message: t( "errors.range01" )
 		};
 	}
 
-	const freedom = Math.round( 1000 * ( dd / 60 ) * ( 1 + ndd / 60 ) * aa * ( 1 - rr ) ) / 10;
+	const freedom = Math.round( 1000 * ( dd / 60 ) * ( 1 + ndd / 60 ) * acceptance * ( 1 - risk ) ) / 10;
 	const failure = 100 - freedom;
 
 	return {
@@ -432,11 +467,13 @@ const model = computed( () => {
 
 const ariaLabel = computed( () => {
 	if ( !model.value.ok ) {
-		return "Entscheidungsbaum (unguenltige Eingaben)";
+		return t( "graph.ariaInvalid" );
 	}
 
-	return `Entscheidungsbaum: Freiheit ${
-		fmtPct( model.value.freedom, 1 )}, Misserfolg ${fmtPct( model.value.failure, 1 )}`;
+	return t( "graph.aria", {
+		freedom: fmtPct( model.value.freedom / 100, 1 ),
+		failure: fmtPct( model.value.failure / 100, 1 )
+	} );
 } );
 </script>
 

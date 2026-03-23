@@ -1,68 +1,42 @@
 <!-- eslint-disable vue/max-len -->
 <template>
-<AppFrame  :sub-chapter="{
-		einleitung:'Einleitung',
-		ziel: 'Ziel',
-		steiner: 'Steiner',
-		fallen: 'Steiner-Fallen',
-		beispiel: 'Beispiel',
-		rechnung: 'Rechnung',
-		ergebnis: 'Ergebnis',
-		bonus: 'Bonus'
-	}"
-	title="Eddie rechnet: Baustatik #1, Satz von Steiner"
+<AppFrame
+	:languages="[ 'de', 'en' ]"
+	:sub-chapter
+	:title="t( 'bs.title' )"
 	:vue-date="__VITE_SFC_MTIME_MS__"
 >
 	<template #bookPart>
 		<figure class="exampleFigure">
-			<ImageZoomer title="Eddie zeigt Sini wie die Summe aller Kräfte Null ist">
+			<ImageZoomer :title="t( 'bs.imageTitle' )">
 				<img loading="lazy" :src="titleImg" />
 			</ImageZoomer>
 		</figure>
-		<h3 id="einleitung">Vaasa, 1. September 1985</h3>
+		<h3 id="einleitung">{{ t( "bs.introDate" ) }}</h3>
 		<div class="eddie">
-			<p>Es ist der erste September, und plötzlich fühlt sich mein Bauch an wie ein Stundenplan: leer und
-				gleichzeitig voll. Sini macht einen falschen FDJ-Gruß, ich falle lachend fast vom Hocker. Aber
-				sobald das Kichern nachlässt, bleibt dieses miese Gefühl: <em>Du verlierst Zeit.</em></p>
-			<p>Also laufe ich allein zur Uni-Bibliothek. Hohe Regale, fremde Sprachen, Papiergeruch. Ich ziehe
-				einen dicken Band raus, <b>Technical Mechanics</b>, und klappe ihn auf, als wäre er ein
-				Rettungsring. Linien, Kästen, Querschnitte. Plötzlich ist mein Kopf wieder da, wach, hungrig.
-				Ich merke, wie gut es tut, wieder etwas zu verstehen, das nicht wegläuft.</p>
-			<p>Zwischen den
-				Seiten stolpere ich über den <b>Satz von Steiner</b>. Kein Zauber, eher ein Trick: Ein paar
-				saubere Schritte – und du weißt, wie fest eine Form wirklich ist, auch wenn sie kompliziert aussieht.</p>
-			<p>Genau darum geht’s jetzt hier: Wir schauen uns an, wie man damit einen <b>I-Träger</b>
-				sinnvoll dimensioniert. Unten wartet eine kleine Simulation, in der du selbst am Profil drehen kannst
-				und siehst, wie sich Stärke anfühlt, wenn man sie rechnen darf.</p>
+			<p v-html="t( 'bs.book.p1' )" />
+			<p v-html="t( 'bs.book.p2' )" />
+			<p v-html="t( 'bs.book.p3' )" />
+			<p v-html="t( 'bs.book.p4' )" />
 		</div>
 	</template>
 
 	<template #descriptionPart>
 
-		<h2 id="ziel">Teil 1 - Flächenträgheitsmoment mit dem Satz von Steiner am Beispiel eines Doppelt-T-Träger (I-Profil)</h2>
+		<h2 id="ziel">{{ t( "bs.sections.part1.title" ) }}</h2>
 		<div class="eddie">
-			<p>
-				<b>Ziel:</b> Wir berechnen das <b>zweite Flächenträgheitsmoment</b> eines Doppelt-T-Querschnitts
-				um die <b>starke Achse</b> mit dem Satz von Steiner (Parallelachsen-Satz).
-			</p>
-			<p>
-				Das braucht man z.B. für Biegespannung und Durchbiegung.
-			</p>
+			<p v-html="t( 'bs.sections.part1.p1' )" />
+			<p>{{ t( "bs.sections.part1.p2" ) }}</p>
 		</div>
 
-		<h2 id="steiner" class="mt-8">Teil 2 - Der Satz von Steiner: Was er aussagt und wie man ihn nutzt</h2>
+		<h2 id="steiner" class="mt-8">{{ t( "bs.sections.part2.title" ) }}</h2>
 		<div class="eddie">
-			<p>
-				Das Flächenträgheitsmoment misst nicht nur, wie viel Fläche vorhanden ist, sondern vor allem, in
-				welchem Abstand zur betrachteten Achse diese Fläche liegt. Genau hier setzt der Satz von Steiner an:
-				Er verschiebt ein bekanntes Trägheitsmoment von der <b>eigenen Schwerpunktachse</b> einer Teilfläche
-				auf eine <b>parallele Achse</b> (z.B. die Gesamtachse des Querschnitts).
-			</p>
+			<p v-html="t( 'bs.sections.part2.p1' )" />
 			<div class="kbox">
 				<Katex as="div" display tex="I_x = I_{x,S} + A\cdot d^2" />
 			</div>
 			<figure class="exampleFigure">
-				<ImageZoomer title="Doppelt-T-Träger">
+				<ImageZoomer :title="t( 'bs.sections.part2.graphTitle' )">
 					<BSGraph
 						:bf="100"
 						:h="200"
@@ -74,31 +48,17 @@
 					/>
 				</ImageZoomer>
 			</figure>
-			<p>
-				Dabei ist <Katex inline tex="I_{x,S}" /> das Trägheitsmoment um die Schwerpunktachse der Teilfläche,
-				<Katex inline tex="A" /> deren Fläche und <Katex inline tex="d" /> der Abstand der beiden Achsen.
-				Der Steiner-Anteil <Katex inline tex="A d^2" /> wächst quadratisch mit dem Abstand und dominiert oft
-				den gesamten Wert.
-			</p>
-			<p>
-				Für beliebige Geometrien ist das Vorgehen immer gleich:
-			</p>
+			<p v-html="t( 'bs.sections.part2.p2' )" />
+			<p>{{ t( "bs.sections.part2.p3" ) }}</p>
 			<ol>
-				<li>Querschnitt in einfache Teilflächen zerlegen (Rechtecke, Dreiecke, Kreise, Aussparungen).</li>
-				<li>Für jede Teilfläche <Katex inline tex="A_i" /> und <Katex inline tex="I_{x,S,i}" /> bestimmen.</li>
-				<li>Abstand <Katex inline tex="d_i" /> der Teilflächenachse zur Gesamtachse berechnen.</li>
-				<li>Alle Beiträge summieren: <Katex inline tex="I_x=\sum_i \left(I_{x,S,i}+A_i d_i^2\right)" />.</li>
+				<li v-html="t( 'bs.sections.part2.step1' )" />
+				<li v-html="t( 'bs.sections.part2.step2' )" />
+				<li v-html="t( 'bs.sections.part2.step3' )" />
+				<li v-html="t( 'bs.sections.part2.step4' )" />
 			</ol>
-			<p>
-				Bei Aussparungen (Löchern) werden Fläche und Steiner-Anteil mit negativem Vorzeichen abgezogen.
-				So lassen sich auch komplexe Profile systematisch berechnen.
-			</p>
-			<p>
-				Für den Doppelt-T-Träger verwenden wir die Zerlegung in drei Rechtecke:
-				2 Flansche und 1 Steg. Die Flansche liegen weit von der neutralen Achse entfernt, dadurch ist ihr
-				Steiner-Anteil groß. Der Steg liegt zentriert, für ihn gilt meist <Katex inline tex="d=0" />.
-			</p>
-			<p>Rechteck-Formeln und Geometrie:</p>
+			<p v-html="t( 'bs.sections.part2.p4' )" />
+			<p v-html="t( 'bs.sections.part2.p5' )" />
+			<p>{{ t( "bs.sections.part2.p6" ) }}</p>
 			<div class="kbox">
 				<Katex aligned
 					as="div"
@@ -109,28 +69,23 @@
 			<div class="kbox">
 				<Katex as="div" display tex="I_x = 2\left(\frac{b_f t_f^3}{12}+b_f t_f\left(\frac{h}{2}-\frac{t_f}{2}\right)^2\right)+\frac{t_w(h-2t_f)^3}{12}" />
 			</div>
-			<p>
-				Genau deshalb ist das I-Profil effizient: viel Material sitzt in den Flanschen mit großem Hebelarm
-				und erhöht <Katex inline tex="I_x" /> deutlich stärker als zusätzlicher Stegquerschnitt in der Mitte.
-			</p>
+			<p v-html="t( 'bs.sections.part2.p7' )" />
 		</div>
 
-		<h2 id="fallen" class="mt-8">Teil 3 - Typische Fehlerquellen (Steiner-Fallen)</h2>
+		<h2 id="fallen" class="mt-8">{{ t( "bs.sections.part3.title" ) }}</h2>
 		<div class="eddie">
 			<ul>
-				<li>Falsches <Katex inline tex="d" />: Abstand immer zwischen Schwerpunktachsen, nicht zwischen Kanten.</li>
-				<li><Katex inline tex="h_w" /> vergessen: <Katex inline tex="h_w=h-2t_f" />, nicht <Katex inline tex="h_w=h" />.</li>
-				<li>Achsen vertauscht: Für die starke Achse ist die Höhe mit Potenz <Katex inline tex="h^3" /> entscheidend.</li>
+				<li v-html="t( 'bs.sections.part3.trap1' )" />
+				<li v-html="t( 'bs.sections.part3.trap2' )" />
+				<li v-html="t( 'bs.sections.part3.trap3' )" />
 			</ul>
 		</div>
 	</template>
 
 	<template #interactivePart>
-		<h2>Interaktiv</h2>
+		<h2>{{ t( "bs.interactive.title" ) }}</h2>
 		<div class="eddie interactive">
-			<p>
-				Wähle einen Träger aus der DR-Liste. Oder erstelle eine eignene Kombinaton aus Werten.
-			</p>
+			<p>{{ t( "bs.interactive.intro" ) }}</p>
 			<v-row class="mt-1" dense>
 				<v-col cols="12" md="4">
 					<v-select
@@ -138,7 +93,7 @@
 						density="compact"
 						hide-details="auto"
 						:items="seriesItems"
-						label="Serie"
+						:label="t( 'bs.interactive.series' )"
 						variant="outlined"
 					/>
 				</v-col>
@@ -148,14 +103,14 @@
 						density="compact"
 						hide-details="auto"
 						:items="profileItems"
-						label="Realer Träger"
+						:label="t( 'bs.interactive.realBeam' )"
 						variant="outlined"
 					/>
 				</v-col>
 			</v-row>
 			<v-card class="px-3 pa-2" variant="tonal">
 				<div class="sliderHeader">
-					<span><Katex inline tex="h" /> Gesamthöhe</span>
+					<span><Katex inline tex="h" /> {{ t( "bs.interactive.totalHeight" ) }}</span>
 					<v-chip color="primary" size="small" variant="flat">
 						{{ formatMm( h ) }}
 					</v-chip>
@@ -171,7 +126,7 @@
 					<template #thumb-label>{{ formatMm( h ) }}</template>
 				</v-slider>
 				<div class="sliderHeader">
-					<span><Katex inline tex="b_f" /> Flanschbreite</span>
+					<span><Katex inline tex="b_f" /> {{ t( "bs.interactive.flangeWidth" ) }}</span>
 					<v-chip color="primary" size="small" variant="flat">
 						{{ formatMm( bf ) }}
 					</v-chip>
@@ -187,7 +142,7 @@
 					<template #thumb-label>{{ formatMm( bf ) }}</template>
 				</v-slider>
 				<div class="sliderHeader">
-					<span><Katex inline tex="t_f" /> Flanschdicke</span>
+					<span><Katex inline tex="t_f" /> {{ t( "bs.interactive.flangeThickness" ) }}</span>
 					<v-chip color="primary" size="small" variant="flat">
 						{{ formatMm( tf ) }}
 					</v-chip>
@@ -203,7 +158,7 @@
 					<template #thumb-label>{{ formatMm( tf ) }}</template>
 				</v-slider>
 				<div class="sliderHeader">
-					<span><Katex inline tex="t_w" /> Stegdicke</span>
+					<span><Katex inline tex="t_w" /> {{ t( "bs.interactive.webThickness" ) }}</span>
 					<v-chip color="primary" size="small" variant="flat">
 						{{ formatMm( tw ) }}
 					</v-chip>
@@ -232,7 +187,7 @@
 				type="success"
 				variant="tonal"
 			>
-				Passender Träger: <b>{{ matchingProfilesLabel }}</b>
+				{{ t( "bs.interactive.matching" ) }} <b>{{ matchingProfilesLabel }}</b>
 			</v-alert>
 			<v-alert v-else
 				class="mt-3"
@@ -240,7 +195,7 @@
 				type="info"
 				variant="tonal"
 			>
-				Diese Kombination entspricht keinem Eintrag in der DR-Liste.
+				{{ t( "bs.interactive.noMatch" ) }}
 			</v-alert>
 
 			<v-alert
@@ -250,13 +205,13 @@
 				type="warning"
 				variant="tonal"
 			>
-				Geometrisch nicht möglich: <Katex inline tex="h_w=h-2t_f" /> ist negativ.
+				<span v-html="t( 'bs.interactive.invalidGeometry' )" />
 			</v-alert>
 		</div>
 	</template>
 
 	<template #calculationPart>
-		<h3 id="beispiel" class="mt-2">3) Beispielwerte</h3>
+		<h3 id="beispiel" class="mt-2">{{ t( "bs.calc.exampleTitle" ) }}</h3>
 		<div class="eddie">
 			<ul>
 				<li><Katex aligned inline :tex="`h=${kFmt(h,0)}\\,\\text{mm}`" /></li>
@@ -273,9 +228,9 @@
 			</div>
 		</div>
 
-		<h3 id="rechnung" class="mt-8">4) Rechnung</h3>
+		<h3 id="rechnung" class="mt-8">{{ t( "bs.calc.calcTitle" ) }}</h3>
 		<div class="eddie">
-			<h4>4.1 Flansche (mit Steiner)</h4>
+			<h4>{{ t( "bs.calc.flangeTitle" ) }}</h4>
 			<div class="kbox">
 				<Katex aligned
 					as="div"
@@ -284,14 +239,14 @@
 				/>
 			</div>
 
-			<h4>4.2 Steg (ohne Steiner)</h4>
-			<p>Der Steg liegt auf der Schwerpunktachse, also <Katex inline tex="d=0" />.</p>
+			<h4>{{ t( "bs.calc.webTitle" ) }}</h4>
+			<p v-html="t( 'bs.calc.webText' )" />
 			<div class="kbox">
 				<Katex as="div" display :tex="texIw" />
 			</div>
 		</div>
 
-		<h3 id="ergebnis" class="mt-8">5) Ergebnis</h3>
+		<h3 id="ergebnis" class="mt-8">{{ t( "bs.calc.resultTitle" ) }}</h3>
 		<div class="eddie">
 			<div class="kbox">
 				<Katex aligned
@@ -302,7 +257,7 @@
 			</div>
 		</div>
 
-		<h3 id="bonus" class="mt-8">6) Bonus: Widerstandsmoment</h3>
+		<h3 id="bonus" class="mt-8">{{ t( "bs.calc.bonusTitle" ) }}</h3>
 		<div class="eddie">
 			<div class="kbox">
 				<Katex aligned
@@ -318,10 +273,24 @@
 
 <script setup>
 import { computed, ref } from "vue";
+import { useI18n } from "@/i18n.mjs";
 
 import titleImg from "./BS.webp";
 import BS from "./BS_DR.mjs";
 import BSGraph from "./BS_Graph.vue";
+
+const { t } = useI18n( "book1/BS" );
+
+const subChapter = computed( () => ( {
+	einleitung: t( "bs.subChapter.einleitung" ),
+	ziel:       t( "bs.subChapter.ziel" ),
+	steiner:    t( "bs.subChapter.steiner" ),
+	fallen:     t( "bs.subChapter.fallen" ),
+	beispiel:   t( "bs.subChapter.beispiel" ),
+	rechnung:   t( "bs.subChapter.rechnung" ),
+	ergebnis:   t( "bs.subChapter.ergebnis" ),
+	bonus:      t( "bs.subChapter.bonus" )
+} ) );
 
 const allProfiles = Object.values( BS.series ).flat();
 

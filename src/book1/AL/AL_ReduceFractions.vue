@@ -1,14 +1,14 @@
 <template>
 <ALCalculation
 	:deck
-	deck-line-title="Note-G"
+	:deck-line-title="t( 'reduceFractions.deckLineTitle' )"
 	:error
 	:formula-tex="programTex"
-	formula-title="Programm (Euklid-Stil)"
+	:formula-title="t( 'reduceFractions.formulaTitle' )"
 	:running
-	:subtitle="'Ada-streng: <b>Data / Working / Result</b>-Spalten und Euklid-Loop.'"
+	:subtitle="t( 'reduceFractions.subtitle' )"
 	:tab
-	title="Ada-Karten: Brüche kürzen"
+	:title="t( 'reduceFractions.title' )"
 	:trace-text
 	@reset="reset"
 	@run="run"
@@ -16,13 +16,13 @@
 >
 	<template #intro>
 		<template v-if="result">
-			Ergebnis für
+			{{ t( "reduceFractions.intro.resultPrefix" ) }}
 			<code>{{ result.numIn }}/{{ result.denIn }}</code>:
 			<b><Katex :tex="result.reducedTex" /></b>
-			mit <Katex :tex="`\\gcd(${result.absNumIn},${result.absDenIn})=${result.gcd}`" />.
+			{{ t( "reduceFractions.intro.resultMiddle" ) }} <Katex :tex="`\\gcd(${result.absNumIn},${result.absDenIn})=${result.gcd}`" />.
 		</template>
 		<template v-else>
-			Gib Zähler und Nenner ein und führe das Kartenprogramm aus.
+			{{ t( "reduceFractions.intro.empty" ) }}
 		</template>
 	</template>
 
@@ -31,7 +31,7 @@
 			<v-text-field
 				v-model="numerator"
 				density="comfortable"
-				label="Zähler z (ganzzahlig)"
+				:label="t( 'reduceFractions.inputs.numerator' )"
 				placeholder="48"
 			/>
 		</v-col>
@@ -39,27 +39,25 @@
 			<v-text-field
 				v-model="denominator"
 				density="comfortable"
-				label="Nenner n (ganzzahlig)"
+				:label="t( 'reduceFractions.inputs.denominator' )"
 				placeholder="18"
 			/>
 		</v-col>
 	</template>
 
 	<template #warning>
-		Nenner <Katex tex="n" /> darf nicht <code>0</code> sein. Bei negativem Nenner wird das
-		Vorzeichen nach oben gezogen, damit <Katex tex="n>0" /> bleibt.
+		<span v-html="t( 'reduceFractions.warning' )" />
 	</template>
 
 	<template #formulaNote>
-		Das Kartenprogramm berechnet erst <Katex tex="g=\gcd(z,n)" /> und teilt dann
-		<Katex tex="z'=\frac{z}{g},\;n'=\frac{n}{g}" />.
+		<span v-html="t( 'reduceFractions.formulaNote' )" />
 	</template>
 
 	<template #result>
 		<v-row v-if="result" dense>
 			<v-col cols="12" md="6">
 				<v-card class="pa-4" rounded="xl" variant="tonal">
-					<div class="text-caption mb-1">Gekürzter Bruch</div>
+					<div class="text-caption mb-1">{{ t( "reduceFractions.result.fraction" ) }}</div>
 					<div class="text-h5 font-weight-bold">
 						{{ result.numOut }}/{{ result.denOut }}
 					</div>
@@ -71,25 +69,23 @@
 
 			<v-col cols="12" md="6">
 				<v-card class="pa-4" rounded="xl" variant="tonal">
-					<div class="text-caption mb-1">ggT und Dezimalwert</div>
+					<div class="text-caption mb-1">{{ t( "reduceFractions.result.gcdDecimal" ) }}</div>
 					<div class="text-h6 font-weight-medium">
 						<Katex :tex="`g=${result.gcd}`" />
 					</div>
 					<div class="text-h6 font-weight-medium mt-1">
 						{{ result.decimal }}
 					</div>
-					<div class="text-caption mt-2">
-						(auf 6 Nachkommastellen gerundet)
-					</div>
+					<div class="text-caption mt-2">{{ t( "reduceFractions.result.decimalNote" ) }}</div>
 				</v-card>
 			</v-col>
 
 			<v-col cols="12">
 				<v-chip class="me-2" color="green" variant="tonal">
-					Loops: {{ result.iterations }}
+					{{ t( "reduceFractions.result.loops", { count: result.iterations } ) }}
 				</v-chip>
 				<v-chip variant="tonal">
-					Karten: {{ deck?.length ?? 0 }}
+					{{ t( "reduceFractions.result.cards", { count: deck?.length ?? 0 } ) }}
 				</v-chip>
 			</v-col>
 		</v-row>
@@ -107,9 +103,9 @@
 					<v-table density="compact">
 						<thead>
 							<tr>
-								<th>Spalte</th>
-								<th>Rolle</th>
-								<th class="text-right">Wert</th>
+								<th>{{ t( "common.table.column" ) }}</th>
+								<th>{{ t( "common.table.role" ) }}</th>
+								<th class="text-right">{{ t( "common.table.value" ) }}</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -128,7 +124,7 @@
 			type="info"
 			variant="tonal"
 		>
-			Das Programm nutzt den Euklid-Loop (L4…L9), danach werden Zähler und Nenner durch den ggT geteilt.
+			{{ t( "reduceFractions.store.info" ) }}
 		</v-alert>
 	</template>
 </ALCalculation>
@@ -136,8 +132,12 @@
 
 <script setup>
 import { ref } from "vue";
+import { computed } from "vue";
+import { useI18n } from "@/i18n.mjs";
 
 import ALCalculation from "./AL_Calculation.vue";
+
+const { t } = useI18n( "book1/AL" );
 
 const bigAbs = ( x ) => x < 0n ? -x : x;
 
@@ -180,7 +180,7 @@ class IntVM {
 				return BigInt( x.I );
 			}
 
-			throw new Error( "Bad operand: " + JSON.stringify( x ) );
+			throw new Error( t( "common.errors.badOperand", { value: JSON.stringify( x ) } ) );
 		};
 
 		const a = read( card.a );
@@ -194,12 +194,12 @@ class IntVM {
 			case "MUL": r = a * b; break;
 			case "DIV":
 				if ( b === 0n ) {
-					throw new Error( "Division durch 0 im Kartenprogramm." );
+					throw new Error( t( "common.errors.divisionByZeroCard" ) );
 				}
 
 				r = a / b;
 				break;
-			default: throw new Error( "Unknown op: " + card.op );
+			default: throw new Error( t( "common.errors.unknownOp", { value: card.op } ) );
 		}
 
 		const dests = Array.isArray( card.dest ) ? card.dest : [ card.dest ];
@@ -229,13 +229,13 @@ function buildReduceDeck( absNum, absDen ) {
 	const push = ( line, card ) => deck.push( { line, ...card } );
 
 	push( 1, {
-		op: "ADD", a: { V: 5 }, b: { V: 1 }, dest: 11, label: "a:=|z|"
+		op: "ADD", a: { V: 5 }, b: { V: 1 }, dest: 11, label: t( "reduceFractions.deck.initA" )
 	} );
 	push( 2, {
-		op: "ADD", a: { V: 6 }, b: { V: 1 }, dest: 12, label: "b:=|n|"
+		op: "ADD", a: { V: 6 }, b: { V: 1 }, dest: 12, label: t( "reduceFractions.deck.initB" )
 	} );
 	push( 3, {
-		op: "ADD", a: { I: 0 }, b: { I: 0 }, dest: 16, label: "iter:=0"
+		op: "ADD", a: { I: 0 }, b: { I: 0 }, dest: 16, label: t( "reduceFractions.deck.initIter" )
 	} );
 
 	let a = absNum;
@@ -246,7 +246,7 @@ function buildReduceDeck( absNum, absDen ) {
 		guard++;
 
 		if ( guard > 512 ) {
-			throw new Error( "Zu viele Schleifendurchläufe im Euklid-Loop." );
+			throw new Error( t( "reduceFractions.errors.loopGuard" ) );
 		}
 
 		const q = a / b;
@@ -254,22 +254,22 @@ function buildReduceDeck( absNum, absDen ) {
 		const r = a - t;
 
 		push( 4, {
-			op: "DIV", a: { V: 11 }, b: { V: 12 }, dest: 13, label: `[${guard}] q:=a/b`
+			op: "DIV", a: { V: 11 }, b: { V: 12 }, dest: 13, label: t( "reduceFractions.deck.q", { step: guard } )
 		} );
 		push( 5, {
-			op: "MUL", a: { V: 13 }, b: { V: 12 }, dest: 14, label: `[${guard}] t:=q*b`
+			op: "MUL", a: { V: 13 }, b: { V: 12 }, dest: 14, label: t( "reduceFractions.deck.t", { step: guard } )
 		} );
 		push( 6, {
-			op: "SUB", a: { V: 11 }, b: { V: 14 }, dest: 15, label: `[${guard}] r:=a-t`
+			op: "SUB", a: { V: 11 }, b: { V: 14 }, dest: 15, label: t( "reduceFractions.deck.r", { step: guard } )
 		} );
 		push( 7, {
-			op: "ADD", a: { V: 12 }, b: { V: 1 }, dest: 11, label: `[${guard}] a:=b`
+			op: "ADD", a: { V: 12 }, b: { V: 1 }, dest: 11, label: t( "reduceFractions.deck.a", { step: guard } )
 		} );
 		push( 8, {
-			op: "ADD", a: { V: 15 }, b: { V: 1 }, dest: 12, label: `[${guard}] b:=r`
+			op: "ADD", a: { V: 15 }, b: { V: 1 }, dest: 12, label: t( "reduceFractions.deck.b", { step: guard } )
 		} );
 		push( 9, {
-			op: "ADD", a: { V: 16 }, b: { V: 2 }, dest: 16, label: `[${guard}] iter++`
+			op: "ADD", a: { V: 16 }, b: { V: 2 }, dest: 16, label: t( "reduceFractions.deck.iter", { step: guard } )
 		} );
 
 		a = b;
@@ -277,13 +277,13 @@ function buildReduceDeck( absNum, absDen ) {
 	}
 
 	push( 10, {
-		op: "ADD", a: { V: 11 }, b: { V: 1 }, dest: 21, label: "g:=a"
+		op: "ADD", a: { V: 11 }, b: { V: 1 }, dest: 21, label: t( "reduceFractions.deck.outputG" )
 	} );
 	push( 11, {
-		op: "DIV", a: { V: 3 }, b: { V: 21 }, dest: 22, label: "z':=z/g"
+		op: "DIV", a: { V: 3 }, b: { V: 21 }, dest: 22, label: t( "reduceFractions.deck.outputZ" )
 	} );
 	push( 12, {
-		op: "DIV", a: { V: 4 }, b: { V: 21 }, dest: 23, label: "n':=n/g"
+		op: "DIV", a: { V: 4 }, b: { V: 21 }, dest: 23, label: t( "reduceFractions.deck.outputN" )
 	} );
 
 	return deck;
@@ -311,54 +311,54 @@ a:=|z|,\;b:=|n| \\
 g:=a,\; z':=\frac{z}{g},\; n':=\frac{n}{g}
 `;
 
-const storeLayout = [
+const storeLayout = computed( () => [
 	{
 		key:     "data",
-		title:   "Data columns",
+		title:   t( "common.dataColumns" ),
 		entries: [
-			{ col: 1, label: "Konstante 0" },
-			{ col: 2, label: "Konstante 1" },
-			{ col: 3, label: "z (normalisiert)" },
-			{ col: 4, label: "n (>0)" },
-			{ col: 5, label: "|z|" },
-			{ col: 6, label: "|n|" }
+			{ col: 1, label: t( "horner.store.const0" ) },
+			{ col: 2, label: t( "bernoulli.store.const1" ) },
+			{ col: 3, label: t( "reduceFractions.store.normalizedNumerator" ) },
+			{ col: 4, label: t( "reduceFractions.store.positiveDenominator" ) },
+			{ col: 5, label: t( "reduceFractions.store.absNumerator" ) },
+			{ col: 6, label: t( "reduceFractions.store.absDenominator" ) }
 		]
 	},
 	{
 		key:     "working",
-		title:   "Working columns",
+		title:   t( "common.workingColumns" ),
 		entries: [
 			{ col: 11, label: "a" },
 			{ col: 12, label: "b" },
 			{ col: 13, label: "q" },
 			{ col: 14, label: "t=q·b" },
 			{ col: 15, label: "r" },
-			{ col: 16, label: "Loopzähler" }
+			{ col: 16, label: t( "reduceFractions.store.loopCounter" ) }
 		]
 	},
 	{
 		key:     "result",
-		title:   "Result columns",
+		title:   t( "common.resultColumns" ),
 		entries: [
-			{ col: 21, label: "ggT g" },
+			{ col: 21, label: t( "reduceFractions.store.gcd" ) },
 			{ col: 22, label: "z'=z/g" },
 			{ col: 23, label: "n'=n/g" }
 		]
 	}
-];
+] );
 
 function parseBigIntInput( v, label ) {
-	const t = String( v ?? "" ).trim();
+	const text = String( v ?? "" ).trim();
 
-	if ( !t ) {
-		throw new Error( `${label}: leer.` );
+	if ( !text ) {
+		throw new Error( t( "common.errors.empty", { label } ) );
 	}
 
-	if ( !/^[-+]?\d+$/.test( t ) ) {
-		throw new Error( `${label}: Bitte ganze Zahl eingeben.` );
+	if ( !/^[-+]?\d+$/.test( text ) ) {
+		throw new Error( t( "common.errors.integer", { label } ) );
 	}
 
-	return BigInt( t );
+	return BigInt( text );
 }
 
 function toKaTeXFrac( fracStr ) {
@@ -424,11 +424,11 @@ async function run() {
 	result.value = null;
 
 	try {
-		let z = parseBigIntInput( numerator.value, "Zähler" );
-		let n = parseBigIntInput( denominator.value, "Nenner" );
+		let z = parseBigIntInput( numerator.value, t( "reduceFractions.inputs.numerator" ) );
+		let n = parseBigIntInput( denominator.value, t( "reduceFractions.inputs.denominator" ) );
 
 		if ( n === 0n ) {
-			throw new Error( "Nenner darf nicht 0 sein." );
+			throw new Error( t( "reduceFractions.errors.denominatorZero" ) );
 		}
 
 		if ( n < 0n ) {

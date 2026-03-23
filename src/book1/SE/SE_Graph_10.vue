@@ -1,7 +1,7 @@
 <template>
 <div class="seGraphWrap">
 	<svg
-		aria-label="Komplettgraph mit n Punkten"
+		:aria-label="t( 'graphs.complete.aria' )"
 		class="seGraphSvg"
 		role="img"
 		:viewBox="`0 0 ${size} ${size}`"
@@ -31,14 +31,17 @@
 
 	<div class="seGraphMeta mono">
 		<div><b>n</b> = {{ n }}</div>
-		<div><b>Verbindungen</b> = {{ edgeCount }}</div>
+		<div><b>{{ t( "graphs.complete.edges" ) }}</b> = {{ edgeCount }}</div>
 	</div>
-	<p class="muted seGraphHint">Klick auf die Grafik</p>
+	<p class="muted seGraphHint">{{ t( "graphs.common.clickHint" ) }}</p>
 </div>
 </template>
 
 <script setup>
 import { computed, ref } from "vue";
+import { useI18n } from "@/i18n.mjs";
+
+const { t } = useI18n( "book1/SE" );
 
 const size = 360;
 const nodeRadius = 5;

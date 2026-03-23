@@ -1,0 +1,167 @@
+title: "Eddie rechnet: Gute-Nacht-Rechenroutine"
+imageTitle: "Eddie kann nicht einschlafen"
+imageAlt: "Eddie liegt wach in einer Laavu"
+introDate: "Vaasaloppet, 29. Juli 1985"
+subChapter:
+  einleitung: "Einleitung"
+  muster: "12 Rituale für die Nacht"
+  quiz: "Quiz zum Üben"
+book:
+  p1: "Meine Brust brennt, der Regen hämmert aufs Dach, und jedes Husten klingt in meinem Kopf wie Jetzt haben sie dich. Ich liege in der Laavu wie ein nasser Sack, starre ins Dunkel und merke, wie die Angst sofort anfängt, mir Geschichten zu erzählen. Vom Ende, von Sackgassen mit nichts als dem Meer dahinter. Und ich, ganz klein, ganz allein."
+  p2: "Dann mache ich das, was mein Vater mir beigebracht hat, keine großen Gedanken, keine Heldenpläne, nur kurze Rechenmuster. Zwei, drei, vier Mini-Schritte. Fertig. Stopp. Als würde ich meinem Gehirn sagen Hier ist eine Schublade, da passt nur Ruhe rein. Das klingt banal, ist es auch. Genau deshalb wirkt's. Es ist wie Atmen zählen, nur mit Zahlen, die sich sauber schließen."
+  p3: "Hier findest du diese Gute-Nacht-Rechenroutine (Wanderhütte-Edition) als kleine Abend-Übungen und unten ein interaktives Quiz zum Mitmachen, bis der Kopf endlich leiser wird."
+sections:
+  routines:
+    title: "Die 12 Rituale"
+  quiz:
+    title: "Mini-Übungsmodus"
+    p1: "Wähle einen Modus, rechne eine Aufgabe und höre nach einer richtigen Lösung auf. Genau das ist die Routine."
+routines:
+  - id: 1
+    title: "1. Dreieckszahlen-Atemzug"
+    text: "Stell dir vor, du zählst kleine Steine aufeinander. Erst einen, dann in der nächsten Reihe zwei, dann drei, so entstehen Dreiecke aus Punkten. Beim Einatmen sagst du leise eins, beim Ausatmen eins plus zwei gleich drei. So gehst du Schritt für Schritt weiter 1, 1+2=3, 1+2+3=6 und so fort. Nach zehn Reihen bist du bei 55 angekommen, eine runde, beruhigende Zahl. Das ist der Punkt, an dem du stoppst und dir sagst Genug gebaut, jetzt schlafe ich."
+  - id: 2
+    graphId: 2
+    title: "2. Paar-Summen bis 100"
+    text: "Die alte Gauss-Trickaufgabe 1+100, 2+99, 3+98. Jedes Paar gibt 101, und es sind genau 50 solcher Paare. Du brauchst nicht alle wirklich zu addieren, es reicht, das Muster zu erkennen. Das Schöne ist Aus einem scheinbar endlosen Zählen wird eine einfache Abkürzung. Und während du dir denkst 50 mal 101 = 5050, merkst du, wie sich dein Atem beruhigt. Der Gedanke ist abgeschlossen, Zeit zum Einschlafen."
+  - id: 3
+    graphId: 3
+    title: "3. Fibonacci-Schlafleiter"
+    text: "Die Fibonacci-Zahlen beginnen harmlos 1, 1, 2, 3, 5, 8. Immer addiert man die letzten beiden, um die nächste zu bekommen. Stell dir die Reihe als Leiter vor, deren Sprossen immer ein kleines bisschen weiter auseinanderliegen. Bis 21 kommst du locker hoch, danach wird's anstrengend. Also hörst du bei 21 auf und stellst dir vor, wie du dich auf dieser Sprosse einfach hinlegst. Von hier aus kannst du in den Schlaf rutschen."
+  - id: 4
+    title: "4. Geräusch-Wahrscheinlichkeit"
+    text: "Alle paar Minuten knackst ein Ast draußen, das kann einen wachhalten. Also dreh den Spieß um und rechne dir die Chancen aus. Wenn die Wahrscheinlichkeit bei 20 Prozent liegt, in einer Minute etwas zu hören, wie groß ist die Chance auf Stille in den nächsten fünf Minuten. Du multiplizierst 0,8×0,8×0,8×0,8×0,8 = etwa 0,33. Das heißt Ein Drittel der Zeit ist es einfach nur still. Diese Erkenntnis lässt dich loslassen. Stille ist nichts Besonderes, sondern der Normalfall."
+  - id: 5
+    title: "5. Uhrenmodulo"
+    text: "Nimm jedes Knacken im Wald wie den Schlag einer Uhr. Du zählst 0, 3, 6, 9, 12 und wieder zurück bei 0. Das Prinzip nennt sich modulo, aber du musst es gar nicht kompliziert verstehen. Es ist nur ein Zählen im Kreis. Jedes Geräusch bringt dich einen Schritt weiter, bis du nach vier, fünf Schritten wieder am Anfang bist. Das macht den Wald berechenbar, wie ein Ticken. Und wenn der Kreis geschlossen ist, darfst du dich im Schlafsack umdrehen."
+  - id: 6
+    graphId: 6
+    title: 6. Prim-Picknick
+    text: Primzahlen sind wie die unteilbaren Beeren im Wald, sie lassen sich nur durch sich selbst und durch 1 pflücken. Fang bei 2 an 2, 3, 5, 7, 11, 13. Sag sie langsam und stell dir kleine Körbchen vor, in die du sie legst. Ganz wichtig Die 1 kommt nicht ins Körbchen, sie gehört nicht dazu. Nach einer Handvoll Primzahlen hörst du auf, das Spiel ist nicht unendlich. Die Körbchen stehen nun da, und du darfst die Augen schließen.
+  - id: 7
+    graphId: 7
+    title: 7. Bretter im Dach - Rechteckzahlen
+    text: Schau an die Dachbalken der Hütte. Stell dir vor, sie bilden ein Gitter mit vier Reihen und drei Spalten. Wie viele Rechtecke kannst du darin finden. Das klingt riesig, aber es gibt einen Trick Du wählst zwei horizontale Linien und zwei vertikale Linien aus, und schon ist ein Rechteck bestimmt. Mit fünf Linien horizontal und vier vertikal gibt das 10×6=60 Rechtecke. 60 klingt ordentlich, vollständig, danach ist der Gedanke abgeschlossen.
+  - id: 8
+    graphId: 8
+    title: 8. Grauzahl-Gähnen (Gray Code)
+    text: Der Gray Code ist eine Reihenfolge von Binärzahlen, bei der sich immer nur eine Ziffer ändert. Fang mit 0000 an, dann 0001, 0011, 0010, 0110. Stell dir vor, du schaltest kleine Lampen an und aus, aber nie mehr als eine gleichzeitig. Das ergibt ein gleichmäßiges, fast hypnotisches Blinken. Nach vier oder fünf Schritten reicht es völlig, du musst nicht alle durchgehen. Das Flip-Flop beruhigt den Kopf, Zeit für ein Gähnen.
+  - id: 9
+    graphId: 9
+    title: 9. Quadratsummen-Atemzug
+    text: Zähle im Kopf die ersten Quadratzahlen 1²=1, 2²=4, 3²=9, 4²=16. Zusammen sind das 30. Sag es dir beim Einatmen und Ausatmen, als ob du die Zahlen an der Hüttenwand aufmalst. Wenn du magst, denk an die Formel, die solche Summen in einem Zug berechnet, aber zwing dich nicht. Wichtig ist nur Die Reihe hat ein klares Ende, und mit ihm dein Gedankengang. Fertig, Augen zu.
+  - id: 10
+    graphId: 10
+    title: 10. Wald-Markierungen (Kombinatorik-Bild)
+    text: Stell dir sechs Bäume im Kreis vor. Du verbindest jeden Baum mit jedem anderen durch eine Linie. Am Ende hast du 15 Verbindungen, das kannst du dir wie ein Netz aus Spinnfäden vorstellen. Zuerst ist es wirr, aber dann merkst du Es sind genau so viele, wie es sein sollen, nicht mehr und nicht weniger. Und wenn du magst, kannst du die Linien langsam im Kopf ausradieren. Zurück bleiben nur die Bäume und die Stille.
+  - id: 11
+    graphId: 11
+    title: 11. Euler-Spaziergang
+    text: Stell dir die Hütte als Punkte und Verbindungen vor Türen, Fenster, Balken. Ein Spaziergang bedeutet, jede Verbindung genau einmal zu gehen. Mach dir eine kleine Regel maximal drei Schritte, dann ist Schluss. So bleibst du im Leichten, im Überschaubaren. Du kannst dich dabei wie auf einem Brettspiel fühlen, das nach drei Zügen automatisch endet. Und wenn es endet, ist das dein Signal Schlafenszeit.
+  - id: 12
+    title: 12. Mini-Arithmetik-Kette
+    text: Starte bei 100 und zieh Schritt für Schritt kleinere Zahlen ab minus 7, minus 6, minus 5 bis du bei 72 landest. Jede Rechnung ist wie ein kleiner Stein, der ins Wasser plumpst. Du hörst es noch, aber nach dem letzten Stein wird es ruhig. 72 ist deine Endstation, da steigst du aus. Kein Weiterrechnen, kein Neuanfang. Einfach 72 nehmen und wegdösen.
+quiz:
+  modeLabel: Übungsmodus
+  newExercise: Neue Übung
+  showSolution: Lösung zeigen
+  hideSolution: Lösung ausblenden
+  check: Prüfen
+  clearSelection: Auswahl löschen
+  feedback:
+    correct: Genau. Das reicht für heute - Muster erkannt, Kopf aus.
+    wrong: Noch nicht. Schau in den Lösungsweg und rechne einmal ruhig nach.
+  modes:
+    - label: Mix
+      value: mix
+    - label: Dreieckszahlen
+      value: tri
+    - label: Gauss-Paare
+      value: gauss
+    - label: Fibonacci
+      value: fib
+    - label: Stille-Wahrscheinlichkeit
+      value: silence
+    - label: Modulo-Uhr
+      value: mod
+  exercises:
+    tri:
+      title: Dreieckszahlen-Atemzug
+      prompt: Berechne die Summe 1 + 2 + ... + {n}.
+      hint: Nutze die Formel n(n+1)/2.
+      formula: S = n(n+1)/2 mit n={n}
+      step1: "{a} · {b} = {product}"
+      step2: "{product} / 2 = {result}"
+    gauss:
+      title: Paar-Summen (Gauss)
+      prompt: "Bestimme 1 + 2 + ... + {n}."
+      hint: "Paare bilden: (1+{n}), (2+...), ..."
+      formula: "S = {pairs}·{pairSum} + {middle}"
+      step1: "{pairs} Paare mit Summe {pairSum}: {pairs} · {pairSum} = {product}"
+      step2: "Mittelzahl addieren: {product} + {middle} = {result}"
+    fib:
+      title: Fibonacci-Schlafleiter
+      prompt: "Wie geht die Folge weiter: {a}, {b}, {c}, ?"
+      hint: Die nächste Zahl ist immer Summe der letzten beiden.
+      formula: "nächste = {b} + {c}"
+      step1: "{b} + {c} = {result}"
+    silence:
+      title: Geräusch-Wahrscheinlichkeit
+      prompt: "Pro Minute ist die Geräuschwahrscheinlichkeit {probability} %. Wie groß ist die Chance auf durchgehende Stille in {minutes} Minuten?"
+      hint: Für Stille pro Minute gilt (1-p). Für mehrere Minuten multiplizieren.
+      formula: "P(Stille) = (1-{p})^{m}"
+      step1: "pro Minute Stille: {q}"
+      step2: "{q}^{m} = {result}"
+      step3: "in Prozent: {result}"
+    mod:
+      title: Uhrenmodulo
+      prompt: "Starte bei 0 und zähle in {step}-Schritten modulo 12. Wo landest du nach {steps} Schritten?"
+      hint: Rechne (Schrittweite · Schritte) mod 12.
+      formula: "({step} · {steps}) mod 12"
+      step1: "{product} mod 12 = {result}"
+details:
+  title: Rechendetails
+  solutionPath: Lösungsweg
+  directSolution: Direkte Lösung
+  correctIs: "Richtig ist: {value}"
+graphs:
+  common:
+    clickHint: Klick auf die Grafik
+  gauss:
+    caption: Gaußsche Summenformel
+  faulhaber:
+    caption: Faulhabersche Formel
+  fib:
+    aria: Fibonacci-Spirale mit Quadraten
+    label: Fibonacci
+  primes:
+    index: "Primzahl #{index}"
+    hint: Klick (oder Enter/Space)
+  rectangles:
+    aria: Rechtecke im Raster
+    count: Rechtecke
+  gray:
+    aria: 0-31 als Binär- und Graycode
+    n: n
+    binary: binär (5 Bit)
+    gray: gray (5 Bit)
+  complete:
+    aria: Komplettgraph mit n Punkten
+    edges: Verbindungen
+  euler:
+    switchGraph: "Graph wechseln: {name}"
+    aria: "Eulerspaziergang - {name}"
+    graph: Graph
+    euler: Euler
+    start: Start
+    end: Ziel
+    edges: Kanten
+    steps: Schritte
+    circle: Kreis
+    path: "Weg ({vertices})"
+    no: "nein ({count} ungerade)"
+    graphNames:
+      nikolaus: Haus des Nikolaus
+      pentagramm: Pentagramm (K5)
+      koenigsberg: Königsb. Brücken (unlösbar)
+      oktaeder: Oktaeder-Graph

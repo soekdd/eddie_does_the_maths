@@ -3,11 +3,11 @@
 	:deck
 	:error
 	:formula-tex
-	formula-title="Formel (Horner)"
+	:formula-title="t( 'horner.formulaTitle' )"
 	:running
-	:subtitle="'Kartenfolge für <b>MUL/ADD</b> in einer Horner-Schleife.'"
+	:subtitle="t( 'horner.subtitle' )"
 	:tab
-	title="Ada-Karten: Polynom mit Horner"
+	:title="t( 'horner.title' )"
 	:trace-text
 	@reset="reset"
 	@run="run"
@@ -18,7 +18,7 @@
 			<Katex :tex="result.evalTex" />
 		</template>
 		<template v-else>
-			Gib Koeffizienten und einen Wert für <Katex tex="x" /> ein.
+			<span v-html="t( 'horner.intro.empty' )" />
 		</template>
 	</template>
 
@@ -27,7 +27,7 @@
 			<v-text-field
 				v-model="coeffInput"
 				density="comfortable"
-				label="Koeffizienten (höchster Grad → konstant)"
+				:label="t( 'horner.inputs.coefficients' )"
 				placeholder="2, -3, 0, 5"
 			/>
 		</v-col>
@@ -36,26 +36,25 @@
 			<v-text-field
 				v-model="xInput"
 				density="comfortable"
-				label="x (ganzzahlig)"
+				:label="t( 'horner.inputs.x' )"
 				placeholder="4"
 			/>
 		</v-col>
 	</template>
 
 	<template #warning>
-		Beispiel: <code>2,-3,0,5</code> bedeutet
-		<Katex tex="p(x)=2x^3-3x^2+0x+5" />.
+		<span v-html="t( 'horner.warning' )" />
 	</template>
 
 	<template #formulaNote>
-		Statt Potenzen direkt zu bilden, verwendet das Kartenprogramm nur Multiplikation und Addition.
+		{{ t( "horner.formulaNote" ) }}
 	</template>
 
 	<template #result>
 		<v-row v-if="result" dense>
 			<v-col cols="12" md="6">
 				<v-card class="pa-4" rounded="xl" variant="tonal">
-					<div class="text-caption mb-1">Polynomwert</div>
+					<div class="text-caption mb-1">{{ t( "horner.result.value" ) }}</div>
 					<div class="text-h5 font-weight-bold">{{ result.value }}</div>
 					<div class="mt-2"><Katex as="div" :display="true" :tex="result.evalTex" /></div>
 				</v-card>
@@ -63,18 +62,18 @@
 
 			<v-col cols="12" md="6">
 				<v-card class="pa-4" rounded="xl" variant="tonal">
-					<div class="text-caption mb-1">Details</div>
-					<div class="text-body-1">Grad: {{ result.degree }}</div>
-					<div class="text-body-1">x = {{ result.x }}</div>
-					<div class="text-caption mt-2">Koeffizienten: {{ result.coefficients }}</div>
+					<div class="text-caption mb-1">{{ t( "horner.result.details" ) }}</div>
+					<div class="text-body-1">{{ t( "horner.result.degree", { value: result.degree } ) }}</div>
+					<div class="text-body-1">{{ t( "horner.result.x", { value: result.x } ) }}</div>
+					<div class="text-caption mt-2">{{ t( "horner.result.coefficients", { value: result.coefficients } ) }}</div>
 				</v-card>
 			</v-col>
 
 			<v-col cols="12">
 				<v-chip class="me-2" color="green" variant="tonal">
-					Horner-Schritte: {{ result.hornerSteps }}
+					{{ t( "horner.result.steps", { count: result.hornerSteps } ) }}
 				</v-chip>
-				<v-chip variant="tonal">Karten: {{ deck?.length ?? 0 }}</v-chip>
+				<v-chip variant="tonal">{{ t( "horner.result.cards", { count: deck?.length ?? 0 } ) }}</v-chip>
 			</v-col>
 		</v-row>
 	</template>
@@ -83,12 +82,12 @@
 		<v-row dense>
 			<v-col cols="12" md="4">
 				<v-card class="pa-2" rounded="lg" variant="tonal">
-					<div class="text-subtitle-2 px-2 py-1">Data columns</div>
+					<div class="text-subtitle-2 px-2 py-1">{{ t( "common.dataColumns" ) }}</div>
 					<v-table density="compact">
 						<tbody>
 							<tr>
 								<td><code>V1</code></td>
-								<td>Konstante 0</td>
+								<td>{{ t( "horner.store.const0" ) }}</td>
 								<td class="mono text-right">{{ storeView(1) }}</td>
 							</tr>
 							<tr>
@@ -108,12 +107,12 @@
 
 			<v-col cols="12" md="4">
 				<v-card class="pa-2" rounded="lg" variant="tonal">
-					<div class="text-subtitle-2 px-2 py-1">Working columns</div>
+					<div class="text-subtitle-2 px-2 py-1">{{ t( "common.workingColumns" ) }}</div>
 					<v-table density="compact">
 						<tbody>
 							<tr>
 								<td><code>V11</code></td>
-								<td>Horner-Akkumulator y</td>
+								<td>{{ t( "horner.store.accumulator" ) }}</td>
 								<td class="mono text-right">{{ storeView(11) }}</td>
 							</tr>
 						</tbody>
@@ -123,12 +122,12 @@
 
 			<v-col cols="12" md="4">
 				<v-card class="pa-2" rounded="lg" variant="tonal">
-					<div class="text-subtitle-2 px-2 py-1">Result columns</div>
+					<div class="text-subtitle-2 px-2 py-1">{{ t( "common.resultColumns" ) }}</div>
 					<v-table density="compact">
 						<tbody>
 							<tr>
 								<td><code>V21</code></td>
-								<td>p(x)</td>
+								<td>{{ t( "horner.store.px" ) }}</td>
 								<td class="mono text-right">{{ storeView(21) }}</td>
 							</tr>
 						</tbody>
@@ -142,7 +141,7 @@
 			type="info"
 			variant="tonal"
 		>
-			Jede Koeffizientenkarte erzeugt genau zwei Mill-Operationen: <code>MUL</code>, dann <code>ADD</code>.
+			<span v-html="t( 'horner.store.info' )" />
 		</v-alert>
 	</template>
 </ALCalculation>
@@ -150,8 +149,11 @@
 
 <script setup>
 import { ref } from "vue";
+import { useI18n } from "@/i18n.mjs";
 
 import ALCalculation from "./AL_Calculation.vue";
+
+const { t } = useI18n( "book1/AL" );
 
 class IntVM {
 	constructor( { storeSize = 96, trace = false } = {} ) {
@@ -179,7 +181,7 @@ class IntVM {
 				return BigInt( x.I );
 			}
 
-			throw new Error( "Bad operand: " + JSON.stringify( x ) );
+			throw new Error( t( "common.errors.badOperand", { value: JSON.stringify( x ) } ) );
 		};
 
 		const a = read( card.a );
@@ -193,13 +195,13 @@ class IntVM {
 			case "MUL": r = a * b; break;
 			case "DIV":
 				if ( b === 0n ) {
-					throw new Error( "Division durch 0 im Kartenprogramm." );
+					throw new Error( t( "common.errors.divisionByZeroCard" ) );
 				}
 
 				r = a / b;
 				break;
 			default:
-				throw new Error( "Unknown op: " + card.op );
+				throw new Error( t( "common.errors.unknownOp", { value: card.op } ) );
 		}
 
 		this.setV( card.dest, r );
@@ -219,17 +221,17 @@ class IntVM {
 }
 
 function parseBigIntInput( v, label ) {
-	const t = String( v ?? "" ).trim();
+	const text = String( v ?? "" ).trim();
 
-	if ( !t ) {
-		throw new Error( `${label}: leer.` );
+	if ( !text ) {
+		throw new Error( t( "common.errors.empty", { label } ) );
 	}
 
-	if ( !/^[-+]?\d+$/.test( t ) ) {
-		throw new Error( `${label}: Bitte ganze Zahl eingeben.` );
+	if ( !/^[-+]?\d+$/.test( text ) ) {
+		throw new Error( t( "common.errors.integer", { label } ) );
 	}
 
-	return BigInt( t );
+	return BigInt( text );
 }
 
 function parseCoeffList( raw ) {
@@ -239,12 +241,12 @@ function parseCoeffList( raw ) {
 		.filter( Boolean );
 
 	if ( parts.length === 0 ) {
-		throw new Error( "Koeffizienten: Bitte mindestens einen Wert eingeben." );
+		throw new Error( t( "horner.errors.coefficientsEmpty" ) );
 	}
 
 	return parts.map( ( p, i ) => {
 		if ( !/^[-+]?\d+$/.test( p ) ) {
-			throw new Error( `Koeffizient #${i + 1}: bitte ganze Zahl angeben.` );
+			throw new Error( t( "horner.errors.coefficientInteger", { index: i + 1 } ) );
 		}
 
 		return BigInt( p );
@@ -301,7 +303,7 @@ function buildHornerDeck( coeffCols ) {
 		a:     { V: coeffCols[ 0 ] },
 		b:     { V: 1 },
 		dest:  11,
-		label: "init y:=a_m"
+		label: t( "horner.deck.init" )
 	} );
 
 	for ( let i = 1; i < coeffCols.length; i++ ) {
@@ -311,7 +313,7 @@ function buildHornerDeck( coeffCols ) {
 			a:     { V: 11 },
 			b:     { V: 3 },
 			dest:  11,
-			label: `[${i}] y:=y*x`
+			label: t( "horner.deck.mul", { step: i } )
 		} );
 
 		deck.push( {
@@ -320,7 +322,10 @@ function buildHornerDeck( coeffCols ) {
 			a:     { V: 11 },
 			b:     { V: coeffCols[ i ] },
 			dest:  11,
-			label: `[${i}] y:=y+a_${coeffCols.length - 1 - i}`
+			label: t( "horner.deck.add", {
+				index: coeffCols.length - 1 - i,
+				step:  i
+			} )
 		} );
 	}
 
@@ -330,7 +335,7 @@ function buildHornerDeck( coeffCols ) {
 		a:     { V: 11 },
 		b:     { V: 1 },
 		dest:  21,
-		label: "output p(x)"
+		label: t( "horner.deck.output" )
 	} );
 
 	return deck;
@@ -387,7 +392,7 @@ async function run() {
 
 	try {
 		const coeffs = parseCoeffList( coeffInput.value );
-		const x = parseBigIntInput( xInput.value, "x" );
+		const x = parseBigIntInput( xInput.value, t( "horner.inputs.x" ) );
 
 		const vm = new IntVM( { storeSize: 96, trace: true } );
 		vm.setV( 1, 0n );

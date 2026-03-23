@@ -1,158 +1,123 @@
 <template>
-<AppFrame  :sub-chapter="{
-		einleitung:'Einleitung',
-		'aufgabe': 'Aufgabe',
-		'loesung': 'Lösung',
-		'zusammenfassung': 'Zusammenfassung',
-		'simulation': 'Simulation'
-	}"
-	title="Eddie rechnet: Frühstückszettel #1 Fischpopulation"
+<AppFrame
+	:languages="[ 'de', 'en' ]"
+	:sub-chapter
+	:title="t( 'fs.title' )"
 	:vue-date="__VITE_SFC_MTIME_MS__"
 >
 	<template #bookPart>
 		<figure class="exampleFigure">
-			<ImageZoomer title="Eddie rechnet zur Fischpopulation">
-				<img  loading="lazy" :src="titleImg" />
+			<ImageZoomer :title="t( 'fs.imageTitle' )">
+				<img :alt="t( 'fs.imageAlt' )" loading="lazy" :src="titleImg" />
 			</ImageZoomer>
 		</figure>
-		<h3 id="einleitung">Vaasa, 8. August 1985</h3>
+		<h3 id="einleitung">{{ t( "fs.introDate" ) }}</h3>
 		<div class="eddie">
-			<p>Ich sitze barfuß in Sinis Küche, die Beine hoch auf dem Stuhl, und tue so, als wären meine
-				Füße nur beleidigt und nicht kaputt. Vor mir liegt dieser erste Frühstückszettel, süß ausgeschnitten,
-				als wäre Mathe ein Keks. „Fischsee“, steht da, und ich muss grinsen: hundert Altfische am Anfang,
-				jedes Jahr kommen Junge dazu, am Ende sterben viele von den Alten, und die Jungen rutschen nach.
-				Das klingt nach Naturfilm, ist aber eigentlich ein Rhythmus, wie Atmen: mehr, weniger, mehr,
-				weniger. Und ich merke, wie schnell mein Kopf das Muster findet, während mein Körper noch
-				hinterherhumpelt.
-			</p>
-			<p>Hier zeige ich dir, wie man bei so einem See Schritt für Schritt mitzählt, wann das Ganze explodiert,
-				wann es sich beruhigt – und warum es am Ende eher nach „Sättigung“ aussieht als nach „Endlosparty“.
-			</p>
+			<p>{{ t( "fs.book.p1" ) }}</p>
+			<p>{{ t( "fs.book.p2" ) }}</p>
 		</div>
 	</template>
 
 	<template #descriptionPart>
-
-		<h2 id="aufgabe">Teil 1 - Aufgabe: Entwicklung eines Fischbestandes</h2>
+		<h2 id="aufgabe">{{ t( "fs.sections.task.title" ) }}</h2>
 		<div class="eddie">
-			<p>
-				In einem abgeschlossenen See lebt eine Fischpopulation.
-				Zu Beginn eines Jahres <Katex tex="t" /> gibt es <Katex tex="N_t" />
-				fortpflanzungsfähige Fische.
-			</p>
-			<p>Für die Entwicklung des Bestands von Jahr zu Jahr gelten folgende Regeln:</p>
+			<p>{{ t( "fs.sections.task.p1" ) }}</p>
+			<p>{{ t( "fs.sections.task.p2" ) }}</p>
 			<ol>
 				<li>
-					Jeder erwachsene Fisch erzeugt im Laufe eines Jahres im Mittel
-					<Katex tex="b>0" /> Jungfische.
+					{{ t( "fs.sections.task.r1" ) }}
 				</li>
 				<li>
-					Nicht alle Jungfische überleben bis zum nächsten Jahr.
-					Die Überlebenswahrscheinlichkeit beträgt:
+					{{ t( "fs.sections.task.r2" ) }}
 					<div class="kbox">
 						<Katex as="div" display tex="s(N_t)=\frac{1}{1+cN_t}" />
 					</div>
-					mit <Katex tex="c>0" /> als Maß für begrenzte Nahrung und begrenzten Lebensraum.
+					{{ t( "fs.sections.task.r2b" ) }}
 				</li>
 				<li>
-					Alle überlebenden Jungfische sind im nächsten Jahr fortpflanzungsfähig.
+					{{ t( "fs.sections.task.r3" ) }}
 				</li>
 				<li>
-					Fischfang, Zu- oder Abwanderung werden vernachlässigt.
+					{{ t( "fs.sections.task.r4" ) }}
 				</li>
 			</ol>
-			<p>
-				Untersuche dazu:
-			</p>
+			<p>{{ t( "fs.sections.task.p3" ) }}</p>
 			<ul>
-				<li><b>a)</b> Stelle die Rekursionsgleichung für <Katex tex="N_{t+1}" /> in Abhängigkeit von <Katex tex="N_t" /> auf.</li>
-				<li><b>b)</b> Bestimme die Gleichgewichte der Rekursion.</li>
-				<li><b>c)</b> Beschreibe das langfristige Verhalten abhängig von <Katex tex="b" />:
-					Aussterben, unbegrenztes Wachstum oder Einpendeln auf einen festen Wert.</li>
+				<li><b>a)</b> {{ t( "fs.sections.task.q1" ) }}</li>
+				<li><b>b)</b> {{ t( "fs.sections.task.q2" ) }}</li>
+				<li><b>c)</b> {{ t( "fs.sections.task.q3" ) }}</li>
 			</ul>
 		</div>
 
-		<h2 id="loesung" class="mt-8">Teil 2 - Lösung</h2>
+		<h2 id="loesung" class="mt-8">{{ t( "fs.sections.solution.title" ) }}</h2>
 		<div class="eddie">
-			<h3>Schritt 2.1 - Rekursionsgleichung</h3>
-			<p>
-				Im Jahr <Katex tex="t" /> gibt es <Katex tex="N_t" /> fortpflanzungsfähige Fische.
-				Diese erzeugen im Mittel <Katex tex="bN_t" /> Jungfische.
-				Jeder Jungfisch überlebt mit Wahrscheinlichkeit <Katex tex="\frac{1}{1+cN_t}" />.
-			</p>
+			<h3>{{ t( "fs.sections.solution.step21" ) }}</h3>
+			<p>{{ t( "fs.sections.solution.p21" ) }}</p>
 			<div class="kbox">
 				<Katex as="div" display tex="N_{t+1}=bN_t\cdot\frac{1}{1+cN_t}=\frac{bN_t}{1+cN_t}" />
 			</div>
-			<p>Damit lautet die Rekursion:</p>
+			<p>{{ t( "fs.sections.solution.p22" ) }}</p>
 			<div class="kbox">
 				<Katex as="div" display tex="\boxed{N_{t+1}=\frac{bN_t}{1+cN_t}}" />
 			</div>
 		</div>
 
 		<div class="eddie">
-			<h3>Schritt 2.2 - Gleichgewichte</h3>
-			<p>
-				Ein Gleichgewicht erfüllt <Katex tex="N_{t+1}=N_t=N^*" />.
-			</p>
+			<h3>{{ t( "fs.sections.solution.step22" ) }}</h3>
+			<p>{{ t( "fs.sections.solution.p23" ) }}</p>
 			<div class="kbox">
 				<Katex as="div" display tex="N^*=\frac{bN^*}{1+cN^*}" />
 			</div>
 
-			<h4>Aussterbe-Gleichgewicht</h4>
+			<h4>{{ t( "fs.sections.solution.extinctionTitle" ) }}</h4>
 			<div class="kbox">
 				<Katex as="div" display tex="N^*=0" />
 			</div>
-			<p>Diese Lösung existiert immer.</p>
+			<p>{{ t( "fs.sections.solution.p24" ) }}</p>
 
-			<h4>Positives Gleichgewicht</h4>
-			<p>
-				Für <Katex tex="N^*>0" /> kann durch <Katex tex="N^*" /> geteilt werden:
-			</p>
+			<h4>{{ t( "fs.sections.solution.positiveTitle" ) }}</h4>
+			<p>{{ t( "fs.sections.solution.p25" ) }}</p>
 			<div class="kbox">
 				<Katex as="div" display tex="1=\frac{b}{1+cN^*}" />
 				<Katex as="div" display tex="1+cN^*=b\Rightarrow N^*=\frac{b-1}{c}" />
 			</div>
-			<p>Ein positives Gleichgewicht existiert nur für <Katex tex="b>1" />.</p>
+			<p>{{ t( "fs.sections.solution.p26" ) }}</p>
 		</div>
 
 		<div class="eddie">
-			<h3>Schritt 2.3 - Langfristiges Verhalten</h3>
-			<p><b>Fall 1:</b> <Katex tex="b\le 1" /></p>
+			<h3>{{ t( "fs.sections.solution.step23" ) }}</h3>
+			<p><b>{{ t( "fs.sections.solution.case1" ) }}</b> <Katex tex="b\le 1" /></p>
 			<ul>
-				<li>Jeder Fisch erzeugt im Mittel höchstens einen überlebenden Nachkommen.</li>
-				<li>Die Population kann sich nicht selbst erhalten.</li>
-				<li>Die Population nimmt langfristig ab.</li>
-				<li>Grenzwert: <Katex tex="N^*=0" /> (Aussterben).</li>
+				<li>{{ t( "fs.sections.solution.case1a" ) }}</li>
+				<li>{{ t( "fs.sections.solution.case1b" ) }}</li>
+				<li>{{ t( "fs.sections.solution.case1c" ) }}</li>
+				<li>{{ t( "fs.sections.solution.case1d" ) }}</li>
 			</ul>
 
-			<p><b>Fall 2:</b> <Katex tex="b>1" /></p>
+			<p><b>{{ t( "fs.sections.solution.case2" ) }}</b> <Katex tex="b>1" /></p>
 			<ul>
-				<li>Die Population wächst zunächst.</li>
-				<li>Mit wachsender Dichte sinkt die Überlebenswahrscheinlichkeit der Jungfische.</li>
-				<li>Unabhängig von der Anfangsgröße pendelt sich die Folge auf <Katex tex="N^*=\frac{b-1}{c}" /> ein.</li>
+				<li>{{ t( "fs.sections.solution.case2a" ) }}</li>
+				<li>{{ t( "fs.sections.solution.case2b" ) }}</li>
+				<li>{{ t( "fs.sections.solution.case2c" ) }}</li>
 			</ul>
-			<p>Unbegrenztes Wachstum tritt in diesem Modell nicht auf.</p>
+			<p>{{ t( "fs.sections.solution.p27" ) }}</p>
 		</div>
 
-		<h2 id="zusammenfassung" class="mt-8">Teil 3 - Zusammenfassung</h2>
+		<h2 id="zusammenfassung" class="mt-8">{{ t( "fs.sections.summary.title" ) }}</h2>
 		<div class="eddie">
 			<ul>
-				<li>Für <Katex tex="b\le 1" /> stirbt die Population aus.</li>
-				<li>Für <Katex tex="b>1" /> stabilisiert sich die Population bei <Katex tex="N^*=\frac{b-1}{c}" />.</li>
-				<li>Die dichteabhängige Überlebenswahrscheinlichkeit verhindert unbegrenztes Wachstum.</li>
+				<li>{{ t( "fs.sections.summary.s1" ) }}</li>
+				<li>{{ t( "fs.sections.summary.s2" ) }}</li>
+				<li>{{ t( "fs.sections.summary.s3" ) }}</li>
 			</ul>
-			<p>Das ist typisch für Modelle mit dichteabhängiger Regulation.</p>
+			<p>{{ t( "fs.sections.summary.p1" ) }}</p>
 		</div>
 	</template>
 
 	<template #interactivePart>
-		<h2 id="simulation">Interaktive Simulation</h2>
+		<h2 id="simulation">{{ t( "fs.interactive.title" ) }}</h2>
 		<div class="eddie">
-			<p>
-				Variiere <Katex tex="N_0,b,c" /> und den Zeithorizont.
-				Die Kurve zeigt den Verlauf <Katex tex="N_t" />;
-				die gestrichelte Linie markiert <Katex tex="N^*" />.
-			</p>
+			<p>{{ t( "fs.interactive.p1" ) }}</p>
 		</div>
 		<v-sheet border class="pa-4" rounded="lg">
 			<v-row dense>
@@ -160,7 +125,7 @@
 					<v-number-input v-model="graphN0Input"
 						control-variant="stacked"
 						hide-details="auto"
-						label="N0 (Startpopulation)"
+						:label="t( 'fs.interactive.n0' )"
 						:max="5000"
 						:min="0"
 						:precision="0"
@@ -171,7 +136,7 @@
 					<v-number-input v-model="graphBInput"
 						control-variant="stacked"
 						hide-details="auto"
-						label="b (Reproduktionsfaktor)"
+						:label="t( 'fs.interactive.b' )"
 						:max="5"
 						:min="0"
 						:precision="2"
@@ -182,7 +147,7 @@
 					<v-number-input v-model="graphCInput"
 						control-variant="stacked"
 						hide-details="auto"
-						label="c (Konkurrenzfaktor)"
+						:label="t( 'fs.interactive.c' )"
 						:max="1"
 						:min="0.0001"
 						:precision="4"
@@ -193,7 +158,7 @@
 					<v-number-input v-model="graphYearsInput"
 						control-variant="stacked"
 						hide-details="auto"
-						label="Zeithorizont t (Jahre)"
+						:label="t( 'fs.interactive.horizon' )"
 						:max="60"
 						:min="1"
 						:precision="0"
@@ -208,16 +173,19 @@
 				:tex="`N_{t+1} &=\\frac{bN_t}{1+cN_t} \\\\
 N_0 &=${fmtTex( graphN0, 0 )},\ b=${fmtTex( graphB, 3 )},\ c=${fmtTex( graphC, 4 )}` +
 					(graphHasPositiveEquilibrium ? `\\\\ N^*&=\\frac{b-1}{c}=${fmtTex( graphEquilibrium, 3 )}`
-						: 'b\le 1\Rightarrow N^* &=0\ (Aussterbe-Gleichgewicht)')"
+						: `\\\\ ${t( 'fs.interactive.extinctionTex' )}`)"
 			/>		</div>
 			<div class="mono">
-				Nach <b>{{ graphHorizon }}</b> Jahren: <b>N</b>={{ fmt( graphFinalPopulation, 3 ) }}.
+				{{ t( "fs.interactive.afterYears", {
+					years: graphHorizon,
+					value: fmt( graphFinalPopulation, 3 )
+				} ) }}
 			</div>
 		</div>
 	</template>
 
 	<template #calculationPart>
-		<h2>Rechnung mit einem Beispielsatz</h2>
+		<h2>{{ t( "fs.calculation.title" ) }}</h2>
 		<div class="eddie">
 			<div class="kbox">
 				<Katex aligned
@@ -241,7 +209,7 @@ N_0 &=${fmtTex( graphN0, 0 )},\ b=${fmtTex( graphB, 3 )},\ c=${fmtTex( graphC, 4
 				/>
 			</div>
 			<p class="muted">
-				Man sieht: Die Population nähert sich dem stabilen Gleichgewicht schnell und ohne Oszillation.
+				{{ t( "fs.calculation.note" ) }}
 			</p>
 		</div>
 	</template>
@@ -260,9 +228,23 @@ N_0 &=${fmtTex( graphN0, 0 )},\ b=${fmtTex( graphB, 3 )},\ c=${fmtTex( graphC, 4
 
 <script setup>
 import { computed, ref } from "vue";
+import { useI18n } from "@/i18n.mjs";
 
 import FSGraph from "./FS_Graph.vue";
 import titleImg from "./FS.webp";
+
+const {
+	locale,
+	t
+} = useI18n( "book1/FS" );
+
+const subChapter = computed( () => ( {
+	einleitung:      t( "fs.subChapter.einleitung" ),
+	aufgabe:         t( "fs.subChapter.aufgabe" ),
+	loesung:         t( "fs.subChapter.loesung" ),
+	zusammenfassung: t( "fs.subChapter.zusammenfassung" ),
+	simulation:      t( "fs.subChapter.simulation" )
+} ) );
 
 const graphN0Input = ref( 4 );
 const graphBInput = ref( 2.2 );
@@ -305,7 +287,7 @@ const texScenario = computed( () => [
 ].join( " " ) );
 const texEquilibrium = computed( () => {
 	if ( !graphHasPositiveEquilibrium.value ) {
-		return "b\le 1\Rightarrow N^* &=0\\ (Aussterbe-Gleichgewicht)";
+		return t( "fs.calculation.extinctionTex" );
 	}
 
 	return [
@@ -343,8 +325,10 @@ function fmt( value, digits = 2 ) {
 		return "0";
 	}
 
-	return Number( value ).toFixed( digits )
-		.replace( ".", "," );
+	return new Intl.NumberFormat( locale.value, {
+		maximumFractionDigits: digits,
+		minimumFractionDigits: digits
+	} ).format( Number( value ) );
 }
 
 function clampNumber(

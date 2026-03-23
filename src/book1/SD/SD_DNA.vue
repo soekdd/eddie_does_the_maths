@@ -2,10 +2,10 @@
 <div class="sdDna">
 	<div class="canvasFrame">
 		<svg
-			aria-label="DNA-Helix aus einem Textstring"
+			:aria-label="t( 'dna.ariaLabel' )"
 			class="helix"
 			role="img"
-			:viewBox="`180 0 ${VIEW.width-200} ${viewHeight}`"
+			:viewBox="`180 0 ${VIEW.width - 200} ${viewHeight}`"
 			xmlns="http://www.w3.org/2000/svg"
 		>
 			<rect
@@ -132,7 +132,7 @@
 
 			<g v-else>
 				<text class="emptyText" :x="VIEW.width / 2" :y="viewHeight / 2">
-					Keine DNA-Sequenz vorhanden.
+					{{ t( "dna.empty" ) }}
 				</text>
 			</g>
 		</svg>
@@ -146,18 +146,20 @@
 	</div>
 
 	<p class="muted">
-		Basenpaare: <b>{{ pairs.length }}</b>,
-		Windungen: <b>{{ turns }}</b>,
-		Raster: <b>3 Basenpaare pro Windung</b>.
-		{{ invalidChars.length ? ` Ignoriert: ${invalidCharsText}.` : "" }}
+		{{ legendSummary }}
 	</p>
 </div>
 </template>
 
 <script setup>
 import { computed } from "vue";
+import { useI18n } from "@/i18n.mjs";
 
 const props = defineProps( { dna: { type: String, default: "" } } );
+const { t: rawT, tm: rawTm } = useI18n( "book1/SD" );
+const t = ( key,
+	params = {} ) => rawT( key, params );
+const tm = ( key = "" ) => rawTm( key ? key : "sd" );
 
 const VIEW = {
 	width:   760,
@@ -197,139 +199,14 @@ const BASE_TEXT_COLORS = {
 	N: "#111827"
 };
 
-const aminoByLetter = {
-	A: {
-		short:  "Ala",
-		nameDe: "Alanin"
-	},
-	C: {
-		short:  "Cys",
-		nameDe: "Cystein"
-	},
-	D: {
-		short:  "Asp",
-		nameDe: "Asparaginsäure"
-	},
-	E: {
-		short:  "Glu",
-		nameDe: "Glutaminsäure"
-	},
-	F: {
-		short:  "Phe",
-		nameDe: "Phenylalanin"
-	},
-	G: {
-		short:  "Gly",
-		nameDe: "Glycin"
-	},
-	H: {
-		short:  "His",
-		nameDe: "Histidin"
-	},
-	I: {
-		short:  "Ile",
-		nameDe: "Isoleucin"
-	},
-	K: {
-		short:  "Lys",
-		nameDe: "Lysin"
-	},
-	L: {
-		short:  "Leu",
-		nameDe: "Leucin"
-	},
-	M: {
-		short:  "Met",
-		nameDe: "Methionin"
-	},
-	N: {
-		short:  "Asn",
-		nameDe: "Asparagin"
-	},
-	O: {
-		short:  "Pyl",
-		nameDe: "Pyrrolysin"
-	},
-	P: {
-		short:  "Pro",
-		nameDe: "Prolin"
-	},
-	Q: {
-		short:  "Gln",
-		nameDe: "Glutamin"
-	},
-	R: {
-		short:  "Arg",
-		nameDe: "Arginin"
-	},
-	S: {
-		short:  "Ser",
-		nameDe: "Serin"
-	},
-	T: {
-		short:  "Thr",
-		nameDe: "Threonin"
-	},
-	U: {
-		short:  "Sec",
-		nameDe: "Selenocystein"
-	},
-	V: {
-		short:  "Val",
-		nameDe: "Valin"
-	},
-	W: {
-		short:  "Trp",
-		nameDe: "Tryptophan"
-	},
-	Y: {
-		short:  "Tyr",
-		nameDe: "Tyrosin"
-	}
-};
-
-const letterByCodon = {
-	GCT: "A",
-	TGT: "C",
-	GAT: "D",
-	GAA: "E",
-	TTT: "F",
-	GGT: "G",
-	CAT: "H",
-	ATT: "I",
-	AAA: "K",
-	TTA: "L",
-	ATG: "M",
-	AAT: "N",
-	TAG: "O",
-	CCT: "P",
-	CAA: "Q",
-	CGT: "R",
-	TCT: "S",
-	ACT: "T",
-	TGA: "U",
-	GTT: "V",
-	TGG: "W",
-	TAT: "Y"
-};
+const aminoByLetter = computed( () => tm( "dna.aminoByLetter" ) ?? {} );
+const letterByCodon = computed( () => tm( "dna.letterByCodon" ) ?? {} );
 
 const legendItems = [
-	{
-		letter: "A",
-		color:  BASE_COLORS.A
-	},
-	{
-		letter: "T",
-		color:  BASE_COLORS.T
-	},
-	{
-		letter: "C",
-		color:  BASE_COLORS.C
-	},
-	{
-		letter: "G",
-		color:  BASE_COLORS.G
-	}
+	{ letter: "A", color: BASE_COLORS.A },
+	{ letter: "T", color: BASE_COLORS.T },
+	{ letter: "C", color: BASE_COLORS.C },
+	{ letter: "G", color: BASE_COLORS.G }
 ];
 
 const normalizedInput = computed( () => String( props.dna ?? "" )
@@ -403,6 +280,22 @@ const pairs = computed( () => bases.value.map( ( base, index ) => {
 } ) );
 
 const turns = computed( () => Math.ceil( pairs.value.length / BASES_PER_TURN ) );
+const legendSummary = computed( () => {
+	if ( invalidChars.value.length ) {
+		return t( "dna.summaryWithIgnored", {
+			pairs:   pairs.value.length,
+			turns:   turns.value,
+			perTurn: BASES_PER_TURN,
+			ignored: invalidCharsText.value
+		} );
+	}
+
+	return t( "dna.summary", {
+		pairs:   pairs.value.length,
+		turns:   turns.value,
+		perTurn: BASES_PER_TURN
+	} );
+} );
 const helixBounds = computed( () => {
 	if ( !pairs.value.length ) {
 		return {
@@ -445,8 +338,8 @@ const codonGroups = computed( () => {
 		const amino = resolveAminoByCodon( codon );
 		const complete = slice.length === BASES_PER_TURN;
 		const aaLabel = complete ?
-			`${amino.nameDe} (${codon})` :
-			"Restgruppe";
+			t( "dna.codonLabel", { name: amino.name, codon } ) :
+			t( "dna.remainingGroup" );
 
 		groups.push( {
 			key:      `codon-${index}`,
@@ -592,21 +485,21 @@ function baseTextColor( letter ) {
 }
 
 function resolveAminoByCodon( codon ) {
-	const letter = letterByCodon[ codon ];
-	const amino = aminoByLetter[ letter ];
+	const letter = letterByCodon.value[ codon ];
+	const amino = aminoByLetter.value[ letter ];
 
 	if ( letter && amino ) {
 		return {
 			letter,
-			short:  amino.short,
-			nameDe: amino.nameDe
+			short: amino.short,
+			name:  amino.name
 		};
 	}
 
 	return {
 		letter: "?",
 		short:  "?",
-		nameDe: `Unbekanntes Codon ${codon}`
+		name:   t( "dna.unknownCodon", { codon } )
 	};
 }
 </script>

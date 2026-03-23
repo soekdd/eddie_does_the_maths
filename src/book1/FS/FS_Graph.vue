@@ -1,7 +1,7 @@
 <template>
 <div class="fsGraph">
 	<svg
-		aria-label="Zeitverlauf der Fischpopulation im Beverton-Holt-Modell"
+		:aria-label="t( 'fs.graph.aria' )"
 		class="chart"
 		role="img"
 		:viewBox="`0 0 ${CHART.width} ${CHART.height}`"
@@ -84,22 +84,28 @@
 		</text>
 
 		<text class="axisTitle" :x="CHART.width / 2" :y="CHART.height - 6">
-			Zeit t (Jahre)
+			{{ t( "fs.graph.xTitle" ) }}
 		</text>
 		<text class="axisTitle axisTitleY" x="14" :y="CHART.height / 2">
-			Population N(t)
+			{{ t( "fs.graph.yTitle" ) }}
 		</text>
 	</svg>
 
 	<div class="legend">
-		<div class="legendItem"><span class="swatch swatchCurve"></span><span>Population N(t)</span></div>
-		<div class="legendItem"><span class="swatch swatchEq"></span><span>Gleichgewicht N*</span></div>
+		<div class="legendItem"><span class="swatch swatchCurve"></span><span>{{ t( "fs.graph.curve" ) }}</span></div>
+		<div class="legendItem"><span class="swatch swatchEq"></span><span>{{ t( "fs.graph.eq" ) }}</span></div>
 	</div>
 </div>
 </template>
 
 <script setup>
 import { computed } from "vue";
+import { useI18n } from "@/i18n.mjs";
+
+const {
+	locale,
+	t
+} = useI18n( "book1/FS" );
 
 const props = defineProps( {
 	n0:      { type: Number, default: 40 },
@@ -243,8 +249,10 @@ function fmt( value, digits = 2 ) {
 		return "0";
 	}
 
-	return Number( value ).toFixed( digits )
-		.replace( ".", "," );
+	return new Intl.NumberFormat( locale.value, {
+		maximumFractionDigits: digits,
+		minimumFractionDigits: digits
+	} ).format( Number( value ) );
 }
 </script>
 
@@ -258,28 +266,16 @@ function fmt( value, digits = 2 ) {
 	--fs-axis: rgba(var(--v-theme-on-surface, 17, 17, 17), 0.82);
 	--fs-label: rgba(var(--v-theme-on-surface, 17, 17, 17), 0.72);
 	--fs-title: rgba(var(--v-theme-on-surface, 17, 17, 17), 0.9);
-	--fs-border: rgba(var(--v-theme-on-surface, 17, 17, 17), 0.2);
-	--fs-curve-dot-stroke: rgb(var(--v-theme-surface, 255, 255, 255));
-
-	display: flex;
-	flex-direction: column;
-	gap: 14px;
 }
 
 .chart {
-	background: linear-gradient(
-		180deg,
-		rgba(var(--v-theme-surface, 255, 255, 255), 1) 0%,
-		rgba(var(--v-theme-primary, 17, 105, 224), 0.06) 100%
-	);
-	border: 1px solid var(--fs-border);
-	border-radius: 12px;
-	height: auto;
+	display: block;
 	width: 100%;
+	height: auto;
 }
 
 .bg {
-	fill: transparent;
+	fill: var(--fs-surface);
 }
 
 .gridLine {
@@ -287,36 +283,32 @@ function fmt( value, digits = 2 ) {
 	stroke-width: 1;
 }
 
-.gridLineVertical {
-	stroke-dasharray: 4 4;
-}
-
 .axis {
 	stroke: var(--fs-axis);
-	stroke-width: 1.4;
+	stroke-width: 1.5;
+}
+
+.equilibrium {
+	stroke: var(--fs-success);
+	stroke-dasharray: 7 6;
+	stroke-width: 2;
 }
 
 .curve {
 	fill: none;
 	stroke: var(--fs-primary);
-	stroke-width: 2.7;
-}
-
-.equilibrium {
-	stroke: var(--fs-success);
-	stroke-dasharray: 7 5;
-	stroke-width: 2;
+	stroke-width: 3;
+	stroke-linecap: round;
+	stroke-linejoin: round;
 }
 
 .dot {
 	fill: var(--fs-primary);
-	stroke: var(--fs-curve-dot-stroke);
-	stroke-width: 1.2;
 }
 
 .axisLabel {
 	fill: var(--fs-label);
-	font-size: 11px;
+	font-size: 13px;
 }
 
 .axisLabelY {
@@ -329,41 +321,44 @@ function fmt( value, digits = 2 ) {
 
 .axisTitle {
 	fill: var(--fs-title);
-	font-size: 12px;
+	font-size: 14px;
 	font-weight: 600;
 	text-anchor: middle;
 }
 
 .axisTitleY {
-	transform-box: fill-box;
-	transform-origin: 14px 180px;
 	transform: rotate(-90deg);
+	transform-origin: 14px 180px;
 }
 
 .legend {
 	display: flex;
 	flex-wrap: wrap;
-	gap: 12px 18px;
+	gap: 1rem 1.5rem;
+	margin-top: 0.85rem;
 }
 
 .legendItem {
-	align-items: center;
 	display: inline-flex;
-	gap: 8px;
+	align-items: center;
+	gap: 0.5rem;
+	color: var(--fs-label);
+	font-size: 0.95rem;
 }
 
 .swatch {
-	border-radius: 999px;
 	display: inline-block;
-	height: 8px;
 	width: 22px;
+	height: 0;
+	border-top: 3px solid currentColor;
 }
 
 .swatchCurve {
-	background: var(--fs-primary);
+	color: var(--fs-primary);
 }
 
 .swatchEq {
-	background: var(--fs-success);
+	color: var(--fs-success);
+	border-top-style: dashed;
 }
 </style>

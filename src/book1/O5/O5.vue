@@ -1,213 +1,211 @@
 <template>
-<AppFrame  :sub-chapter="{
-		einleitung:'Einleitung',
-		'geometrie': 'Geometrie',
-		'potenzpunkte': 'Potenzpunkte',
-		'radikalachsen': 'Radikalachsen'
-	}"
-	title="Eddie rechnet: IMO 1985 Aufgabe B2"
+<AppFrame
+	:languages="[ 'de', 'en' ]"
+	:sub-chapter
+	:title="t( 'title' )"
 	:vue-date="__VITE_SFC_MTIME_MS__"
 >
-
 	<template #bookPart>
 		<figure class="exampleFigure">
-			<ImageZoomer title="Eddie denkt über die Aufgabe B2 der IMO 85 nach">
-				<img loading="lazy" :src="titleImg" />
+			<ImageZoomer :title="t( 'imageTitle' )">
+				<img :alt="t( 'imageAlt' )" loading="lazy" :src="titleImg" />
 			</ImageZoomer>
 		</figure>
-		<h3 id="einleitung">Joutsa, 5. Juli 1985</h3>
-		<p>Ich höre jeden Atemzug im Raum. Sogar das Umblättern klingt wie ein
-			Signal. Mein Blick springt ständig vom Blatt zur Tür, als würde sie gleich aufgehen.</p><p>
-			Die Aufgabe ist Geometrie, aber nicht die freundliche Sorte. Es geht um ein Dreieck, und durch
-			zwei seiner Ecken läuft ein Kreis mit einem Mittelpunkt, der extra genannt wird. Dieser Kreis
-			schneidet zwei Seiten des Dreiecks noch einmal in zwei neuen Punkten. Dann werden zwei weitere
-			Kreise gebaut, jeweils durch drei Punkte, und diese beiden Kreise treffen sich (natürlich) in
-			genau zwei Stellen. Eine davon ist eine Ecke des Dreiecks. Die andere ist der “mysteriöse” Punkt,
-			um den es geht.</p><p>
-			Und die ganze Aufgabe läuft auf eine einfache Aussage hinaus: Ein bestimmter Winkel muss genau ein
-			rechter Winkel sein. Also wie eine perfekte Ecke.</p><p>
-			Normalerweise liebe ich solche “Das muss 90 Grad sein!”-Momente. Heute fühlt es sich an, als müsste
-			ich mich zwingen, überhaupt in der Zeichnung zu bleiben.</p><p>
-			Hier führe ich dich durch die Idee und die Formeln: Welche Kreise hier “zusammenarbeiten” und warum
-			am Ende eine rechte Ecke rausfällt.</p>
+		<h3 id="einleitung">{{ t( "introDate" ) }}</h3>
+		<div class="eddie">
+			<p>{{ t( "book.p1" ) }}</p>
+			<p>{{ t( "book.p2" ) }}</p>
+			<p>{{ t( "book.p3" ) }}</p>
+			<p>{{ t( "book.p4" ) }}</p>
+			<p>{{ t( "book.p5" ) }}</p>
+		</div>
 	</template>
 
 	<template #descriptionPart>
 		<div class="eddie">
-			<h2>Teil 1 - Aufgabenstellung</h2>
+			<h2>{{ t( "sections.part1.title" ) }}</h2>
 			<p>
-				Ein Kreis mit Mittelpunkt <Katex tex="O" /> geht durch die Punkte <Katex tex="A" /> und
-				<Katex tex="C" /> des Dreiecks <Katex tex="ABC" />.
-				Er schneidet die Strecken <Katex tex="AB" /> bzw. <Katex tex="BC" /> ein zweites Mal in
-				<Katex tex="K" /> bzw. <Katex tex="N" />.
+				{{ t( "sections.part1.p1a" ) }} <Katex tex="O" /> {{ t( "sections.part1.p1b" ) }}
+				<Katex tex="A" /> {{ t( "sections.part1.p1c" ) }} <Katex tex="C" />
+				{{ t( "sections.part1.p1d" ) }} <Katex tex="ABC" />.
+				{{ t( "sections.part1.p1e" ) }} <Katex tex="AB" /> {{ t( "sections.part1.p1f" ) }}
+				<Katex tex="BC" /> {{ t( "sections.part1.p1g" ) }} <Katex tex="K" />
+				{{ t( "sections.part1.p1h" ) }} <Katex tex="N" />.
 			</p>
 			<p>
-				Die Umkreise von <Katex tex="ABC" /> und <Katex tex="KBN" /> schneiden sich
-				(neben <Katex tex="B" />) in einem zweiten Punkt <Katex tex="M" />.
+				{{ t( "sections.part1.p2a" ) }} <Katex tex="ABC" /> {{ t( "sections.part1.p2b" ) }}
+				<Katex tex="KBN" /> {{ t( "sections.part1.p2c" ) }} {{ t( "sections.part1.p2d" ) }}
+				<Katex tex="B" />) {{ t( "sections.part1.p2e" ) }} <Katex tex="M" />.
 			</p>
-			<p>Zu zeigen ist:</p>
+			<p>{{ t( "sections.part1.prove" ) }}</p>
 			<div class="kbox">
 				<Katex as="div" display tex="\angle OMB = 90^\circ." />
 			</div>
 		</div>
 		<figure class="exampleFigure">
-			<image-zoomer>
+			<ImageZoomer>
 				<O5Graph :result />
-			</image-zoomer>
+			</ImageZoomer>
 		</figure>
 
-		<h2 id="radikalachsen" class="mt-8">Teil 2 - Zwei Werkzeuge, die wir brauchen (Potenz + Radikalachse)</h2>
+		<h2 id="radikalachsen" class="mt-8">{{ t( "sections.part2.title" ) }}</h2>
 		<div class="eddie">
-			<h3>2.1 Potenz eines Punktes zu einem Kreis</h3>
+			<h3>{{ t( "sections.part2.s1Title" ) }}</h3>
 			<p>
-				Für einen Kreis <Katex tex="\omega" /> und einen Punkt <Katex tex="P" /> (nicht unbedingt auf dem Kreis)
-				heißt die Potenz von <Katex tex="P" /> bezüglich <Katex tex="\omega" />:
+				{{ t( "sections.part2.s1p1a" ) }} <Katex tex="\omega" /> {{ t( "sections.part2.s1p1b" ) }}
+				<Katex tex="P" /> {{ t( "sections.part2.s1p1c" ) }} <Katex tex="P" />
+				{{ t( "sections.part2.s1p1d" ) }} <Katex tex="\omega" />:
 			</p>
 			<div class="kbox">
 				<Katex as="div" display tex="\operatorname{Pot}_{\omega}(P)." />
 			</div>
-			<p>Zwei praktische Rechenregeln:</p>
-			<p><b>(A) Sekantenformel:</b></p>
+			<p>{{ t( "sections.part2.s1p2" ) }}</p>
+			<p><b>{{ t( "sections.part2.s1a" ) }}</b></p>
 			<p>
-				Schneidet eine Gerade durch <Katex tex="P" /> den Kreis <Katex tex="\omega" /> in
-				<Katex tex="U" /> und <Katex tex="V" />, dann gilt
+				{{ t( "sections.part2.s1p3a" ) }} <Katex tex="P" /> {{ t( "sections.part2.s1p3b" ) }}
+				<Katex tex="\omega" /> {{ t( "sections.part2.s1p3c" ) }} <Katex tex="U" />
+				{{ t( "sections.part2.s1p3d" ) }} <Katex tex="V" />, {{ t( "sections.part2.s1p3e" ) }}
 			</p>
 			<div class="kbox">
 				<Katex as="div" display tex="\operatorname{Pot}_{\omega}(P)=PU\cdot PV." />
 			</div>
-			<p><b>(B) Mittelpunktformel:</b></p>
+			<p><b>{{ t( "sections.part2.s1b" ) }}</b></p>
 			<p>
-				Hat <Katex tex="\omega" /> Mittelpunkt <Katex tex="S" /> und Radius <Katex tex="r" />, dann gilt
+				{{ t( "sections.part2.s1p4a" ) }} <Katex tex="\omega" /> {{ t( "sections.part2.s1p4b" ) }}
+				<Katex tex="S" /> {{ t( "sections.part2.s1p4c" ) }} <Katex tex="r" />,
+				{{ t( "sections.part2.s1p4d" ) }}
 			</p>
 			<div class="kbox">
 				<Katex as="div" display tex="\operatorname{Pot}_{\omega}(P)=PS^2-r^2." />
 			</div>
-			<p>Beide Formeln liefern dieselbe Zahl.</p>
+			<p>{{ t( "sections.part2.s1p5" ) }}</p>
 
-			<h3 class="mt-6">2.2 Radikalachse (Radical axis)</h3>
+			<h3 class="mt-6">{{ t( "sections.part2.s2Title" ) }}</h3>
 			<p>
-				Für zwei Kreise <Katex tex="\omega_1,\omega_2" /> ist die Radikalachse die Menge aller Punkte
-				<Katex tex="P" /> mit
+				{{ t( "sections.part2.s2p1a" ) }} <Katex tex="\omega_1,\omega_2" />
+				{{ t( "sections.part2.s2p1b" ) }} <Katex tex="P" />
+				{{ t( "sections.part2.s2p1c" ) }}
 			</p>
 			<div class="kbox">
 				<Katex as="div" display tex="\operatorname{Pot}_{\omega_1}(P)=\operatorname{Pot}_{\omega_2}(P)." />
 			</div>
-			<p>Diese Menge ist immer eine Gerade.</p>
-			<p>Wichtigster Spezialfall:</p>
+			<p>{{ t( "sections.part2.s2p2" ) }}</p>
+			<p>{{ t( "sections.part2.s2p3" ) }}</p>
 			<ul>
 				<li>
-					Schneiden sich <Katex tex="\omega_1" /> und <Katex tex="\omega_2" /> in zwei Punkten,
-					dann ist ihre Radikalachse die Gerade durch diese beiden Schnittpunkte.
+					{{ t( "sections.part2.s2l1a" ) }} <Katex tex="\omega_1" /> {{ t( "sections.part2.s2l1b" ) }}
+					<Katex tex="\omega_2" /> {{ t( "sections.part2.s2l1c" ) }}
 				</li>
 			</ul>
-			<p>Noch ein Fakt (für ganz am Ende):</p>
+			<p>{{ t( "sections.part2.s2p4" ) }}</p>
 			<ul>
-				<li>
-					Die Radikalachse zweier Kreise steht senkrecht zur Verbindungslinie ihrer Mittelpunkte.
-				</li>
+				<li>{{ t( "sections.part2.s2l2" ) }}</li>
 			</ul>
 		</div>
 
-		<h2 class="mt-8">Teil 3 - Die drei Kreise in der Aufgabe</h2>
+		<h2 id="geometrie" class="mt-8">{{ t( "sections.part3.title" ) }}</h2>
 		<div class="eddie">
-			<p>Wir benennen:</p>
+			<p>{{ t( "sections.part3.p1" ) }}</p>
 			<ul>
 				<li>
-					<Katex tex="\omega" />: der Kreis mit Mittelpunkt <Katex tex="O" /> durch <Katex tex="A" />
-					und <Katex tex="C" />. Sein Radius ist
-					<Katex tex="R=OA=OC=OK=ON" />.
+					<Katex tex="\omega" />{{ t( "sections.part3.l1a" ) }} <Katex tex="O" />
+					{{ t( "sections.part3.l1b" ) }} <Katex tex="A" />
+					{{ t( "sections.part3.l1c" ) }} <Katex tex="C" />.
+					{{ t( "sections.part3.l1d" ) }} <Katex tex="R=OA=OC=OK=ON" />.
 				</li>
-				<li><Katex tex="\Gamma" />: der Umkreis von <Katex tex="ABC" />.</li>
-				<li><Katex tex="\gamma" />: der Umkreis von <Katex tex="KBN" />.</li>
+				<li><Katex tex="\Gamma" />{{ t( "sections.part3.l2" ) }} <Katex tex="ABC" />.</li>
+				<li><Katex tex="\gamma" />{{ t( "sections.part3.l3" ) }} <Katex tex="KBN" />.</li>
 			</ul>
-			<p>Dann gelten sofort drei Radikalachsen:</p>
+			<p>{{ t( "sections.part3.p2" ) }}</p>
 			<ol>
 				<li>
-					<Katex tex="\omega" /> und <Katex tex="\Gamma" /> schneiden sich in
-					<Katex tex="A" /> und <Katex tex="C" /> <Katex tex="\Rightarrow" /> Radikalachse ist
+					<Katex tex="\omega" /> {{ t( "sections.part3.o1a" ) }} <Katex tex="\Gamma" />
+					{{ t( "sections.part3.o1b" ) }} <Katex tex="A" /> {{ t( "sections.part3.o1c" ) }}
+					<Katex tex="C" /> <Katex tex="\Rightarrow" /> {{ t( "sections.part3.o1d" ) }}
 					<Katex tex="AC" />.
 				</li>
 				<li>
-					<Katex tex="\omega" /> und <Katex tex="\gamma" /> schneiden sich in
-					<Katex tex="K" /> und <Katex tex="N" /> <Katex tex="\Rightarrow" /> Radikalachse ist
+					<Katex tex="\omega" /> {{ t( "sections.part3.o2a" ) }} <Katex tex="\gamma" />
+					{{ t( "sections.part3.o2b" ) }} <Katex tex="K" /> {{ t( "sections.part3.o2c" ) }}
+					<Katex tex="N" /> <Katex tex="\Rightarrow" /> {{ t( "sections.part3.o2d" ) }}
 					<Katex tex="KN" />.
 				</li>
 				<li>
-					<Katex tex="\Gamma" /> und <Katex tex="\gamma" /> schneiden sich in
-					<Katex tex="B" /> und <Katex tex="M" /> <Katex tex="\Rightarrow" /> Radikalachse ist
+					<Katex tex="\Gamma" /> {{ t( "sections.part3.o3a" ) }} <Katex tex="\gamma" />
+					{{ t( "sections.part3.o3b" ) }} <Katex tex="B" /> {{ t( "sections.part3.o3c" ) }}
+					<Katex tex="M" /> <Katex tex="\Rightarrow" /> {{ t( "sections.part3.o3d" ) }}
 					<Katex tex="BM" />.
 				</li>
 			</ol>
-			<p>
-				Diese drei Radikalachsen schneiden sich in einem Punkt (dem Radikalzentrum).
-				Nenne diesen Punkt
-			</p>
+			<p>{{ t( "sections.part3.p3" ) }}</p>
 			<div class="kbox">
 				<Katex as="div" display tex="X := AC \cap KN \cap BM." />
 			</div>
-			<p>Damit gilt besonders: <Katex tex="B,X,M" /> liegen auf einer Geraden.</p>
+			<p>{{ t( "sections.part3.p4" ) }} <Katex tex="B,X,M" /> {{ t( "sections.part3.p4b" ) }}</p>
 		</div>
 
-		<h2 class="mt-8">Teil 4 - Ein Schlüsselschritt: <Katex tex="X,M,N,C" /> liegen auf einem Kreis</h2>
+		<h2 class="mt-8">{{ t( "sections.part4.title" ) }} <Katex tex="X,M,N,C" /> {{ t( "sections.part4.titleSuffix" ) }}</h2>
 		<div class="eddie">
-			<p>Wir zeigen:</p>
+			<p>{{ t( "sections.part4.p1" ) }}</p>
 			<div class="kbox">
 				<Katex as="div" display tex="X,M,N,C \text{ liegen auf einem Kreis.}" />
 			</div>
-			<p>Dazu zeigen wir die Winkelgleichheit</p>
+			<p>{{ t( "sections.part4.p2" ) }}</p>
 			<div class="kbox">
 				<Katex as="div" display tex="\angle XMN = \angle XCN." />
 			</div>
 			<p>
-				In den folgenden Gleichungen verstehen wir Winkel als Winkel zwischen Geraden
-				(also ohne Richtung; Winkel werden modulo <Katex tex="180^\circ" /> betrachtet).
+				{{ t( "sections.part4.p3a" ) }} <Katex tex="180^\circ" /> {{ t( "sections.part4.p3b" ) }}
 			</p>
-			<p>Jetzt die Winkelkette:</p>
+			<p>{{ t( "sections.part4.p4" ) }}</p>
 			<ul>
 				<li>
-					Weil <Katex tex="B,X,M" /> auf einer Geraden liegen, sind die Geraden
-					<Katex tex="MX" /> und <Katex tex="MB" /> dieselbe Gerade; daher ist
-					<Katex tex="\angle XMN=\angle BMN" />.
+					{{ t( "sections.part4.l1a" ) }} <Katex tex="B,X,M" /> {{ t( "sections.part4.l1b" ) }}
+					<Katex tex="MX" /> {{ t( "sections.part4.l1c" ) }} <Katex tex="MB" />
+					{{ t( "sections.part4.l1d" ) }} <Katex tex="\angle XMN=\angle BMN" />.
 				</li>
 				<li>
-					Weil <Katex tex="B,K,M,N" /> auf dem Kreis <Katex tex="\gamma" /> liegen, gilt
-					<Katex tex="\angle BMN=\angle BKN" />.
+					{{ t( "sections.part4.l2a" ) }} <Katex tex="B,K,M,N" /> {{ t( "sections.part4.l2b" ) }}
+					<Katex tex="\gamma" /> {{ t( "sections.part4.l2c" ) }} <Katex tex="\angle BMN=\angle BKN" />.
 				</li>
 				<li>
-					Weil <Katex tex="A,K,B" /> auf einer Geraden liegen, sind die Geraden
-					<Katex tex="BK" /> und <Katex tex="AK" /> dieselbe Gerade.
-					Daher ist der Winkel zwischen <Katex tex="BK" /> und <Katex tex="KN" /> gleich dem Winkel
-					zwischen <Katex tex="AK" /> und <Katex tex="KN" />; kurz:
+					{{ t( "sections.part4.l3a" ) }} <Katex tex="A,K,B" /> {{ t( "sections.part4.l3b" ) }}
+					<Katex tex="BK" /> {{ t( "sections.part4.l3c" ) }} <Katex tex="AK" />
+					{{ t( "sections.part4.l3d" ) }} <Katex tex="BK" /> {{ t( "sections.part4.l3e" ) }}
+					<Katex tex="KN" /> {{ t( "sections.part4.l3f" ) }} <Katex tex="AK" />
+					{{ t( "sections.part4.l3g" ) }} <Katex tex="KN" />; {{ t( "sections.part4.l3h" ) }}
 					<Katex tex="\angle BKN=\angle AKN" />.
 				</li>
 				<li>
-					Weil <Katex tex="A,C,K,N" /> auf dem Kreis <Katex tex="\omega" /> liegen, gilt
-					<Katex tex="\angle AKN=\angle ACN" />.
+					{{ t( "sections.part4.l4a" ) }} <Katex tex="A,C,K,N" /> {{ t( "sections.part4.l4b" ) }}
+					<Katex tex="\omega" /> {{ t( "sections.part4.l4c" ) }} <Katex tex="\angle AKN=\angle ACN" />.
 				</li>
 				<li>
-					Weil <Katex tex="X" /> auf <Katex tex="AC" /> liegt, ist
-					<Katex tex="\angle ACN=\angle XCN" />.
+					{{ t( "sections.part4.l5a" ) }} <Katex tex="X" /> {{ t( "sections.part4.l5b" ) }}
+					<Katex tex="AC" /> {{ t( "sections.part4.l5c" ) }} <Katex tex="\angle ACN=\angle XCN" />.
 				</li>
 			</ul>
 			<div class="kbox">
 				<Katex as="div" display tex="\angle XMN=\angle BMN=\angle BKN=\angle AKN=\angle ACN=\angle XCN." />
 			</div>
-			<p>Damit ist <Katex tex="X,M,N,C" /> zyklisch.</p>
+			<p>{{ t( "sections.part4.p5" ) }} <Katex tex="X,M,N,C" /> {{ t( "sections.part4.p5b" ) }}</p>
 		</div>
 
-		<h2 id="potenzpunkte" class="mt-8">Teil 5 - Die Potenzgleichungen (jetzt wird gerechnet)</h2>
+		<h2 id="potenzpunkte" class="mt-8">{{ t( "sections.part5.title" ) }}</h2>
 		<div class="eddie">
-			<h3>5.1 Eine Gleichung aus dem Radikalzentrum <Katex tex="X" /></h3>
+			<h3>{{ t( "sections.part5.s1Title" ) }} <Katex tex="X" /></h3>
 			<p>
-				Da <Katex tex="X" /> auf <Katex tex="BM" /> liegt und <Katex tex="B,M" /> auf
-				<Katex tex="\Gamma" /> liegen, ist
+				{{ t( "sections.part5.s1p1a" ) }} <Katex tex="X" /> {{ t( "sections.part5.s1p1b" ) }}
+				<Katex tex="BM" /> {{ t( "sections.part5.s1p1c" ) }} <Katex tex="B,M" />
+				{{ t( "sections.part5.s1p1d" ) }} <Katex tex="\Gamma" /> {{ t( "sections.part5.s1p1e" ) }}
 			</p>
 			<div class="kbox">
 				<Katex as="div" display tex="\operatorname{Pot}_{\Gamma}(X)=XB\cdot XM." />
 			</div>
 			<p>
-				Da <Katex tex="X" /> aber auch auf der Radikalachse von <Katex tex="\Gamma" /> und
-				<Katex tex="\omega" /> liegt (das ist <Katex tex="AC" />), gilt
+				{{ t( "sections.part5.s1p2a" ) }} <Katex tex="X" /> {{ t( "sections.part5.s1p2b" ) }}
+				<Katex tex="\Gamma" /> {{ t( "sections.part5.s1p2c" ) }} <Katex tex="\omega" />
+				{{ t( "sections.part5.s1p2d" ) }} <Katex tex="AC" />{{ t( "sections.part5.s1p2e" ) }}
 			</p>
 			<div class="kbox">
 				<Katex as="div" display tex="\operatorname{Pot}_{\Gamma}(X)=\operatorname{Pot}_{\omega}(X)." />
@@ -216,18 +214,23 @@
 			</div>
 			<p><Katex tex="\text{(1)}" /></p>
 
-			<h3 class="mt-6">5.2 Eine zweite Gleichung über den Kreis durch <Katex tex="X,M,N,C" /></h3>
-			<p>Aus Teil 4 wissen wir: Es gibt einen Kreis durch <Katex tex="X,M,N,C" />. Nenne ihn <Katex tex="\sigma" />.</p>
-			<p>Dann ist die Potenz von <Katex tex="B" /> bezüglich <Katex tex="\sigma" /> auf zwei Geraden berechenbar:</p>
+			<h3 class="mt-6">{{ t( "sections.part5.s2Title" ) }} <Katex tex="X,M,N,C" /></h3>
+			<p>{{ t( "sections.part5.s2p1a" ) }} <Katex tex="X,M,N,C" />. {{ t( "sections.part5.s2p1b" ) }} <Katex tex="\sigma" />.</p>
+			<p>
+				{{ t( "sections.part5.s2p2a" ) }} <Katex tex="B" /> {{ t( "sections.part5.s2p2b" ) }}
+				<Katex tex="\sigma" /> {{ t( "sections.part5.s2p2c" ) }}
+			</p>
 			<ul>
 				<li>
-					Auf der Geraden <Katex tex="BM" /> schneidet <Katex tex="\sigma" /> in
-					<Katex tex="M" /> und <Katex tex="X" />, also
+					{{ t( "sections.part5.s2l1a" ) }} <Katex tex="BM" /> {{ t( "sections.part5.s2l1b" ) }}
+					<Katex tex="\sigma" /> {{ t( "sections.part5.s2l1c" ) }} <Katex tex="M" />
+					{{ t( "sections.part5.s2l1d" ) }} <Katex tex="X" />, {{ t( "sections.part5.s2l1e" ) }}
 					<Katex tex="\operatorname{Pot}_{\sigma}(B)=BM\cdot BX" />.
 				</li>
 				<li>
-					Auf der Geraden <Katex tex="BC" /> schneidet <Katex tex="\sigma" /> in
-					<Katex tex="C" /> und <Katex tex="N" />, also
+					{{ t( "sections.part5.s2l2a" ) }} <Katex tex="BC" /> {{ t( "sections.part5.s2l2b" ) }}
+					<Katex tex="\sigma" /> {{ t( "sections.part5.s2l2c" ) }} <Katex tex="C" />
+					{{ t( "sections.part5.s2l2d" ) }} <Katex tex="N" />, {{ t( "sections.part5.s2l2e" ) }}
 					<Katex tex="\operatorname{Pot}_{\sigma}(B)=BC\cdot BN" />.
 				</li>
 			</ul>
@@ -236,9 +239,12 @@
 			</div>
 			<p><Katex tex="\text{(2)}" /></p>
 			<p>
-				Aber <Katex tex="C" /> und <Katex tex="N" /> liegen auch auf <Katex tex="\omega" />, also ist
-				<Katex tex="BC\cdot BN" /> gleichzeitig die Potenz von <Katex tex="B" /> bezüglich <Katex tex="\omega" />.
-				Mit der Mittelpunktformel:
+				{{ t( "sections.part5.s2p3a" ) }} <Katex tex="C" /> {{ t( "sections.part5.s2p3b" ) }}
+				<Katex tex="N" /> {{ t( "sections.part5.s2p3c" ) }} <Katex tex="\omega" />,
+				{{ t( "sections.part5.s2p3d" ) }} <Katex tex="BC\cdot BN" />
+				{{ t( "sections.part5.s2p3e" ) }} <Katex tex="B" />
+				{{ t( "sections.part5.s2p3f" ) }} <Katex tex="\omega" />.
+				{{ t( "sections.part5.s2p3g" ) }}
 			</p>
 			<div class="kbox">
 				<Katex as="div" display tex="BC\cdot BN=\operatorname{Pot}_{\omega}(B)=BO^2-R^2=BO^2-ON^2." />
@@ -247,128 +253,127 @@
 			<p><Katex tex="\text{(3)}" /></p>
 		</div>
 
-		<h2 class="mt-8">Teil 6 - Der Schluss: daraus folgt der rechte Winkel</h2>
+		<h2 class="mt-8">{{ t( "sections.part6.title" ) }}</h2>
 		<div class="eddie">
-			<p>Wir ziehen (3) von (1) ab:</p>
+			<p>{{ t( "sections.part6.p1" ) }}</p>
 			<div class="kbox">
 				<Katex as="div" display tex="(XB\cdot XM) - (BM\cdot BX) = (XO^2-ON^2) - (BO^2-ON^2)," />
 				<Katex as="div" display tex="XB\cdot XM - BM\cdot BX = XO^2-BO^2." />
 			</div>
 			<p><Katex tex="\text{(4)}" /></p>
 			<p>
-				Jetzt kommt ein kurzer Trick mit gerichteten Strecken auf der Geraden <Katex tex="BM" />.
-				Wir rechnen auf der Geraden <Katex tex="BM" /> wie auf einer Zahlengeraden (mit Vorzeichen).
-				Dabei gilt stets <Katex tex="BM = BX + XM" />; umgestellt ist das
-				<Katex tex="BX = BM - XM" /> (mit Vorzeichen).
-				Entsprechend gilt dann auch <Katex tex="XB = XM - BM" />.
+				{{ t( "sections.part6.p2a" ) }} <Katex tex="BM" />.
+				{{ t( "sections.part6.p2b" ) }} <Katex tex="BM" /> {{ t( "sections.part6.p2c" ) }}
+			</p>
+			<p>
+				{{ t( "sections.part6.p3a" ) }} <Katex tex="BM = BX + XM" />; {{ t( "sections.part6.p3b" ) }}
+				<Katex tex="BX = BM - XM" /> {{ t( "sections.part6.p3c" ) }}
+				<Katex tex="XB = XM - BM" />.
 			</p>
 			<div class="kbox">
 				<Katex as="div" display tex="BX = BM - XM \quad\text{(als gerichtete Strecken)}." />
 			</div>
-			<p>Dann ist</p>
+			<p>{{ t( "sections.part6.p4" ) }}</p>
 			<div class="kbox">
 				<Katex as="div" display tex="BM\cdot BX = BM(BM - XM)=BM^2 - BM\cdot XM," />
 				<Katex as="div" display tex="XM\cdot XB = XM(XM - BM)=XM^2 - BM\cdot XM." />
 			</div>
-			<p>Subtrahieren ergibt:</p>
+			<p>{{ t( "sections.part6.p5" ) }}</p>
 			<div class="kbox">
 				<Katex as="div" display tex="XM\cdot XB - BM\cdot BX = XM^2 - BM^2." />
 			</div>
-			<p>Setze das in (4) ein:</p>
+			<p>{{ t( "sections.part6.p6" ) }}</p>
 			<div class="kbox">
 				<Katex as="div" display tex="XM^2 - BM^2 = XO^2 - BO^2," />
 				<Katex as="div" display tex="XO^2 - XM^2 = BO^2 - BM^2." />
 			</div>
 			<p><Katex tex="\text{(5)}" /></p>
 
-			<h3 class="mt-6">6.1 Was bedeutet (5) geometrisch?</h3>
-			<p>Betrachte zwei Kreise:</p>
+			<h3 class="mt-6">{{ t( "sections.part6.s1Title" ) }}</h3>
+			<p>{{ t( "sections.part6.s1p1" ) }}</p>
 			<ul>
-				<li>Kreis <Katex tex="\tau" /> mit Mittelpunkt <Katex tex="O" /> und Radius <Katex tex="OB" />,</li>
-				<li>Kreis <Katex tex="\upsilon" /> mit Mittelpunkt <Katex tex="M" /> und Radius <Katex tex="MB" />.</li>
+				<li>
+					{{ t( "sections.part6.s1l1" ) }} <Katex tex="\tau" /> {{ t( "sections.part6.s1l1b" ) }}
+					<Katex tex="O" /> {{ t( "sections.part6.s1l1c" ) }} <Katex tex="OB" />,
+				</li>
+				<li>
+					{{ t( "sections.part6.s1l2" ) }} <Katex tex="\upsilon" /> {{ t( "sections.part6.s1l2b" ) }}
+					<Katex tex="M" /> {{ t( "sections.part6.s1l2c" ) }} <Katex tex="MB" />.
+				</li>
 			</ul>
 			<p>
-				Dann hat ein Punkt <Katex tex="P" /> auf ihrer Radikalachse genau dann gleiche Potenzen, wenn
+				{{ t( "sections.part6.s1p2a" ) }} <Katex tex="P" /> {{ t( "sections.part6.s1p2b" ) }}
 			</p>
 			<div class="kbox">
 				<Katex as="div" display tex="PO^2-OB^2 = PM^2-MB^2 \Longleftrightarrow PO^2-PM^2 = OB^2-MB^2." />
 			</div>
 			<p>
-				Gleichung (5) sagt genau: Die Punkte <Katex tex="P=X" /> und <Katex tex="P=B" /> erfüllen diese Bedingung.
-				Also liegen <Katex tex="B" /> und <Katex tex="X" /> auf der Radikalachse der Kreise <Katex tex="\tau" />
-				und <Katex tex="\upsilon" />. Diese Radikalachse ist die Gerade <Katex tex="BX" />.
+				{{ t( "sections.part6.s1p3a" ) }} <Katex tex="P=X" /> {{ t( "sections.part6.s1p3b" ) }}
+				<Katex tex="P=B" /> {{ t( "sections.part6.s1p3c" ) }} <Katex tex="B" />
+				{{ t( "sections.part6.s1p3d" ) }} <Katex tex="X" />
+				{{ t( "sections.part6.s1p3e" ) }} <Katex tex="\tau" />
+				{{ t( "sections.part6.s1p3f" ) }} <Katex tex="\upsilon" />.
+				{{ t( "sections.part6.s1p3g" ) }} <Katex tex="BX" />.
 			</p>
 			<p>
-				Aber: Die Radikalachse zweier Kreise steht senkrecht zur Verbindungslinie ihrer Mittelpunkte,
-				hier also senkrecht auf <Katex tex="OM" />. Damit:
+				{{ t( "sections.part6.s1p4a" ) }} <Katex tex="OM" />.
+				{{ t( "sections.part6.s1p4b" ) }}
 			</p>
 			<div class="kbox">
 				<Katex as="div" display tex="BX \perp OM." />
 			</div>
 			<p>
-				Und weil <Katex tex="B,X,M" /> auf einer Geraden liegen, ist
-				<Katex tex="BX" /> dieselbe Gerade wie <Katex tex="BM" />. Also:
+				{{ t( "sections.part6.s1p5a" ) }} <Katex tex="B,X,M" /> {{ t( "sections.part6.s1p5b" ) }}
+				<Katex tex="BX" /> {{ t( "sections.part6.s1p5c" ) }} <Katex tex="BM" />.
+				{{ t( "sections.part6.s1p5d" ) }}
 			</p>
 			<div class="kbox">
 				<Katex as="div" display tex="BM \perp OM \Rightarrow \angle OMB = 90^\circ." />
 				<Katex as="div" display tex="\boxed{\angle OMB = 90^\circ.}" />
 			</div>
 		</div>
-		<EddieComment subtitle="Die großen Ideen sind:">
+		<EddieComment :subtitle="t( 'sections.part6.commentTitle' )">
 			<ol>
-				<li>Radikalachsen: drei Paare von Kreisen, drei Geraden, ein Schnittpunkt <Katex tex="X" />.</li>
-				<li>Ein zyklisches Viereck <Katex tex="X,M,N,C" /> per Winkelkette.</li>
-				<li>Potenzrechnungen auf passenden Geraden (Produkt von Strecken).</li>
-				<li>
-					Am Ende zeigt eine Gleichung, dass <Katex tex="BX" /> die Radikalachse zweier Kreise mit
-					Mittelpunkten <Katex tex="O" /> und <Katex tex="M" /> ist - und damit automatisch senkrecht auf
-					<Katex tex="OM" />.
-				</li>
+				<li v-for="( item, index ) in commentItems" :key="index" v-html="item" />
 			</ol>
 		</EddieComment>
 	</template>
 
 	<template #interactivePart>
-		<h2>Spielplatz: numerische Verifikation</h2>
+		<h2>{{ t( "sections.interactive.title" ) }}</h2>
 		<div class="eddie d-flex flex-column ga-3">
-			<p>
-				Wir bauen eine gültige Konfiguration analytisch auf und rechnen die in der Lösung benutzten
-				Identitäten numerisch nach.
-			</p>
+			<p>{{ t( "sections.interactive.intro" ) }}</p>
 
 			<div class="d-flex flex-wrap ga-3 align-center">
 				<v-text-field
 					v-model="bxInput"
 					hide-details="auto"
-					label="B_x"
+					:label="t( 'sections.interactive.bxLabel' )"
 					style="max-width: 140px"
 				/>
 				<v-text-field
 					v-model="byInput"
 					hide-details="auto"
-					label="B_y"
+					:label="t( 'sections.interactive.byLabel' )"
 					style="max-width: 140px"
 				/>
 				<v-text-field
 					v-model="alphaInput"
 					hide-details="auto"
-					label="Richtung α (Grad)"
+					:label="t( 'sections.interactive.alphaLabel' )"
 					style="max-width: 170px"
 				/>
 				<v-text-field
 					v-model="betaInput"
 					hide-details="auto"
-					label="Richtung β (Grad)"
+					:label="t( 'sections.interactive.betaLabel' )"
 					style="max-width: 170px"
 				/>
-				<v-btn color="primary" variant="flat" @click="runCheck">Berechnen</v-btn>
-				<v-btn variant="tonal" @click="randomExample">Zufall</v-btn>
+				<v-btn color="primary" variant="flat" @click="runCheck">{{ t( "sections.interactive.check" ) }}</v-btn>
+				<v-btn variant="tonal" @click="randomExample">{{ t( "sections.interactive.random" ) }}</v-btn>
 			</div>
 
-			<p class="muted">
-				Die Richtungen α und β sind die beiden Sekanten durch <Katex tex="B" />, auf denen
-				<Katex tex="(A,K)" /> bzw. <Katex tex="(C,N)" /> liegen.
-			</p>
+			<p class="muted" v-html="t( 'sections.interactive.hint' )" />
 
 			<v-alert v-if="error" type="error" variant="tonal">
 				{{ error }}
@@ -378,30 +383,30 @@
 				<div class="d-flex flex-column ga-1">
 					<div>
 						<Katex :tex="`\\angle OMB \\approx ${fmt(result.angleOMB, 6)}^\\circ`" />,
-						Abweichung zu <Katex tex="90^\circ" />:
+						{{ t( "sections.interactive.angleLabel" ) }} <Katex tex="90^\circ" />:
 						<Katex :tex="`${fmt(result.angleDeviation, 6)}^\\circ`" />.
 					</div>
 					<div>
-						{{ result.okRightAngle ? "Numerisch bestätigt." : "Hier ist die Konfiguration numerisch instabil." }}
+						{{ result.okRightAngle ? t( "sections.interactive.confirmed" ) : t( "sections.interactive.unstable" ) }}
 					</div>
 				</div>
 			</v-alert>
 
-			<image-zoomer :title="`IMO85/5`">
+			<ImageZoomer :title="t( 'sections.interactive.graphZoomTitle' )">
 				<O5Graph :result />
-			</image-zoomer>
+			</ImageZoomer>
 		</div>
 	</template>
 
 	<template #calculationPart>
-		<h2>Rechendetails</h2>
+		<h2>{{ t( "sections.calculation.title" ) }}</h2>
 		<div class="eddie d-flex flex-column ga-3">
 			<v-sheet v-if="result" border class="pa-3 rounded">
-				<div class="text-subtitle-1 font-weight-medium mb-2">Punkte</div>
+				<div class="text-subtitle-1 font-weight-medium mb-2">{{ t( "sections.calculation.pointsTitle" ) }}</div>
 				<v-table density="compact">
 					<thead>
 						<tr>
-							<th>Punkt</th>
+							<th>{{ t( "sections.calculation.point" ) }}</th>
 							<th class="text-right">x</th>
 							<th class="text-right">y</th>
 						</tr>
@@ -417,33 +422,37 @@
 			</v-sheet>
 
 			<v-sheet v-if="result" border class="pa-3 rounded">
-				<div class="text-subtitle-1 font-weight-medium mb-2">Identitäten aus der Lösung</div>
+				<div class="text-subtitle-1 font-weight-medium mb-2">{{ t( "sections.calculation.identitiesTitle" ) }}</div>
 				<div class="mono">XM·XB = {{ fmt(result.eq.xmxb, 8) }}</div>
 				<div class="mono">XK·XN = {{ fmt(result.eq.xkxn, 8) }}</div>
 				<div class="mono">XO²−ON² = {{ fmt(result.eq.xo2on2, 8) }}</div>
 				<div class="mono">BM·BX = {{ fmt(result.eq.bmbx, 8) }}</div>
 				<div class="mono">BN·BC = {{ fmt(result.eq.bnbc, 8) }}</div>
 				<div class="mono">BO²−ON² = {{ fmt(result.eq.bo2on2, 8) }}</div>
-				<div class="mono mt-2">Residual 1 = {{ fmt(result.eq.res1, 10) }}</div>
-				<div class="mono">Residual 2 = {{ fmt(result.eq.res2, 10) }}</div>
-				<div class="mono">Kollinearität(X,B,M) = {{ fmt(result.collinearity, 10) }}</div>
+				<div class="mono mt-2">{{ t( "sections.calculation.residual1" ) }} = {{ fmt(result.eq.res1, 10) }}</div>
+				<div class="mono">{{ t( "sections.calculation.residual2" ) }} = {{ fmt(result.eq.res2, 10) }}</div>
+				<div class="mono">{{ t( "sections.calculation.collinearity" ) }} = {{ fmt(result.collinearity, 10) }}</div>
 			</v-sheet>
 		</div>
 	</template>
+
 	<template #footer>
 		<p class="muted">
-			Quelle der Aufgabenstellung/Lösungsskizze:
-			<a href="https://prase.cz/kalva/imo/isoln/isoln855.html">IMO 1985 B2 (ISL solutions, prase.cz)</a>
+			{{ t( "footer.label" ) }}
+			<a href="https://prase.cz/kalva/imo/isoln/isoln855.html">{{ t( "footer.link" ) }}</a>
 		</p>
 	</template>
 </AppFrame>
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { computed, ref } from "vue";
+import { useI18n } from "@/i18n.mjs";
 
 import O5Graph from "./O5_Graph.vue";
 import titleImg from "./O5.webp";
+
+const { t, tm } = useI18n( "book1/O5" );
 
 const R = 1;
 const EPS = 1e-9;
@@ -455,9 +464,14 @@ const betaInput = ref( "220" );
 
 const error = ref( "" );
 const result = ref( null );
+const subChapter = computed( () => tm( "subChapter" ) ?? {} );
+const commentItems = computed( () => tm( "sections.part6.commentItems" ) ?? [] );
 
 function pt( x, y ) {
-	return { x, y };
+	return {
+		x,
+		y
+	};
 }
 
 function add( a, b ) {
@@ -509,7 +523,7 @@ function solveLineCircle(
 	const delta = bu * bu - c;
 
 	if ( delta <= EPS ) {
-		throw new Error( "Sekante trifft den Kreis nicht in zwei Punkten." );
+		throw new Error( t( "sections.interactive.errors.noSecant" ) );
 	}
 
 	const s = Math.sqrt( delta );
@@ -540,7 +554,7 @@ function orientedSecant(
 		}
 	}
 
-	throw new Error( "Richtung liefert keine Sekante mit zwei positiven Schnittparametern." );
+	throw new Error( t( "sections.interactive.errors.noPositiveSecant" ) );
 }
 
 function circumcircle(
@@ -556,7 +570,7 @@ function circumcircle(
 	const d = 2 * ( x1 * ( y2 - y3 ) + x2 * ( y3 - y1 ) + x3 * ( y1 - y2 ) );
 
 	if ( Math.abs( d ) < EPS ) {
-		throw new Error( "Punkte für Umkreis sind nahezu kollinear." );
+		throw new Error( t( "sections.interactive.errors.circumcircleCollinear" ) );
 	}
 
 	const uX =
@@ -582,22 +596,22 @@ function circleIntersections(
 	const d = dist( c1, c2 );
 
 	if ( d < EPS ) {
-		throw new Error( "Kreise haben fast gleichen Mittelpunkt." );
+		throw new Error( t( "sections.interactive.errors.sameCenter" ) );
 	}
 
 	if ( d > r1 + r2 + EPS ) {
-		throw new Error( "Kreise schneiden sich nicht." );
+		throw new Error( t( "sections.interactive.errors.noIntersection" ) );
 	}
 
 	if ( d < Math.abs( r1 - r2 ) - EPS ) {
-		throw new Error( "Ein Kreis liegt im anderen ohne Schnitt." );
+		throw new Error( t( "sections.interactive.errors.containedNoIntersection" ) );
 	}
 
 	const a = ( r1 * r1 - r2 * r2 + d * d ) / ( 2 * d );
 	const h2 = r1 * r1 - a * a;
 
 	if ( h2 < -EPS ) {
-		throw new Error( "Numerischer Fehler bei Kreis-Schnitt." );
+		throw new Error( t( "sections.interactive.errors.numericIntersection" ) );
 	}
 
 	const h = Math.sqrt( Math.max( 0, h2 ) );
@@ -620,11 +634,11 @@ function lineIntersection(
 	const denom = cross( r, s );
 
 	if ( Math.abs( denom ) < EPS ) {
-		throw new Error( "Geraden sind parallel oder fast parallel." );
+		throw new Error( t( "sections.interactive.errors.parallelLines" ) );
 	}
 
-	const t = cross( sub( Q1, P1 ), s ) / denom;
-	return add( P1, mul( r, t ) );
+	const tParam = cross( sub( Q1, P1 ), s ) / denom;
+	return add( P1, mul( r, tParam ) );
 }
 
 function angleAt(
@@ -636,7 +650,7 @@ function angleAt(
 	const n2 = Math.sqrt( norm2( v2 ) );
 
 	if ( n1 < EPS || n2 < EPS ) {
-		throw new Error( "Winkel mit zu kleinem Schenkel." );
+		throw new Error( t( "sections.interactive.errors.smallAngleLeg" ) );
 	}
 
 	let c = dot( v1, v2 ) / ( n1 * n2 );
@@ -649,13 +663,13 @@ function parseNumber( v, label ) {
 		.replace( ",", "." );
 
 	if ( !s ) {
-		throw new Error( `${label}: leer.` );
+		throw new Error( t( "sections.interactive.errors.empty", { label } ) );
 	}
 
 	const x = Number( s );
 
 	if ( !Number.isFinite( x ) ) {
-		throw new Error( `${label}: ungültige Zahl.` );
+		throw new Error( t( "sections.interactive.errors.invalidNumber", { label } ) );
 	}
 
 	return x;
@@ -668,11 +682,11 @@ function buildConfiguration( {
 	const B = pt( bx, by );
 
 	if ( dist( B, O ) <= R + 0.02 ) {
-		throw new Error( "B muss außerhalb des Kreises um O liegen." );
+		throw new Error( t( "sections.interactive.errors.pointBOutside" ) );
 	}
 
 	if ( Math.abs( alpha - beta ) < 2 ) {
-		throw new Error( "Die Richtungen α und β müssen ausreichend verschieden sein." );
+		throw new Error( t( "sections.interactive.errors.directionsDifferent" ) );
 	}
 
 	const sec1 = orientedSecant(
@@ -690,7 +704,7 @@ function buildConfiguration( {
 	const area2 = Math.abs( cross( sub( A, B ), sub( C, B ) ) );
 
 	if ( area2 < 1e-4 ) {
-		throw new Error( "A, B, C liegen nahezu auf einer Linie." );
+		throw new Error( t( "sections.interactive.errors.abcCollinear" ) );
 	}
 
 	const cABC = circumcircle(
@@ -788,7 +802,10 @@ function runCheck() {
 		const alpha = parseNumber( alphaInput.value, "α" );
 		const beta = parseNumber( betaInput.value, "β" );
 		result.value = buildConfiguration( {
-			bx, by, alpha, beta
+			bx,
+			by,
+			alpha,
+			beta
 		} );
 	} catch ( e ) {
 		error.value = e?.message ? String( e.message ) : String( e );
@@ -814,7 +831,10 @@ function randomExample() {
 
 		try {
 			const out = buildConfiguration( {
-				bx, by, alpha, beta
+				bx,
+				by,
+				alpha,
+				beta
 			} );
 			bxInput.value = String( bx );
 			byInput.value = String( by );
@@ -827,7 +847,7 @@ function randomExample() {
 		}
 	}
 
-	error.value = "Konnte keine stabile Zufallskonfiguration finden. Bitte erneut klicken.";
+	error.value = t( "sections.interactive.errors.randomFailed" );
 }
 
 function fmt( n, digits = 6 ) {

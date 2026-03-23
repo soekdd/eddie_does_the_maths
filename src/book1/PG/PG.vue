@@ -1,116 +1,86 @@
 <!-- eslint-disable vue/max-len -->
 <template>
-<AppFrame  :sub-chapter="{
-		'einleitung': 'Einleitung',
-		'poker': 'Poker',
-		'wahrscheinlichkeiten': 'Wahrscheinlichkeiten',
-		'bayes': 'Bayes',
-		'ev': 'EV'
-	}"
-	title="Eddie rechnet: Five Card Draw - 7 statistische Aufgaben"
+<AppFrame
+	:languages="[ 'de', 'en' ]"
+	:sub-chapter
+	:title="t( 'title' )"
 	:vue-date="__VITE_SFC_MTIME_MS__"
 >
 	<template #bookPart>
 		<figure class="exampleFigure">
-			<ImageZoomer title="Eddie zockt die Jungs ab">
-				<img loading="lazy" :src="titleImg" />
+			<ImageZoomer :title="t( 'imageTitle' )">
+				<img :alt="t( 'imageAlt' )" loading="lazy" :src="titleImg" />
 			</ImageZoomer>
 		</figure>
-		<h3 id="einleitung">Joutsenlampi, 4. Juli 1985</h3>
-		<div class="eddie"><p>Ich sitze zwischen den Jungs, als wäre ich nur harmlose Deko am Tisch.
-			Genau deshalb lassen sie mich so nah ran: Kleidchen, braver Blick, “ich kann das gar nicht”.
-			Und ja, die Regeln muss ich wirklich noch verstehen. Aber ein Blatt ist kein Mysterium.
-			Es ist Mathe. Welche Kombinationen möglich sind. Wie oft ich sie treffe. Wie wahrscheinlich
-			eine bestimmte Karte im Draw überhaupt noch im Deck liegt. Das folgt festen Gesetzen, und die
-			begreife ich schneller als Aaron “All-in” sagen kann.
-		</p><p>
-			Wir spielen Five-Card-Draw, ohne offene Karten. Heißt: Rechnen im Kopf, und der Rest ist Psychologie.
-			Ich achte auf Timing (zu schnelles Setzen ist oft Panik), auf Hände (zu viel Rumfummeln schreit Bluff),
-			auf Stimmen (plötzlich zu locker = gespielt). Und ich stelle Fragen, nur um zu sehen, wer ausweicht.
-		</p><p>
-			Hier zeige ich dir, wie du bei Five-Draw sauber rechnest – und unten kannst du ein
-			interaktives Blatt selbst ausprobieren.
-		</p>
+		<h3 id="einleitung">{{ t( "introDate" ) }}</h3>
+		<div class="eddie">
+			<p>{{ t( "book.p1" ) }}</p>
+			<p>{{ t( "book.p2" ) }}</p>
+			<p>{{ t( "book.p3" ) }}</p>
 		</div>
 	</template>
 
 	<template #descriptionPart>
-		<h2 id="poker">Five Card Draw: Aufgabenblock</h2>
+		<h2 id="poker">{{ t( "sections.poker.title" ) }}</h2>
 		<div class="eddie">
-			<p>
-				Im <b>Five Card Draw</b> (5 Karten aus einem 52er-Deck, Reihenfolge egal) lassen sich
-				Entscheidungen sehr gut über <b>Wahrscheinlichkeiten</b> und <b>Erwartungswerte</b>
-				modellieren.
-			</p>
-			<p class="mono">
-				Wichtiger Zählhinweis für die Draw-Aufgaben: Bei einer 1-Karten-Ziehung sind
-				<b>47 Karten ziehbar</b>, also <Katex inline tex="52-5=47" />.
-				Grund: 4 gehaltene Karten <i>und</i> die abgeworfene Karte sind nicht im Ziehstapel.
-			</p>
+			<p v-html="t( 'sections.poker.p1' )" />
+			<p class="mono" v-html="t( 'sections.poker.p2' )" />
 		</div>
 
 		<section class="task">
 			<figure class="exampleFigure">
-				<ImageZoomer no-zoom title="Beispielhand: Ein Paare">
+				<ImageZoomer no-zoom :title="t( 'sections.task1.imageTitle' )">
 					<PGHand
 						:cards="[
-							{ code: 'Ds', suit: 'Pik',   rank: 'Dame' },
-							{ code: 'Dh', suit: 'Herz',  rank: 'Dame' },
+							{ code: 'Ds', suit: 'Pik', rank: 'Dame' },
+							{ code: 'Dh', suit: 'Herz', rank: 'Dame' }
 						]"
 					/>
 				</ImageZoomer>
 			</figure>
-			<h3 id="wahrscheinlichkeiten">Schritt 1.1 - Aufgabe 1: Das klassische Paar - Lohnt sich "3 ziehen"?</h3>
+			<h3 id="wahrscheinlichkeiten">{{ t( "sections.task1.title" ) }}</h3>
 			<div class="eddie">
-				<p>
-					<b>Situation:</b> Eddie hält nach dem Deal ein Paar und wirft die anderen drei Karten weg.
-					Sie zieht <b>3 neue Karten</b>.
-				</p>
-				<p><b>Fragen:</b></p>
+				<p v-html="t( 'sections.task1.p1' )" />
+				<p><b>{{ t( "sections.task1.questions" ) }}</b></p>
 				<ol>
-					<li>Wie wahrscheinlich verbessert sie sich zu Two Pair, Drilling, Full House, Vierling?</li>
-					<li>Wie oft bleibt sie bei nur einem Paar?</li>
+					<li>{{ t( "sections.task1.q1" ) }}</li>
+					<li>{{ t( "sections.task1.q2" ) }}</li>
 				</ol>
 				<p>
-					<b>Lösung (exakt):</b> Insgesamt gibt es
-					<Katex inline tex="\binom{52-5}{3}=\binom{47}{3}=16{,}215" /> Ziehungen.
+					<b>{{ t( "sections.task1.solution" ) }}</b> {{ t( "sections.task1.solution2" ) }}
+					<Katex inline tex="\binom{52-5}{3}=\binom{47}{3}=16{,}215" />
+					{{ t( "sections.task1.solution3" ) }}
 				</p>
 				<div class="kbox">
-					<div class="mono">Two Pair: 2592/16215 ≈ 15,985%</div>
-					<div class="mono">Drilling: 1854/16215 ≈ 11,434%</div>
-					<div class="mono">Full House: 165/16215 ≈ 1,018%</div>
-					<div class="mono">Vierling: 45/16215 ≈ 0,278%</div>
-					<div class="mono">Bleibt Paar: 11559/16215 ≈ 71,286%</div>
+					<div class="mono">{{ t( "sections.task1.twoPair" ) }}</div>
+					<div class="mono">{{ t( "sections.task1.threeKind" ) }}</div>
+					<div class="mono">{{ t( "sections.task1.fullHouse" ) }}</div>
+					<div class="mono">{{ t( "sections.task1.fourKind" ) }}</div>
+					<div class="mono">{{ t( "sections.task1.keepPair" ) }}</div>
 				</div>
-				<p class="muted"><i>Story-Hook:</i> "Sieben von zehn Mal bleib ich beim Paar."</p>
+				<p class="muted"><i>{{ t( "sections.task1.storyHook" ) }}</i></p>
 			</div>
 		</section>
 
 		<section class="task">
 			<figure class="exampleFigure">
-				<ImageZoomer no-zoom  title="Beispielhand: Zwei Paare">
+				<ImageZoomer no-zoom :title="t( 'sections.task2.imageTitle' )">
 					<PGHand
 						:cards="[
 							{ code: '4c', suit: 'Kreuz', rank: 4 },
-							{ code: '4h', suit: 'Herz',  rank: 4 },
-							{ code: 'Ks', suit: 'Pik',   rank: 'König' },
-							{ code: 'Kd', suit: 'Karo',  rank: 'König' }
+							{ code: '4h', suit: 'Herz', rank: 4 },
+							{ code: 'Ks', suit: 'Pik', rank: 'König' },
+							{ code: 'Kd', suit: 'Karo', rank: 'König' }
 						]"
 					/>
 				</ImageZoomer>
 			</figure>
-			<h3>Schritt 1.2 - Aufgabe 2: Zwei Paare - Zieh ich 1 Karte oder bleib ich stehen?</h3>
+			<h3>{{ t( "sections.task2.title" ) }}</h3>
 			<div class="eddie">
-				<p>
-					<b>Situation:</b> Eddie hat zwei Paare plus Kicker,
-					wirft den Kicker weg und zieht <b>1 Karte</b>.
-				</p>
-				<p><b>Frage:</b> Wie wahrscheinlich wird daraus ein Full House?</p>
+				<p v-html="t( 'sections.task2.p1' )" />
+				<p><b>{{ t( "sections.task2.p2" ) }}</b></p>
 				<div class="kbox">
-					<p class="mono">
-						Ziehbare Karten: <Katex inline tex="52-5=47" /> (nicht 48), denn die 5. Handkarte wurde abgeworfen.
-						Outs: 2 Könige + 2 Vieren = 4 von 47
-					</p>
+					<p class="mono" v-html="t( 'sections.task2.p3' )" />
 					<Katex as="div" display tex="P(\text{Full House})=\frac{4}{47}\approx 8{,}51\%" />
 				</div>
 			</div>
@@ -118,25 +88,23 @@
 
 		<section class="task">
 			<figure class="exampleFigure">
-				<ImageZoomer no-zoom title="Beispielhand: Vier zum Flush">
+				<ImageZoomer no-zoom :title="t( 'sections.task3.imageTitle' )">
 					<PGHand
 						:cards="[
-							{ code: 'Kc', suit: 'Kreuz',   rank: '7' },
-							{ code: 'Kc', suit: 'Kreuz',  rank: '10' },
-							{ code: 'Kc', suit: 'Kreuz',   rank: 'Dame' },
-							{ code: 'Kc', suit: 'Kreuz',  rank: 'König' },
+							{ code: 'Kc', suit: 'Kreuz', rank: '7' },
+							{ code: 'Kc', suit: 'Kreuz', rank: '10' },
+							{ code: 'Kc', suit: 'Kreuz', rank: 'Dame' },
+							{ code: 'Kc', suit: 'Kreuz', rank: 'König' }
 						]"
 					/>
 				</ImageZoomer>
 			</figure>
-			<h3>Schritt 1.3 - Aufgabe 3: Vier Karten zum Flush - Wie gut ist der 1-Karten-Draw?</h3>
+			<h3>{{ t( "sections.task3.title" ) }}</h3>
 			<div class="eddie">
-				<p>
-					<b>Situation:</b> Eddie hat 4 Karten einer Farbe und zieht <b>1 Karte</b>.
-				</p>
-				<p><b>Frage:</b> Wie oft trifft sie den Flush?</p>
+				<p v-html="t( 'sections.task3.p1' )" />
+				<p><b>{{ t( "sections.task3.p2" ) }}</b></p>
 				<div class="kbox">
-					<p class="mono">Ziehbare Karten: <Katex inline tex="52-5=47" />, davon 9 in der gesuchten Farbe.</p>
+					<p class="mono" v-html="t( 'sections.task3.p3' )" />
 					<Katex as="div" display tex="P(\text{Flush})=\frac{9}{47}\approx 19{,}15\%" />
 				</div>
 			</div>
@@ -144,29 +112,27 @@
 
 		<section class="task">
 			<figure class="exampleFigure">
-				<ImageZoomer no-zoom title="Beispielhand: Open-ended Draw">
+				<ImageZoomer no-zoom :title="t( 'sections.task4.imageTitle' )">
 					<PGHand
 						:cards="[
-							{ code: 'Kc', suit: 'Karo',   rank: '6' },
-							{ code: 'Kc', suit: 'Karo',  rank: '7' },
-							{ code: 'Kc', suit: 'Karo',   rank: '8' },
-							{ code: 'Kc', suit: 'Karo',  rank: '9' },
+							{ code: 'Kc', suit: 'Karo', rank: '6' },
+							{ code: 'Kc', suit: 'Karo', rank: '7' },
+							{ code: 'Kc', suit: 'Karo', rank: '8' },
+							{ code: 'Kc', suit: 'Karo', rank: '9' }
 						]"
 					/>
 				</ImageZoomer>
 			</figure>
-			
-			<h3>Schritt 1.4 - Aufgabe 4: Vier Karten zur Strasse - Open-Ended vs. Gutshot</h3>
+
+			<h3>{{ t( "sections.task4.title" ) }}</h3>
 			<div class="eddie">
-				<p>
-					<b>Situation:</b> Eddie hat 4 Karten zur Strasse und zieht <b>1 Karte</b>.
-				</p>
+				<p v-html="t( 'sections.task4.p1' )" />
 				<ul>
-					<li>Open-ended Draw, z.B. 6-7-8-9 (es fehlt 5 oder 10)</li>
-					<li>Gutshot Draw, z.B. 6-7-9-10 (es fehlt 8)</li>
+					<li>{{ t( "sections.task4.l1" ) }}</li>
+					<li>{{ t( "sections.task4.l2" ) }}</li>
 				</ul>
 				<div class="kbox">
-					<p class="mono">Auch hier gilt beim 1-Karten-Draw: <Katex inline tex="52-5=47" /> ziehbare Karten.</p>
+					<p class="mono" v-html="t( 'sections.task4.p2' )" />
 					<Katex
 						aligned
 						as="div"
@@ -179,23 +145,22 @@
 
 		<section class="task">
 			<figure class="exampleFigure">
-				<ImageZoomer title="Eddie Pokerqueen">
-					<img loading="lazy" :src="eddieImg" />
+				<ImageZoomer :title="t( 'sections.task5.imageTitle' )">
+					<img :alt="t( 'sections.task5.imageAlt' )" loading="lazy" :src="eddieImg" />
 				</ImageZoomer>
 			</figure>
-			<h3 id="bayes">Schritt 1.5 - Aufgabe 5: Bayes aus Ziehzahl - Gegner zieht 1 Karte</h3>
+			<h3 id="bayes">{{ t( "sections.task5.title" ) }}</h3>
 			<div class="eddie">
-				<p>
-					<b>Modellannahme (vereinfacht):</b>
-				</p>
+				<p><b>{{ t( "sections.task5.p1" ) }}</b></p>
 				<ul>
-					<li>Wer Two Pair hat, zieht genau 1 Karte (auf Full House).</li>
-					<li>Wer 4-Flush hat, zieht genau 1 Karte (auf Flush).</li>
-					<li>Andere Hände ziehen in diesem Modell nicht genau 1 Karte.</li>
+					<li>{{ t( "sections.task5.l1" ) }}</li>
+					<li>{{ t( "sections.task5.l2" ) }}</li>
+					<li>{{ t( "sections.task5.l3" ) }}</li>
 				</ul>
 				<p>
-					<b>Beobachtung:</b> Gegner zieht 1 Karte.
-					Gesucht ist <Katex inline tex="P(\text{Two Pair}\mid \text{zieht 1})" />.
+					<b>{{ t( "sections.task5.p2" ) }}</b>
+					{{ t( "sections.task5.p3" ) }}
+					<Katex inline tex="P(\text{Two Pair}\mid \text{zieht 1})" />.
 				</p>
 				<div class="kbox">
 					<Katex
@@ -205,18 +170,15 @@
 						tex="P(\text{Two Pair}) &= \frac{123{.}552}{2{.}598{.}960}\approx 4{,}754\% \\ N(\text{4-Flush}) &= 4\cdot \binom{13}{4}\cdot 39=111{.}540 \\ P(\text{4-Flush}) &= \frac{111{.}540}{2{.}598{.}960}\approx 4{,}292\% \\ P(\text{Two Pair}\mid 1) &\approx 0{,}5255"
 					/>
 				</div>
-				<p class="mono">Also: ca. 52,6% Two Pair vs. 47,4% 4-Flush.</p>
+				<p class="mono">{{ t( "sections.task5.p4" ) }}</p>
 			</div>
 		</section>
 
 		<section class="task">
-			<h3>Schritt 1.6 - Aufgabe 6: Bluff-Mathe - Wie oft muss er funktionieren?</h3>
+			<h3>{{ t( "sections.task6.title" ) }}</h3>
 			<div class="eddie">
-				<p>
-					<b>Situation:</b> Nach dem Draw ist der Pot <Katex inline tex="P" />.
-					Eddie blufft mit Einsatz <Katex inline tex="B" />.
-				</p>
-				<p><b>Frage:</b> Welche Mindest-Foldrate <Katex inline tex="f" /> braucht sie für Break-even?</p>
+				<p v-html="t( 'sections.task6.p1' )" />
+				<p><b>{{ t( "sections.task6.p2" ) }}</b></p>
 				<div class="kbox">
 					<Katex as="div" display tex="f\cdot P-(1-f)\cdot B=0\Rightarrow f=\frac{B}{P+B}" />
 					<Katex as="div" display tex="P=20,\;B=10\Rightarrow f=\frac{10}{30}=\frac{1}{3}\approx 33{,}3\%" />
@@ -225,18 +187,14 @@
 		</section>
 
 		<section class="task">
-			<h3 id="ev">Schritt 1.7 - Aufgabe 7: EV statt Bauchgefühl - Welche Linie ist besser?</h3>
+			<h3 id="ev">{{ t( "sections.task7.title" ) }}</h3>
 			<div class="eddie">
-				<p>
-					<b>Situation:</b> Eddie hat ein Paar und kann wählen:
-				</p>
+				<p>{{ t( "sections.task7.p1" ) }}</p>
 				<ul>
-					<li>Linie A: 3 Karten ziehen (klassisch)</li>
-					<li>Linie B: 0 ziehen (stehen bleiben), um Stärke zu repräsentieren</li>
+					<li>{{ t( "sections.task7.l1" ) }}</li>
+					<li>{{ t( "sections.task7.l2" ) }}</li>
 				</ul>
-				<p>
-					Gegner callt nach dem Draw nur ab Two Pair.
-				</p>
+				<p>{{ t( "sections.task7.p2" ) }}</p>
 				<div class="kbox">
 					<Katex
 						as="div"
@@ -245,57 +203,54 @@
 					/>
 				</div>
 				<ol>
-					<li>Nutze diese Wahrscheinlichkeit für Linie A.</li>
-					<li>Linie B gewinnt nur über Folds.</li>
-					<li>Setze Pot, Bet und Calling-Range ein und vergleiche den EV.</li>
+					<li>{{ t( "sections.task7.o1" ) }}</li>
+					<li>{{ t( "sections.task7.o2" ) }}</li>
+					<li>{{ t( "sections.task7.o3" ) }}</li>
 				</ol>
 			</div>
 		</section>
 
-		<EddieComment class="mt-4" subtitle="Real Talk vom Pokertisch">
-			<p>
-				Mathematik ist beim Poker Pflicht, aber nie die ganze Geschichte.
-				Die Zahlen zeigen dir gute Linien, doch gespielt wird gegen Menschen.
-			</p>
-			<p>
-				Psychologie, Schauspieltalent, Intuition und Beobachtungsgabe zählen genauso:
-				Wer wirkt plötzlich unsicher? Wer overacted Stärke? Wer verändert sein Timing?
-			</p>
-			<p class="muted">
-				Kurz: Rechne sauber, aber lies immer auch die Person auf der anderen Seite.
-			</p>
+		<EddieComment class="mt-4" :subtitle="t( 'sections.comment.title' )">
+			<p>{{ t( "sections.comment.p1" ) }}</p>
+			<p>{{ t( "sections.comment.p2" ) }}</p>
+			<p class="muted">{{ t( "sections.comment.p3" ) }}</p>
 		</EddieComment>
-
 	</template>
 	<template #interactivePart>
-		<PGGame/>
+		<PGGame />
 	</template>
 
 	<template #footer>
 		<p class="muted">
-			<a href="https://github.com/goldfire/pokersolver">Thanks to James Simpson and GoldFire Studios, Inc. for their Poker Solver (MIT License)</a>
+			<a href="https://github.com/goldfire/pokersolver">{{ t( "footer.link" ) }}</a>
 		</p>
 	</template>
 </AppFrame>
 </template>
 
 <script setup>
+import { computed } from "vue";
+import { useI18n } from "@/i18n.mjs";
+
 import titleImg from "./PG.webp";
 import eddieImg from "./PG_Eddie.webp";
 import PGGame from "./PG_Game.vue";
 import PGHand from "./PG_Hand.vue";
+
+const { t, tm } = useI18n( "book1/PG" );
+const subChapter = computed( () => tm( "subChapter" ) ?? {} );
 </script>
 
 <style scoped>
 .task {
-  margin-top: 14px;
+	margin-top: 14px;
 }
 
 .miniPair {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  margin: 0 4px;
-  vertical-align: middle;
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	margin: 0 4px;
+	vertical-align: middle;
 }
 </style>

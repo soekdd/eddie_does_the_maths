@@ -12,13 +12,19 @@
 				<div class="calc-top d-flex align-center justify-space-between mb-3">
 					<div class="brand">
 						<div class="brand-line1">CASIO</div>
-						<div class="brand-line2">fx-7000G <span class="brand-badge">EDDIE EDITION</span></div>
+						<div class="brand-line2">fx-7000G <span class="brand-badge">{{ t( "fx7000g.edition" ) }}</span></div>
 					</div>
 
 					<div class="status text-caption">
-						<div><strong>Interpreter:</strong> {{ cbiReady ? "bereit" : "lädt…" }}</div>
-						<div><strong>Mode:</strong> {{ calcMode === "direct" ? `CALC (${directAngleMode})` : "BASIC" }}</div>
-						<div><strong>Status:</strong> {{ status }}</div>
+						<div>
+							<strong>{{ t( "fx7000g.labels.interpreter" ) }}:</strong>
+							{{ cbiReady ? t( "fx7000g.labels.ready" ) : t( "fx7000g.labels.loading" ) }}
+						</div>
+						<div>
+							<strong>{{ t( "fx7000g.labels.mode" ) }}:</strong>
+							{{ calcMode === "direct" ? `CALC (${directAngleMode})` : "BASIC" }}
+						</div>
+						<div><strong>{{ t( "fx7000g.labels.status" ) }}:</strong> {{ statusLabel }}</div>
 					</div>
 				</div>
 
@@ -103,7 +109,7 @@
 				<div class="d-flex align-center justify-space-between mb-2">
 					<div class="text-h6 mr-4">BASIC</div>
 					<div class="text-caption">
-						Tipp: <code>INPUT</code> Werte kannst du dann über die Zifferntasten + <code>EXE</code> eingeben.
+						{{ t( "fx7000g.editor.tip" ) }}
 					</div>
 				</div>
 
@@ -113,7 +119,7 @@
 					density="compact"
 					hide-details
 					:items="programItems"
-					label="Vorgefertigtes Programm"
+					:label="t( 'fx7000g.editor.programPreset' )"
 					variant="outlined"
 				/>
 
@@ -121,7 +127,7 @@
 					v-model="programSrc"
 					auto-grow
 					class="mb-3"
-					label="Programmtext"
+					:label="t( 'fx7000g.editor.programText' )"
 					rows="18"
 					spellcheck="false"
 					variant="outlined"
@@ -140,21 +146,21 @@
 						variant="elevated"
 						@click="runProgram"
 					>
-						Run
+						{{ t( "fx7000g.editor.run" ) }}
 					</v-btn>
 					<v-btn color="secondary"
 						:disabled="!cbiReady"
 						variant="elevated"
 						@click="stopProgram"
 					>
-						Stop
+						{{ t( "fx7000g.editor.stop" ) }}
 					</v-btn>
 					<v-btn color="error"
 						:disabled="!cbiReady"
 						variant="elevated"
 						@click="hardReset"
 					>
-						Reset
+						{{ t( "fx7000g.editor.reset" ) }}
 					</v-btn>
 				</div>
 
@@ -164,7 +170,7 @@
 					variant="tonal"
 				>
 					<div class="text-caption">
-						<strong>Finish:</strong> {{ lastFinish }}
+						<strong>{{ t( "fx7000g.editor.finish" ) }}:</strong> {{ lastFinish }}
 					</div>
 				</v-alert>
 			</v-card>
@@ -177,6 +183,7 @@
 import {
 	computed, nextTick, onBeforeUnmount, onMounted, ref, watch
 } from "vue";
+import { useI18n } from "@/i18n.mjs";
 import katex from "katex";
 import { ensureCbiLoaded } from "./cbi/cbi.mjs";
 
@@ -225,6 +232,11 @@ declare global {
   }
 }
 
+const {
+	t,
+	tm
+} = useI18n( "book1/FX" );
+
 const cbiReady = ref( false );
 const status = ref( "idle" );
 const lastFinish = ref<string>( "" );
@@ -254,349 +266,80 @@ type ProgramPreset = {
 	source: string;
 };
 
-const programPresets: ProgramPreset[] = [
-	{
-		id:     "hello",
-		name:   "Hello World",
-		source: [
-			"Cls",
-			"Locate 1,1,\"HELLO WORLD\"",
-			"For 1->I To 5",
-			"Locate 1,I+2,I",
-			"Locate 5,I+2,I*I",
-			"Next",
-			"Stop"
-		].join( "\n" )
-	},
-	{
-		id:     "graphTest",
-		name:   "Grafik-Test",
-		source: [
-			"Cls",
-			"Locate 1,1,\"GRAFIK TEST\"",
-			"ClrGraph",
-			"For 1->X To 95",
-			"PxlOn 32,X",
-			"Next",
-			"For 1->Y To 63",
-			"PxlOn Y,48",
-			"Next",
-			"Circle 48,32,14",
-			"Stop"
-		].join( "\n" )
-	},
-	{
-		id:     "sinCos",
-		name:   "Sinus und Kosinus",
-		source: `ViewWindow -2π, 2π, π÷4, -1.6, 1.6, 0.5
-GridOn
-AxesOn
-Rad
-Cls
+const programPresets = computed<ProgramPreset[]>( () => {
+	const rawPrograms = tm( "fx7000g.programs" );
 
-.2->S
-
-For Xmin->X to Xmax+S Step S
-  F-Line X-S, cos (X-S), X, cos X
-Next
-
-For Xmin->X to Xmax+S Step S
-  F-Line X-S, sin (X-S), X, sin X
-Next
-
-GridOff
-AxesOff`
-	},
-	{
-		id:     "mazes",
-		name:   "Labyrint",
-		source: `ViewWindow 0,126,0,62,0,0
-For 0->B To 13
-  For 0->A To 25
-    RanInt#(0,1)->C
-    F-line 5A,5(B+C),5(A+1),5(B+1-C)
-  Next
-Next`
-	},
-	{
-		id:     "kochCurveLoopD3",
-		name:   "Koch-Kurve (Schleife D3)",
-		source: [
-			"Cls",
-			"Locate 1,1,\"KOCH LOOP D3\"",
-			"ClrGraph",
-			"Range 0,95,5,0,63,5",
-			"Deg",
-			"54->L",
-			"20->X",
-			"47->Y",
-			"0->A",
-			"For 1->Z To 3",
-			"For 1->I To 4",
-			"For 1->J To 4",
-			"For 1->K To 4",
-			"X+L/27*Cos(A)->M",
-			"Y+L/27*Sin(A)->N",
-			"F-Line X,Y,M,N",
-			"M->X",
-			"N->Y",
-			"If K=1",
-			"Then",
-			"A+60->A",
-			"IfEnd",
-			"If K=2",
-			"Then",
-			"A-120->A",
-			"IfEnd",
-			"If K=3",
-			"Then",
-			"A+60->A",
-			"IfEnd",
-			"Next",
-			"If J=1",
-			"Then",
-			"A+60->A",
-			"IfEnd",
-			"If J=2",
-			"Then",
-			"A-120->A",
-			"IfEnd",
-			"If J=3",
-			"Then",
-			"A+60->A",
-			"IfEnd",
-			"Next",
-			"If I=1",
-			"Then",
-			"A+60->A",
-			"IfEnd",
-			"If I=2",
-			"Then",
-			"A-120->A",
-			"IfEnd",
-			"If I=3",
-			"Then",
-			"A+60->A",
-			"IfEnd",
-			"Next",
-			"A-120->A",
-			"Next",
-			"Stop"
-		].join( "\n" )
-	},
-	{
-		id:     "kochCurveLoopD4",
-		name:   "Koch-Kurve (Schleife D4)",
-		source: [
-			"Cls",
-			"Locate 1,1,\"KOCH LOOP D4\"",
-			"ClrGraph",
-			"Range 0,95,5,0,63,5",
-			"Deg",
-			"54->L",
-			"20->X",
-			"47->Y",
-			"0->A",
-			"For 1->Z To 3",
-			"For 1->I To 4",
-			"For 1->J To 4",
-			"For 1->K To 4",
-			"For 1->Q To 4",
-			"X+L/81*Cos(A)->M",
-			"Y+L/81*Sin(A)->N",
-			"F-Line X,Y,M,N",
-			"M->X",
-			"N->Y",
-			"If Q=1",
-			"Then",
-			"A+60->A",
-			"IfEnd",
-			"If Q=2",
-			"Then",
-			"A-120->A",
-			"IfEnd",
-			"If Q=3",
-			"Then",
-			"A+60->A",
-			"IfEnd",
-			"Next",
-			"If K=1",
-			"Then",
-			"A+60->A",
-			"IfEnd",
-			"If K=2",
-			"Then",
-			"A-120->A",
-			"IfEnd",
-			"If K=3",
-			"Then",
-			"A+60->A",
-			"IfEnd",
-			"Next",
-			"If J=1",
-			"Then",
-			"A+60->A",
-			"IfEnd",
-			"If J=2",
-			"Then",
-			"A-120->A",
-			"IfEnd",
-			"If J=3",
-			"Then",
-			"A+60->A",
-			"IfEnd",
-			"Next",
-			"If I=1",
-			"Then",
-			"A+60->A",
-			"IfEnd",
-			"If I=2",
-			"Then",
-			"A-120->A",
-			"IfEnd",
-			"If I=3",
-			"Then",
-			"A+60->A",
-			"IfEnd",
-			"Next",
-			"A-120->A",
-			"Next",
-			"Stop"
-		].join( "\n" )
-	},
-	{
-		id:     "vigenere295",
-		name:   "Vigenere 295 (A=0..Z=25)",
-		source: [
-			"Cls",
-			"Locate 1,1,\"VIG 295\"",
-			"Locate 1,2,\"A(0-25)?\"",
-			"?->A",
-			"Locate 1,3,\"POS I?\"",
-			"?->I",
-			"I-Int((I-1)/3)*3->J",
-			"2->S",
-			"If J=2",
-			"Then",
-			"9->S",
-			"IfEnd",
-			"If J=0",
-			"Then",
-			"5->S",
-			"IfEnd",
-			"A+S->C",
-			"If C>=26",
-			"Then",
-			"C-26->C",
-			"IfEnd",
-			"Locate 1,5,\"SHIFT=\"",
-			"Locate 7,5,S",
-			"Locate 1,6,\"C=\"",
-			"Locate 3,6,C",
-			"Stop"
-		].join( "\n" )
-	},
-	{
-		id:     "fractionReduce",
-		name:   "Bruch kürzen",
-		source: [
-			"Cls",
-			"Locate 1,3,\"BRUCH KUERZEN\"",
-			"Locate 1,4,\"ZAEHLER?\"",
-			"?->N",
-			"Locate 1,5,\"NENNER?\"",
-			"?->D",
-			"If D=0",
-			"Then",
-			"Locate 1,5,\"NENNER=0\"",
-			"Stop",
-			"IfEnd",
-			"If D<0",
-			"Then",
-			"-N->N",
-			"-D->D",
-			"IfEnd",
-			"Abs(N)->A",
-			"D->B",
-			"While B<>0",
-			"A-Int(A/B)*B->T",
-			"B->A",
-			"T->B",
-			"WhileEnd",
-			"N/A->P",
-			"D/A->Q",
-			"Locate 1,6,\"R=\"",
-			"Locate 3,6,P",
-			"Locate 6,6,\"/\"",
-			"Locate 8,6,Q",
-			"Stop"
-		].join( "\n" )
-	},
-	{
-		id:     "primes",
-		name:   "Primzahlen bis Reset",
-		source: [
-			"Cls",
-			"Locate 1,1,\"PRIMZAHLEN\"",
-			"2->N",
-			"1->C",
-			"While 1",
-			"1->P",
-			"For 2->D To Int(N/2)",
-			"If Int(N/D)=N/D",
-			"Then",
-			"0->P",
-			"IfEnd",
-			"Next",
-			"If P=1",
-			"Then",
-			"C+1->C",
-			"Locate 1,3,\"N=\"",
-			"Locate 3,3,N",
-			"Locate 1,4,\"ANZ=\"",
-			"Locate 5,4,C",
-			"IfEnd",
-			"N+1->N",
-			"WhileEnd"
-		].join( "\n" )
-	},
-	{
-		id:     "pi",
-		name:   "PI Näherung bis Reset",
-		source: [
-			"Cls",
-			"Locate 1,1,\"PI LEIBNIZ\"",
-			"0->S",
-			"1->K",
-			"0->I",
-			"While 1",
-			"S+K/(2*I+1)->S",
-			"I+1->I",
-			"-K->K",
-			"4*S->P",
-			"Locate 1,3,\"N=\"",
-			"Locate 3,3,I",
-			"Locate 1,4,\"PI=\"",
-			"Locate 4,4,P",
-			"WhileEnd"
-		].join( "\n" )
+	if ( !Array.isArray( rawPrograms ) ) {
+		return [];
 	}
-];
 
-const selectedProgramId = ref( programPresets[ 0 ]?.id ?? "" );
+	return rawPrograms.map( ( program: any ) => ( {
+		id:     String( program.id ?? "" ),
+		name:   String( program.name ?? "" ),
+		source: Array.isArray( program.source ) ? program.source.join( "\n" ) : String( program.source ?? "" )
+	} ) );
+} );
+
+const selectedProgramId = ref( "" );
 const programItems = computed( () =>
-	programPresets.map( ( p ) => ( { title: p.name, value: p.id } ) ) );
+	programPresets.value.map( ( p ) => ( { title: p.name, value: p.id } ) ) );
 const selectedProgramSource = computed( () =>
-	programPresets.find( ( p ) => p.id === selectedProgramId.value )?.source ?? "" );
+	programPresets.value.find( ( p ) => p.id === selectedProgramId.value )?.source ?? "" );
 const programSrc = ref<string>( selectedProgramSource.value );
 
 watch(
-	selectedProgramId,
+	programPresets,
+	( presets ) => {
+		if ( !presets.length ) {
+			selectedProgramId.value = "";
+			return;
+		}
+
+		if ( !presets.some( ( p ) => p.id === selectedProgramId.value ) ) {
+			selectedProgramId.value = presets[ 0 ].id;
+		}
+	},
+	{ immediate: true }
+);
+
+watch(
+	selectedProgramSource,
 	() => {
 		programSrc.value = selectedProgramSource.value;
 	},
 	{ immediate: true }
 );
+
+const statusLabel = computed( () => {
+	switch ( status.value ) {
+		case "idle":
+			return t( "fx7000g.status.idle" );
+		case "loading":
+			return t( "fx7000g.status.loading" );
+		case "missing jsccRun":
+			return t( "fx7000g.status.missingJsccRun" );
+		case "failed to load cbi":
+			return t( "fx7000g.status.failedToLoadCbi" );
+		case "ready":
+			return t( "fx7000g.status.ready" );
+		case "direct ready":
+			return t( "fx7000g.status.directReady" );
+		case "running":
+			return t( "fx7000g.status.running" );
+		case "stopped":
+			return t( "fx7000g.status.stopped" );
+		case "direct running":
+			return t( "fx7000g.status.directRunning" );
+		case "direct error":
+			return t( "fx7000g.status.directError" );
+		case "reset failed":
+			return t( "fx7000g.status.resetFailed" );
+		case "init failed":
+			return t( "fx7000g.status.initFailed" );
+		default:
+			return status.value;
+	}
+} );
 
 function katexHtml( expr: string, small = false ) {
 	// very small labels: allow plain text + LaTeX
@@ -830,10 +573,10 @@ function renderDirectScreen() {
 		lcdFit( `Ans=${formatDirectNumber( directAns.value )}` ),
 		directError.value ?
 			lcdFit( `Err ${directError.value}` ) : directResult.value ?
-				lcdFit( `= ${directResult.value}` ) : "EXE=calc DEL=back",
-		"MODE/BASIC UP/DN mem",
-		directBusy.value ? "Berechne..." : "AC clear ENG angle",
-		"sin cos tan log ln"
+				lcdFit( `= ${directResult.value}` ) : t( "fx7000g.run.help1" ),
+		t( "fx7000g.run.help2" ),
+		directBusy.value ? t( "fx7000g.run.busy" ) : t( "fx7000g.run.help3" ),
+		t( "fx7000g.run.help4" )
 	];
 	renderDirectCanvas(
 		lines, cursorCol, 2

@@ -1,0 +1,195 @@
+title: "Eddie Does the Maths: Let Me Show You Your DNA"
+imageTitle: "Eddie and Sini in Vaasa"
+imageAlt: "Eddie and Sini with a genetics book in Vaasa"
+samiImageTitle: "Sini's SAMI DNA"
+samiImageAlt: "Hand-drawn SAMI DNA sequence"
+introDate: "Vaasa, August 12, 1985"
+subChapter:
+  einleitung: "Introduction"
+  bits-zu-basen: "Bits to Bases"
+  codons: "Codons"
+  vergleich: "Comparison"
+  frameshift: "Frameshift"
+  warum: "Why This Grabs Me"
+  gift-code: "String to DNA"
+book:
+  p1: "In Sini's apartment there's this genetics book lying around, heavy as a brick, and of course I can't leave it alone. I open it. And boom, my head does its thing again. Biology turns into a system. Pictures turn into rules. Bases turn into code."
+  p2: "Suddenly DNA does not feel like some slimy microscope thing anymore, but like an insanely elegant storage format. Not polished like a computer, more like brilliantly scrappy, a machine born in the forest that still runs reliably. Four symbols, endless combinations. And right in the middle of it, me, barefoot on Sini's floorboards, with colored pencils in hand and an idea that is freaky and sweet at the same time."
+  p3: "Here I want to show you exactly that trick, how to translate letters into DNA, how to build words out of it, yes even names like PUNK and SAMI, and why groups of three are so beautifully logical. Below you can click on your own little sheet, try things out, swap things around, tinker, until genetics suddenly turns into a gift."
+sections:
+  part1:
+    title: "Part 1 - From Bits to Bases: four symbols instead of two"
+    p1: "Computers love two states, 0 and 1. Nature says I will take four. DNA uses the bases A, C, G, T. And it couples them directly as pairs, A-T and C-G."
+    p2: "That is storage and plausibility checking in one step. When you see an A, you expect a T on the other side."
+    p3: "And now the computer science moment, four symbols fit exactly into 2 bits."
+    note: "That means one base carries roughly two bits in information-theoretic terms."
+  part2:
+    title: "Part 2 - Codons are like opcodes"
+    p1: "Three bases in a row form a codon, a mini instruction for the cell telling it which amino acid gets added next."
+    p2: "The genetic code is deliberately redundant. Several codons can mean the same amino acid. At first that looks wasteful, but it makes the system more robust."
+  part3:
+    title: "Part 3 - Amino acids, proteins, genes"
+    p1: "Amino acids are building blocks. Chains of them become proteins. And proteins are not just protein, they are tools: motors, switches, transporters, sensors."
+    p2: "A gene is like a function or module, a section of DNA that encodes a concrete product, protein or RNA. The genome is then the complete codebase."
+  part4:
+    title: "Part 4 - Comparison table: Computer science vs. genetics"
+  part5:
+    title: "Part 5 - Errors that feel like nightmares: frameshift"
+    p1: "If a base is inserted or deleted in DNA, the reading frame shifts. From that point on, all following codons change."
+    p2: "It is like shifting everything in a machine program by one bit starting at byte 17. Suddenly the same data stream means something completely different."
+    p3: "And we still exist because cells have repair mechanisms, proofreading, correction squads, redundancy. ECC RAM, just biochemical."
+baseEncodingRows:
+  - bits: "00"
+    base: A
+  - bits: "01"
+    base: C
+  - bits: "10"
+    base: G
+  - bits: "11"
+    base: T
+comparison:
+  headers:
+    cs: "Computer science"
+    genetics: "Genetics"
+    note: "What I Love About It"
+  rows:
+    - cs: Bit (0/1)
+      genetics: State / variation
+      note: A single flip can have huge consequences, just like a mutation.
+    - cs: 2 bits (00/01/10/11)
+      genetics: Base (A/C/G/T)
+      note: Four symbols fit perfectly into a 2-bit alphabet.
+    - cs: Byte (8 bits)
+      genetics: 4 bases
+      note: One byte roughly matches four DNA letters.
+    - cs: Word (16/32 bits)
+      genetics: k-mer / segment (e.g. 8-16 bases)
+      note: Larger patterns serve recognition and control.
+    - cs: String
+      genetics: DNA sequence
+      note: Character chains whose meaning emerges from reading frame and context.
+    - cs: Opcode / instruction
+      genetics: Codon (3 bases)
+      note: Three symbols encode the next amino acid step.
+    - cs: Assembler -> machine
+      genetics: Transcription/translation
+      note: DNA is first rewritten into RNA and then translated into protein.
+    - cs: Function / subroutine
+      genetics: Gene
+      note: A continuous section with a clear task.
+    - cs: Library
+      genetics: Gene family / conserved domains
+      note: Reusable building blocks in slightly different variants.
+    - cs: Config / flags
+      genetics: Regulatory sequences
+      note: They control when and how strongly a gene is active.
+    - cs: Bug
+      genetics: Mutation
+      note: It can be harmful, neutral, or an advantage.
+    - cs: Version control
+      genetics: Evolution
+      note: Branches, forks, and merge effects, just over a very long time.
+comment:
+  title: "Why This Grabs Me So Hard"
+  p1: "Genetics answers the big question. How do you turn matter into a system that copies itself, repairs itself, and creates new variants along the way?"
+  p2: "Computers are strict, input in, output out. DNA is cheekier. It does not just store, it experiments. Some bit flips are crashes, some do nothing, some suddenly become upgrades."
+  p3: "Every time I look at a double helix, I think this is not just a chain of molecules. This is an ancient program. And it runs."
+gift:
+  title: "Nerd Gift: String to DNA"
+  p1: "This is not science, just a small nerdy gift joke. Every amino acid has a one-letter abbreviation. We use that to represent names or messages as DNA. Unfortunately the letters B, J, X, and Z do not have an unambiguous mapping in this context, so we cannot encode them here."
+  inputLabel: "Enter a string (e.g. SAMIPUNK)"
+  blocked: "Cannot be encoded unambiguously because of: <b>{letters}</b>. Please remove or replace those letters."
+  empty: "Please enter at least one letter from A to Z."
+  success: "Encoding possible for <b>{count}</b> letters."
+  successWithIgnored: "Encoding possible for <b>{count}</b> letters. Ignored: {ignored}."
+  dnaCodons: "DNA (codons)"
+  dnaCompact: "DNA (compact)"
+  aminoShort: "Amino acids (short)"
+  aminoLong: "Amino acids (full)"
+  imageTitle: "Let Me Show You Your DNA"
+  table:
+    letter: "Letter"
+    short: "Short"
+    long: "Full name"
+    codon: "DNA codon"
+  aminoByLetter:
+    A: { short: Ala, name: Alanine, codon: GCT }
+    B: { short: N/D, name: Asx (Asparagine or Aspartic acid), codon: null }
+    C: { short: Cys, name: Cysteine, codon: TGT }
+    D: { short: Asp, name: Aspartic acid, codon: GAT }
+    E: { short: Glu, name: Glutamic acid, codon: GAA }
+    F: { short: Phe, name: Phenylalanine, codon: TTT }
+    G: { short: Gly, name: Glycine, codon: GGT }
+    H: { short: His, name: Histidine, codon: CAT }
+    I: { short: Ile, name: Isoleucine, codon: ATT }
+    J: { short: "-", name: Not used as an amino-acid code, codon: null }
+    K: { short: Lys, name: Lysine, codon: AAA }
+    L: { short: Leu, name: Leucine, codon: TTA }
+    M: { short: Met, name: Methionine, codon: ATG }
+    N: { short: Asn, name: Asparagine, codon: AAT }
+    O: { short: Pyl, name: Pyrrolysine, codon: TAG }
+    P: { short: Pro, name: Proline, codon: CCT }
+    Q: { short: Gln, name: Glutamine, codon: CAA }
+    R: { short: Arg, name: Arginine, codon: CGT }
+    S: { short: Ser, name: Serine, codon: TCT }
+    T: { short: Thr, name: Threonine, codon: ACT }
+    U: { short: Sec, name: Selenocysteine, codon: TGA }
+    V: { short: Val, name: Valine, codon: GTT }
+    W: { short: Trp, name: Tryptophan, codon: TGG }
+    X: { short: X, name: Unknown amino acid, codon: null }
+    Y: { short: Tyr, name: Tyrosine, codon: TAT }
+    Z: { short: Q/E, name: Glx (Glutamine or Glutamic acid), codon: null }
+dna:
+  ariaLabel: DNA helix generated from a text string
+  empty: No DNA sequence available.
+  summary: "Base pairs: <b>{pairs}</b>, turns: <b>{turns}</b>, grid: <b>{perTurn} base pairs per turn</b>."
+  summaryWithIgnored: "Base pairs: <b>{pairs}</b>, turns: <b>{turns}</b>, grid: <b>{perTurn} base pairs per turn</b>. Ignored: {ignored}."
+  codonLabel: "{name} ({codon})"
+  remainingGroup: Remaining group
+  unknownCodon: "Unknown codon {codon}"
+  aminoByLetter:
+    A: { short: Ala, name: Alanine }
+    C: { short: Cys, name: Cysteine }
+    D: { short: Asp, name: Aspartic acid }
+    E: { short: Glu, name: Glutamic acid }
+    F: { short: Phe, name: Phenylalanine }
+    G: { short: Gly, name: Glycine }
+    H: { short: His, name: Histidine }
+    I: { short: Ile, name: Isoleucine }
+    K: { short: Lys, name: Lysine }
+    L: { short: Leu, name: Leucine }
+    M: { short: Met, name: Methionine }
+    N: { short: Asn, name: Asparagine }
+    O: { short: Pyl, name: Pyrrolysine }
+    P: { short: Pro, name: Proline }
+    Q: { short: Gln, name: Glutamine }
+    R: { short: Arg, name: Arginine }
+    S: { short: Ser, name: Serine }
+    T: { short: Thr, name: Threonine }
+    U: { short: Sec, name: Selenocysteine }
+    V: { short: Val, name: Valine }
+    W: { short: Trp, name: Tryptophan }
+    Y: { short: Tyr, name: Tyrosine }
+  letterByCodon:
+    GCT: A
+    TGT: C
+    GAT: D
+    GAA: E
+    TTT: F
+    GGT: G
+    CAT: H
+    ATT: I
+    AAA: K
+    TTA: L
+    ATG: M
+    AAT: N
+    TAG: O
+    CCT: P
+    CAA: Q
+    CGT: R
+    TCT: S
+    ACT: T
+    TGA: U
+    GTT: V
+    TGG: W
+    TAT: Y

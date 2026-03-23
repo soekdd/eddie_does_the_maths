@@ -6,33 +6,21 @@
 import { useHead } from "@unhead/vue";
 import { computed } from "vue";
 import { useRoute } from "vue-router";
-import { normalizeSeoText } from "@/router.js";
+import { useI18n } from "@/i18n.mjs";
+import {
+	normalizeSeoText, resolveRouteMetaDescription, resolveRouteMetaTitle
+} from "@/router.js";
 
-const siteName = "Eddie rechnet";
-const fallbackDescription = "Interaktive Mathematik mit Eddie: Rechenwege, Visualisierungen und Übungen zum Mitmachen.";
 const route = useRoute();
+const { locale, t } = useI18n( "components/lang" );
+const siteName = computed( () => t( "routeSeoHead.siteName" ) );
 
 const pageTitle = computed( () => {
-	const titleFromRoute = normalizeSeoText( route.meta?.title );
-	return titleFromRoute ? `${siteName}: ${titleFromRoute}` : siteName;
+	const titleFromRoute = normalizeSeoText( resolveRouteMetaTitle( route.meta, locale.value ) );
+	return titleFromRoute ? `${siteName.value}: ${titleFromRoute}` : siteName.value;
 } );
 
-const pageDescription = computed( () => {
-	const fromMeta = normalizeSeoText( route.meta?.description );
-
-	if ( fromMeta ) {
-		return fromMeta;
-	}
-
-	const titleFromRoute = normalizeSeoText( route.meta?.title );
-
-	if ( titleFromRoute ) {
-		return `Interaktive Mathe-Seite: ${
-			titleFromRoute}. Rechenwege, Visualisierungen und Übungen zum Mitmachen.`;
-	}
-
-	return fallbackDescription;
-} );
+const pageDescription = computed( () => normalizeSeoText( resolveRouteMetaDescription( route.meta, locale.value ) ) );
 
 useHead( () => ( {
 	title: pageTitle.value,

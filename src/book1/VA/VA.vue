@@ -1,246 +1,184 @@
 <template>
-<AppFrame  :sub-chapter="{
-		gleichgewicht: 'Gleichgewicht',
-		metazentrum: 'Metazentrum',
-		windmoment: 'Windmoment',
-		downflooding: 'Downflooding',
-		interaktiv: 'Interaktiv'
-	}"
-	title="Eddie rechnet: Warum die Vasa sinken musste"
+<AppFrame
+	:languages="[ 'de', 'en' ]"
+	:sub-chapter
+	:title="t( 'title' )"
 	:vue-date="__VITE_SFC_MTIME_MS__"
 >
 	<template #bookPart>
 		<figure class="exampleFigure">
-			<ImageZoomer title="Vidar zeigt Eddie die Vaasa">
-				<img loading="lazy" :src="titleImg" />
+			<ImageZoomer :title="t( 'imageTitle' )">
+				<img :alt="t( 'imageAlt' )" loading="lazy" :src="titleImg" />
 			</ImageZoomer>
 		</figure>
-		<h3 id="einleitung">Stockholm, 26. Oktiber 1985</h3>
+		<h3 id="einleitung">{{ t( "introDate" ) }}</h3>
 		<div class="eddie">
-			<p>Ich stehe vor der <b>Vasa</b> und kann mich nicht entscheiden, ob ich wütend sein soll oder einfach
-				nur traurig. Vidar erzählt mir die Geschichte, und je mehr ich höre, desto klarer wird: Das war
-				kein „Unglück“. Das war ein Unfall mit Ansage. Ein Schiff, gebaut als schwimmendes Machtwort,
-				höher, schwerer bewaffnet, beeindruckender als alles, was vorher da war, weil ein König es so
-				wollte.</p>
-			<p>Und dann kommt dieser Teil, der mir den Magen zusammenzieht: <b>1628</b> ist sie
-				nicht mal richtig losgefahren. Sie ist noch im Hafen gesunken. Ein paar hundert Meter,
-				ein Windstoß, ein bisschen Welle – und aus dem Stolz wird ein Klotz, der einfach umkippt.
-				Vidar erzählt von Tests, bei denen man sie absichtlich zum Schwanken bringt, und alle sehen
-				dabei, wie instabil sie ist. Kanonen, die schon bei der Probe gefährlich nah ans Wasser rutschen.
-				Blicke, die sagen: <em>Das wird schiefgehen.</em></p> <p>Nur: Niemand stoppt es. Niemand will
-				der Erste sein, der „Stopp“ sagt. Zu viel Prestige, zu viel Angst, zu viel Arbeit, die
-				schon drinsteckt. Und genau das macht die Vasa für mich so brutal: Sie ist ein Denkmal
-				dafür, wie ein System lieber untergeht, als einen Fehler einzugestehen.</p>
-			<p>Hier schaue ich mir dann an, was hier eigentlich passiert: wie man erkennt, ob ein
-				Schiff „sicher“ im Wasser liegt, und warum manche Rümpfe bei der kleinsten Gelegenheit
-				kippen. Unten kannst du es in einer Simulation selbst ausprobieren und verschiedene
-				Schiffsrümpfe auf ihre Stabilität testen.</p>
+			<p v-html="t( 'book.p1' )" />
+			<p v-html="t( 'book.p2' )" />
+			<p>{{ t( "book.p3" ) }}</p>
 		</div>
 	</template>
 
 	<template #descriptionPart>
-
-		<h2 id="gleichgewicht">Teil 1 — Gleichgewicht: Der erste Satz, der alles entscheidet</h2>
+		<h2 id="gleichgewicht">{{ t( "sections.part1.title" ) }}</h2>
 		<div class="eddie">
 			<p>
-				Die <b>Vasa</b> war ein schwimmender Palast und sank trotzdem nach etwa
-				<Katex tex="1300\,\mathrm{m}" />. Das wirkt wie Pech, ist aber vor allem
-				Geometrie plus Physik.
+				{{ t( "sections.part1.p1Before" ) }}
+				<Katex tex="1300\,\mathrm{m}" />.
+				{{ t( "sections.part1.p1After" ) }}
 			</p>
-			<p>
-				Ein Schiff schwimmt, wenn Gewicht und Auftrieb gleich groß sind:
-			</p>
+			<p>{{ t( "sections.part1.p2" ) }}</p>
 			<div class="kbox">
 				<Katex as="div" display tex="W = m g,\qquad A = \rho_{\mathrm{W}} g V,\qquad W=A\Rightarrow m=\rho_{\mathrm{W}}V." />
 			</div>
-			<p>
-				Für die Vasa sind folgende Größenordnung bekannt:
-			</p>
+			<p>{{ t( "sections.part1.p3" ) }}</p>
 			<v-table class="mt-3" density="compact">
 				<thead>
 					<tr>
-						<th>Symbol</th>
-						<th>Bedeutung</th>
-						<th class="text-right">Wert</th>
+						<th>{{ t( "sections.part1.table.symbol" ) }}</th>
+						<th>{{ t( "sections.part1.table.meaning" ) }}</th>
+						<th class="text-right">{{ t( "sections.part1.table.value" ) }}</th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
-						<td><Katex tex="\Delta" /></td>
-						<td>Verdrängung</td>
-						<td class="text-right"><Katex tex="\approx 1210\,\mathrm{t}" /></td>
-					</tr>
-					<tr>
-						<td><Katex tex="L" /></td>
-						<td>Länge</td>
-						<td class="text-right"><Katex tex="\approx 69\,\mathrm{m}" /></td>
-					</tr>
-					<tr>
-						<td><Katex tex="B" /></td>
-						<td>Breite</td>
-						<td class="text-right"><Katex tex="\approx 11{,}7\,\mathrm{m}" /></td>
-					</tr>
-					<tr>
-						<td><Katex tex="H" /></td>
-						<td>Höhe</td>
-						<td class="text-right"><Katex tex="\approx 52{,}5\,\mathrm{m}" /></td>
-					</tr>
-					<tr>
-						<td><Katex tex="V" /></td>
-						<td>verdrängte Volume</td>
-						<td class="text-right"><Katex tex="\approx 1210\,\mathrm{m^3}" /></td>
+					<tr v-for="row in vesselRows" :key="row.id">
+						<td><Katex :tex="row.symbol" /></td>
+						<td>{{ row.label }}</td>
+						<td class="text-right"><Katex :tex="row.value" /></td>
 					</tr>
 				</tbody>
 			</v-table>
 		</div>
 
-		<h2 id="metazentrum" class="mt-8">Teil 2 — Schwerpunkt, Auftriebspunkt, Metazentrum</h2>
+		<h2 id="metazentrum" class="mt-8">{{ t( "sections.part2.title" ) }}</h2>
 		<figure class="exampleFigure">
-			<ImageZoomer title="Schwerpunkt, Auftriebspunkt, Metazentrum">
-				<VAShip nolegend zoom="2"/>
+			<ImageZoomer :title="t( 'sections.part2.imageTitle' )">
+				<VAShip nolegend zoom="2" />
 			</ImageZoomer>
 		</figure>
 		<div class="eddie">
 			<p>
-				Entscheidend sind die Punkte
-				<Katex tex="G" /> (Schwerpunkt),
-				<Katex tex="B" /> (Auftriebsschwerpunkt)
-				und
-				<Katex tex="M" /> (Metazentrum).
+				{{ t( "sections.part2.p1Before" ) }}
+				<Katex tex="G" /> ({{ t( "sections.part2.g" ) }}),
+				<Katex tex="B" /> ({{ t( "sections.part2.b" ) }})
+				{{ t( "sections.part2.and" ) }}
+				<Katex tex="M" /> ({{ t( "sections.part2.m" ) }}).
 			</p>
 			<ul>
 				<li>
-					<Katex tex="G" /> ist der <b>Schwerpunkt des gesamten Schiffs</b>
-					(Rumpf, Kanonen, Masten, Ballast, Ladung). In diesem Punkt kann man sich die
-					Gewichtskraft <Katex tex="W=\Delta g" /> angreifend denken. Liegt viel Masse hoch,
-					steigt <Katex tex="KG" /> und das Schiff wird kippempfindlicher.
+					<Katex tex="G" /> <span v-html="t( 'sections.part2.bullets.g' )" />
 				</li>
 				<li>
-					<Katex tex="B" /> ist der <b>Schwerpunkt des verdrängten Wasservolumens</b>.
-					Dort greift die Auftriebskraft <Katex tex="A" /> an. Anders als <Katex tex="G" />
-					ist <Katex tex="B" /> nicht fest am Schiff: Bei Krängung ändert sich die Form des
-					untergetauchten Volumens, dadurch wandert <Katex tex="B" /> zur tieferen Seite.
+					<Katex tex="B" /> <span v-html="t( 'sections.part2.bullets.b' )" />
 				</li>
 				<li>
-					<Katex tex="M" /> ist das <b>Metazentrum</b>, also der Schnittpunkt der Auftriebslinien
-					für sehr kleine Krängungswinkel. Es ist ein geometrischer Referenzpunkt für die
-					Anfangsstabilität: Liegt <Katex tex="M" /> über <Katex tex="G" />, entsteht ein
-					aufrichtendes Moment; liegt <Katex tex="M" /> darunter, kippt das System weiter.
+					<Katex tex="M" /> <span v-html="t( 'sections.part2.bullets.m' )" />
 				</li>
 			</ul>
 			<p>
-				Die zentrale Kenngröße ist der Abstand <Katex tex="GM" />, die metazentrische Höhe.
-				Für kleine Krängung gilt:
+				{{ t( "sections.part2.p2Before" ) }}
+				<Katex tex="GM" />
+				{{ t( "sections.part2.p2After" ) }}
 			</p>
 			<div class="kbox">
 				<Katex as="div" display tex="GM = KM - KG,\qquad BM=\frac{I_{\mathrm{W}}}{V}." />
 			</div>
 			<p>
-				Wenn <Katex tex="GM>0" />, richtet sich das Schiff anfangs selbst auf.
-				Kleines <Katex tex="GM" /> bedeutet aber: wenig Stabilitätsreserve.
-				Großes <Katex tex="KG" /> (viel Masse oben) verschlechtert das direkt.
+				{{ t( "sections.part2.p3Before" ) }}
+				<Katex tex="GM>0" />
+				{{ t( "sections.part2.p3Middle" ) }}
+				<Katex tex="GM" />
+				{{ t( "sections.part2.p3After" ) }}
+				<Katex tex="KG" />
+				{{ t( "sections.part2.p3End" ) }}
 			</p>
 			<p>
-				Breite an der Wasserlinie hilft stark, weil
+				{{ t( "sections.part2.p4Before" ) }}
 				<Katex tex="I_{\mathrm{W}}" />
-				mit der Breite stark wächst.
+				{{ t( "sections.part2.p4After" ) }}
 			</p>
 		</div>
 
-		<h2 id="windmoment" class="mt-8">Teil 3 — Windmoment gegen Rückstellmoment</h2>
+		<h2 id="windmoment" class="mt-8">{{ t( "sections.part3.title" ) }}</h2>
 		<div class="eddie">
 			<p>
-				Bei Krängungswinkel <Katex tex="\varphi" /> wirkt der Rückstellhebelarm
-				näherungsweise wie:
+				{{ t( "sections.part3.p1Before" ) }}
+				<Katex tex="\varphi" />
+				{{ t( "sections.part3.p1After" ) }}
 			</p>
 			<p>
-				Der <b>Krängungswinkel</b> <Katex tex="\varphi" /> ist der seitliche Neigungswinkel des Schiffs
-				um seine Längsachse. Er misst also, wie weit das Schiff aus der aufrechten Ruhelage gekippt ist:
-				<Katex tex="\varphi=0^\circ" /> bedeutet „gerade“, größere Werte bedeuten stärkere Schräglage
-				zur Backbord- oder Steuerbordseite.
+				{{ t( "sections.part3.p2Before" ) }}
+				<Katex tex="\varphi" />
+				{{ t( "sections.part3.p2Middle" ) }}
+				<Katex tex="\varphi=0^\circ" />
+				{{ t( "sections.part3.p2After" ) }}
 			</p>
 			<p>
-				Für die Stabilitätsrechnung ist wichtig: Im kleinen Winkelbereich (typisch einige Grad bis grob
-				<Katex tex="10^\circ\text{ bis }15^\circ" />) kann man mit den Kleinwinkel-Formeln gut arbeiten.
-				Bei größeren Winkeln wird die Geometrie des untergetauchten Rumpfs stark nichtlinear, dann
-				reicht die einfache Näherung nicht mehr.
+				{{ t( "sections.part3.p3Before" ) }}
+				<Katex tex="10^\circ\text{ bis }15^\circ" />
+				{{ t( "sections.part3.p3After" ) }}
 			</p>
 			<div class="kbox">
 				<Katex as="div" display tex="GZ(\varphi)\approx GM\sin\varphi,\qquad M_{\mathrm{R}}(\varphi)\approx \Delta g\,GM\sin\varphi." />
 			</div>
-			<p>
-				Das Windmoment kann man grob mit
-			</p>
+			<p>{{ t( "sections.part3.p4" ) }}</p>
 			<div class="kbox">
-				<Katex as="div"
+				<Katex
+					as="div"
 					display
 					tex="F_{\mathrm{W}}\approx \frac12\rho_{\mathrm{L}} C_D A v^2,\qquad M_{\mathrm{W}}\approx F_{\mathrm{W}}\,h_{\mathrm{CE}}"
 				/>
 			</div>
 			<p>
-				abschätzen. Kritisch wird es, wenn
+				{{ t( "sections.part3.p5Before" ) }}
 				<Katex tex="M_{\mathrm{W}}\gtrsim M_{\mathrm{R}}" />.
 			</p>
-			<p>
-				Die Proportionen der Vasa zeigen das Problem:
-			</p>
+			<p>{{ t( "sections.part3.p6" ) }}</p>
 			<div class="kbox">
 				<Katex as="div" display tex="\frac{H}{B}\approx\frac{52{,}5}{11{,}7}\approx 4{,}49." />
 			</div>
 			<p>
-				Hoher Aufbau treibt <Katex tex="KG" /> nach oben, große Segelfläche erhöht das Windmoment.
+				{{ t( "sections.part3.p7Before" ) }}
+				<Katex tex="KG" />
+				{{ t( "sections.part3.p7After" ) }}
 			</p>
 		</div>
 
-		<h2 id="downflooding" class="mt-8">Teil 4 — Downflooding und freie Wasseroberfläche</h2>
+		<h2 id="downflooding" class="mt-8">{{ t( "sections.part4.title" ) }}</h2>
 		<div class="eddie">
-			<p>
-				Sobald bei Krängung untere Öffnungen unter Wasser geraten, läuft Wasser ein.
-				Dann sinkt die effektive Stabilität zusätzlich durch den freien Oberflächeneffekt:
-			</p>
+			<p>{{ t( "sections.part4.p1" ) }}</p>
 			<div class="kbox">
 				<Katex as="div" display tex="GM_{\mathrm{eff}}\approx GM-\frac{\rho_{\mathrm{W}}I_{\mathrm{FS}}}{\Delta}." />
 			</div>
 			<p>
-				Mehr Wasser auf einem breiten Deck bedeutet:
-				größeres <Katex tex="I_{\mathrm{FS}}" />, kleineres <Katex tex="GM_{\mathrm{eff}}" />,
-				noch mehr Krängung.
+				{{ t( "sections.part4.p2Before" ) }}
+				<Katex tex="I_{\mathrm{FS}}" />
+				{{ t( "sections.part4.p2Middle" ) }}
+				<Katex tex="GM_{\mathrm{eff}}" />
+				{{ t( "sections.part4.p2After" ) }}
 			</p>
-			<p>
-				Die bekannte Belastungsprobe mit laufenden Matrosen deutete genau darauf hin:
-				zu kleine Anfangsstabilität.
-			</p>
-			<p>
-				Auch die Rollperiode zeigt die Empfindlichkeit:
-			</p>
+			<p>{{ t( "sections.part4.p3" ) }}</p>
+			<p>{{ t( "sections.part4.p4" ) }}</p>
 			<div class="kbox">
 				<Katex as="div" display tex="T\approx 2\pi\sqrt{\frac{I_{\varphi}}{\Delta g\,GM}}\approx 2\pi\sqrt{\frac{k^2}{g\,GM}}." />
 			</div>
 		</div>
 
-		<h2 id="schluss" class="mt-8">Teil 5 — Was die Mathe vorgeschlagen hätte</h2>
+		<h2 id="schluss" class="mt-8">{{ t( "sections.part5.title" ) }}</h2>
 		<div class="eddie">
-			<p>
-				Mathematisch sind die Stellschrauben klar:
-			</p>
+			<p>{{ t( "sections.part5.p1" ) }}</p>
 			<ol>
-				<li><Katex tex="KG" /> nach unten: Gewicht tiefer, oben leichter.</li>
-				<li><Katex tex="I_{\mathrm{W}}" /> nach oben: mehr Breite an der Wasserlinie.</li>
-				<li>Downflooding verhindern: tiefe Stückpforten erst spät öffnen.</li>
+				<li><Katex tex="KG" /> {{ t( "sections.part5.items.kg" ) }}</li>
+				<li><Katex tex="I_{\mathrm{W}}" /> {{ t( "sections.part5.items.iw" ) }}</li>
+				<li>{{ t( "sections.part5.items.downflooding" ) }}</li>
 			</ol>
-			<p>
-				Nebenbei zählt auch Unsymmetrie beim Bau (z. B. unterschiedliche Maßsysteme links/rechts),
-				weil eine Anfangsschlagseite die Reserve weiter verringert.
-			</p>
-			<p class="muted">
-				Kurzform: Die Vasa ist weniger an einer einzelnen Böe gescheitert,
-				sondern an einer zu kleinen Stabilitätsmarge im Gesamtdesign.
-			</p>
+			<p>{{ t( "sections.part5.p2" ) }}</p>
+			<p class="muted">{{ t( "sections.part5.note" ) }}</p>
 		</div>
 	</template>
 
 	<template #interactivePart>
-		<h2 id="interaktiv">Interaktiv: Schiffquerschnitt und Stabilitätsrechner</h2>
+		<h2 id="interaktiv">{{ t( "interactive.title" ) }}</h2>
 		<div class="eddie d-flex flex-column ga-3">
 			<v-card class="panel pa-4">
 				<v-select
@@ -249,66 +187,66 @@
 					item-title="title"
 					item-value="value"
 					:items="geometryPresets"
-					label="Schiffsgeometrie"
+					:label="t( 'interactive.presetLabel' )"
 				/>
 
-				<div class="sectionTitle">Geometrie</div>
+				<div class="sectionTitle">{{ t( "interactive.sections.geometry" ) }}</div>
 				<v-row dense>
 					<v-col cols="12" md="6" sm="6">
-						<v-text-field v-model="inputs.beam" hide-details="auto" label="Breite B [m]" />
+						<v-text-field v-model="inputs.beam" hide-details="auto" :label="t( 'interactive.fields.beam' )" />
 					</v-col>
 					<v-col cols="12" md="6" sm="6">
-						<v-text-field v-model="inputs.depth" hide-details="auto" label="Tiefe D [m]" />
+						<v-text-field v-model="inputs.depth" hide-details="auto" :label="t( 'interactive.fields.depth' )" />
 					</v-col>
 					<v-col cols="12" md="6" sm="6">
-						<v-text-field v-model="inputs.draft" hide-details="auto" label="Tiefgang T [m]" />
+						<v-text-field v-model="inputs.draft" hide-details="auto" :label="t( 'interactive.fields.draft' )" />
 					</v-col>
 					<v-col cols="12" md="6" sm="6">
-						<v-text-field v-model="inputs.length" hide-details="auto" label="Wasserlinienlänge L [m]" />
+						<v-text-field v-model="inputs.length" hide-details="auto" :label="t( 'interactive.fields.length' )" />
 					</v-col>
 					<v-col cols="12" md="6" sm="6">
-						<v-text-field v-model="inputs.cwp" hide-details="auto" label="Wasserlinienfaktor Cwp" />
+						<v-text-field v-model="inputs.cwp" hide-details="auto" :label="t( 'interactive.fields.cwp' )" />
 					</v-col>
 					<v-col cols="12" md="6" sm="6">
-						<v-text-field v-model="inputs.openingHeight" hide-details="auto" label="Höhe untere Öffnung über WL [m]" />
+						<v-text-field v-model="inputs.openingHeight" hide-details="auto" :label="t( 'interactive.fields.openingHeight' )" />
 					</v-col>
 				</v-row>
 
-				<div class="sectionTitle">Masse und Stabilität</div>
+				<div class="sectionTitle">{{ t( "interactive.sections.mass" ) }}</div>
 				<v-row dense>
 					<v-col cols="12" md="6" sm="6">
-						<v-text-field v-model="inputs.displacement" hide-details="auto" label="Verdrängung Δ [t]" />
+						<v-text-field v-model="inputs.displacement" hide-details="auto" :label="t( 'interactive.fields.displacement' )" />
 					</v-col>
 					<v-col cols="12" md="6" sm="6">
-						<v-text-field v-model="inputs.kg" hide-details="auto" label="KG [m]" />
+						<v-text-field v-model="inputs.kg" hide-details="auto" :label="t( 'interactive.fields.kg' )" />
 					</v-col>
 					<v-col cols="12" md="6" sm="6">
-						<v-text-field v-model="inputs.kb" hide-details="auto" label="KB [m]" />
+						<v-text-field v-model="inputs.kb" hide-details="auto" :label="t( 'interactive.fields.kb' )" />
 					</v-col>
 					<v-col cols="12" md="6" sm="6">
-						<v-text-field v-model="inputs.freeSurface" hide-details="auto" label="ΔGM freier Spiegel [m]" />
+						<v-text-field v-model="inputs.freeSurface" hide-details="auto" :label="t( 'interactive.fields.freeSurface' )" />
 					</v-col>
 				</v-row>
 
-				<div class="sectionTitle">Wind</div>
+				<div class="sectionTitle">{{ t( "interactive.sections.wind" ) }}</div>
 				<v-row dense>
 					<v-col cols="12" md="6" sm="6">
-						<v-text-field v-model="inputs.sailArea" hide-details="auto" label="Segelfläche A [m²]" />
+						<v-text-field v-model="inputs.sailArea" hide-details="auto" :label="t( 'interactive.fields.sailArea' )" />
 					</v-col>
 					<v-col cols="12" md="6" sm="6">
-						<v-text-field v-model="inputs.windSpeed" hide-details="auto" label="Windgeschwindigkeit v [m/s]" />
+						<v-text-field v-model="inputs.windSpeed" hide-details="auto" :label="t( 'interactive.fields.windSpeed' )" />
 					</v-col>
 					<v-col cols="12" md="6" sm="6">
-						<v-text-field v-model="inputs.cd" hide-details="auto" label="Widerstandsbeiwert Cd" />
+						<v-text-field v-model="inputs.cd" hide-details="auto" :label="t( 'interactive.fields.cd' )" />
 					</v-col>
 					<v-col cols="12" md="6" sm="6">
-						<v-text-field v-model="inputs.hCe" hide-details="auto" label="Angriffshöhe hCE [m]" />
+						<v-text-field v-model="inputs.hCe" hide-details="auto" :label="t( 'interactive.fields.hCe' )" />
 					</v-col>
 				</v-row>
 
 				<div class="d-flex flex-wrap ga-2 mt-2">
-					<v-btn color="primary" variant="flat" @click="loadPreset">Preset laden</v-btn>
-					<v-btn variant="tonal" @click="randomizeWind">Zufallsböe</v-btn>
+					<v-btn color="primary" variant="flat" @click="loadPreset">{{ t( "interactive.loadPreset" ) }}</v-btn>
+					<v-btn variant="tonal" @click="randomizeWind">{{ t( "interactive.randomWind" ) }}</v-btn>
 				</div>
 			</v-card>
 
@@ -319,26 +257,26 @@
 				</p>
 			</v-alert>
 		</div>
-		<h2 class="mt-2">Rechenweg</h2>
+		<h2 class="mt-2">{{ t( "interactive.calculationTitle" ) }}</h2>
 		<div class="eddie d-flex flex-column ga-3">
 			<v-sheet border class="pa-3 rounded">
 				<div class="kbox">
-					<div class="mono">V = Δ/ρw = {{ fmt( calc.volume, 1 ) }} m³</div>
-					<div class="mono">Iw = Cwp·L·B³/12 = {{ fmt( calc.iw, 1 ) }} m⁴</div>
-					<div class="mono">BM = Iw/V = {{ fmt( calc.bm, 3 ) }} m</div>
-					<div class="mono">KM = KB + BM = {{ fmt( calc.km, 3 ) }} m</div>
-					<div class="mono">GM = KM - KG = {{ fmt( calc.gmRaw, 3 ) }} m</div>
-					<div class="mono">GM_eff = GM - ΔGM_fs = {{ fmt( calc.gmEff, 3 ) }} m</div>
+					<div class="mono">{{ t( "interactive.formulas.volume" ) }} = {{ fmt( calc.volume, 1 ) }} m³</div>
+					<div class="mono">{{ t( "interactive.formulas.iw" ) }} = {{ fmt( calc.iw, 1 ) }} m⁴</div>
+					<div class="mono">{{ t( "interactive.formulas.bm" ) }} = {{ fmt( calc.bm, 3 ) }} m</div>
+					<div class="mono">{{ t( "interactive.formulas.km" ) }} = {{ fmt( calc.km, 3 ) }} m</div>
+					<div class="mono">{{ t( "interactive.formulas.gm" ) }} = {{ fmt( calc.gmRaw, 3 ) }} m</div>
+					<div class="mono">{{ t( "interactive.formulas.gmEff" ) }} = {{ fmt( calc.gmEff, 3 ) }} m</div>
 				</div>
 			</v-sheet>
 
 			<v-sheet border class="pa-3 rounded">
 				<div class="kbox">
-					<div class="mono">F_w = 0.5·ρL·Cd·A·v² = {{ fmt( calc.windForce / 1000, 2 ) }} kN</div>
-					<div class="mono">M_w = F_w·hCE = {{ fmt( calc.windMoment / 1000, 1 ) }} kN m</div>
-					<div class="mono">M_r = Δ·g·GM_eff·sin(phi) = {{ fmt( calc.restoringMoment / 1000, 1 ) }} kN m</div>
-					<div class="mono">phi_eq = {{ fmt( calc.heelDeg, 2 ) }} deg</div>
-					<div class="mono">Downflooding-Winkel = {{ fmt( calc.downfloodAngle, 2 ) }} deg</div>
+					<div class="mono">{{ t( "interactive.formulas.windForce" ) }} = {{ fmt( calc.windForce / 1000, 2 ) }} kN</div>
+					<div class="mono">{{ t( "interactive.formulas.windMoment" ) }} = {{ fmt( calc.windMoment / 1000, 1 ) }} kN m</div>
+					<div class="mono">{{ t( "interactive.formulas.restoringMoment" ) }} = {{ fmt( calc.restoringMoment / 1000, 1 ) }} kN m</div>
+					<div class="mono">{{ t( "interactive.formulas.heel" ) }} = {{ fmt( calc.heelDeg, 2 ) }} deg</div>
+					<div class="mono">{{ t( "interactive.formulas.downfloodAngle" ) }} = {{ fmt( calc.downfloodAngle, 2 ) }} deg</div>
 				</div>
 			</v-sheet>
 
@@ -346,25 +284,25 @@
 				<v-table density="compact">
 					<thead>
 						<tr>
-							<th>Größe</th>
-							<th class="text-right">Wert</th>
+							<th>{{ t( "interactive.resultTable.metric" ) }}</th>
+							<th class="text-right">{{ t( "interactive.resultTable.value" ) }}</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr>
-							<td>Stabilitätsverhältnis r = M_w/(Δ·g·GM_eff)</td>
+							<td>{{ t( "interactive.resultTable.ratio" ) }}</td>
 							<td class="mono text-right">{{ fmt( calc.ratio, 3 ) }}</td>
 						</tr>
 						<tr>
-							<td>GZ(phi) ≈ GM_eff·sin(phi)</td>
+							<td>{{ t( "interactive.resultTable.gz" ) }}</td>
 							<td class="mono text-right">{{ fmt( calc.gz, 3 ) }} m</td>
 						</tr>
 						<tr>
-							<td>Reserve bis Downflooding</td>
+							<td>{{ t( "interactive.resultTable.margin" ) }}</td>
 							<td class="mono text-right">{{ fmt( calc.downfloodMargin, 2 ) }} deg</td>
 						</tr>
 						<tr>
-							<td>Bewertung</td>
+							<td>{{ t( "interactive.resultTable.status" ) }}</td>
 							<td class="mono text-right">{{ calc.shipStatus }}</td>
 						</tr>
 					</tbody>
@@ -374,12 +312,11 @@
 	</template>
 
 	<template #calculationPart>
-		<ImageZoomer title="Segelschiff Simulation">
+		<ImageZoomer :title="t( 'simulationTitle' )">
 			<VAShip
 				:beam="calc.beam"
 				:bm="calc.bm"
 				:depth="calc.depth"
-				:displacement-tons="calc.displacementTons"
 				:downflood-angle="calc.downfloodAngle"
 				:draft="calc.draft"
 				:gm="calc.gmEff"
@@ -400,18 +337,25 @@
 
 <script setup>
 import {
-	computed, reactive, ref, watch
+	computed,
+	reactive,
+	ref,
+	watch
 } from "vue";
+import { useI18n } from "@/i18n.mjs";
 import titleImg from "./VA.webp";
 import VAShip from "./VA_Ship.vue";
 
 const RHO_WATER = 1025;
 const G = 9.81;
 
-const geometryPresets = [
+const {
+	locale, t, tm
+} = useI18n( "book1/VA" );
+
+const presetDefaults = [
 	{
 		value:         "vasa",
-		title:         "Vasa (historisch, grob)",
 		beam:          11.7,
 		depth:         11.0,
 		draft:         4.8,
@@ -429,7 +373,6 @@ const geometryPresets = [
 	},
 	{
 		value:         "ballast",
-		title:         "Mehr Ballast, gleicher Rumpf",
 		beam:          11.7,
 		depth:         11.0,
 		draft:         5.1,
@@ -447,7 +390,6 @@ const geometryPresets = [
 	},
 	{
 		value:         "beamy",
-		title:         "Breiter Rumpf (stabiler)",
 		beam:          13.5,
 		depth:         11.2,
 		draft:         5.0,
@@ -465,7 +407,6 @@ const geometryPresets = [
 	},
 	{
 		value:         "top-heavy",
-		title:         "Schmal und top-heavy (kritisch)",
 		beam:          10.5,
 		depth:         10.8,
 		draft:         4.6,
@@ -483,7 +424,6 @@ const geometryPresets = [
 	},
 	{
 		value:         "modern-slim-stable",
-		title:         "Modern schmal (Tiefkiel, stabil)",
 		beam:          9.4,
 		depth:         10.6,
 		draft:         5.7,
@@ -501,8 +441,7 @@ const geometryPresets = [
 	}
 ];
 
-const presetId = ref( geometryPresets[ 0 ].value );
-
+const presetId = ref( presetDefaults[ 0 ].value );
 const inputs = reactive( {
 	beam:          "",
 	depth:         "",
@@ -520,6 +459,13 @@ const inputs = reactive( {
 	hCe:           ""
 } );
 
+const subChapter = computed( () => tm( "subChapter" ) ?? {} );
+const geometryPresets = computed( () => presetDefaults.map( ( preset ) => ( {
+	...preset,
+	title: t( `presets.${preset.value}` )
+} ) ) );
+const vesselRows = computed( () => tm( "sections.part1.rows" ) ?? [] );
+
 function clamp(
 	v, lo, hi
 ) {
@@ -534,33 +480,36 @@ function radToDeg( rad ) {
 	return rad * 180 / Math.PI;
 }
 
-function fmt( v, digits = 2 ) {
-	if ( !Number.isFinite( v ) ) {
+function fmt( value, digits = 2 ) {
+	if ( !Number.isFinite( value ) ) {
 		return "-";
 	}
 
-	return Number( v ).toFixed( digits );
+	return new Intl.NumberFormat( locale.value, {
+		maximumFractionDigits: digits,
+		minimumFractionDigits: digits
+	} ).format( Number( value ) );
 }
 
 function getPreset() {
-	return geometryPresets.find( ( p ) => p.value === presetId.value ) ?? geometryPresets[ 0 ];
+	return geometryPresets.value.find( ( preset ) => preset.value === presetId.value ) ?? geometryPresets.value[ 0 ];
 }
 
-function setInputsFromPreset( p ) {
-	inputs.beam = fmt( p.beam, 2 );
-	inputs.depth = fmt( p.depth, 2 );
-	inputs.draft = fmt( p.draft, 2 );
-	inputs.length = fmt( p.length, 2 );
-	inputs.cwp = fmt( p.cwp, 3 );
-	inputs.openingHeight = fmt( p.openingHeight, 2 );
-	inputs.displacement = fmt( p.displacement, 1 );
-	inputs.kg = fmt( p.kg, 2 );
-	inputs.kb = fmt( p.kb, 2 );
-	inputs.freeSurface = fmt( p.freeSurface, 2 );
-	inputs.sailArea = fmt( p.sailArea, 0 );
-	inputs.windSpeed = fmt( p.windSpeed, 1 );
-	inputs.cd = fmt( p.cd, 2 );
-	inputs.hCe = fmt( p.hCe, 2 );
+function setInputsFromPreset( preset ) {
+	inputs.beam = fmt( preset.beam, 2 );
+	inputs.depth = fmt( preset.depth, 2 );
+	inputs.draft = fmt( preset.draft, 2 );
+	inputs.length = fmt( preset.length, 2 );
+	inputs.cwp = fmt( preset.cwp, 3 );
+	inputs.openingHeight = fmt( preset.openingHeight, 2 );
+	inputs.displacement = fmt( preset.displacement, 1 );
+	inputs.kg = fmt( preset.kg, 2 );
+	inputs.kb = fmt( preset.kb, 2 );
+	inputs.freeSurface = fmt( preset.freeSurface, 2 );
+	inputs.sailArea = fmt( preset.sailArea, 0 );
+	inputs.windSpeed = fmt( preset.windSpeed, 1 );
+	inputs.cd = fmt( preset.cd, 2 );
+	inputs.hCe = fmt( preset.hCe, 2 );
 }
 
 function loadPreset() {
@@ -574,11 +523,25 @@ watch(
 );
 
 function randomizeWind() {
-	const v = 6 + Math.random() * 20;
+	const windSpeed = 6 + Math.random() * 20;
 	const areaFactor = 0.85 + Math.random() * 0.35;
 	const baseArea = getPreset().sailArea;
-	inputs.windSpeed = fmt( v, 1 );
+	inputs.windSpeed = fmt( windSpeed, 1 );
 	inputs.sailArea = fmt( baseArea * areaFactor, 0 );
+}
+
+function issueForInvalid( label, fallback ) {
+	return t( "issues.invalid", {
+		label,
+		value: fmt( fallback, 2 )
+	} );
+}
+
+function issueForClamped( label, value ) {
+	return t( "issues.clamped", {
+		label,
+		value: fmt( value, 2 )
+	} );
 }
 
 function readNumber(
@@ -588,10 +551,10 @@ function readNumber(
 	min = -Number.POSITIVE_INFINITY,
 	max = Number.POSITIVE_INFINITY
 ) {
-	const text = String( raw ?? "" ).trim()
+	const normalized = String( raw ?? "" ).trim()
 		.replace( ",", "." );
 
-	if ( !text ) {
+	if ( !normalized ) {
 		return {
 			value: clamp(
 				fallback, min, max
@@ -600,14 +563,14 @@ function readNumber(
 		};
 	}
 
-	const parsed = Number( text );
+	const parsed = Number( normalized );
 
 	if ( !Number.isFinite( parsed ) ) {
 		return {
 			value: clamp(
 				fallback, min, max
 			),
-			issue: `${label}: ungültig, nutze ${fmt( fallback, 2 )}`
+			issue: issueForInvalid( label, fallback )
 		};
 	}
 
@@ -618,7 +581,7 @@ function readNumber(
 	if ( bounded !== parsed ) {
 		return {
 			value: bounded,
-			issue: `${label}: begrenzt auf ${fmt( bounded, 2 )}`
+			issue: issueForClamped( label, bounded )
 		};
 	}
 
@@ -626,106 +589,51 @@ function readNumber(
 }
 
 const calc = computed( () => {
-	const p = getPreset();
+	const preset = getPreset();
 	const issues = [];
+	const labels = tm( "fieldShort" ) ?? {};
 
 	const beamRes = readNumber(
-		inputs.beam,
-		"B",
-		p.beam,
-		4,
-		30
+		inputs.beam, labels.beam, preset.beam, 4, 30
 	);
 	const depthRes = readNumber(
-		inputs.depth,
-		"D",
-		p.depth,
-		2,
-		25
+		inputs.depth, labels.depth, preset.depth, 2, 25
 	);
 	const draftRes = readNumber(
-		inputs.draft,
-		"T",
-		p.draft,
-		0.4,
-		depthRes.value - 0.1
+		inputs.draft, labels.draft, preset.draft, 0.4, depthRes.value - 0.1
 	);
 	const lengthRes = readNumber(
-		inputs.length,
-		"L",
-		p.length,
-		10,
-		120
+		inputs.length, labels.length, preset.length, 10, 120
 	);
 	const cwpRes = readNumber(
-		inputs.cwp,
-		"Cwp",
-		p.cwp,
-		0.45,
-		0.98
+		inputs.cwp, labels.cwp, preset.cwp, 0.45, 0.98
 	);
 	const openingRes = readNumber(
-		inputs.openingHeight,
-		"h_open",
-		p.openingHeight,
-		0.05,
-		8
+		inputs.openingHeight, labels.openingHeight, preset.openingHeight, 0.05, 8
 	);
 	const dispRes = readNumber(
-		inputs.displacement,
-		"Delta",
-		p.displacement,
-		100,
-		10000
+		inputs.displacement, labels.displacement, preset.displacement, 100, 10000
 	);
 	const kgRes = readNumber(
-		inputs.kg,
-		"KG",
-		p.kg,
-		0.2,
-		20
+		inputs.kg, labels.kg, preset.kg, 0.2, 20
 	);
 	const kbRes = readNumber(
-		inputs.kb,
-		"KB",
-		p.kb,
-		0.1,
-		20
+		inputs.kb, labels.kb, preset.kb, 0.1, 20
 	);
 	const freeSurfaceRes = readNumber(
-		inputs.freeSurface,
-		"DeltaGM_fs",
-		p.freeSurface,
-		0,
-		5
+		inputs.freeSurface, labels.freeSurface, preset.freeSurface, 0, 5
 	);
 	const areaRes = readNumber(
-		inputs.sailArea,
-		"A",
-		p.sailArea,
-		0,
-		8000
+		inputs.sailArea, labels.sailArea, preset.sailArea, 0, 8000
 	);
 	const windRes = readNumber(
-		inputs.windSpeed,
-		"v",
-		p.windSpeed,
-		0,
-		60
+		inputs.windSpeed, labels.windSpeed, preset.windSpeed, 0, 60
 	);
 	const cdRes = readNumber(
-		inputs.cd,
-		"Cd",
-		p.cd,
-		0.2,
-		3.0
+		inputs.cd, labels.cd, preset.cd, 0.2, 3.0
 	);
 	const hCeRes = readNumber(
-		inputs.hCe,
-		"hCE",
-		p.hCe,
-		depthRes.value + 0.5,
-		60
+		inputs.hCe, labels.hCe, preset.hCe, depthRes.value + 0.5, 60
 	);
 
 	for ( const result of [
@@ -771,13 +679,10 @@ const calc = computed( () => {
 	const km = kb + bm;
 	const gmRaw = km - kg;
 	const gmEff = gmRaw - freeSurface;
-
 	const rhoAir = 1.225;
 	const windForce = 0.5 * rhoAir * cd * sailArea * windSpeed * windSpeed;
 	const windMoment = windForce * hCe;
-	const downfloodAngle = radToDeg( Math.atan2( openingHeight,
-		beam / 2 ) );
-
+	const downfloodAngle = radToDeg( Math.atan2( openingHeight, beam / 2 ) );
 	const stableDenominator = displacementKg * G * Math.max( gmEff, 1e-9 );
 	const ratio = gmEff > 0 ? windMoment / stableDenominator : Number.POSITIVE_INFINITY;
 	const windDrive = windMoment / ( displacementKg * G * Math.max( beam * 0.5, 0.25 ) );
@@ -785,7 +690,6 @@ const calc = computed( () => {
 	let heelDeg = 0;
 
 	if ( gmEff <= 0 ) {
-		// Even in unstable mode, stronger wind should increase heel.
 		const instability = Math.max( 0, -gmEff );
 		const baseHeel = downfloodAngle * 0.55 + 3 + instability * 2.5;
 		const windHeel = radToDeg( Math.atan( windDrive * 5 ) );
@@ -807,25 +711,25 @@ const calc = computed( () => {
 	const downfloodMargin = downfloodAngle - heelDeg;
 
 	let statusKind = "success";
-	let statusText = "Stabile Anfangslage: Rückstellmoment liegt über dem Windmoment.";
-	let shipStatus = "stabil: Reserve vorhanden";
+	let statusText = t( "status.successText" );
+	let shipStatus = t( "status.successShort" );
 
 	if ( gmEff <= 0 ) {
 		statusKind = "error";
-		statusText = "GM_eff <= 0: Das Schiff ist im Kleinwinkelbereich nicht aufrichtend.";
-		shipStatus = "instabil: GM_eff <= 0";
+		statusText = t( "status.unstableText" );
+		shipStatus = t( "status.unstableShort" );
 	} else if ( heelDeg >= downfloodAngle ) {
 		statusKind = "error";
-		statusText = "Kritisch: Der Gleichgewichtswinkel liegt im Downflooding-Bereich.";
-		shipStatus = "kritisch: Downflooding moeglich";
+		statusText = t( "status.criticalText" );
+		shipStatus = t( "status.criticalShort" );
 	} else if ( ratio > 0.85 ) {
 		statusKind = "warning";
-		statusText = "Kleine Stabilitätsreserve: bereits moderate Böen führen zu großen Krängungen.";
-		shipStatus = "warnung: kleine Reserve";
+		statusText = t( "status.warningText" );
+		shipStatus = t( "status.warningShort" );
 	} else if ( ratio > 0.6 ) {
 		statusKind = "info";
-		statusText = "Spürbare Krängung, aber noch mit Reserve unterhalb des Downflooding-Winkels.";
-		shipStatus = "spuerbar gekraengt";
+		statusText = t( "status.infoText" );
+		shipStatus = t( "status.infoShort" );
 	}
 
 	return {
@@ -867,9 +771,9 @@ const calc = computed( () => {
 
 <style scoped>
 .sectionTitle {
-  font-size: 0.95rem;
-  font-weight: 600;
-  margin-top: 14px;
-  margin-bottom: 4px;
+	font-size: 0.95rem;
+	font-weight: 600;
+	margin-top: 14px;
+	margin-bottom: 4px;
 }
 </style>

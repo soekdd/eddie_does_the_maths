@@ -56,6 +56,9 @@
 
 <script setup lang="ts">
 import { computed } from "vue";
+import { useI18n } from "@/i18n.mjs";
+
+const { t } = useI18n( "book1/PG" );
 
 type Rank = number | string;
 
@@ -201,7 +204,10 @@ const centerFigureSrc = computed( () => {
 	return figureImages[ imagePath ] ?? "";
 } );
 
-const centerFigureAlt = computed( () => `Bildkarte ${rankText.value}${suitIcon.value}` );
+const centerFigureAlt = computed( () => t( "cards.figureAlt", {
+	rank: rankText.value,
+	suit: suitIcon.value
+} ) );
 
 const numberRank = computed( () => {
 	const parsedRank = Number( rankText.value );

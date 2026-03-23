@@ -1,195 +1,134 @@
 <!-- eslint-disable vue/max-len -->
 <template>
-<AppFrame  :sub-chapter="{
-		einleitung: 'Einleitung',
-		'warum-laplace':    'Warum Laplace?',
-		vorgehen:           'Vorgehen',
-		'beispielrechnung': 'Beispielrechnung',
-		fazit:              'Fazit',
-		interactivePart:'Laplace-Transformator'
-	}"
-	title="Eddie rechnet: Laplace-Transformation"
+<AppFrame
+	:languages="[ 'de', 'en' ]"
+	:sub-chapter
+	:title="t( 'title' )"
 	:vue-date="__VITE_SFC_MTIME_MS__"
 >
 
 	<template #bookPart>
 		<figure class="exampleFigure">
-			<ImageZoomer title="Eddie und Zarah lösen Differentialgleichungen">
-				<img loading="lazy" :src="titleImg" />
+			<ImageZoomer :title="t( 'imageTitle' )">
+				<img :alt="t( 'imageAlt' )" loading="lazy" :src="titleImg" />
 			</ImageZoomer>
 		</figure>
-		<h3 id="einleitung">Stockholm, 27. Dezember 1985</h3>
+		<h3 id="einleitung">{{ t( "introDate" ) }}</h3>
 		<div class="eddie">
-			<p><b>Ort:</b> WG-Küche in Stockholm.</p>
-			<p>
-				Auf dem Tisch: Kaffee, kariertes Papier, ein Bleistiftstummel.
-				Unter dem Tisch schnarcht ein Hund, als würde er jede Mathe-Diskussion
-				grundsätzlich boykottieren.
-			</p>
-			<p>
-				Ich schiebe Zarah meinen Zettel rüber und tippe drauf, als wäre das
-				hier eine Gerichtsverhandlung.
-			</p>
-			<p>
-				<b>Ich (Eddie):</b> „Eine lineare Differentialgleichung erster Ordnung
-				löst man klassisch im Zeitbereich: trennen, integrieren, fertig.“
-			</p>
-			<p>
-				<b>Zarah:</b> „Oder Laplace: in den Bildbereich, algebraisch lösen,
-				rücktransformieren. Schnell und sauber.“
-			</p>
-			<p><b>Ich:</b> „Du flüchtest doch nur vor dem Integrieren.“</p>
-			<p>
-				<b>Zarah:</b> „Ich ersetze <em>leidende</em> Differentialgleichungen durch
-				<em>gehorsame</em> Gleichungen. Vor allem bei Schaltungen mit Sprüngen
-				und Impulsen spart das Nerven.“
-			</p>
-			<p>
-				<b>Ich:</b> „Ich will verstehen, <em>warum</em> etwas passiert, nicht nur
-				eine Zahl ausspucken.“
-			</p>
-			<p>
-				<b>Zarah:</b> „Und ich will, dass es am Ende funktioniert. Eleganz hilft
-				nicht, wenn der Motor trotzdem abbrennt.“
-			</p>
-			<p>
-				<b>Ich:</b> „Also: Zeitbereich ist Handarbeit und Intuition. Laplace ist
-				Werkzeugkasten und Abkürzung.“
-			</p>
-			<p>
-				<b>Zarah:</b> „Genau. Für lineare Systeme genial. Bei Nichtlinearität
-				braucht man wieder andere Methoden.“
-			</p>
-			<p>
-				Ich ziehe den Zettel zu mir zurück, trinke einen Schluck Kaffee und tue
-				so, als wäre ich nicht ein bisschen beeindruckt.
-			</p>
-			<p>
-				<b>Ich:</b> „Dann machen wir’s ordentlich: erst klassisch im Zeitbereich,
-				danach deine Laplace-Maschine.“
-			</p>
-			<p>
-				<b>Zarah:</b> „Deal. Und wenn du freiwillig rücktransformierst, gibt’s
-				zwei Kekse.“
-			</p>
-			<p>
-				Damit ist der Frieden kurz geschlossen. Denn jetzt schauen wir wirklich
-				hin.
-			</p>
-			<p>
-				In der folgenden Betrachtung gehen wir die Unterschiede zwischen dem
-				klassischen Lösen im Zeitbereich und der Laplace-Methode Schritt für
-				Schritt durch. Und im interaktiven Teil kannst du die
-				Laplace-Transformation <em>hin</em> und <em>zurück</em> selbst
-				ausprobieren, damit aus „klingt schlau“ endlich „hab ich verstanden“
-				wird.
-			</p>
+			<p v-html="t( 'book.p1' )" />
+			<p v-html="t( 'book.p2' )" />
+			<p v-html="t( 'book.p3' )" />
+			<p v-html="t( 'book.p4' )" />
+			<p v-html="t( 'book.p5' )" />
+			<p v-html="t( 'book.p6' )" />
+			<p v-html="t( 'book.p7' )" />
+			<p v-html="t( 'book.p8' )" />
+			<p v-html="t( 'book.p9' )" />
+			<p v-html="t( 'book.p10' )" />
+			<p v-html="t( 'book.p11' )" />
+			<p v-html="t( 'book.p12' )" />
+			<p v-html="t( 'book.p13' )" />
+			<p v-html="t( 'book.p14' )" />
+			<p v-html="t( 'book.p15' )" />
 		</div>
 	</template>
 
 	<template #descriptionPart>
-		<h2>Teil 1 - Differentialgleichungen - Klassischer Lösungsweg vs. Laplace-Transformation</h2>
+		<h2>{{ t( "sections.part1.title" ) }}</h2>
 
-		<h2 id="warum-laplace" class="mt-8">Teil 2 - Warum funktioniert Laplace in der Elektrotechnik (fast) immer?</h2>
+		<h2 id="warum-laplace" class="mt-8">{{ t( "sections.part2.title" ) }}</h2>
 		<div class="eddie">
-			<p>
-				In der Elektrotechnik treten fast ausschließlich
-				<b>lineare Differentialgleichungen mit konstanten Koeffizienten</b>
-				auf, z. B.:
-			</p>
+			<p v-html="t( 'sections.part2.p1' )" />
 
 			<ul>
-				<li>RC-Glieder</li>
-				<li>RL-Glieder</li>
-				<li>RLC-Schwingkreise</li>
-				<li>Regelstrecken</li>
+				<li>{{ t( "sections.part2.s1" ) }}</li>
+				<li>{{ t( "sections.part2.s2" ) }}</li>
+				<li>{{ t( "sections.part2.s3" ) }}</li>
+				<li>{{ t( "sections.part2.s4" ) }}</li>
 			</ul>
 
-			<p>Solche Systeme sind:</p>
+			<p>{{ t( "sections.part2.p2" ) }}</p>
 			<ol>
-				<li>linear</li>
-				<li>zeitinvariant</li>
-				<li>durch Anfangswerte eindeutig bestimmt</li>
-				<li>meist durch stückweise stetige Eingangssignale angeregt</li>
+				<li>{{ t( "sections.part2.o1" ) }}</li>
+				<li>{{ t( "sections.part2.o2" ) }}</li>
+				<li>{{ t( "sections.part2.o3" ) }}</li>
+				<li>{{ t( "sections.part2.o4" ) }}</li>
 			</ol>
 
-			<p>Die Laplace-Transformation besitzt die entscheidende Eigenschaft:</p>
+			<p>{{ t( "sections.part2.p3" ) }}</p>
 			<div class="kbox">
 				<Katex as="div" display tex="\mathcal{L}\{f'(t)\} = sF(s) - f(0)" />
 			</div>
 
-			<p>
-				Damit wird aus einer Differentialgleichung eine
-				<b>algebraische Gleichung im s-Bereich</b>.
-			</p>
+			<p v-html="t( 'sections.part2.p4' )" />
 
-			<h3>Warum ist das so mächtig?</h3>
+			<h3>{{ t( "sections.part2.h1" ) }}</h3>
 			<ul>
-				<li>Ableitungen werden zu Multiplikationen mit <Katex tex="s" />.</li>
-				<li>Anfangswerte erscheinen automatisch.</li>
-				<li>Faltungen werden zu Multiplikationen.</li>
-				<li>Übertragungsfunktionen entstehen direkt.</li>
-				<li>Stabilität erkennt man an den Polen.</li>
+				<li>{{ t( "sections.part2.m1" ) }}</li>
+				<li>{{ t( "sections.part2.m2" ) }}</li>
+				<li>{{ t( "sections.part2.m3" ) }}</li>
+				<li>{{ t( "sections.part2.m4" ) }}</li>
+				<li>{{ t( "sections.part2.m5" ) }}</li>
 			</ul>
 
-			<h3>Wo liegen die Grenzen?</h3>
-			<p>Laplace funktioniert besonders gut bei:</p>
+			<h3>{{ t( "sections.part2.h2" ) }}</h3>
+			<p>{{ t( "sections.part2.p5" ) }}</p>
 			<ul>
-				<li>linearen Systemen</li>
-				<li>konstanten Koeffizienten</li>
-				<li>Signalen exponentieller Ordnung</li>
+				<li>{{ t( "sections.part2.g1" ) }}</li>
+				<li>{{ t( "sections.part2.g2" ) }}</li>
+				<li>{{ t( "sections.part2.g3" ) }}</li>
 			</ul>
 
-			<p>Schwierigkeiten entstehen bei:</p>
+			<p>{{ t( "sections.part2.p6" ) }}</p>
 			<ul>
-				<li>nichtlinearen Systemen</li>
-				<li>zeitvariablen Systemen</li>
-				<li>chaotischen Dynamiken</li>
-				<li>stark numerischen Simulationen großer Netzwerke</li>
+				<li>{{ t( "sections.part2.w1" ) }}</li>
+				<li>{{ t( "sections.part2.w2" ) }}</li>
+				<li>{{ t( "sections.part2.w3" ) }}</li>
+				<li>{{ t( "sections.part2.w4" ) }}</li>
 			</ul>
 
-			<p>Dort helfen meist nur numerische Verfahren.</p>
+			<p>{{ t( "sections.part2.p7" ) }}</p>
 		</div>
 
-		<h2 id="vorgehen" class="mt-8">Teil 3 - Vorgehen bei der Laplace-Methode</h2>
+		<h2 id="vorgehen" class="mt-8">{{ t( "sections.part3.title" ) }}</h2>
 		<div class="eddie">
-			<p>Gegeben eine Anfangswertaufgabe:</p>
+			<p>{{ t( "sections.part3.p1" ) }}</p>
 			<ol>
 				<li>
-					<b>Schritt 1: Transformieren</b><br>
-					Differentialgleichung in den s-Bereich übertragen.
+					<b>{{ t( "sections.part3.s1Title" ) }}</b><br>
+					{{ t( "sections.part3.s1" ) }}
 				</li>
 				<li>
-					<b>Schritt 2: Algebraisch lösen</b><br>
-					Nach <Katex tex="Y(s)" /> auflösen.
+					<b>{{ t( "sections.part3.s2Title" ) }}</b><br>
+					{{ t( "sections.part3.s2" ) }}
 				</li>
 				<li>
-					<b>Schritt 3: Partialbruchzerlegung</b><br>
-					Falls nötig, zur Vorbereitung der Rücktransformation.
+					<b>{{ t( "sections.part3.s3Title" ) }}</b><br>
+					{{ t( "sections.part3.s3" ) }}
 				</li>
 				<li>
-					<b>Schritt 4: Rücktransformation</b><br>
-					Mit bekannten Transformationspaaren zurück in den Zeitbereich.
+					<b>{{ t( "sections.part3.s4Title" ) }}</b><br>
+					{{ t( "sections.part3.s4" ) }}
 				</li>
 			</ol>
 		</div>
 
-		<h2 id="beispielrechnung" class="mt-8">Teil 4 - Beispielrechnung</h2>
+		<h2 id="beispielrechnung" class="mt-8">{{ t( "sections.part4.title" ) }}</h2>
 		<div class="eddie">
-			<p>Gegeben:</p>
+			<p>{{ t( "sections.part4.p1" ) }}</p>
 			<div class="kbox">
 				<Katex as="div" display tex="y'(t) + 2y(t) = 4" />
 			</div>
-			<p>mit</p>
+			<p>{{ t( "sections.part4.p2" ) }}</p>
 			<div class="kbox">
 				<Katex as="div" display tex="y(0) = 1" />
 			</div>
 
 			<div class="exampleSplit">
 				<section class="methodCard">
-					<h3>Lösung 1 - Klassischer Lösungsweg im Zeitbereich (Eddie)</h3>
+					<h3>{{ t( "sections.part4.left.title" ) }}</h3>
 
-					<h4>Homogene Gleichung</h4>
+					<h4>{{ t( "sections.part4.left.h1" ) }}</h4>
 					<div class="kbox">
 						<Katex
 							aligned
@@ -199,8 +138,8 @@
 						/>
 					</div>
 
-					<h4>Partikuläre Lösung</h4>
-					<p>Da rechte Seite konstant:</p>
+					<h4>{{ t( "sections.part4.left.h2" ) }}</h4>
+					<p>{{ t( "sections.part4.left.p1" ) }}</p>
 					<div class="kbox">
 						<Katex
 							aligned
@@ -210,7 +149,7 @@
 						/>
 					</div>
 
-					<h4>Gesamtlösung</h4>
+					<h4>{{ t( "sections.part4.left.h3" ) }}</h4>
 					<div class="kbox">
 						<Katex
 							aligned
@@ -220,21 +159,21 @@
 						/>
 					</div>
 
-					<h4>Endlösung</h4>
+					<h4>{{ t( "sections.part4.left.h4" ) }}</h4>
 					<div class="kbox">
 						<Katex as="div" display tex="\boxed{y(t) = 2 - e^{-2t}}" />
 					</div>
 				</section>
 
 				<section class="methodCard">
-					<h3>Lösung 2 - Laplace-Methode (Zarah)</h3>
+					<h3>{{ t( "sections.part4.right.title" ) }}</h3>
 
-					<p>Ausgangsgleichung:</p>
+					<p>{{ t( "sections.part4.right.p1" ) }}</p>
 					<div class="kbox">
 						<Katex as="div" display tex="y' + 2y = 4" />
 					</div>
 
-					<p>Laplace-Transformation:</p>
+					<p>{{ t( "sections.part4.right.p2" ) }}</p>
 					<div class="kbox">
 						<Katex
 							aligned
@@ -244,7 +183,7 @@
 						/>
 					</div>
 
-					<h4>Partialbruchzerlegung</h4>
+					<h4>{{ t( "sections.part4.right.h1" ) }}</h4>
 					<div class="kbox">
 						<Katex
 							aligned
@@ -254,7 +193,7 @@
 						/>
 					</div>
 
-					<h4>Rücktransformation</h4>
+					<h4>{{ t( "sections.part4.right.h2" ) }}</h4>
 					<div class="kbox">
 						<Katex as="div" display tex="\boxed{y(t) = 2 - e^{-2t}}" />
 					</div>
@@ -262,42 +201,42 @@
 			</div>
 		</div>
 
-		<h2 id="fazit" class="mt-8">Teil 5 - Fazit</h2>
+		<h2 id="fazit" class="mt-8">{{ t( "sections.part5.title" ) }}</h2>
 		<div class="eddie">
-			<p>Beide Wege führen zur gleichen Lösung.</p>
+			<p>{{ t( "sections.part5.p1" ) }}</p>
 
 			<div class="tableWrap">
 				<table class="compareTable">
 					<thead>
 						<tr>
-							<th>Eddie</th>
-							<th>Zarah</th>
+							<th>{{ t( "sections.part5.table.h1" ) }}</th>
+							<th>{{ t( "sections.part5.table.h2" ) }}</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr>
-							<td>Intuitiv</td>
-							<td>Systematisch</td>
+							<td>{{ t( "sections.part5.table.r1c1" ) }}</td>
+							<td>{{ t( "sections.part5.table.r1c2" ) }}</td>
 						</tr>
 						<tr>
-							<td>Zeitbereich</td>
-							<td>Bildbereich</td>
+							<td>{{ t( "sections.part5.table.r2c1" ) }}</td>
+							<td>{{ t( "sections.part5.table.r2c2" ) }}</td>
 						</tr>
 						<tr>
-							<td>Gut für einzelne Gleichungen</td>
-							<td>Ideal für Systeme</td>
+							<td>{{ t( "sections.part5.table.r3c1" ) }}</td>
+							<td>{{ t( "sections.part5.table.r3c2" ) }}</td>
 						</tr>
 						<tr>
-							<td>Gefühl für Dynamik</td>
-							<td>Ideal für Elektrotechnik</td>
+							<td>{{ t( "sections.part5.table.r4c1" ) }}</td>
+							<td>{{ t( "sections.part5.table.r4c2" ) }}</td>
 						</tr>
 					</tbody>
 				</table>
 			</div>
 
-			<p><b>Eddie:</b> „Ich sehe die Lösung wachsen.“</p>
-			<p><b>Zarah:</b> „Und ich sehe die Pole.“</p>
-			<p>Beide lachen.</p>
+			<p v-html="t( 'sections.part5.p2' )" />
+			<p v-html="t( 'sections.part5.p3' )" />
+			<p>{{ t( "sections.part5.p4" ) }}</p>
 		</div>
 	</template>
 
@@ -311,15 +250,28 @@
 
 	<template #footer>
 		<p class="muted">
-			<a href="http://www-fourier.ujf-grenoble.fr/~parisse/giac.html">Thanks to Universität Joseph Fourier Grenoble for giac (GPLv3)</a>
+			<a href="http://www-fourier.ujf-grenoble.fr/~parisse/giac.html">{{ t( "footer" ) }}</a>
 		</p>
 	</template>
 </AppFrame>
 </template>
 
 <script setup>
+import { computed } from "vue";
+import { useI18n } from "@/i18n.mjs";
 import titleImg from "./LT.webp";
 import LTTransform from "./LT_Transform.vue";
+
+const { t } = useI18n( "book1/LT" );
+
+const subChapter = computed( () => Object.fromEntries( [
+	[ "einleitung", t( "subChapter.einleitung" ) ],
+	[ "warum-laplace", t( "subChapter.warumLaplace" ) ],
+	[ "vorgehen", t( "subChapter.vorgehen" ) ],
+	[ "beispielrechnung", t( "subChapter.beispielrechnung" ) ],
+	[ "fazit", t( "subChapter.fazit" ) ],
+	[ "interactivePart", t( "subChapter.interactivePart" ) ]
+] ) );
 </script>
 
 <style scoped>

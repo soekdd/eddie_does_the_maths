@@ -1,54 +1,37 @@
 <template>
-<AppFrame  :sub-chapter="{
-		einleitung:'Einleitung',
-		'casar': 'Cäsar',
-		'vigenere': 'Vigenère',
-		'c64-emulator': 'C64 Emulator'
-	}"
-	title="Eddie rechnet: BASIC for runaways"
+<AppFrame
+	:languages="[ 'de', 'en' ]"
+	:sub-chapter
+	:title="t( 'ba.title' )"
 	:vue-date="__VITE_SFC_MTIME_MS__"
 >
 	<template #bookPart>
 		<figure class="exampleFigure">
-			<ImageZoomer title="Eddie am Karis C64">
+			<ImageZoomer :title="t( 'ba.imageTitle' )">
 				<img loading="lazy" :src="titleImg" />
 			</ImageZoomer>
 		</figure>
-		<h3 id="einleitung">Vaasa, 11. August 1985</h3>
+		<h3 id="einleitung">{{ t( "ba.introDate" ) }}</h3>
 		<div class="eddie">
-			<p>Die Buchstabenreihe <em>DXNZG.<wbr>EMIKN.<wbr>AOJUT.<wbr>CNNUT.<wbr>BXTLJ</em> liegt vor mir wie ein schlechter Witz,
-				nur dass keiner lacht. Am Küchentisch stapeln sich Radierkrümel, Kaffeeflecken und peinlich viele
-				Fehlversuche. Cäsar hab ich durchgeprügelt, Vigenère angeknabbert, Geburtstage verheizt und trotzdem
-				bleibt alles erst mal nur Buchstabensuppe.</p>
-			<p>Dann schleppt Jukka diese beige Kiste rein, und
-				auf dem Fernseher flackert <b>READY.</b> auf. Ich spüre sofort: Das ist kein Gerät, das ist ein Komplize.
-				BASIC ist wie Mathe mit Tasten: stumpf, ehrlich und schnell. Genau das brauche ich, wenn meine Finger
-				schon streiken.</p>
-			<p>Hier zeige ich dir, wie ich mit ein paar Zeilen C64-BASIC
-				systematisch entschlüssele: erst die einfachen Shifts, dann rotierende Schlüssel. Und wenn du nicht
-				nur lesen willst: Unten wartet
-				ein echter BASIC-Interpreter. Drücke <b>RUN</b>. Und der Buchstabensalat löst sich auf.</p>
+			<p v-html="t( 'ba.book.p1' )" />
+			<p v-html="t( 'ba.book.p2' )" />
+			<p v-html="t( 'ba.book.p3' )" />
 		</div>
 	</template>
 
 	<template #descriptionPart>
 
-		<h2>Teil 1 — Cäsar &amp; Vigenère</h2>
+		<h2>{{ t( "ba.sections.part1.title" ) }}</h2>
 		<div class="eddie">
-			<p class="text-body-2 text-medium-emphasis">
-				Zwei Klassiker: einmal „Alphabet verschieben“, einmal „Verschieben mit rotierendem Schlüssel“.
-			</p>
+			<p class="text-body-2 text-medium-emphasis">{{ t( "ba.sections.part1.lead" ) }}</p>
 		</div>
 
-		<h2 class="mt-8">Teil 2 — Grundidee: Buchstaben als Zahlen</h2>
+		<h2 class="mt-8">{{ t( "ba.sections.part2.title" ) }}</h2>
 		<div class="eddie">
-			<p class="mb-3">
-				Wir arbeiten fast immer mit dem Alphabet <strong>A–Z</strong> und machen daraus Zahlen.
-				Am beliebtesten ist:
-			</p>
+			<p class="mb-3" v-html="t( 'ba.sections.part2.p1' )" />
 
 			<div class="kbox">
-				<div class="text-subtitle-2 mb-2">Zuordnung</div>
+				<div class="text-subtitle-2 mb-2">{{ t( "ba.sections.part2.mapping" ) }}</div>
 				<div class="d-flex flex-wrap ga-2">
 					<v-chip size="small" variant="tonal">A → 0</v-chip>
 					<v-chip size="small" variant="tonal">B → 1</v-chip>
@@ -58,10 +41,8 @@
 			</div>
 
 			<div class="kbox">
-				<div class="text-subtitle-2 mb-2">Rechnen „im Kreis“</div>
-				<div class="text-body-2">
-					Nach Z kommt wieder A. Mathematisch ist das Rechnen <em>modulo 26</em>.
-				</div>
+				<div class="text-subtitle-2 mb-2">{{ t( "ba.sections.part2.circle" ) }}</div>
+				<div class="text-body-2" v-html="t( 'ba.sections.part2.circleText' )" />
 				<div class="mt-2">
 					<Katex
 						as="div"
@@ -73,19 +54,12 @@
 
 			<v-divider class="my-4" />
 
-			<p class="mb-0">
-				Und ja: In echten Texten muss man vorher meist „aufräumen“:
-				Großbuchstaben, Umlaute ersetzen (Ä→AE, Ö→OE, Ü→UE), Satzzeichen raus –
-				oder man behandelt sie getrennt.
-			</p>
+			<p class="mb-0" v-html="t( 'ba.sections.part2.cleanup' )" />
 		</div>
 
-		<h2 id="casar" class="mt-8">Teil 3 — Cäsar-Verschlüsselung</h2>
+		<h2 id="casar" class="mt-8">{{ t( "ba.sections.part3.title" ) }}</h2>
 		<div class="eddie">
-			<p class="mb-3">
-				Cäsar ist die Minimalversion: ein fester Shift <span class="font-weight-medium">k</span>.
-				Jeder Buchstabe wird um <span class="font-weight-medium">k</span> Stellen weitergeschoben.
-			</p>
+			<p class="mb-3" v-html="t( 'ba.sections.part3.p1' )" />
 
 			<div class="kbox">
 				<Katex
@@ -102,18 +76,22 @@
 			<v-row>
 				<v-col cols="12" md="6">
 					<div class="kbox">
-						<div class="text-subtitle-2 mb-2">Beispiel</div>
-						<div class="text-body-2 mb-2">
-							Klartext: <code>{{ caesarExample.plain }}</code> &nbsp;|&nbsp; Shift: <code>k={{ caesarExample.k }}</code>
-						</div>
+						<div class="text-subtitle-2 mb-2">{{ t( "ba.sections.part3.example" ) }}</div>
+						<div
+							class="text-body-2 mb-2"
+							v-html="t( 'ba.sections.part3.plainShift', {
+								plain: caesarExample.plain,
+								k:     caesarExample.k
+							} )"
+						/>
 
 						<v-table density="compact">
 							<thead>
 								<tr>
-									<th class="text-left">Buchstabe</th>
-									<th class="text-left">Zahl</th>
-									<th class="text-left">+k</th>
-									<th class="text-left">Cipher</th>
+									<th class="text-left">{{ t( "ba.sections.part3.table.letter" ) }}</th>
+									<th class="text-left">{{ t( "ba.sections.part3.table.number" ) }}</th>
+									<th class="text-left">{{ t( "ba.sections.part3.table.shift" ) }}</th>
+									<th class="text-left">{{ t( "ba.sections.part3.table.cipher" ) }}</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -126,31 +104,26 @@
 							</tbody>
 						</v-table>
 
-						<div class="mt-3 text-body-2">
-							Ergebnis: <code>{{ caesarExample.cipher }}</code>
-						</div>
+						<div class="mt-3 text-body-2" v-html="t( 'ba.sections.part3.result', { cipher: caesarExample.cipher } )" />
 					</div>
 				</v-col>
 
 				<v-col cols="12" md="6">
 					<div class="kbox">
-						<div class="text-subtitle-2 mb-2">Warum Cäsar oft schnell fällt</div>
+						<div class="text-subtitle-2 mb-2">{{ t( "ba.sections.part3.whyTitle" ) }}</div>
 						<ul class="text-body-2 mb-0">
-							<li>Es gibt nur <strong>25</strong> sinnvolle Schlüssel (k=1…25).</li>
-							<li>Man kann einfach alles durchprobieren („Bruteforce“).</li>
-							<li>Oder man nutzt <strong>Häufigkeiten</strong>: E, N, I, R, S… treten oft auf.</li>
+							<li v-html="t( 'ba.sections.part3.why1' )" />
+							<li v-html="t( 'ba.sections.part3.why2' )" />
+							<li v-html="t( 'ba.sections.part3.why3' )" />
 						</ul>
 					</div>
 				</v-col>
 			</v-row>
 		</div>
 
-		<h2 id="vigenere" class="mt-8">Teil 4 — Vigenère-Verschlüsselung</h2>
+		<h2 id="vigenere" class="mt-8">{{ t( "ba.sections.part4.title" ) }}</h2>
 		<div class="eddie">
-			<p class="mb-3">
-				Vigenère ist wie Cäsar – nur mit einem <strong>rotierenden Schlüssel</strong>.
-				Statt immer denselben Shift zu nehmen, hast du eine Folge von Shifts, die sich wiederholt.
-			</p>
+			<p class="mb-3" v-html="t( 'ba.sections.part4.p1' )" />
 
 			<div class="kbox">
 				<Katex
@@ -166,19 +139,22 @@
 			<v-row>
 				<v-col cols="12" md="6">
 					<div class="kbox">
-						<div class="text-subtitle-2 mb-2">Beispiel (klassisch mit Wortschlüssel)</div>
-						<div class="text-body-2 mb-2">
-							Klartext: <code>{{ vigWordExample.plain }}</code><br />
-							Schlüssel: <code>{{ vigWordExample.key }}</code> (wird wiederholt)
-						</div>
+						<div class="text-subtitle-2 mb-2">{{ t( "ba.sections.part4.classicTitle" ) }}</div>
+						<div
+							class="text-body-2 mb-2"
+							v-html="t( 'ba.sections.part4.classicText', {
+								plain: vigWordExample.plain,
+								key:   vigWordExample.key
+							} )"
+						/>
 
 						<v-table density="compact">
 							<thead>
 								<tr>
-									<th class="text-left">Pos</th>
-									<th class="text-left">P</th>
-									<th class="text-left">K</th>
-									<th class="text-left">C</th>
+									<th class="text-left">{{ t( "ba.sections.part4.table.pos" ) }}</th>
+									<th class="text-left">{{ t( "ba.sections.part4.table.p" ) }}</th>
+									<th class="text-left">{{ t( "ba.sections.part4.table.k" ) }}</th>
+									<th class="text-left">{{ t( "ba.sections.part4.table.c" ) }}</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -191,27 +167,22 @@
 							</tbody>
 						</v-table>
 
-						<div class="mt-3 text-body-2">
-							Ergebnis: <code>{{ vigWordExample.cipher }}</code>
-						</div>
+						<div class="mt-3 text-body-2" v-html="t( 'ba.sections.part4.classicResult', { cipher: vigWordExample.cipher } )" />
 					</div>
 				</v-col>
 
 				<v-col cols="12" md="6">
 					<div class="kbox">
-						<div class="text-subtitle-2 mb-2">Beispiel (Zahlenschlüssel wie „2,9,5“)</div>
-						<div class="text-body-2 mb-2">
-							Hier ist der Schlüssel direkt eine Zahlenfolge:
-							<code>{{ vigNumExample.key.join(",") }}</code> (wiederholt).
-						</div>
+						<div class="text-subtitle-2 mb-2">{{ t( "ba.sections.part4.numericTitle" ) }}</div>
+						<div class="text-body-2 mb-2" v-html="t( 'ba.sections.part4.numericText', { key: vigNumExample.key.join( ',' ) } )" />
 
 						<v-table density="compact">
 							<thead>
 								<tr>
-									<th class="text-left">Pos</th>
-									<th class="text-left">P</th>
-									<th class="text-left">Shift</th>
-									<th class="text-left">C</th>
+									<th class="text-left">{{ t( "ba.sections.part4.table.pos" ) }}</th>
+									<th class="text-left">{{ t( "ba.sections.part4.table.p" ) }}</th>
+									<th class="text-left">{{ t( "ba.sections.part4.table.shift" ) }}</th>
+									<th class="text-left">{{ t( "ba.sections.part4.table.c" ) }}</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -224,10 +195,13 @@
 							</tbody>
 						</v-table>
 
-						<div class="mt-3 text-body-2">
-							Klartext: <code>{{ vigNumExample.plain }}</code><br />
-							Cipher: <code>{{ vigNumExample.cipher }}</code>
-						</div>
+						<div
+							class="mt-3 text-body-2"
+							v-html="t( 'ba.sections.part4.numericResult', {
+								plain:  vigNumExample.plain,
+								cipher: vigNumExample.cipher
+							} )"
+						/>
 					</div>
 				</v-col>
 			</v-row>
@@ -237,21 +211,18 @@
 			<v-row>
 				<v-col cols="12" md="6">
 					<div class="kbox">
-						<div class="text-subtitle-2 mb-2">Warum Vigenère stärker ist</div>
+						<div class="text-subtitle-2 mb-2">{{ t( "ba.sections.part4.whyTitle" ) }}</div>
 						<ul class="text-body-2 mb-0">
-							<li>Kein einzelner Shift → Häufigkeiten „verwischen“.</li>
-							<li>Die Sicherheit hängt stark von der <strong>Schlüssellänge</strong> ab.</li>
-							<li>Kurze Schlüssel sind knackbar (Kasiski/Friedman), lange sind deutlich zäher.</li>
+							<li v-html="t( 'ba.sections.part4.why1' )" />
+							<li v-html="t( 'ba.sections.part4.why2' )" />
+							<li v-html="t( 'ba.sections.part4.why3' )" />
 						</ul>
 					</div>
 				</v-col>
 				<v-col cols="12" md="6">
 					<div class="kbox">
-						<div class="text-subtitle-2 mb-2">Eddie-Tipp fürs Denken</div>
-						<div class="text-body-2">
-							Stell dir vor, du hast mehrere Cäsar-Chiffren, die sich abwechseln.
-							Wenn du die Periodenlänge kennst, zerfällt das Problem wieder in mehrere kleine Cäsar-Aufgaben.
-						</div>
+						<div class="text-subtitle-2 mb-2">{{ t( "ba.sections.part4.tipTitle" ) }}</div>
+						<div class="text-body-2">{{ t( "ba.sections.part4.tipText" ) }}</div>
 						<div class="mt-2">
 							<Katex
 								as="div"
@@ -274,24 +245,24 @@
 			</v-row>
 		</div>
 
-		<h2 class="mt-8">Teil 5 — Merksätze</h2>
+		<h2 class="mt-8">{{ t( "ba.sections.part5.title" ) }}</h2>
 		<div class="eddie">
 			<v-row>
 				<v-col cols="12" md="6">
 					<div class="kbox">
-						<div class="text-subtitle-2 mb-2">Cäsar</div>
+						<div class="text-subtitle-2 mb-2">{{ t( "ba.sections.part5.caesar" ) }}</div>
 						<ul class="text-body-2 mb-0">
-							<li>Ein Shift für alles.</li>
-							<li>Schnell zu knacken (25 Versuche oder Frequenzanalyse).</li>
+							<li>{{ t( "ba.sections.part5.caesar1" ) }}</li>
+							<li>{{ t( "ba.sections.part5.caesar2" ) }}</li>
 						</ul>
 					</div>
 				</v-col>
 				<v-col cols="12" md="6">
 					<div class="kbox">
-						<div class="text-subtitle-2 mb-2">Vigenère</div>
+						<div class="text-subtitle-2 mb-2">{{ t( "ba.sections.part5.vigenere" ) }}</div>
 						<ul class="text-body-2 mb-0">
-							<li>Shift-Folge (Schlüssel) wiederholt sich.</li>
-							<li>Schlüssellänge ist die Schwachstelle – kurze Schlüssel sind angreifbar.</li>
+							<li>{{ t( "ba.sections.part5.vigenere1" ) }}</li>
+							<li>{{ t( "ba.sections.part5.vigenere2" ) }}</li>
 						</ul>
 					</div>
 				</v-col>
@@ -300,7 +271,7 @@
 	</template>
 
 	<template #interactivePart>
-		<h2 id="c64-emulator">BASIC-Emulator</h2>
+		<h2 id="c64-emulator">{{ t( "ba.interactive.title" ) }}</h2>
 		<div class="eddie d-flex flex-column ga-3">
 			<div class="kbox">
 				<v-row align="center" dense>
@@ -310,7 +281,7 @@
 							density="compact"
 							hide-details
 							:items="programItems"
-							label="BASIC-Programm"
+							:label="t( 'ba.interactive.programLabel' )"
 						/>
 					</v-col>
 				</v-row>
@@ -321,7 +292,7 @@
 							:disabled="!emulatorReady || emulatorRunning"
 							@click="runSelectedProgram"
 						>
-							RUN
+							{{ t( "ba.interactive.run" ) }}
 						</v-btn>
 
 						<v-btn
@@ -329,7 +300,7 @@
 							variant="tonal"
 							@click="clearProgramScreen"
 						>
-							CLEAR
+							{{ t( "ba.interactive.clear" ) }}
 						</v-btn>
 
 						<v-btn
@@ -337,7 +308,7 @@
 							variant="tonal"
 							@click="resetProgramRuntime"
 						>
-							RESET
+							{{ t( "ba.interactive.reset" ) }}
 						</v-btn>
 
 						<v-spacer />
@@ -347,14 +318,14 @@
 							size="small"
 							variant="tonal"
 						>
-							basic ready
+							{{ t( "ba.interactive.ready" ) }}
 						</v-chip>
 						<v-chip v-else
 							color="grey"
 							size="small"
 							variant="tonal"
 						>
-							loading…
+							{{ t( "ba.interactive.loading" ) }}
 						</v-chip>
 					</v-col>
 				</v-row>
@@ -366,7 +337,7 @@
 					auto-grow
 					class="basic-source-editor"
 					:disabled="emulatorRunning"
-					label="BASIC Quelltext"
+					:label="t( 'ba.interactive.source' )"
 					rows="12"
 					spellcheck="false"
 				/>
@@ -375,7 +346,7 @@
 	</template>
 
 	<template #calculationPart>
-		<h2>Emulator-Ausgabe</h2>
+		<h2>{{ t( "ba.interactive.output" ) }}</h2>
 		<div class="eddie">
 			<BAEmulator
 				:key="emulatorKey"
@@ -389,7 +360,7 @@
 
 	<template #footer>
 		<p class="muted">
-			<a href="https://github.com/mist64/cbmbasic/">Thanks to Michael Steil and James Abbatiello for their cbmbasic (BSD2-like License)</a>
+			<a href="https://github.com/mist64/cbmbasic/">{{ t( "ba.interactive.footer" ) }}</a>
 		</p>
 	</template>
 </AppFrame>
@@ -399,14 +370,23 @@
 import {
 	ref, computed, watch
 } from "vue";
+import { useI18n } from "@/i18n.mjs";
 import BAEmulator from "./BA_Emulator.vue";
 import titleImg from "./BA.webp";
+
+const { t } = useI18n( "book1/BA" );
 
 const emulatorKey = ref( 0 );
 const emulatorRef = ref( null );
 const emulatorReady = ref( false );
 const emulatorRunning = ref( false );
 const encodedHAMMessage = "OJUTXTLJNNUTXNZGMIKN";
+const subChapter = computed( () => ( {
+	einleitung:     t( "ba.subChapter.einleitung" ),
+	casar:          t( "ba.subChapter.casar" ),
+	vigenere:       t( "ba.subChapter.vigenere" ),
+	"c64-emulator": t( "ba.subChapter.c64-emulator" )
+} ) );
 const programs = [
 	{
 		id:     "hello",
@@ -647,7 +627,10 @@ const programs = [
 ];
 const selectedProgramId = ref( programs[ 0 ]?.id ?? "" );
 const programItems = computed( () =>
-	programs.map( ( p ) => ( { title: p.name, value: p.id } ) ) );
+	programs.map( ( p ) => ( {
+		title: t( `ba.programs.${p.id}` ),
+		value: p.id
+	} ) ) );
 const selectedProgramSource =
 	computed( () => programs.find( ( p ) => p.id === selectedProgramId.value )?.source ?? "" );
 const sourceEditor = ref( selectedProgramSource.value );

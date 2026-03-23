@@ -16,7 +16,7 @@
 	<v-row class="rdg-layout" dense>
 		<v-col cols="12" md="4">
 			<v-card class="pa-3" variant="tonal">
-				<div class="text-h6 mb-3">Jeep-Problem – interaktiv</div>
+				<div class="text-h6 mb-3">{{ t( "graphInteractive.title" ) }}</div>
 
 				<v-select
 					v-model="variant"
@@ -25,18 +25,18 @@
 					item-title="title"
 					item-value="value"
 					:items="variantItems"
-					label="Variante"
+					:label="t( 'graphInteractive.variant' )"
 				/>
 
 				<v-divider class="my-2" />
 
-				<div class="text-subtitle-2 mb-2">Fahrzeug & Einheiten</div>
+				<div class="text-subtitle-2 mb-2">{{ t( "graphInteractive.vehicle" ) }}</div>
 
 				<v-text-field
 					v-model.number="tankCapacityL"
 					class="mb-2"
 					density="comfortable"
-					label="Tankkapazität (Liter)"
+					:label="t( 'graphInteractive.tankCapacity' )"
 					min="0.0001"
 					step="1"
 					type="number"
@@ -46,8 +46,8 @@
 					v-model.number="consumptionLperKm"
 					class="mb-2"
 					density="comfortable"
-					hint="z.B. 0.12 = 12L/100km"
-					label="Verbrauch (Liter / km)"
+					:hint="t( 'graphInteractive.consumptionHint' )"
+					:label="t( 'graphInteractive.consumption' )"
 					min="0.000001"
 					persistent-hint
 					step="0.001"
@@ -58,7 +58,7 @@
 					v-model.number="speedKmH"
 					class="mb-2"
 					density="comfortable"
-					label="Geschwindigkeit (km/h) – nur für Y-Achse"
+					:label="t( 'graphInteractive.speed' )"
 					min="0.0001"
 					step="1"
 					type="number"
@@ -66,27 +66,27 @@
 
 				<v-divider class="my-2" />
 
-				<div v-if="variant !== 'deliver'" class="text-subtitle-2 mb-2">Starttreibstoff</div>
+				<div v-if="variant !== 'deliver'" class="text-subtitle-2 mb-2">{{ t( "graphInteractive.startFuel" ) }}</div>
 
 				<v-text-field
 					v-if="variant !== 'deliver'"
 					v-model.number="startFuelL"
 					class="mb-2"
 					density="comfortable"
-					label="Gesamt-Treibstoff am Start (Liter)"
+					:label="t( 'graphInteractive.totalStartFuel' )"
 					min="0"
 					step="1"
 					type="number"
 				/>
 
 				<template v-else>
-					<div class="text-subtitle-2 mb-2">Lieferproblem</div>
+					<div class="text-subtitle-2 mb-2">{{ t( "graphInteractive.deliveryProblem" ) }}</div>
 
 					<v-text-field
 						v-model.number="targetDistanceKm"
 						class="mb-2"
 						density="comfortable"
-						label="Zielentfernung (km)"
+						:label="t( 'graphInteractive.targetDistance' )"
 						min="0"
 						step="1"
 						type="number"
@@ -96,7 +96,7 @@
 						v-model.number="deliveredFuelL"
 						class="mb-2"
 						density="comfortable"
-						label="Treibstoff am Ziel (Liter)"
+						:label="t( 'graphInteractive.deliveredFuel' )"
 						min="0"
 						step="1"
 						type="number"
@@ -105,19 +105,19 @@
 
 				<v-divider class="my-2" />
 
-				<div class="text-subtitle-2 mb-2">Visualisierung</div>
+				<div class="text-subtitle-2 mb-2">{{ t( "graphInteractive.visualization" ) }}</div>
 
 				<v-switch
 					v-model="showGrid"
 					class="mb-1"
 					density="comfortable"
-					label="Raster anzeigen"
+					:label="t( 'graphInteractive.showGrid' )"
 				/>
 				<v-switch
 					v-model="showPhaseMarkers"
 					class="mb-2"
 					density="comfortable"
-					label="Phasenmarken anzeigen"
+					:label="t( 'graphInteractive.showPhaseMarkers' )"
 				/>
 
 				<!-- <v-slider
@@ -142,9 +142,7 @@
 			</v-card>
 			<v-divider class="my-3" />
 			<div class="text-caption text-medium-emphasis">
-				Modellannahme: Treibstoff ist kontinuierlich teilbar, Umfüllen/Depots sind verlustfrei,
-				und “optimal” wird hier über das klassische Phasen-Modell (harmonische Summen) angenähert.
-				Für Kanister/Integer-Restriktionen oder Depot-Limits müsste man extra Regeln ergänzen.
+				{{ t( "graphInteractive.assumption" ) }}
 			</div>
 		</v-col>
 
@@ -152,31 +150,31 @@
 			<v-card class="pa-3 graph-card">
 				<div class="d-flex align-center justify-space-between flex-wrap ga-3">
 					<div>
-						<div class="text-h6">Fahrten (X = Entfernung, Y = Zeit)</div>
+						<div class="text-h6">{{ t( "graphInteractive.tripsTitle" ) }}</div>
 						<div class="text-caption text-medium-emphasis">
-							Y wächst nach unten wie in einem Sequenzdiagramm.
+							{{ t( "graphInteractive.tripsSubtitle" ) }}
 						</div>
 					</div>
 
 					<div class="text-caption text-right">
 						<div v-if="variant !== 'deliver'">
-							<b>Max. Entfernung:</b> {{ fmtKm(result.maxDistanceKm) }}
-							<span v-if="variant === 'roundtrip'"> (und zurück)</span>
+							<b>{{ t( "graphInteractive.maxDistance" ) }}</b> {{ fmtKm(result.maxDistanceKm) }}
+							<span v-if="variant === 'roundtrip'"> {{ t( "graphInteractive.andBack" ) }}</span>
 						</div>
 						<div v-else>
-							<b>Benötigter Starttreibstoff:</b> {{ fmtL(result.requiredStartFuelL) }}
+							<b>{{ t( "graphInteractive.requiredStartFuel" ) }}</b> {{ fmtL(result.requiredStartFuelL) }}
 						</div>
 						<div>
-							<b>Gesamtfahrzeit:</b> {{ fmtH(result.totalTimeH) }}
+							<b>{{ t( "graphInteractive.totalTime" ) }}</b> {{ fmtH(result.totalTimeH) }}
 							&nbsp;·&nbsp;
-							<b>Gesamtfahrstrecke:</b> {{ fmtKm(result.totalTravelKm) }}
+							<b>{{ t( "graphInteractive.totalDistance" ) }}</b> {{ fmtKm(result.totalTravelKm) }}
 						</div>
 					</div>
 				</div>
 
 				<div class="max90 svg-wrap mt-3">
 					<svg
-						aria-label="Jeep-Fahrten Diagramm"
+						:aria-label="t( 'graphInteractive.aria' )"
 						class="max90"
 						preserveAspectRatio="xMidYMid meet"
 						role="img"
@@ -244,7 +242,7 @@
 								:x="plotLeft"
 								:y="plotTop - 10"
 							>
-								Zeit (h) ↓
+								{{ t( "graphInteractive.timeAxis" ) }}
 							</text>
 							<text
 								fill="currentColor"
@@ -252,7 +250,7 @@
 								:x="plotRight - 140"
 								:y="plotTop - 10"
 							>
-								Entfernung (km) →
+								{{ t( "graphInteractive.distanceAxis" ) }}
 							</text>
 						</g>
 
@@ -338,6 +336,7 @@
 
 <script setup lang="ts">
 import { computed, ref } from "vue";
+import { useI18n } from "@/i18n.mjs";
 
 type Variant = "oneway" | "roundtrip" | "deliver";
 
@@ -351,12 +350,14 @@ type Phase = {
 
 type PathPoint = { xKm: number; tH: number };
 
+const { t } = useI18n( "book1/RD" );
+
 const variant = ref<Variant>( "oneway" );
-const variantItems = [
-	{ title: "1) One-way: maximale Reichweite", value: "oneway" },
-	{ title: "2) Hin & zurück: maximale Entfernung", value: "roundtrip" },
-	{ title: "3) Lieferung: Startfuel für Ziel + Rest", value: "deliver" }
-];
+const variantItems = computed( () => [
+	{ title: t( "graphInteractive.variantItems.oneway" ), value: "oneway" },
+	{ title: t( "graphInteractive.variantItems.roundtrip" ), value: "roundtrip" },
+	{ title: t( "graphInteractive.variantItems.deliver" ), value: "deliver" }
+] );
 
 // Eingaben
 const tankCapacityL = ref( 60 );
@@ -582,20 +583,20 @@ function buildPathFromPhases(
 // ---- Ergebnisberechnung ----
 const warning = computed( () => {
 	if ( !( tankCapacityL.value > 0 ) || !( consumptionLperKm.value > 0 ) || !( speedKmH.value > 0 ) ) {
-		return "Tankkapazität, Verbrauch und Geschwindigkeit müssen > 0 sein.";
+		return t( "graphInteractive.errors.basePositive" );
 	}
 
 	if ( variant.value !== "deliver" && startFuelL.value < 0 ) {
-		return "Starttreibstoff darf nicht negativ sein.";
+		return t( "graphInteractive.errors.startFuelNonNegative" );
 	}
 
 	if ( variant.value === "deliver" ) {
 		if ( targetDistanceKm.value < 0 ) {
-			return "Zielentfernung darf nicht negativ sein.";
+			return t( "graphInteractive.errors.targetDistanceNonNegative" );
 		}
 
 		if ( deliveredFuelL.value < 0 ) {
-			return "Liefermenge darf nicht negativ sein.";
+			return t( "graphInteractive.errors.deliveryNonNegative" );
 		}
 	}
 

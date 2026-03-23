@@ -18,7 +18,7 @@
 	</template>
 
 	<div class="eddieCommentHeader">
-		<strong>Eddie:</strong>
+		<strong>{{ t( "eddieComment.label" ) }}</strong>
 		<span v-if="subtitle" class="eddieCommentSubtitle">{{ subtitle }}</span>
 	</div>
 	<div class="eddieCommentBody eddie">
@@ -28,7 +28,10 @@
 </template>
 
 <script setup>
+import { useI18n } from "@/i18n.mjs";
 import faviconPng from "@/images/favicon.png";
+
+const { t } = useI18n( "components/lang" );
 
 defineProps( {
 	subtitle: {

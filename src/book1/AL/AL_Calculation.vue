@@ -33,10 +33,10 @@
 							rounded="xl"
 							@click="$emit('run')"
 						>
-							Ausführen
+							{{ t( "calculation.actions.run" ) }}
 						</v-btn>
 						<v-btn rounded="xl" variant="tonal" @click="$emit('reset')">
-							Reset
+							{{ t( "calculation.actions.reset" ) }}
 						</v-btn>
 					</v-col>
 				</v-row>
@@ -70,9 +70,9 @@
 				<v-divider class="my-4" />
 
 				<v-tabs v-model="tabProxy" color="primary">
-					<v-tab value="deck">Kartendeck</v-tab>
-					<v-tab value="trace">Trace</v-tab>
-					<v-tab value="store">Store-Snapshot</v-tab>
+					<v-tab value="deck">{{ t( "calculation.tabs.deck" ) }}</v-tab>
+					<v-tab value="trace">{{ t( "calculation.tabs.trace" ) }}</v-tab>
+					<v-tab value="store">{{ t( "calculation.tabs.store" ) }}</v-tab>
 				</v-tabs>
 
 				<v-window v-model="tabProxy" class="mt-3">
@@ -80,11 +80,11 @@
 						<v-table density="compact">
 							<thead>
 								<tr>
-									<th style="width: 70px;">#</th>
+									<th style="width: 70px;">{{ t( "calculation.columns.index" ) }}</th>
 									<th style="width: 90px;">{{ deckLineTitle }}</th>
-									<th>Label</th>
-									<th style="width: 110px;">Op</th>
-									<th style="width: 150px;">Ziel</th>
+									<th>{{ t( "calculation.columns.label" ) }}</th>
+									<th style="width: 110px;">{{ t( "calculation.columns.op" ) }}</th>
+									<th style="width: 150px;">{{ t( "calculation.columns.target" ) }}</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -102,7 +102,7 @@
 					<v-window-item value="trace">
 						<v-textarea
 							auto-grow
-							label="Karten-Log"
+							:label="t( 'calculation.traceLabel' )"
 							:model-value="traceText"
 							readonly
 							rows="16"
@@ -121,13 +121,16 @@
 
 <script setup>
 import { computed } from "vue";
+import { useI18n } from "@/i18n.mjs";
+
+const { t } = useI18n( "book1/AL" );
 
 const props = defineProps( {
 	title:         { type: String, required: true },
 	subtitle:      { type: String, required: true },
 	formulaTitle:  { type: String, required: true },
 	formulaTex:    { type: String, required: true },
-	resultTitle:   { type: String, default: "Ergebnis" },
+	resultTitle:   { type: String, default: "" },
 	deckLineTitle: { type: String, default: "Line" },
 	running:       { type: Boolean, default: false },
 	error:         { type: String, default: "" },
@@ -148,6 +151,8 @@ const tabProxy = computed( {
 		emit( "update:tab", value );
 	}
 } );
+
+const resultTitle = computed( () => props.resultTitle || t( "calculation.resultTitle" ) );
 
 function formatDest( dest ) {
 	if ( Array.isArray( dest ) ) {

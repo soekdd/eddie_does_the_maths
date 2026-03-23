@@ -2,7 +2,7 @@
 <div class="wrap">
 	<template v-if="geom">
 		<svg
-			aria-label="Geometrische Konfiguration zu IMO 1985 Aufgabe 5"
+			:aria-label="t( 'graph.aria' )"
 			class="svg"
 			role="img"
 			:viewBox="`${viewBox.x} ${viewBox.y} ${viewBox.w} ${viewBox.h}`"
@@ -115,7 +115,8 @@
 
 				<!-- Points -->
 				<g fill="var(--o5-ink)">
-					<circle v-for="p in geom.points"
+					<circle
+						v-for="p in geom.points"
 						:key="p.name"
 						:cx="p.x"
 						:cy="p.y"
@@ -140,29 +141,32 @@
 		<div class="legendHtml">
 			<div class="legendItem">
 				<span class="swatch tri"></span>
-				<span>Dreieck ABC</span>
+				<span>{{ t( "graph.legendTriangle" ) }}</span>
 			</div>
 			<div class="legendItem">
 				<span class="swatch rad"></span>
-				<span>Radikalachsen AC und KN</span>
+				<span>{{ t( "graph.legendAxes" ) }}</span>
 			</div>
 			<div class="legendItem">
 				<span class="swatch right"></span>
-				<span>BM und OM (zu zeigen: ⟂)</span>
+				<span>{{ t( "graph.legendRight" ) }}</span>
 			</div>
 			<div class="legendItem">
 				<span class="swatch circ"></span>
-				<span>Umkreise von ABC und KBN</span>
+				<span>{{ t( "graph.legendCircles" ) }}</span>
 			</div>
 		</div>
 	</template>
 
-	<div v-else class="loading">Gültige Konfiguration berechnen…</div>
+	<div v-else class="loading">{{ t( "graph.loading" ) }}</div>
 </div>
 </template>
 
 <script setup>
 import { computed } from "vue";
+import { useI18n } from "@/i18n.mjs";
+
+const { t } = useI18n( "book1/O5" );
 
 const EPS = 1e-9;
 
@@ -248,7 +252,10 @@ function circumcircle(
 		return null;
 	}
 
-	return { center, radius };
+	return {
+		center,
+		radius
+	};
 }
 
 function boundsFromPoints( points ) {
@@ -273,7 +280,10 @@ function boundsFromPoints( points ) {
 	}
 
 	return {
-		minX, maxX, minY, maxY
+		minX,
+		maxX,
+		minY,
+		maxY
 	};
 }
 
@@ -446,7 +456,7 @@ const viewBox = computed( () => {
 		radius: geom.value.baseRadius
 	};
 	const r = Math.max( circle.radius, EPS );
-	const w = 2.5 * r; // because diameter / width = 2r / w = 0.8
+	const w = 2.5 * r;
 	const h = w;
 	const cx = circle.center.x;
 	const cy = circle.center.y;

@@ -1,54 +1,31 @@
 <template>
-<AppFrame  :sub-chapter="{
-		'a1': 'A1',
-		'a2': 'A2',
-		'a3': 'A3',
-		'b1': 'B1',
-		'b2': 'B2',
-		'b3': 'B3'
-	}"
-	title="Eddie rechnet: IMO 1985 Aufgaben Übersicht"
+<AppFrame
+	:languages="[ 'de', 'en' ]"
+	:sub-chapter
+	:title="t( 'title' )"
 	:vue-date="__VITE_SFC_MTIME_MS__"
 >
 
 	<template #bookPart>
 		<figure class="exampleFigure">
-			<ImageZoomer title="Eddie am zweiten Wettkampftag">
-				<img loading="lazy" :src="titleImg" />
+			<ImageZoomer :title="t( 'imageTitle' )">
+				<img :alt="t( 'imageAlt' )" loading="lazy" :src="titleImg" />
 			</ImageZoomer>
 		</figure>
-		<h3 id="einleitung">Joutsa, 4. Juli 1985</h3>
+		<h3 id="einleitung">{{ t( "introDate1" ) }}</h3>
 		<div class="eddie">
-			<p>Joutsa, Klassenzimmer, alles geschniegelt: Tische in Reih und Glied, Uhren ticken
-				viel zu laut, und ich sitze da wie ein gespannter Flitzebogen. Heute bin ich noch
-				voll im Film. Ich will nicht nur gut sein – ich will zeigen, dass ich <em>die</em> Eddie bin.
-				Drei Aufgaben, drei Chancen, die Welt kurz auf Pause zu drücken und nur noch logisch zu atmen.</p><p>
-				Die erste ist so eine Geometrie-Falle: Kreise, ein Viereck, und irgendwo steckt eine Beziehung,
-				die man “sehen” muss, sonst rennt man im Kreis. Die zweite tut harmlos mit Farben und Zahlen,
-				aber die Regeln kleben alles zusammen, bis du kaum noch frei entscheiden kannst. Und die
-				dritte ist wie ein Rechen-Zaubertrick: Du baust etwas aus Bausteinen zusammen und musst beweisen,
-				dass eine bestimmte Eigenschaft nicht einfach verschwindet, nur weil man addiert.</p><p>
-				Ich bin wach, frech, überzeugt: Das hier ist mein Terrain.</p>
+			<p>{{ t( "book.day1p1" ) }}</p><p>{{ t( "book.day1p2" ) }}</p><p>{{ t( "book.day1p3" ) }}</p>
 		</div>
-		<h3>Joutsa, 5. Juli 1985</h3>
+		<h3>{{ t( "introDate2" ) }}</h3>
 		<div class="eddie">
-			<p>Gleicher Raum, gleiche Geräusche – aber ich bin nicht mehr dieselbe. Mein Kopf ist schon halb draußen,
-				bei Türen, Wegen, Blicken. Ich versuche zu lesen, doch die Gedanken rutschen weg wie Seife. Alles
-				in mir zählt nicht mehr Punkte, sondern Sekunden.</p><p>
-				Die Aufgaben fühlen sich plötzlich schwer an, obwohl sie es nicht “dürfen”. Erst geht’s um viele
-				Zahlen, die nur aus kleinen Prim-Bausteinen bestehen, und irgendwo soll man garantiert vier finden,
-				die zusammen etwas “perfekt Ganzes” ergeben. Dann wieder Geometrie: Dreieck, Kreise, Schnittpunkte
-				und am Ende muss eine Ecke genau rechtwinklig sein, als würde die Zeichnung das heimlich erzwingen.
-				Und zuletzt eine Zahlenfolge: Startest du falsch, kippt alles. Es soll genau <em>einen</em> Anfang geben,
-				der die Folge brav zwischen null und eins hält und trotzdem wachsen lässt.</p><p>
-				Ich weiß, wie man das angeht, aber ich fühle, wie mir die Klarheit durch die Finger rinnt.</p>
+			<p>{{ t( "book.day2p1" ) }}</p><p>{{ t( "book.day2p2" ) }}</p><p>{{ t( "book.day2p3" ) }}</p>
 		</div>
 	</template>
 
 	<template #descriptionPart>
-		<h2>IMO 1985 - Aufgaben</h2>
+		<h2>{{ t( "sections.title" ) }}</h2>
 		<p class="meta">
-			Nur die Aufgaben (keine Lösungen). Quelle:
+			{{ t( "sections.meta" ) }}
 			<a href="https://prase.cz/kalva/imo/imo85.html" rel="noreferrer" target="_blank">
 				prase.cz/kalva/imo/imo85.html
 			</a>
@@ -56,59 +33,32 @@
 
 		<section class="problem">
 			<div class="problem-head">
-				<h3 id="a1">Schritt 1.1 - A1</h3>
-				<RouterLink class="task-link" to="/O1">Zur Aufgabe A1</RouterLink>
+				<h3 id="a1">{{ t( "tasks.a1.heading" ) }}</h3>
+				<RouterLink class="task-link" to="/O1">{{ t( "tasks.a1.link" ) }}</RouterLink>
 			</div>
-			<p>
-				Ein Kreis hat seinen Mittelpunkt auf der Seite <Katex inline tex="AB" /> des Sehnenvierecks
-				<Katex inline tex="ABCD" />. Die drei anderen Seiten berühren den Kreis (sind Tangenten an ihn).
-				Beweise:
-				<Katex inline tex="AD + BC = AB" />.
-			</p>
+			<p>{{ t( "tasks.a1.p1" ) }}</p>
 		</section>
 
 		<section class="problem">
 			<div class="problem-head">
-				<h3 id="a2">Schritt 1.2 - A2</h3>
-				<RouterLink class="task-link" to="/O2">Zur Aufgabe A2</RouterLink>
+				<h3 id="a2">{{ t( "tasks.a2.heading" ) }}</h3>
+				<RouterLink class="task-link" to="/O2">{{ t( "tasks.a2.link" ) }}</RouterLink>
 			</div>
-			<p>
-				Seien <Katex inline tex="n" /> und <Katex inline tex="k" /> teilerfremde positive ganze Zahlen mit
-				<Katex inline tex="k&lt;n" />. Jede Zahl aus der Menge
-				<Katex inline tex="M=\{1,2,3,\dots,n-1\}" />
-				wird entweder blau oder weiß gefärbt.
-			</p>
+			<p>{{ t( "tasks.a2.p1" ) }}</p>
 			<ul>
-				<li>
-					Für jedes <Katex inline tex="i\in M" /> haben <Katex inline tex="i" /> und
-					<Katex inline tex="n-i" /> dieselbe Farbe.
-				</li>
-				<li>
-					Für jedes <Katex inline tex="i\in M" /> mit <Katex inline tex="i\ne k" /> haben
-					<Katex inline tex="i" /> und <Katex inline tex="\lvert i-k\rvert" /> dieselbe Farbe.
-				</li>
+				<li>{{ t( "tasks.a2.l1" ) }}</li>
+				<li>{{ t( "tasks.a2.l2" ) }}</li>
 			</ul>
-			<p>
-				Beweise, dass alle Zahlen in <Katex inline tex="M" /> dieselbe Farbe haben müssen.
-			</p>
+			<p>{{ t( "tasks.a2.p2" ) }}</p>
 		</section>
 
 		<section class="problem">
 			<div class="problem-head">
-				<h3 id="a3">Schritt 1.3 - A3</h3>
-				<RouterLink class="task-link" to="/O3">Zur Aufgabe A3</RouterLink>
+				<h3 id="a3">{{ t( "tasks.a3.heading" ) }}</h3>
+				<RouterLink class="task-link" to="/O3">{{ t( "tasks.a3.link" ) }}</RouterLink>
 			</div>
-			<p>
-				Für ein Polynom
-				<Katex inline tex="P(x)=a_0+a_1x+\dots+a_kx^k" />
-				mit ganzzahligen Koeffizienten bezeichne <Katex inline tex="o(P)" /> die Anzahl der ungeraden
-				Koeffizienten von <Katex inline tex="P" />. Für <Katex inline tex="i=0,1,2,\dots" /> sei
-				<Katex inline tex="Q_i(x)=(1+x)^i" />.
-			</p>
-			<p>
-				Beweise: Sind <Katex inline tex="i_1,i_2,\dots,i_n" /> ganze Zahlen mit
-				<Katex inline tex="0\le i_1&lt;i_2&lt;\dots&lt;i_n" />, dann gilt
-			</p>
+			<p>{{ t( "tasks.a3.p1" ) }}</p>
+			<p>{{ t( "tasks.a3.p2" ) }}</p>
 			<Katex
 				tex="o\!\bigl(Q_{i_1}+Q_{i_2}+\dots+Q_{i_n}\bigr)\;\ge\;o\!\bigl(Q_{i_1}\bigr)."
 			/>
@@ -116,67 +66,56 @@
 
 		<section class="problem">
 			<div class="problem-head">
-				<h3 id="b1">Schritt 1.4 - B1</h3>
-				<RouterLink class="task-link" to="/O4">Zur Aufgabe B1</RouterLink>
+				<h3 id="b1">{{ t( "tasks.b1.heading" ) }}</h3>
+				<RouterLink class="task-link" to="/O4">{{ t( "tasks.b1.link" ) }}</RouterLink>
 			</div>
-			<p>
-				Gegeben ist eine Menge <Katex inline tex="M" /> aus <Katex inline tex="1985" /> paarweise
-				verschiedenen positiven ganzen Zahlen, von denen keine einen Primteiler größer als
-				<Katex inline tex="23" /> besitzt.
-			</p>
-			<p>
-				Beweise, dass <Katex inline tex="M" /> eine Teilmenge aus <Katex inline tex="4" /> Elementen enthält,
-				deren Produkt eine vierte Potenz einer ganzen Zahl ist.
-			</p>
+			<p>{{ t( "tasks.b1.p1" ) }}</p>
+			<p>{{ t( "tasks.b1.p2" ) }}</p>
 		</section>
 
 		<section class="problem">
 			<div class="problem-head">
-				<h3 id="b2">Schritt 1.5 - B2</h3>
-				<RouterLink class="task-link" to="/O5">Zur Aufgabe B2</RouterLink>
+				<h3 id="b2">{{ t( "tasks.b2.heading" ) }}</h3>
+				<RouterLink class="task-link" to="/O5">{{ t( "tasks.b2.link" ) }}</RouterLink>
 			</div>
-			<p>
-				Ein Kreis mit Mittelpunkt <Katex inline tex="O" /> geht durch die Eckpunkte
-				<Katex inline tex="A" /> und <Katex inline tex="C" /> des Dreiecks <Katex inline tex="ABC" /> und
-				schneidet die Strecken <Katex inline tex="AB" /> bzw. <Katex inline tex="BC" /> ein zweites Mal in
-				den (verschiedenen) Punkten <Katex inline tex="K" /> bzw. <Katex inline tex="N" />.
-			</p>
-			<p>
-				Die Umkreise der Dreiecke <Katex inline tex="ABC" /> und <Katex inline tex="KBN" /> schneiden sich
-				in genau zwei verschiedenen Punkten <Katex inline tex="B" /> und <Katex inline tex="M" />.
-				Beweise, dass der Winkel <Katex inline tex="\angle OMB" /> ein rechter Winkel ist, also
-				<Katex inline tex="\angle OMB = 90^\circ" />.
-			</p>
+			<p>{{ t( "tasks.b2.p1" ) }}</p>
+			<p>{{ t( "tasks.b2.p2" ) }}</p>
 		</section>
 
 		<section class="problem">
 			<div class="problem-head">
-				<h3 id="b3">Schritt 1.6 - B3</h3>
-				<RouterLink class="task-link" to="/O6">Zur Aufgabe B3</RouterLink>
+				<h3 id="b3">{{ t( "tasks.b3.heading" ) }}</h3>
+				<RouterLink class="task-link" to="/O6">{{ t( "tasks.b3.link" ) }}</RouterLink>
 			</div>
-			<p>
-				Für jede reelle Zahl <Katex inline tex="x_1" /> wird eine Folge
-				<Katex inline tex="x_1,x_2,\dots" /> definiert durch
-			</p>
+			<p>{{ t( "tasks.b3.p1" ) }}</p>
 			<Katex tex="x_{n+1}=x_n\left(x_n+\frac{1}{n}\right)\quad (n=1,2,3,\dots)." />
-			<p>
-				Beweise, dass es genau einen Startwert <Katex inline tex="x_1" /> gibt, für den für alle
-				<Katex inline tex="n" /> gilt:
-				<Katex inline tex="0&lt;x_n&lt;x_{n+1}&lt;1" />.
-			</p>
+			<p>{{ t( "tasks.b3.p2" ) }}</p>
 		</section>
 	</template>
 
 	<template #footer>
 		<p class="muted">
-			Quellen (zum Nachlesen): AoPS Wiki (IMO 1985 Problem 1-6) und die offiziellen ISL-Solutions (prase.cz).
+			{{ t( "footer" ) }}
 		</p>
 	</template>
 </AppFrame>
 </template>
 
 <script setup>
+import { computed } from "vue";
+import { useI18n } from "@/i18n.mjs";
 import titleImg from "./MO.webp";
+
+const { t } = useI18n( "book1/MO" );
+
+const subChapter = computed( () => Object.fromEntries( [
+	[ "a1", "A1" ],
+	[ "a2", "A2" ],
+	[ "a3", "A3" ],
+	[ "b1", "B1" ],
+	[ "b2", "B2" ],
+	[ "b3", "B3" ]
+] ) );
 </script>
 
 <style scoped>

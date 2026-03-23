@@ -31,7 +31,7 @@
 	</svg>
 
 	<p v-if="showLegend" class="legend">
-		Pascalsches Dreieck modulo&nbsp;2:
+		{{ t( "graph.legend" ) }}
 		<Katex tex="\binom{n}{k}\equiv 1\pmod 2 \iff (k\,\&\,n)=k" />.
 	</p>
 </div>
@@ -39,6 +39,9 @@
 
 <script setup>
 import { computed } from "vue";
+import { useI18n } from "@/i18n.mjs";
+
+const { t } = useI18n( "book1/O3" );
 
 const props = defineProps( {
 	rows: {
@@ -63,9 +66,11 @@ const props = defineProps( {
 	},
 	ariaLabel: {
 		type:    String,
-		default: "Sierpinski-Muster aus dem Pascalschen Dreieck modulo 2"
+		default: ""
 	}
 } );
+
+const ariaLabel = computed( () => props.ariaLabel || t( "graph.aria" ) );
 
 const rowCount = computed( () => clampInt(
 	props.rows, 1, 256

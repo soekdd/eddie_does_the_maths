@@ -1,83 +1,68 @@
 <!-- eslint-disable vue/max-len -->
 <template>
-<AppFrame  :sub-chapter="{
-		'analytical-engine': 'Analytical Engine',
-		'bernoulli-zahlen': 'Bernoulli-Zahlen',
-		'gcd': 'gcd',
-		'babbage':'Babbages Maschine'
-	}"
-	title="Eddie rechnet: Kartenspiele mit Ada Lovelace"
+<AppFrame
+	:languages="[ 'de', 'en' ]"
+	:sub-chapter
+	:title="t( 'al.title' )"
 	:vue-date="__VITE_SFC_MTIME_MS__"
 >
-
 	<template #bookPart>
 		<figure class="exampleFigure">
-			<ImageZoomer title="Eddie und Ada Lovelace">
+			<ImageZoomer :title="t( 'al.imageTitle' )">
 				<img loading="lazy" :src="titleImg" />
 			</ImageZoomer>
 		</figure>
-		<h3 id="einleitung">Vaasa, 16. September 1985</h3>
+		<h3 id="einleitung">{{ t( "al.introDate" ) }}</h3>
 		<div class="eddie">
-			<p>Ich sitze neben Sini auf der Bank, noch warm von ihrem Lachen, noch weich von dieser Umarmung,
-				bei der ich kurz vergesse, dass mein Leben aus Abfahrtszeiten und Fluchtwegen besteht. Und dann
-				rutscht mir dieser Satz raus: Dass mein Vater mich eigentlich „Ada“ nennen wollte. Sini ruft sofort,
-				„Ada? Nach Ada Lovelace? Ich bin kein Nerd wie du, aber von ihr habe ich schon gehört!“</p>
-			<p>Ada Lovelace ist so berühmt, weil sie etwas Unverschämtes gemacht hat: Sie denkt sich Programme aus, obwohl
-				es noch gar keinen Computer gibt. Sie schaut auf Charles Babbages Rechenmaschine – diese riesige Idee aus
-				Zahnrädern – und schreibt nicht nur „spannend“, sondern: <em>Damit kann man Schritte planen. Wiederholen.
-					Variieren.</em> Und sie sieht weiter als alle: Dass so eine Maschine später nicht nur Zahlen frisst,
-				sondern auch Musik, Texte, Muster.</p>
-			<p>In diesem Kapitel nehme ich dich genau da mit rein: Wer Ada war, was sie wirklich „programmiert“ hat
-				und du kannst Babbages Maschine online selbst anwerfen und ausprobieren.</p>
+			<p v-html="t( 'al.bookPart.p1' )" />
+			<p v-html="t( 'al.bookPart.p2' )" />
+			<p v-html="t( 'al.bookPart.p3' )" />
 		</div>
 	</template>
 
 	<template #descriptionPart>
-		<h2>Teil 1 - Kartenspiel mit Ada</h2>
+		<h2>{{ t( "al.sections.part1.title" ) }}</h2>
 		<div class="eddie">
-			<p>
-				Heute rechne ich wie Ada. Ada wollte mit Hilfe von Charles Babbages Rechenmaschine
-				eine Reihe sogenannter Bernoulli-Zahlen berechnen.
-			</p>
+			<p v-html="t( 'al.sections.part1.p1' )" />
 		</div>
 
-		<h2 id="analytical-engine">Teil 2 - Was ist Adas "Computer"?</h2>
+		<h2 id="analytical-engine">{{ t( "al.sections.part2.title" ) }}</h2>
 		<div class="eddie">
-			<p>
-				Adas Maschine heisst <b>Analytical Engine</b>. Sie wurde historisch nie vollständig gebaut,
-				aber das Modell ist glasklar: eine universelle Rechenmaschine.
-			</p>
+			<p v-html="t( 'al.sections.part2.p1' )" />
 			<ul>
 				<li>
-					<b>Store (Speicher):</b> nummerierte Fächer für Zahlen, z.B. <Katex inline tex="V[0]" />.
+					<b>{{ t( "al.sections.part2.item1Prefix" ) }}</b>
+					{{ t( "al.sections.part2.item1Suffix" ) }}
+					<Katex inline tex="V[0]" />.
 				</li>
 				<li>
-					<b>Mill (Mühle):</b> Rechenwerk für Plus, Minus, Mal, Geteilt.
+					<b>{{ t( "al.sections.part2.item2Prefix" ) }}</b>
+					{{ t( "al.sections.part2.item2Suffix" ) }}
 				</li>
 			</ul>
-			<p>Gesteuert wird die Maschine über Lochkarten:</p>
+			<p>{{ t( "al.sections.part2.cardsLead" ) }}</p>
 			<ol>
-				<li>Operationskarten (Addiere, Subtrahiere, Multipliziere, Dividiere)</li>
-				<li>Zahlkarten (Konstanten)</li>
-				<li>Variablenkarten (lies/schreibe <Katex inline tex="V[i]" />)</li>
+				<li>{{ t( "al.sections.part2.cards1" ) }}</li>
+				<li>{{ t( "al.sections.part2.cards2" ) }}</li>
+				<li>
+					{{ t( "al.sections.part2.cards3Prefix" ) }}
+					<Katex inline tex="V[i]" />
+					{{ t( "al.sections.part2.cards3Suffix" ) }}
+				</li>
 			</ol>
-			<p class="muted">
-				Programmlogik mit Schleifen und Abzweigungen ist damit bereits möglich.
-			</p>
+			<p class="muted">{{ t( "al.sections.part2.muted" ) }}</p>
 		</div>
 
-		<h2 id="bernoulli-zahlen">Teil 3 - Was sind Bernoulli-Zahlen?</h2>
+		<h2 id="bernoulli-zahlen">{{ t( "al.sections.part3.title" ) }}</h2>
 		<div class="eddie">
 			<p>
-				Bernoulli-Zahlen <Katex inline tex="B_0,B_1,B_2,\dots" /> sind eine spezielle Zahlenfolge,
-				die in vielen Summenformeln auftaucht, besonders bei Potenzsummen wie
+				{{ t( "al.sections.part3.p1Prefix" ) }}
+				<Katex inline tex="B_0,B_1,B_2,\dots" /> {{ t( "al.sections.part3.p1Middle" ) }}
 				<Katex inline tex="1^p+2^p+\dots+n^p" />.
-				Sie sind also eine Art „Bausteine“ für kompakte geschlossene Formeln.
+				{{ t( "al.sections.part3.p1Suffix" ) }}
 			</p>
 
-			<p>
-				Ein klassisches Beispiel ist die Faulhaber-Formel:
-			</p>
+			<p>{{ t( "al.sections.part3.p2" ) }}</p>
 
 			<div class="kbox">
 				<Katex
@@ -88,24 +73,27 @@
 			</div>
 
 			<p>
-				Mit der in der Mathematik üblichen Konvention <Katex inline tex="B_1=-\frac12" />
-				beginnt die Folge z.B. so:
+				{{ t( "al.sections.part3.p3Prefix" ) }}
+				<Katex inline tex="B_1=-\frac12" />
+				{{ t( "al.sections.part3.p3Suffix" ) }}
 			</p>
 
 			<div class="kbox">
 				<div class="mono"><Katex inline tex="B_0=1,\;B_1=-\frac12,\;B_2=\frac16,\;B_4=-\frac1{30},\;B_6=\frac1{42}" /></div>
-				<div class="mono">und für diese Konvention gilt: <Katex inline tex="B_3=B_5=B_7=\dots=0" />.</div>
+				<div class="mono">{{ t( "al.sections.part3.convention" ) }} <Katex inline tex="B_3=B_5=B_7=\dots=0" />.</div>
 			</div>
 
 			<p>
-				Unser Emulator darunter rechnet bewusst im <i>Note‑G‑Stil</i> mit den Startwerten
-				<Katex inline tex="B_1,B_3,B_5" /> und der mechanischen Form
+				<span v-html="t( 'al.sections.part3.p4Prefix' )" />
+				<Katex inline tex="B_1,B_3,B_5" />
+				{{ t( "al.sections.part3.p4Middle" ) }}
 				<Katex inline tex="B_{2n-1}=-(A_0+A_1B_1+A_3B_3+A_5B_5)" />.
-				Das ist eine historische, didaktische Nachbildung des Kartenablaufs.
+				{{ t( "al.sections.part3.p4Suffix" ) }}
 			</p>
 
 			<p>
-				Beispiel aus dem Emulator für <Katex inline tex="n=4" />:
+				{{ t( "al.sections.part3.p5Prefix" ) }}
+				<Katex inline tex="n=4" />{{ t( "al.sections.part3.p5Suffix" ) }}
 			</p>
 
 			<div class="kbox">
@@ -118,16 +106,20 @@
 			</div>
 		</div>
 
-		<h2>Teil 4 - Ich "programmiere" Ada: B0, B1, B2</h2>
+		<h2>{{ t( "al.sections.part4.title" ) }}</h2>
 		<div class="eddie">
-			<h3>Schritt 0 - Startwert</h3>
+			<h3>{{ t( "al.sections.part4.step0Title" ) }}</h3>
 			<p>
-				Zahlkarte <b>1</b>, dann Variablenkarte <b>-&gt; V[0]</b>.
-				Damit gilt <Katex inline tex="V[0]=B_0=1" />.
+				<span v-html="t( 'al.sections.part4.step0' )" />
+				<Katex inline tex="V[0]=B_0=1" />.
 			</p>
 
-			<h3>Schritt 1 - B1</h3>
-			<p>Für <Katex inline tex="m=1" /> gilt:</p>
+			<h3>{{ t( "al.sections.part4.step1Title" ) }}</h3>
+			<p>
+				{{ t( "al.sections.part4.step1LeadPrefix" ) }}
+				<Katex inline tex="m=1" />
+				{{ t( "al.sections.part4.step1LeadSuffix" ) }}
+			</p>
 			<div class="kbox">
 				<Katex aligned
 					as="div"
@@ -136,30 +128,32 @@
 				/>
 			</div>
 			<p>
-				Im Store steht danach: <Katex inline tex="V[1]=B_1=-\frac12" />.
+				{{ t( "al.sections.part4.step1Result" ) }}
+				<Katex inline tex="V[1]=B_1=-\frac12" />.
 			</p>
 
-			<h3>Schritt 2 - B2</h3>
-			<p>Für <Katex inline tex="m=2" />:</p>
+			<h3>{{ t( "al.sections.part4.step2Title" ) }}</h3>
+			<p>
+				{{ t( "al.sections.part4.step2LeadPrefix" ) }}
+				<Katex inline tex="m=2" />{{ t( "al.sections.part4.step2LeadSuffix" ) }}
+			</p>
 			<div class="kbox">
 				<Katex aligned
 					as="div"
-					display
+					d
+					isplay
 					tex="B_0 + 3B_1 + 3B_2 &= 0\\3B_2 &= -B_0 - 3B_1\\B_2&=\frac{-B_0-3B_1}{3}=\frac16"
 				/>
 			</div>
 			<p>
-				Im Store steht danach: <Katex inline tex="V[2]=B_2=\frac16" />.
+				{{ t( "al.sections.part4.step2Result" ) }}
+				<Katex inline tex="V[2]=B_2=\frac16" />.
 			</p>
 		</div>
 
-		<h2>Teil 5 - Historischer Druckfehler: der erste Bug?</h2>
+		<h2>{{ t( "al.sections.part5.title" ) }}</h2>
 		<div class="eddie">
-			<p>
-				In Adas gedruckter <i>Note G</i> gibt es eine bekannte vertauschte Division.
-				Sie wird oft als einer der frühesten dokumentierten Programmierfehler erzählt:
-				ein Quotient steht auf dem Kopf.
-			</p>
+			<p v-html="t( 'al.sections.part5.p1' )" />
 			<div class="kbox">
 				<Katex
 					as="div"
@@ -169,104 +163,113 @@
 			</div>
 		</div>
 
-		<h2>Teil 6 - Warum das mehr ist als Zahlenspielerei</h2>
+		<h2>{{ t( "al.sections.part6.title" ) }}</h2>
 		<div class="eddie">
 			<p>
-				Bernoulli-Zahlen stecken in Summenformeln wie
-				<Katex inline tex="1+2+\dots+n" /> oder
-				<Katex inline tex="1^2+2^2+\dots+n^2" />.
+				{{ t( "al.sections.part6.p1Prefix" ) }}
+				<Katex inline tex="1+2+\dots+n" />
+				{{ t( "al.sections.part6.p1Middle" ) }}
+				<Katex inline tex="1^2+2^2+\dots+n^2" />{{ t( "al.sections.part6.p1Suffix" ) }}
 			</p>
-			<p>
-				Die Idee ist zentral: Karten erzeugen nicht nur Zahlen, sondern Muster.
-			</p>
+			<p>{{ t( "al.sections.part6.p2" ) }}</p>
 		</div>
 
-		<h2>Teil 7 - Noch mal in superkurz</h2>
+		<h2>{{ t( "al.sections.part7.title" ) }}</h2>
 		<div class="eddie">
 			<ul>
-				<li><b>Store:</b> nummerierte Fächer <Katex inline tex="V[i]" /></li>
-				<li><b>Mill:</b> rechnet mit ausgelesenen Werten</li>
-				<li><b>Lochkarten:</b> Operation, Zahl, Variable</li>
-				<li><b>Programm:</b> Kartenfolge = Rechenfolge, inkl. Schleifen/Abzweigungen</li>
-				<li>
-					<b>Startwerte:</b>
-					<Katex inline tex="B_0=1,\;B_1=-\frac12,\;B_2=\frac16" />
-				</li>
+				<li><b>{{ t( "al.sections.part7.item1Prefix" ) }}</b> {{ t( "al.sections.part7.item1Suffix" ) }} <Katex inline tex="V[i]" /></li>
+				<li><b>{{ t( "al.sections.part7.item2Prefix" ) }}</b> {{ t( "al.sections.part7.item2Suffix" ) }}</li>
+				<li><b>{{ t( "al.sections.part7.item3Prefix" ) }}</b> {{ t( "al.sections.part7.item3Suffix" ) }}</li>
+				<li><b>{{ t( "al.sections.part7.item4Prefix" ) }}</b> {{ t( "al.sections.part7.item4Suffix" ) }}</li>
+				<li><b>{{ t( "al.sections.part7.item5Prefix" ) }}</b> <Katex inline tex="B_0=1,\;B_1=-\frac12,\;B_2=\frac16" /></li>
 			</ul>
 		</div>
 
-		<h2 id="gcd" class="mt-2">Teil 8 - Eddie kürzt Brüche mit Ada</h2>
+		<h2 id="gcd" class="mt-2">{{ t( "al.sections.part8.title" ) }}</h2>
 		<div class="eddie">
-			<p>
-				Brüche kürzen geht über den grössten gemeinsamen Teiler:
-			</p>
+			<p>{{ t( "al.sections.part8.p1" ) }}</p>
 			<div class="kbox">
-				<Katex
-					as="div"
-					display
-					tex="\frac{48}{18}=\frac{8}{3},\quad \text{weil }\gcd(48,18)=6."
-				/>
+				<Katex as="div" display tex="\frac{48}{18}=\frac{8}{3},\quad \text{weil }\gcd(48,18)=6." />
 			</div>
 		</div>
 
-		<h2>Teil 9 - Algorithmus in Worten</h2>
+		<h2>{{ t( "al.sections.part9.title" ) }}</h2>
 		<div class="eddie">
 			<ol>
-				<li>Nimm zwei Zahlen <Katex inline tex="a" /> und <Katex inline tex="b" />.</li>
 				<li>
-					Solange <Katex inline tex="b\neq 0" />:
+					{{ t( "al.sections.part9.step1Prefix" ) }}
+					<Katex inline tex="a" />
+					{{ t( "al.sections.part9.step1Middle" ) }}
+					<Katex inline tex="b" />{{ t( "al.sections.part9.step1Suffix" ) }}
+				</li>
+				<li>
+					{{ t( "al.sections.part9.step2Prefix" ) }}
+					<Katex inline tex="b\neq 0" />{{ t( "al.sections.part9.step2Suffix" ) }}
 					<ul>
-						<li>teile <Katex inline tex="a" /> durch <Katex inline tex="b" /></li>
-						<li>behalte nur den Rest <Katex inline tex="r" /></li>
-						<li>setze <Katex inline tex="a:=b,\;b:=r" /></li>
+						<li>
+							{{ t( "al.sections.part9.step2aPrefix" ) }}
+							<Katex inline tex="a" />
+							{{ t( "al.sections.part9.step2aMiddle" ) }}
+							<Katex inline tex="b" />{{ t( "al.sections.part9.step2aSuffix" ) }}
+						</li>
+						<li>
+							{{ t( "al.sections.part9.step2bPrefix" ) }}
+							<Katex inline tex="r" />{{ t( "al.sections.part9.step2bSuffix" ) }}
+						</li>
+						<li>
+							{{ t( "al.sections.part9.step2cPrefix" ) }}
+							<Katex inline tex="a:=b,\;b:=r" />.
+						</li>
 					</ul>
 				</li>
-				<li>Am Ende ist <Katex inline tex="a=\gcd(a,b)" />.</li>
+				<li>
+					{{ t( "al.sections.part9.step3Prefix" ) }}
+					<Katex inline tex="a=\gcd(a,b)" />{{ t( "al.sections.part9.step3Suffix" ) }}
+				</li>
 			</ol>
 		</div>
 
-		<h2>Teil 10 - Jetzt in Karten: gcd(48,18)</h2>
+		<h2>{{ t( "al.sections.part10.title" ) }}</h2>
 		<div class="eddie">
-			<h3>Schritt 10.1 - Start</h3>
-			<p>
-				Zahlkarte <b>48</b> in <b>V[a]</b>, Zahlkarte <b>18</b> in <b>V[b]</b>.
-			</p>
+			<h3>{{ t( "al.sections.part10.step1Title" ) }}</h3>
+			<p v-html="t( 'al.sections.part10.step1' )" />
 
-			<h3>Schritt 10.2 - Schleife 1</h3>
+			<h3>{{ t( "al.sections.part10.step2Title" ) }}</h3>
 			<div class="kbox">
 				<Katex as="div" display tex="48 \div 18 \Rightarrow r=12,\; a:=18,\; b:=12" />
 			</div>
 
-			<h3>Schritt 10.3 - Schleife 2</h3>
+			<h3>{{ t( "al.sections.part10.step3Title" ) }}</h3>
 			<div class="kbox">
 				<Katex as="div" display tex="18 \div 12 \Rightarrow r=6,\; a:=12,\; b:=6" />
 			</div>
 
-			<h3>Schritt 10.4 - Schleife 3</h3>
+			<h3>{{ t( "al.sections.part10.step4Title" ) }}</h3>
 			<div class="kbox">
 				<Katex as="div" display tex="12 \div 6 \Rightarrow r=0,\; a:=6,\; b:=0" />
 			</div>
 
-			<h3>Schritt 10.5 - Ende</h3>
+			<h3>{{ t( "al.sections.part10.step5Title" ) }}</h3>
 			<p>
-				Da <Katex inline tex="b=0" />, gilt:
+				{{ t( "al.sections.part10.step5Prefix" ) }}
+				<Katex inline tex="b=0" />, {{ t( "al.sections.part10.step5Middle" ) }}
 				<Katex inline tex="\gcd(48,18)=6" />.
 			</p>
 		</div>
 
-		<h2>Teil 11 - Was wir gelernt haben</h2>
+		<h2>{{ t( "al.sections.part11.title" ) }}</h2>
 		<div class="eddie">
 			<ul>
-				<li>Lochkarten können Schleifen abbilden.</li>
-				<li>Die Analytical Engine kann Restbildung (Modulo) verwenden.</li>
-				<li>Damit kann sie Brüche systematisch kürzen.</li>
-				<li>Das Modell ist mechanisch, aber bereits voll programmatisch.</li>
+				<li>{{ t( "al.sections.part11.item1" ) }}</li>
+				<li>{{ t( "al.sections.part11.item2" ) }}</li>
+				<li>{{ t( "al.sections.part11.item3" ) }}</li>
+				<li>{{ t( "al.sections.part11.item4" ) }}</li>
 			</ul>
 		</div>
 	</template>
 
 	<template #interactivePart>
-		<h3 id="babbage">Babbages Maschine</h3>
+		<h3 id="babbage">{{ t( "al.interactiveTitle" ) }}</h3>
 		<v-card class="pa-2">
 			<v-select
 				v-model="selectedProgram"
@@ -275,7 +278,7 @@
 				item-title="title"
 				item-value="value"
 				:items="programOptions"
-				label="Programm auswählen"
+				:label="t( 'al.programSelect' )"
 			/>
 		</v-card>
 		<ALBernoulli v-if="selectedProgram === 'bernoulli'" />
@@ -288,7 +291,8 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { computed, ref } from "vue";
+import { useI18n } from "@/i18n.mjs";
 import titleImg from "./AL.webp";
 import ALBernoulli from "./AL_Bernoulli.vue";
 import ALReduceFractions from "./AL_ReduceFractions.vue";
@@ -296,12 +300,22 @@ import ALHorner from "./AL_Horner.vue";
 import ALSqrt from "./AL_Sqrt.vue";
 import ALPrimeTest from "./AL_PrimeTest.vue";
 
+const { t } = useI18n( "book1/AL" );
+
 const selectedProgram = ref( "bernoulli" );
-const programOptions = [
-	{ title: "Bernoulli-Zahlen (Note G)", value: "bernoulli" },
-	{ title: "Brüche kürzen (ggT)", value: "reduceFractions" },
-	{ title: "Polynom (Horner-Schema)", value: "horner" },
-	{ title: "Quadratwurzel (Heron/Newton)", value: "sqrt" },
-	{ title: "Primzahltest (Trial Division)", value: "primeTest" }
-];
+
+const subChapter = computed( () => ( {
+	"analytical-engine": t( "al.subChapter.analytical-engine" ),
+	"bernoulli-zahlen":  t( "al.subChapter.bernoulli-zahlen" ),
+	gcd:                 t( "al.subChapter.gcd" ),
+	babbage:             t( "al.subChapter.babbage" )
+} ) );
+
+const programOptions = computed( () => [
+	{ title: t( "al.programs.bernoulli" ), value: "bernoulli" },
+	{ title: t( "al.programs.reduceFractions" ), value: "reduceFractions" },
+	{ title: t( "al.programs.horner" ), value: "horner" },
+	{ title: t( "al.programs.sqrt" ), value: "sqrt" },
+	{ title: t( "al.programs.primeTest" ), value: "primeTest" }
+] );
 </script>

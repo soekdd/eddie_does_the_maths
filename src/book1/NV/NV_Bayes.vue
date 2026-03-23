@@ -1,22 +1,19 @@
 <template>
 <v-card class="pa-4" rounded="xl">
-	<h3 class="text-h6 mb-2">Bayes-Update und Mess-Fusion</h3>
-	<p class="text-body-2 mb-4">
-		Wenn mehrere Standorthypothesen möglich sind, hilft Bayes beim Update.
-		Für numerische Messwerte kombiniert die Gewichtung mit 1/sigma^2 mehrere Quellen.
-	</p>
+	<h3 class="text-h6 mb-2">{{ t( "bayes.title" ) }}</h3>
+	<p class="text-body-2 mb-4">{{ t( "bayes.intro" ) }}</p>
 
 	<v-row dense>
 		<v-col cols="12" md="7">
 			<v-sheet class="pa-3 rounded-lg" variant="tonal">
-				<div class="text-subtitle-2 mb-2">A) Standort-Hypothesen (Bayes)</div>
+				<div class="text-subtitle-2 mb-2">{{ t( "bayes.sections.hypotheses" ) }}</div>
 				<v-table density="compact">
 					<thead>
 						<tr>
-							<th>Hypothese</th>
-							<th>Prior</th>
-							<th>Likelihood P(E|H)</th>
-							<th>Posterior</th>
+							<th>{{ t( "bayes.table.hypothesis" ) }}</th>
+							<th>{{ t( "bayes.table.prior" ) }}</th>
+							<th>{{ t( "bayes.table.likelihood" ) }}</th>
+							<th>{{ t( "bayes.table.posterior" ) }}</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -63,13 +60,13 @@
 
 		<v-col cols="12" md="5">
 			<v-sheet class="pa-3 rounded-lg" variant="tonal">
-				<div class="text-subtitle-2 mb-2">B) Messwert-Fusion</div>
+				<div class="text-subtitle-2 mb-2">{{ t( "bayes.sections.fusion" ) }}</div>
 				<v-table density="compact">
 					<thead>
 						<tr>
-							<th>Messung</th>
-							<th>Wert x_i</th>
-							<th>Sigma_i</th>
+							<th>{{ t( "bayes.table.measurement" ) }}</th>
+							<th>{{ t( "bayes.table.value" ) }}</th>
+							<th>{{ t( "bayes.table.sigma" ) }}</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -98,8 +95,8 @@
 					</tbody>
 				</v-table>
 
-				<div class="mono mt-2">x_hat = {{ fmt( fusedMean, 3 ) }}</div>
-				<div class="mono">sigma_hat = {{ fmt( fusedSigma, 3 ) }}</div>
+				<div class="mono mt-2">{{ t( "bayes.labels.xHat" ) }} = {{ fmt( fusedMean, 3 ) }}</div>
+				<div class="mono">{{ t( "bayes.labels.sigmaHat" ) }} = {{ fmt( fusedSigma, 3 ) }}</div>
 			</v-sheet>
 		</v-col>
 	</v-row>
@@ -125,13 +122,13 @@
 
 	<div class="d-flex flex-wrap ga-2 mt-2">
 		<v-btn color="primary" variant="flat" @click="applyScenario('ambiguous')">
-			Szenario: uneindeutig
+			{{ t( "bayes.labels.ambiguous" ) }}
 		</v-btn>
 		<v-btn variant="tonal" @click="applyScenario('clear')">
-			Szenario: klarer Befund
+			{{ t( "bayes.labels.clear" ) }}
 		</v-btn>
 		<v-btn variant="text" @click="resetAll">
-			Reset
+			{{ t( "bayes.labels.reset" ) }}
 		</v-btn>
 	</div>
 </v-card>
@@ -139,40 +136,31 @@
 
 <script setup>
 import { computed, ref } from "vue";
+import { useI18n } from "@/i18n.mjs";
+
+const { t } = useI18n( "book1/NV" );
 
 const hypotheses = ref( [
 	{
-		id:         "H1",
-		prior:      0.5,
-		likelihood: 0.45
+		id: "H1", prior: 0.5, likelihood: 0.45
 	},
 	{
-		id:         "H2",
-		prior:      0.3,
-		likelihood: 0.8
+		id: "H2", prior: 0.3, likelihood: 0.8
 	},
 	{
-		id:         "H3",
-		prior:      0.2,
-		likelihood: 0.35
+		id: "H3", prior: 0.2, likelihood: 0.35
 	}
 ] );
 
 const measurements = ref( [
 	{
-		id:    "M1",
-		value: 12.4,
-		sigma: 1.2
+		id: "M1", value: 12.4, sigma: 1.2
 	},
 	{
-		id:    "M2",
-		value: 11.1,
-		sigma: 2.1
+		id: "M2", value: 11.1, sigma: 2.1
 	},
 	{
-		id:    "M3",
-		value: 13.0,
-		sigma: 1.6
+		id: "M3", value: 13.0, sigma: 1.6
 	}
 ] );
 
@@ -213,9 +201,7 @@ const normalizedPrior = computed( () => {
 } );
 
 const posteriorValues = computed( () => {
-	const numerators = hypotheses.value.map( ( h, idx ) => {
-		return normalizedPrior.value[ idx ] * clamp01( h.likelihood );
-	} );
+	const numerators = hypotheses.value.map( ( h, idx ) => normalizedPrior.value[ idx ] * clamp01( h.likelihood ) );
 	const z = numerators.reduce( ( a, b ) => a + b, 0 );
 
 	if ( z <= 1e-12 ) {
@@ -293,27 +279,30 @@ const bayesStatus = computed( () => {
 	if ( !Number.isFinite( winner.value.value ) ) {
 		return {
 			type:    "error",
-			message: "Posterior nicht berechenbar. Priors/Likelihoods prüfen."
+			message: t( "bayes.status.posteriorInvalid" )
 		};
 	}
 
 	if ( winner.value.value > 0.75 ) {
 		return {
 			type:    "success",
-			message: `${winner.value.id} dominiert mit ${fmtPercent( winner.value.value )}.`
+			message: t( "bayes.status.dominant", {
+				id:    winner.value.id,
+				value: fmtPercent( winner.value.value )
+			} )
 		};
 	}
 
 	if ( winner.value.value > 0.5 ) {
 		return {
 			type:    "info",
-			message: `${winner.value.id} führt, aber Konkurrenz bleibt relevant.`
+			message: t( "bayes.status.leading", { id: winner.value.id } )
 		};
 	}
 
 	return {
 		type:    "warning",
-		message: "Keine klare Dominanz. Mehr Evidenz nötig."
+		message: t( "bayes.status.unclear" )
 	};
 } );
 
@@ -321,27 +310,27 @@ const fusionStatus = computed( () => {
 	if ( !Number.isFinite( fusedSigma.value ) ) {
 		return {
 			type:    "error",
-			message: "Fusion ungültig. Sigma-Werte prüfen."
+			message: t( "bayes.status.fusionInvalid" )
 		};
 	}
 
 	if ( fusedSigma.value < 0.9 ) {
 		return {
 			type:    "success",
-			message: "Gute Gesamtschärfe durch mehrere präzise Messungen."
+			message: t( "bayes.status.fusionGood" )
 		};
 	}
 
 	if ( fusedSigma.value < 1.6 ) {
 		return {
 			type:    "info",
-			message: "Mittlere Unsicherheit. Für Kursentscheidungen meist brauchbar."
+			message: t( "bayes.status.fusionMedium" )
 		};
 	}
 
 	return {
 		type:    "warning",
-		message: "Hohe Unsicherheit. Zusatzevidenz empfehlenswert."
+		message: t( "bayes.status.fusionPoor" )
 	};
 } );
 
@@ -349,19 +338,13 @@ function applyScenario( mode ) {
 	if ( mode === "clear" ) {
 		hypotheses.value = [
 			{
-				id:         "H1",
-				prior:      0.45,
-				likelihood: 0.2
+				id: "H1", prior: 0.45, likelihood: 0.2
 			},
 			{
-				id:         "H2",
-				prior:      0.35,
-				likelihood: 0.92
+				id: "H2", prior: 0.35, likelihood: 0.92
 			},
 			{
-				id:         "H3",
-				prior:      0.2,
-				likelihood: 0.15
+				id: "H3", prior: 0.2, likelihood: 0.15
 			}
 		];
 		return;
@@ -369,19 +352,13 @@ function applyScenario( mode ) {
 
 	hypotheses.value = [
 		{
-			id:         "H1",
-			prior:      0.4,
-			likelihood: 0.55
+			id: "H1", prior: 0.4, likelihood: 0.55
 		},
 		{
-			id:         "H2",
-			prior:      0.35,
-			likelihood: 0.6
+			id: "H2", prior: 0.35, likelihood: 0.6
 		},
 		{
-			id:         "H3",
-			prior:      0.25,
-			likelihood: 0.5
+			id: "H3", prior: 0.25, likelihood: 0.5
 		}
 	];
 }
@@ -389,37 +366,25 @@ function applyScenario( mode ) {
 function resetAll() {
 	hypotheses.value = [
 		{
-			id:         "H1",
-			prior:      0.5,
-			likelihood: 0.45
+			id: "H1", prior: 0.5, likelihood: 0.45
 		},
 		{
-			id:         "H2",
-			prior:      0.3,
-			likelihood: 0.8
+			id: "H2", prior: 0.3, likelihood: 0.8
 		},
 		{
-			id:         "H3",
-			prior:      0.2,
-			likelihood: 0.35
+			id: "H3", prior: 0.2, likelihood: 0.35
 		}
 	];
 
 	measurements.value = [
 		{
-			id:    "M1",
-			value: 12.4,
-			sigma: 1.2
+			id: "M1", value: 12.4, sigma: 1.2
 		},
 		{
-			id:    "M2",
-			value: 11.1,
-			sigma: 2.1
+			id: "M2", value: 11.1, sigma: 2.1
 		},
 		{
-			id:    "M3",
-			value: 13.0,
-			sigma: 1.6
+			id: "M3", value: 13.0, sigma: 1.6
 		}
 	];
 }

@@ -1,146 +1,95 @@
 <template>
-<AppFrame  :sub-chapter="{
-		einleitung:'Einleitung',
-		rekursion: 'Rekursion',
-		monotonie: 'Monotonie',
-		'existenz-eindeutigkeit': 'Existenz & Eindeutigkeit'
-	}"
-	title="Eddie rechnet: IMO 1985 Aufgabe B3"
+<AppFrame
+	:languages="[ 'de', 'en' ]"
+	:sub-chapter
+	:title="t( 'title' )"
 	:vue-date="__VITE_SFC_MTIME_MS__"
 >
-
 	<template #bookPart>
 		<figure class="exampleFigure">
-			<ImageZoomer title="Eddie denkt über die Aufgabe B3 der IMO 85 nach">
-				<img loading="lazy" :src="titleImg" />
+			<ImageZoomer :title="t( 'imageTitle' )">
+				<img :alt="t( 'imageAlt' )" loading="lazy" :src="titleImg" />
 			</ImageZoomer>
 		</figure>
-		<h3 id="einleitung">Joutsa, 5. Juli 1985</h3>
+		<h3 id="einleitung">{{ t( "introDate" ) }}</h3>
 		<div class="eddie">
-			<p>Joutsa, zweiter Wettkampftag. Mir ist, als hätte jemand Watte in meinen Kopf gestopft. Ich
-				lese den Text zweimal und merke: Ich verstehe ihn und gleichzeitig rutsche ich weg. Als
-				würde mein Gehirn auf einem nassen Bootssteg stehen.</p><p>
-				Hier geht es um eine Zahlenfolge. Du startest mit einer Zahl, und dann erzeugst du die
-				nächste aus der vorherigen, immer nach derselben Vorschrift. Wie ein Automat: du fütterst
-				ihn mit dem aktuellen Wert und bekommst den nächsten ausgespuckt.</p><p>
-				Das Gemeine ist: Je nachdem, womit du startest, benimmt sich diese Folge komplett anders.
-				Sie kann zu groß werden, sie kann falsch abbiegen, sie kann aus dem “sicheren Bereich”
-				rausfallen. Und die Aufgabe behauptet: Es gibt genau <strong>einen</strong> einzigen Startwert, d
-				er alles richtig macht. Dann bleibt die Folge immer zwischen null und eins und sie wächst
-				trotzdem Schritt für Schritt.<br data-end="6012" data-start="6009">
-				Das ist eigentlich wunderschön: eine einzige perfekte Startzahl, die genau die Balance trifft.
-				Aber ausgerechnet heute denke ich bei “einziger Startwert” nicht an Schönheit, sondern an
-				Risiko. An <em >nur eine Chance</em>.</p><p>
-				Hier erkläre ich das ganz schlicht: Warum fast alle Starts scheitern und warum genau
-				einer durchrutscht. Hoffe ich, dass auch ich heute durchkomme.</p>
+			<p>{{ t( "book.p1" ) }}</p>
+			<p>{{ t( "book.p2" ) }}</p>
+			<p v-html="t( 'book.p3' )" />
+			<p>{{ t( "book.p4" ) }}</p>
 		</div>
 	</template>
 
 	<template #descriptionPart>
-
-		<h2 id="rekursion">Teil 1 — Aufgabenstellung</h2>
+		<h2 id="rekursion">{{ t( "sections.part1.title" ) }}</h2>
 		<div class="eddie">
-			<p>
-				Für jede reelle Startzahl <Katex tex="x_1" /> wird eine Folge durch
-			</p>
+			<p>{{ t( "sections.part1.p1" ) }}</p>
 			<div class="kbox">
 				<Katex as="div" display tex="x_{n+1}=x_n\left(x_n+\frac{1}{n}\right),\quad n=1,2,3,\dots" />
 			</div>
 			<p>
-				definiert. Zu zeigen ist: Es gibt <b>genau einen</b> Startwert <Katex tex="x_1" />, für den
+				{{ t( "sections.part1.p2a" ) }} <b>{{ t( "sections.part1.p2b" ) }}</b>
+				{{ t( "sections.part1.p2c" ) }} <Katex tex="x_1" /> {{ t( "sections.part1.p2d" ) }}
 			</p>
 			<div class="kbox">
 				<Katex as="div" display tex="0<x_n<x_{n+1}<1\quad\text{für alle }n" />
 			</div>
+			<p>{{ t( "sections.part1.p3" ) }}</p>
 			<p>
-				In Worten bedeutet das:
-				Jedes Folgenglied ist positiv, bleibt kleiner als 1 und ist immer größer als das vorherige.
-				Die Folge wächst also, aber sie darf nie die 1 erreichen oder überschreiten.
-			</p>
-			<p>
-				Man kann sich die Vorschrift wie einen kleinen Rechner vorstellen:
-				Du gibst den aktuellen Wert <Katex tex="x_n" /> hinein und bekommst den nächsten Wert
-				<Katex tex="x_{n+1}" /> heraus.
-				Die Aufgabe fragt dabei nicht nur nach irgendeinem passenden Startwert,
-				sondern nach genau einem einzigen.
+				{{ t( "sections.part1.p4a" ) }} <Katex tex="x_n" /> {{ t( "sections.part1.p4b" ) }}
+				<Katex tex="x_{n+1}" /> {{ t( "sections.part1.p4c" ) }}
 			</p>
 		</div>
 
-		<h2 id="monotonie" class="mt-8">Teil 2 — Umformulierung mit Hilfsfunktionen</h2>
+		<h2 id="monotonie" class="mt-8">{{ t( "sections.part2.title" ) }}</h2>
 		<div class="eddie">
-			<p>
-				Für den Beweis führen wir zuerst Hilfsfunktionen (Iterationsfunktionen) ein:
-			</p>
+			<p>{{ t( "sections.part2.p1" ) }}</p>
 			<div class="kbox">
 				<Katex as="div" display tex="f_n(t):=t\left(t+\frac{1}{n}\right),\qquad n\ge1." />
 			</div>
 			<div class="kbox">
 				<Katex as="div" display tex="T_1(x):=x,\qquad T_{n+1}(x):=f_n\!\left(T_n(x)\right)." />
 			</div>
-			<p>
-				Damit gilt bei Startwert <Katex tex="x_1=x" /> stets <Katex tex="x_n=T_n(x)" />.
-			</p>
+			<p>{{ t( "sections.part2.p2a" ) }} <Katex tex="x_1=x" /> {{ t( "sections.part2.p2b" ) }} <Katex tex="x_n=T_n(x)" />.</p>
 			<div class="kbox">
 				<Katex as="div" display tex="f_n'(t)=2t+\frac1n>0\quad\text{für }t\in[0,1]." />
 			</div>
-			<p>
-				Damit ist jede Funktion <Katex tex="f_n" /> auf <Katex tex="[0,1]" /> stetig und streng wachsend.
-				Als Komposition solcher Funktionen ist auch jede Funktion <Katex tex="T_n" /> stetig und streng wachsend.
-			</p>
+			<p>{{ t( "sections.part2.p3" ) }}</p>
 			<div class="kbox">
 				<Katex as="div" display tex="T_n(0)=0,\qquad T_1(1)=1,\qquad T_n(1)>1\ \text{für }n\ge2." />
 			</div>
 		</div>
 
-		<h2 id="existenz-eindeutigkeit" class="mt-8">Teil 3 — Existenz über Intervallschachtelung</h2>
+		<h2 id="existenz-eindeutigkeit" class="mt-8">{{ t( "sections.part3.title" ) }}</h2>
 		<div class="eddie">
-			<p>
-				<strong>Vorbetrachtung:</strong> Angenommen, ein Startwert <Katex tex="x_1" /> erfüllt bereits
-				<Katex tex="0<x_n<x_{n+1}<1" /> für alle <Katex tex="n" />.
-				Dann folgt für jedes feste <Katex tex="n" />:
-			</p>
+			<p v-html="t( 'sections.part3.p1' )" />
 			<div class="kbox">
 				<Katex as="div" display tex="0<x_n<x_n\!\left(x_n+\frac{1}{n}\right)=x_{n+1}<1\quad\Longrightarrow\quad 1-\frac{1}{n}<x_n<1." />
 			</div>
-			<p>
-				Das ist die notwendige Richtung.
-				Umgekehrt nehmen wir an, dass für alle <Katex tex="n\ge1" /> gilt
-				<Katex tex="1-\frac{1}{n}<x_n<1" />.
-				Dann ist <Katex tex="x_n>0" /> für alle <Katex tex="n" />.
-			</p>
+			<p v-html="t( 'sections.part3.p2' )" />
 			<div class="kbox">
 				<Katex as="div" display tex="x_{n+1}-x_n=x_n\!\left(x_n+\frac{1}{n}-1\right)>0\quad\Longrightarrow\quad x_n<x_{n+1}." />
 			</div>
-			<p>
-				Außerdem liefert die Annahme mit Index <Katex tex="n+1" /> direkt
-				<Katex tex="x_{n+1}<1" />.
-				Daher gilt für alle <Katex tex="n\ge1" />:
-			</p>
+			<p>{{ t( "sections.part3.p3" ) }}</p>
 			<div class="kbox">
 				<Katex as="div" display tex="0<x_n<x_{n+1}<1\ \Longleftrightarrow\ 1-\frac{1}{n}<x_n<1." />
 			</div>
+			<p>{{ t( "sections.part3.p4" ) }}</p>
 			<p>
-				Damit dürfen wir äquivalent nach einem Startwert mit
-				<Katex tex="1-\frac{1}{n}<T_n(x_1)<1" /> für alle <Katex tex="n" /> suchen.
-			</p>
-			<p>
-				Für <Katex tex="n=1" /> genügt die Grundbedingung <Katex tex="0<x_1<1" />; wir setzen daher
-				<Katex tex="a_1:=0" /> und <Katex tex="b_1:=1" />.
-				Für jedes <Katex tex="n\ge2" /> definieren wir <Katex tex="a_n,b_n\in(0,1)" /> durch:
+				{{ t( "sections.part3.p5a" ) }} <Katex tex="n=1" /> {{ t( "sections.part3.p5b" ) }}
+				<Katex tex="0<x_1<1" />; {{ t( "sections.part3.p5c" ) }} <Katex tex="a_1:=0" />
+				{{ t( "sections.part3.p5d" ) }} <Katex tex="b_1:=1" />. {{ t( "sections.part3.p5e" ) }}
+				<Katex tex="n\ge2" /> {{ t( "sections.part3.p5f" ) }} <Katex tex="a_n,b_n\in(0,1)" />
+				{{ t( "sections.part3.p5g" ) }}
 			</p>
 			<div class="kbox">
 				<Katex as="div" display tex="T_n(a_n)=1-\frac{1}{n},\qquad T_n(b_n)=1." />
 			</div>
-			<p>
-				Wegen Stetigkeit und strenger Monotonie von <Katex tex="T_n" /> sind <Katex tex="a_n,b_n" />
-				eindeutig bestimmt und es gilt <Katex tex="a_n<b_n" />.
-			</p>
-			<p>
-				Jetzt die Monotoniebeweise (für <Katex tex="n\ge2" />):
-			</p>
+			<p>{{ t( "sections.part3.p6" ) }}</p>
+			<p>{{ t( "sections.part3.p7" ) }} <Katex tex="n\ge2" />):</p>
 			<ul>
 				<li>
-					<em><Katex tex="(a_n)" /> ist streng wachsend.</em>
+					<em><Katex tex="(a_n)" /> {{ t( "sections.part3.l1Title" ) }}</em>
 					<div class="kbox">
 						<Katex as="div" display tex="T_{n+1}(a_n)=T_n(a_n)\!\left(T_n(a_n)+\frac{1}{n}\right)." />
 					</div>
@@ -148,62 +97,47 @@
 						<Katex as="div" display tex="T_{n+1}(a_n)=\left(1-\frac{1}{n}\right)\!\left(1-\frac{1}{n}+\frac{1}{n}\right)=1-\frac{1}{n}" />
 						<Katex as="div" display tex="<1-\frac{1}{n+1}=T_{n+1}(a_{n+1})." />
 					</div>
-					Da <Katex tex="T_{n+1}" /> streng wachsend ist, folgt <Katex tex="a_n<a_{n+1}" />.
+					{{ t( "sections.part3.l1Text" ) }} <Katex tex="T_{n+1}" /> {{ t( "sections.part3.l1Text2" ) }} <Katex tex="a_n<a_{n+1}" />.
 				</li>
 				<li>
-					<em><Katex tex="(b_n)" /> ist streng fallend.</em>
+					<em><Katex tex="(b_n)" /> {{ t( "sections.part3.l2Title" ) }}</em>
 					<div class="kbox">
 						<Katex as="div" display tex="T_{n+1}(b_n)=T_n(b_n)\!\left(T_n(b_n)+\frac{1}{n}\right)=1\!\left(1+\frac{1}{n}\right)>1." />
 					</div>
 					<div class="kbox">
 						<Katex as="div" display tex="T_{n+1}(b_n)>1=T_{n+1}(b_{n+1})." />
 					</div>
-					Wegen der strengen Monotonie von <Katex tex="T_{n+1}" /> folgt <Katex tex="b_{n+1}<b_n" />.
+					{{ t( "sections.part3.l2Text" ) }} <Katex tex="T_{n+1}" /> {{ t( "sections.part3.l2Text2" ) }} <Katex tex="b_{n+1}<b_n" />.
 				</li>
 			</ul>
 			<p>
-				Damit sind die abgeschlossenen Intervalle <Katex tex="I_n=[a_n,b_n]" />
-				(für <Katex tex="n\ge2" />) geschachtelt:
+				{{ t( "sections.part3.p8" ) }} <Katex tex="I_n=[a_n,b_n]" /> {{ t( "sections.part3.p8b" ) }}
+				<Katex tex="n\ge2" />) {{ t( "sections.part3.p8c" ) }}
 			</p>
 			<div class="kbox">
 				<Katex as="div" display tex="a_2<a_3<\dots<b_3<b_2,\qquad I_{n+1}\subset I_n\ (n\ge2)." />
 			</div>
-			<p>
-				Nach dem Intervallschachtelungsprinzip ist <Katex tex="\bigcap_{n\ge2}I_n" /> nichtleer.
-				Die Existenz ist damit gezeigt.
-			</p>
+			<p>{{ t( "sections.part3.p9" ) }} <Katex tex="\bigcap_{n\ge2}I_n" /> {{ t( "sections.part3.p9b" ) }}</p>
 		</div>
 
-		<h2 class="mt-8">Teil 4 — Eindeutigkeit (mit Distanzbeweis)</h2>
+		<h2 class="mt-8">{{ t( "sections.part4.title" ) }}</h2>
 		<div class="eddie">
-			<p>
-				Für die Eindeutigkeit müssen wir zeigen, dass die Intervalllängen gegen 0 gehen.
-				Wir fixieren ein <Katex tex="n\ge2" /> und betrachten das zugehörige Intervall
-				<Katex tex="I_n=[a_n,b_n]" />, dessen Länge <Katex tex="b_n-a_n" /> wir abschätzen wollen.
-				Wenn wir zeigen, dass diese Länge für große <Katex tex="n" /> gegen 0 geht,
-				folgt die Eindeutigkeit.
-			</p>
-			<p>
-				Setze für <Katex tex="k=1,\dots,n" />:
-			</p>
+			<p>{{ t( "sections.part4.p1" ) }}</p>
+			<p>{{ t( "sections.part4.p2" ) }} <Katex tex="k=1,\dots,n" />:</p>
 			<div class="kbox">
 				<Katex as="div" display tex="u_k:=T_k(a_n),\qquad v_k:=T_k(b_n),\qquad d_k:=v_k-u_k." />
 			</div>
 			<div class="kbox">
 				<Katex as="div" display tex="d_1=b_n-a_n,\qquad d_n=T_n(b_n)-T_n(a_n)=1-\left(1-\frac{1}{n}\right)=\frac{1}{n}." />
 			</div>
-			<p>
-				Für <Katex tex="k=1,\dots,n-1" /> rechnen wir explizit:
-			</p>
+			<p>{{ t( "sections.part4.p3" ) }} <Katex tex="k=1,\dots,n-1" /> {{ t( "sections.part4.p3b" ) }}</p>
 			<div class="kbox">
 				<Katex as="div" display tex="v_{k+1}-u_{k+1}=v_k\!\left(v_k+\frac1k\right)-u_k\!\left(u_k+\frac1k\right)." />
 			</div>
 			<div class="kbox">
 				<Katex as="div" display tex="=(v_k-u_k)\!\left(u_k+v_k+\frac1k\right)=d_k\!\left(u_k+v_k+\frac1k\right)." />
 			</div>
-			<p>
-				Nun zeigen wir, dass der Faktor streng größer als 1 ist:
-			</p>
+			<p>{{ t( "sections.part4.p4" ) }}</p>
 			<div class="kbox">
 				<Katex as="div" display tex="d_k>0\quad\text{(da }a_n<b_n\text{ und }T_k\text{ streng wachsend ist).}" />
 			</div>
@@ -213,78 +147,44 @@
 			<div class="kbox">
 				<Katex as="div" display tex="v_k+\frac{1}{k}>1\ \Longrightarrow\ u_k+v_k+\frac{1}{k}>1." />
 			</div>
-			<p>
-				Damit folgt für alle <Katex tex="k=1,\dots,n-1" />:
-				<Katex tex="d_{k+1}>d_k" />.
-			</p>
+			<p>{{ t( "sections.part4.p5" ) }} <Katex tex="k=1,\dots,n-1" />: <Katex tex="d_{k+1}>d_k" />.</p>
 			<div class="kbox">
 				<Katex as="div" display tex="d_1<d_2<\dots<d_n=\frac{1}{n}." />
 			</div>
 			<div class="kbox">
 				<Katex as="div" display tex="0<b_n-a_n=d_1<\frac{1}{n}\xrightarrow[n\to\infty]{}0." />
 			</div>
-			<p>
-				Die Intervalllängen der geschachtelten Intervalle gehen also gegen 0.
-				Daher besteht <Katex tex="\bigcap_{n\ge2}I_n" /> aus genau einem Punkt, nenne ihn
-				<Katex tex="x^*" />.
-			</p>
-			<p>
-				Weil die Intervalle geschachtelt sind, gilt
-				<Katex tex="a_n<a_{n+1}\le x^*" /> und <Katex tex="x^*\le b_{n+1}<b_n" />.
-				Also liegt <Katex tex="x^*" /> für jedes <Katex tex="n\ge2" /> strikt im Inneren:
-				<Katex tex="a_n<x^*<b_n" />.
-				Mit der strengen Monotonie von <Katex tex="T_n" /> folgt dann:
-			</p>
+			<p>{{ t( "sections.part4.p6" ) }} <Katex tex="\bigcap_{n\ge2}I_n" /> {{ t( "sections.part4.p6b" ) }} <Katex tex="x^*" />.</p>
+			<p>{{ t( "sections.part4.p7" ) }}</p>
 			<div class="kbox">
 				<Katex as="div" display tex="1-\frac{1}{n}=T_n(a_n)<T_n(x^*)<T_n(b_n)=1\quad(n\ge2)." />
 			</div>
-			<p>
-				Für <Katex tex="n=1" /> gilt zusätzlich
-				<Katex tex="a_1=0<a_2\le x^*\le b_2<b_1=1" />, also <Katex tex="0<x^*<1" />.
-				Mit der Äquivalenz aus Teil 3 folgt damit:
-			</p>
+			<p>{{ t( "sections.part4.p8" ) }}</p>
 			<div class="kbox">
 				<Katex as="div" display tex="x_n=T_n(x^*)\quad\Longrightarrow\quad 0<x_n<x_{n+1}<1\ \text{für alle }n." />
 			</div>
-			<p>
-				Zum Schluss die formale Eindeutigkeit:
-				Haben <Katex tex="x_1" /> und <Katex tex="y_1" /> die Eigenschaft, dann liegen beide für jedes
-				<Katex tex="n\ge2" /> in <Katex tex="(a_n,b_n)" />.
-			</p>
+			<p>{{ t( "sections.part4.p9" ) }}</p>
 			<div class="kbox">
 				<Katex as="div" display tex="|x_1-y_1|\le b_n-a_n<\frac1n\quad(n\ge2)." />
 			</div>
-			<p>
-				Da dies für alle <Katex tex="n\ge2" /> gilt, folgt <Katex tex="|x_1-y_1|=0" />,
-				also <Katex tex="x_1=y_1" />.
-			</p>
+			<p>{{ t( "sections.part4.p10" ) }}</p>
 		</div>
 
-		<EddieComment subtitle="Fazit mit Grinsen">
-			<p>
-				Am Ende ist es fast schon frech schön: unendlich viele Startwerte probieren,
-				aber nur einer trifft exakt die Spur zwischen „zu klein“ und „zu groß“.
-				Wenn der sitzt, marschiert die Folge brav aufwärts und bleibt trotzdem unter 1.
-				Ein mathematischer Präzisionsstart.
-			</p>
+		<EddieComment :subtitle="t( 'sections.part4.commentTitle' )">
+			<p>{{ t( "sections.part4.commentText" ) }}</p>
 		</EddieComment>
 	</template>
 
 	<template #interactivePart>
-		<h2>Spielplatz: Näherung für den eindeutigen Startwert</h2>
+		<h2>{{ t( "sections.interactive.title" ) }}</h2>
 		<div class="eddie d-flex flex-column ga-3">
-			<p>
-				Wir berechnen für ein gewähltes <Katex tex="N" /> die numerischen Schranken
-				<Katex tex="A_N=\max_{1\le n\le N}a_n" /> und
-				<Katex tex="B_N=\min_{1\le n\le N}b_n" />.
-				Das Intervall <Katex tex="[A_N,B_N]" /> enthält den eindeutigen Startwert.
-			</p>
+			<p v-html="t( 'sections.interactive.intro' )" />
 
 			<div class="d-flex flex-wrap ga-3 align-center">
 				<v-text-field
 					v-model="nInput"
 					hide-details="auto"
-					label="N (Anzahl Stufen)"
+					:label="t( 'sections.interactive.nLabel' )"
 					max="120"
 					min="2"
 					style="max-width: 180px"
@@ -293,12 +193,12 @@
 				<v-text-field
 					v-model="x1Input"
 					hide-details="auto"
-					label="Testwert x1"
+					:label="t( 'sections.interactive.x1Label' )"
 					style="max-width: 220px"
 				/>
-				<v-btn color="primary" variant="flat" @click="runCheck">Berechnen</v-btn>
-				<v-btn variant="tonal" @click="setMidpoint">x1 = (A_N+B_N)/2</v-btn>
-				<v-btn variant="tonal" @click="randomAround">Zufall nahe Intervall</v-btn>
+				<v-btn color="primary" variant="flat" @click="runCheck">{{ t( "sections.interactive.check" ) }}</v-btn>
+				<v-btn variant="tonal" @click="setMidpoint">{{ t( "sections.interactive.midpoint" ) }}</v-btn>
+				<v-btn variant="tonal" @click="randomAround">{{ t( "sections.interactive.randomNear" ) }}</v-btn>
 			</div>
 
 			<v-alert v-if="error" type="error" variant="tonal">
@@ -312,9 +212,9 @@
 						<Katex :tex="`B_N=${fmt(result.BN, 10)}`" />
 					</div>
 					<div>
-						Breite:
+						{{ t( "sections.interactive.width" ) }}:
 						<Katex :tex="`B_N-A_N=${fmt(result.width, 10)}`" />,<br>
-						Vergleich:
+						{{ t( "sections.interactive.comparison" ) }}:
 						<Katex :tex="`\\frac1N=${fmt(1 / result.N, 10)}`" />.
 					</div>
 				</div>
@@ -326,12 +226,17 @@
 				variant="tonal"
 			>
 				<div v-if="result.okAll">
-					Für <code>x1={{ fmt(result.x1, 10) }}</code> gilt numerisch bis <code>n={{ result.N }}</code>:
+					{{ t( "sections.interactive.okPrefix" ) }}
+					<code>x1={{ fmt(result.x1, 10) }}</code>
+					{{ t( "sections.interactive.okMiddle" ) }}
+					<code>n={{ result.N }}</code>:
 					<Katex tex="0<x_n<x_{n+1}<1" />.
 				</div>
 				<div v-else>
-					Bedingung verletzt bei <code>n={{ result.failAt }}</code>.
-					Werte: <code>x_n={{ fmt(result.failXn, 10) }}</code>,
+					{{ t( "sections.interactive.failPrefix" ) }}
+					<code>n={{ result.failAt }}</code>.
+					{{ t( "sections.interactive.failValues" ) }}
+					<code>x_n={{ fmt(result.failXn, 10) }}</code>,
 					<code>x_{n+1}={{ fmt(result.failXn1, 10) }}</code>.
 				</div>
 			</v-alert>
@@ -339,10 +244,10 @@
 	</template>
 
 	<template #calculationPart>
-		<h2>Tabellen</h2>
+		<h2>{{ t( "sections.calculation.title" ) }}</h2>
 		<div class="eddie d-flex flex-column ga-3">
 			<v-sheet v-if="result" border class="pa-3 rounded">
-				<div class="text-subtitle-1 font-weight-medium mb-2">Schrankenfolgen</div>
+				<div class="text-subtitle-1 font-weight-medium mb-2">{{ t( "sections.calculation.boundsTitle" ) }}</div>
 				<v-table density="compact">
 					<thead>
 						<tr>
@@ -366,14 +271,14 @@
 			</v-sheet>
 
 			<v-sheet v-if="result" border class="pa-3 rounded">
-				<div class="text-subtitle-1 font-weight-medium mb-2">Folge für den Testwert x1</div>
+				<div class="text-subtitle-1 font-weight-medium mb-2">{{ t( "sections.calculation.sequenceTitle" ) }}</div>
 				<v-table density="compact">
 					<thead>
 						<tr>
 							<th>n</th>
 							<th class="text-right">x_n</th>
 							<th class="text-right">x_{n+1}</th>
-							<th class="text-right">Check</th>
+							<th class="text-right">{{ t( "sections.calculation.check" ) }}</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -381,7 +286,7 @@
 							<td class="mono">{{ row.n }}</td>
 							<td class="mono text-right">{{ fmt(row.xn, 10) }}</td>
 							<td class="mono text-right">{{ fmt(row.xn1, 10) }}</td>
-							<td class="mono text-right">{{ row.ok ? "ok" : "fail" }}</td>
+							<td class="mono text-right">{{ row.ok ? t( "sections.calculation.ok" ) : t( "sections.calculation.fail" ) }}</td>
 						</tr>
 					</tbody>
 				</v-table>
@@ -391,16 +296,25 @@
 
 	<template #footer>
 		<p class="muted">
-			Quelle der Aufgabenstellung/Lösungsskizze:
-			<a href="https://prase.cz/kalva/imo/isoln/isoln856.html">IMO 1985 B3 (ISL solutions, prase.cz)</a>
+			{{ t( "footer.label" ) }}
+			<a href="https://prase.cz/kalva/imo/isoln/isoln856.html">{{ t( "footer.link" ) }}</a>
 		</p>
 	</template>
 </AppFrame>
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { computed, ref } from "vue";
+import { useI18n } from "@/i18n.mjs";
+
 import titleImg from "./O6.webp";
+
+const { t: rawT, tm: rawTm } = useI18n( "book1/O6" );
+const t = (
+	key,
+	params = {}
+) => rawT( `o6.${key}`, params );
+const tm = ( key = "" ) => rawTm( key ? `o6.${key}` : "o6" );
 
 const EPS = 1e-13;
 
@@ -409,19 +323,20 @@ const x1Input = ref( "0.57" );
 
 const error = ref( "" );
 const result = ref( null );
+const subChapter = computed( () => tm( "subChapter" ) ?? {} );
 
 function parseNumber( v, label ) {
 	const s = String( v ?? "" ).trim()
 		.replace( ",", "." );
 
 	if ( !s ) {
-		throw new Error( `${label}: leer.` );
+		throw new Error( t( "sections.interactive.errors.empty", { label } ) );
 	}
 
 	const x = Number( s );
 
 	if ( !Number.isFinite( x ) ) {
-		throw new Error( `${label}: ungültige Zahl.` );
+		throw new Error( t( "sections.interactive.errors.invalid", { label } ) );
 	}
 
 	return x;
@@ -445,7 +360,7 @@ function bisectionForSn( n, target ) {
 	let lo = 0;
 	let hi = 1;
 	let flo = Sn( lo, n ) - target;
-	let fhi = Sn( hi, n ) - target;
+	const fhi = Sn( hi, n ) - target;
 
 	if ( Math.abs( flo ) < EPS ) {
 		return lo;
@@ -456,7 +371,10 @@ function bisectionForSn( n, target ) {
 	}
 
 	if ( flo * fhi > 0 ) {
-		throw new Error( `Bisection failed for n=${n}, target=${target}.` );
+		throw new Error( t( "sections.interactive.errors.bisection", {
+			n,
+			target
+		} ) );
 	}
 
 	for ( let iter = 0; iter < 120; iter++ ) {
@@ -469,7 +387,6 @@ function bisectionForSn( n, target ) {
 
 		if ( flo * fm <= 0 ) {
 			hi = mid;
-			fhi = fm;
 		} else {
 			lo = mid;
 			flo = fm;
@@ -528,7 +445,10 @@ function computeSequenceRows( x1, N ) {
 		}
 	}
 
-	return { rows, fail };
+	return {
+		rows,
+		fail
+	};
 }
 
 function runCheck() {
@@ -540,11 +460,11 @@ function runCheck() {
 		const x1 = parseNumber( x1Input.value, "x1" );
 
 		if ( !Number.isInteger( N ) ) {
-			throw new Error( "N muss ganzzahlig sein." );
+			throw new Error( t( "sections.interactive.errors.integerN" ) );
 		}
 
 		if ( N < 2 || N > 120 ) {
-			throw new Error( "N bitte zwischen 2 und 120 wählen." );
+			throw new Error( t( "sections.interactive.errors.rangeN" ) );
 		}
 
 		const bounds = computeBounds( N );

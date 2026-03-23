@@ -9,6 +9,7 @@ import ImageZoomer from "@/components/ImageZoomer.vue";
 import Katex from "@/components/Katex.vue";
 import RouteSeoHead from "@/components/RouteSeoHead.vue";
 import EddieComment from "@/components/EddieComment.vue";
+import i18n from "@/i18n.mjs";
 import "katex/dist/katex.min.css";
 import { routes, scrollBehavior } from "@/router.js";
 import { vuetify } from "@/utils/vuetify";
@@ -201,6 +202,7 @@ export const createApp = ViteSSG(
 		app, router, isClient
 	} ) => {
 		app.use( vuetify );
+		app.use( i18n );
 
 		// Global layout component so views don't need to import it explicitly.
 		app.component( "AppFrame", AppFrame );

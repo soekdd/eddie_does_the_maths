@@ -66,7 +66,7 @@
 			<v-col cols="12">
 				<v-row align="center" class="controlRow" dense>
 					<v-col cols="12" md="3" sm="3">
-						<v-label class="controlLabel">r (Risiko)</v-label>
+						<v-label class="controlLabel">{{ t( "graph.controls.risk" ) }}</v-label>
 					</v-col>
 					<v-col cols="9" md="7" sm="7">
 						<v-slider
@@ -97,7 +97,7 @@
 	</div>
 
 	<svg
-		aria-label="Geometrie des Fährterminal-Hofs und optimaler Weg"
+		:aria-label="t( 'graph.aria' )"
 		class="svg"
 		preserveAspectRatio="xMidYMid meet"
 		role="img"
@@ -270,56 +270,56 @@
 				:x="toSvgX( buildingCenterX, buildingCenterY )"
 				:y="toSvgY( buildingCenterX, buildingCenterY )"
 			>
-				Terminal
+				{{ t( "graph.terminal" ) }}
 			</text>
 
-			<text class="t" :x="toSvgX( A.x, A.y )" :y="toSvgY( A.x, A.y ) + 64">A (Start)</text>
+			<text class="t" :x="toSvgX( A.x, A.y )" :y="toSvgY( A.x, A.y ) + 64">{{ t( "graph.start" ) }}</text>
 
 			<text v-if="!useOuterAsOptimal"
 				class="t"
 				:x="toSvgX( P.x, P.y ) - 20"
 				:y="toSvgY( P.x, P.y ) + 64"
 			>
-				P (x*={{ xOpt.toFixed(2) }})
+				{{ t( "graph.crossingPoint", { value: fmt( xOpt, 2 ) } ) }}
 			</text>
 
-			<text class="t" :x="toSvgX( B.x, B.y ) - 44" :y="toSvgY( B.x, B.y ) - 40">B (Tor)</text>
+			<text class="t" :x="toSvgX( B.x, B.y ) - 44" :y="toSvgY( B.x, B.y ) - 40">{{ t( "graph.goal" ) }}</text>
 		</g>
 	</svg>
 
 	<div class="legendHtml">
 		<div class="legendItem">
 			<span class="swatch shadow"></span>
-			<span>Schatten: 1 Riskopunkt / Meter</span>
+			<span>{{ t( "graph.legendShadow" ) }}</span>
 		</div>
 		<div class="legendItem">
 			<span class="swatch sprint"></span>
-			<span>Querung: {{r}} Risikopunkte / Meter (r)</span>
+			<span>{{ t( "graph.legendCrossing", { value: fmt( r, 1 ) } ) }}</span>
 		</div>
 		<div v-if="showOuterRoute && !useOuterAsOptimal" class="legendItem">
 			<span class="swatch outer"></span>
-			<span>Außenroute (schematisch)</span>
+			<span>{{ t( "graph.legendOuter" ) }}</span>
 		</div>
 	</div>
 
 	<div class="meta">
 		<div class="kpi">
 			<div>
-				<b>Formel:&nbsp;</b>
+				<b>{{ t( "graph.formula" ) }}&nbsp;</b>
 				<Katex tex="x^* = \frac{L}{2} - \dfrac{W}{\sqrt{r^2 - 1}}\quad (\text{für } r>1)" />
 			</div>
-			<div><b>x*</b> = {{ xOpt.toFixed(2) }} m &nbsp;|&nbsp; <b>u</b> =&nbsp;L/2-x* = {{ u.toFixed(2) }} m</div>
-			<div><b>PB</b> = {{ PB.toFixed(2) }} m &nbsp;|&nbsp; <b>Risiko</b> = {{ Ropt.toFixed(2) }} Punkte</div>
-			<div><b>Außenrum (nur Schatten)
-			</b> = {{ shadowOnlyDistance.toFixed(2) }} m &nbsp;|&nbsp; <b>Risiko</b> = {{ shadowOnlyRisk.toFixed(2) }} Punkte</div>
-			<div><b>Ersparnis vs. außenrum
-			</b> = {{ savingsVsShadowOnly.toFixed(2) }} Punkte</div>
-			<div><b>Gewählte Route
-			</b> = {{ useOuterAsOptimal ? "Außenrum (nur Schatten)" : "Schatten + Querung" }} &nbsp;|
-				&nbsp; <b>Minimalrisiko</b> = {{ selectedRisk.toFixed(2) }} Punkte</div>
+			<div><b>{{ t( "graph.xStar" ) }}</b> = {{ fmt( xOpt, 2 ) }} m &nbsp;|&nbsp; <b>u</b> =&nbsp;L/2-x* = {{ fmt( u, 2 ) }} m</div>
+			<div><b>PB</b> = {{ fmt( PB, 2 ) }} m &nbsp;|&nbsp; <b>{{ t( "graph.risk" ) }}</b> = {{ fmt( Ropt, 2 ) }} Punkte</div>
+			<div><b>{{ t( "graph.outerOnly" ) }}
+			</b> = {{ fmt( shadowOnlyDistance, 2 ) }} m &nbsp;|&nbsp; <b>{{ t( "graph.risk" ) }}</b> = {{ fmt( shadowOnlyRisk, 2 ) }} Punkte</div>
+			<div><b>{{ t( "graph.savings" ) }}
+			</b> = {{ fmt( savingsVsShadowOnly, 2 ) }} Punkte</div>
+			<div><b>{{ t( "graph.chosenRoute" ) }}
+			</b> = {{ useOuterAsOptimal ? t( "graph.routeOuter" ) : t( "graph.routeCrossing" ) }} &nbsp;|
+				&nbsp; <b>{{ t( "graph.minRisk" ) }}</b> = {{ fmt( selectedRisk, 2 ) }} Punkte</div>
 		</div>
 		<div v-if="r <= 1" class="hint">
-			Hinweis: r ≤ 1 ⇒ Querung ist nicht riskanter als Schatten; dann ist „so früh wie möglich“ optimal (x*=0).
+			{{ t( "graph.hint" ) }}
 		</div>
 	</div>
 </div>
@@ -330,6 +330,7 @@ import {
 	computed, onBeforeUnmount, onMounted, ref, watch, watchEffect
 } from "vue";
 import { useDisplay } from "vuetify";
+import { useI18n } from "@/i18n.mjs";
 /**
  * Parametrisierbar:
  *  - L: Länge des Hofs (m)
@@ -343,6 +344,7 @@ const props = defineProps( {
 	showControls:   { type: Boolean, default: true },
 	showOuterRoute: { type: Boolean, default: false }
 } );
+const { locale, t } = useI18n( "book1/WO" );
 const { smAndDown } = useDisplay();
 const rotateMobile = computed( () => smAndDown.value );
 
@@ -549,6 +551,13 @@ const shadowOnlyRisk = computed( () => shadowOnlyDistance.value ); // 1 Punkt/m 
 const savingsVsShadowOnly = computed( () => shadowOnlyRisk.value - Ropt.value );
 const useOuterAsOptimal = computed( () => savingsVsShadowOnly.value < 0 );
 const selectedRisk = computed( () => useOuterAsOptimal.value ? shadowOnlyRisk.value : Ropt.value );
+
+function fmt( value, digits = 2 ) {
+	return new Intl.NumberFormat( locale.value, {
+		maximumFractionDigits: digits,
+		minimumFractionDigits: digits
+	} ).format( Number( value ) );
+}
 
 // Außenroute entlang der Hofkante: rechts, hoch, links zu B
 const outerPathD = computed( () => {

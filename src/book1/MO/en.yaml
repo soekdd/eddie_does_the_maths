@@ -1,0 +1,48 @@
+title: "Eddie Calculates: IMO 1985 Problem Overview"
+imageTitle: "Eddie on the second competition day"
+imageAlt: "Eddie on the second competition day of IMO 1985"
+introDate1: "Joutsa, July 4, 1985"
+introDate2: "Joutsa, July 5, 1985"
+book:
+  day1p1: "Joutsa, classroom, everything tidy: desks in neat rows, clocks ticking far too loudly, and I am sitting there like a drawn bow. Today I am still completely in the zone. I do not just want to be good. I want to show that I am <em>the</em> Eddie. Three problems, three chances to press pause on the world for a moment and breathe only logic."
+  day1p2: "The first one is a geometry trap: circles, a quadrilateral, and somewhere inside there is a relation you have to “see”, or else you run in circles. The second one looks harmless with colors and numbers, but the rules glue everything together until you can barely make any free choice. And the third is like an arithmetic magic trick: you build something out of blocks and must prove that a certain property does not simply disappear just because you add things together."
+  day1p3: "I am awake, cheeky, convinced: this is my terrain."
+  day2p1: "Same room, same sounds, but I am no longer the same. My head is already half outside, with doors, routes, glances. I try to read, but the thoughts keep slipping away like soap. Everything inside me is no longer counting points, only seconds."
+  day2p2: "The problems suddenly feel heavy, even though they are not supposed to. First there are many numbers built only from small prime blocks, and somewhere you are guaranteed to find four whose product becomes something “perfectly whole”. Then geometry again: triangle, circles, intersection points, and in the end one angle has to be exactly right, as if the drawing secretly forces it. And finally a sequence: if you start wrong, everything collapses. There should be exactly <em>one</em> starting value that keeps the sequence neatly between zero and one while still making it grow."
+  day2p3: "I know how to approach it, but I can feel the clarity slipping through my fingers."
+sections:
+  title: "IMO 1985 - Problems"
+  meta: "Problems only (no solutions). Source:"
+tasks:
+  a1:
+    heading: "Step 1.1 - A1"
+    link: "Go to problem A1"
+    p1: "A circle has its center on side AB of the cyclic quadrilateral ABCD. The other three sides touch the circle (they are tangent to it). Prove that AD + BC = AB."
+  a2:
+    heading: "Step 1.2 - A2"
+    link: "Go to problem A2"
+    p1: "Let n and k be coprime positive integers with k<n. Each number in the set M={1,2,3,\\dots,n-1} is colored either blue or white."
+    l1: "For every i∈M, the numbers i and n-i have the same color."
+    l2: "For every i∈M with i≠k, the numbers i and |i-k| have the same color."
+    p2: "Prove that all numbers in M must have the same color."
+  a3:
+    heading: "Step 1.3 - A3"
+    link: "Go to problem A3"
+    p1: "For a polynomial P(x)=a_0+a_1x+\\dots+a_kx^k with integer coefficients, let o(P) denote the number of odd coefficients of P. For i=0,1,2,\\dots let Q_i(x)=(1+x)^i."
+    p2: "Prove: if i_1,i_2,\\dots,i_n are integers with 0\\le i_1<i_2<\\dots<i_n, then"
+  b1:
+    heading: "Step 1.4 - B1"
+    link: "Go to problem B1"
+    p1: "Given is a set M of 1985 pairwise distinct positive integers, none of which has a prime divisor greater than 23."
+    p2: "Prove that M contains a subset of 4 elements whose product is a fourth power of an integer."
+  b2:
+    heading: "Step 1.5 - B2"
+    link: "Go to problem B2"
+    p1: "A circle with center O passes through vertices A and C of triangle ABC and meets segments AB and BC again at the distinct points K and N respectively."
+    p2: "The circumcircles of triangles ABC and KBN intersect in exactly two distinct points B and M. Prove that angle ∠OMB is a right angle, i.e. ∠OMB = 90^\\circ."
+  b3:
+    heading: "Step 1.6 - B3"
+    link: "Go to problem B3"
+    p1: "For each real number x_1, a sequence x_1,x_2,\\dots is defined by"
+    p2: "Prove that there exists exactly one starting value x_1 for which, for all n, we have 0<x_n<x_{n+1}<1."
+footer: "Sources for further reading: AoPS Wiki (IMO 1985 Problems 1-6) and the official ISL solutions (prase.cz)."

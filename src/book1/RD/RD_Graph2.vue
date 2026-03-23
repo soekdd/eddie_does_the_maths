@@ -1,9 +1,9 @@
 <template>
 <svg
-	:aria-label="ariaLabel"
+	:aria-label
 	class="rdGraph"
 	role="img"
-	:viewBox="viewBox"
+	:viewBox
 	xmlns="http://www.w3.org/2000/svg"
 >
 	<rect class="bg"
@@ -46,7 +46,7 @@
 			:x="model.right"
 			:y="model.axisY + 30"
 		>
-			Distanz [km]
+			{{ t( "graph.distance" ) }}
 		</text>
 
 		<g class="tick">
@@ -110,7 +110,7 @@
 				:y1="model.axisY + 42"
 				:y2="model.axisY + 42"
 			/>
-			<text :x="model.left + 52" :y="model.axisY + 46">Hinweg</text>
+			<text :x="model.left + 52" :y="model.axisY + 46">{{ t( "graph.outward" ) }}</text>
 
 			<line class="back"
 				:x1="model.left + 140"
@@ -118,7 +118,7 @@
 				:y1="model.axisY + 42"
 				:y2="model.axisY + 42"
 			/>
-			<text :x="model.left + 192" :y="model.axisY + 46">Rückweg</text>
+			<text :x="model.left + 192" :y="model.axisY + 46">{{ t( "graph.return" ) }}</text>
 		</g>
 
 		<text v-if="model.trimmed"
@@ -126,7 +126,10 @@
 			:x="model.left"
 			:y="model.axisY + 66"
 		>
-			Es werden die ersten {{ model.shownK }} von {{ model.k }} Shuttles gezeigt.
+			{{ t( "graph.shownShuttles", {
+				shown: model.shownK,
+				total: model.k
+			} ) }}
 		</text>
 		<text v-if="model.warning"
 			class="warn"
@@ -139,7 +142,9 @@
 
 	<g v-else>
 		<text class="headline" :x="model.left" y="26">
-			Mehrdepot-Stufen bis Dm = {{ model.totalDistance }} km
+			{{ t( "graph.classicHeadline", {
+				distance: model.totalDistance
+			} ) }}
 		</text>
 
 		<line class="axis"
@@ -152,7 +157,7 @@
 			:x="model.right"
 			:y="model.axisY + 28"
 		>
-			Distanz [km]
+			{{ t( "graph.distance" ) }}
 		</text>
 
 		<g class="tick">
@@ -205,10 +210,13 @@
 		</g>
 
 		<g class="msg" :transform="`translate(${model.left}, ${model.bandY + 44})`">
-			<text y="0">Stufenbreiten entsprechen Delta x_j.</text>
-			<text y="18">Je hoehere Stufe, desto kleiner der Zugewinn.</text>
+			<text y="0">{{ t( "graph.classicNote1" ) }}</text>
+			<text y="18">{{ t( "graph.classicNote2" ) }}</text>
 			<text v-if="model.trimmed" y="36">
-				Es werden {{ model.shown }} von {{ model.total }} Stufen gezeigt.
+				{{ t( "graph.shownStages", {
+					shown: model.shown,
+					total: model.total
+				} ) }}
 			</text>
 		</g>
 	</g>
@@ -217,6 +225,9 @@
 
 <script setup>
 import { computed } from "vue";
+import { useI18n } from "@/i18n.mjs";
+
+const { t } = useI18n( "book1/RD" );
 
 const props = defineProps( {
 	mode: { type: String, default: "light" },
@@ -313,10 +324,10 @@ const viewBox = computed( () => `0 0 ${model.value.width} ${model.value.height}`
 
 const ariaLabel = computed( () => {
 	if ( props.mode === "classic" ) {
-		return "Mehrdepot-Stufen";
+		return t( "graph.classicAria" );
 	}
 
-	return "Touren der Ein-Depot-Strategie";
+	return t( "graph.lightAria" );
 } );
 
 function buildLightModel() {
@@ -337,7 +348,7 @@ function buildLightModel() {
 			kind:    "error",
 			width:   920,
 			height:  170,
-			message: "Bitte gültige Eingaben für die Light-Touren setzen."
+			message: t( "graph.errors.lightValues" )
 		};
 	}
 
@@ -346,7 +357,7 @@ function buildLightModel() {
 			kind:    "error",
 			width:   920,
 			height:  170,
-			message: "Die Touren brauchen positive Werte (x, d, k nicht negativ)."
+			message: t( "graph.errors.lightPositive" )
 		};
 	}
 
@@ -369,16 +380,22 @@ function buildLightModel() {
 
 	const baseGuides = [
 		{
-			id: "start", value: 0, label: "Start"
+			id: "start", value: 0, label: t( "graph.start" )
 		},
 		{
-			id: "depot", value: depotX, label: `Depot ${fmt( depotX )} km`
+			id:    "depot",
+			value: depotX,
+			label: t( "graph.depot", { value: fmt( depotX ) } )
 		},
 		{
-			id: "d0", value: d0, label: `Ohne Depot ${fmt( d0 )} km`
+			id:    "d0",
+			value: d0,
+			label: t( "graph.withoutDepot", { value: fmt( d0 ) } )
 		},
 		{
-			id: "turn", value: dmax, label: `Wende ${fmt( dmax )} km`
+			id:    "turn",
+			value: dmax,
+			label: t( "graph.turn", { value: fmt( dmax ) } )
 		}
 	];
 	const tolerance = domainMax * 0.005;
@@ -412,7 +429,7 @@ function buildLightModel() {
 		const y = top + i * rowGap;
 		rows.push( {
 			id:       `shuttle-${i + 1}`,
-			label:    `Shuttle ${i + 1}`,
+			label:    t( "graph.shuttle", { index: i + 1 } ),
 			y,
 			turnX:    null,
 			segments: [
@@ -429,7 +446,7 @@ function buildLightModel() {
 	const finalY = top + shownK * rowGap;
 	rows.push( {
 		id:       "final",
-		label:    "Finale Tour",
+		label:    t( "graph.finalTour" ),
 		y:        finalY,
 		turnX:    toX( dmax ),
 		segments: [
@@ -481,7 +498,7 @@ function buildClassicModel() {
 			kind:    "error",
 			width:   920,
 			height:  180,
-			message: "Bitte gültige Werte für das Mehrdepot-Modell setzen."
+			message: t( "graph.errors.classicValues" )
 		};
 	}
 

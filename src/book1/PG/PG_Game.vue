@@ -3,9 +3,11 @@
 <v-card class="pa-4" elevation="4">
 	<div class="d-flex align-center justify-space-between mb-3">
 		<div>
-			<div class="text-h6">Zufallsblatt</div>
+			<div class="text-h6">{{ t( "game.title" ) }}</div>
 			<div class="text-body-2 text-medium-emphasis">
-				Handgröße: {{ handCodes.length }} Karten
+				{{ t( "game.handSize", {
+					count: handCodes.length
+				} ) }}
 			</div>
 		</div>
 		<div class="d-flex ga-2">
@@ -14,21 +16,21 @@
 				:variant="selectedHandSize === 3 ? 'flat' : 'outlined'"
 				@click="newRandomHand( 3 )"
 			>
-				{{ compactButtonLabels ? "3" : "3 Karten" }}
+				{{ compactButtonLabels ? "3" : t( "game.size3" ) }}
 			</v-btn>
 			<v-btn
 				color="primary"
 				:variant="selectedHandSize === 4 ? 'flat' : 'outlined'"
 				@click="newRandomHand( 4 )"
 			>
-				{{ compactButtonLabels ? "4" : "4 Karten" }}
+				{{ compactButtonLabels ? "4" : t( "game.size4" ) }}
 			</v-btn>
 			<v-btn
 				color="primary"
 				:variant="selectedHandSize === 5 ? 'flat' : 'outlined'"
 				@click="newRandomHand( 5 )"
 			>
-				{{ compactButtonLabels ? "5" : "5 Karten" }}
+				{{ compactButtonLabels ? "5" : t( "game.size5" ) }}
 			</v-btn>
 		</div>
 	</div>
@@ -41,7 +43,8 @@
 
 	<v-divider class="my-4" />
 
-	<v-alert v-if="note"
+	<v-alert
+		v-if="note"
 		class="mb-3"
 		type="info"
 		variant="tonal"
@@ -51,7 +54,7 @@
 
 	<div class="d-flex flex-wrap align-center ga-3">
 		<v-chip color="secondary" variant="tonal">
-			Bewertung: {{ resultTitle }}
+			{{ t( "game.rating" ) }}: {{ resultTitle }}
 		</v-chip>
 		<div v-if="resultDescr" class="text-body-2">
 			{{ resultDescr }}
@@ -60,9 +63,9 @@
 
 	<div v-if="missingToFive > 0 && completionOptionsCards.length" class="mt-2 text-body-2 text-medium-emphasis">
 		<span class="completionOptions">
-			erforderliche Ergänzungskarten:
-			<template v-for="(option, optionIndex) in completionOptionsCards" :key="`completion-option-${optionIndex}`">
-				<span v-if="optionIndex > 0" class="completionOr">oder</span>
+			{{ t( "game.requiredCards" ) }}:
+			<template v-for="( option, optionIndex ) in completionOptionsCards" :key="`completion-option-${optionIndex}`">
+				<span v-if="optionIndex > 0" class="completionOr">{{ t( "game.or" ) }}</span>
 				<span class="completionMiniCards">
 					<PokerCard
 						v-for="c in option"
@@ -81,7 +84,7 @@
 		v-if="completionDrawProbability !== null"
 		class="mt-1 text-body-2 text-medium-emphasis"
 	>
-		Wahrscheinlichkeit, eine solche Ergänzung zu ziehen:
+		{{ t( "game.drawProbability" ) }}:
 		<Katex
 			as="div"
 			:display="true"
@@ -90,7 +93,7 @@
 	</div>
 
 	<div v-else-if="missingToFive === 0" class="mt-2 text-body-2 text-medium-emphasis">
-		(Direkt bewertet – exakt 5 Karten.)
+		({{ t( "game.directlyRated" ) }})
 	</div>
 </v-card>
 </template>
@@ -100,15 +103,20 @@ import {
 	computed, onMounted, ref
 } from "vue";
 import { useDisplay } from "vuetify";
+import { useI18n } from "@/i18n.mjs";
 import PokerCard from "./PG_Card.vue";
 import PGHand from "./PG_Hand.vue";
 import PokerSolver from "pokersolver";
+
 const { Hand } = PokerSolver as any;
+const {
+	locale, t, tm
+} = useI18n( "book1/PG" );
 
 type SuitChar = "s" | "h" | "d" | "c";
 
-const handCodes = ref<string[]>( [] ); // z.B. ["As","Td","7h"]
-const bestCompletionOptions = ref<string[][]>( [] ); // alle optimalen Ergänzungen aus dem Restdeck
+const handCodes = ref<string[]>( [] );
+const bestCompletionOptions = ref<string[][]>( [] );
 const solved = ref<any | null>( null );
 const note = ref<string>( "" );
 const selectedHandSize = ref<3 | 4 | 5>( 5 );
@@ -116,8 +124,8 @@ const { width } = useDisplay();
 const compactButtonLabels = computed( () => width.value <= 700 );
 
 function buildDeck(): string[] {
-	const ranks = [ "2","3","4","5","6","7","8","9","T","J","Q","K","A" ];
-	const suits: SuitChar[] = [ "s","h","d","c" ];
+	const ranks = [ "2", "3", "4", "5", "6", "7", "8", "9", "T", "J", "Q", "K", "A" ];
+	const suits: SuitChar[] = [ "s", "h", "d", "c" ];
 	const deck: string[] = [];
 
 	for ( const r of ranks ) {
@@ -140,12 +148,12 @@ function shuffle<T>( arr: T[] ): T[] {
 	return a;
 }
 
-function suitToGerman( s: SuitChar ): string {
+function localizedSuit( s: SuitChar ): string {
 	switch ( s ) {
-		case "s": return "Pik";
-		case "h": return "Herz";
-		case "d": return "Karo";
-		case "c": return "Kreuz";
+		case "s": return t( "cards.suits.spades" );
+		case "h": return t( "cards.suits.hearts" );
+		case "d": return t( "cards.suits.diamonds" );
+		case "c": return t( "cards.suits.clubs" );
 	}
 }
 
@@ -155,19 +163,19 @@ function rankToDisplay( r: string ): number | string {
 	}
 
 	if ( r === "J" ) {
-		return "Bube";
+		return t( "cards.ranks.jack" );
 	}
 
 	if ( r === "Q" ) {
-		return "Dame";
+		return t( "cards.ranks.queen" );
 	}
 
 	if ( r === "K" ) {
-		return "König";
+		return t( "cards.ranks.king" );
 	}
 
 	if ( r === "A" ) {
-		return "Ass";
+		return t( "cards.ranks.ace" );
 	}
 
 	return Number( r );
@@ -178,7 +186,7 @@ function parseCard( code: string ) {
 	const s = code[ 1 ] as SuitChar;
 	return {
 		code,
-		suit: suitToGerman( s ),
+		suit: localizedSuit( s ),
 		rank: rankToDisplay( r )
 	};
 }
@@ -187,7 +195,8 @@ const cards = computed( () => handCodes.value.map( parseCard ) );
 const canRemoveCard = computed( () => handCodes.value.length === 5 );
 const missingToFive = computed( () => Math.max( 0, 5 - handCodes.value.length ) );
 const remainingDeckCount = computed( () => 52 - handCodes.value.length );
-const completionOptionsCards = computed( () => bestCompletionOptions.value.map( option => option.map( parseCard ) ) );
+const completionOptionsCards = computed( () =>
+	bestCompletionOptions.value.map( ( option ) => option.map( parseCard ) ) );
 
 function nChooseK( n: number, k: number ): number {
 	if ( k < 0 || k > n ) {
@@ -241,27 +250,26 @@ const completionDrawTex = computed( () => {
 	const percent = p * 100;
 	const percentDigits = percent >= 1 ? 2 : percent >= 0.1 ? 3 : 4;
 	const percentText = toTexNumber( percent, percentDigits );
-	const lhs = String.raw`P(\text{optimale Ergänzung})`;
-	const rhs = String.raw`\frac{${favorable}}{\binom{${n}}{${k}}}=\frac{${
-		favorable}}{${denominatorText}}\approx ${percentText}\%`;
+	const lhs = locale.value === "de" ?
+		String.raw`P(\text{optimale Ergänzung})` :
+		String.raw`P(\text{optimal completion})`;
+	const rhs = String.raw`\frac{${favorable}}{\binom{${n}}{${k}}}` +
+		String.raw`=\frac{${favorable}}{${denominatorText}}\approx ${percentText}\%`;
 	return `${lhs}=${rhs}`;
 } );
 
 function evaluateWithPokerSolver( current: string[] ) {
 	const deck = buildDeck();
-	const remaining = deck.filter( c => !current.includes( c ) );
+	const remaining = deck.filter( ( c ) => !current.includes( c ) );
 	const missing = 5 - current.length;
 
-	// genau 5 Karten -> direkt lösen
 	if ( missing <= 0 ) {
 		bestCompletionOptions.value = [];
 		solved.value = Hand.solve( current.slice( 0, 5 ) );
-		note.value = "Hinweis: Du siehst ein volles Kartendeck. Du kannst eine Karte entfernen und sehen" +
-		" welche Möglichkeiten sich dadurch eröffnen.";
+		note.value = t( "game.fullDeckNote" );
 		return;
 	}
 
-	// 3–4 Karten -> alle optimalen Ergänzungen bestimmen (inkl. ODER-Fälle)
 	let bestHand: any | null = null;
 	let bestOptionsLocal: string[][] = [];
 
@@ -300,9 +308,7 @@ function evaluateWithPokerSolver( current: string[] ) {
 	} else if ( missing === 2 ) {
 		for ( let i = 0; i < remaining.length - 1; i++ ) {
 			for ( let j = i + 1; j < remaining.length; j++ ) {
-				const c1 = remaining[ i ];
-				const c2 = remaining[ j ];
-				const additions = [ c1, c2 ];
+				const additions = [ remaining[ i ], remaining[ j ] ];
 				const codes = [ ...current, ...additions ];
 				const h = Hand.solve( codes );
 				const relation = compare( h, bestHand );
@@ -316,16 +322,16 @@ function evaluateWithPokerSolver( current: string[] ) {
 			}
 		}
 	} else {
-		// bei 3-5 Karten kommt das hier nicht vor
 		bestHand = null;
 		bestOptionsLocal = [];
 	}
 
 	bestCompletionOptions.value = bestOptionsLocal;
 	solved.value = bestHand;
-	note.value =
-    `Hinweis: Du siehst ${current.length} Karten. Bewertung ist die *bestmögliche* 5-Karten-Hand, ` +
-    `wenn man die fehlenden ${missing} Karte(n) optimal aus dem Restdeck ergänzen dürfte (ggf. mehrere ODER-Optionen).`;
+	note.value = t( "game.partialDeckNote", {
+		count: current.length,
+		missing
+	} );
 }
 
 function newRandomHand( size: 3 | 4 | 5 = selectedHandSize.value ) {
@@ -348,11 +354,7 @@ function removeCardAt( index: number ) {
 }
 
 function addCompletionCard( code: string ) {
-	if ( handCodes.value.length >= 5 ) {
-		return;
-	}
-
-	if ( handCodes.value.includes( code ) ) {
+	if ( handCodes.value.length >= 5 || handCodes.value.includes( code ) ) {
 		return;
 	}
 
@@ -364,11 +366,11 @@ function addCompletionCard( code: string ) {
 
 const resultTitle = computed( () => {
 	if ( !solved.value ) {
-		return "—";
+		return t( "game.noResult" );
 	}
 
-	// pokersolver liefert i.d.R. { name, descr, ... }
-	return solved.value.name ?? "Ergebnis";
+	const labels = tm( "solver.names" ) as Record<string, string> | undefined;
+	return labels?.[ solved.value.name ] ?? solved.value.name ?? t( "game.result" );
 } );
 
 const resultDescr = computed( () => {
@@ -376,8 +378,58 @@ const resultDescr = computed( () => {
 		return "";
 	}
 
-	return solved.value.descr ?? "";
+	return translateSolverDescr( solved.value.descr ?? "" );
 } );
+
+function translateSolverDescr( descr: string ) {
+	if ( !descr || locale.value === "en" ) {
+		return descr;
+	}
+
+	const names = tm( "solver.names" ) as Record<string, string> | undefined;
+	const ranks = tm( "solver.ranks" ) as Record<string, string> | undefined;
+
+	const rankLabel = ( raw: string ) => {
+		const cleaned = raw.replace( /[^0-9AJQKT]/gi, "" ).toUpperCase();
+		return ranks?.[ cleaned ] ?? cleaned;
+	};
+
+	let match = descr.match( /^([A-Za-z ]+), ([0-9AJQKT]+)'s & ([0-9AJQKT]+)'s$/ );
+
+	if ( match ) {
+		return `${names?.[ match[ 1 ] ] ?? match[ 1 ]}, ${rankLabel( match[ 2 ] )}er und ${rankLabel( match[ 3 ] )}er`;
+	}
+
+	match = descr.match( /^([A-Za-z ]+), ([0-9AJQKT]+)'s over ([0-9AJQKT]+)'s$/ );
+
+	if ( match ) {
+		return `${names?.[ match[ 1 ] ] ?? match[ 1 ]}, ${rankLabel( match[ 2 ] )}er über ${rankLabel( match[ 3 ] )}er`;
+	}
+
+	match = descr.match( /^([A-Za-z ]+), ([0-9AJQKT]+)'s$/ );
+
+	if ( match ) {
+		return `${names?.[ match[ 1 ] ] ?? match[ 1 ]}, ${rankLabel( match[ 2 ] )}er`;
+	}
+
+	match = descr.match( /^([A-Za-z ]+), ([0-9AJQKT]+)[shdc]? High$/i );
+
+	if ( match ) {
+		return `${names?.[ match[ 1 ] ] ?? match[ 1 ]}, ${rankLabel( match[ 2 ] )} hoch`;
+	}
+
+	match = descr.match( /^([0-9AJQKT]+)[shdc]? High$/i );
+
+	if ( match ) {
+		return `${rankLabel( match[ 1 ] )} hoch`;
+	}
+
+	if ( descr === "Straight, Wheel" ) {
+		return t( "solver.wheel" );
+	}
+
+	return names?.[ descr ] ?? descr;
+}
 
 onMounted( () => {
 	newRandomHand( selectedHandSize.value );
@@ -386,24 +438,24 @@ onMounted( () => {
 
 <style scoped>
 .completionMiniCards {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  vertical-align: middle;
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	vertical-align: middle;
 }
 
 .completionMiniCard {
-  cursor: pointer;
+	cursor: pointer;
 }
 
 .completionOptions {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  flex-wrap: wrap;
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	flex-wrap: wrap;
 }
 
 .completionOr {
-  font-weight: 600;
+	font-weight: 600;
 }
 </style>

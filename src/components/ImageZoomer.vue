@@ -25,16 +25,16 @@
 		<v-card class="zoomerCard" :class="{ fullscreen: effectiveSmAndDown }">
 			<v-card-title class="zoomerTitle">
 				<div class="zoomerTitleText">
-					{{ title || 'Zoom' }}
+					{{ title || t( "imageZoomer.zoom" ) }}
 				</div>
 				<v-spacer />
 				<v-btn
-					aria-label="Schließen"
+					:aria-label="t( 'imageZoomer.close' )"
 					class="zoomerClose"
 					icon
 					rounded="circle"
 					size="large"
-					title="Schließen"
+					:title="t( 'imageZoomer.close' )"
 					variant="tonal"
 					@click="open = false"
 				>
@@ -43,7 +43,7 @@
 			</v-card-title>
 			<v-divider />
 			<v-card-text class="zoomerBody">
-				<div ref="contentBoxRef" aria-label="Zoom-Inhalt" class="zoomerContent">
+				<div ref="contentBoxRef" :aria-label="t( 'imageZoomer.contentAria' )" class="zoomerContent">
 					<div
 						ref="fitBoxRef"
 						class="zoomerFit"
@@ -64,6 +64,7 @@ import {
 	computed, nextTick, onBeforeUnmount, onMounted, ref, watch
 } from "vue";
 import { useDisplay } from "vuetify";
+import { useI18n } from "@/i18n.mjs";
 
 const props = defineProps( {
 	title:    { type: String, default: "" },
@@ -73,6 +74,7 @@ const props = defineProps( {
 	maxWidth: { type: [ Number, String ], default: 1400 }
 } );
 
+const { t } = useI18n( "components/lang" );
 const open = ref( false );
 const { smAndDown } = useDisplay();
 const hasMounted = ref( false );

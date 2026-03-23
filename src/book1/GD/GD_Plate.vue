@@ -3,21 +3,21 @@
 	<v-row dense>
 		<v-col cols="12" md="5">
 			<v-card class="pa-4" rounded="xl">
-				<h3 class="text-h6 mb-2">Term-Editor</h3>
+				<h3 class="text-h6 mb-2">{{ t( "gdPlate.editor.title" ) }}</h3>
 				<p class="text-body-2 mb-3">
-					Jeder Term ist entweder ein Bruchteil von <Katex tex="x" /> oder eine feste Jahreszahl.
+					{{ t( "gdPlate.editor.p1" ) }}
 				</p>
 
 				<div class="d-flex flex-wrap ga-2 mb-3">
 					<v-btn color="primary" variant="flat" @click="openNewTerm">
-						Term hinzufügen
+						{{ t( "gdPlate.editor.add" ) }}
 					</v-btn>
 					<v-btn
 						:disabled="terms.length === 0"
 						variant="tonal"
 						@click="clearTerms"
 					>
-						Alle Terme löschen
+						{{ t( "gdPlate.editor.clear" ) }}
 					</v-btn>
 				</div>
 
@@ -53,7 +53,7 @@
 					</v-list-item>
 				</v-list>
 				<p v-else class="text-body-2 text-medium-emphasis">
-					Noch keine Terme. Starte mit einem Bruch oder einer konstanten Zeit.
+					{{ t( "gdPlate.editor.empty" ) }}
 				</p>
 			</v-card>
 		</v-col>
@@ -61,8 +61,8 @@
 		<v-col cols="12" md="7">
 			<section class="plateCard">
 				<header class="plateHeader">
-					<div class="plateLead">Hier ruht ein Zahlenfreund</div>
-					<div class="plateLeadSub">Sein Alter verrät die Rechnung</div>
+					<div class="plateLead">{{ t( "gdPlate.plate.title" ) }}</div>
+					<div class="plateLeadSub">{{ t( "gdPlate.plate.subtitle" ) }}</div>
 				</header>
 
 				<div class="plateEquation">
@@ -73,25 +73,25 @@
 				<ol v-if="stageRows.length" class="inscriptionList">
 					<li v-for="row in stageRows" :key="row.id">
 						<p class="inscriptionText">
-							Nach <span class="termAccent">{{ row.termLabel }}</span>:
+							{{ t( "gdPlate.plate.after" ) }} <span class="termAccent">{{ row.termLabel }}</span>:
 							{{ row.description }}
 						</p>
 						<p v-if="row.cumulativeAge !== null" class="inscriptionAge">
-							+{{ formatYears( row.increment ) }} Jahre · Alter:
-							{{ formatYears( row.cumulativeAge ) }} Jahre
+							+{{ formatYears( row.increment ) }} {{ t( "gdPlate.plate.years" ) }} · {{ t( "gdPlate.plate.age" ) }}:
+							{{ formatYears( row.cumulativeAge ) }} {{ t( "gdPlate.plate.years" ) }}
 						</p>
 						<p v-else class="inscriptionAge inscriptionAgeMuted">
-							Alter erscheint, sobald die Gleichung lösbar ist.
+							{{ t( "gdPlate.plate.pending" ) }}
 						</p>
 					</li>
 				</ol>
 				<p v-else class="plateHint">
-					Füge links Terme hinzu, dann graviert sich die Inschrift hier automatisch.
+					{{ t( "gdPlate.plate.hint" ) }}
 				</p>
 
 				<footer v-if="totalLifetime !== null" class="plateFooter">
-					Gesamtes Alter:
-					<strong>{{ formatYears( totalLifetime ) }} Jahre</strong>
+					{{ t( "gdPlate.plate.total" ) }}:
+					<strong>{{ formatYears( totalLifetime ) }} {{ t( "gdPlate.plate.years" ) }}</strong>
 				</footer>
 			</section>
 		</v-col>
@@ -100,12 +100,12 @@
 	<v-dialog v-if="hasMounted" v-model="editorOpen" max-width="560">
 		<v-card>
 			<v-card-title>
-				{{ editingIndex >= 0 ? "Term bearbeiten" : "Neuen Term erstellen" }}
+				{{ editingIndex >= 0 ? t( "gdPlate.dialog.edit" ) : t( "gdPlate.dialog.new" ) }}
 			</v-card-title>
 			<v-card-text>
 				<v-radio-group v-model="draft.kind" inline>
-					<v-radio label="Bruch von x" value="fraction" />
-					<v-radio label="Konstante Jahre" value="constant" />
+					<v-radio :label="t( 'gdPlate.dialog.fraction' )" value="fraction" />
+					<v-radio :label="t( 'gdPlate.dialog.constant' )" value="constant" />
 				</v-radio-group>
 
 				<v-select
@@ -116,14 +116,14 @@
 					item-title="label"
 					item-value="id"
 					:items="FRACTION_OPTIONS"
-					label="Einfachen Bruch wählen"
+					:label="t( 'gdPlate.dialog.pickFraction' )"
 				/>
 
 				<v-text-field
 					v-else
 					v-model="draft.constantYears"
 					class="mb-3"
-					label="Jahre"
+					:label="t( 'gdPlate.dialog.years' )"
 					min="0.1"
 					step="0.5"
 					type="number"
@@ -131,8 +131,8 @@
 
 				<v-text-field
 					v-model="draft.description"
-					label="Lebensabschnitt (Freitext)"
-					placeholder="z. B. bis zur Hochzeit"
+					:label="t( 'gdPlate.dialog.description' )"
+					:placeholder="t( 'gdPlate.dialog.placeholder' )"
 				/>
 
 				<v-alert v-if="draftError"
@@ -145,9 +145,9 @@
 			</v-card-text>
 			<v-card-actions>
 				<v-spacer />
-				<v-btn variant="text" @click="closeEditor">Abbrechen</v-btn>
+				<v-btn variant="text" @click="closeEditor">{{ t( "gdPlate.dialog.cancel" ) }}</v-btn>
 				<v-btn color="primary" variant="flat" @click="saveDraft">
-					{{ editingIndex >= 0 ? "Speichern" : "Hinzufügen" }}
+					{{ editingIndex >= 0 ? t( "gdPlate.dialog.save" ) : t( "gdPlate.dialog.add" ) }}
 				</v-btn>
 			</v-card-actions>
 		</v-card>
@@ -162,84 +162,89 @@ import {
 	reactive,
 	ref
 } from "vue";
+import { useI18n } from "@/i18n.mjs";
 
-const FRACTION_OPTIONS = [
+const {
+	locale,
+	t
+} = useI18n( "book1/GD" );
+
+const FRACTION_OPTIONS = computed( () => [
 	{
 		id:          "1/12",
-		label:       "1/12 der Lebensdauer",
+		label:       t( "gdPlate.fractions.1_12" ),
 		numerator:   1,
 		denominator: 12
 	},
 	{
 		id:          "1/10",
-		label:       "1/10 der Lebensdauer",
+		label:       t( "gdPlate.fractions.1_10" ),
 		numerator:   1,
 		denominator: 10
 	},
 	{
 		id:          "1/9",
-		label:       "1/9 der Lebensdauer",
+		label:       t( "gdPlate.fractions.1_9" ),
 		numerator:   1,
 		denominator: 9
 	},
 	{
 		id:          "1/8",
-		label:       "1/8 der Lebensdauer",
+		label:       t( "gdPlate.fractions.1_8" ),
 		numerator:   1,
 		denominator: 8
 	},
 	{
 		id:          "1/7",
-		label:       "1/7 der Lebensdauer",
+		label:       t( "gdPlate.fractions.1_7" ),
 		numerator:   1,
 		denominator: 7
 	},
 	{
 		id:          "1/6",
-		label:       "1/6 der Lebensdauer",
+		label:       t( "gdPlate.fractions.1_6" ),
 		numerator:   1,
 		denominator: 6
 	},
 	{
 		id:          "1/5",
-		label:       "1/5 der Lebensdauer",
+		label:       t( "gdPlate.fractions.1_5" ),
 		numerator:   1,
 		denominator: 5
 	},
 	{
 		id:          "1/4",
-		label:       "1/4 der Lebensdauer",
+		label:       t( "gdPlate.fractions.1_4" ),
 		numerator:   1,
 		denominator: 4
 	},
 	{
 		id:          "1/3",
-		label:       "1/3 der Lebensdauer",
+		label:       t( "gdPlate.fractions.1_3" ),
 		numerator:   1,
 		denominator: 3
 	},
 	{
 		id:          "2/3",
-		label:       "2/3 der Lebensdauer",
+		label:       t( "gdPlate.fractions.2_3" ),
 		numerator:   2,
 		denominator: 3
 	},
 	{
 		id:          "3/4",
-		label:       "3/4 der Lebensdauer",
+		label:       t( "gdPlate.fractions.3_4" ),
 		numerator:   3,
 		denominator: 4
 	},
 	{
 		id:          "1/2",
-		label:       "1/2 der Lebensdauer",
+		label:       t( "gdPlate.fractions.1_2" ),
 		numerator:   1,
 		denominator: 2
 	}
-];
+] );
 
 const EPS = 1e-9;
-const yearFormatter = new Intl.NumberFormat( "de-DE", { maximumFractionDigits: 2 } );
 
 const terms = ref( [] );
 const editorOpen = ref( false );
@@ -250,7 +255,7 @@ let nextId = 1;
 
 const draft = reactive( {
 	kind:          "fraction",
-	fractionId:    FRACTION_OPTIONS[ 0 ].id,
+	fractionId:    "1/12",
 	constantYears: "5",
 	description:   ""
 } );
@@ -260,7 +265,7 @@ onMounted( () => {
 } );
 
 function fractionById( fractionId ) {
-	return FRACTION_OPTIONS.find( ( option ) => option.id === fractionId ) ?? null;
+	return FRACTION_OPTIONS.value.find( ( option ) => option.id === fractionId ) ?? null;
 }
 
 function fractionValue( fractionId ) {
@@ -303,7 +308,7 @@ function formatYears( value ) {
 		Math.round( value ) :
 		Number( value.toFixed( 2 ) );
 
-	return yearFormatter.format( normalized );
+	return new Intl.NumberFormat( locale.value, { maximumFractionDigits: 2 } ).format( normalized );
 }
 
 function describeTerm( term ) {
@@ -311,13 +316,13 @@ function describeTerm( term ) {
 		const fraction = fractionById( term.fractionId );
 
 		if ( !fraction ) {
-			return "Ungültiger Bruch";
+			return t( "gdPlate.invalidFraction" );
 		}
 
-		return `${fraction.numerator}/${fraction.denominator} von x`;
+		return t( "gdPlate.describeFraction", { numerator: fraction.numerator, denominator: fraction.denominator } );
 	}
 
-	return `${formatYears( term.constantYears )} Jahre`;
+	return t( "gdPlate.describeConstant", { years: formatYears( term.constantYears ) } );
 }
 
 function termEquationTex( term ) {
@@ -339,18 +344,18 @@ function stageLabel( term ) {
 		const fraction = fractionById( term.fractionId );
 
 		if ( !fraction ) {
-			return "einem unbekannten Bruch";
+			return t( "gdPlate.unknownFraction" );
 		}
 
-		return `${fraction.numerator}/${fraction.denominator} seiner Lebenszeit`;
+		return t( "gdPlate.stageFraction", { numerator: fraction.numerator, denominator: fraction.denominator } );
 	}
 
-	return `${formatYears( term.constantYears )} Jahren`;
+	return t( "gdPlate.stageConstant", { years: formatYears( term.constantYears ) } );
 }
 
 function resetDraft() {
 	draft.kind = "fraction";
-	draft.fractionId = FRACTION_OPTIONS[ 0 ].id;
+	draft.fractionId = FRACTION_OPTIONS.value[ 0 ]?.id ?? "1/12";
 	draft.constantYears = "5";
 	draft.description = "";
 	draftError.value = "";
@@ -373,7 +378,7 @@ function openEditTerm( index ) {
 	draft.kind = term.kind;
 	draft.fractionId = term.kind === "fraction" ?
 		term.fractionId :
-		FRACTION_OPTIONS[ 0 ].id;
+		FRACTION_OPTIONS.value[ 0 ]?.id ?? "1/12";
 	draft.constantYears = term.kind === "constant" ?
 		String( term.constantYears ) :
 		"5";
@@ -391,7 +396,7 @@ function buildTermFromDraft() {
 	const description = draft.description.trim();
 
 	if ( !description ) {
-		draftError.value = "Bitte gib einen Lebensabschnitt als Freitext ein.";
+		draftError.value = t( "gdPlate.errors.description" );
 		return null;
 	}
 
@@ -399,7 +404,7 @@ function buildTermFromDraft() {
 		const fraction = fractionById( draft.fractionId );
 
 		if ( !fraction ) {
-			draftError.value = "Bitte wähle einen gültigen Bruch aus.";
+			draftError.value = t( "gdPlate.errors.fraction" );
 			return null;
 		}
 
@@ -414,7 +419,7 @@ function buildTermFromDraft() {
 	const constantYears = normalizeYears( draft.constantYears );
 
 	if ( constantYears === null || constantYears <= 0 ) {
-		draftError.value = "Konstante Jahre müssen eine positive Zahl sein.";
+		draftError.value = t( "gdPlate.errors.years" );
 		return null;
 	}
 
@@ -542,34 +547,34 @@ const status = computed( () => {
 	if ( terms.value.length === 0 ) {
 		return {
 			type:    "info",
-			message: "Lege deine Termliste an. Sobald sie lösbar ist, wird das Alter automatisch berechnet."
+			message: t( "gdPlate.status.empty" )
 		};
 	}
 
 	if ( fractionSum.value >= 1 - EPS ) {
 		return {
 			type:    "warning",
-			message: "Die Bruchanteile sind zusammen mindestens 1. So kann kein positives Gesamtalter berechnet werden."
+			message: t( "gdPlate.status.tooLarge" )
 		};
 	}
 
 	if ( constantSum.value <= EPS ) {
 		return {
 			type:    "warning",
-			message: "Füge mindestens einen konstanten Term (z. B. 5 Jahre) hinzu, damit x bestimmbar ist."
+			message: t( "gdPlate.status.needConstant" )
 		};
 	}
 
 	if ( totalLifetime.value === null ) {
 		return {
 			type:    "warning",
-			message: "Die aktuelle Termliste ist noch nicht sauber lösbar."
+			message: t( "gdPlate.status.unsolved" )
 		};
 	}
 
 	return {
 		type:    "success",
-		message: `Aus den Termen folgt ein Gesamtalter von ${formatYears( totalLifetime.value )} Jahren.`
+		message: t( "gdPlate.status.solved", { years: formatYears( totalLifetime.value ) } )
 	};
 } );
 </script>

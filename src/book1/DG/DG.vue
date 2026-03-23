@@ -1,59 +1,36 @@
 <template>
-<AppFrame  :sub-chapter="{
-		'einleitung': 'Einleitung',
-		'einfuhrungsbeispiel': 'Einführungsbeispiel',
-		'erklarung': 'Erklärung',
-		'rechner': 'Rechner'
-	}"
-	title="Eddie rechnet: Lineare diophantische Gleichung"
+<AppFrame
+	:languages="[ 'de', 'en' ]"
+	:sub-chapter
+	:title="t( 'dg.title' )"
 	:vue-date="__VITE_SFC_MTIME_MS__"
 >
 
 	<template #bookPart>
 		<figure class="exampleFigure">
-			<ImageZoomer title="Eddie auf dem Marktplatz in Tampere">
+			<ImageZoomer :title="t( 'dg.imageTitle' )">
 				<img loading="lazy" :src="titleImg" />
 			</ImageZoomer>
 		</figure>
-		<h3 id="einleitung">Joutsenlampi, 5. Juli 1985</h3>
+		<h3 id="einleitung">{{ t( "dg.introDate" ) }}</h3>
 		<div class="eddie">
-			<p>Der Volvo-Bus ruckelt über finnische Schlaglöcher, und ich sitze hinten wie auf glühenden Kohlen.
-				Fischer kritzelt seelenruhig in meinem Matheblock, ausgerechnet in dem Block, in dem mein ganzes
-				Leben zwischen den Seiten steckt. Ich lächle Edmilla-mäßig, außen harmlos, innen Herzrasen. Vorne
-				lauert Mielke schon in meinen Gedanken: „Edda…“  und ich weiß, jeder falsche Blick ist ein Risiko.</p>
-			<p>Fischer redet von diesen Bauernaufgaben: Geld, Kühe, Schweine. Alle stöhnen. Und dann schnipst
-				er die Seiten. Dicker. Zu dick. Für einen Moment blitzt das Siegel auf, und mir wird eiskalt. </p>
-			<p >Was er gerade an die Seite gekritzelt hat, ist aber genau mein Ding: Wie findet man alle Lösungen,
-				wenn nur ganze Zahlen erlaubt sind? Hier zeige ich, wie man so eine Gleichung knackt, wie man aus
-				einer Lösung viele macht und woran man merkt, ob es überhaupt eine gibt. </p>
+			<p v-html="t( 'dg.book.p1' )" />
+			<p v-html="t( 'dg.book.p2' )" />
+			<p v-html="t( 'dg.book.p3' )" />
 		</div>
 	</template>
 
 	<template #descriptionPart>
-		<h2 id="einfuhrungsbeispiel">Teil 1 — Einfaches Beispiel</h2>
+		<h2 id="einfuhrungsbeispiel">{{ t( "dg.sections.part1.title" ) }}</h2>
 
 		<div class="eddie">
-			<p>
-				Fangen wir mit einen einfachen Beispiel an. Ein Klassiker, wie er mir schon mal bei der Mathe Kreisolympiade begegnet ist:
-			</p>
+			<p>{{ t( "dg.sections.part1.p1" ) }}</p>
+			<p v-html="t( 'dg.sections.part1.p2' )" />
+			<p v-html="t( 'dg.sections.part1.p3' )" />
 
-			<p>
-				Ein Bauer geht mit <b>200 Talern</b> auf den Markt und will sein ganzes Geld für <b>Kühe</b> und
-				<b>Schweine</b> ausgeben. Eine Kuh kostet <b>17</b> Taler, ein Schwein <b>6</b>.
-			</p>
+			<Katex as="div" display tex="17k + 6s = 200,\quad k,s\in\mathbb{N}_0" />
 
-			<p>
-				Setze <b>k</b> = Anzahl Kühe, <b>s</b> = Anzahl Schweine. Dann ist das genau die diophantische
-				Gleichung:
-				<Katex as="div" display tex="17k + 6s = 200,\quad k,s\in\mathbb{N}_0" />
-			</p>
-
-			<p>
-				Weil <Katex tex="\gcd(17,6)=1" /> und <Katex tex="1\mid 200" /> gilt, existieren ganzzahlige
-				Lösungen. Aus <Katex tex="17k\equiv 200\pmod 6" /> folgt <Katex tex="k\equiv 4\pmod 6" />, also
-				<Katex tex="k=4+6t" />. Dann wird
-				<Katex tex="s=\frac{200-17k}{6}=22-17t" />.
-			</p>
+			<p v-html="t( 'dg.sections.part1.p4' )" />
 
 			<div class="exampleClear"></div>
 
@@ -66,9 +43,9 @@
 					<thead>
 						<tr>
 							<th>t</th>
-							<th>Kühe k</th>
-							<th>Schweine s</th>
-							<th>Check</th>
+							<th>{{ t( "dg.sections.part1.cows" ) }}</th>
+							<th>{{ t( "dg.sections.part1.pigs" ) }}</th>
+							<th>{{ t( "dg.sections.part1.check" ) }}</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -88,84 +65,54 @@
 				</v-table>
 			</div>
 
-			<p class="muted">
-				Tipp: Trag unten einfach <code>a=17</code>, <code>b=6</code>, <code>c=200</code> ein, dann siehst
-				du die gleiche Lösung inkl. Schritt-für-Schritt.
-			</p>
+			<p class="muted" v-html="t( 'dg.sections.part1.hint' )" />
 		</div>
 
-		<h2 id="erklarung" class="mt-8">Teil 2 — Eddie erklärt’s</h2>
+		<h2 id="erklarung" class="mt-8">{{ t( "dg.sections.part2.title" ) }}</h2>
 
 		<figure class="exampleFigure">
-			<ImageZoomer :title="`Grafik: ${example.a}k + ${example.b}s = ${example.c}`">
+			<ImageZoomer :title="t( 'dg.sections.part2.graphTitle', { a: example.a, b: example.b, c: example.c } )">
 				<DGGraph
 					:a="example.a"
 					:b="example.b"
 					:c="example.c"
-					x-label="Kühe (k)"
+					:x-label="t( 'dg.sections.part2.xLabel' )"
 					x-var="k"
-					y-label="Schweine (s)"
+					:y-label="t( 'dg.sections.part2.yLabel' )"
 					y-var="s"
 				/>
 			</ImageZoomer>
 		</figure>
 
 		<div class="eddie">
-			<p>
-				Wir reden über <b>lineare diophantische Gleichungen</b>:
-				<Katex tex="ax + by = c" />. Und jetzt kommt der Twist: <b>x und y sollen ganze Zahlen sein</b>.
-				Keine Kommas. Keine Ausreden.
-			</p>
+			<p v-html="t( 'dg.sections.part2.p1' )" />
+			<p v-html="t( 'dg.sections.part2.p2' )" />
+			<p v-html="t( 'dg.sections.part2.p3' )" />
+			<p v-html="t( 'dg.sections.part2.p4' )" />
+			<Katex
+				as="div"
+				display
+				tex="x_0 = u\cdot \frac{c}{g},\quad y_0 = v\cdot \frac{c}{g}"
+			/>
+			<p v-html="t( 'dg.sections.part2.p5' )" />
+			<p v-html="t( 'dg.sections.part2.p6' )" />
+			<Katex
+				as="div"
+				display
+				tex="x = x_0 + \frac{b}{g}\,t,\quad y = y_0 - \frac{a}{g}\,t,\quad t\in\mathbb{Z}"
+			/>
+			<p v-html="t( 'dg.sections.part2.p7' )" />
 
-			<p>
-				Der wichtigste Move ist der <b>ggT</b> (größter gemeinsamer Teiler). Schreib ich kurz als
-				<Katex tex="\gcd(a,b)" />. Denn: Die Gleichung hat genau dann Lösungen in ganzen Zahlen, wenn
-				<Katex tex="\gcd(a,b)\mid c" /> gilt. Also: Der ggT von a und b muss c sauber teilen. Wenn
-				nicht: Game over, keine ganzzahlige Lösung.
-			</p>
-
-			<p>
-				Warum? Weil <Katex tex="\gcd(a,b)" /> alles teilt, was du aus <Katex tex="a" /> und
-				<Katex tex="b" /> per Kombination <Katex tex="ax+by" /> bauen kannst. Wenn <Katex tex="c" />
-				da nicht reinpasst, passt’s halt nicht. Mathematik ist manchmal kalt.
-			</p>
-
-			<p>
-				Wenn’s passt, finden wir sogar eine Lösung. Der Trick heißt <b>erweiterter Euklid</b>: Er
-				liefert Zahlen <Katex tex="u,v" /> mit <Katex tex="au + bv = \gcd(a,b)" />. Und dann skalieren
-				wir das auf <Katex tex="c" />:
-				<Katex
-					as="div"
-					display
-					tex="x_0 = u\cdot \frac{c}{g},\quad y_0 = v\cdot \frac{c}{g}"
-				/>
-				wobei <Katex tex="g=\gcd(a,b)" />.
-			</p>
-
-			<p>
-				Und weil Mathe gern Serien draus macht, kommen alle Lösungen als Familie:
-				<Katex
-					as="div"
-					display
-					tex="x = x_0 + \frac{b}{g}\,t,\quad y = y_0 - \frac{a}{g}\,t,\quad t\in\mathbb{Z}"
-				/>
-				Du darfst also <Katex tex="t" /> frei wählen (aber ganzzahlig!), und bekommst endlos viele
-				Lösungen.
-			</p>
-
-			<EddieComment subtitle="Was heißt „diophantisch“?">
-				<p>
-					Heißt im Kern: „Wir spielen das Ganze im Reich der ganzen Zahlen.“ Benannt nach Diophantos.
-					Ja, die Alten hatten auch schon Spaß daran, sich das Leben schwer zu machen.
-				</p>
+			<EddieComment :subtitle="t( 'dg.sections.part2.commentTitle' )">
+				<p>{{ t( "dg.sections.part2.commentBody" ) }}</p>
 			</EddieComment>
 		</div>
 	</template>
 
 	<template #interactivePart>
-		<h2 id="rechner">Teil 3 — Rechner: <Katex tex="ax + by = c" /></h2>
+		<h2 id="rechner" v-html="t( 'dg.sections.part3.title' )" />
 
-		<v-card class="panel pa-5" >
+		<v-card class="panel pa-5">
 			<v-form autocomplete="off" @submit.prevent="submit">
 				<div class="formGrid">
 					<v-text-field v-model="a" inputmode="numeric" label="a" />
@@ -174,30 +121,26 @@
 				</div>
 
 				<div class="actions">
-					<v-btn color="primary" type="submit" variant="flat">Rechnen</v-btn>
-					<v-btn type="button" variant="outlined" @click="randomize">Zufall</v-btn>
-					<v-btn type="button" variant="text" @click="reset">Reset</v-btn>
+					<v-btn color="primary" type="submit" variant="flat">{{ t( "dg.sections.part3.calc" ) }}</v-btn>
+					<v-btn type="button" variant="outlined" @click="randomize">{{ t( "dg.sections.part3.random" ) }}</v-btn>
+					<v-btn type="button" variant="text" @click="reset">{{ t( "dg.sections.part3.reset" ) }}</v-btn>
 				</div>
 
-				<p class="mini">
-					Ganze Zahlen only. Negative sind okay. Aber <code>a=b=0</code> ist… äh… „Existenzfrage“.
-				</p>
+				<p class="mini" v-html="t( 'dg.sections.part3.mini' )" />
 			</v-form>
 		</v-card>
 
-		<v-card class="panel pa-3 mt-4" >
-			<h3>Grafik zu deinen Eingaben</h3>
-			<ImageZoomer :title="`Grafik: ${String(a)}x + ${String(b)}y = ${String(c)}`">
+		<v-card class="panel pa-3 mt-4">
+			<h3>{{ t( "dg.sections.part3.graphInput" ) }}</h3>
+			<ImageZoomer :title="t( 'dg.sections.part3.graphTitle', { a: String( a ), b: String( b ), c: String( c ) } )">
 				<DGGraph :a :b :c />
 			</ImageZoomer>
-			<p class="mini muted">
-				Zeigt die positiven ganzzahligen Lösungen (nur wenn a und b das gleiche Vorzeichen haben).
-			</p>
+			<p class="mini muted">{{ t( "dg.sections.part3.graphHint" ) }}</p>
 		</v-card>
 	</template>
 
 	<template #calculationPart>
-		<v-card class="panel" >
+		<v-card class="panel">
 			<div class="resultHeader">
 				<v-chip
 					class="pill"
@@ -228,43 +171,48 @@
 			</div>
 
 			<div v-if="steps" class="stepWrap">
-				<h3 id="schritt-fur-schritt">Schritt-für-Schritt (ausklappbar)</h3>
+				<h3 id="schritt-fur-schritt">{{ t( "dg.steps.title" ) }}</h3>
 
 				<v-expansion-panels multiple variant="accordion">
 					<v-expansion-panel :value="0">
-						<v-expansion-panel-title>1) Lösbarkeitscheck</v-expansion-panel-title>
+						<v-expansion-panel-title>{{ t( "dg.steps.s1" ) }}</v-expansion-panel-title>
 						<v-expansion-panel-text eager>
 							<div class="kbox">
 								<Katex
 									as="div"
 									display
-									:tex="`g=\\gcd(${fmt(steps.a)},${fmt(steps.b)})=${fmt(steps.g)}`"
+									:tex="`g=\\gcd(${fmt( steps.a )},${fmt( steps.b )})=${fmt( steps.g )}`"
 								/>
 							</div>
 							<div class="kbox">
-								<Katex as="div" display :tex="`${fmt(steps.g)}\\mid ${fmt(steps.c)}\\Rightarrow\\text{lösbar}`" />
+								<Katex
+									as="div"
+									display
+									:tex="`${fmt( steps.g )}\\mid ${fmt( steps.c )}\\Rightarrow\\text{${t( 'dg.steps.divisible' )}}`"
+								/>
 							</div>
 						</v-expansion-panel-text>
 					</v-expansion-panel>
 
 					<v-expansion-panel>
-						<v-expansion-panel-title>2) Erweiterter Euklid</v-expansion-panel-title>
+						<v-expansion-panel-title>{{ t( "dg.steps.s2" ) }}</v-expansion-panel-title>
 						<v-expansion-panel-text eager>
-							<p class="muted">Wir suchen u,v mit au+bv=g.</p>
+							<p class="muted">{{ t( "dg.steps.uv" ) }}</p>
 							<div class="kbox">
 								<Katex
 									as="div"
 									display
-									:tex="`${fmt(steps.a)}\\cdot ${fmt(steps.uNorm)} + ${fmt(steps.b)}\\cdot ${fmt(steps.vNorm)} = ${fmt(steps.g)}`"
+									:tex="`${fmt( steps.a )}\\cdot ${fmt( steps.uNorm )} + ${
+										fmt( steps.b )}\\cdot ${fmt( steps.vNorm )} = ${fmt( steps.g )}`"
 								/>
 							</div>
 
-							<p class="muted">Rechenspur (Zustand vor jedem Update):</p>
+							<p class="muted">{{ t( "dg.steps.trace" ) }}</p>
 							<div class="tableScroller">
 								<v-table density="compact">
 									<thead>
 										<tr>
-											<th>Schritt</th>
+											<th>{{ t( "dg.steps.step" ) }}</th>
 											<th>q</th>
 											<th>old_r</th>
 											<th>r</th>
@@ -275,7 +223,7 @@
 										</tr>
 									</thead>
 									<tbody>
-										<tr v-for="(st, idx) in steps.euclidSteps.slice(1)" :key="idx">
+										<tr v-for="(st, idx) in steps.euclidSteps.slice( 1 )" :key="idx">
 											<td class="mono">{{ idx + 1 }}</td>
 											<td class="mono">{{ st.q }}</td>
 											<td class="mono">{{ st.old_r }}</td>
@@ -286,7 +234,7 @@
 											<td class="mono">{{ st.t }}</td>
 										</tr>
 										<tr v-if="steps.euclidSteps.length <= 1">
-											<td class="muted" colspan="8">Keine Schritte (komisch, aber möglich).</td>
+											<td class="muted" colspan="8">{{ t( "dg.steps.noSteps" ) }}</td>
 										</tr>
 									</tbody>
 								</v-table>
@@ -295,70 +243,68 @@
 					</v-expansion-panel>
 
 					<v-expansion-panel :value="2">
-						<v-expansion-panel-title>3) Skalieren auf c</v-expansion-panel-title>
+						<v-expansion-panel-title>{{ t( "dg.steps.s3" ) }}</v-expansion-panel-title>
 						<v-expansion-panel-text eager>
-							<p class="muted">Wenn au+bv=g, dann gilt (c/g)(au+bv)=c.</p>
+							<p class="muted">{{ t( "dg.steps.scaleText" ) }}</p>
 							<div class="kbox">
 								<Katex
 									as="div"
 									display
-									:tex="`x_0=u\\cdot\\frac{c}{g}=${
-										fmt(steps.x0Euclid)}\\quad,\\quad y_0=v\\cdot\\frac{c}{g}=${fmt(steps.y0Euclid)}`"
+									:tex="`x_0=u\\cdot\\frac{c}{g}=${fmt( steps.x0Euclid )}\\quad,\\quad y_0=v\\cdot\\frac{c}{g}=${
+										fmt( steps.y0Euclid )}`"
 								/>
 							</div>
 							<div class="kbox">
 								<Katex
 									as="div"
 									display
-									:tex="`${fmt(steps.a)}\\cdot ${
-										fmt(steps.x0Euclid)} + ${fmt(steps.b)}\\cdot ${fmt(steps.y0Euclid)} = ${fmt(steps.c)}`"
+									:tex="`${fmt( steps.a )}\\cdot ${fmt( steps.x0Euclid )} + ${
+										fmt( steps.b )}\\cdot ${fmt( steps.y0Euclid )} = ${fmt( steps.c )}`"
 								/>
 							</div>
 						</v-expansion-panel-text>
 					</v-expansion-panel>
 
 					<v-expansion-panel :value="3">
-						<v-expansion-panel-title>4) Allgemeine Lösung</v-expansion-panel-title>
+						<v-expansion-panel-title>{{ t( "dg.steps.s4" ) }}</v-expansion-panel-title>
 						<v-expansion-panel-text eager>
 							<div class="kbox">
-								<Katex as="div" display :tex="`x=x_0+\\frac{b}{g}t=${fmt(steps.x0)}+${fmt(steps.dx)}t`" />
+								<Katex as="div" display :tex="`x=x_0+\\frac{b}{g}t=${fmt( steps.x0 )}+${fmt( steps.dx )}t`" />
 							</div>
 							<div class="kbox">
-								<Katex as="div" display :tex="`y=y_0-\\frac{a}{g}t=${fmt(steps.y0)}-${fmt(steps.dy)}t`" />
+								<Katex as="div" display :tex="`y=y_0-\\frac{a}{g}t=${fmt( steps.y0 )}-${fmt( steps.dy )}t`" />
 							</div>
 							<p v-if="steps.tShift !== 0" class="muted">
-								Basislösung wurde für die Tabelle normalisiert (t0={{ steps.tShift }}).
+								{{ t( "dg.steps.normalized", { tShift: steps.tShift } ) }}
 							</p>
-							<p class="muted">Mit <Katex tex="t\in\mathbb{Z}" />.</p>
+							<p class="muted" v-html="t( 'dg.steps.withT' )" />
 						</v-expansion-panel-text>
 					</v-expansion-panel>
 				</v-expansion-panels>
 			</div>
 
 			<div v-if="lastSolution" class="tableWrap">
-				<h3 id="losungstabelle">Viele Lösungen als Tabelle</h3>
+				<h3 id="losungstabelle">{{ t( "dg.table.title" ) }}</h3>
 
 				<v-row dense>
 					<v-col cols="12" md="4">
-						<v-text-field v-model="tableControls.tMin" inputmode="numeric" label="t von" />
+						<v-text-field v-model="tableControls.tMin" inputmode="numeric" :label="t( 'dg.table.tFrom' )" />
 					</v-col>
 					<v-col cols="12" md="4">
-						<v-text-field v-model="tableControls.tMax" inputmode="numeric" label="t bis" />
+						<v-text-field v-model="tableControls.tMax" inputmode="numeric" :label="t( 'dg.table.tTo' )" />
 					</v-col>
-					<v-col cols="12" md="4">
-						<!-- <v-btn class="w-100" variant="outlined" @click="updateTable">Tabelle aktualisieren</v-btn> -->
-					</v-col>
+					<v-col cols="12" md="4" />
 				</v-row>
 
 				<v-row dense>
 					<v-col cols="12" md="4">
-						<v-checkbox v-model="tableControls.rangeFilter" label="nur x,y im Bereich" />
+						<v-checkbox v-model="tableControls.rangeFilter" :label="t( 'dg.table.rangeOnly' )" />
 					</v-col>
 					<v-col cols="12" md="4">
-						<v-text-field v-model="tableControls.xAbs" inputmode="numeric" label="|x| ≤" />
+						<v-text-field v-model="tableControls.xAbs" inputmode="numeric" :label="t( 'dg.table.xAbs' )" />
 					</v-col>
 					<v-col cols="12" md="4">
-						<v-text-field v-model="tableControls.yAbs" inputmode="numeric" label="|y| ≤" />
+						<v-text-field v-model="tableControls.yAbs" inputmode="numeric" :label="t( 'dg.table.yAbs' )" />
 					</v-col>
 				</v-row>
 
@@ -368,10 +314,10 @@
 					<v-table density="compact">
 						<thead>
 							<tr>
-								<th>t</th>
-								<th>x</th>
-								<th>y</th>
-								<th>Check <Katex tex="ax+by" /></th>
+								<th>{{ t( "dg.table.t" ) }}</th>
+								<th>{{ t( "dg.table.x" ) }}</th>
+								<th>{{ t( "dg.table.y" ) }}</th>
+								<th>{{ t( "dg.table.check" ) }} <Katex tex="ax+by" /></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -384,7 +330,7 @@
 								</td>
 							</tr>
 							<tr v-if="table.rows.length === 0">
-								<td class="muted" colspan="4">Keine Treffer in diesem Bereich.</td>
+								<td class="muted" colspan="4">{{ t( "dg.table.noHits" ) }}</td>
 							</tr>
 						</tbody>
 					</v-table>
@@ -395,8 +341,7 @@
 
 	<template #footer>
 		<p class="muted">
-			Hinweis: Die Schritt-für-Schritt-Ansicht zeigt die Logik, nicht nur das Ergebnis. Die Tabelle ist
-			praktisch, wenn du „schöne“ Lösungen suchst (z.B. kleine Beträge).
+			{{ t( "dg.footer" ) }}
 		</p>
 	</template>
 </AppFrame>
@@ -406,12 +351,22 @@
 import {
 	computed, reactive, ref, watch
 } from "vue";
+import { useI18n } from "@/i18n.mjs";
 import DGGraph from "./DG_Graph.vue";
 import Katex from "@/components/Katex.vue";
 import {
 	egcdWithSteps, fmt, gcd, parseIntStrict
 } from "./DG_diophantine";
 import titleImg from "./DG.webp";
+
+const { t } = useI18n( "book1/DG" );
+
+const subChapter = computed( () => ( {
+	einleitung:          t( "dg.subChapter.einleitung" ),
+	einfuhrungsbeispiel: t( "dg.subChapter.einfuhrungsbeispiel" ),
+	erklarung:           t( "dg.subChapter.erklarung" ),
+	rechner:             t( "dg.subChapter.rechner" )
+} ) );
 
 const example = {
 	a: 17, b: 6, c: 200
@@ -423,7 +378,7 @@ const c = ref( "200" );
 
 const status = reactive( {
 	kind: "",
-	text: "bereit"
+	text: t( "dg.result.ready" )
 } );
 
 const equationTex = computed( () => {
@@ -440,7 +395,7 @@ const equationTex = computed( () => {
 
 const output = ref( {
 	title:       "",
-	body:        "Gib Werte ein und klick auf Rechnen.",
+	body:        t( "dg.result.prompt" ),
 	bodyIsKatex: false
 } );
 
@@ -471,15 +426,11 @@ function mod( n, m ) {
 	return ( n % m + m ) % m;
 }
 
-// Choose a "nicer" particular solution so that the table shows pleasant values near t=0.
-// Strategy: normalize the coordinate with the smaller step size to its smallest nonnegative residue.
 function normalizeParticularSolution( {
 	x0, y0, dx, dy
 } ) {
 	const stepX = Math.abs( dx );
 	const stepY = Math.abs( dy );
-
-	// Prefer normalizing the variable that changes slower (smaller step).
 	const normalizeX = stepX <= stepY;
 
 	if ( normalizeX ) {
@@ -525,10 +476,10 @@ function reset() {
 	a.value = "17";
 	b.value = "6";
 	c.value = "200";
-	setStatus( "", "bereit" );
+	setStatus( "", t( "dg.result.ready" ) );
 	output.value = {
 		title:       "",
-		body:        "Gib Werte ein und klick auf Rechnen.",
+		body:        t( "dg.result.prompt" ),
 		bodyIsKatex: false
 	};
 	steps.value = null;
@@ -547,19 +498,18 @@ function solveAndRender(
 	table.rows = [];
 	table.clipped = false;
 
-	// Degenerate
 	if ( an === 0 && bn === 0 ) {
 		if ( cn === 0 ) {
-			setStatus( "warn", "unendlich viele" );
+			setStatus( "warn", t( "dg.result.infinite" ) );
 			output.value = {
-				title:       "Hier steht effektiv:",
+				title:       t( "dg.result.effective" ),
 				body:        "0 = 0",
 				bodyIsKatex: true
 			};
 		} else {
-			setStatus( "bad", "keine" );
+			setStatus( "bad", t( "dg.result.none" ) );
 			output.value = {
-				title:       "Hier steht effektiv:",
+				title:       t( "dg.result.effective" ),
 				body:        `0 = ${fmt( cn )}`,
 				bodyIsKatex: true
 			};
@@ -568,23 +518,25 @@ function solveAndRender(
 		return;
 	}
 
-	// One coefficient zero: solve directly
 	if ( an === 0 ) {
 		if ( cn % bn !== 0 ) {
-			setStatus( "bad", "keine" );
+			setStatus( "bad", t( "dg.result.none" ) );
 			output.value = {
-				title: "Weil a=0:",
-				body:  `${fmt( bn )}y = ${
-					fmt( cn )}\\;\\Rightarrow\\;\\text{nicht teilbar} \\Rightarrow \\text{keine L\\\"osung}`,
+				title: t( "dg.result.becauseA0" ),
+				body:  [
+					`${fmt( bn )}y = ${fmt( cn )}`,
+					"\\;\\Rightarrow\\;\\text{nicht teilbar}",
+					"\\Rightarrow \\text{keine L\\\"osung}"
+				].join( "" ),
 				bodyIsKatex: true
 			};
 			return;
 		}
 
 		const y0 = cn / bn;
-		setStatus( "ok", "lösbar" );
+		setStatus( "ok", t( "dg.result.solvable" ) );
 		output.value = {
-			title:       "Weil a=0:",
+			title:       t( "dg.result.becauseA0" ),
 			body:        `y = ${fmt( y0 )}\\quad\\text{und}\\quad x=t\\ \\text{frei}`,
 			bodyIsKatex: true
 		};
@@ -593,20 +545,23 @@ function solveAndRender(
 
 	if ( bn === 0 ) {
 		if ( cn % an !== 0 ) {
-			setStatus( "bad", "keine" );
+			setStatus( "bad", t( "dg.result.none" ) );
 			output.value = {
-				title: "Weil b=0:",
-				body:  `${fmt( an )}x = ${
-					fmt( cn )}\\;\\Rightarrow\\;\\text{nicht teilbar} \\Rightarrow \\text{keine L\\\"osung}`,
+				title: t( "dg.result.becauseB0" ),
+				body:  [
+					`${fmt( an )}x = ${fmt( cn )}`,
+					"\\;\\Rightarrow\\;\\text{nicht teilbar}",
+					"\\Rightarrow \\text{keine L\\\"osung}"
+				].join( "" ),
 				bodyIsKatex: true
 			};
 			return;
 		}
 
 		const x0 = cn / an;
-		setStatus( "ok", "lösbar" );
+		setStatus( "ok", t( "dg.result.solvable" ) );
 		output.value = {
-			title:       "Weil b=0:",
+			title:       t( "dg.result.becauseB0" ),
 			body:        `x = ${fmt( x0 )}\\quad\\text{und}\\quad y=t\\ \\text{frei}`,
 			bodyIsKatex: true
 		};
@@ -616,9 +571,9 @@ function solveAndRender(
 	const g = gcd( an, bn );
 
 	if ( cn % g !== 0 ) {
-		setStatus( "bad", "keine" );
+		setStatus( "bad", t( "dg.result.none" ) );
 		output.value = {
-			title:       "ggT-Check:",
+			title:       t( "dg.result.gcdCheck" ),
 			body:        `g=\\gcd(${fmt( an )},${fmt( bn )})=${fmt( g )},\\quad ${fmt( g )}\\nmid ${fmt( cn )}`,
 			bodyIsKatex: true
 		};
@@ -648,12 +603,14 @@ function solveAndRender(
 	const x0 = normalized.x0;
 	const y0 = normalized.y0;
 
-	setStatus( "ok", "lösbar" );
+	setStatus( "ok", t( "dg.result.solvable" ) );
 	output.value = {
-		title: "Ergebnis",
-		body:  `(x_0,y_0)=(${
-			fmt( x0 )},${fmt( y0 )})\\quad\\text{und}\\quad x=${fmt( x0 )}+${
-			fmt( dx )}t,\\ y=${fmt( y0 )}-${fmt( dy )}t`,
+		title: t( "dg.result.resultTitle" ),
+		body:  [
+			`(x_0,y_0)=(${fmt( x0 )},${fmt( y0 )})`,
+			`\\quad\\text{und}\\quad x=${fmt( x0 )}+${fmt( dx )}t,`,
+			`\\ y=${fmt( y0 )}-${fmt( dy )}t`
+		].join( "" ),
 		bodyIsKatex: true
 	};
 
@@ -687,10 +644,10 @@ function submit() {
 	const cn = parseIntStrict( c.value );
 
 	if ( an === null || bn === null || cn === null ) {
-		setStatus( "warn", "Eingabe?" );
+		setStatus( "warn", t( "dg.result.inputQuestion" ) );
 		output.value = {
 			title:       "",
-			body:        "Ich brauch ganze Zahlen. Also 12 oder -7, nicht 3.14.",
+			body:        t( "dg.result.inputBody" ),
 			bodyIsKatex: false
 		};
 		steps.value = null;
@@ -727,7 +684,7 @@ function updateTable() {
 	const yAbs = parseIntStrict( tableControls.yAbs );
 
 	if ( tMin === null || tMax === null || xAbs === null || yAbs === null ) {
-		table.meta = "Eingaben für Tabelle müssen ganze Zahlen sein.";
+		table.meta = t( "dg.table.invalidInput" );
 		table.rows = [];
 		table.clipped = false;
 		return;
@@ -735,7 +692,6 @@ function updateTable() {
 
 	const lo = Math.min( tMin, tMax );
 	const hi = Math.max( tMin, tMax );
-
 	const rows = [];
 
 	for ( let t = lo; t <= hi; t++ ) {
@@ -757,9 +713,13 @@ function updateTable() {
 	table.clipped = rows.length > maxShow;
 	table.rows = table.clipped ? rows.slice( 0, maxShow ) : rows;
 
-	table.meta = `Bereich t in [${lo}, ${hi}] | Treffer: ${rows.length}${
-		table.clipped ? ` (zeige nur die ersten ${maxShow})` : ""
-	}${tableControls.rangeFilter ? ` | Filter: |x|<=${xAbs}, |y|<=${yAbs}` : ""}`;
+	table.meta = t( "dg.table.meta", {
+		lo,
+		hi,
+		count:   rows.length,
+		clipped: table.clipped ? t( "dg.table.clipped", { maxShow } ) : "",
+		filter:  tableControls.rangeFilter ? t( "dg.table.filter", { xAbs, yAbs } ) : ""
+	} );
 }
 
 watch( () => [

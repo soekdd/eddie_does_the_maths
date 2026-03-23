@@ -1,16 +1,16 @@
 <template>
 <div class="seCodeWrap">
 	<svg
-		:aria-label="`0–31 als Binär- und Graycode`"
+		:aria-label="t( 'graphs.gray.aria' )"
 		class="seCodeSvg"
 		role="img"
 		:viewBox="`0 0 ${W} ${H}`"
 	>
 		<!-- Header -->
 		<g>
-			<text class="hdr mono" :x="pad" :y="pad + headerH - 6">n</text>
-			<text class="hdr mono" :x="xBin" :y="pad + headerH - 6">binär (5 Bit)</text>
-			<text class="hdr mono" :x="xGray" :y="pad + headerH - 6">gray (5 Bit)</text>
+			<text class="hdr mono" :x="pad" :y="pad + headerH - 6">{{ t( "graphs.gray.n" ) }}</text>
+			<text class="hdr mono" :x="xBin" :y="pad + headerH - 6">{{ t( "graphs.gray.binary" ) }}</text>
+			<text class="hdr mono" :x="xGray" :y="pad + headerH - 6">{{ t( "graphs.gray.gray" ) }}</text>
 
 			<line
 				class="sep"
@@ -102,6 +102,9 @@
 
 <script setup>
 import { computed } from "vue";
+import { useI18n } from "@/i18n.mjs";
+
+const { t } = useI18n( "book1/SE" );
 
 /**
  * 0–31 als Binär (5 Bit) und Graycode.

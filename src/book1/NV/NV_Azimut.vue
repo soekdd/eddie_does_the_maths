@@ -1,41 +1,26 @@
 <template>
 <v-card class="pa-4" rounded="xl">
-	<h3 class="text-h6 mb-2">Azimut und Kursabweichung</h3>
-	<p class="text-body-2 mb-4">
-		Du gibst Kartenkurs, Deklination, Distanz und einen Winkel-Fehler ein.
-		Der Rechner zeigt sofort, wie groß die seitliche Abweichung wird.
-	</p>
+	<h3 class="text-h6 mb-2">{{ t( "azimut.title" ) }}</h3>
+	<p class="text-body-2 mb-4">{{ t( "azimut.intro" ) }}</p>
 
 	<v-row dense>
 		<v-col cols="12" md="3">
-			<v-text-field
-				v-model.number="alphaKarte"
-				label="Kartenkurs α_karte (Grad)"
-				type="number"
-			/>
+			<v-text-field v-model.number="alphaKarte" :label="t( 'azimut.labels.alphaKarte' )" type="number" />
 		</v-col>
 		<v-col cols="12" md="3">
-			<v-text-field
-				v-model.number="deklination"
-				label="Deklination D (Grad)"
-				type="number"
-			/>
+			<v-text-field v-model.number="deklination" :label="t( 'azimut.labels.deklination' )" type="number" />
 		</v-col>
 		<v-col cols="12" md="3">
 			<v-text-field
 				v-model.number="distanceKm"
-				label="Distanz d (km)"
+				:label="t( 'azimut.labels.distance' )"
 				min="0.1"
 				step="0.1"
 				type="number"
 			/>
 		</v-col>
 		<v-col cols="12" md="3">
-			<v-text-field
-				v-model.number="deltaAlpha"
-				label="Kursfehler Δα (Grad)"
-				type="number"
-			/>
+			<v-text-field v-model.number="deltaAlpha" :label="t( 'azimut.labels.deltaAlpha' )" type="number" />
 		</v-col>
 	</v-row>
 
@@ -92,16 +77,16 @@
 				r="5"
 			/>
 
-			<text class="label" :x="startPx.x + 6" :y="startPx.y - 8">Start</text>
-			<text class="label" :x="plannedPx.x + 6" :y="plannedPx.y - 8">Plan</text>
-			<text class="label" :x="actualPx.x + 6" :y="actualPx.y - 8">Ist</text>
+			<text class="label" :x="startPx.x + 6" :y="startPx.y - 8">{{ t( "azimut.labels.start" ) }}</text>
+			<text class="label" :x="plannedPx.x + 6" :y="plannedPx.y - 8">{{ t( "azimut.labels.plan" ) }}</text>
+			<text class="label" :x="actualPx.x + 6" :y="actualPx.y - 8">{{ t( "azimut.labels.actual" ) }}</text>
 		</svg>
 	</div>
 
 	<v-row class="mt-3" dense>
 		<v-col cols="12" md="4">
 			<v-sheet class="pa-3 rounded-lg" variant="outlined">
-				<div class="text-caption text-medium-emphasis mb-1">Kurse</div>
+				<div class="text-caption text-medium-emphasis mb-1">{{ t( "azimut.labels.courses" ) }}</div>
 				<div class="mono">α_karte: {{ fmt( alphaKarteNorm ) }}°</div>
 				<div class="mono">α_mag: {{ fmt( alphaMag ) }}°</div>
 				<div class="mono">α_ist: {{ fmt( alphaActual ) }}°</div>
@@ -109,17 +94,17 @@
 		</v-col>
 		<v-col cols="12" md="4">
 			<v-sheet class="pa-3 rounded-lg" variant="outlined">
-				<div class="text-caption text-medium-emphasis mb-1">Abweichung</div>
-				<div class="mono">seitlich e: {{ fmt( lateralErrorKm, 3 ) }} km</div>
-				<div class="mono">Fehlerlinie: {{ fmt( endpointErrorKm, 3 ) }} km</div>
-				<div class="mono">in Metern: {{ fmt( lateralErrorKm * 1000, 0 ) }} m</div>
+				<div class="text-caption text-medium-emphasis mb-1">{{ t( "azimut.labels.deviation" ) }}</div>
+				<div class="mono">{{ t( "azimut.labels.lateral" ) }}: {{ fmt( lateralErrorKm, 3 ) }} km</div>
+				<div class="mono">{{ t( "azimut.labels.errorLine" ) }}: {{ fmt( endpointErrorKm, 3 ) }} km</div>
+				<div class="mono">{{ t( "azimut.labels.meters" ) }}: {{ fmt( lateralErrorKm * 1000, 0 ) }} m</div>
 			</v-sheet>
 		</v-col>
 		<v-col cols="12" md="4">
 			<v-sheet class="pa-3 rounded-lg" variant="outlined">
-				<div class="text-caption text-medium-emphasis mb-1">Merksatz</div>
+				<div class="text-caption text-medium-emphasis mb-1">{{ t( "azimut.labels.memo" ) }}</div>
 				<div class="mono">e ~ d * sin(Delta alpha)</div>
-				<div class="mono">Bei kleinen Winkeln:</div>
+				<div class="mono">{{ t( "azimut.labels.smallAngles" ) }}</div>
 				<div class="mono">e ~ d * Delta alpha(rad)</div>
 			</v-sheet>
 		</v-col>
@@ -129,6 +114,9 @@
 
 <script setup>
 import { computed, ref } from "vue";
+import { useI18n } from "@/i18n.mjs";
+
+const { t } = useI18n( "book1/NV" );
 
 const alphaKarte = ref( 68 );
 const deklination = ref( 6 );
@@ -226,8 +214,7 @@ function mapPoint( p ) {
 	const b = bounds.value;
 	const spanX = Math.max( 1e-6, b.maxX - b.minX );
 	const spanY = Math.max( 1e-6, b.maxY - b.minY );
-	const scale = Math.min( ( CANVAS.w - 2 * CANVAS.pad ) / spanX,
-		( CANVAS.h - 2 * CANVAS.pad ) / spanY );
+	const scale = Math.min( ( CANVAS.w - 2 * CANVAS.pad ) / spanX, ( CANVAS.h - 2 * CANVAS.pad ) / spanY );
 	const drawW = spanX * scale;
 	const drawH = spanY * scale;
 	const offX = ( CANVAS.w - drawW ) / 2;
@@ -249,20 +236,20 @@ const status = computed( () => {
 	if ( lateralErrorKm.value < 0.02 ) {
 		return {
 			type:    "success",
-			message: "Sehr kleine Kursabweichung. Bei dieser Distanz bleibt der Fehler gering."
+			message: t( "azimut.status.success" )
 		};
 	}
 
 	if ( lateralErrorKm.value < 0.1 ) {
 		return {
 			type:    "info",
-			message: "Moderate Abweichung. Mit Zwischenzielen kannst du das gut korrigieren."
+			message: t( "azimut.status.info" )
 		};
 	}
 
 	return {
 		type:    "warning",
-		message: "Deutliche seitliche Abweichung. Kürzere Teilabschnitte und häufiges Nachpeilen empfohlen."
+		message: t( "azimut.status.warning" )
 	};
 } );
 

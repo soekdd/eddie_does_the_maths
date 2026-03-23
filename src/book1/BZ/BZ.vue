@@ -1,55 +1,32 @@
 <!-- eslint-disable vue/max-len -->
 <template>
-<AppFrame  :sub-chapter="{
-		einleitung: 'Einleitung',
-		impuls: 'Impuls vs. k',
-		idee: 'Idee',
-		rechenweg: 'Rechenweg',
-		beispiel: 'Mini-Beispiel',
-		fazit: 'Fazit'
-	}"
-	title="Eddie rechnet: Baustatik #3 Dynamische Lasten"
+<AppFrame
+	:languages="[ 'de', 'en' ]"
+	:sub-chapter
+	:title="t( 'bz.title' )"
 	:vue-date="__VITE_SFC_MTIME_MS__"
 >
 	<template #bookPart>
 		<figure class="exampleFigure">
-			<ImageZoomer title="Eddie vergleicht ruhige und knallige Lasten">
-				<img alt="Eddie erklärt dynamische Lasten" loading="lazy" :src="titleImg" />
+			<ImageZoomer :title="t( 'bz.imageTitle' )">
+				<img :alt="t( 'bz.imageAlt' )" loading="lazy" :src="titleImg" />
 			</ImageZoomer>
 		</figure>
-		<h3 id="einleitung">Stockholm, 28. Oktober 1985</h3>
+		<h3 id="einleitung">{{ t( "bz.introDate" ) }}</h3>
 		<div class="eddie">
-			<p>Der Übersetzer hat weitere Abweichungen zwischen TGL und DIN gefunden und mich gebeten,
-				sie für ihn sauber durchzurechnen. Ich nicke, als wäre das eine normale Bitte. Als würde
-				ich nicht gerade davon leben, dass jemand mir Münzen hinwirft und ich dafür Ordnung in
-				Zahlen bringe. Auf dem Papier sieht alles gleich brav aus: eine Last ist eine Last. Aber
-				sobald etwas <em>in Bewegung</em> gerät, fängt die Welt an, anders zu ticken.</p>
-
-			<p>Ich stelle mir das ganz einfach vor: Ein dicker Mann lässt sich langsam in ein Sofa sinken.
-				Das ist schwer, ja, aber es passiert gemütlich, fast wie ein Seufzen. Und dann ein Kind,
-				das eine Arschbombe macht – nicht aufs Sofa, sondern auf den Fußboden. Viel leichter,
-				viel kleiner … und trotzdem knallt es, als hätte jemand kurz die Schwerkraft aufgedreht.
-				<b>Gleiche Masse</b> heißt eben nicht <b>gleiche Wirkung</b>, wenn Geschwindigkeit und Stopp plötzlich mitreden.</p>
-
-			<p>Genau hier setzen wir an: Die <em>TGL</em> unterscheidet bei solchen dynamischen
-				Lasten genauer und behandelt „langsam einsinken“ anders als „hart aufschlagen“. Die <em>DIN</em>
-				ist an der Stelle grober und setzt beides oft gleich. Unten kannst du den Unterschied im interaktiven
-				Teil selbst entdecken.</p>
-
-			<p>Draußen wartet schon Vidar auf mich. Heute werde ich im Café bezahlen, sage ich mir trotzig,
-				als wäre das die einfachste Rechnung der Welt.</p>
+			<p v-html="t( 'bz.book.p1' )" />
+			<p v-html="t( 'bz.book.p2' )" />
+			<p v-html="t( 'bz.book.p3' )" />
+			<p v-html="t( 'bz.book.p4' )" />
 
 		</div>
 	</template>
 
 	<template #descriptionPart>
 
-		<h2 id="impuls">Teil 1 - Eigentlich müsste man dynamische Lasten über Impuls rechnen</h2>
+		<h2 id="impuls">{{ t( "bz.sections.part1.title" ) }}</h2>
 		<div class="eddie">
-			<p>
-				Bei einem Stoß ist die Last nicht nur „Gewicht“, sondern vor allem ein zeitlicher Kraftverlauf.
-				Streng genommen läuft die Rechnung über den Impuls:
-			</p>
+			<p>{{ t( "bz.sections.part1.p1" ) }}</p>
 			<div class="kbox">
 				<Katex
 					aligned
@@ -58,43 +35,31 @@
 					tex="J &= \int_{t_0}^{t_1}F(t)\,\mathrm{d}t=\Delta p=m(v_1-v_0) \\ \int_{t_0}^{t_1}\big(F_K(t)-m g\big)\,\mathrm{d}t &= m(v_1-v_0) \\ F_{K,\mathrm{mittel}} &= m g+\frac{m(v_1-v_0)}{\Delta t}"
 				/>
 			</div>
-			<p>
-				Damit sieht man sofort: kurze Abbremszeit <Katex tex="\Delta t" /> bedeutet große Kraftspitzen.
-				Wie hoch die Spitze wirklich wird, hängt zusätzlich von Steifigkeit, Dämpfung und Kontaktverlauf ab.
-			</p>
-			<p>
-				Im Entwurfsalltag machen es sich Ingenieure hier gern leicht und ersetzen die vollständige Stoßrechnung
-				durch einen Zuschlagfaktor:
-			</p>
+			<p v-html="t( 'bz.sections.part1.p2' )" />
+			<p>{{ t( "bz.sections.part1.p3" ) }}</p>
 			<div class="kbox">
 				<Katex as="div" display tex="F_d=k\,F_k,\qquad F_k=m g" />
 			</div>
-			<p>
-				Der Faktor <Katex tex="k" /> ist also ein Ersatz für „alles Dynamische“: Geschwindigkeit,
-				Abbremszeit, Schwingungsverhalten und Unsicherheiten.
-			</p>
+			<p v-html="t( 'bz.sections.part1.p4' )" />
 		</div>
 
-		<h2 id="idee" class="mt-8">Teil 2 - Dynamische Lasten - anschaulich gedacht (TGL vs. DIN damals)</h2>
+		<h2 id="idee" class="mt-8">{{ t( "bz.sections.part2.title" ) }}</h2>
 		<div class="eddie">
-			<h3>Idee in einem Bild</h3>
+			<h3>{{ t( "bz.sections.part2.imageIdea" ) }}</h3>
 			<ul>
-				<li><strong>Langsam:</strong> Ein dicker Mann setzt sich aufs Sofa. Schwer, aber eher ruhig.</li>
-				<li><strong>Schnell und hart:</strong> Ein Kind springt vom Sofa auf den Boden. Leichter, aber kurzer Knall.</li>
+				<li v-html="t( 'bz.sections.part2.slow' )" />
+				<li v-html="t( 'bz.sections.part2.fast' )" />
 			</ul>
-			<p>Für die Rechnung nutzen wir ein didaktisches Denkmodell:</p>
+			<p>{{ t( "bz.sections.part2.p1" ) }}</p>
 			<ul>
-				<li>Grundlast: <Katex tex="F_k" /></li>
-				<li>Zuschlag: <Katex tex="k" /></li>
-				<li>Bemessungslast: <Katex tex="F_d" /></li>
+				<li v-html="t( 'bz.sections.part2.baseLoad' )" />
+				<li v-html="t( 'bz.sections.part2.surcharge' )" />
+				<li v-html="t( 'bz.sections.part2.designLoad' )" />
 			</ul>
-			<p class="muted">
-				Wichtig: Das ist bewusst einfach gehalten und keine exakte Normabschrift.
-				Es zeigt nur, was mit „differenziert nach Lastcharakter“ gemeint ist.
-			</p>
+			<p class="muted">{{ t( "bz.sections.part2.note" ) }}</p>
 		</div>
 
-		<h2 id="rechenweg" class="mt-8">Teil 3 - Gemeinsame Eingaben für alle Rechenwege</h2>
+		<h2 id="rechenweg" class="mt-8">{{ t( "bz.sections.part3.title" ) }}</h2>
 		<div class="eddie">
 			<ul>
 				<li><Katex :tex="`m_M=${kFmt( inputs.mMkg, 0 )}\\,\\mathrm{kg}`" /></li>
@@ -104,26 +69,26 @@
 					<Katex :tex="`k_{\\text{ruhig}}=${kFmt( inputs.kRuhig, 1 )},\\quad k_{\\text{knall}}=${kFmt( inputs.kKnall, 1 )},\\quad k_{\\text{DIN}}=${kFmt( inputs.kDIN, 1 )}`" />
 				</li>
 			</ul>
-			<h3 id="beispiel" class="mt-4">Schritt 3.1 - Rechenweg und Zahlenbeispiel</h3>
+			<h3 id="beispiel" class="mt-4">{{ t( "bz.sections.part3.step31" ) }}</h3>
 
 			<v-row class="mb-2" dense>
 				<v-col cols="12" md="4">
 					<v-card class="columnHeader pa-3" variant="outlined">
-						<h4 class="columnTitle">TGL: dicker Mann (setzt sich, ruhig)</h4>
+						<h4 class="columnTitle">{{ t( "bz.sections.part3.col1" ) }}</h4>
 					</v-card>
 				</v-col>
 				<v-col cols="12" md="4">
 					<v-card class="columnHeader pa-3" variant="outlined">
-						<h4 class="columnTitle">TGL: Kind (springt, knallt)</h4>
+						<h4 class="columnTitle">{{ t( "bz.sections.part3.col2" ) }}</h4>
 					</v-card>
 				</v-col>
 				<v-col cols="12" md="4">
 					<v-card class="columnHeader pa-3" variant="outlined">
-						<h4 class="columnTitle">DIN (um 1985): pauschal</h4>
+						<h4 class="columnTitle">{{ t( "bz.sections.part3.col3" ) }}</h4>
 					</v-card>
 				</v-col>
 			</v-row>
-			<p class="stepTitle">1) Grundlast</p>
+			<p class="stepTitle">{{ t( "bz.sections.part3.step1" ) }}</p>
 			<v-row dense>
 				<v-col cols="12" md="4">
 					<v-card class="compareCard pa-4" variant="outlined">
@@ -151,7 +116,7 @@
 					<v-card class="compareCard pa-4" variant="outlined">
 
 						<Katex as="div" display tex="F_k=m\cdot g" />
-						<p class="cellNote">ohne Trennung von „setzt“ und „springt“</p>
+						<p class="cellNote">{{ t( "bz.sections.part3.cell1Note" ) }}</p>
 						<Katex
 							aligned
 							as="div"
@@ -161,28 +126,28 @@
 					</v-card>
 				</v-col>
 			</v-row>
-			<p class="stepTitle">2) Zuschlag</p>
+			<p class="stepTitle">{{ t( "bz.sections.part3.step2" ) }}</p>
 			<v-row dense>
 				<v-col cols="12" md="4">
 					<v-card class="compareCard pa-4" variant="outlined">
 						<Katex as="div" display :tex="`k_{\\text{ruhig}}=${kFmt( inputs.kRuhig, 1 )}`" />
-						<p class="cellNote">kleiner Zuschlag für ruhige Last</p>
+						<p class="cellNote">{{ t( "bz.sections.part3.cell2Left" ) }}</p>
 					</v-card>
 				</v-col>
 				<v-col cols="12" md="4">
 					<v-card class="compareCard pa-4" variant="outlined">
 						<Katex as="div" display :tex="`k_{\\text{knall}}=${kFmt( inputs.kKnall, 1 )}`" />
-						<p class="cellNote">groesserer Zuschlag für knallige Last</p>
+						<p class="cellNote">{{ t( "bz.sections.part3.cell2Mid" ) }}</p>
 					</v-card>
 				</v-col>
 				<v-col cols="12" md="4">
 					<v-card class="compareCard pa-4" variant="outlined">
 						<Katex as="div" display :tex="`k_{\\text{DIN}}=${kFmt( inputs.kDIN, 1 )}`" />
-						<p class="cellNote">gleich, egal wie die Last entsteht</p>
+						<p class="cellNote">{{ t( "bz.sections.part3.cell2Right" ) }}</p>
 					</v-card>
 				</v-col>
 			</v-row>
-			<p class="stepTitle">3) Bemessungslast</p>
+			<p class="stepTitle">{{ t( "bz.sections.part3.step3" ) }}</p>
 			<v-row dense>
 				<v-col cols="12" md="4">
 					<v-card class="compareCard pa-4" variant="outlined">
@@ -215,52 +180,49 @@
 					</v-card>
 				</v-col>
 			</v-row>
-			<p class="stepTitle">4) Merksatz</p>
+			<p class="stepTitle">{{ t( "bz.sections.part3.step4" ) }}</p>
 			<v-row dense>
 				<v-col cols="12" md="4">
 					<v-card class="compareCard pa-4" variant="outlined">
-						<p>Schwer, aber gemütlich.</p>
+						<p>{{ t( "bz.sections.part3.max1" ) }}</p>
 					</v-card>
 				</v-col>
 				<v-col cols="12" md="4">
 					<v-card class="compareCard pa-4" variant="outlined">
-						<p>Leicht, aber kurz brutal.</p>
+						<p>{{ t( "bz.sections.part3.max2" ) }}</p>
 					</v-card>
 				</v-col>
 				<v-col cols="12" md="4">
 					<v-card class="compareCard pa-4" variant="outlined">
-						<p>Ein Zuschlag für alles.</p>
+						<p>{{ t( "bz.sections.part3.max3" ) }}</p>
 					</v-card>
 				</v-col>
 			</v-row>
 
-			<p>Was man daran sieht:</p>
+			<p>{{ t( "bz.sections.part3.summaryLead" ) }}</p>
 			<ul>
-				<li>Bei TGL kann ein leichter Sprung fast so schlimm sein wie ein schweres Hinsetzen.</li>
-				<li>Bei DIN (damals) bleibt der Sprung automatisch klein, weil er denselben Zuschlag bekommt.</li>
+				<li>{{ t( "bz.sections.part3.summary1" ) }}</li>
+				<li>{{ t( "bz.sections.part3.summary2" ) }}</li>
 			</ul>
 		</div>
 
-		<h2 id="fazit" class="mt-8">Teil 4 - Fazit</h2>
+		<h2 id="fazit" class="mt-8">{{ t( "bz.sections.part4.title" ) }}</h2>
 		<div class="eddie">
 			<ul>
-				<li><strong>TGL-Denke:</strong> nicht nur „wie schwer“, sondern auch „wie passiert es?“</li>
-				<li><strong>DIN (damals):</strong> ein Zuschlag für alles, robust und einfach</li>
+				<li v-html="t( 'bz.sections.part4.f1' )" />
+				<li v-html="t( 'bz.sections.part4.f2' )" />
 			</ul>
-			<p>
-				Kurz gesagt: TGL wirkt feiner (<Katex tex="\text{setzt sich}\neq \text{springt}" />),
-				DIN (damals) grober, dafür leichter anzuwenden. Heute unterscheidet auch die DIN nach Lastcharakter.
-			</p>
+			<p v-html="t( 'bz.sections.part4.p1' )" />
 		</div>
 	</template>
 	<template #interactivePart>
-		<h2>Interaktiv</h2>
+		<h2>{{ t( "bz.interactive.title" ) }}</h2>
 		<div class="eddie interactive">
 			<v-card class="pa-3" variant="tonal">
 				<v-row dense>
 					<v-col cols="12" md="6">
 						<div class="sliderHeader">
-							<span><Katex inline tex="m_M" /> Masse Mann</span>
+							<span><Katex inline tex="m_M" /> {{ t( "bz.interactive.massMan" ) }}</span>
 							<v-chip color="primary" size="small" variant="flat">
 								{{ `${uiFmt( inputs.mMkg, 0 )} kg` }}
 							</v-chip>
@@ -279,7 +241,7 @@
 
 					<v-col cols="12" md="6">
 						<div class="sliderHeader">
-							<span><Katex inline tex="m_K" /> Masse Kind</span>
+							<span><Katex inline tex="m_K" /> {{ t( "bz.interactive.massChild" ) }}</span>
 							<v-chip color="primary" size="small" variant="flat">
 								{{ `${uiFmt( inputs.mKkg, 0 )} kg` }}
 							</v-chip>
@@ -298,7 +260,7 @@
 
 					<v-col cols="12" md="6">
 						<div class="sliderHeader">
-							<span><Katex inline tex="k_{\text{ruhig}}" /> Zuschlag ruhig</span>
+							<span><Katex inline tex="k_{\text{ruhig}}" /> {{ t( "bz.interactive.surchargeCalm" ) }}</span>
 							<v-chip color="primary" size="small" variant="flat">
 								{{ uiFmt( inputs.kRuhig, 2 ) }}
 							</v-chip>
@@ -317,7 +279,7 @@
 
 					<v-col cols="12" md="6">
 						<div class="sliderHeader">
-							<span><Katex inline tex="k_{\text{knall}}" /> Zuschlag knallt</span>
+							<span><Katex inline tex="k_{\text{knall}}" /> {{ t( "bz.interactive.surchargeBang" ) }}</span>
 							<v-chip color="primary" size="small" variant="flat">
 								{{ uiFmt( inputs.kKnall, 2 ) }}
 							</v-chip>
@@ -348,8 +310,20 @@
 
 <script setup>
 import { computed, reactive } from "vue";
+import { useI18n } from "@/i18n.mjs";
 import titleImg from "./BZ.webp";
 import BZGraph from "./BZ_Graph.vue";
+
+const { t } = useI18n( "book1/BZ" );
+
+const subChapter = computed( () => ( {
+	einleitung: t( "bz.subChapter.einleitung" ),
+	impuls:     t( "bz.subChapter.impuls" ),
+	idee:       t( "bz.subChapter.idee" ),
+	rechenweg:  t( "bz.subChapter.rechenweg" ),
+	beispiel:   t( "bz.subChapter.beispiel" ),
+	fazit:      t( "bz.subChapter.fazit" )
+} ) );
 
 const inputs = reactive( {
 	mMkg:   120,

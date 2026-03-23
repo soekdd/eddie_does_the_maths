@@ -3,11 +3,11 @@
 	:deck
 	:error
 	:formula-tex
-	formula-title="Formel (Resttest)"
+	:formula-title="t( 'primeTest.formulaTitle' )"
 	:running
-	:subtitle="'Trial Division über Restbildung mit <b>DIV/MUL/SUB</b>.'"
+	:subtitle="t( 'primeTest.subtitle' )"
 	:tab
-	title="Ada-Karten: Primzahltest"
+	:title="t( 'primeTest.title' )"
 	:trace-text
 	@reset="reset"
 	@run="run"
@@ -15,15 +15,20 @@
 >
 	<template #intro>
 		<template v-if="result">
-			<span v-if="result.isPrime">
-				<code>{{ result.n }}</code> ist <b>prim</b>.
-			</span>
-			<span v-else>
-				<code>{{ result.n }}</code> ist <b>nicht prim</b>; kleinster Teiler: <b>{{ result.divisor }}</b>.
-			</span>
+			<span
+				v-if="result.isPrime"
+				v-html="t( 'primeTest.intro.prime', { n: result.n } )"
+			/>
+			<span
+				v-else
+				v-html="t( 'primeTest.intro.composite', {
+					n:       result.n,
+					divisor: result.divisor
+				} )"
+			/>
 		</template>
 		<template v-else>
-			Gib eine ganze Zahl <Katex tex="n\ge 2" /> ein.
+			<span v-html="t( 'primeTest.intro.empty' )" />
 		</template>
 	</template>
 
@@ -32,27 +37,27 @@
 			<v-text-field
 				v-model="nInput"
 				density="comfortable"
-				label="n (ganzzahlig)"
+				:label="t( 'primeTest.inputs.n' )"
 				placeholder="91"
 			/>
 		</v-col>
 	</template>
 
 	<template #warning>
-		Geprüft werden Teiler <Katex tex="d=2,3,\dots,\lfloor\sqrt{n}\rfloor" />.
+		<span v-html="t( 'primeTest.warning' )" />
 	</template>
 
 	<template #formulaNote>
-		Ein Teiler liegt vor, wenn der Rest <Katex tex="r" /> gleich 0 ist.
+		<span v-html="t( 'primeTest.formulaNote' )" />
 	</template>
 
 	<template #result>
 		<v-row v-if="result" dense>
 			<v-col cols="12" md="6">
 				<v-card class="pa-4" rounded="xl" variant="tonal">
-					<div class="text-caption mb-1">Klassifikation</div>
+					<div class="text-caption mb-1">{{ t( "primeTest.result.classification" ) }}</div>
 					<div class="text-h5 font-weight-bold">
-						{{ result.isPrime ? "Prim" : "Komposit" }}
+						{{ result.isPrime ? t( "primeTest.result.prime" ) : t( "primeTest.result.composite" ) }}
 					</div>
 					<div class="text-body-2 mt-2">
 						{{ result.description }}
@@ -62,18 +67,18 @@
 
 			<v-col cols="12" md="6">
 				<v-card class="pa-4" rounded="xl" variant="tonal">
-					<div class="text-caption mb-1">Prüfdetails</div>
-					<div class="text-body-1">Geprüfte Teiler: {{ result.checks }}</div>
-					<div class="text-body-1">Grenze: {{ result.bound }}</div>
-					<div v-if="!result.isPrime" class="text-body-1">Erster Teiler: {{ result.divisor }}</div>
+					<div class="text-caption mb-1">{{ t( "primeTest.result.details" ) }}</div>
+					<div class="text-body-1">{{ t( "primeTest.result.checks", { value: result.checks } ) }}</div>
+					<div class="text-body-1">{{ t( "primeTest.result.bound", { value: result.bound } ) }}</div>
+					<div v-if="!result.isPrime" class="text-body-1">{{ t( "primeTest.result.divisor", { value: result.divisor } ) }}</div>
 				</v-card>
 			</v-col>
 
 			<v-col cols="12">
 				<v-chip class="me-2" color="green" variant="tonal">
-					Checks: {{ result.checks }}
+					{{ t( "primeTest.result.checksChip", { count: result.checks } ) }}
 				</v-chip>
-				<v-chip variant="tonal">Karten: {{ deck?.length ?? 0 }}</v-chip>
+				<v-chip variant="tonal">{{ t( "primeTest.result.cards", { count: deck?.length ?? 0 } ) }}</v-chip>
 			</v-col>
 		</v-row>
 	</template>
@@ -82,7 +87,7 @@
 		<v-row dense>
 			<v-col cols="12" md="4">
 				<v-card class="pa-2" rounded="lg" variant="tonal">
-					<div class="text-subtitle-2 px-2 py-1">Data columns</div>
+					<div class="text-subtitle-2 px-2 py-1">{{ t( "common.dataColumns" ) }}</div>
 					<v-table density="compact">
 						<tbody>
 							<tr><td><code>V1</code></td><td>0</td><td class="mono text-right">{{ storeView(1) }}</td></tr>
@@ -96,7 +101,7 @@
 
 			<v-col cols="12" md="4">
 				<v-card class="pa-2" rounded="lg" variant="tonal">
-					<div class="text-subtitle-2 px-2 py-1">Working columns</div>
+					<div class="text-subtitle-2 px-2 py-1">{{ t( "common.workingColumns" ) }}</div>
 					<v-table density="compact">
 						<tbody>
 							<tr><td><code>V11</code></td><td>d</td><td class="mono text-right">{{ storeView(11) }}</td></tr>
@@ -105,7 +110,11 @@
 								<td class="mono text-right">{{ storeView(13) }}</td></tr>
 							<tr><td><code>V14</code></td><td>q*d</td><td class="mono text-right">{{ storeView(14) }}</td></tr>
 							<tr><td><code>V15</code></td><td>r</td><td class="mono text-right">{{ storeView(15) }}</td></tr>
-							<tr><td><code>V16</code></td><td>Checks</td><td class="mono text-right">{{ storeView(16) }}</td></tr>
+							<tr>
+								<td><code>V16</code></td>
+								<td>{{ t( "primeTest.store.checks" ) }}</td>
+								<td class="mono text-right">{{ storeView(16) }}</td>
+							</tr>
 						</tbody>
 					</v-table>
 				</v-card>
@@ -113,12 +122,19 @@
 
 			<v-col cols="12" md="4">
 				<v-card class="pa-2" rounded="lg" variant="tonal">
-					<div class="text-subtitle-2 px-2 py-1">Result columns</div>
+					<div class="text-subtitle-2 px-2 py-1">{{ t( "common.resultColumns" ) }}</div>
 					<v-table density="compact">
 						<tbody>
-							<tr><td><code>V21</code></td><td>Primflag (1/0)</td>
-								<td class="mono text-right">{{ storeView(21) }}</td></tr>
-							<tr><td><code>V22</code></td><td>Teiler</td><td class="mono text-right">{{ storeView(22) }}</td></tr>
+							<tr>
+								<td><code>V21</code></td>
+								<td>{{ t( "primeTest.store.primeFlag" ) }}</td>
+								<td class="mono text-right">{{ storeView(21) }}</td>
+							</tr>
+							<tr>
+								<td><code>V22</code></td>
+								<td>{{ t( "primeTest.store.divisor" ) }}</td>
+								<td class="mono text-right">{{ storeView(22) }}</td>
+							</tr>
 						</tbody>
 					</v-table>
 				</v-card>
@@ -130,16 +146,19 @@
 			type="info"
 			variant="tonal"
 		>
-			Rest wird wie bei Euklid berechnet: <code>r = n - floor(n/d)*d</code>.
+			<span v-html="t( 'primeTest.store.info' )" />
 		</v-alert>
 	</template>
 </ALCalculation>
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { computed, ref } from "vue";
+import { useI18n } from "@/i18n.mjs";
 
 import ALCalculation from "./AL_Calculation.vue";
+
+const { t } = useI18n( "book1/AL" );
 
 class IntVM {
 	constructor( { storeSize = 96, trace = false } = {} ) {
@@ -167,7 +186,7 @@ class IntVM {
 				return BigInt( x.I );
 			}
 
-			throw new Error( "Bad operand: " + JSON.stringify( x ) );
+			throw new Error( t( "common.errors.badOperand", { value: JSON.stringify( x ) } ) );
 		};
 
 		const a = read( card.a );
@@ -181,13 +200,13 @@ class IntVM {
 			case "MUL": r = a * b; break;
 			case "DIV":
 				if ( b === 0n ) {
-					throw new Error( "Division durch 0 im Kartenprogramm." );
+					throw new Error( t( "common.errors.divisionByZeroCard" ) );
 				}
 
 				r = a / b;
 				break;
 			default:
-				throw new Error( "Unknown op: " + card.op );
+				throw new Error( t( "common.errors.unknownOp", { value: card.op } ) );
 		}
 
 		this.setV( card.dest, r );
@@ -207,17 +226,17 @@ class IntVM {
 }
 
 function parseBigIntInput( v, label ) {
-	const t = String( v ?? "" ).trim();
+	const text = String( v ?? "" ).trim();
 
-	if ( !t ) {
-		throw new Error( `${label}: leer.` );
+	if ( !text ) {
+		throw new Error( t( "common.errors.empty", { label } ) );
 	}
 
-	if ( !/^[-+]?\d+$/.test( t ) ) {
-		throw new Error( `${label}: Bitte ganze Zahl eingeben.` );
+	if ( !/^[-+]?\d+$/.test( text ) ) {
+		throw new Error( t( "common.errors.integer", { label } ) );
 	}
 
-	return BigInt( t );
+	return BigInt( text );
 }
 
 function buildPrimeDeck( n ) {
@@ -225,35 +244,80 @@ function buildPrimeDeck( n ) {
 	let line = 1;
 
 	deck.push( {
-		line: line++, op: "ADD", a: { V: 5 }, b: { V: 1 }, dest: 11, label: "d:=2"
+		line:  line++,
+		op:    "ADD",
+		a:     { V: 5 },
+		b:     { V: 1 },
+		dest:  11,
+		label: t( "primeTest.deck.initD" )
 	} );
 	deck.push( {
-		line: line++, op: "ADD", a: { V: 2 }, b: { V: 1 }, dest: 21, label: "isPrime:=1"
+		line:  line++,
+		op:    "ADD",
+		a:     { V: 2 },
+		b:     { V: 1 },
+		dest:  21,
+		label: t( "primeTest.deck.initPrime" )
 	} );
 	deck.push( {
-		line: line++, op: "ADD", a: { V: 1 }, b: { V: 1 }, dest: 22, label: "divisor:=0"
+		line:  line++,
+		op:    "ADD",
+		a:     { V: 1 },
+		b:     { V: 1 },
+		dest:  22,
+		label: t( "primeTest.deck.initDivisor" )
 	} );
 	deck.push( {
-		line: line++, op: "ADD", a: { V: 1 }, b: { V: 1 }, dest: 16, label: "checks:=0"
+		line:  line++,
+		op:    "ADD",
+		a:     { V: 1 },
+		b:     { V: 1 },
+		dest:  16,
+		label: t( "primeTest.deck.initChecks" )
 	} );
 
 	let d = 2n;
 
 	while ( d * d <= n ) {
 		deck.push( {
-			line: line++, op: "MUL", a: { V: 11 }, b: { V: 11 }, dest: 12, label: `[d=${d}] d2`
+			line:  line++,
+			op:    "MUL",
+			a:     { V: 11 },
+			b:     { V: 11 },
+			dest:  12,
+			label: t( "primeTest.deck.square", { value: d } )
 		} );
 		deck.push( {
-			line: line++, op: "DIV", a: { V: 3 }, b: { V: 11 }, dest: 13, label: `[d=${d}] q:=n/d`
+			line:  line++,
+			op:    "DIV",
+			a:     { V: 3 },
+			b:     { V: 11 },
+			dest:  13,
+			label: t( "primeTest.deck.quotient", { value: d } )
 		} );
 		deck.push( {
-			line: line++, op: "MUL", a: { V: 13 }, b: { V: 11 }, dest: 14, label: `[d=${d}] t:=q*d`
+			line:  line++,
+			op:    "MUL",
+			a:     { V: 13 },
+			b:     { V: 11 },
+			dest:  14,
+			label: t( "primeTest.deck.product", { value: d } )
 		} );
 		deck.push( {
-			line: line++, op: "SUB", a: { V: 3 }, b: { V: 14 }, dest: 15, label: `[d=${d}] r:=n-t`
+			line:  line++,
+			op:    "SUB",
+			a:     { V: 3 },
+			b:     { V: 14 },
+			dest:  15,
+			label: t( "primeTest.deck.remainder", { value: d } )
 		} );
 		deck.push( {
-			line: line++, op: "ADD", a: { V: 16 }, b: { V: 2 }, dest: 16, label: `[d=${d}] checks++`
+			line:  line++,
+			op:    "ADD",
+			a:     { V: 16 },
+			b:     { V: 2 },
+			dest:  16,
+			label: t( "primeTest.deck.checks", { value: d } )
 		} );
 
 		const q = n / d;
@@ -262,16 +326,31 @@ function buildPrimeDeck( n ) {
 
 		if ( r === 0n ) {
 			deck.push( {
-				line: line++, op: "ADD", a: { V: 11 }, b: { V: 1 }, dest: 22, label: `[d=${d}] divisor:=d`
+				line:  line++,
+				op:    "ADD",
+				a:     { V: 11 },
+				b:     { V: 1 },
+				dest:  22,
+				label: t( "primeTest.deck.divisor", { value: d } )
 			} );
 			deck.push( {
-				line: line++, op: "ADD", a: { V: 1 }, b: { V: 1 }, dest: 21, label: `[d=${d}] isPrime:=0`
+				line:  line++,
+				op:    "ADD",
+				a:     { V: 1 },
+				b:     { V: 1 },
+				dest:  21,
+				label: t( "primeTest.deck.composite", { value: d } )
 			} );
 			break;
 		}
 
 		deck.push( {
-			line: line++, op: "ADD", a: { V: 11 }, b: { V: 2 }, dest: 11, label: `[d=${d}] d++`
+			line:  line++,
+			op:    "ADD",
+			a:     { V: 11 },
+			b:     { V: 2 },
+			dest:  11,
+			label: t( "primeTest.deck.increment", { value: d } )
 		} );
 		d += 1n;
 	}
@@ -292,10 +371,10 @@ const traceText = ref( "" );
 const store = ref( null );
 const tab = ref( "deck" );
 
-const formulaTex = String.raw`
+const formulaTex = computed( () => String.raw`
 q:=\left\lfloor\frac{n}{d}\right\rfloor,\quad r:=n-q\cdot d\\
-r=0\Rightarrow d\mid n\Rightarrow n\text{ ist nicht prim}
-`;
+r=0\Rightarrow d\mid n\Rightarrow n\text{ ${t( "primeTest.result.composite" )}}
+` );
 
 function storeView( i ) {
 	if ( !store.value ) {
@@ -308,7 +387,7 @@ function storeView( i ) {
 
 function intSqrtFloor( n ) {
 	if ( n < 0n ) {
-		throw new Error( "sqrt nur für n>=0" );
+		throw new Error( t( "common.errors.sqrtNonNegative" ) );
 	}
 
 	if ( n < 2n ) {
@@ -346,7 +425,7 @@ async function run() {
 		const n = parseBigIntInput( nInput.value, "n" );
 
 		if ( n < 2n ) {
-			throw new Error( "n muss mindestens 2 sein." );
+			throw new Error( t( "primeTest.errors.minN" ) );
 		}
 
 		const vm = new IntVM( { storeSize: 96, trace: true } );
@@ -371,8 +450,11 @@ async function run() {
 			checks:      checks.toString(),
 			bound:       bound.toString(),
 			description: isPrime ?
-				`Kein Teiler zwischen 2 und ${bound.toString()} gefunden.` :
-				`${divisor.toString()} teilt ${n.toString()} ohne Rest.`
+				t( "primeTest.result.primeDescription", { bound: bound.toString() } ) :
+				t( "primeTest.result.compositeDescription", {
+					divisor: divisor.toString(),
+					n:       n.toString()
+				} )
 		};
 
 		traceText.value = vm.logs.join( "\n" );

@@ -2,9 +2,9 @@
 <v-card>
 	<div class="topbar">
 		<div class="left">
-			<strong>Laplace Twin Editor</strong>
+			<strong>{{ t( "ttitle" ) }}</strong>
 			<span class="pill" :class="{ ok: giacReady, bad: !giacReady }">
-				{{ giacReady ? "Giac bereit" : "Giac lädt / nicht bereit" }}
+				{{ giacReady ? t( "giacReady" ) : t( "giacLoading" ) }}
 			</span>
 		</div>
 
@@ -13,7 +13,7 @@
 
 			<label class="ctrl toggle">
 				<input v-model="autoSync" type="checkbox" />
-				Auto-Sync
+				{{ t( "autoSync" ) }}
 			</label>
 		</div>
 	</div>
@@ -21,7 +21,7 @@
 	<div class="grid">
 		<v-sheet class="pane" rounded="0">
 			<header class="paneHead">
-				<h2>Zeitfunktion f(<input v-model="tVar" class="mini" />)</h2>
+				<h2>{{ t( "timeFunction" ) }} f(<input v-model="tVar" class="mini" />)</h2>
 				<div class="paneFormula">
 					<Katex :tex="ftHeaderTex" />
 				</div>
@@ -36,7 +36,7 @@
 					item-title="title"
 					item-value="value"
 					:items="ftExampleItems"
-					label="Beispiel auswählen"
+					:label="t( 'pickExample' )"
 					variant="outlined"
 					@update:model-value="applyFtExample"
 				/>
@@ -46,7 +46,7 @@
 					variant="text"
 					@click="ft = ''"
 				>
-					Leeren
+					{{ t( "clear" ) }}
 				</v-btn>
 			</div>
 			<v-textarea
@@ -61,7 +61,7 @@
 				@keydown.ctrl.enter.prevent="toLaplace()"
 				@update:model-value="onEdit('t')"
 			/>
-			<div class="hint px-2">Giac-Syntax, z. B. <code>sin(t)</code> oder <code>t^2*exp(3*t)</code></div>
+			<div class="hint px-2">{{ t( "timeHint" ) }} <code>sin(t)</code> {{ t( "or" ) }} <code>t^2*exp(3*t)</code></div>
 		</v-sheet>
 		<v-sheet class="pane actionPane" rounded="0">
 			<v-btn
@@ -88,7 +88,7 @@
 
 		<v-sheet class="pane" rounded="0">
 			<header class="paneHead">
-				<h2>Laplace-Bild F(<input v-model="sVar" class="mini" />)</h2>
+				<h2>{{ t( "laplaceImage" ) }} F(<input v-model="sVar" class="mini" />)</h2>
 				<div class="paneFormula">
 					<Katex :tex="FsHeaderTex" />
 				</div>
@@ -103,7 +103,7 @@
 					item-title="title"
 					item-value="value"
 					:items="FsExampleItems"
-					label="Beispiel auswählen"
+					:label="t( 'pickExample' )"
 					variant="outlined"
 					@update:model-value="applyFsExample"
 				/>
@@ -113,7 +113,7 @@
 					variant="text"
 					@click="Fs = ''"
 				>
-					Leeren
+					{{ t( "clear" ) }}
 				</v-btn>
 			</div>
 			<v-textarea
@@ -128,12 +128,12 @@
 				@keydown.ctrl.enter.prevent="toTime()"
 				@update:model-value="onEdit('s')"
 			/>
-			<div class="hint px-2">Giac-Syntax, z. B. <code>1/(s^2+1)</code></div>
+			<div class="hint px-2">{{ t( "laplaceHint" ) }} <code>1/(s^2+1)</code></div>
 		</v-sheet>
 	</div>
 
 	<div class="status">
-		<div v-if="busy">Rechne…</div>
+		<div v-if="busy">{{ t( "status.busy" ) }}</div>
 		<div v-else-if="error" class="err">{{ error }}</div>
 		<div v-else class="oktxt">{{ lastInfo }}</div>
 	</div>
@@ -144,6 +144,7 @@
 import {
 	computed, onMounted, ref
 } from "vue";
+import { useI18n } from "@/i18n.mjs";
 import giacFactoryAssetUrl from "../../utils/giac/giacggb.js?url";
 import giacWasmAssetUrl from "../../utils/giac/giacggb.wasm?url";
 
@@ -165,10 +166,12 @@ declare global {
   }
 }
 
+const { t } = useI18n( "book1/LT" );
+
 const giacReady = ref( false );
 const busy = ref( false );
 const error = ref<string | null>( null );
-const lastInfo = ref( "Bereit." );
+const lastInfo = ref( t( "status.ready" ) );
 const ftPreviewTex = ref<string>( "\\;" );
 const FsPreviewTex = ref<string>( "\\;" );
 
@@ -181,7 +184,7 @@ const Fs = ref( "" );
 
 const selectedFtExample = ref<string | null>( null );
 const selectedFsExample = ref<string | null>( null );
-const ftExampleItems = [
+const ftExampleItems = computed( () => [
 	{ title: "1", value: "1" },
 	{ title: "t", value: "{t}" },
 	{ title: "t^2", value: "{t}^2" },
@@ -192,8 +195,8 @@ const ftExampleItems = [
 	{ title: "cosh(t)", value: "cosh({t})" },
 	{ title: "t*exp(-t)", value: "{t}*exp(-{t})" },
 	{ title: "exp(2*t)*sin(3*t)", value: "exp(2*{t})*sin(3*{t})" }
-];
-const FsExampleItems = [
+] );
+const FsExampleItems = computed( () => [
 	{ title: "1/s", value: "1/{s}" },
 	{ title: "1/s^2", value: "1/{s}^2" },
 	{ title: "2/s^3", value: "2/{s}^3" },
@@ -204,14 +207,14 @@ const FsExampleItems = [
 	{ title: "1/(s^2-1)", value: "1/({s}^2-1)" },
 	{ title: "1/(s+1)^2", value: "1/({s}+1)^2" },
 	{ title: "3/((s-2)^2+9)", value: "3/(({s}-2)^2+9)" }
-];
+] );
 
 let casevalFn: ( ( cmd: string ) => string ) | null = null;
 const GIAC_FACTORY_URL = giacFactoryAssetUrl;
 const GIAC_WASM_URL = giacWasmAssetUrl;
 const GIAC_ASSET_BASE_URL = GIAC_WASM_URL.slice( 0, GIAC_WASM_URL.lastIndexOf( "/" ) + 1 );
-const GIAC_CWRAP_MISSING_ERROR = "Giac Module.cwrap() fehlt – falsches Build oder Script nicht korrekt geladen.";
-const GIAC_CASEVAL_MISSING_ERROR = "caseval ist nicht verfügbar.";
+const GIAC_CWRAP_MISSING_ERROR = computed( () => t( "errors.cwrapMissing" ) );
+const GIAC_CASEVAL_MISSING_ERROR = computed( () => t( "errors.casevalMissing" ) );
 const tVarTex = computed( () => tVar.value.trim() || "t" );
 const sVarTex = computed( () => sVar.value.trim() || "s" );
 const laplaceForwardTex = computed( () =>
@@ -343,7 +346,7 @@ async function loadGiac(): Promise<void> {
 						const M = window.Module;
 
 						if ( !M || typeof M.cwrap !== "function" ) {
-							throw new Error( GIAC_CWRAP_MISSING_ERROR );
+							throw new Error( GIAC_CWRAP_MISSING_ERROR.value );
 						}
 
 						window.__giacCasevalFn = M.cwrap(
@@ -359,7 +362,7 @@ async function loadGiac(): Promise<void> {
 			const script = document.createElement( "script" );
 			script.src = GIAC_FACTORY_URL;
 			script.async = true;
-			script.onerror = () => reject( new Error( "Konnte giacwasm.js aus src/utils/giac nicht laden." ) );
+			script.onerror = () => reject( new Error( t( "errors.loadScript" ) ) );
 			document.head.appendChild( script );
 		} )
 			.catch( ( err ) => {
@@ -385,18 +388,18 @@ async function loadGiac(): Promise<void> {
 	}
 
 	if ( !casevalFn ) {
-		throw new Error( GIAC_CASEVAL_MISSING_ERROR );
+		throw new Error( GIAC_CASEVAL_MISSING_ERROR.value );
 	}
 
 	giacReady.value = true;
-	lastInfo.value = "Giac initialisiert.";
+	lastInfo.value = t( "status.giacReady" );
 }
 
 async function giacEval( cmd: string ): Promise<string> {
 	await loadGiac();
 
 	if ( !casevalFn ) {
-		throw new Error( GIAC_CASEVAL_MISSING_ERROR );
+		throw new Error( GIAC_CASEVAL_MISSING_ERROR.value );
 	}
 
 	// giac returns a string; we trim lightly
@@ -414,7 +417,7 @@ async function toLaplace(): Promise<void> {
 		const cmd = `laplace(${expr},${tVar.value},${sVar.value})`;
 		const out = await giacEval( cmd );
 		Fs.value = out;
-		lastInfo.value = "Laplace transformiert.";
+		lastInfo.value = t( "status.forwardDone" );
 		await refreshPreview( "s" );
 	} catch ( e: any ) {
 		error.value = e?.message ?? String( e );
@@ -433,7 +436,7 @@ async function toTime(): Promise<void> {
 		const cmd = `ilaplace(${expr},${sVar.value},${tVar.value})`;
 		const out = await giacEval( cmd );
 		ft.value = out;
-		lastInfo.value = "Inverse Laplace transformiert.";
+		lastInfo.value = t( "status.inverseDone" );
 		await refreshPreview( "t" );
 	} catch ( e: any ) {
 		error.value = e?.message ?? String( e );

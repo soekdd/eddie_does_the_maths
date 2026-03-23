@@ -3,14 +3,28 @@
 	<v-app-bar class="topBar pa-0" flat :height="appBarHeight">
 		<v-container class="wrap pa-0">
 			<div class="brand">
+				<div
+					v-if="showLanguageSwitch"
+					:aria-label="t( 'app.languageAria' )"
+					class="lang-switch"
+					role="group"
+				>
+					<button
+						class="lang-btn"
+						type="button"
+						@click="toggleLanguage"
+					>
+						{{ nextLanguageLabel }}
+					</button>
+				</div>
 				<router-link
 					v-if="showHomeBadge"
-					aria-label="Home"
+					:aria-label="t( 'app.home' )"
 					class="homeBadgeLink badge"
-					title="Home"
-					to="/"
+					:title="t( 'app.home' )"
+					:to="homeLinkTarget"
 				>
-					<img alt="Home" class="homeBadgeIcon" :src="faviconPng" />
+					<img :alt="t( 'app.home' )" class="homeBadgeIcon" :src="faviconPng" />
 				</router-link>
 				<template v-if="showFormalTitle">
 					<div v-if="shortText" class="badge">{{ shortText }}</div>
@@ -37,7 +51,7 @@
 						<p v-if="subChapterEntries.length" class="sub">
 							<template v-for="( chapter ) in subChapterEntries" :key="chapter.id">
 								<router-link
-									:to="{ path: routePathForHashLinks, hash: `#${chapter.id}` }"
+									:to="{ path: routePathForHashLinks, hash: `#${chapter.id}`, query: languageQuery }"
 									@click="handleHashLinkClick( `#${chapter.id}` )"
 								>
 									{{ chapter.label }}
@@ -45,10 +59,10 @@
 								<span> • </span>
 							</template>
 							<router-link
-								:to="{ path: routePathForHashLinks, hash: '#forum' }"
+								:to="{ path: routePathForHashLinks, hash: '#forum', query: languageQuery }"
 								@click="handleHashLinkClick( '#forum' )"
 							>
-								Forum
+								{{ t( "app.forum" ) }}
 							</router-link>
 						</p>
 					</div>
@@ -92,7 +106,7 @@
 				type="success"
 				variant="tonal"
 			>
-				Dieses Kapitel wird aktuell von {{ correctorName }} geprüft.
+				{{ t( "app.reviewInProgress", { name: correctorName } ) }}
 			</v-alert>
 
 			<Page v-if="showBookCard">
@@ -108,7 +122,7 @@
 						variant="text"
 						@click="downloadPDF"
 					>
-						PDF
+						{{ t( "app.pdf" ) }}
 					</v-btn>
 					<MarkdownDownload
 						:file-name="descriptionMarkdownFileName"
@@ -118,7 +132,7 @@
 				<div id="descriptionPartMarkdownSource">
 					<slot name="descriptionPart" />
 				</div>
-				<div class="lastUpdate">letzte Änderung: {{fileDate}}</div>
+				<div class="lastUpdate">{{ t( "app.lastUpdate" ) }}: {{fileDate}}</div>
 			</section>
 
 			<section v-if="showPartsCard" id="interactiv" class="card">
@@ -157,17 +171,17 @@
 			<footer class="foot">
 				<slot name="footer" />
 				<div v-if="showCorrectedCredit" class="correctedCredit">
-					freundlicher Weise geprüft und korrigiert von {{ correctedName }}
+					{{ t( "app.correctedCredit", { name: correctedName } ) }}
 				</div>
 				<div class="legalRow">
-					<a class="legalLink" href="https://github.com/soekdd/eddie_does_the_maths">GitHub</a>
+					<a class="legalLink" href="https://github.com/soekdd/eddie_does_the_maths">{{ t( "app.github" ) }}</a>
 					<span class="legalSep">·</span>
 					<button
 						class="legalLink"
 						type="button"
 						@click="showReportErrorDialog = true"
 					>
-						Fehler melden
+						{{ t( "app.reportError" ) }}
 					</button>
 					<span class="legalSep">·</span>
 					<button
@@ -175,7 +189,7 @@
 						type="button"
 						@click="showImpressumDialog = true"
 					>
-						Impressum
+						{{ t( "app.impressum" ) }}
 					</button>
 					<span class="legalSep">·</span>
 					<button
@@ -183,7 +197,7 @@
 						type="button"
 						@click="showPrivacyDialog = true"
 					>
-						Datenschutzerklärung
+						{{ t( "app.privacyPolicy" ) }}
 					</button>
 					<span v-if="buildDateText" class="legalSep">·</span>
 					<time
@@ -191,7 +205,7 @@
 						class="legalBuild"
 						:datetime="buildDateRaw"
 					>
-						Build: {{ buildDateText }}
+						{{ t( "app.build" ) }}: {{ buildDateText }}
 					</time>
 				</div>
 			</footer>
@@ -206,12 +220,12 @@
 		scrollable
 	>
 		<v-card>
-			<v-card-title class="text-h6">Fehler melden</v-card-title>
+			<v-card-title class="text-h6">{{ t( "app.reportError" ) }}</v-card-title>
 			<v-card-text class="legalContent" v-html="reportErrorHTML" />
 			<v-card-actions>
 				<v-spacer />
 				<v-btn variant="text" @click="showReportErrorDialog = false">
-					Schließen
+					{{ t( "app.close" ) }}
 				</v-btn>
 			</v-card-actions>
 		</v-card>
@@ -225,12 +239,12 @@
 		scrollable
 	>
 		<v-card>
-			<v-card-title class="text-h6">Impressum</v-card-title>
+			<v-card-title class="text-h6">{{ t( "app.impressum" ) }}</v-card-title>
 			<v-card-text class="legalContent" v-html="impressumHtml" />
 			<v-card-actions>
 				<v-spacer />
 				<v-btn variant="text" @click="showImpressumDialog = false">
-					Schließen
+					{{ t( "app.close" ) }}
 				</v-btn>
 			</v-card-actions>
 		</v-card>
@@ -244,12 +258,12 @@
 		scrollable
 	>
 		<v-card>
-			<v-card-title class="text-h6">Datenschutzerklärung</v-card-title>
+			<v-card-title class="text-h6">{{ t( "app.privacyPolicy" ) }}</v-card-title>
 			<v-card-text class="legalContent" v-html="privacyPolicyHtml" />
 			<v-card-actions>
 				<v-spacer />
 				<v-btn variant="text" @click="showPrivacyDialog = false">
-					Schließen
+					{{ t( "app.close" ) }}
 				</v-btn>
 			</v-card-actions>
 		</v-card>
@@ -260,23 +274,31 @@
 import {
 	computed, nextTick, onMounted, ref, useSlots, watch
 } from "vue";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { useDisplay } from "vuetify";
 import {
 	mdiDownload, mdiHexagonSlice2, mdiHexagonSlice4, mdiHexagonSlice6
 } from "@mdi/js";
-import reportErrorHTML from "../utils/disclaimer/report_errors_de.html?raw";
-import impressumHtml from "../utils/disclaimer/impressum_de.html?raw";
-import privacyPolicyHtml from "../utils/disclaimer/privacy_policy_de.html?raw";
+import { i18nApi, useI18n } from "@/i18n.mjs";
 import faviconPng from "../images/favicon.png";
 import ForumThreadPocketBase from "./ForumThreadPocketBase.vue";
 import MarkdownDownload from "./MarkdownDownload.vue";
 import Page from "./Page.vue";
 
+const disclaimerModules = import.meta.glob( "../utils/disclaimer/*_{de,en}.html", {
+	eager:  true,
+	import: "default",
+	query:  "?raw"
+} );
+
 const props = defineProps( {
-	title:      { type: String, default: "" },
-	nomd:       { type: Boolean, default: false },
-	vueDate:    { type: Number || String, default: null },
+	title:     { type: String, default: "" },
+	nomd:      { type: Boolean, default: false },
+	vueDate:   { type: Number || String, default: null },
+	languages: {
+		type:    Array,
+		default: () => []
+	},
 	subChapter: {
 		type:    Object,
 		default: () => ( {} )
@@ -284,19 +306,21 @@ const props = defineProps( {
 } );
 
 const { width } = useDisplay();
+const { t, locale } = useI18n( "components/lang" );
 const slots = useSlots();
 const route = useRoute();
+const router = useRouter();
 const hasMounted = ref( false );
 
 // Vuetify's built-in "mobile" flag defaults to < lg (1280px), which is too wide for our
 // header-wrapping case. Match the app's existing "mobile-ish" breakpoint (see eddie.css).
 const isMobile = computed( () => hasMounted.value ? width.value < 860 : false );
 const appBarHeight = computed( () => isMobile.value ? 108 : 72 );
-const fileDate = computed( () => new Date( props.vueDate ).toLocaleString( "de-DE" ) );
+const uiLocale = computed( () => locale.value === "en" ? "en-US" : "de-DE" );
+const fileDate = computed( () => new Date( props.vueDate ).toLocaleString( uiLocale.value ) );
 const errorMessage = computed( () => {
 	if ( route.meta?.error === true ) {
-		return "Achtung: Dieser Inhalt ist bekanntermaßen noch fehlerhaft. " +
-				"Texte, Grafiken und Rechenwege können falsch sein.";
+		return t( "app.knownError" );
 	}
 
 	if ( typeof route.meta?.error === "string" ) {
@@ -308,8 +332,7 @@ const errorMessage = computed( () => {
 
 const warningMessage = computed( () => {
 	if ( route.meta?.warning === true ) {
-		return "Hinweis: Dieser Inhalt wurde noch nicht geprüft. " +
-				"Texte, Grafiken und Rechenwege können also noch Fehler beinhalten. Mithilfe ist erbeten.";
+		return t( "app.uncheckedWarning" );
 	}
 
 	if ( typeof route.meta?.warning === "string" ) {
@@ -356,7 +379,56 @@ function normalizePathForHashLinks( pathValue ) {
 }
 
 const routePathForHashLinks = computed( () => normalizePathForHashLinks( route.path ) );
+const supportedLanguages = computed( () =>
+	props.languages
+		.map( ( value ) => String( value ?? "" ).trim()
+			.toLowerCase() )
+		.filter( (
+			value, index, values
+		) => value && values.indexOf( value ) === index ) );
+const currentLanguage = computed( () => String( locale.value || "de" ).trim()
+	.toLowerCase() );
+const disclaimerLanguage = computed( () => currentLanguage.value === "en" ? "en" : "de" );
+const activeLanguages = computed( () =>
+	supportedLanguages.value.length > 0 ? supportedLanguages.value : [ currentLanguage.value ] );
+const resolvedLanguage = computed( () =>
+	activeLanguages.value.includes( currentLanguage.value ) ?
+		currentLanguage.value :
+		activeLanguages.value[ 0 ] || "de" );
+const languageQuery = computed( () => ( {
+	...route.query,
+	lang: resolvedLanguage.value
+} ) );
+const homeLinkTarget = computed( () => ( {
+	path:  "/",
+	query: languageQuery.value
+} ) );
+const showLanguageSwitch = computed( () => supportedLanguages.value.length > 1 );
+const nextLanguage = computed( () =>
+	supportedLanguages.value.find( ( value ) => value !== resolvedLanguage.value ) || "" );
+const nextLanguageLabel = computed( () => nextLanguage.value.toUpperCase() );
+const routeLanguage = computed( () => String( route.query.lang ?? "" ).trim()
+	.toLowerCase() );
 const showHomeBadge = computed( () => route.path !== "/" );
+
+function resolveDisclaimerHtml( name,
+	locale ) {
+	const localizedPath = `../utils/disclaimer/${name}_${locale}.html`;
+	const fallbackPath = `../utils/disclaimer/${name}_de.html`;
+	const localized = disclaimerModules[ localizedPath ];
+
+	if ( typeof localized === "string" ) {
+		return localized;
+	}
+
+	const fallback = disclaimerModules[ fallbackPath ];
+	return typeof fallback === "string" ? fallback : "";
+}
+
+const reportErrorHTML = computed( () => resolveDisclaimerHtml( "report_errors", disclaimerLanguage.value ) );
+const impressumHtml = computed( () => resolveDisclaimerHtml( "impressum", disclaimerLanguage.value ) );
+const privacyPolicyHtml = computed( () => resolveDisclaimerHtml( "privacy_policy", disclaimerLanguage.value ) );
+
 const shortText = computed( () => {
 	const routeName = typeof route.name === "string" ? route.name : "";
 	const normalizedRouteName = routeName.trim().toUpperCase();
@@ -388,15 +460,15 @@ const difficultyIcon = computed( () => {
 } );
 const difficultyLabel = computed( () => {
 	if ( difficultyValue.value === 1 ) {
-		return "Schwierigkeitsgrad: leicht";
+		return t( "app.difficulty.easy" );
 	}
 
 	if ( difficultyValue.value === 2 ) {
-		return "Schwierigkeitsgrad: mittel";
+		return t( "app.difficulty.medium" );
 	}
 
 	if ( difficultyValue.value === 3 ) {
-		return "Schwierigkeitsgrad: schwer";
+		return t( "app.difficulty.hard" );
 	}
 
 	return "";
@@ -416,7 +488,7 @@ const descriptionMarkdownFileName = computed( () => {
 		.filter( Boolean );
 
 	if ( !parts.length ) {
-		return "beschreibung";
+		return t( "app.markdownFallback" );
 	}
 
 	return parts.join( "-" );
@@ -456,13 +528,19 @@ function routePdfSlug( routePath ) {
 	return segments.length > 0 ? segments[ 0 ] : "index";
 }
 
+function routePdfFileName(
+	routePath,
+	localeValue
+) {
+	return `${routePdfSlug( routePath )}_${localeValue}.pdf`;
+}
+
 function downloadPDF() {
 	if ( typeof window === "undefined" ) {
 		return;
 	}
 
-	const pdfSlug = routePdfSlug( route.path );
-	const pdfPath = `${appBasePath}pdf/${encodeURIComponent( pdfSlug )}.pdf`;
+	const pdfPath = `${appBasePath}pdf/${encodeURIComponent( routePdfFileName( route.path, locale.value ) )}`;
 	const opened = window.open(
 		pdfPath, "_blank", "noopener,noreferrer"
 	);
@@ -470,6 +548,44 @@ function downloadPDF() {
 	if ( opened ) {
 		opened.opener = null;
 	}
+}
+
+let languageNavigationTarget = "";
+
+async function replaceLanguageInUrl( nextLanguage ) {
+	const normalizedLanguage = String( nextLanguage ?? "" ).trim()
+		.toLowerCase();
+
+	if ( !normalizedLanguage || routeLanguage.value === normalizedLanguage ||
+		languageNavigationTarget === normalizedLanguage ) {
+		return;
+	}
+
+	languageNavigationTarget = normalizedLanguage;
+
+	try {
+		await router.replace( {
+			path:   route.path,
+			hash:   route.hash,
+			params: route.params,
+			query:  {
+				...route.query,
+				lang: normalizedLanguage
+			}
+		} );
+	} finally {
+		if ( languageNavigationTarget === normalizedLanguage ) {
+			languageNavigationTarget = "";
+		}
+	}
+}
+
+function toggleLanguage() {
+	if ( !nextLanguage.value ) {
+		return;
+	}
+
+	void replaceLanguageInUrl( nextLanguage.value );
 }
 
 function formatUtcBuildDate( date ) {
@@ -545,6 +661,30 @@ function handleHashLinkClick( hash ) {
 }
 
 watch(
+	[
+		routeLanguage,
+		activeLanguages
+	],
+	( [
+		requestedLanguage
+	] ) => {
+		const fallbackLanguage = activeLanguages.value[ 0 ] || "de";
+		const nextLanguage = activeLanguages.value.includes( requestedLanguage ) ?
+			requestedLanguage :
+			fallbackLanguage;
+
+		if ( currentLanguage.value !== nextLanguage ) {
+			i18nApi.setLocale( nextLanguage );
+		}
+
+		if ( hasMounted.value && requestedLanguage !== nextLanguage ) {
+			void replaceLanguageInUrl( nextLanguage );
+		}
+	},
+	{ immediate: true }
+);
+
+watch(
 	() => route.hash,
 	async( hash ) => {
 		if ( !hasMounted.value || !hash ) {
@@ -559,6 +699,10 @@ watch(
 
 onMounted( () => {
 	hasMounted.value = true;
+
+	if ( supportedLanguages.value.length > 0 && routeLanguage.value !== resolvedLanguage.value ) {
+		void replaceLanguageInUrl( resolvedLanguage.value );
+	}
 
 	if ( route.hash ) {
 		nextTick( () => {
@@ -575,6 +719,37 @@ onMounted( () => {
 } );
 </script>
 <style scoped>
+.lang-switch {
+	position: absolute;
+	top: 0;
+	right: 0;
+	display: flex;
+	align-items: center;
+}
+
+.lang-btn {
+	border: 1px solid rgba(var(--v-theme-on-surface), 0.18);
+	background: rgba(var(--v-theme-surface), 0.88);
+	color: inherit;
+	border-radius: 999px;
+	padding: 4px 10px;
+	font: inherit;
+	font-size: 0.78rem;
+	font-weight: 700;
+	letter-spacing: 0.06em;
+	cursor: pointer;
+	transition: background-color 0.18s ease, border-color 0.18s ease;
+}
+
+.lang-btn:hover {
+	background: rgba(var(--v-theme-primary), 0.12);
+	border-color: rgba(var(--v-theme-primary), 0.38);
+}
+
+.brand {
+	position: relative;
+}
+
 .wipAlert {
   margin-top: 16px;
 }
@@ -688,6 +863,10 @@ onMounted( () => {
 }
 
 @media (max-width: 860px) {
+	.lang-switch {
+		top: -2px;
+	}
+
 	#forum {
 		scroll-margin-top: 132px;
 	}

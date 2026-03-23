@@ -2,7 +2,7 @@
 <div class="wrap">
 	<svg
 		v-if="state.ready"
-		aria-label="Zyklisches Viereck mit Tangentialkreis"
+		:aria-label="t( 'graph.aria' )"
 		class="svg"
 		role="img"
 		:viewBox="`${viewBox.x} ${viewBox.y} ${viewBox.w} ${viewBox.h}`"
@@ -123,20 +123,23 @@
 	<div v-if="state.ready" class="legendHtml">
 		<div class="legendItem">
 			<span class="swatch circ"></span>
-			<span>Umkreis durch A,B,C,D (zyklisch)</span>
+			<span>{{ t( "graph.legendCirc" ) }}</span>
 		</div>
 		<div class="legendItem">
 			<span class="swatch tan"></span>
-			<span>Tangentialkreis: berührt AD, DC, BC</span>
+			<span>{{ t( "graph.legendTan" ) }}</span>
 		</div>
 	</div>
 
-	<div v-else class="loading">Generiere Beispiel…</div>
+	<div v-else class="loading">{{ t( "graph.loading" ) }}</div>
 </div>
 </template>
 
 <script setup>
 import { onMounted, reactive } from "vue";
+import { useI18n } from "@/i18n.mjs";
+
+const { t } = useI18n( "book1/O1" );
 
 const FIXED_AB = 100;
 const FIXED_A_X = -50;
@@ -508,7 +511,7 @@ function regenerate() {
 
 	// fallback (should rarely happen)
 	state.ready = false;
-	console.warn( "Konnte kein gültiges Beispiel finden. Bitte erneut klicken." );
+	console.warn( t( "graph.warning" ) );
 }
 
 // expose regenerate for parent components if you want

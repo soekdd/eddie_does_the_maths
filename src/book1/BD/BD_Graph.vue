@@ -1,7 +1,7 @@
 <template>
 <div class="bdGraphWrap">
 	<svg
-		aria-label="Träger-System: beidseitig gelenkig gelagert, Punktlast in Feldmitte und Streckenlast aus Eigengewicht"
+		:aria-label="t( 'bd.graph.aria' )"
 		class="bdGraphSvg"
 		role="img"
 		:viewBox="graphViewBox"
@@ -55,7 +55,7 @@
 			:x="( xA + xB ) / 2"
 			y="36"
 		>
-			Einfeldträger (beidseitig gelenkig) mit P in Feldmitte und q_g
+			{{ t( "bd.graph.title" ) }}
 		</text>
 
 		<line class="beam"
@@ -118,7 +118,7 @@
 			:x="( xA + xB ) / 2 - 200"
 			:y="yDistLoadTop - 24"
 		>
-			Eigengewicht des Trägers
+			{{ t( "bd.graph.beamWeight" ) }}
 		</text>
 
 		<line class="pointLoad"
@@ -128,7 +128,7 @@
 			:y2="yBeam - 8"
 		/>
 		<text class="label" :x="xMid + 14" :y="yPointLoadTop + 10">
-			{{ reduced ? "Punktlast P" : `Punktlast P = ${fmt( pointLoadKN, 1, true )} kN` }}
+			{{ reduced ? t( "bd.graph.pointLoadShort" ) : t( "bd.graph.pointLoadFull", { value: fmt( pointLoadKN, 1, true ) } ) }}
 		</text>
 
 		<line class="reaction"
@@ -203,7 +203,7 @@
 				text-anchor="middle"
 				x="550"
 				y="452"
-			>Wertevergleich DIN vs. TGL</text>
+			>{{ t( "bd.graph.compareTitle" ) }}</text>
 
 			<rect class="dinChip"
 				height="16"
@@ -214,7 +214,10 @@
 				y="470"
 			/>
 			<text class="valueDin" x="190" y="483">
-				{{ `DIN: q_g = ${fmt( qgDinKNm, 3, true )} kN/m, R_A = R_B = ${fmt( reactionDinKN, 2, true )} kN` }}
+				{{ t( "bd.graph.dinValues", {
+					qg:       fmt( qgDinKNm, 3, true ),
+					reaction: fmt( reactionDinKN, 2, true )
+				} ) }}
 			</text>
 
 			<rect class="tglChip"
@@ -226,7 +229,10 @@
 				y="500"
 			/>
 			<text class="valueTgl" x="190" y="513">
-				{{ `TGL: q_g = ${fmt( qgTglKNm, 3, true )} kN/m, R_A = R_B = ${fmt( reactionTglKN, 2, true )} kN` }}
+				{{ t( "bd.graph.tglValues", {
+					qg:       fmt( qgTglKNm, 3, true ),
+					reaction: fmt( reactionTglKN, 2, true )
+				} ) }}
 			</text>
 		</g>
 	</svg>
@@ -235,6 +241,9 @@
 
 <script setup>
 import { computed } from "vue";
+import { useI18n } from "@/i18n.mjs";
+
+const { t } = useI18n( "book1/BD" );
 
 const props = defineProps( {
 	Lm: {

@@ -1,10 +1,7 @@
 <template>
-<AppFrame  :sub-chapter="{
-		'entscheidungsbaum': 'Entscheidungsbaum',
-		'wahrscheinlichkeiten': 'Wahrscheinlichkeiten',
-		'rechner': 'Rechner'
-	}"
-	title="Eddie rechnet: Internationale Matheolympiade 1885 Aufgabe 1"
+<AppFrame
+	:sub-chapter
+	:title="t( 'empty.title' )"
 	:vue-date="__VITE_SFC_MTIME_MS__"
 >
 
@@ -30,4 +27,9 @@
 </template>
 
 <script setup>
+import { computed } from "vue";
+import { useI18n } from "@/i18n.mjs";
+
+const { t, tm } = useI18n( "components/lang" );
+const subChapter = computed( () => tm( "empty.subChapter" ) ?? {} );
 </script>

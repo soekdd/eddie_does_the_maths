@@ -1,6 +1,6 @@
 <template>
 <svg
-	:aria-label="ariaLabel"
+	:aria-label
 	class="dgGraph"
 	role="img"
 	viewBox="0 0 520 600"
@@ -202,8 +202,11 @@
 
 <script setup>
 import { computed } from "vue";
+import { useI18n } from "@/i18n.mjs";
 
 import { gcd, parseIntStrict } from "./DG_diophantine";
+
+const { t } = useI18n( "book1/DG" );
 
 const props = defineProps( {
 	a: { type: [ Number, String ], required: true },
@@ -287,16 +290,16 @@ const model = computed( () => {
 	const cRaw = parseMaybeInt( props.c );
 
 	if ( aRaw === null || bRaw === null || cRaw === null ) {
-		return { ok: false, message: "Bitte ganze Zahlen für a,b,c eingeben." };
+		return { ok: false, message: t( "dg.graph.invalidInput" ) };
 	}
 
 	if ( aRaw === 0 || bRaw === 0 ) {
-		return { ok: false, message: "Grafik nur für a≠0 und b≠0." };
+		return { ok: false, message: t( "dg.graph.onlyNonzero" ) };
 	}
 
 	// If a and b have different signs, there can be infinitely many solutions in the first quadrant.
 	if ( aRaw * bRaw < 0 ) {
-		return { ok: false, message: "Grafik nur für a und b mit gleichem Vorzeichen." };
+		return { ok: false, message: t( "dg.graph.sameSign" ) };
 	}
 
 	// Normalize global sign so we can work with a>0,b>0.
@@ -315,7 +318,7 @@ const model = computed( () => {
 			g:       gcd( a, b ),
 			dx:      0,
 			dy:      0,
-			message: "Keine positiven Lösungen (c muss > 0 sein)."
+			message: t( "dg.graph.noPositiveC" )
 		};
 	}
 
@@ -323,7 +326,7 @@ const model = computed( () => {
 
 	if ( c % g !== 0 ) {
 		return {
-			ok: true, a, b, c, points: [], g, dx: b / g, dy: a / g, message: "Keine ganzzahligen Lösungen."
+			ok: true, a, b, c, points: [], g, dx: b / g, dy: a / g, message: t( "dg.graph.noInteger" )
 		};
 	}
 
@@ -361,7 +364,7 @@ const model = computed( () => {
 		g,
 		dx:      b / g,
 		dy:      a / g,
-		message: points.length ? "" : "Keine positiven ganzzahligen Lösungen im 1. Quadranten."
+		message: points.length ? "" : t( "dg.graph.noPositiveQuadrant" )
 	};
 } );
 
@@ -589,13 +592,19 @@ const vector = computed( () => {
 
 const ariaLabel = computed( () => {
 	if ( !model.value.ok ) {
-		return "Diophantische Gleichung";
+		return t( "dg.graph.fallbackAria" );
 	}
 
 	const {
 		a, b, c
 	} = model.value;
-	return `Diophantische Gleichung als Gerade mit Gitterpunkten: ${a}${props.xVar} + ${b}${props.yVar} = ${c}`;
+	return t( "dg.graph.aria", {
+		a,
+		xVar: props.xVar,
+		b,
+		yVar: props.yVar,
+		c
+	} );
 } );
 
 const equationText = computed( () => {
@@ -635,7 +644,7 @@ const constraintLines = computed( () => {
 			line: {
 				x1: xPix( x ), y1: l.yTop, x2: xPix( x ), y2: l.bottom
 			},
-			label: `${props.xVar} ≥ ${x}`
+			label: t( "dg.graph.constraintX", { xVar: props.xVar, x } )
 		};
 	}
 
@@ -644,7 +653,7 @@ const constraintLines = computed( () => {
 			line: {
 				x1: l.left, y1: yPix( y ), x2: l.xEnd, y2: yPix( y )
 			},
-			label: `${props.yVar} ≥ ${y}`
+			label: t( "dg.graph.constraintY", { yVar: props.yVar, y } )
 		};
 	}
 
@@ -661,9 +670,9 @@ const legend = computed( () => {
 	const y0 = 110;
 
 	const lines = [
-		"• Gerade: reelle Lösungen",
-		"• Markierte Gitterpunkte:",
-		"  ganzzahlige Lösungen"
+		t( "dg.graph.legend1" ),
+		t( "dg.graph.legend2" ),
+		t( "dg.graph.legend3" )
 	];
 
 	const extra = [];
@@ -673,7 +682,7 @@ const legend = computed( () => {
 	}
 
 	if ( hasHiddenLabels.value ) {
-		extra.push( `(… und ${drawPoints.value.length - labelPoints.value.length} weitere)` );
+		extra.push( t( "dg.graph.more", { count: drawPoints.value.length - labelPoints.value.length } ) );
 	}
 
 	return {

@@ -1,102 +1,60 @@
 <!-- eslint-disable vue/max-len -->
 <template>
-<AppFrame  :sub-chapter="{
-		einleitung: 'Einleitung',
-		'diophantos-raetsel': 'Diophantos-Rätsel',
-		'in-formeln': 'In Formeln',
-		loesen: 'Lösen',
-		stationen: 'Bonus-Stationen',
-		'eddies-rechnung': 'Eddies Rechnung',
-		'mit-t18': 'Mit T=18',
-		'deine-grabplatte': 'Deine Grabplatte'
-	}"
-	title="Ich rechne: Diophantos' Grabplatte"
+<AppFrame
+	:languages="[ 'de', 'en' ]"
+	:sub-chapter
+	:title="t( 'gd.title' )"
 	:vue-date="__VITE_SFC_MTIME_MS__"
 >
 	<template #bookPart>
 		<figure class="exampleFigure">
-			<ImageZoomer title="Ich und das Grabplatten-Rätsel">
-				<img loading="lazy" :src="titleImg" />
+			<ImageZoomer :title="t( 'gd.imageTitle' )">
+				<img :alt="t( 'gd.imageAlt' )" loading="lazy" :src="titleImg" />
 			</ImageZoomer>
 		</figure>
-		<h3 id="einleitung">Stockholm, 26. Oktober 1985</h3>
+		<h3 id="einleitung">{{ t( "gd.introDate" ) }}</h3>
 		<div class="eddie">
-
-			<p>Ich lehne mich am Fensterplatz zurück, während draußen die Stadt den Sonntag
-				weiteratmet. In der Rotunde ist es dagegen, als würde die Zeit in Ringen laufen:
-				leise Schritte, Papiergeruch, das dumpfe Klacken von Buchdeckeln. Genau hier
-				fühlen sich Zahlen nicht wie Schulstoff an, sondern wie Geschichten, die jemand
-				vor mir begonnen hat. Ich mag das. Geschichten kann man weiterführen. Man kann
-				sie sogar umschreiben.
-			</p><p>
-				Und Diophantos ist so einer, der mich dabei erwischt, wie ich kurz vergesse, wer ich gerade sein
-				muss. Nicht Eddie auf der Flucht, nicht Edmilla im Kostüm, nicht das Mädchen mit dem Hund, der
-				im Park den Schnee umgräbt. Sondern einfach ich mit einem Stift, einem Block und dieser nervigen
-				Sehnsucht nach Ordnung in allem, was gerade unordentlich ist.
-			</p><p>
-				Die Inschrift wirkt wie ein Spruch aus einem alten Rätselheft, nur dass hier niemand
-				„Lösung auf Seite 84“ drunterdruckt. Also mache ich das, was ich immer mache, wenn mir
-				etwas zu groß vorkommt: Ich zerlege es in Teile, bis es wieder in meine Hand passt.
-			</p>
+			<p>{{ t( "gd.book.p1" ) }}</p>
+			<p>{{ t( "gd.book.p2" ) }}</p>
+			<p>{{ t( "gd.book.p3" ) }}</p>
 		</div>
 	</template>
 
 	<template #descriptionPart>
-		<h2 id="diophantos-raetsel">Teil 1 - Das Grabplatten-Rätsel des Diophantos</h2>
+		<h2 id="diophantos-raetsel">{{ t( "gd.sections.part1.title" ) }}</h2>
 		<div class="eddie">
-			<p>Die Originalfassung des Epitaphs:</p>
+			<p>{{ t( "gd.sections.part1.p1" ) }}</p>
 			<div class="cContainer">
 				<blockquote class="storyQuote">
 					<div class="plateHeader">
-						<div class="plateLead">Diophantos</div>
-						<div class="plateLeadSub">Epitaph</div>
+						<div class="plateLead">{{ t( "gd.sections.part1.plateLead" ) }}</div>
+						<div class="plateLeadSub">{{ t( "gd.sections.part1.plateLeadSub" ) }}</div>
 					</div>
-					Hier das Grabmal deckt Diophantos, ein Wunder zu schauen:
-					<br> Durch des Entschlafenen Kunst lehrt dich sein Alter der Stein.
-					<br> Knabe zu bleiben verlieh ein Sechstel des Lebens ein Gott ihm;
-					<br> Fügend das Zwölftel hinzu, ließ er ihm sprossen die Wang.
-					<br> Steckte ihm drauf auch nach dem Siebtel die Fackel der Hochzeit,
-					<br> Und fünf Jahre nachher teilt' er ein Söhnlein ihm zu.
-					<br> Weh! unglückliches Kind, so geliebt! Halb hatt' es des Vaters
-					<br> Alter erreicht, da nahm's Hades, der schaurige, allzufrüh.
-					<br> Noch vier Jahre den Schmerz durch Kunde der Zahlen besänftigend,
-					<br> Langte am Ziele des Seins endlich er selber auch an.
+					<div v-html="t( 'gd.sections.part1.epitaph' )" />
 				</blockquote>
 			</div>
-			<p>Nimmt man den Pathos heraus und behält nur die Algebra, steht da:</p>
+			<p>{{ t( "gd.sections.part1.p2" ) }}</p>
 			<ul>
-				<li><Katex tex="\frac16" /> seiner Lebenszeit für die Kindheit.</li>
-				<li>weitere <Katex tex="\frac1{12}" /> bis zum Bartwuchs.</li>
-				<li>weitere <Katex tex="\frac17" /> bis zur Hochzeit.</li>
-				<li><Katex tex="5" /> Jahre später bekommt er einen Sohn.</li>
-				<li>
-					Der Sohn lebt <Katex tex="\frac12" /> so lang wie der Vater
-					(bezogen auf die Lebenszeit des Vaters).
-				</li>
-				<li>
-					<Katex tex="4" /> Jahre nach dem Tod des Sohnes stirbt
-					Diophantos.
-				</li>
+				<li>{{ t( "gd.sections.part1.s1" ) }}</li>
+				<li>{{ t( "gd.sections.part1.s2" ) }}</li>
+				<li>{{ t( "gd.sections.part1.s3" ) }}</li>
+				<li>{{ t( "gd.sections.part1.s4" ) }}</li>
+				<li>{{ t( "gd.sections.part1.s5" ) }}</li>
+				<li>{{ t( "gd.sections.part1.s6" ) }}</li>
 			</ul>
 		</div>
 
-		<h2 id="in-formeln" class="mt-8">Teil 2 - In Formeln überführen</h2>
+		<h2 id="in-formeln" class="mt-8">{{ t( "gd.sections.part2.title" ) }}</h2>
 		<div class="eddie">
-			<p>
-				<Katex tex="x" /> als gesamte Lebensdauer von Diophantos
-				in Jahren.
-			</p>
+			<p>{{ t( "gd.sections.part2.p1" ) }}</p>
 			<div class="kbox">
 				<Katex as="div" display tex="\frac16x+\frac1{12}x+\frac17x+5+\frac12x+4=x" />
 			</div>
 		</div>
 
-		<h2 id="loesen" class="mt-8">Teil 3 - Lösen</h2>
+		<h2 id="loesen" class="mt-8">{{ t( "gd.sections.part3.title" ) }}</h2>
 		<div class="eddie">
-			<p>
-				Zuerst die Brüche zusammenfassen. Ein gemeinsamer Nenner ist  <Katex tex="84" />
-				(damit ist die Lösung fast schon da):
-			</p>
+			<p>{{ t( "gd.sections.part3.p1" ) }}</p>
 			<div class="kbox">
 				<Katex
 					as="div"
@@ -112,62 +70,33 @@
 					tex="\left(\frac{14+7+12+42}{84}\right)x+9 &= x \\ \frac{75}{84}x+9 &= x \\ x-\frac{75}{84}x &= 9 \\ \frac9{84}x &= 9 \\ x &= 9\cdot\frac{84}{9}=84"
 				/>
 			</div>
-			<p><b>Diophantos wurde also 84 Jahre alt.</b></p>
+			<p><b>{{ t( "gd.sections.part3.p2" ) }}</b></p>
 		</div>
 
-		<h2 id="stationen" class="mt-8">Teil 4 - Bonus: Die Stationen als konkrete Alterszahlen</h2>
+		<h2 id="stationen" class="mt-8">{{ t( "gd.sections.part4.title" ) }}</h2>
 		<div class="eddie">
 			<ul>
-				<li>
-					Ende der Kindheit:
-					<Katex tex="\frac16x=14" />
-				</li>
-				<li>
-					Bartwuchs:
-					<Katex tex="\left(\frac16+\frac1{12}\right)x=14+7=21" />
-				</li>
-				<li>
-					Hochzeit:
-					<Katex tex="\left(\frac16+\frac1{12}+\frac17\right)x=14+7+12=33" />
-				</li>
-				<li>
-					Geburt des Sohnes:
-					<Katex tex="33+5=38" />
-				</li>
-				<li>
-					für den Sohn:
-					<Katex tex="\frac12x=42" /> Jahre, also ist Diophantos beim Tod des
-					Sohnes
-					<Katex tex="38+42=80" />
-					Jahre alt.
-				</li>
-				<li>
-					für Diophantos' Tod auf:
-					<Katex tex="80+4=84" />
-				</li>
+				<li>{{ t( "gd.sections.part4.s1" ) }} <Katex tex="\frac16x=14" /></li>
+				<li>{{ t( "gd.sections.part4.s2" ) }} <Katex tex="\left(\frac16+\frac1{12}\right)x=14+7=21" /></li>
+				<li>{{ t( "gd.sections.part4.s3" ) }} <Katex tex="\left(\frac16+\frac1{12}+\frac17\right)x=14+7+12=33" /></li>
+				<li>{{ t( "gd.sections.part4.s4" ) }} <Katex tex="33+5=38" /></li>
+				<li>{{ t( "gd.sections.part4.s5" ) }} <Katex tex="\frac12x=42" /> {{ t( "gd.sections.part4.s5b" ) }} <Katex tex="38+42=80" /> {{ t( "gd.sections.part4.s5c" ) }}</li>
+				<li>{{ t( "gd.sections.part4.s6" ) }} <Katex tex="80+4=84" /></li>
 			</ul>
 		</div>
 
-		<h2 id="eddies-rechnung" class="mt-8">Teil 5 - Meine eigene „Meilenstein-Rechnung“</h2>
+		<h2 id="eddies-rechnung" class="mt-8">{{ t( "gd.sections.part5.title" ) }}</h2>
 		<div class="eddie">
 			<div class="cContainer">
 				<blockquote class="storyQuote">
 					<div class="plateHeader">
-						<div class="plateLead">Eddie</div>
-						<div class="plateLeadSub">Meilenstein-Rechnung</div>
+						<div class="plateLead">{{ t( "gd.sections.part5.plateLead" ) }}</div>
+						<div class="plateLeadSub">{{ t( "gd.sections.part5.plateLeadSub" ) }}</div>
 					</div>
-					Ein Drittel Kleinkind,<br>
-					vier Neuntel bin ich Schulkind,<br>
-					ein Sechstel bin ich Spezi der Zahlen,<br>
-					davon zwei Drittel als Edmilla getarnt. <br>
-					Zwei Monde bin ich frei.<br>
-					Den Rest auf der Flucht.
+					<div v-html="t( 'gd.sections.part5.poem' )" />
 				</blockquote>
 			</div>
-			<p>
-				Ich interpretiere das als Aufteilung meiner Lebenszeit
-				<Katex tex="T" /> bis zu meinem 18. Geburtstag.
-			</p>
+			<p>{{ t( "gd.sections.part5.p1" ) }}</p>
 			<div class="kbox">
 				<Katex
 					aligned
@@ -176,11 +105,8 @@
 					tex="T_{\text{klein}} &= \frac13T \\ T_{\text{schule}} &= \frac49T \\ T_{\text{zahlen}} &= \frac16T \\ T_{\text{Edmilla}} &= \frac23\cdot T_{\text{zahlen}}=\frac23\cdot\frac16T=\frac19T \\ T_{\text{frei}} &= \frac{2}{12}=\frac16\;\text{Jahr}"
 				/>
 			</div>
-			<p>
-				Ich behandle die Edmilla-Zeit als Unterabschnitt der Zahlen-Phase,
-				nicht als zusätzlichen Hauptabschnitt.
-			</p>
-			<p>Den Rest auf der Flucht rechne ich dann so:</p>
+			<p>{{ t( "gd.sections.part5.p2" ) }}</p>
+			<p>{{ t( "gd.sections.part5.p3" ) }}</p>
 			<div class="kbox">
 				<Katex
 					aligned
@@ -189,17 +115,12 @@
 					tex="T_{\text{Flucht}} &= T-\left(\frac13T+\frac49T+\frac16T+\frac16\right) \\ \frac13T+\frac49T+\frac16T &= \frac{6}{18}T+\frac{8}{18}T+\frac{3}{18}T=\frac{17}{18}T \\ T_{\text{Flucht}} &= T-\left(\frac{17}{18}T+\frac16\right)=\frac1{18}T-\frac16"
 				/>
 			</div>
-			<p>
-				Damit habe ich meinen Text als Gleichungssystem sauber übersetzt.
-				Anders als bei Diophantos ist <Katex tex="T" /> hier nicht durch den
-				Text selbst festgelegt. Wenn mein Alter gegeben ist, kann ich den
-				Flucht-Abschnitt sofort konkret berechnen.
-			</p>
+			<p>{{ t( "gd.sections.part5.p4" ) }}</p>
 		</div>
 
-		<h2 id="mit-t18" class="mt-8">Teil 6 - Lösung</h2>
+		<h2 id="mit-t18" class="mt-8">{{ t( "gd.sections.part6.title" ) }}</h2>
 		<div class="eddie">
-			<p>Wenn ich <Katex tex="T=18" /> setze, folgt eine Fluchtzeit von:</p>
+			<p>{{ t( "gd.sections.part6.p1" ) }}</p>
 			<div class="kbox">
 				<Katex
 					aligned
@@ -208,17 +129,14 @@
 					tex="T_{\text{Flucht}} &= \frac1{18}\cdot 18-\frac16 \\ &= 1-\frac16=\frac56 \\ &= \frac56\approx 0{,}83\text{ Jahre}=10\text{ Monate}"
 				/>
 			</div>
-			Das passt. 10 Monate habe ich gebraucht, um Westdeutschland zu erreichen.
+			{{ t( "gd.sections.part6.p2" ) }}
 		</div>
 	</template>
 
 	<template #interactivePart>
-		<h2 id="deine-grabplatte">4) Erstelle dein eigenes Grabplatten-Rätsel</h2>
+		<h2 id="deine-grabplatte">{{ t( "gd.interactive.title" ) }}</h2>
 		<div class="eddie">
-			<p>
-				Lege deine Lebensstationen als Terme an. Die Gleichung wird automatisch aufgebaut
-				und die Alterswerte zu jeder Station werden im Stil einer Grabplatte berechnet.
-			</p>
+			<p>{{ t( "gd.interactive.p1" ) }}</p>
 		</div>
 		<GDPlate />
 	</template>
@@ -226,8 +144,23 @@
 </template>
 
 <script setup>
+import { computed } from "vue";
+import { useI18n } from "@/i18n.mjs";
 import titleImg from "./GD.webp";
 import GDPlate from "./GD_Plate.vue";
+
+const { t } = useI18n( "book1/GD" );
+
+const subChapter = computed( () => Object.fromEntries( [
+	[ "einleitung", t( "gd.subChapter.einleitung" ) ],
+	[ "diophantos-raetsel", t( "gd.subChapter.diophantosRaetsel" ) ],
+	[ "in-formeln", t( "gd.subChapter.inFormeln" ) ],
+	[ "loesen", t( "gd.subChapter.loesen" ) ],
+	[ "stationen", t( "gd.subChapter.stationen" ) ],
+	[ "eddies-rechnung", t( "gd.subChapter.eddiesRechnung" ) ],
+	[ "mit-t18", t( "gd.subChapter.mitT18" ) ],
+	[ "deine-grabplatte", t( "gd.subChapter.deineGrabplatte" ) ]
+] ) );
 </script>
 
 <style scoped>

@@ -9,22 +9,26 @@
 	variant="text"
 	@click="downloadMarkdown"
 >
-	{{ buttonLabel }}
+	{{ effectiveButtonLabel }}
 </v-btn>
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import TurndownService from "turndown";
 import { gfm } from "turndown-plugin-gfm";
 import { mdiDownload } from "@mdi/js";
+import { useI18n } from "@/i18n.mjs";
 const props = defineProps( {
 	targetId:    { type: String, required: true },
-	fileName:    { type: String, default: "description" },
-	buttonLabel: { type: String, default: "Markdown" }
+	fileName:    { type: String, default: "" },
+	buttonLabel: { type: String, default: "" }
 } );
 
+const { t } = useI18n( "components/lang" );
 const isBusy = ref( false );
+const effectiveButtonLabel = computed( () => props.buttonLabel || t( "markdownDownload.buttonLabel" ) );
+const effectiveFileName = computed( () => props.fileName || t( "markdownDownload.fileNameFallback" ) );
 
 function sanitizeFileName( value ) {
 	const normalized = String( value ?? "" )
@@ -35,7 +39,7 @@ function sanitizeFileName( value ) {
 		.replace( /-+/gu, "-" )
 		.replace( /^-+|-+$/gu, "" );
 
-	return normalized || "description";
+	return normalized || t( "markdownDownload.fileNameFallback" );
 }
 
 function decodeBase64Utf8( value ) {
@@ -215,7 +219,7 @@ function downloadMarkdown() {
 
 	try {
 		const markdown = toMarkdown( source );
-		triggerDownload( markdown, props.fileName );
+		triggerDownload( markdown, effectiveFileName.value );
 	} finally {
 		isBusy.value = false;
 	}

@@ -1,0 +1,167 @@
+title: "Eddie Does the Maths: Bedtime Math Routine"
+imageTitle: "Eddie can't fall asleep"
+imageAlt: "Eddie lying awake in a lean-to shelter"
+introDate: "Vaasaloppet, July 29, 1985"
+subChapter:
+  einleitung: "Introduction"
+  muster: "12 Night Rituals"
+  quiz: "Practice Quiz"
+book:
+  p1: "My chest is burning, the rain is hammering on the roof, and every cough sounds in my head like now they've got you. I lie in the laavu like a soaked sack, staring into the dark, and I can feel fear instantly starting to tell me stories. About endings, about dead ends with nothing but the sea behind them. And me, very small, very alone."
+  p2: "Then I do what my father taught me, no big thoughts, no heroic plans, just short arithmetic patterns. Two, three, four mini steps. Done. Stop. As if I were telling my brain here is a drawer, only calm fits in there. It sounds banal, and it is. That is exactly why it works. It is like counting breaths, only with numbers that close neatly."
+  p3: "Here you will find this bedtime math routine, hiking-hut edition, as small evening exercises, and below that an interactive quiz to join in with until your head finally grows quieter."
+sections:
+  routines:
+    title: "The 12 Rituals"
+  quiz:
+    title: "Mini Practice Mode"
+    p1: "Choose a mode, solve one exercise, and stop after one correct answer. That is the routine."
+routines:
+  - id: 1
+    title: "1. Triangular Number Breath"
+    text: "Imagine you are stacking little stones. First one, then two in the next row, then three, and that is how triangles of dots appear. On the inhale you quietly say one, on the exhale one plus two equals three. You keep going step by step, 1, 1+2=3, 1+2+3=6, and so on. After ten rows you reach 55, a round calming number. That is where you stop and tell yourself enough building, now I sleep."
+  - id: 2
+    graphId: 2
+    title: "2. Pair Sums to 100"
+    text: "The old Gauss trick problem, 1+100, 2+99, 3+98. Every pair gives 101, and there are exactly 50 such pairs. You do not need to really add them all, it is enough to recognize the pattern. The beautiful part is that what looks like endless counting turns into a simple shortcut. And while you think 50 times 101 equals 5050, you notice your breathing settle. The thought is complete, time to fall asleep."
+  - id: 3
+    graphId: 3
+    title: "3. Fibonacci Sleep Ladder"
+    text: "The Fibonacci numbers begin harmlessly, 1, 1, 2, 3, 5, 8. You always add the last two to get the next one. Imagine the sequence as a ladder whose rungs keep spreading a little farther apart. Up to 21 you can still climb easily, after that it gets hard. So you stop at 21 and imagine simply lying down on that rung. From there you can slide into sleep."
+  - id: 4
+    title: "4. Noise Probability"
+    text: "Every few minutes a branch cracks outside, and that can keep you awake. So flip it around and calculate the chances. If the probability of hearing something in one minute is 20 percent, how large is the chance of silence over the next five minutes. You multiply 0.8×0.8×0.8×0.8×0.8, about 0.33. That means one third of the time it is simply quiet. That realization lets you let go. Silence is not special, it is the default."
+  - id: 5
+    title: "5. Clock Modulo"
+    text: "Take every cracking sound in the forest like the strike of a clock. You count 0, 3, 6, 9, 12, and back to 0. The principle is called modulo, but you do not have to understand it in any complicated way. It is just counting in a circle. Every sound carries you one step farther until after four or five steps you are back at the beginning. That makes the forest predictable, like a ticking sound. And once the circle is closed, you are allowed to turn over in your sleeping bag."
+  - id: 6
+    graphId: 6
+    title: 6. Prime Picnic
+    text: Prime numbers are like the indivisible berries in the forest, you can only pick them by themselves and by 1. Start with 2, 2, 3, 5, 7, 11, 13. Say them slowly and imagine little baskets you place them in. One thing matters, 1 does not go into the basket, it does not belong there. After a handful of primes you stop, the game is not infinite. The baskets now stand there, and you can close your eyes.
+  - id: 7
+    graphId: 7
+    title: 7. Boards in the Roof - Rectangle Numbers
+    text: Look at the roof beams of the hut. Imagine they form a grid with four rows and three columns. How many rectangles can you find in it. It sounds huge, but there is a trick, you choose two horizontal lines and two vertical lines, and that already determines one rectangle. With five horizontal lines and four vertical ones, that gives 10×6=60 rectangles. Sixty sounds tidy and complete, and then the thought is finished.
+  - id: 8
+    graphId: 8
+    title: 8. Gray-Code Yawn
+    text: Gray code is an ordering of binary numbers in which only one digit changes at a time. Start with 0000, then 0001, 0011, 0010, 0110. Imagine switching tiny lamps on and off, but never more than one at once. That creates a steady, almost hypnotic blinking. After four or five steps that is plenty, you do not need to go through them all. The flip-flop calms the head, time for a yawn.
+  - id: 9
+    graphId: 9
+    title: 9. Square-Sum Breath
+    text: Count the first square numbers in your head, 1²=1, 2²=4, 3²=9, 4²=16. Together they make 30. Say it to yourself on the inhale and exhale as if you were painting the numbers on the hut wall. If you want, think of the formula that computes such sums in one stroke, but do not force it. What matters is only this, the sequence has a clear end, and with it your line of thought. Done, eyes closed.
+  - id: 10
+    graphId: 10
+    title: 10. Forest Markings (Combinatorics Picture)
+    text: Imagine six trees in a circle. You connect every tree to every other one with a line. In the end you have 15 connections, like a web of spider threads. At first it looks messy, but then you realize there are exactly as many as there should be, no more and no less. And if you like, you can slowly erase the lines in your head. All that remains are the trees and the quiet.
+  - id: 11
+    graphId: 11
+    title: 11. Euler Walk
+    text: Imagine the hut as points and connections, doors, windows, beams. A walk means traversing every connection exactly once. Set yourself a small rule, at most three steps, then stop. That keeps you in the light and manageable part of things. You can feel like you are on a board game that ends automatically after three moves. And when it ends, that is your signal, bedtime.
+  - id: 12
+    title: 12. Mini Arithmetic Chain
+    text: Start at 100 and subtract smaller numbers step by step, minus 7, minus 6, minus 5, until you land at 72. Every calculation is like a small stone plopping into the water. You still hear it, but after the last stone it grows quiet. Seventy-two is your final stop, you get off there. No more calculating, no restart. Just take 72 and drift off.
+quiz:
+  modeLabel: Practice mode
+  newExercise: New exercise
+  showSolution: Show solution
+  hideSolution: Hide solution
+  check: Check
+  clearSelection: Clear selection
+  feedback:
+    correct: Exactly. That is enough for today, pattern recognized, head off.
+    wrong: Not yet. Look at the solution steps and calmly work through it once.
+  modes:
+    - label: Mix
+      value: mix
+    - label: Triangular numbers
+      value: tri
+    - label: Gauss pairs
+      value: gauss
+    - label: Fibonacci
+      value: fib
+    - label: Silence probability
+      value: silence
+    - label: Modulo clock
+      value: mod
+  exercises:
+    tri:
+      title: Triangular Number Breath
+      prompt: "Calculate the sum 1 + 2 + ... + {n}."
+      hint: Use the formula n(n+1)/2.
+      formula: "S = n(n+1)/2 with n={n}"
+      step1: "{a} · {b} = {product}"
+      step2: "{product} / 2 = {result}"
+    gauss:
+      title: Pair Sums (Gauss)
+      prompt: "Determine 1 + 2 + ... + {n}."
+      hint: "Build pairs: (1+{n}), (2+...), ..."
+      formula: "S = {pairs}·{pairSum} + {middle}"
+      step1: "{pairs} pairs with sum {pairSum}: {pairs} · {pairSum} = {product}"
+      step2: "Add the middle number: {product} + {middle} = {result}"
+    fib:
+      title: Fibonacci Sleep Ladder
+      prompt: "How does the sequence continue: {a}, {b}, {c}, ?"
+      hint: The next number is always the sum of the last two.
+      formula: "next = {b} + {c}"
+      step1: "{b} + {c} = {result}"
+    silence:
+      title: Noise Probability
+      prompt: "The probability of a noise in one minute is {probability}%. What is the chance of continuous silence over {minutes} minutes?"
+      hint: Silence in one minute is (1-p). For several minutes, multiply.
+      formula: "P(silence) = (1-{p})^{m}"
+      step1: "silence per minute: {q}"
+      step2: "{q}^{m} = {result}"
+      step3: "as a percentage: {result}"
+    mod:
+      title: Clock Modulo
+      prompt: "Start at 0 and count in steps of {step} modulo 12. Where do you land after {steps} steps?"
+      hint: Calculate (step size · steps) mod 12.
+      formula: "({step} · {steps}) mod 12"
+      step1: "{product} mod 12 = {result}"
+details:
+  title: Calculation details
+  solutionPath: Solution path
+  directSolution: Direct solution
+  correctIs: "Correct is: {value}"
+graphs:
+  common:
+    clickHint: Click the graphic
+  gauss:
+    caption: Gauss sum formula
+  faulhaber:
+    caption: Faulhaber formula
+  fib:
+    aria: Fibonacci spiral with squares
+    label: Fibonacci
+  primes:
+    index: "Prime #{index}"
+    hint: Click (or Enter/Space)
+  rectangles:
+    aria: Rectangles in a grid
+    count: Rectangles
+  gray:
+    aria: 0-31 as binary and Gray code
+    n: n
+    binary: binary (5 bits)
+    gray: gray (5 bits)
+  complete:
+    aria: Complete graph with n points
+    edges: Edges
+  euler:
+    switchGraph: "Switch graph: {name}"
+    aria: "Euler walk - {name}"
+    graph: Graph
+    euler: Euler
+    start: Start
+    end: End
+    edges: Edges
+    steps: Steps
+    circle: Cycle
+    path: "Path ({vertices})"
+    no: "no ({count} odd)"
+    graphNames:
+      nikolaus: House of Nikolaus
+      pentagramm: Pentagram (K5)
+      koenigsberg: Konigsberg bridges (unsolvable)
+      oktaeder: Octahedron graph

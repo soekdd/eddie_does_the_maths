@@ -3,7 +3,7 @@
 	<div class="controls">
 		<div class="flex">
 			<label class="btn">
-				Upload einer eigenen Karte
+				{{ t( "fi.map.upload" ) }}
 				<input accept="image/*"
 					hidden
 					type="file"
@@ -12,9 +12,9 @@
 			</label>
 
 			<label>
-				Karten meiner Reise
+				{{ t( "fi.map.travelMaps" ) }}
 				<select v-model="selectedAssetKey" :disabled="assetKeys.length === 0" @change="loadSelectedAsset">
-					<option disabled value="">– auswählen –</option>
+					<option disabled value="">{{ t( "fi.map.choose" ) }}</option>
 					<option v-for="k in assetKeys" :key="k" :value="k">
 						{{ prettyAssetName(k) }}
 					</option>
@@ -22,20 +22,20 @@
 			</label>
 
 			<label>
-				Konforme Verzerrung
+				{{ t( "fi.map.distortion" ) }}
 				<select v-model="mapName">
-					<option value="identity">Identität</option>
-					<option value="powerN">z ↦ z^n (stark, „Wickeln“)</option>
-					<option value="expScaled">z ↦ exp(k·z) (radial/extrem)</option>
-					<option value="sinScaled">z ↦ sin(k·z) (wellenartig, wild)</option>
-					<option value="mobius">Möbius (Kreise↔Geraden, „Sog“)</option>
-					<option value="joukowski">Joukowski z + 1/z (Airfoil-Look)</option>
-					<option value="weierstrass">Weierstrass-artig: z + a·sin(z) (noch holomorph)</option>
+					<option value="identity">{{ t( "fi.map.identity" ) }}</option>
+					<option value="powerN">{{ t( "fi.map.powerN" ) }}</option>
+					<option value="expScaled">{{ t( "fi.map.expScaled" ) }}</option>
+					<option value="sinScaled">{{ t( "fi.map.sinScaled" ) }}</option>
+					<option value="mobius">{{ t( "fi.map.mobius" ) }}</option>
+					<option value="joukowski">{{ t( "fi.map.joukowski" ) }}</option>
+					<option value="weierstrass">{{ t( "fi.map.weierstrass" ) }}</option>
 				</select>
 			</label>
 
 			<label>
-				Ausgabegröße
+				{{ t( "fi.map.outputSize" ) }}
 				<select v-model.number="outSize">
 					<option :value="512">512×512</option>
 					<option :value="768">768×768</option>
@@ -44,7 +44,7 @@
 			</label>
 
 			<label>
-				Zoom (Fenster)
+				{{ t( "fi.map.zoom" ) }}
 				<input v-model.number="viewZoom"
 					max="6"
 					min="0.15"
@@ -55,7 +55,7 @@
 			</label>
 
 			<label>
-				Center X
+				{{ t( "fi.map.centerX" ) }}
 				<input v-model.number="cx"
 					max="3"
 					min="-3"
@@ -66,7 +66,7 @@
 			</label>
 
 			<label>
-				Center Y
+				{{ t( "fi.map.centerY" ) }}
 				<input v-model.number="cy"
 					max="3"
 					min="-3"
@@ -117,7 +117,7 @@
 			</template>
 
 			<details v-if="mapName === 'mobius'" class="mobius">
-				<summary>Möbius-Parameter (komplex)</summary>
+				<summary>{{ t( "fi.map.mobiusParams" ) }}</summary>
 				<div class="grid">
 					<div class="row">
 						<strong>a</strong><span>re</span><input v-model.number="A.re" step="0.01" type="number" />
@@ -136,14 +136,11 @@
 						<span>im</span><input v-model.number="D.im" step="0.01" type="number" />
 					</div>
 				</div>
-				<small class="hint">
-					Konform (außer an Polstellen). Standard ist Identität: a=1, d=1, b=c=0.
-					„Sog“: setze z.B. c.re=0.35.
-				</small>
+				<small class="hint">{{ t( "fi.map.mobiusHint" ) }}</small>
 			</details>
 
 			<label>
-				Iterationen (für inverse)
+				{{ t( "fi.map.iterations" ) }}
 				<input v-model.number="iters"
 					max="25"
 					min="0"
@@ -153,12 +150,12 @@
 				<span class="mono">{{ iters }}</span>
 			</label>
 		</div>
-		<button class="btn2 ma-2" :disabled="!hasImage" @click="render">Render</button>
-		<button class="btn2 ma-2" :disabled="!hasImage" @click="resetView">Reset</button>
+		<button class="btn2 ma-2" :disabled="!hasImage" @click="render">{{ t( "fi.map.render" ) }}</button>
+		<button class="btn2 ma-2" :disabled="!hasImage" @click="resetView">{{ t( "fi.map.reset" ) }}</button>
 	</div>
 
 	<div class="formulaCard">
-		<div class="title">Aktive Abbildung</div>
+		<div class="title">{{ t( "fi.map.activeMap" ) }}</div>
 		<Katex
 			as="div"
 			class="formulaKatex"
@@ -169,20 +166,16 @@
 
 	<div class="canvases">
 		<div class="pane">
-			<div class="title">Quelle</div>
+			<div class="title">{{ t( "fi.map.source" ) }}</div>
 			<canvas ref="srcCanvas" class="canvas"></canvas>
 		</div>
 		<div class="pane">
-			<div class="title">Konforme Verzerrung</div>
+			<div class="title">{{ t( "fi.map.result" ) }}</div>
 			<canvas ref="dstCanvas" class="canvas"></canvas>
 		</div>
 	</div>
 
-	<p class="note">
-		Die Verzerrungen sind <em>winkeltreu</em>, weil sie aus holomorphen Funktionen bestehen.
-		Singularitäten/Kritische Punkte (z.B. bei <span class="mono">1/z</span>, oder <span class="mono">f'(z)=0</span>) können lokal „ausfressen“ –
-		deshalb ist das Ergebnis bewusst dramatisch.
-	</p>
+	<p class="note" v-html="t( 'fi.map.note' )" />
 </div>
 </template>
 
@@ -190,6 +183,9 @@
 import {
 	computed, onMounted, reactive, ref, watch
 } from "vue";
+import { useI18n } from "@/i18n.mjs";
+
+const { t } = useI18n( "book1/FI" );
 
 /**
  * Assets aus dem Projekt:
@@ -250,7 +246,21 @@ const cInv = ( z: Complex ): Complex => cDiv( { re: 1, im: 0 }, z );
 
 function prettyAssetName( k: string ) {
 	const parts = k.split( "/" );
-	return parts[ parts.length - 1 ];
+	const name = parts[ parts.length - 1 ];
+
+	if ( name.includes( "FI_Eddie" ) ) {
+		return t( "fi.map.assetEddie" );
+	}
+
+	if ( name.includes( "FI_Stockholm" ) ) {
+		return t( "fi.map.assetStockholm" );
+	}
+
+	if ( name.includes( "FI_Vaasa" ) ) {
+		return t( "fi.map.assetVaasa" );
+	}
+
+	return name;
 }
 
 /** ---------- UI state ---------- */
@@ -336,7 +346,7 @@ async function loadImageUrl( url: string ) {
 	img.crossOrigin = "anonymous";
 	await new Promise<void>( ( resolve, reject ) => {
 		img.onload = () => resolve();
-		img.onerror = () => reject( new Error( "Bild konnte nicht geladen werden." ) );
+		img.onerror = () => reject( new Error( t( "fi.map.loadError" ) ) );
 		img.src = url;
 	} );
 

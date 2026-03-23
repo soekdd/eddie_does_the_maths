@@ -1,91 +1,82 @@
 <!-- eslint-disable vue/max-len -->
 <template>
-<AppFrame  :sub-chapter="{
-		einleitung:'Einleitung',
-		'frage': 'Fragestellung',
-		'formel': 'Formel',
-		'winkel': 'Winkelargument',
-		'finnland': 'Länderbeispiel'
-	}"
-	title="Eddie rechnet: Frühstückszettel #3 Uferaufdickung"
+<AppFrame
+	:languages="[ 'de', 'en' ]"
+	:sub-chapter
+	:title="t( 'title' )"
 	:vue-date="__VITE_SFC_MTIME_MS__"
 >
-
 	<template #bookPart>
 		<figure class="exampleFigure">
-			<ImageZoomer title="Eddie knobelt über Wasserflächen">
-				<img alt="Eddie und die Vasa" loading="lazy" :src="titleImg" />
+			<ImageZoomer :title="t( 'imageTitle' )">
+				<img :alt="t( 'imageAlt' )" loading="lazy" :src="titleImg" />
 			</ImageZoomer>
 		</figure>
-		<h3 id="einleitung">Vaasa, 10. August 1985</h3>
+		<h3 id="einleitung">{{ t( "introDate" ) }}</h3>
 		<div class="eddie">
-			<p>Am dritten Tag sitzt Sini mir gegenüber, Kaffee dampft, und ich merke plötzlich: Meine Füße sind
-				fast still. Dafür fängt mein Kopf wieder an zu hüpfen. Der Zettel ist wellig ausgeschnitten wie
-				eine Wasserlinie, und die Frage ist so finnisch, dass sie eigentlich nach Wald riecht: Wie
-				wahrscheinlich ist es, dass ein zufälliger Punkt höchstens einen Kilometer vom Seeufer entfernt
-				liegt? Also: Wie „wassernah“ ist dieses Land wirklich, nicht gefühlt, sondern grob geschätzt?</p>
-			<p>Ich kritzle Finnland auf Küchenrolle, mache blaue Tupfer wie kleine Seen, und dann stelle ich mir
-				vor, ich würde jedem Ufer einen dicken Rand ausbreiten, wie eine Jacke, die man um Wasser legt.
-				Wenn der Rand groß genug ist, frisst er plötzlich riesige Flächen. Und genau da steckt die Idee.</p>
-			<p>Hier zeige ich dir, wie man mit Flächen und Uferlängen abschätzt, ohne sich in Details zu verlieren.
-				Unten kannst du die „Ufer-Aufdickung“ interaktiv selbst verschieben und sehen, wie schnell
-				Finnland zur Wasserkarte wird.</p>
+			<p>{{ t( "book.p1" ) }}</p>
+			<p>{{ t( "book.p2" ) }}</p>
+			<p>{{ t( "book.p3" ) }}</p>
 		</div>
 	</template>
 
 	<template #descriptionPart>
-		<h2 id="frage">Teil 1 - Wie wahrscheinlich ist "maximal 100 m bis zum nächsten See"?</h2>
+		<h2 id="frage">{{ t( "sections.part1.title" ) }}</h2>
 		<div class="eddie">
 			<p>
-				Wir wählen zufällig einen Punkt auf der Landfläche (ohne Seen).
-				Gesucht ist die Wahrscheinlichkeit, dass der Punkt höchstens
-				<Katex tex="h=100\ \mathrm{m}" /> vom nächsten Seeufer entfernt ist.
+				{{ t( "sections.part1.p1Before" ) }}
+				<Katex tex="h=100\ \mathrm{m}" />
+				{{ t( "sections.part1.p1After" ) }}
 			</p>
 			<p>
-				Dazu vergleichen wir
-				<Katex tex="A_{\text{Ufer}}(h)" /> mit der gesamten Landfläche
+				{{ t( "sections.part1.p2Before" ) }}
+				<Katex tex="A_{\text{Ufer}}(h)" />
+				{{ t( "sections.part1.p2Middle" ) }}
 				<Katex tex="A_{\text{Land}}" />.
 			</p>
 		</div>
 
-		<h2 id="formel" class="mt-8">Teil 2 - Formel für die Uferfläche</h2>
-		<UDGraph/>
+		<h2 id="formel" class="mt-8">{{ t( "sections.part2.title" ) }}</h2>
+		<UDGraph />
 		<div class="eddie">
 			<p>
-				Bezeichne mit <Katex tex="d" /> die gesamte Uferlänge und mit <Katex tex="h" /> die Uferbreite.
-				Für einen einzelnen See (eine geschlossene Uferlinie) gilt:
+				{{ t( "sections.part2.p1Before" ) }}
+				<Katex tex="d" />
+				{{ t( "sections.part2.p1Middle" ) }}
+				<Katex tex="h" />
+				{{ t( "sections.part2.p1After" ) }}
 			</p>
 			<div class="kbox">
 				<Katex as="div" display tex="A_{\text{Ufer}}(h)=h\cdot d+\pi h^2" />
 			</div>
 			<p>
-				Der erste Term ist die Summe aller Kantenrechtecke:
+				{{ t( "sections.part2.p2Before" ) }}
 				<Katex tex="\sum_i (h\ell_i)=h\sum_i \ell_i = h\,d" />.
 			</p>
 			<p>
-				Der zweite Term ist die gesamte Eckkorrektur
-				(konvexe Tortenstücke minus konkave Tortenstücke) und ergibt genau
+				{{ t( "sections.part2.p3Before" ) }}
 				<Katex tex="\pi h^2" />.
 			</p>
 			<p>
-				Bei <Katex tex="n" /> getrennten Seen addiert sich dieser Eckterm im additiven Modell zu
+				{{ t( "sections.part2.p4Before" ) }}
+				<Katex tex="n" />
+				{{ t( "sections.part2.p4Middle" ) }}
 				<Katex tex="n\pi h^2" />:
 			</p>
 			<div class="kbox">
 				<Katex as="div" display tex="A_{\text{Ufer,add}}(h)=h\cdot d+n\pi h^2" />
 			</div>
-			<p class="muted">
-				Die reale Uferfläche ist die Vereinigungsfläche aller Uferzonen und damit wegen Überlappung
-				nie größer als diese additive Summe.
-			</p>
+			<p class="muted">{{ t( "sections.part2.note" ) }}</p>
 		</div>
 
-		<h2 id="winkel" class="mt-8">Teil 3 - Warum konkav/konvex egal ist</h2>
+		<h2 id="winkel" class="mt-8">{{ t( "sections.part3.title" ) }}</h2>
 		<div class="eddie">
 			<p>
-				Sei <Katex tex="\varphi_i" /> der signierte Außendrehwinkel an Ecke <Katex tex="i" />
-				(konvex positiv, konkav negativ).
-				Die Sektorfläche an dieser Ecke ist
+				{{ t( "sections.part3.p1Before" ) }}
+				<Katex tex="\varphi_i" />
+				{{ t( "sections.part3.p1Middle" ) }}
+				<Katex tex="i" />
+				{{ t( "sections.part3.p1After" ) }}
 				<Katex tex="\frac{h^2}{2}\varphi_i" />.
 			</p>
 			<div class="kbox">
@@ -97,26 +88,23 @@
 				/>
 			</div>
 			<p>
-				Für <Katex tex="n" /> getrennte Seen gilt entsprechend
-				<Katex tex="\sum \varphi = 2\pi n" /> und damit im additiven Modell
+				{{ t( "sections.part3.p2Before" ) }}
+				<Katex tex="n" />
+				{{ t( "sections.part3.p2Middle" ) }}
+				<Katex tex="\sum \varphi = 2\pi n" />
+				{{ t( "sections.part3.p2After" ) }}
 				<Katex tex="A_{\text{Ecken,add}}=n\pi h^2" />.
 			</p>
-			<p class="muted">
-				Darum bleibt die Formel unabhängig von der Polygonauflösung und auch bei konkaven Teilen gültig.
-			</p>
+			<p class="muted">{{ t( "sections.part3.note" ) }}</p>
 			<div class="kbox">
 				<Katex as="div" display tex="P(\mathrm{Distanz}\le h)\approx \frac{A_{\text{Ufer}}(h)}{A_{\text{Land}}}" />
 			</div>
 		</div>
 
-		<h2 class="mt-8">Teil 4 - Zweistufige Betrachtung</h2>
+		<h2 class="mt-8">{{ t( "sections.part4.title" ) }}</h2>
 		<div class="eddie">
-			<h3>Schritt 4.1 - Stufe 1: Additive Näherung</h3>
-			<p>
-				Im ersten Schritt addieren wir alle lokalen Beiträge unabhängig voneinander:
-				Rechteckanteile entlang der Ufer plus Eckanteile. Für viele getrennte Seen ergibt das
-				eine einfache, gut interpretierbare Startformel.
-			</p>
+			<h3>{{ t( "sections.part4.stage1Title" ) }}</h3>
+			<p>{{ t( "sections.part4.stage1Text" ) }}</p>
 			<div class="kbox">
 				<Katex
 					aligned
@@ -126,16 +114,18 @@
 				/>
 			</div>
 			<p class="muted">
-				Diese Stufe zählt Überlappungen mehrfach. Darum ist sie für kleine
-				<Katex tex="h" /> oft brauchbar, kann für größere <Katex tex="h" />
-				aber unplausibel werden.
+				{{ t( "sections.part4.stage1NoteBefore" ) }}
+				<Katex tex="h" />
+				{{ t( "sections.part4.stage1NoteMiddle" ) }}
+				<Katex tex="h" />
+				{{ t( "sections.part4.stage1NoteAfter" ) }}
 			</p>
 
-			<h3>Schritt 4.2 - Stufe 2: Minkowski-orientierte Korrektur</h3>
+			<h3>{{ t( "sections.part4.stage2Title" ) }}</h3>
 			<p>
-				Mathematisch ist die gesuchte Uferfläche die Vereinigungsfläche einer Aufdickung
-				aller Wasserflächen um den Radius <Katex tex="h" />, abzüglich der Wasserflächen selbst
-				und auf Land begrenzt.
+				{{ t( "sections.part4.stage2TextBefore" ) }}
+				<Katex tex="h" />
+				{{ t( "sections.part4.stage2TextAfter" ) }}
 			</p>
 			<div class="kbox">
 				<Katex
@@ -146,8 +136,9 @@
 				/>
 			</div>
 			<p>
-				Wenn nur aggregierte Daten vorliegen (<Katex tex="n,d,A_{\text{Land}}" />), nutzen wir als
-				pragmatische zweite Stufe eine Überlappungs-Korrektur:
+				{{ t( "sections.part4.stage2ApproxBefore" ) }}
+				<Katex tex="n,d,A_{\text{Land}}" />
+				{{ t( "sections.part4.stage2ApproxAfter" ) }}
 			</p>
 			<div class="kbox">
 				<Katex
@@ -158,11 +149,13 @@
 				/>
 			</div>
 			<p>
-				Die Idee dahinter: Setze
+				{{ t( "sections.part4.stage2IdeaBefore" ) }}
 				<Katex tex="\lambda(h)=\frac{A_{\text{add}}(h)}{A_{\text{Land}}}" />.
-				Dann ist <Katex tex="\lambda" /> die additive mittlere Trefferzahl an einem zufälligen Landpunkt.
-				Unter einer zufälligen Überdeckungsannahme ist die Nicht-Treffer-Wahrscheinlichkeit
-				etwa <Katex tex="\exp(-\lambda)" />, also
+				{{ t( "sections.part4.stage2IdeaMiddle" ) }}
+				<Katex tex="\lambda" />
+				{{ t( "sections.part4.stage2IdeaAfter" ) }}
+				<Katex tex="\exp(-\lambda)" />
+				{{ t( "sections.part4.stage2IdeaEnd" ) }}
 				<Katex tex="P_2=1-\exp(-\lambda)" />.
 			</p>
 			<div class="kbox">
@@ -174,22 +167,29 @@
 				/>
 			</div>
 			<p class="muted">
-				Für kleine <Katex tex="\lambda" /> gilt
+				{{ t( "sections.part4.stage2SmallBefore" ) }}
+				<Katex tex="\lambda" />
+				{{ t( "sections.part4.stage2SmallMiddle" ) }}
 				<Katex tex="K(\lambda)=1-\frac{\lambda}{2}+O(\lambda^2)" />:
-				Die Korrektur ist dann klein. Für große <Katex tex="\lambda" />
-				sättigt <Katex tex="P_2" /> automatisch bei <Katex tex="1" />.
+				{{ t( "sections.part4.stage2SmallAfter" ) }}
+				<Katex tex="\lambda" />
+				{{ t( "sections.part4.stage2SmallEnd" ) }}
+				<Katex tex="P_2" />
+				{{ t( "sections.part4.stage2SmallTail" ) }}
+				<Katex tex="1" />.
 			</p>
 			<p class="muted">
-				Minkowski liefert die exakte Geometrie über die Vereinigungsfläche
-				<Katex tex="(W\oplus B_h)" />. Unser Korrekturfaktor ist nicht selbst ein
-				Minkowski-Satz, sondern eine Näherung für Überlappungen, wenn nur Summenwerte
-				(<Katex tex="n,d,A_{\text{Land}}" />) und keine vollständigen Geometrien vorliegen.
+				{{ t( "sections.part4.stage2DisclaimerBefore" ) }}
+				<Katex tex="(W\oplus B_h)" />
+				{{ t( "sections.part4.stage2DisclaimerMiddle" ) }}
+				<Katex tex="n,d,A_{\text{Land}}" />
+				{{ t( "sections.part4.stage2DisclaimerAfter" ) }}
 			</p>
 		</div>
 	</template>
 
 	<template #interactivePart>
-		<h2 id="finnland">Beispiel: {{ activeCountry.name }}</h2>
+		<h2 id="finnland">{{ t( "interactive.exampleTitle", { country: activeCountry.name } ) }}</h2>
 		<v-select
 			v-model="selectedCountryCode"
 			class="mb-4"
@@ -197,18 +197,20 @@
 			hide-details
 			item-title="name"
 			item-value="code"
-			:items="COUNTRY_DATA"
-			label="Land auswählen"
+			:items="countryOptions"
+			:label="t( 'interactive.countryLabel' )"
 			variant="outlined"
 		/>
 		<div class="eddie">
 			<p>
-				Der Slider steuert <Katex tex="h" /> direkt die Uferflächen:
+				{{ t( "interactive.sliderIntroBefore" ) }}
+				<Katex tex="h" />
+				{{ t( "interactive.sliderIntroAfter" ) }}
 			</p>
 		</div>
 		<v-row align="center" class="controls" dense>
 			<v-col cols="12" md="3" sm="3">
-				<v-label class="meta">Uferbreite h</v-label>
+				<v-label class="meta">{{ t( "interactive.shoreWidthLabel" ) }}</v-label>
 			</v-col>
 			<v-col cols="9" md="7" sm="7">
 				<v-slider
@@ -227,30 +229,29 @@
 				sm="2"
 			>
 				<v-chip color="primary" size="small" variant="tonal">
-					{{ hDistanceKm.toFixed(3) }} m
+					{{ hDistanceMetersLabel }} m
 				</v-chip>
 			</v-col>
 		</v-row>
 		<UDMap
-			:country="activeCountry.code === 'FI' ? 'finland' : 'germany'"
+			:country="activeCountry.mapCountry"
 			:h-distance-meters
 			:probability-percent="mainModel.poissonProbabilityPercent"
 			:shore-width
 		/>
 		<div class="eddie">
-			<p>
-				Die dargestellten Entfernungen sind nicht maßstabsgerecht. Die Anzahl an Wasserflächen ist in der Realität viel größer.
-			</p>
+			<p>{{ t( "interactive.scaleNote" ) }}</p>
 		</div>
 	</template>
 
 	<template #calculationPart>
-		<h2>Berechnung für {{ activeCountry.name }}</h2>
+		<h2>{{ t( "calculation.title", { country: activeCountry.name } ) }}</h2>
 		<div class="eddie">
 			<p>
-				Verwendete Distanzschwelle:
-				<Katex :tex="`h=${hDistanceMeters}\\ \\mathrm{m}=${hDistanceKmTex}\\ \\mathrm{km}`" /> und
-				Kontrollwert <Katex :tex="`h=${hStressKm}\\ \\mathrm{km}`" />.
+				{{ t( "calculation.thresholdBefore" ) }}
+				<Katex :tex="`h=${hDistanceMeters}\\ \\mathrm{m}=${hDistanceKmTex}\\ \\mathrm{km}`" />
+				{{ t( "calculation.thresholdAfter" ) }}
+				<Katex :tex="`h=${hStressKm}\\ \\mathrm{km}`" />.
 			</p>
 			<div id="werteLand" class="kbox">
 				<Katex
@@ -260,7 +261,7 @@
 					:tex="texAlignedBlock([ texCountryLakesCount, texCountryShoreline, texCountryLandArea ])"
 				/>
 			</div>
-			<h3>Schritt 4.1 - Stufe 1: Additive Näherung</h3>
+			<h3>{{ t( "calculation.stage1Title" ) }}</h3>
 			<div class="kbox">
 				<Katex
 					aligned
@@ -277,7 +278,7 @@
 					:tex="texAlignedBlock([ texStage1Stress, texStage1ProbStress ])"
 				/>
 			</div>
-			<h3>Stufe 2: Überlappungskorrigierte Näherung</h3>
+			<h3>{{ t( "calculation.stage2Title" ) }}</h3>
 			<div class="kbox">
 				<Katex
 					aligned
@@ -288,9 +289,10 @@
 			</div>
 		</div>
 	</template>
+
 	<template #footer>
 		<p class="muted">
-			<a href="https://matheplanet.com/default3.html?topic=267213=103">Vielen Dank für die Herleitung von Kitaktus und haribo</a>
+			<a href="https://matheplanet.com/default3.html?topic=267213=103">{{ t( "footerLink" ) }}</a>
 		</p>
 	</template>
 </AppFrame>
@@ -301,31 +303,53 @@ import {
 	computed,
 	ref
 } from "vue";
+import { useI18n } from "@/i18n.mjs";
 import titleImg from "./UD.webp";
 import UDGraph from "./UD_Graph.vue";
 import UDMap from "./UD_Map.vue";
 
-const COUNTRY_DATA = [
+const {
+	locale,
+	t,
+	tm
+} = useI18n( "book1/UD" );
+
+const BASE_COUNTRY_DATA = [
 	{
 		code:        "FI",
-		name:        "Finnland",
+		mapCountry:  "finland",
 		lakesCount:  187888,
 		shorelineKm: 214896,
 		landAreaKm2: 304000
 	},
 	{
 		code:        "DE",
-		name:        "Deutschland",
+		mapCountry:  "germany",
 		lakesCount:  12000,
 		shorelineKm: 11000,
 		landAreaKm2: 353674
 	}
 ];
 
-const selectedCountryCode = ref( COUNTRY_DATA[ 0 ]?.code ?? "FI" );
+const selectedCountryCode = ref( BASE_COUNTRY_DATA[ 0 ]?.code ?? "FI" );
 const shoreWidth = ref( 2.5 );
 const minBorder = 0;
 const maxBorder = 50;
+const hStressKm = 1;
+
+const subChapter = computed( () => tm( "subChapter" ) ?? {} );
+const numberFormatter0 = computed( () => new Intl.NumberFormat( locale.value, { maximumFractionDigits: 0 } ) );
+
+const countryOptions = computed( () => BASE_COUNTRY_DATA.map( ( country ) => ( {
+	...country,
+	name: t( `countries.${country.code}.name` )
+} ) ) );
+
+const activeCountry = computed( () => {
+	const selected = countryOptions.value.find( ( country ) => country.code === selectedCountryCode.value );
+	return selected ?? countryOptions.value[ 0 ];
+} );
+
 const hDistanceKm = computed( () => {
 	const span = maxBorder - minBorder;
 
@@ -336,15 +360,14 @@ const hDistanceKm = computed( () => {
 	const normalized = ( shoreWidth.value - minBorder ) / span;
 	return Math.min( 1, Math.max( 0, normalized ) );
 } );
+
 const hDistanceKmTex = computed( () => fmtTexNum( hDistanceKm.value, 3 ) );
 const hDistanceMeters = computed( () => Math.round( hDistanceKm.value * 1000 ) );
-const hStressKm = 1;
-
-const activeCountry = computed( () =>
-	COUNTRY_DATA.find( ( c ) => c.code === selectedCountryCode.value ) ?? COUNTRY_DATA[ 0 ] );
+const hDistanceMetersLabel = computed( () => numberFormatter0.value.format( hDistanceMeters.value ) );
 
 const mainModel = computed( () => computeModelValues( hDistanceKm.value, activeCountry.value ) );
 const stressModel = computed( () => computeModelValues( hStressKm, activeCountry.value ) );
+
 const texCountryLakesCount = computed( () =>
 	`n_{\\text{Seen}}=${fmtIntMath( activeCountry.value.lakesCount )}` );
 const texCountryShoreline = computed( () =>
@@ -353,28 +376,28 @@ const texCountryLandArea = computed( () =>
 	`A_{\\text{Land}}=${fmtIntMath( activeCountry.value.landAreaKm2 )}\\ \\mathrm{km}^2` );
 
 const texStage1Main = computed( () => [
-	`A_{\\text{add}}(${fmtTexNum( mainModel.value.hKm, 3 )})=${
-		fmtTexNum( mainModel.value.hKm, 3 )}\\cdot ${activeCountry.value.shorelineKm}`,
-	`+${activeCountry.value.lakesCount}\\pi\\cdot ${fmtTexNum( mainModel.value.hKm, 3 )}^2=`,
+	`A_{\\text{add}}(${fmtTexNum( mainModel.value.hKm, 3 )})=`,
+	`${fmtTexNum( mainModel.value.hKm, 3 )}\\cdot ${fmtIntMath( activeCountry.value.shorelineKm )}`,
+	`+${fmtIntMath( activeCountry.value.lakesCount )}\\pi\\cdot ${fmtTexNum( mainModel.value.hKm, 3 )}^2=`,
 	`${fmtNum( mainModel.value.addAreaKm2, 3 )}\\ \\mathrm{km}^2`
 ].join( "" ) );
 
 const texStage1ProbMain = computed( () => [
 	`P_{1}\\approx\\frac{A_{\\text{add}}}{A_{\\text{Land}}}=\\frac{${fmtNum( mainModel.value.addAreaKm2, 3 )}}`,
-	`{${activeCountry.value.landAreaKm2}}=${fmtNum( mainModel.value.addProbability, 6 )}\\approx `,
+	`{${fmtIntMath( activeCountry.value.landAreaKm2 )}}=${fmtNum( mainModel.value.addProbability, 6 )}\\approx `,
 	`${fmtNum( mainModel.value.addProbabilityPercent, 2 )}\\%`
 ].join( "" ) );
 
 const texStage1Stress = computed( () => [
-	`A_{\\text{add}}(${fmtTexNum( stressModel.value.hKm, 3 )})=${
-		fmtTexNum( stressModel.value.hKm, 3 )}\\cdot ${activeCountry.value.shorelineKm}`,
-	`+${activeCountry.value.lakesCount}\\pi\\cdot ${fmtTexNum( stressModel.value.hKm, 3 )}^2=`,
+	`A_{\\text{add}}(${fmtTexNum( stressModel.value.hKm, 3 )})=`,
+	`${fmtTexNum( stressModel.value.hKm, 3 )}\\cdot ${fmtIntMath( activeCountry.value.shorelineKm )}`,
+	`+${fmtIntMath( activeCountry.value.lakesCount )}\\pi\\cdot ${fmtTexNum( stressModel.value.hKm, 3 )}^2=`,
 	`${fmtNum( stressModel.value.addAreaKm2, 3 )}\\ \\mathrm{km}^2`
 ].join( "" ) );
 
 const texStage1ProbStress = computed( () => [
-	`P_{1}(${stressModel.value.hKm})\\approx\\frac{${fmtNum( stressModel.value.addAreaKm2, 3 )}}`,
-	`{${activeCountry.value.landAreaKm2}}=${fmtNum( stressModel.value.addProbability, 6 )}\\approx `,
+	`P_{1}(${fmtTexNum( stressModel.value.hKm, 3 )})\\approx\\frac{${fmtNum( stressModel.value.addAreaKm2, 3 )}}`,
+	`{${fmtIntMath( activeCountry.value.landAreaKm2 )}}=${fmtNum( stressModel.value.addProbability, 6 )}\\approx `,
 	`${fmtNum( stressModel.value.addProbabilityPercent, 2 )}\\%`
 ].join( "" ) );
 
@@ -436,13 +459,14 @@ function fmtIntMath( value ) {
 }
 
 function fmtNum( value, digits = 2 ) {
-	return Number( value ).toFixed( digits )
-		.replace( ".", "," );
+	const fixed = Number( value ).toFixed( digits );
+	return locale.value === "de" ? fixed.replace( ".", "," ) : fixed;
 }
 
 function fmtTexNum( value, digits = 3 ) {
-	return Number( value ).toFixed( digits )
+	const compact = Number( value ).toFixed( digits )
 		.replace( /(?:\.0+|(\.\d+?)0+)$/, "$1" );
+	return locale.value === "de" ? compact.replace( ".", "," ) : compact;
 }
 </script>
 

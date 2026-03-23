@@ -1,69 +1,39 @@
 <!-- eslint-disable vue/max-len -->
 <template>
-<AppFrame  :sub-chapter="{
-		einleitung: 'Einleitung',
-		eigengewicht: 'Eigengewicht',
-		schnittgroessen: 'Schnittgrößen',
-		sicherheitsansatz: 'DIN vs. TGL',
-		nachweis: 'Querschnittsnachweis',
-		zahlenbeispiel: 'Zahlenbeispiel',
-		bewertung: 'Bewertung',
-		interaktiv: 'Interaktiv'
-	}"
-	title="Eddie rechnet: Baustatik #2 DIN vs. TGL"
+<AppFrame
+	:languages="[ 'de', 'en' ]"
+	:sub-chapter
+	:title="t( 'bd.title' )"
 	:vue-date="__VITE_SFC_MTIME_MS__"
 >
 	<template #bookPart>
 		<figure class="exampleFigure">
-			<ImageZoomer title="E&V albern über Sicherheitsfaktoren rum">
-				<img alt="Eddie mit Stahlträger" loading="lazy" :src="titleImg" />
+			<ImageZoomer :title="t( 'bd.imageTitle' )">
+				<img :alt="t( 'bd.imageAlt' )" loading="lazy" :src="titleImg" />
 			</ImageZoomer>
 		</figure>
-		<h3 id="einleitung">Stockholm, 23. Oktober 1985</h3>
+		<h3 id="einleitung">{{ t( "bd.introDate" ) }}</h3>
 		<div class="eddie">
-			<p>Ich sitze in dieser viel zu sauberen Uni-Bibliothek und fühle mich trotzdem wie ein Fleck
-				auf frisch gewischtem Boden. Draußen pfeift der Wind über die Brücken, drinnen riecht alles
-				nach Holz und Papier. Ich schleiche, ich zähle Schritte, ich verstecke mich sogar vor Blicken.</p>
-			<p>Und dann sehe ich es: <b>Dresden</b>. Schwarz auf weiß. Ein Bauvorhaben, ein West-Architekt,
-				ein DDR-Hotel – und auf dem Tisch liegen <b>DIN</b> und <b>TGL</b> wie zwei Notenblätter fürs
-				gleiche Lied. Nur dass hier jemand die Sicherheitszuschläge nicht vergleicht, sondern einfach
-				zusammenmultipliziert. Wie drei Helme auf einmal. Warm, schwer, teuer – und leider Quatsch.</p>
-			<p>Bevor ich mich wieder in die Regale verkrieche, mache ich kurz mein Mathehirn an: <em>Was sagen
-				DIN und TGL wirklich – und wie groß wird der Fehler, wenn man’s falsch macht?</em> Unten kannst
-				du genau das in einer Simulation selbst ausprobieren: dieselbe Last, einmal nach DIN, einmal nach TGL.</p>
+			<p v-html="t( 'bd.book.p1' )" />
+			<p v-html="t( 'bd.book.p2' )" />
+			<p v-html="t( 'bd.book.p3' )" />
 		</div>
 	</template>
 	<template #descriptionPart>
-		<h2 id="system">Teil 1 - Punktlast mittig + Eigengewicht auf beidseitig gelenkig gelagertem Stahlträger</h2>
+		<h2 id="system">{{ t( "bd.sections.part1.title" ) }}</h2>
 		<div class="eddie">
-			<p>
-				Wir betrachten einen einfach gelagerten Träger (beidseitig drehbar/gelenkig)
-				mit Stützweite <Katex tex="L" />, einer Punktlast
-				<Katex tex="P" /> in Feldmitte (<Katex tex="x=L/2" />) und
-				einer gleichmäßig verteilten Streckenlast aus Eigengewicht
-				<Katex tex="q_g\,[\mathrm{kN/m}]" />.
-			</p>
-			<p>
-				Der Nachweis erfolgt über den Biegemomenten-Tragfähigkeitsvergleich:
-			</p>
+			<p v-html="t( 'bd.sections.part1.p1' )" />
+			<p>{{ t( "bd.sections.part1.p2" ) }}</p>
 			<div class="kbox">
 				<Katex as="div" display tex="M_{Ed}\le M_{Rd}" />
 			</div>
-			<p>
-				Dabei koppeln wir Einwirkungen (Lasten mit Sicherheitsbeiwerten <Katex tex="\gamma" />)
-				und Widerstand (Materialseite mit <Katex tex="f_{yd}=f_y/\gamma_M" />).
-			</p>
-			<p class="muted">
-				Heute führt die DIN ebenfalls getrennte Sicherheitsbeiwerte.
-				Doch wir sind ja im Jahre 1985, da war das bei vielen DIN-Normen noch nicht so.
-				Deshalb wird hier die Aufgabenlogik mit gleich faktorisierten DIN-Lastanteilen einer
-				TGL-Variante mit niedrigerem Eigengewichtsbeiwert gegenübergestellt.
-			</p>
+			<p v-html="t( 'bd.sections.part1.p3' )" />
+			<p class="muted" v-html="t( 'bd.sections.part1.p4' )" />
 		</div>
 
-		<h2 id="eigengewicht" class="mt-8">Teil 2 - Eigengewicht als Streckenlast <Katex tex="q_g" /></h2>
+		<h2 id="eigengewicht" class="mt-8" v-html="t( 'bd.sections.part2.title' )" />
 		<div class="eddie">
-			<p>Das Eigengewicht pro Meter folgt aus der Querschnittsfläche <Katex tex="A" />:</p>
+			<p v-html="t( 'bd.sections.part2.p1' )" />
 			<div class="kbox">
 				<Katex aligned
 					as="div"
@@ -71,38 +41,33 @@
 					tex="q_g&=\rho_{\text{Stahl}}\,g\,A\\q_g\,[\mathrm{kN/m}]&=\frac{\rho g}{1000}\,A"
 				/>
 			</div>
-			<p>
-				mit <Katex tex="\rho_{\text{Stahl}}\approx 7850\,\mathrm{kg/m^3}" /> und
-				<Katex tex="g\approx 9{,}81\,\mathrm{m/s^2}" />.
-			</p>
-			<p>
-				Wichtig: <Katex tex="q_g" /> hängt vom gewählten Querschnitt ab. Der Entwurf ist daher leicht iterativ.
-			</p>
+			<p v-html="t( 'bd.sections.part2.p2' )" />
+			<p v-html="t( 'bd.sections.part2.p3' )" />
 			<ol>
-				<li>Querschnitt annehmen und <Katex tex="q_g" /> berechnen.</li>
-				<li><Katex tex="M_{Ed}" /> bestimmen und erforderliches <Katex tex="W" /> ableiten.</li>
-				<li>Querschnitt anpassen und erneut prüfen.</li>
+				<li v-html="t( 'bd.sections.part2.step1' )" />
+				<li v-html="t( 'bd.sections.part2.step2' )" />
+				<li v-html="t( 'bd.sections.part2.step3' )" />
 			</ol>
 		</div>
 		<figure class="exampleFigure">
-			<ImageZoomer title="Einfache Punktlast + Eigengewicht">
+			<ImageZoomer :title="t( 'bd.sections.part2.graphTitle' )">
 				<BDGraph v-bind="graphProps" reduced />
 			</ImageZoomer>
 		</figure>
-		<h2 id="schnittgroessen" class="mt-8">Teil 3 - Schnittgrößen (charakteristisch) für Punktlast + Gleichlast</h2>
+		<h2 id="schnittgroessen" class="mt-8">{{ t( "bd.sections.part3.title" ) }}</h2>
 		<div class="eddie">
-			<h3>Schritt 3.1 - Auflagerreaktionen</h3>
-			<p>Aus Symmetrie folgt:</p>
+			<h3>{{ t( "bd.sections.part3.step31" ) }}</h3>
+			<p>{{ t( "bd.sections.part3.p1" ) }}</p>
 			<div class="kbox">
 				<Katex as="div" display tex="R_A=R_B=\frac{P}{2}+\frac{q_g L}{2}" />
 			</div>
 
-			<h3>Schritt 3.2 - Querkraft (maximal am Auflager)</h3>
+			<h3>{{ t( "bd.sections.part3.step32" ) }}</h3>
 			<div class="kbox">
 				<Katex as="div" display tex="V_{k,\max}=\frac{P}{2}+\frac{q_g L}{2}" />
 			</div>
 
-			<h3>Schritt 3.3 - Biegemoment (maximal in Feldmitte)</h3>
+			<h3>{{ t( "bd.sections.part3.step33" ) }}</h3>
 			<div class="kbox">
 				<Katex aligned
 					as="div"
@@ -112,11 +77,11 @@
 			</div>
 		</div>
 
-		<h2 id="sicherheitsansatz" class="mt-8">Teil 4 - Sicherheitsansatz der Einwirkungen: DIN vs. TGL</h2>
+		<h2 id="sicherheitsansatz" class="mt-8">{{ t( "bd.sections.part4.title" ) }}</h2>
 		<div class="eddie">
 			<v-row dense>
 				<v-col cols="12" md="6">
-					<h3>Schritt 4.1 - DIN-Ansatz: gleicher Faktor auf beide Lastanteile</h3>
+					<h3>{{ t( "bd.sections.part4.step41" ) }}</h3>
 					<div class="kbox">
 						<Katex aligned
 							as="div"
@@ -124,12 +89,10 @@
 							tex="P_d&=\gamma_{\text{DIN}}P\\q_{g,d}&=\gamma_{\text{DIN}}q_g\\M_{Ed,\text{DIN}}&=\gamma_{\text{DIN}}\left(\frac{P L}{4}+\frac{q_g L^2}{8}\right)"
 						/>
 					</div>
-					<p>
-						Dieser gleichfaktorige Ansatz in der DIN ist heute nicht mehr üblich.
-					</p>
+					<p>{{ t( "bd.sections.part4.p1" ) }}</p>
 				</v-col>
 				<v-col cols="12" md="6">
-					<h3>Schritt 4.2 - TGL-Ansatz: Verkehrslast wie DIN, Eigengewicht niedriger</h3>
+					<h3>{{ t( "bd.sections.part4.step42" ) }}</h3>
 					<div class="kbox">
 						<Katex aligned
 							as="div"
@@ -137,22 +100,18 @@
 							tex="P_d&=\gamma_Q P\\q_{g,d}&=\gamma_G q_g,\qquad \gamma_G<\gamma_{\text{DIN}}\\M_{Ed,\text{TGL}}&=\gamma_Q\frac{P L}{4}+\gamma_G\frac{q_g L^2}{8}\\"
 						/>
 					</div>
-					<p>
-						Die Idee: Eigengewicht ist meist genauer bekannt als Verkehrslast und kann deshalb geringer faktorisiert werden.
-					</p>
+					<p>{{ t( "bd.sections.part4.p2" ) }}</p>
 				</v-col>
 			</v-row>
 
-			<h3>Schritt 4.3 - Mathematischer Kernausdruck</h3>
+			<h3>{{ t( "bd.sections.part4.step43" ) }}</h3>
 			<div class="kbox">
 				<Katex as="div" display tex="M_{Ed,\text{DIN}}-M_{Ed,\text{TGL}}=(\gamma_{\text{DIN}}-\gamma_G)\,\frac{q_g L^2}{8}" />
 			</div>
-			<p>
-				Der Unterschied entsteht nur über den Eigengewichtsanteil und wächst bei großen Spannweiten oder schweren Trägern.
-			</p>
+			<p>{{ t( "bd.sections.part4.p3" ) }}</p>
 		</div>
 
-		<h2 id="nachweis" class="mt-8">Teil 5 - Querschnittsnachweis über Widerstandsmoment <Katex tex="W" /></h2>
+		<h2 id="nachweis" class="mt-8" v-html="t( 'bd.sections.part5.title' )" />
 		<div class="eddie">
 			<div class="kbox">
 				<Katex aligned
@@ -161,12 +120,10 @@
 					tex="\sigma_{Ed}&=\frac{M_{Ed}}{W}\le f_{yd}\\W\ge W_{\text{erf}}&=\frac{M_{Ed}}{f_{yd}}\\f_{yd}&=\frac{f_y}{\gamma_M}"
 				/>
 			</div>
-			<p>
-				Die Gegenüberstellung DIN/TGL bleibt konsistent, solange <Katex tex="f_{yd}" /> identisch behandelt wird.
-			</p>
+			<p v-html="t( 'bd.sections.part5.p1' )" />
 		</div>
 		<figure class="exampleFigure">
-			<ImageZoomer title="Dimmensionierung eines I-Trägers">
+			<ImageZoomer :title="t( 'bd.sections.part5.graphTitle' )">
 				<BSGraph
 					:bf="100"
 					:h="200"
@@ -178,15 +135,15 @@
 				/>
 			</ImageZoomer>
 		</figure>
-		<h2 id="zahlenbeispiel" class="mt-8">Teil 6 - Zahlenbeispiel</h2>
+		<h2 id="zahlenbeispiel" class="mt-8">{{ t( "bd.sections.part6.title" ) }}</h2>
 		<div class="eddie">
-			<h3>Schritt 6.1 - Gewählte Parameter</h3>
+			<h3>{{ t( "bd.sections.part6.step61" ) }}</h3>
 			<ul>
 				<li><Katex :tex="`L=${fmtMath( inputs.Lm, 0 )}\\,\\mathrm{m}`" /></li>
-				<li><Katex :tex="`P=${fmtMath( inputs.PkN, 0 )}\\,\\mathrm{kN}`" /> (Punktlast in Feldmitte)</li>
+				<li><Katex :tex="`P=${fmtMath( inputs.PkN, 0 )}\\,\\mathrm{kN}`" /> ({{ t( "bd.sections.part6.pointLoadMid" ) }})</li>
 				<li>
 					DIN: <Katex :tex="`\\gamma_{\\text{DIN}}=${fmtMath( inputs.gammaDIN, 2 )}`" />
-					(auf beide Lasten gleich)
+					({{ t( "bd.sections.part6.sameLoads" ) }})
 				</li>
 				<li>
 					TGL:
@@ -197,7 +154,7 @@
 					<Katex :tex="`f_y=${fmtMath( materialBase.fyNmm2, 0 )}\\,\\mathrm{N/mm^2},\\;\\gamma_M=${fmtMath( materialBase.gammaM, 1 )}\\Rightarrow f_{yd}=${fmtMath( fyd, 0 )}\\,\\mathrm{N/mm^2}`" />
 				</li>
 			</ul>
-			<p>Geschweißter I-Träger (Dimensionierung über <Katex tex="t_f" />):</p>
+			<p v-html="t( 'bd.sections.part6.weldedBeam' )" />
 			<div class="kbox">
 				<Katex
 					as="div"
@@ -206,7 +163,7 @@
 				/>
 			</div>
 
-			<h3>Schritt 6.2 - Eigengewicht aus Geometrie</h3>
+			<h3>{{ t( "bd.sections.part6.step62" ) }}</h3>
 			<div class="kbox">
 				<Katex aligned
 					as="div"
@@ -217,8 +174,8 @@
 
 			<v-row dense>
 				<v-col cols="12" md="6">
-					<h3>Schritt 6.3 - DIN-Entwurf (gleiches <Katex tex="\gamma" />)</h3>
-					<p>Praktisch gerundet: <Katex :tex="`t_f=${fmtMath( tfDinMm, 0 )}\\,\\mathrm{mm}`" />.</p>
+					<h3 v-html="t( 'bd.sections.part6.step63' )" />
+					<p>{{ t( "bd.sections.part6.practicalRounded" ) }} <Katex :tex="`t_f=${fmtMath( tfDinMm, 0 )}\\,\\mathrm{mm}`" />.</p>
 					<div class="kbox">
 						<Katex
 							aligned
@@ -227,11 +184,11 @@
 							:tex="texDinDesignBlock"
 						/>
 					</div>
-					<p><strong>{{ isDinOk ? "DIN erfüllt." : "DIN nicht erfüllt." }}</strong></p>
+					<p><strong>{{ isDinOk ? t( "bd.sections.part6.dinOk" ) : t( "bd.sections.part6.dinNotOk" ) }}</strong></p>
 				</v-col>
 				<v-col cols="12" md="6">
-					<h3>Schritt 6.4 - TGL-Entwurf (Eigengewicht niedriger faktorisiert)</h3>
-					<p>Praktisch gerundet: <Katex :tex="`t_f=${fmtMath( tfTglMm, 0 )}\\,\\mathrm{mm}`" />.</p>
+					<h3 v-html="t( 'bd.sections.part6.step64' )" />
+					<p>{{ t( "bd.sections.part6.practicalRounded" ) }} <Katex :tex="`t_f=${fmtMath( tfTglMm, 0 )}\\,\\mathrm{mm}`" />.</p>
 					<div class="kbox">
 						<Katex
 							aligned
@@ -240,71 +197,53 @@
 							:tex="texTglDesignBlock"
 						/>
 					</div>
-					<p><strong>{{ isTglOk ? "TGL erfüllt." : "TGL nicht erfüllt." }}</strong></p>
+					<p><strong>{{ isTglOk ? t( "bd.sections.part6.tglOk" ) : t( "bd.sections.part6.tglNotOk" ) }}</strong></p>
 				</v-col>
 			</v-row>
 
-			<h3>Schritt 6.5 - Sichtbares Ergebnis</h3>
+			<h3>{{ t( "bd.sections.part6.step65" ) }}</h3>
 			<ul>
-				<li>DIN benötigt in dieser Konstellation: <Katex :tex="`t_f=${fmtMath( tfDinMm, 0 )}\\,\\mathrm{mm}`" /></li>
-				<li>TGL erlaubt: <Katex :tex="`t_f=${fmtMath( tfTglMm, 0 )}\\,\\mathrm{mm}`" /></li>
+				<li>{{ t( "bd.sections.part6.dinNeeds" ) }} <Katex :tex="`t_f=${fmtMath( tfDinMm, 0 )}\\,\\mathrm{mm}`" /></li>
+				<li>{{ t( "bd.sections.part6.tglAllows" ) }} <Katex :tex="`t_f=${fmtMath( tfTglMm, 0 )}\\,\\mathrm{mm}`" /></li>
 			</ul>
-			<p>
-				Der TGL-Träger ist damit rechnerisch schwächer: geringeres erforderliches
-				<Katex tex="W" /> (hier etwa <Katex :tex="`${fmtMath( wReqReductionPercent, 1, true )}\\%`" /> weniger) und geringeres Eigengewicht
-				(ca. <Katex :tex="`${fmtMath( qgDinKgM, 0 )}-${fmtMath( qgTglKgM, 0 )}\\approx ${fmtMath( weightDeltaKgM, 1, true )}\\,\\mathrm{kg/m}`" />).
-			</p>
+			<p
+				v-html="t( 'bd.sections.part6.p1', {
+					wReduction: `${fmtMath( wReqReductionPercent, 1, true )}\\%`,
+					qgDin:      fmtMath( qgDinKgM, 0 ),
+					qgTgl:      fmtMath( qgTglKgM, 0 ),
+					weightDelta: fmtMath( weightDeltaKgM, 1, true )
+				} )"
+			/>
 		</div>
 
-		<h2 id="bewertung" class="mt-8">Teil 7 - Abschließende Bewertung</h2>
+		<h2 id="bewertung" class="mt-8">{{ t( "bd.sections.part7.title" ) }}</h2>
 		<div class="eddie">
-			<h3>Schritt 7.1 - Warum der TGL-Gedanke plausibel wirkt</h3>
-			<p>
-				Eigengewicht ist oft besser bekannt (kleinere Streuung) als Verkehrslast.
-				Daher ist ein kleinerer Zuschlag für <Katex tex="G" /> und ein größerer für
-				<Katex tex="Q" /> aus probabilistischer Sicht nachvollziehbar.
-			</p>
+			<h3>{{ t( "bd.sections.part7.step71" ) }}</h3>
+			<p v-html="t( 'bd.sections.part7.p1' )" />
 
-			<h3>Schritt 7.2 - Warum rechnerisch schwächere Bauteile herauskommen</h3>
+			<h3>{{ t( "bd.sections.part7.step72" ) }}</h3>
 			<div class="kbox">
 				<Katex as="div" display tex="\Delta M_{Ed}=(\gamma_{\text{DIN}}-\gamma_G)\,\frac{q_g L^2}{8}" />
 			</div>
-			<p>
-				Wenn <Katex tex="M_{Ed}" /> sinkt, sinkt auch <Katex tex="W_{\text{erf}}" />.
-				Damit werden kleinere Profile bzw. dünnere Flansche zulässig. Wie im interaktiven Teil sichtbar, führt das gelegentlich zu einem leichteren Träger. Ingesamt ist der Unterschied aber moderat (hier ca. 10% weniger Eigengewicht).
-			</p>
+			<p v-html="t( 'bd.sections.part7.p2' )" />
 
-			<h3>Schritt 7.3 - Sicherheitsphilosophischer Haken</h3>
-			<p>
-				Schwächer bedeutet nicht automatisch unsicher, solange Last- und Widerstandsseite konsistent kalibriert sind.
-				Wenn jedoch nur der Eigengewichtsfaktor reduziert wird und alles andere gleich bleibt,
-				sinkt die rechnerische Reserve gegen nicht modellierte Effekte
-				(z.B. Korrosion, Imperfektionen, Montagezustände, Zusatzlasten, Dynamik).
-			</p>
-			<p>
-				Dazu passt auch die historische Entwicklung: Die DIN wurde später angepasst und rechnet heute
-				ebenfalls mit getrennten Sicherheitsbeiwerten für ständige und veränderliche Einwirkungen.
-			</p>
-			<p class="muted">
-				Der gleichfaktorige DIN-Weg wirkt oft grober, ist aber robust gegenüber Modelllücken.
-				Der differenzierte TGL-Weg ist eleganter, setzt jedoch voraus, dass die Modellannahmen gut passen.
-			</p>
+			<h3>{{ t( "bd.sections.part7.step73" ) }}</h3>
+			<p v-html="t( 'bd.sections.part7.p3' )" />
+			<p>{{ t( "bd.sections.part7.p4" ) }}</p>
+			<p class="muted">{{ t( "bd.sections.part7.p5" ) }}</p>
 		</div>
 	</template>
 
 	<template #interactivePart>
-		<h2 id="interaktiv">Interaktive Systemdarstellung</h2>
+		<h2 id="interaktiv">{{ t( "bd.interactive.title" ) }}</h2>
 		<div class="eddie">
-			<p>
-				Die Eingaben steuern die Lastannahmen und Sicherheitsbeiwerte.
-				Die SVG-Skizze zeigt das statische System in üblicher TM-Darstellung für DIN- und TGL-Fall.
-			</p>
+			<p>{{ t( "bd.interactive.intro" ) }}</p>
 		</div>
 
 		<v-sheet border class="pa-4" rounded="lg">
 			<v-row dense>
 				<v-col cols="12" md="6">
-					<h3 class="text-subtitle-1 mb-2">System und Lasten</h3>
+					<h3 class="text-subtitle-1 mb-2">{{ t( "bd.interactive.systemLoads" ) }}</h3>
 
 					<v-row align="center" class="controlRow" dense>
 						<v-col cols="12" md="4" sm="4">
@@ -426,15 +365,12 @@
 						density="comfortable"
 						type="info"
 						variant="tonal"
-					>
-						Für DIN und TGL wird jeweils
-						<Katex tex="t_f" /> aus dem Nachweis berechnet; daraus folgt
-						das Eigengewicht <Katex tex="q_g" />.
-					</v-alert>
+						v-html="t( 'bd.interactive.alert' )"
+					/>
 				</v-col>
 
 				<v-col cols="12" md="6">
-					<h3 class="text-subtitle-1 mb-2">Querschnitt und Material</h3>
+					<h3 class="text-subtitle-1 mb-2">{{ t( "bd.interactive.sectionMaterial" ) }}</h3>
 					<div class="kbox">
 						<Katex
 							as="div"
@@ -468,11 +404,24 @@ import {
 	h,
 	reactive
 } from "vue";
+import { useI18n } from "@/i18n.mjs";
 
 import titleImg from "./BD.webp";
 import BDGraph from "./BD_Graph.vue";
 import BSGraph from "../BS/BS_Graph.vue";
 
+const { t } = useI18n( "book1/BD" );
+
+const subChapter = computed( () => ( {
+	einleitung:        t( "bd.subChapter.einleitung" ),
+	eigengewicht:      t( "bd.subChapter.eigengewicht" ),
+	schnittgroessen:   t( "bd.subChapter.schnittgroessen" ),
+	sicherheitsansatz: t( "bd.subChapter.sicherheitsansatz" ),
+	nachweis:          t( "bd.subChapter.nachweis" ),
+	zahlenbeispiel:    t( "bd.subChapter.zahlenbeispiel" ),
+	bewertung:         t( "bd.subChapter.bewertung" ),
+	interaktiv:        t( "bd.subChapter.interaktiv" )
+} ) );
 const inputs = reactive( {
 	Lm:       25,
 	PkN:      100,

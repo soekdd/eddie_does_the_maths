@@ -4,7 +4,7 @@
 		<!-- Graph-Toggle (oben links auf der Grafik) -->
 		<button
 			class="graphToggle mono"
-			:title="`Graph wechseln: ${graph.name}`"
+			:title="t( 'graphs.euler.switchGraph', { name: graph.name } )"
 			type="button"
 			@click.stop="toggleGraph"
 		>
@@ -12,7 +12,7 @@
 		</button>
 
 		<svg
-			:aria-label="`Eulerspaziergang – ${graph.name}`"
+			:aria-label="t( 'graphs.euler.aria', { name: graph.name } )"
 			class="seGraphSvg"
 			role="img"
 			:viewBox="`0 0 ${size} ${size}`"
@@ -58,22 +58,25 @@
 	</div>
 
 	<div class="seGraphMeta mono">
-		<div><b>Graph</b> = {{ graph.name }}</div>
-		<div><b>Euler</b> = {{ eulerInfo.text }}</div>
-		<div><b>Start</b> = {{ startId ?? "–" }}</div>
-		<div><b>Ziel</b> = {{ endId ?? "–" }}</div>
-		<div><b>Kanten</b> = {{ graph.edges.length }}</div>
-		<div><b>Schritte</b> = {{ Math.max(0, trailVertices.length - 1) }}</div>
+		<div><b>{{ t( "graphs.euler.graph" ) }}</b> = {{ graph.name }}</div>
+		<div><b>{{ t( "graphs.euler.euler" ) }}</b> = {{ eulerInfo.text }}</div>
+		<div><b>{{ t( "graphs.euler.start" ) }}</b> = {{ startId ?? "-" }}</div>
+		<div><b>{{ t( "graphs.euler.end" ) }}</b> = {{ endId ?? "-" }}</div>
+		<div><b>{{ t( "graphs.euler.edges" ) }}</b> = {{ graph.edges.length }}</div>
+		<div><b>{{ t( "graphs.euler.steps" ) }}</b> = {{ Math.max( 0, trailVertices.length - 1 ) }}</div>
 	</div>
 
 	<p class="muted seGraphHint">
-		Klick auf die Grafik.
+		{{ t( "graphs.common.clickHint" ) }}
 	</p>
 </div>
 </template>
 
 <script setup>
 import { computed, ref } from "vue";
+import { useI18n } from "@/i18n.mjs";
+
+const { t } = useI18n( "book1/SE" );
 
 const size = 420;
 
@@ -107,7 +110,7 @@ const graphs = [
 	{
 		id:       "nikolaus",
 		btn:      "H",
-		name:     "Haus des Nikolaus",
+		name:     t( "graphs.euler.graphNames.nikolaus" ),
 		vertices: {
 			A: { x: 70, y: 380 },
 			B: { x: 350, y: 380 },
@@ -129,7 +132,7 @@ const graphs = [
 	{
 		id:       "pentagramm",
 		btn:      "★",
-		name:     "Pentagramm (K5)",
+		name:     t( "graphs.euler.graphNames.pentagramm" ),
 		vertices: regularPolygonVertices(
 			5, 210, 220, 170, -90, [ "A", "B", "C", "D", "E" ]
 		),
@@ -151,7 +154,7 @@ const graphs = [
 	{
 		id:       "koenigsberg",
 		btn:      "B",
-		name:     "Königsb. Brücken (unlösbar)",
+		name:     t( "graphs.euler.graphNames.koenigsberg" ),
 		vertices: {
 			N: { x: 120, y: 120 }, // Nordufer
 			S: { x: 120, y: 320 }, // Südufer
@@ -176,7 +179,7 @@ const graphs = [
 	{
 		id:       "oktaeder",
 		btn:      "O",
-		name:     "Oktaeder-Graph",
+		name:     t( "graphs.euler.graphNames.oktaeder" ),
 		vertices: {
 			T: { x: 210, y: 60 },
 			U: { x: 210, y: 140 },
@@ -246,14 +249,14 @@ const eulerInfo = computed( () => {
 	const odd = oddVertices.value;
 
 	if ( odd.length === 0 ) {
-		return { possible: true, text: "Kreis" };
+		return { possible: true, text: t( "graphs.euler.circle" ) };
 	}
 
 	if ( odd.length === 2 ) {
-		return { possible: true, text: `Weg (${odd.join( ", " )})` };
+		return { possible: true, text: t( "graphs.euler.path", { vertices: odd.join( ", " ) } ) };
 	}
 
-	return { possible: false, text: `nein (${odd.length} ungerade` };
+	return { possible: false, text: t( "graphs.euler.no", { count: odd.length } ) };
 } );
 
 function pickRandom( arr ) {

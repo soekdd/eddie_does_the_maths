@@ -1,14 +1,14 @@
 <template>
 <ALCalculation
 	:deck
-	deck-line-title="Note-G"
+	:deck-line-title="t( 'reduceFractions.deckLineTitle' )"
 	:error
 	:formula-tex
-	formula-title="Formel (Note-G-Stil)"
+	:formula-title="t( 'bernoulli.formulaTitle' )"
 	:running
-	:subtitle="'Ada-streng: <b>Data / Working / Result</b>-Spalten und Loop für Sektion <b>13…23</b>.'"
+	:subtitle="t( 'bernoulli.subtitle' )"
 	:tab
-	title="Ada-Karten (Note G) Emulator"
+	:title="t( 'bernoulli.title' )"
 	:trace-text
 	@reset="reset"
 	@run="run"
@@ -16,12 +16,12 @@
 >
 	<template #intro>
 		<template v-if="result">
-			Aktuelle Ausführung liefert für <code>n={{ n }}</code>
-			(also <Katex :tex="`B_{${2 * n - 1}}`" />)
+			{{ t( "bernoulli.intro.resultPrefix" ) }} <code>n={{ n }}</code>
+			{{ t( "bernoulli.intro.resultMiddle" ) }} <Katex :tex="`B_{${2 * n - 1}}`" />)
 			<b><Katex :tex="toKaTeXFrac(result.frac)" /></b>.
 		</template>
 		<template v-else>
-			Führe den Emulator aus, um das Ergebnis für <code>n</code> zu sehen.
+			<span v-html="t( 'bernoulli.intro.empty' )" />
 		</template>
 	</template>
 
@@ -30,7 +30,7 @@
 			<v-text-field
 				v-model.number="n"
 				density="comfortable"
-				label="n (für B(2n-1); Note-G Demo: n=4 → B7)"
+				:label="t( 'bernoulli.inputs.n' )"
 				min="2"
 				step="1"
 				type="number"
@@ -40,7 +40,7 @@
 		<v-col cols="12">
 			<v-expansion-panels variant="accordion">
 				<v-expansion-panel>
-					<v-expansion-panel-title>Bernoulli-Startwerte (für Note-G-Demo)</v-expansion-panel-title>
+					<v-expansion-panel-title>{{ t( "bernoulli.inputs.startValuesTitle" ) }}</v-expansion-panel-title>
 					<v-expansion-panel-text>
 						<v-row dense>
 							<v-col cols="12">
@@ -51,7 +51,7 @@
 								<v-text-field
 									v-model="B1"
 									density="comfortable"
-									label="B1 (als Bruch)"
+									:label="t( 'bernoulli.inputs.b1' )"
 									placeholder="-1/2"
 								/>
 							</v-col>
@@ -59,7 +59,7 @@
 								<v-text-field
 									v-model="B3"
 									density="comfortable"
-									label="B3 (als Bruch)"
+									:label="t( 'bernoulli.inputs.b3' )"
 									placeholder="1/6"
 								/>
 							</v-col>
@@ -67,15 +67,14 @@
 								<v-text-field
 									v-model="B5"
 									density="comfortable"
-									label="B5 (als Bruch)"
+									:label="t( 'bernoulli.inputs.b5' )"
 									placeholder="-1/30"
 								/>
 							</v-col>
 
 							<v-col cols="12">
 								<v-alert density="compact" type="warning" variant="tonal">
-									Für echte <Katex tex="B_{2n-1}" /> braucht man alle vorherigen ungeraden Bernoulli-Zahlen.
-									Diese GUI ist absichtlich “Note-G-nah”: sie rechnet exemplarisch mit <Katex tex="B_1,B_3,B_5" />.
+									<span v-html="t( 'bernoulli.inputs.warning' )" />
 								</v-alert>
 							</v-col>
 						</v-row>
@@ -86,15 +85,14 @@
 	</template>
 
 	<template #formulaNote>
-		Dabei sind <Katex tex="A_0, A_1, A_3, A_5" /> die “mechanischen” Koeffizienten aus Produkten/Divisionen,
-		so wie es die Karten sauber abspulen können.
+		<span v-html="t( 'bernoulli.formulaNote' )" />
 	</template>
 
 	<template #result>
 		<v-row v-if="result" dense>
 			<v-col cols="12" md="6">
 				<v-card class="pa-4" rounded="xl" variant="tonal">
-					<div class="text-caption mb-1">Ausgabe (Bruch)</div>
+					<div class="text-caption mb-1">{{ t( "bernoulli.result.fraction" ) }}</div>
 					<div class="text-h5 font-weight-bold">
 						{{ result.frac }}
 					</div>
@@ -106,22 +104,20 @@
 
 			<v-col cols="12" md="6">
 				<v-card class="pa-4" rounded="xl" variant="tonal">
-					<div class="text-caption mb-1">Dezimal (nur Anzeige)</div>
+					<div class="text-caption mb-1">{{ t( "bernoulli.result.decimal" ) }}</div>
 					<div class="text-h6 font-weight-medium">
 						{{ result.decimal }}
 					</div>
-					<div class="text-caption mt-2">
-						(exakt gerechnet; auf 6 Nachkommastellen gerundet)
-					</div>
+					<div class="text-caption mt-2">{{ t( "bernoulli.result.decimalNote" ) }}</div>
 				</v-card>
 			</v-col>
 
 			<v-col cols="12">
 				<v-chip class="me-2" color="green" variant="tonal">
-					Korrigiert
+					{{ t( "bernoulli.result.corrected" ) }}
 				</v-chip>
 				<v-chip variant="tonal">
-					Karten: {{ deck?.length ?? 0 }}
+					{{ t( "bernoulli.result.cards", { count: deck?.length ?? 0 } ) }}
 				</v-chip>
 			</v-col>
 		</v-row>
@@ -139,9 +135,9 @@
 					<v-table density="compact">
 						<thead>
 							<tr>
-								<th>Spalte</th>
-								<th>Rolle</th>
-								<th class="text-right">Wert</th>
+								<th>{{ t( "common.table.column" ) }}</th>
+								<th>{{ t( "common.table.role" ) }}</th>
+								<th class="text-right">{{ t( "common.table.value" ) }}</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -160,7 +156,7 @@
 			type="info"
 			variant="tonal"
 		>
-			Das Store-Layout folgt nun Data/Working/Result; die Sektion 13…23 wird als Schleife erzeugt.
+			{{ t( "bernoulli.store.info" ) }}
 		</v-alert>
 	</template>
 </ALCalculation>
@@ -168,8 +164,11 @@
 
 <script setup>
 import { computed, ref } from "vue";
+import { useI18n } from "@/i18n.mjs";
 
 import ALCalculation from "./AL_Calculation.vue";
+
+const { t } = useI18n( "book1/AL" );
 
 // ---------- Rational arithmetic (BigInt) ----------
 const bigAbs = ( x ) => x < 0n ? -x : x;
@@ -190,7 +189,7 @@ function gcd( a, b ) {
 class Rat {
 	constructor( num, den = 1n ) {
 		if ( den === 0n ) {
-			throw new Error( "Division by zero (den=0)." );
+			throw new Error( t( "common.errors.divisionByZeroCard" ) );
 		}
 
 		if ( den < 0n ) {
@@ -216,7 +215,7 @@ class Rat {
 	}
 	div( r ) {
 		if ( r.num === 0n ) {
-			throw new Error( "Division by zero (r=0)." );
+			throw new Error( t( "common.errors.divisionByZeroCard" ) );
 		}
 
 		return new Rat( this.num * r.den, this.den * r.num );
@@ -277,7 +276,7 @@ class CardVM {
 				return Rat.ofInt( x.I );
 			}
 
-			throw new Error( "Bad operand: " + JSON.stringify( x ) );
+			throw new Error( t( "common.errors.badOperand", { value: JSON.stringify( x ) } ) );
 		};
 
 		const a = read( card.a );
@@ -290,7 +289,7 @@ class CardVM {
 			case "SUB": r = a.sub( b ); break;
 			case "MUL": r = a.mul( b ); break;
 			case "DIV": r = a.div( b ); break;
-			default: throw new Error( "Unknown op: " + card.op );
+			default: throw new Error( t( "common.errors.unknownOp", { value: card.op } ) );
 		}
 
 		const dests = Array.isArray( card.dest ) ? card.dest : [ card.dest ];
@@ -322,40 +321,40 @@ function buildNoteGDeck() {
 
 	// Setup (L1..L12)
 	push( 1, {
-		op: "MUL", a: { V: 2 }, b: { V: 3 }, dest: [ 4, 5, 6 ], label: "2*n → V4,V5,V6"
+		op: "MUL", a: { V: 2 }, b: { V: 3 }, dest: [ 4, 5, 6 ], label: t( "bernoulli.deck.l1" )
 	} );
 	push( 2, {
-		op: "SUB", a: { V: 4 }, b: { V: 1 }, dest: 4, label: "V4=2n-1"
+		op: "SUB", a: { V: 4 }, b: { V: 1 }, dest: 4, label: t( "bernoulli.deck.l2" )
 	} );
 	push( 3, {
-		op: "ADD", a: { V: 5 }, b: { V: 1 }, dest: 5, label: "V5=2n+1"
+		op: "ADD", a: { V: 5 }, b: { V: 1 }, dest: 5, label: t( "bernoulli.deck.l3" )
 	} );
 	push( 4, {
-		op: "DIV", a: { V: 4 }, b: { V: 5 }, dest: 11, label: "V11=(2n-1)/(2n+1)"
+		op: "DIV", a: { V: 4 }, b: { V: 5 }, dest: 11, label: t( "bernoulli.deck.l4" )
 	} );
 	push( 5, {
-		op: "DIV", a: { V: 11 }, b: { V: 2 }, dest: 11, label: "V11/=2"
+		op: "DIV", a: { V: 11 }, b: { V: 2 }, dest: 11, label: t( "bernoulli.deck.l5" )
 	} );
 	push( 6, {
-		op: "SUB", a: { I: 0 }, b: { V: 11 }, dest: 11, label: "A0=-V11"
+		op: "SUB", a: { I: 0 }, b: { V: 11 }, dest: 11, label: t( "bernoulli.deck.l6" )
 	} );
 	push( 7, {
-		op: "ADD", a: { V: 13 }, b: { V: 11 }, dest: 13, label: "S+=A0"
+		op: "ADD", a: { V: 13 }, b: { V: 11 }, dest: 13, label: t( "bernoulli.deck.l7" )
 	} );
 	push( 8, {
-		op: "DIV", a: { V: 6 }, b: { V: 2 }, dest: 11, label: "A1=(2n)/2"
+		op: "DIV", a: { V: 6 }, b: { V: 2 }, dest: 11, label: t( "bernoulli.deck.l8" )
 	} );
 	push( 9, {
-		op: "ADD", a: { I: 0 }, b: { I: 1 }, dest: 17, label: "k=1"
+		op: "ADD", a: { I: 0 }, b: { I: 1 }, dest: 17, label: t( "bernoulli.deck.l9" )
 	} );
 	push( 10, {
-		op: "MUL", a: { V: 11 }, b: { V: 21 }, dest: 12, label: "term=A1*B1"
+		op: "MUL", a: { V: 11 }, b: { V: 21 }, dest: 12, label: t( "bernoulli.deck.l10" )
 	} );
 	push( 11, {
-		op: "ADD", a: { V: 13 }, b: { V: 12 }, dest: 13, label: "S+=term"
+		op: "ADD", a: { V: 13 }, b: { V: 12 }, dest: 13, label: t( "bernoulli.deck.l11" )
 	} );
 	push( 12, {
-		op: "ADD", a: { V: 17 }, b: { I: 2 }, dest: 17, label: "k+=2"
+		op: "ADD", a: { V: 17 }, b: { I: 2 }, dest: 17, label: t( "bernoulli.deck.l12" )
 	} );
 
 	// Loop body (L13..L23), repeated for B3 and B5.
@@ -370,43 +369,47 @@ function buildNoteGDeck() {
 
 	for ( const spec of loopSpecs ) {
 		push( 13, {
-			op: "SUB", a: { V: 6 }, b: { I: spec.f1 }, dest: 7, label: `V7=2n-${spec.f1}`
+			op: "SUB", a: { V: 6 }, b: { I: spec.f1 }, dest: 7, label: t( "bernoulli.deck.l13", { value: spec.f1 } )
 		} );
 		push( 14, {
-			op: "SUB", a: { V: 6 }, b: { I: spec.f2 }, dest: 8, label: `V8=2n-${spec.f2}`
+			op: "SUB", a: { V: 6 }, b: { I: spec.f2 }, dest: 8, label: t( "bernoulli.deck.l14", { value: spec.f2 } )
 		} );
 		push( 15, {
-			op: "MUL", a: { V: 11 }, b: { V: 7 }, dest: 11, label: "A*=V7"
+			op: "MUL", a: { V: 11 }, b: { V: 7 }, dest: 11, label: t( "bernoulli.deck.l15" )
 		} );
 		push( 16, {
-			op: "MUL", a: { V: 11 }, b: { V: 8 }, dest: 11, label: "A*=V8"
+			op: "MUL", a: { V: 11 }, b: { V: 8 }, dest: 11, label: t( "bernoulli.deck.l16" )
 		} );
 		push( 17, {
-			op: "ADD", a: { I: 0 }, b: { I: spec.d1 }, dest: 14, label: `V14=${spec.d1}`
+			op: "ADD", a: { I: 0 }, b: { I: spec.d1 }, dest: 14, label: t( "bernoulli.deck.l17", { value: spec.d1 } )
 		} );
 		push( 18, {
-			op: "ADD", a: { I: 0 }, b: { I: spec.d2 }, dest: 15, label: `V15=${spec.d2}`
+			op: "ADD", a: { I: 0 }, b: { I: spec.d2 }, dest: 15, label: t( "bernoulli.deck.l18", { value: spec.d2 } )
 		} );
 		push( 19, {
-			op: "MUL", a: { V: 14 }, b: { V: 15 }, dest: 16, label: "V16=V14*V15"
+			op: "MUL", a: { V: 14 }, b: { V: 15 }, dest: 16, label: t( "bernoulli.deck.l19" )
 		} );
 		push( 20, {
-			op: "DIV", a: { V: 11 }, b: { V: 16 }, dest: 11, label: "A/=V16"
+			op: "DIV", a: { V: 11 }, b: { V: 16 }, dest: 11, label: t( "bernoulli.deck.l20" )
 		} );
 		push( 21, {
-			op: "MUL", a: { V: 11 }, b: { V: spec.bCol }, dest: 12, label: `term=A*${spec.bLabel}`
+			op:    "MUL",
+			a:     { V: 11 },
+			b:     { V: spec.bCol },
+			dest:  12,
+			label: t( "bernoulli.deck.l21", { value: spec.bLabel } )
 		} );
 		push( 22, {
-			op: "ADD", a: { V: 13 }, b: { V: 12 }, dest: 13, label: "S+=term"
+			op: "ADD", a: { V: 13 }, b: { V: 12 }, dest: 13, label: t( "bernoulli.deck.l22" )
 		} );
 		push( 23, {
-			op: "ADD", a: { V: 17 }, b: { I: 2 }, dest: 17, label: "k+=2"
+			op: "ADD", a: { V: 17 }, b: { I: 2 }, dest: 17, label: t( "bernoulli.deck.l23" )
 		} );
 	}
 
 	// Final output (L24)
 	push( 24, {
-		op: "SUB", a: { I: 0 }, b: { V: 13 }, dest: 24, label: "B=-S"
+		op: "SUB", a: { I: 0 }, b: { V: 13 }, dest: 24, label: t( "bernoulli.deck.l24" )
 	} );
 
 	return deck;
@@ -434,13 +437,13 @@ const store = ref( null );
 
 const tab = ref( "deck" );
 
-const storeLayout = [
+const storeLayout = computed( () => [
 	{
 		key:     "data",
-		title:   "Data columns",
+		title:   t( "common.dataColumns" ),
 		entries: [
-			{ col: 1, label: "Konstante 1" },
-			{ col: 2, label: "Konstante 2" },
+			{ col: 1, label: t( "bernoulli.store.const1" ) },
+			{ col: 2, label: t( "bernoulli.store.const2" ) },
 			{ col: 3, label: "n" },
 			{ col: 21, label: "B1" },
 			{ col: 22, label: "B3" },
@@ -449,30 +452,30 @@ const storeLayout = [
 	},
 	{
 		key:     "working",
-		title:   "Working columns",
+		title:   t( "common.workingColumns" ),
 		entries: [
 			{ col: 4, label: "2n-1" },
 			{ col: 5, label: "2n+1" },
 			{ col: 6, label: "2n" },
-			{ col: 7, label: "Faktor A" },
-			{ col: 8, label: "Faktor B" },
-			{ col: 11, label: "A_k (aktuell)" },
-			{ col: 12, label: "Term (A_k·B_k)" },
-			{ col: 14, label: "Nennerteil 1" },
-			{ col: 15, label: "Nennerteil 2" },
-			{ col: 16, label: "Nennerprodukt" },
-			{ col: 17, label: "k-Zaehler" }
+			{ col: 7, label: t( "bernoulli.store.factorA" ) },
+			{ col: 8, label: t( "bernoulli.store.factorB" ) },
+			{ col: 11, label: t( "bernoulli.store.currentA" ) },
+			{ col: 12, label: t( "bernoulli.store.term" ) },
+			{ col: 14, label: t( "bernoulli.store.denominator1" ) },
+			{ col: 15, label: t( "bernoulli.store.denominator2" ) },
+			{ col: 16, label: t( "bernoulli.store.denominatorProduct" ) },
+			{ col: 17, label: t( "bernoulli.store.kCounter" ) }
 		]
 	},
 	{
 		key:     "result",
-		title:   "Result columns",
+		title:   t( "common.resultColumns" ),
 		entries: [
-			{ col: 13, label: "S (Zwischensumme)" },
+			{ col: 13, label: t( "bernoulli.store.sum" ) },
 			{ col: 24, label: "B_{2n-1}" }
 		]
 	}
-];
+] );
 
 const formulaTex = computed( () => {
 	const k = 2 * Number( n.value ) - 1;
@@ -483,20 +486,20 @@ B_{${k}} \;=\; -\Bigl(A_0 \;+\; A_1\,B_1 \;+\; A_3\,B_3 \;+\; A_5\,B_5\Bigr)
 
 // ---------- helpers ----------
 function parseFrac( s ) {
-	const t = String( s ?? "" ).trim();
+	const text = String( s ?? "" ).trim();
 
-	if ( !t ) {
-		throw new Error( "Leerer Bruch." );
+	if ( !text ) {
+		throw new Error( t( "common.errors.fractionEmpty" ) );
 	}
 
-	if ( /^-?\d+$/.test( t ) ) {
-		return new Rat( BigInt( t ), 1n );
+	if ( /^-?\d+$/.test( text ) ) {
+		return new Rat( BigInt( text ), 1n );
 	}
 
-	const m = t.match( /^(-?\d+)\s*\/\s*(-?\d+)$/ );
+	const m = text.match( /^(-?\d+)\s*\/\s*(-?\d+)$/ );
 
 	if ( !m ) {
-		throw new Error( `Ungültiges Format: "${t}". Erlaubt: a/b oder ganze Zahl.` );
+		throw new Error( t( "common.errors.fractionFormat", { value: text } ) );
 	}
 
 	return new Rat( BigInt( m[ 1 ] ), BigInt( m[ 2 ] ) );

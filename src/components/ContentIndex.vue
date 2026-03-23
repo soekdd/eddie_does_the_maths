@@ -1,6 +1,6 @@
 <template>
 <div class="contentIndex">
-	<p class="muted mb-2">{{ title }}</p>
+	<p class="muted mb-2">{{ displayTitle }}</p>
 	<client-only>
 		<v-tabs
 			v-if="bookTabs.length"
@@ -78,11 +78,11 @@
 				</v-btn>
 			</div>
 
-			<p v-else class="muted">Noch keine Inhalte für dieses Buch registriert.</p>
+			<p v-else class="muted">{{ t( "contentIndex.emptyBook" ) }}</p>
 		</v-window-item>
 	</v-window>
 
-	<p v-else class="muted">Noch keine Inhalte registriert.</p>
+	<p v-else class="muted">{{ t( "contentIndex.emptyAll" ) }}</p>
 </div>
 </template>
 <script setup>
@@ -95,11 +95,13 @@ import {
 } from "@mdi/js";
 import { useRoute } from "vue-router";
 import PocketBase from "pocketbase";
-import { routes as appRoutes } from "@/router.js";
+import { useI18n } from "@/i18n.mjs";
+import { resolveRouteMetaTitle, routes as appRoutes } from "@/router.js";
 
-const props = defineProps( { title: { type: String, default: "Die aktuell ausgearbeiteten Inhalte sind:" } } );
+const props = defineProps( { title: { type: String, default: "" } } );
 
 const route = useRoute();
+const { locale, t } = useI18n( "components/lang" );
 const TILE_SIZE_PX = 195;
 const RECENT_COMMENT_MAX_AGE_MS = 24 * 60 * 60 * 1000;
 const commentBubbleIcon = mdiMessageOutline;
@@ -117,15 +119,16 @@ let commentCountRequestId = 0;
 const books = {
 	1: {
 		index: 1,
-		title: "Eddie und die Diophantische Gleichung",
-		short: "Eddie &#9312;"
+		title: "contentIndex.books.one.title",
+		short: "contentIndex.books.one.short"
 	},
 	2: {
 		index: 2,
-		title: "Eddie und das Monty Hall Problem",
-		short: "Eddie &#9313;"
+		title: "contentIndex.books.two.title",
+		short: "contentIndex.books.two.short"
 	}
 };
+const displayTitle = computed( () => props.title.trim() || t( "contentIndex.defaultTitle" ) );
 
 const imageModules = import.meta.glob( [ "@/images/*.webp", "@/book1/*/*.webp" ], { eager: true, import: "default" } );
 const imageByRouteName = Object.entries( imageModules ).reduce( ( acc, [ path, url ] ) => {
@@ -192,11 +195,16 @@ function parseIsoDateToTimestamp( value ) {
 	return Number.isFinite( timestamp ) ? timestamp : null;
 }
 
+const languageQuery = computed( () => ( {
+	...route.query,
+	lang: locale.value
+} ) );
+
 const bookTabs = computed( () => Object.values( books )
 	.map( ( book ) => ( {
 		value: normalizeBookIndex( book?.index ),
-		title: String( book?.title ?? "" ),
-		short: String( book?.short ?? book?.title ?? "" )
+		title: String( t( String( book?.title ?? "" ) ) ?? "" ),
+		short: String( t( String( book?.short ?? book?.title ?? "" ) ) ?? "" )
 	} ) )
 	.filter( ( tab ) => tab.value !== null && tab.short.trim() )
 	.sort( ( a, b ) => a.value - b.value ) );
@@ -229,11 +237,18 @@ onMounted( () => {
 
 const items = computed( () => {
 	return appRoutes
-		.filter( ( r ) => r?.meta?.index === true && typeof r.meta?.title === "string" && r.meta.title.trim() )
 		.map( ( r ) => ( {
-			key:        String( r.name ?? r.path ),
-			title:      String( r.meta.title ).replace( /&shy;/gi, "\u00AD" ),
-			to:         normalizeRouteLinkPath( r.path ),
+			route: r,
+			title: resolveRouteMetaTitle( r?.meta, locale.value )
+		} ) )
+		.filter( ( entry ) => entry.route?.meta?.index === true && entry.title.trim() )
+		.map( ( { route: r, title } ) => ( {
+			key:   String( r.name ?? r.path ),
+			title: title.replace( /&shy;/gi, "\u00AD" ),
+			to:    {
+				path:  normalizeRouteLinkPath( r.path ),
+				query: languageQuery.value
+			},
 			order:      Number.isFinite( r?.meta?.order ) ? Number( r.meta.order ) : null,
 			path:       r.path,
 			forumKey:   toForumKey( r.name ),
@@ -264,7 +279,7 @@ const items = computed( () => {
 				return 1;
 			}
 
-			const byTitle = a.title.localeCompare( b.title, "de" );
+			const byTitle = a.title.localeCompare( b.title, locale.value );
 			return byTitle !== 0 ? byTitle : a.path.localeCompare( b.path, "en" );
 		} );
 } );
@@ -333,7 +348,7 @@ async function refreshCommentCounts( nextItems ) {
 		commentCountByForumKey.value = counts;
 		recentCommentByForumKey.value = recentByForumKey;
 	} catch ( err ) {
-		console.warn( "Kommentaranzahl konnte nicht geladen werden:", err );
+		console.warn( t( "contentIndex.comments.loadFailed" ), err );
 
 		if ( requestId === commentCountRequestId ) {
 			commentCountByForumKey.value = {};
@@ -476,15 +491,15 @@ function difficultyIcon( difficulty ) {
 
 function difficultyLabel( difficulty ) {
 	if ( difficulty === 1 ) {
-		return "Schwierigkeitsgrad: leicht";
+		return t( "contentIndex.difficulty.easy" );
 	}
 
 	if ( difficulty === 2 ) {
-		return "Schwierigkeitsgrad: mittel";
+		return t( "contentIndex.difficulty.medium" );
 	}
 
 	if ( difficulty === 3 ) {
-		return "Schwierigkeitsgrad: schwer";
+		return t( "contentIndex.difficulty.hard" );
 	}
 
 	return "";

@@ -1,7 +1,7 @@
 <template>
 <div class="bzGraphWrap">
 	<svg
-		aria-label="Wippe zum Vergleich der Bemessungslasten Fd,M und Fd,K"
+		:aria-label="t( 'bz.graph.aria' )"
 		class="bzGraphSvg"
 		preserveAspectRatio="xMidYMid meet"
 		role="img"
@@ -125,21 +125,21 @@
 		>
 			<div class="kLabel resultLabel" xmlns="http://www.w3.org/1999/xhtml">
 				<template v-if="inBalance">
-					<span>Wippe in Waage: </span>
+					<span>{{ t( "bz.graph.balanceStart" ) }} </span>
 					<Katex inline tex="F_{d,M}" />
-					<span> und </span>
+					<span> {{ t( "bz.graph.balanceAnd" ) }} </span>
 					<Katex inline tex="F_{d,K}" />
-					<span> sind ungefähr gleich</span>
+					<span> {{ t( "bz.graph.balanceEnd" ) }}</span>
 				</template>
 				<template v-else-if="tiltDeg < 0">
-					<span>Wippe kippt nach links: </span>
+					<span>{{ t( "bz.graph.left" ) }} </span>
 					<Katex inline tex="F_{d,M}" />
-					<span> ist größer</span>
+					<span> {{ t( "bz.graph.leftEnd" ) }}</span>
 				</template>
 				<template v-else>
-					<span>Wippe kippt nach rechts: </span>
+					<span>{{ t( "bz.graph.right" ) }} </span>
 					<Katex inline tex="F_{d,K}" />
-					<span> ist größer</span>
+					<span> {{ t( "bz.graph.rightEnd" ) }}</span>
 				</template>
 			</div>
 		</foreignObject>
@@ -149,9 +149,11 @@
 
 <script setup>
 import { computed } from "vue";
+import { useI18n } from "@/i18n.mjs";
 import { useTheme } from "vuetify";
 import armadilloImg from "./BZ_Armadillo.webp";
 import elefantImg from "./BZ_Elefant.webp";
+const { t } = useI18n( "book1/BZ" );
 const imageSize = 280;
 const props = defineProps( {
 	fdM: {

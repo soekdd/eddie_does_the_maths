@@ -1,7 +1,7 @@
 <template>
 <div class="seGraphWrap">
 	<svg
-		aria-label="Fibonacci-Spirale mit Quadraten"
+		:aria-label="t( 'graphs.fib.aria' )"
 		class="seGraphSvg"
 		role="img"
 		:viewBox="`0 0 ${viewWidth} ${viewHeight}`"
@@ -35,14 +35,17 @@
 	</svg>
 
 	<div class="seGraphMeta mono">
-		<div><b>n</b> = {{ n }} <b>Fibonacci</b> =<br>{{ fibLabel }}</div>
+		<div><b>n</b> = {{ n }} <b>{{ t( "graphs.fib.label" ) }}</b> =<br>{{ fibLabel }}</div>
 	</div>
-	<p class="muted seGraphHint">Klick auf die Grafik</p>
+	<p class="muted seGraphHint">{{ t( "graphs.common.clickHint" ) }}</p>
 </div>
 </template>
 
 <script setup>
 import { computed, ref } from "vue";
+import { useI18n } from "@/i18n.mjs";
+
+const { t } = useI18n( "book1/SE" );
 
 const viewWidth = 640;
 const viewHeight = 360;

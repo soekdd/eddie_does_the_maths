@@ -1,7 +1,7 @@
 <template>
 <div class="vaShipWrap" :class="{ noLegendMode: props.nolegend }">
 	<svg
-		:aria-label="`Schiffquerschnitt mit Kraeften, Heel=${fmt( model.heelDeg, 1 )} deg`"
+		:aria-label="t( 'ship.aria', { heel: fmt( model.heelDeg, 1 ) } )"
 		class="vaShipFigure"
 		role="img"
 		:viewBox="model.shipViewBox"
@@ -72,7 +72,7 @@
 				:y2="model.beamR.y"
 			/>
 			<text class="valueText" :x="model.beamLabel.x" :y="model.beamLabel.y">
-				B = {{ fmt( model.beam, 2 ) }} m
+				{{ t( "ship.beam" ) }} = {{ fmt( model.beam, 2 ) }} m
 			</text>
 
 			<line class="dim"
@@ -84,7 +84,7 @@
 				:y2="model.draftBottom.y"
 			/>
 			<text class="valueText" :x="model.draftLabel.x" :y="model.draftLabel.y">
-				T = {{ fmt( model.draft, 2 ) }} m
+				{{ t( "ship.draft" ) }} = {{ fmt( model.draft, 2 ) }} m
 			</text>
 
 			<line v-if="!props.nolegend"
@@ -97,7 +97,7 @@
 				:y2="model.depthBottom.y"
 			/>
 			<text class="valueText" :x="model.depthLabel.x" :y="model.depthLabel.y">
-				D = {{ fmt( model.depth, 2 ) }} m
+				{{ t( "ship.depth" ) }} = {{ fmt( model.depth, 2 ) }} m
 			</text>
 		</g>
 
@@ -115,7 +115,7 @@
 				:y2="model.axisNowB.y"
 			/>
 			<text class="valueText" :x="model.phiLabel.x" :y="model.phiLabel.y">
-				phi = {{ fmt( -model.heelDeg, 1 ) }} deg
+				{{ t( "ship.heel" ) }} = {{ fmt( -model.heelDeg, 1 ) }} deg
 			</text>
 		</g>
 
@@ -159,7 +159,7 @@
 				:y2="model.gzB.y"
 			/>
 			<text class="valueText" :x="model.gzText.x" :y="model.gzText.y">
-				GZ = {{ fmt( model.gz, 2 ) }} m
+				{{ t( "ship.gz" ) }} = {{ fmt( model.gz, 2 ) }} m
 			</text>
 		</g>
 
@@ -177,7 +177,7 @@
 
 	<svg
 		v-if="!props.nolegend"
-		:aria-label="`Legende zum Schiffquerschnitt, Heel=${fmt( model.heelDeg, 1 )} deg`"
+		:aria-label="t( 'ship.legendAria', { heel: fmt( model.heelDeg, 1 ) } )"
 		class="vaShipLegend"
 		role="img"
 		:viewBox="`0 0 ${model.legendWidth} ${model.legendHeight}`"
@@ -205,6 +205,7 @@
 
 <script setup>
 import { computed } from "vue";
+import { useI18n } from "@/i18n.mjs";
 
 const props = defineProps( {
 	beam:            { type: Number, default: 11.7 },
@@ -226,6 +227,7 @@ const props = defineProps( {
 	nolegend:        { type: Boolean, default: false },
 	zoom:            { type: [ Number, String ], default: 1 }
 } );
+const { locale, t } = useI18n( "book1/VA" );
 
 function clamp(
 	v, lo, hi
@@ -266,7 +268,10 @@ function fmt( v, digits = 2 ) {
 		return "-";
 	}
 
-	return Number( v ).toFixed( digits );
+	return new Intl.NumberFormat( locale.value, {
+		maximumFractionDigits: digits,
+		minimumFractionDigits: digits
+	} ).format( Number( v ) );
 }
 
 const model = computed( () => {
@@ -603,16 +608,18 @@ const model = computed( () => {
 
 	const statusText = props.status || "-";
 	const legendLines = [
-		`KG = ${fmt( kg, 2 )} m`,
-		`KB = ${fmt( kb, 2 )} m`,
-		`BM = ${fmt( bm, 2 )} m`,
-		`GM = ${fmt( gm, 2 )} m`,
-		`M_w = ${fmt( windMoment / 1000, 1 )} kN m`,
-		`M_r = ${fmt( restoringMoment / 1000, 1 )} kN m`,
-		`v = ${fmt( windSpeed, 1 )} m/s, A = ${
-			fmt( Math.max( 0, toFinite( props.sailArea, 0 ) ), 0 )} m^2`,
-		`Downflooding bei phi ~= ${fmt( toFinite( props.downfloodAngle, NaN ), 1 )} deg`,
-		`Status: ${statusText}`
+		t( "ship.legend.kg", { value: fmt( kg, 2 ) } ),
+		t( "ship.legend.kb", { value: fmt( kb, 2 ) } ),
+		t( "ship.legend.bm", { value: fmt( bm, 2 ) } ),
+		t( "ship.legend.gm", { value: fmt( gm, 2 ) } ),
+		t( "ship.legend.windMoment", { value: fmt( windMoment / 1000, 1 ) } ),
+		t( "ship.legend.restoringMoment", { value: fmt( restoringMoment / 1000, 1 ) } ),
+		t( "ship.legend.wind", {
+			speed: fmt( windSpeed, 1 ),
+			area:  fmt( Math.max( 0, toFinite( props.sailArea, 0 ) ), 0 )
+		} ),
+		t( "ship.legend.downflooding", { value: fmt( toFinite( props.downfloodAngle, NaN ), 1 ) } ),
+		t( "ship.legend.status", { value: statusText } )
 	];
 	const legendWidth = width;
 	const legendHeight = 56 + legendLines.length * 24;

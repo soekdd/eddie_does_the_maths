@@ -1,0 +1,98 @@
+app:
+  languageAria: "Sprache"
+  home: "Home"
+  forum: "Forum"
+  reviewInProgress: "Dieses Kapitel wird aktuell von {name} geprüft."
+  pdf: "PDF"
+  lastUpdate: "letzte Änderung"
+  correctedCredit: "freundlicher Weise geprüft und korrigiert von {name}"
+  github: "GitHub"
+  reportError: "Fehler melden"
+  impressum: "Impressum"
+  privacyPolicy: "Datenschutzerklärung"
+  build: "Build"
+  close: "Schließen"
+  knownError: "Achtung: Dieser Inhalt ist bekanntermaßen noch fehlerhaft. Texte, Grafiken und Rechenwege können falsch sein."
+  uncheckedWarning: "Hinweis: Dieser Inhalt wurde noch nicht geprüft. Texte, Grafiken und Rechenwege können also noch Fehler beinhalten. Mithilfe ist erbeten."
+  difficulty:
+    easy: "Schwierigkeitsgrad: leicht"
+    medium: "Schwierigkeitsgrad: mittel"
+    hard: "Schwierigkeitsgrad: schwer"
+  markdownFallback: "beschreibung"
+catchAll:
+  title: "Eddie rechnet: Thema in Arbeit"
+  subChapter:
+    dieses-thema-ist-noch-nicht-ausgearbeitet: "Dieses Thema ist noch nicht ausgearbeitet"
+  heading: "Oh nein - das ist gerade eine echte <strong>404</strong>... sorry!"
+  p1: "Der Inhalt, den du suchst, ist noch nicht verfügbar, aber ich bin schon dran und baue ihn gerade zusammen, Schritt für Schritt, wie eine Rechnung, die am Ende aufgeht."
+  p2: "Komm später nochmal vorbei, okay? Dann wartet hier hoffentlich genau das, was du gesucht hast."
+  back: "Zurück"
+  tip: "Tipp: Wenn du eine URL mit Query-Shortcut nutzt (z.B. <code class=\"mono\">?DG</code>), wird sie auf <code class=\"mono\">/DG/</code> umgeschrieben."
+contentIndex:
+  defaultTitle: "Die aktuell ausgearbeiteten Inhalte sind:"
+  emptyBook: "Noch keine Inhalte für dieses Buch registriert."
+  emptyAll: "Noch keine Inhalte registriert."
+  books:
+    one:
+      title: "Eddie und die Diophantische Gleichung"
+      short: "Eddie &#9312;"
+    two:
+      title: "Eddie und das Monty Hall Problem"
+      short: "Eddie &#9313;"
+  difficulty:
+    easy: "Schwierigkeitsgrad: leicht"
+    medium: "Schwierigkeitsgrad: mittel"
+    hard: "Schwierigkeitsgrad: schwer"
+  comments:
+    loadFailed: "Kommentaranzahl konnte nicht geladen werden:"
+eddieComment:
+  label: "Eddie:"
+empty:
+  title: "Eddie rechnet: Internationale Matheolympiade 1885 Aufgabe 1"
+  subChapter:
+    entscheidungsbaum: "Entscheidungsbaum"
+    wahrscheinlichkeiten: "Wahrscheinlichkeiten"
+    rechner: "Rechner"
+forumThread:
+  title: "Kommentare"
+  thread: "Thread"
+  posts: "{count} Beiträge"
+  newComment: "Neuen Kommentar schreiben"
+  name: "Name"
+  comment: "Kommentar"
+  acceptRulesPrefix: "Ich akzeptiere die"
+  forumRules: "Forumsregeln"
+  commentAction: "Kommentieren"
+  empty: "Noch keine Kommentare."
+  unknownAuthor: "Unbekannt"
+  replyChip: "Antwort"
+  cancel: "Abbrechen"
+  replyAction: "Antworten"
+  replyLabel: "Antwort"
+  rulesUnavailable: "<p>Forumsregeln sind derzeit nicht verfügbar.</p>"
+  loadFailed: "Kommentare konnten nicht geladen werden."
+  saveCommentFailed: "Kommentar konnte nicht gespeichert werden."
+  saveReplyFailed: "Antwort konnte nicht gespeichert werden."
+  realtimeFailed: "PocketBase realtime subscribe failed:"
+imageZoomer:
+  zoom: "Zoom"
+  close: "Schließen"
+  contentAria: "Zoom-Inhalt"
+markdownDownload:
+  fileNameFallback: "beschreibung"
+  buttonLabel: "Markdown"
+routeSeoHead:
+  siteName: "Eddie rechnet"
+welcome:
+  title: "Eddie rechnet"
+  subChapter:
+    willkommen: "Willkommen"
+    ubersicht: "Übersicht"
+  imageTitle: "Eddie"
+  heading: "Willkommen"
+  p1: "Hey, ich bin Eddie, und wenn du mein Buch kennst, weißt du: Meine Flucht aus der DDR ist kein Zufall, sondern ein Plan aus Papier, Mut und Mathe."
+  p2: "In meinem Kopf werden Karten zu Geometrie, Angst zu Wahrscheinlichkeiten und „unmöglich“ zu einer Gleichung, die ich knacken kann."
+  p3: "Genau darum gibt's <strong>Eddie rechnet</strong>: damit du siehst, wie Mathe im echten Leben plötzlich über Freiheit, Richtung und die nächsten Schritte entscheidet."
+  p4: "In den einzelnen Kapiteln werden all die Situationen meiner Flucht aufgegriffen, in denen ich mich mit Mathe irgendwie gerettet habe. Im Buch hätte das gestört, aber hier habe ich den Raum, meine Gedanken und Rechnungen zu vertiefen. Damit du mir nicht nur beim Denken zusehen musst, gibt es am Ende jedes Kapitels einen interaktiven Teil, in dem du die Rechnung selbst ausprobieren kannst. Steinalte Computer werden wieder zum Leben erweckt, und noch ältere Segelschiffe werden sinken."
+  p5: "Und nun viel Spaß...."
+  index: "Index"

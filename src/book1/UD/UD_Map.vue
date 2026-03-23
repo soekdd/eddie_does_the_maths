@@ -60,6 +60,7 @@ import {
 	computed,
 	useId
 } from "vue";
+import { useI18n } from "@/i18n.mjs";
 import countries from "./UD_countries";
 
 const props = defineProps( {
@@ -74,18 +75,24 @@ const props = defineProps( {
 const landClipPathId = `ud-land-clip-${useId()}`;
 const THEME_SHORE_COLOR = "rgb(var(--v-theme-warning, 245, 158, 11))";
 const THEME_WATER_COLOR = "rgb(var(--v-theme-info, 37, 99, 235))";
+const { locale } = useI18n( "book1/UD" );
 const resolvedShoreColor = computed( () => props.shoreColor || THEME_SHORE_COLOR );
 const resolvedWaterColor = computed( () => props.waterColor || THEME_WATER_COLOR );
 const landPath = computed( () => countries[ props.country ].land );
 const lakesPath = computed( () => countries[ props.country ].lakes );
 const viewBox = computed( () => countries[ props.country ].viewBox );
+const integerFormatter = computed( () => new Intl.NumberFormat( locale.value, { maximumFractionDigits: 0 } ) );
 const hDistanceMetersLabel = computed( () =>
-	Number.isFinite( props.hDistanceMeters ) ? Math.round( props.hDistanceMeters ).toString() : "0" );
+	Number.isFinite( props.hDistanceMeters ) ?
+		integerFormatter.value.format( Math.round( props.hDistanceMeters ) ) :
+		"0" );
 const probabilityPercentLabel = computed( () =>
 	Number.isFinite( props.probabilityPercent ) ?
-		Number( props.probabilityPercent ).toFixed( 2 )
-			.replace( ".", "," ) :
-		"0,00" );
+		new Intl.NumberFormat( locale.value, {
+			maximumFractionDigits: 2,
+			minimumFractionDigits: 2
+		} ).format( Number( props.probabilityPercent ) ) :
+		new Intl.NumberFormat( locale.value, { maximumFractionDigits: 2, minimumFractionDigits: 2 } ).format( 0 ) );
 </script>
 
 <style scoped>

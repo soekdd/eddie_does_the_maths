@@ -1,0 +1,98 @@
+app:
+  languageAria: "Language"
+  home: "Home"
+  forum: "Forum"
+  reviewInProgress: "This chapter is currently being reviewed by {name}."
+  pdf: "PDF"
+  lastUpdate: "Last updated"
+  correctedCredit: "Kindly reviewed and corrected by {name}"
+  github: "GitHub"
+  reportError: "Report error"
+  impressum: "Imprint"
+  privacyPolicy: "Privacy policy"
+  build: "Build"
+  close: "Close"
+  knownError: "Warning: this content is known to still contain errors. Text, graphics, and calculations may be incorrect."
+  uncheckedWarning: "Note: this content has not yet been reviewed. Text, graphics, and calculations may still contain errors. Help is welcome."
+  difficulty:
+    easy: "Difficulty: easy"
+    medium: "Difficulty: medium"
+    hard: "Difficulty: hard"
+  markdownFallback: "description"
+catchAll:
+  title: "Eddie Calculates: Topic in Progress"
+  subChapter:
+    dieses-thema-ist-noch-nicht-ausgearbeitet: "This topic is not yet developed"
+  heading: "Oh no - this is a real <strong>404</strong> right now... sorry!"
+  p1: "The content you are looking for is not available yet, but I am already working on it and building it step by step, like a calculation that works out in the end."
+  p2: "Come back later, okay? Hopefully exactly what you were looking for will be waiting here then."
+  back: "Back"
+  tip: "Tip: If you use a URL with a query shortcut (for example <code class=\"mono\">?DG</code>), it will be rewritten to <code class=\"mono\">/DG/</code>."
+contentIndex:
+  defaultTitle: "The currently completed contents are:"
+  emptyBook: "No content registered for this book yet."
+  emptyAll: "No content registered yet."
+  books:
+    one:
+      title: "Eddie and the Diophantine Equation"
+      short: "Eddie &#9312;"
+    two:
+      title: "Eddie and the Monty Hall Problem"
+      short: "Eddie &#9313;"
+  difficulty:
+    easy: "Difficulty: easy"
+    medium: "Difficulty: medium"
+    hard: "Difficulty: hard"
+  comments:
+    loadFailed: "Could not load comment counts:"
+eddieComment:
+  label: "Eddie:"
+empty:
+  title: "Eddie Calculates: International Mathematical Olympiad 1885 Problem 1"
+  subChapter:
+    entscheidungsbaum: "Decision tree"
+    wahrscheinlichkeiten: "Probabilities"
+    rechner: "Calculator"
+forumThread:
+  title: "Comments"
+  thread: "Thread"
+  posts: "{count} posts"
+  newComment: "Write a new comment"
+  name: "Name"
+  comment: "Comment"
+  acceptRulesPrefix: "I accept the"
+  forumRules: "forum rules"
+  commentAction: "Comment"
+  empty: "No comments yet."
+  unknownAuthor: "Unknown"
+  replyChip: "Reply"
+  cancel: "Cancel"
+  replyAction: "Reply"
+  replyLabel: "Reply"
+  rulesUnavailable: "<p>Forum rules are currently unavailable.</p>"
+  loadFailed: "Comments could not be loaded."
+  saveCommentFailed: "Comment could not be saved."
+  saveReplyFailed: "Reply could not be saved."
+  realtimeFailed: "PocketBase realtime subscribe failed:"
+imageZoomer:
+  zoom: "Zoom"
+  close: "Close"
+  contentAria: "Zoom content"
+markdownDownload:
+  fileNameFallback: "description"
+  buttonLabel: "Markdown"
+routeSeoHead:
+  siteName: "Eddie Calculates"
+welcome:
+  title: "Eddie Calculates"
+  subChapter:
+    willkommen: "Welcome"
+    ubersicht: "Overview"
+  imageTitle: "Eddie"
+  heading: "Welcome"
+  p1: "Hey, I'm Eddie, and if you know my book, you know this: my escape from East Germany was not luck, but a plan made of paper, courage, and mathematics."
+  p2: "In my head, maps become geometry, fear becomes probability, and \"impossible\" becomes an equation I can crack."
+  p3: "That is exactly why <strong>Eddie Calculates</strong> exists: so you can see how mathematics in real life suddenly decides freedom, direction, and the next steps."
+  p4: "In the individual chapters, all the situations from my escape are picked up in which mathematics somehow helped save me. In the book that would have been distracting, but here I have the space to deepen my thoughts and calculations. And so you do not only have to watch me think, every chapter ends with an interactive part where you can try the calculation yourself. Ancient computers are brought back to life, and even older sailing ships are going to sink."
+  p5: "And now, have fun...."
+  index: "Index"

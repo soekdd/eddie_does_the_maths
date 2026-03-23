@@ -1,0 +1,326 @@
+title: "Eddie Calculates: Navigation in the Forest"
+imageTitle: "Eddie's Navigation Cheat Sheet"
+imageAlt: "Eddie's navigation cheat sheet"
+introDate: "Vasaloppet, July 24, 1985"
+subChapter:
+  einleitung: "Introduction"
+  lektionen: "9 Navigation Lessons"
+  interaktiv: "Interactive"
+book:
+  p1: "Rain in my face, mud on my knees, and suddenly my brain switches back into nerd mode: <em>paces</em>, angles, axes. One second I'm crying like a broken child in this marsh chessboard of ditches, the next I hear Dad's voice: 'One hundred steps, seventy metres.' I grit my teeth, declare a ditch to be the <em>x-axis</em>, and pretend I'm not completely lost, just... temporarily rearranged."
+  p2: "That is exactly where I start here: in <b>9 lessons</b> I unpack what Dad drilled into me in the Dresdner Heide, how to find yourself again in the woods when both your map and your nerves are getting soaked. <em>Offset aiming</em>, markers, wind as a compass, pacing instead of panic."
+  p3: "And at the bottom there are interactive calculation tools so you can test your own paces and routes without ending up in the ditch yourself. Hopefully."
+sections:
+  lessonsTitle: "9 Navigation Lessons"
+  stepsTitle: "Steps To Reproduce It Yourself"
+  practiceTitle: "Mini Exercise"
+  noteTitle: "Note"
+  noteBody: "These rules of thumb assume the Northern Hemisphere. For watch tricks in summer, you may need to correct by one hour. All values are approximations."
+  interactiveTitle: "Interactive Navigation Tools"
+  interactiveBody: "Choose a tool and try the method directly. All four modules are built so you can follow the calculation step by step."
+  interactiveSelect: "Interactive tool"
+interactiveModes:
+  - label: "Intersection method"
+    value: "schnitt"
+  - label: "Azimuth"
+    value: "azimut"
+  - label: "Time estimate"
+    value: "zeit"
+  - label: "Bayes and fusion"
+    value: "bayes"
+lessons:
+  - id: 1
+    title: "1. Orientation (cardinal direction)"
+    text:
+      - "If you start without a compass, you should always combine at least two independent methods: the watch trick, a shadow stick, and noon altitude complement each other well."
+      - "The core idea is always the same: first build a rough north-south axis, then verify it with a second observation. That keeps a single measurement error from throwing off your whole course."
+      - "For everyday use, an uncertainty of about 10 to 15 degrees is often good enough, as long as you recalibrate afterwards with landmarks and back checks."
+    formulas:
+      - "\\text{South axis}\\approx \\frac{1}{2}\\angle(\\text{hour hand},12)"
+      - "\\tan(h)=\\frac{L}{s}"
+      - "\\varphi\\approx 90^\\circ-h+\\delta"
+    steps:
+      - "Note the time and the sun position, hold the watch level, mark the angle between the hour hand and 12, and bisect it."
+      - "Place a stick upright, mark the tip of the shadow, then set a second mark 20 minutes later: the connecting line is west-east."
+      - "Draw the north-south axis as the perpendicular to the west-east line."
+      - "Cross-check with noon altitude: measure stick length L and shadow length s, then compute h from tan(h)=L/s."
+      - "Only then set your marching direction and check again after 10 to 15 minutes."
+    practice:
+      - "Build a 1 m shadow stick and measure L and s at the same time on three different days."
+      - "Compare the watch-trick axis and the shadow-stick axis by angular deviation."
+      - "Document how strongly clouds and uneven ground shift the measurement."
+    note: "In daylight saving time, a one-hour correction may be necessary."
+  - id: 2
+    title: "2. Position fixing (intersection method)"
+    text:
+      - "Position fixing becomes robust when you combine geometric information: angles (bearings), distances (estimated or taken from the map), and line objects such as paths or streams."
+      - "A single intersection point looks exact, but it rarely is. In practice you usually get a small error region. That is exactly what you should draw consciously instead of ignoring it."
+      - "The more favorable the angle between two bearings, the more stable the back-calculation of your own position becomes."
+    formulas:
+      - "\\mathbf{r}_A(t)=\\mathbf{A}+t\\begin{pmatrix}\\cos\\alpha_A\\\\\\sin\\alpha_A\\end{pmatrix}"
+      - "\\mathbf{r}_B(u)=\\mathbf{B}+u\\begin{pmatrix}\\cos\\alpha_B\\\\\\sin\\alpha_B\\end{pmatrix}"
+      - "(x-x_i)^2+(y-y_i)^2=d_i^2"
+    steps:
+      - "Identify two clearly separated landmarks on the map and mark their coordinates."
+      - "From your position, take bearings to both landmarks and measure the angles relative to north."
+      - "Draw a back-bearing line for each landmark on the map; their intersection gives the primary position."
+      - "If you can estimate distance, draw a circle around the landmark with radius d_i and compare it with the bearing intersection."
+      - "With three measurements, use the smallest common error area as your position."
+    practice:
+      - "Do it once using only two bearings and once using two bearings plus distance."
+      - "Compare the size of the error region in both cases."
+      - "Repeat with both poor and good intersection angles."
+    note: "Intersection angles between 30 and 150 degrees are stable in practice."
+  - id: 3
+    title: "3. Distances and scale"
+    text:
+      - "Many navigation errors do not come from direction but from badly estimated distances. So translate from map scale to real metres cleanly."
+      - "Pacing only works if you have calibrated your own stride length for different terrain types."
+      - "On slopes, separate sloping distance and horizontal projection consistently. For the map, the projection is what matters."
+    formulas:
+      - "d_{real}=d_{map}\\cdot M"
+      - "d_{pace}=N\\cdot p"
+      - "L_{hor}=L\\cos(\\theta)"
+      - "s=\\frac{\\Delta h}{\\Delta x}"
+    steps:
+      - "Measure the map distance with a ruler or thread and multiply it by the scale factor M."
+      - "Determine your own double-step length p on a 100 m test section and write it down."
+      - "In the field, count N double steps and estimate distance with d=N*p."
+      - "For slope angle theta, correct the sloping distance to horizontal distance with cos(theta)."
+      - "Check the gradient from contour lines: divide delta h by the horizontal distance delta x."
+    practice:
+      - "Calibrate p separately on a path, a forest trail, and soft ground."
+      - "Compare d_map and d_pace on three route segments."
+      - "Find the segment with the greatest deviation and explain the error."
+    note: "Pacing drifts noticeably with fatigue and in dense undergrowth."
+  - id: 4
+    title: "4. Time estimates"
+    text:
+      - "Time planning needs a base model plus corrections. Naismith is a robust starting model, Tobler is often more realistic for more variable gradients."
+      - "What matters is not the perfect equation but that you compare actual time with planned time regularly and correct early."
+      - "Always plan in segments: three short stages with checkpoints are better than one big block without control."
+    formulas:
+      - "t_{Naismith}[h]=\\frac{d_{km}}{5}+\\frac{h_{up}}{600}"
+      - "v_{Tobler}=6\\,e^{-3.5\\lvert s+0.05\\rvert}"
+      - "t=\\frac{d}{v}"
+    steps:
+      - "Split the route into segments and determine distance d_i and ascent h_i for each segment."
+      - "Compute t_Naismith for each segment and note it as the target value."
+      - "Optionally determine Tobler speed for each segment slope s_i."
+      - "After each segment, measure the actual time and document the difference from the target."
+      - "If delays recur, adjust the route: shorter, safer, or abort earlier."
+    practice:
+      - "Calculate the same route once with Naismith and once with Tobler."
+      - "Compare both predictions with your actual walking time."
+      - "Use that to derive a personal correction factor for future tours."
+    note: "On wet ground or with a pack, times often rise by 10 to 30 percent."
+  - id: 5
+    title: "5. Holding course (azimuth)"
+    text:
+      - "A carefully planned azimuth only helps if you hold it steadily on the move. Small angular errors quickly grow into large lateral errors over distance."
+      - "That is why you work with intermediate targets: a short sight line, then realign. That is more accurate than blindly forcing a long bearing."
+      - "Convert consciously between map north, true north, and magnetic north instead of relying on instinct."
+    formulas:
+      - "\\alpha_{mag}=\\alpha_{map}-D"
+      - "e\\approx d\\sin(\\Delta\\alpha)"
+      - "\\Delta\\alpha_{corr}\\approx \\arctan\\!\\left(\\frac{e}{d_{rest}}\\right)"
+    steps:
+      - "Determine the azimuth on the map and look up declination D for the region."
+      - "Convert it into a magnetic bearing and set it on the compass or substitute method."
+      - "Choose an intermediate target 50 to 100 m away on the sight line and walk to it."
+      - "After each section, estimate the lateral deviation e and correct if needed."
+      - "In poor visibility, shorten distance sections and realign more often."
+    practice:
+      - "Walk the same azimuth once in 300 m sections and once in 80 m sections."
+      - "Measure the final deviation of both variants relative to a target point."
+      - "Test how much a 5 degree heading error shifts you sideways over 1 km."
+    note: "With east declination, this convention subtracts D."
+  - id: 6
+    title: "6. Probabilities and fusion"
+    text:
+      - "In unclear terrain there is rarely only one plausible location. Instead of guessing immediately, rate several hypotheses with probabilities."
+      - "Bayes helps you incorporate new observations systematically. Weighted averaging helps you combine several measurement sources with different accuracy."
+      - "The goal is not mathematical perfection but a transparent, repeatable decision process."
+    formulas:
+      - "P(H_i\\mid E)=\\frac{P(E\\mid H_i)P(H_i)}{\\sum_j P(E\\mid H_j)P(H_j)}"
+      - "\\hat{x}=\\frac{\\sum_i w_i x_i}{\\sum_i w_i},\\quad w_i=\\frac{1}{\\sigma_i^2}"
+      - "\\sigma_{\\hat{x}}=\\frac{1}{\\sqrt{\\sum_i w_i}}"
+    steps:
+      - "Mark possible locations H_i on the map as a candidate set."
+      - "Assign priors P(H_i), for example from route, time, and terrain logic."
+      - "Record a new observation E, for example stream direction or elevation band."
+      - "Estimate likelihood P(E|H_i) for each location and compute the posterior."
+      - "Average measurements with known scatter sigma_i using weights 1/sigma_i^2."
+    practice:
+      - "Set up three location candidates and perform two Bayes updates in sequence."
+      - "Compare the result with and without weighting measurement quality."
+      - "Document when one hypothesis clearly dominates and when it does not."
+    note: "A good structure matters more than exact decimal places."
+  - id: 7
+    title: "7. Terrain geometry"
+    text:
+      - "Contour lines carry more information than just height: from their shape you read steepness, ridges, gullies, and preferred movement axes."
+      - "The fall line is always orthogonal to the contour lines. That lets you estimate slope direction and crossing risk directly from the map."
+      - "For long-range visibility and landmark planning, a simple horizon estimate using observer heights is useful."
+    formulas:
+      - "\\lVert\\nabla z\\rVert\\approx \\frac{\\Delta h}{\\Delta n}"
+      - "\\beta=\\operatorname{atan2}\\!\\left(-\\frac{\\partial z}{\\partial x},-\\frac{\\partial z}{\\partial y}\\right)"
+      - "d_{vis}[km]\\approx 3.57\\left(\\sqrt{h_1}+\\sqrt{h_2}\\right)"
+    steps:
+      - "Align the map to your current position and compare contour spacing."
+      - "Mark close contour lines as steep areas and wider spacing as gentler terrain."
+      - "Draw the fall direction as the perpendicular to the contour and compare it with the real slope impression."
+      - "Estimate visibility range for landmarks using observer heights h1 and h2."
+      - "Plan the route so critical traverses and dead ends become visible early."
+    practice:
+      - "Take a hillside area and mark three possible ascent and descent lines."
+      - "For each line, justify steepness, visibility, and safety margin."
+      - "Check on site whether the map interpretation matches the terrain impression."
+    note: "Vegetation and microterrain can override a pure contour interpretation."
+  - id: 8
+    title: "8. Route choice (optimization)"
+    text:
+      - "Route choice is an optimization problem: the shortest distance is not automatically the fastest or safest route."
+      - "On a trail network you typically minimize time cost. In open terrain you use a combined cost function from distance, elevation work, and risk."
+      - "What matters is that your criteria are fixed before you start, otherwise you keep optimizing on the move against changing gut feelings."
+    formulas:
+      - "C(\\pi)=\\sum_{e\\in\\pi} t_e"
+      - "f(n)=g(n)+h(n)\\quad (\\text{A*})"
+      - "C=w_d\\,d+w_h\\,\\Delta h+w_r\\,R"
+    steps:
+      - "Model the route as a graph: nodes are decision points, edges are segments."
+      - "Assign time or cost to each edge, not just distance."
+      - "Use Dijkstra or A* to compute a primary candidate route."
+      - "Evaluate alternative routes with the same method and compare costs."
+      - "Define an abort or replanning threshold before you start."
+    practice:
+      - "Compute both a fast and a low-risk variant for the same route."
+      - "Vary the weights w_d, w_h, w_r and observe the route jump."
+      - "Use that to derive a personal set of weights for different weather conditions."
+    note: "Models only help if the input data are updated regularly."
+  - id: 9
+    title: "9. Plausibility checks and errors"
+    text:
+      - "Navigation remains error-prone. What matters is recognizing errors early, bounding them quantitatively, and then correcting consistently."
+      - "Instead of staring at one supposedly exact point, work with error corridors and plausibility rules."
+      - "Out-and-back balance is a strong reality check: if the numbers do not match, something is wrong."
+    formulas:
+      - "\\gamma=\\lvert\\alpha_1-\\alpha_2\\rvert"
+      - "\\sigma_{\\perp}\\approx d\\,\\sigma_{\\alpha}\\quad (\\sigma_{\\alpha}\\,\\text{in rad})"
+      - "\\sigma_{ges}=\\sqrt{\\sigma_d^2+(d\\,\\sigma_{\\alpha})^2}"
+      - "e_{close}=\\lVert\\mathbf{x}_{return}-\\mathbf{x}_{start}\\rVert"
+    steps:
+      - "At every position update, check the intersection angle gamma and mark poor geometry."
+      - "Merge angular and distance uncertainties into a common error corridor."
+      - "After each segment, compare plan versus reality for direction, distance, and time."
+      - "If three plausibility criteria fail at once, stop immediately and restart the process."
+      - "Document the closure error e_close on the return path or loop closure."
+    practice:
+      - "Take an old track log and compute the closure error afterwards."
+      - "Simulate the effect of +3 degree and +8 degree angular noise."
+      - "Define your personal alarm thresholds for turning back or replanning."
+    note: "Plausibility checks often save more time than hectic forward motion."
+azimut:
+  title: "Azimuth and course deviation"
+  intro: "Enter map bearing, declination, distance, and an angular error. The calculator immediately shows how large the lateral deviation becomes."
+  labels:
+    alphaKarte: "Map bearing α_map (degrees)"
+    deklination: "Declination D (degrees)"
+    distance: "Distance d (km)"
+    deltaAlpha: "Course error Δα (degrees)"
+    start: "Start"
+    plan: "Planned"
+    actual: "Actual"
+    courses: "Courses"
+    deviation: "Deviation"
+    memo: "Rule of thumb"
+    lateral: "lateral e"
+    errorLine: "endpoint error"
+    meters: "in metres"
+    smallAngles: "For small angles:"
+  status:
+    success: "Very small course deviation. At this distance the error remains minor."
+    info: "Moderate deviation. You can correct it well with intermediate targets."
+    warning: "Clear lateral deviation. Use shorter sections and re-sight more often."
+bayes:
+  title: "Bayes update and measurement fusion"
+  intro: "If several location hypotheses are possible, Bayes helps with the update. For numeric measurements, weighting with 1/sigma^2 combines multiple sources."
+  sections:
+    hypotheses: "A) Location hypotheses (Bayes)"
+    fusion: "B) Measurement fusion"
+  table:
+    hypothesis: "Hypothesis"
+    prior: "Prior"
+    likelihood: "Likelihood P(E|H)"
+    posterior: "Posterior"
+    measurement: "Measurement"
+    value: "Value x_i"
+    sigma: "Sigma_i"
+  labels:
+    xHat: "x_hat"
+    sigmaHat: "sigma_hat"
+    ambiguous: "Scenario: ambiguous"
+    clear: "Scenario: clear finding"
+    reset: "Reset"
+  status:
+    posteriorInvalid: "Posterior cannot be computed. Check priors and likelihoods."
+    dominant: "{id} dominates with {value}."
+    leading: "{id} leads, but competing hypotheses still matter."
+    unclear: "No clear dominance. More evidence needed."
+    fusionInvalid: "Fusion invalid. Check sigma values."
+    fusionGood: "Good overall sharpness from several precise measurements."
+    fusionMedium: "Medium uncertainty. Usually usable for route decisions."
+    fusionPoor: "High uncertainty. Additional evidence recommended."
+schnitt:
+  title: "Position fix by intersection method"
+  intro: "Two landmarks and two bearings give your position as the intersection of the back-bearing lines. You can optionally enable distance circles for plausibility."
+  landmarkA: "Landmark A"
+  landmarkB: "Landmark B"
+  labels:
+    ax: "A_x"
+    ay: "A_y"
+    bx: "B_x"
+    by: "B_y"
+    bearingA: "Bearing to A (degrees from north)"
+    bearingB: "Bearing to B (degrees from north)"
+    distanceA: "Optional distance to A"
+    distanceB: "Optional distance to B"
+    epsilon: "Uncertainty ±ε"
+    showCircles: "Draw distance circles"
+    backBearings: "Back bearings"
+    distanceCheck: "Distance check"
+    intersectionAngle: "Intersection angle"
+    residual: "Residual"
+  status:
+    parallel: "The lines are nearly parallel. Change at least one bearing."
+    badAngle: "Poor intersection angle. Use 30 to 150 degrees if possible."
+    behind: "The intersection lies behind at least one landmark. Check the bearing."
+    stable: "Geometry is stable enough. Position X is usable as the primary estimate."
+  tex:
+    noIntersection: "\\text{No stable intersection point}"
+zeit:
+  title: "Time estimate: Naismith vs. Tobler"
+  intro: "Define your route as segments. The calculator compares two models per segment and returns total time plus reserve."
+  labels:
+    terrainFactor: "Terrain factor (1.0 = neutral)"
+    addSegment: "Segment +"
+    reset: "Reset"
+    distanceKm: "Distance [km]"
+    ascentM: "Ascent [m]"
+    slope: "Slope s"
+    naismith: "Naismith [h]"
+    tobler: "Tobler [h]"
+    totals: "Totals"
+    timeModel: "Time model"
+    recommendation: "Recommendation"
+    totalDistance: "Distance"
+    totalAscent: "Ascent"
+    totalSegments: "Segments"
+    difference: "Difference"
+    planTime: "Planned time"
+    reserve: "Reserve (15%)"
+    totalTarget: "Target total"
+  status:
+    short: "Short route. Even so, always start with reserve."
+    medium: "Medium tour. Checkpoints and time checks per segment make sense."
+    long: "Long route. Set an early turn-back threshold and a clear emergency option."

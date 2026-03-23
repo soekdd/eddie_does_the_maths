@@ -19,16 +19,17 @@
 
 		<!-- optional: winziges Label unten -->
 		<div class="primeMeta mono">
-			Primzahl #{{ primeIndex }}
+			{{ t( "graphs.primes.index", { index: primeIndex } ) }}
 		</div>
 
-		<div class="primeHint muted">Klick (oder Enter/Space)</div>
+		<div class="primeHint muted">{{ t( "graphs.primes.hint" ) }}</div>
 	</div>
 </div>
 </template>
 
 <script setup>
 import { computed, ref } from "vue";
+import { useI18n } from "@/i18n.mjs";
 import {
 	mdiNumeric0Box,
 	mdiNumeric1Box,
@@ -41,6 +42,8 @@ import {
 	mdiNumeric8Box,
 	mdiNumeric9Box
 } from "@mdi/js";
+
+const { t } = useI18n( "book1/SE" );
 
 /**
  * Interaktive Primzahlen-Anzeige:

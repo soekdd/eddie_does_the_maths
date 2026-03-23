@@ -3,7 +3,7 @@
 	<div class="c64-wrap">
 		<div class="c64-frame">
 			<div class="c64-border">
-				<div aria-label="C64 text screen" class="c64-screen" role="img">
+				<div :aria-label="t( 'ba.emulator.screenAria' )" class="c64-screen" role="img">
 					<pre class="c64-text">{{ screenText }}</pre>
 
 					<!-- Cursor-Overlay -->
@@ -24,7 +24,7 @@
 				v-model="inputLine"
 				density="compact"
 				hide-details
-				label="INPUT-Zeile (Enter sendet)"
+				:label="t( 'ba.emulator.inputLine' )"
 				@keydown.enter.prevent="sendInput"
 			/>
 		</v-col>
@@ -34,14 +34,14 @@
 				variant="tonal"
 				@click="sendInput"
 			>
-				SEND
+				{{ t( "ba.emulator.send" ) }}
 			</v-btn>
 			<v-btn
 				:disabled="stdinQueue.length === 0"
 				variant="text"
 				@click="clearStdinQueue"
 			>
-				queue leeren
+				{{ t( "ba.emulator.clearQueue" ) }}
 			</v-btn>
 		</v-col>
 	</v-row>
@@ -52,7 +52,7 @@
 		density="compact"
 		type="warning"
 	>
-		Interpreter wartet auf INPUT. Eingabe senden und das Programm laeuft direkt weiter.
+		{{ t( "ba.emulator.awaitingInput" ) }}
 	</v-alert>
 
 	<v-alert
@@ -79,9 +79,12 @@
 import {
 	computed, onBeforeUnmount, onMounted, ref, watch
 } from "vue";
+import { useI18n } from "@/i18n.mjs";
 import cbmbasicFactoryAssetUrl from "./cbmbasic/cbmbasic.mjs?url";
 import cbmbasicWasmAssetUrl from "./cbmbasic/cbmbasic.wasm?url";
 import CbmbasicWorker from "./cbmbasic/cbmbasic.worker.ts?worker";
+
+const { t } = useI18n( "book1/BA" );
 
 const DEFAULT_CBMBASIC_FACTORY_URL = cbmbasicFactoryAssetUrl;
 const DEFAULT_WASM_URL = cbmbasicWasmAssetUrl;

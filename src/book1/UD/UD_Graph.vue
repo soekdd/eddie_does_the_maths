@@ -6,10 +6,10 @@
 			type="button"
 			@click="regenerate"
 		>
-			Neues Polygon
+			{{ t( "graph.randomButton" ) }}
 		</button>
 		<label class="vertexControl" for="vertexCountSlider">
-			<span class="meta">Ecken: {{ vertexCountTarget }}</span>
+			<span class="meta">{{ t( "graph.vertices", { count: vertexCountTarget } ) }}</span>
 			<input
 				id="vertexCountSlider"
 				v-model.number="vertexCountTarget"
@@ -21,7 +21,7 @@
 				@input="regenerate"
 			>
 		</label>
-		<span class="meta">Typ: {{ model.concave ? "konkav" : "konvex" }}</span>
+		<span class="meta">{{ t( "graph.type", { value: model.concave ? t( "graph.concave" ) : t( "graph.convex" ) } ) }}</span>
 	</div>
 
 	<svg
@@ -110,13 +110,14 @@
 	</svg>
 
 	<p class="hint">
-		Im Kreis oben rechts wird klar, dass die Kreissektoren um die Ecken in der Summe genau eine Kreisfläche ergeben.
+		{{ t( "graph.hint" ) }}
 	</p>
 </div>
 </template>
 
 <script setup>
 import { computed, ref } from "vue";
+import { useI18n } from "@/i18n.mjs";
 
 const VIEWBOX_WIDTH = 640;
 const VIEWBOX_HEIGHT = 420;
@@ -135,8 +136,9 @@ const SLICE_PACK_CENTER = {
 const vertexCountTarget = ref( 6 );
 const model = ref( createPolygonModel( vertexCountTarget.value ) );
 const hoveredIndex = ref( -1 );
+const { locale, t } = useI18n( "book1/UD" );
 
-const ariaLabel = computed( () => `Zufallspolygon mit ${model.value.vertexCount} Punkten` );
+const ariaLabel = computed( () => t( "graph.aria", { count: model.value.vertexCount } ) );
 
 const polylinePoints = computed( () => {
 	const pts = model.value.points.map( ( p ) => `${p.x},${p.y}` );
@@ -744,7 +746,10 @@ function clampVertexCount( value ) {
 }
 
 function fmt( value ) {
-	return Number( value ).toFixed( 1 );
+	return new Intl.NumberFormat( locale.value, {
+		maximumFractionDigits: 1,
+		minimumFractionDigits: 1
+	} ).format( Number( value ) );
 }
 </script>
 

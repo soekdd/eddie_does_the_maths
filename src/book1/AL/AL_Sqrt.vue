@@ -2,13 +2,12 @@
 <ALCalculation
 	:deck
 	:error
-	formula-tex="x_{k+1}=\frac{1}{2}\left(x_k+\frac{N}{x_k}\right)\\
-\text{Start }x_0>0,\;\text{dann }x_k\to\sqrt{N}"
-	formula-title="Formel (Heron/Newton)"
+	:formula-tex
+	:formula-title="t( 'sqrt.formulaTitle' )"
 	:running
-	:subtitle="'Heron/Newton-Iteration mit Karten für <b>DIV, ADD, DIV</b>.'"
+	:subtitle="t( 'sqrt.subtitle' )"
 	:tab
-	title="Ada-Karten: Quadratwurzel"
+	:title="t( 'sqrt.title' )"
 	:trace-text
 	@reset="reset"
 	@run="run"
@@ -16,11 +15,11 @@
 >
 	<template #intro>
 		<template v-if="result">
-			Nach {{ result.iterations }} Iterationen:
+			{{ t( "sqrt.intro.result", { iterations: result.iterations } ) }}
 			<b><Katex :tex="`x\\approx${toKaTeXFrac(result.approxFrac)}`" /></b>
 		</template>
 		<template v-else>
-			Wähle <Katex tex="N" />, Startwert <Katex tex="x_0" /> und Iterationszahl.
+			<span v-html="t( 'sqrt.intro.empty' )" />
 		</template>
 	</template>
 
@@ -29,7 +28,7 @@
 			<v-text-field
 				v-model="nInput"
 				density="comfortable"
-				label="N (ganzzahlig, >0)"
+				:label="t( 'sqrt.inputs.n' )"
 				placeholder="2"
 			/>
 		</v-col>
@@ -38,7 +37,7 @@
 			<v-text-field
 				v-model="iterInput"
 				density="comfortable"
-				label="Iterationen"
+				:label="t( 'sqrt.inputs.iterations' )"
 				placeholder="6"
 			/>
 		</v-col>
@@ -47,25 +46,25 @@
 			<v-text-field
 				v-model="x0Input"
 				density="comfortable"
-				label="Startwert x0 (Bruch erlaubt, z.B. 1 oder 3/2)"
+				:label="t( 'sqrt.inputs.x0' )"
 				placeholder="1"
 			/>
 		</v-col>
 	</template>
 
 	<template #warning>
-		Iterationsformel: <Katex tex="x_{k+1}=\frac{1}{2}\left(x_k+\frac{N}{x_k}\right)" />.
+		<span v-html="t( 'sqrt.warning' )" />
 	</template>
 
 	<template #formulaNote>
-		Mit jedem Durchlauf nähert sich <Katex tex="x_k" /> der Wurzel <Katex tex="\sqrt{N}" /> an.
+		<span v-html="t( 'sqrt.formulaNote' )" />
 	</template>
 
 	<template #result>
 		<v-row v-if="result" dense>
 			<v-col cols="12" md="6">
 				<v-card class="pa-4" rounded="xl" variant="tonal">
-					<div class="text-caption mb-1">Näherung</div>
+					<div class="text-caption mb-1">{{ t( "sqrt.result.approximation" ) }}</div>
 					<div class="text-h5 font-weight-bold">{{ result.approxFrac }}</div>
 					<div class="mt-2"><Katex as="div" :display="true" :tex="result.evalTex" /></div>
 				</v-card>
@@ -73,18 +72,18 @@
 
 			<v-col cols="12" md="6">
 				<v-card class="pa-4" rounded="xl" variant="tonal">
-					<div class="text-caption mb-1">Dezimal & Fehler</div>
+					<div class="text-caption mb-1">{{ t( "sqrt.result.decimalError" ) }}</div>
 					<div class="text-h6 font-weight-medium">{{ result.approxDecimal }}</div>
-					<div class="text-body-2 mt-1">Fehler: {{ result.errorDecimal }}</div>
-					<div class="text-caption mt-2">(auf 6 Nachkommastellen gerundet)</div>
+					<div class="text-body-2 mt-1">{{ t( "sqrt.result.error", { value: result.errorDecimal } ) }}</div>
+					<div class="text-caption mt-2">{{ t( "sqrt.result.decimalNote" ) }}</div>
 				</v-card>
 			</v-col>
 
 			<v-col cols="12">
 				<v-chip class="me-2" color="green" variant="tonal">
-					Iterationen: {{ result.iterations }}
+					{{ t( "sqrt.result.iterations", { count: result.iterations } ) }}
 				</v-chip>
-				<v-chip variant="tonal">Karten: {{ deck?.length ?? 0 }}</v-chip>
+				<v-chip variant="tonal">{{ t( "sqrt.result.cards", { count: deck?.length ?? 0 } ) }}</v-chip>
 			</v-col>
 		</v-row>
 	</template>
@@ -93,7 +92,7 @@
 		<v-row dense>
 			<v-col cols="12" md="4">
 				<v-card class="pa-2" rounded="lg" variant="tonal">
-					<div class="text-subtitle-2 px-2 py-1">Data columns</div>
+					<div class="text-subtitle-2 px-2 py-1">{{ t( "common.dataColumns" ) }}</div>
 					<v-table density="compact">
 						<tbody>
 							<tr><td><code>V1</code></td><td>0</td><td class="mono text-right">{{ storeView(1) }}</td></tr>
@@ -108,14 +107,18 @@
 
 			<v-col cols="12" md="4">
 				<v-card class="pa-2" rounded="lg" variant="tonal">
-					<div class="text-subtitle-2 px-2 py-1">Working columns</div>
+					<div class="text-subtitle-2 px-2 py-1">{{ t( "common.workingColumns" ) }}</div>
 					<v-table density="compact">
 						<tbody>
 							<tr><td><code>V11</code></td><td>x_k</td><td class="mono text-right">{{ storeView(11) }}</td></tr>
 							<tr><td><code>V12</code></td><td>N/x_k</td><td class="mono text-right">{{ storeView(12) }}</td></tr>
-							<tr><td><code>V13</code></td><td>Summe</td><td class="mono text-right">{{ storeView(13) }}</td></tr>
+							<tr><td><code>V13</code></td><td>{{ t( "sqrt.store.sum" ) }}</td><td class="mono text-right">{{ storeView(13) }}</td></tr>
 							<tr><td><code>V14</code></td><td>x_{k+1}</td><td class="mono text-right">{{ storeView(14) }}</td></tr>
-							<tr><td><code>V16</code></td><td>Loopzähler</td><td class="mono text-right">{{ storeView(16) }}</td></tr>
+							<tr>
+								<td><code>V16</code></td>
+								<td>{{ t( "sqrt.store.loopCounter" ) }}</td>
+								<td class="mono text-right">{{ storeView(16) }}</td>
+							</tr>
 						</tbody>
 					</v-table>
 				</v-card>
@@ -123,10 +126,14 @@
 
 			<v-col cols="12" md="4">
 				<v-card class="pa-2" rounded="lg" variant="tonal">
-					<div class="text-subtitle-2 px-2 py-1">Result columns</div>
+					<div class="text-subtitle-2 px-2 py-1">{{ t( "common.resultColumns" ) }}</div>
 					<v-table density="compact">
 						<tbody>
-							<tr><td><code>V21</code></td><td>Näherung</td><td class="mono text-right">{{ storeView(21) }}</td></tr>
+							<tr>
+								<td><code>V21</code></td>
+								<td>{{ t( "sqrt.store.approximation" ) }}</td>
+								<td class="mono text-right">{{ storeView(21) }}</td>
+							</tr>
 							<tr><td><code>V22</code></td><td>x^2</td><td class="mono text-right">{{ storeView(22) }}</td></tr>
 							<tr><td><code>V23</code></td><td>x^2-N</td><td class="mono text-right">{{ storeView(23) }}</td></tr>
 						</tbody>
@@ -140,16 +147,19 @@
 			type="info"
 			variant="tonal"
 		>
-			Ein Iterationszyklus ist exakt: <code>DIV</code> → <code>ADD</code> → <code>DIV</code>.
+			<span v-html="t( 'sqrt.store.info' )" />
 		</v-alert>
 	</template>
 </ALCalculation>
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { computed, ref } from "vue";
+import { useI18n } from "@/i18n.mjs";
 
 import ALCalculation from "./AL_Calculation.vue";
+
+const { t } = useI18n( "book1/AL" );
 
 const bigAbs = ( x ) => x < 0n ? -x : x;
 
@@ -169,7 +179,7 @@ function gcd( a, b ) {
 class Rat {
 	constructor( num, den = 1n ) {
 		if ( den === 0n ) {
-			throw new Error( "Division by zero (den=0)." );
+			throw new Error( t( "common.errors.divisionByZeroCard" ) );
 		}
 
 		if ( den < 0n ) {
@@ -200,7 +210,7 @@ class Rat {
 
 	div( r ) {
 		if ( r.num === 0n ) {
-			throw new Error( "Division by zero." );
+			throw new Error( t( "common.errors.divisionByZeroCard" ) );
 		}
 
 		return new Rat( this.num * r.den, this.den * r.num );
@@ -265,7 +275,7 @@ class RatVM {
 				return Rat.ofInt( x.I );
 			}
 
-			throw new Error( "Bad operand: " + JSON.stringify( x ) );
+			throw new Error( t( "common.errors.badOperand", { value: JSON.stringify( x ) } ) );
 		};
 
 		const a = read( card.a );
@@ -279,7 +289,7 @@ class RatVM {
 			case "MUL": r = a.mul( b ); break;
 			case "DIV": r = a.div( b ); break;
 			default:
-				throw new Error( "Unknown op: " + card.op );
+				throw new Error( t( "common.errors.unknownOp", { value: card.op } ) );
 		}
 
 		this.setV( card.dest, r );
@@ -299,42 +309,42 @@ class RatVM {
 }
 
 function parseBigIntInput( v, label ) {
-	const t = String( v ?? "" ).trim();
+	const text = String( v ?? "" ).trim();
 
-	if ( !t ) {
-		throw new Error( `${label}: leer.` );
+	if ( !text ) {
+		throw new Error( t( "common.errors.empty", { label } ) );
 	}
 
-	if ( !/^[-+]?\d+$/.test( t ) ) {
-		throw new Error( `${label}: Bitte ganze Zahl eingeben.` );
+	if ( !/^[-+]?\d+$/.test( text ) ) {
+		throw new Error( t( "common.errors.integer", { label } ) );
 	}
 
-	return BigInt( t );
+	return BigInt( text );
 }
 
 function parseRatInput( v, label ) {
-	const t = String( v ?? "" ).trim();
+	const text = String( v ?? "" ).trim();
 
-	if ( !t ) {
-		throw new Error( `${label}: leer.` );
+	if ( !text ) {
+		throw new Error( t( "common.errors.empty", { label } ) );
 	}
 
-	if ( /^[-+]?\d+$/.test( t ) ) {
-		return new Rat( BigInt( t ), 1n );
+	if ( /^[-+]?\d+$/.test( text ) ) {
+		return new Rat( BigInt( text ), 1n );
 	}
 
-	if ( /^[-+]?\d+\s*\/\s*[-+]?\d+$/.test( t ) ) {
-		const [ a, b ] = t.split( "/" ).map( ( x ) => x.trim() );
+	if ( /^[-+]?\d+\s*\/\s*[-+]?\d+$/.test( text ) ) {
+		const [ a, b ] = text.split( "/" ).map( ( x ) => x.trim() );
 		const den = BigInt( b );
 
 		if ( den === 0n ) {
-			throw new Error( `${label}: Nenner darf nicht 0 sein.` );
+			throw new Error( t( "sqrt.errors.denominatorZero", { label } ) );
 		}
 
 		return new Rat( BigInt( a ), den );
 	}
 
-	throw new Error( `${label}: Nur ganze Zahl oder Bruch a/b erlaubt.` );
+	throw new Error( t( "sqrt.errors.ratFormat", { label } ) );
 }
 
 function toKaTeXFrac( fracStr ) {
@@ -353,38 +363,38 @@ function buildSqrtDeck( iterations ) {
 	let line = 1;
 
 	deck.push( {
-		line: line++, op: "ADD", a: { V: 4 }, b: { V: 1 }, dest: 11, label: "x:=x0"
+		line: line++, op: "ADD", a: { V: 4 }, b: { V: 1 }, dest: 11, label: t( "sqrt.deck.initX" )
 	} );
 	deck.push( {
-		line: line++, op: "ADD", a: { V: 1 }, b: { V: 1 }, dest: 16, label: "iter:=0"
+		line: line++, op: "ADD", a: { V: 1 }, b: { V: 1 }, dest: 16, label: t( "sqrt.deck.initIter" )
 	} );
 
 	for ( let k = 1; k <= iterations; k++ ) {
 		deck.push( {
-			line: line++, op: "DIV", a: { V: 3 }, b: { V: 11 }, dest: 12, label: `[${k}] t:=N/x`
+			line: line++, op: "DIV", a: { V: 3 }, b: { V: 11 }, dest: 12, label: t( "sqrt.deck.div", { step: k } )
 		} );
 		deck.push( {
-			line: line++, op: "ADD", a: { V: 11 }, b: { V: 12 }, dest: 13, label: `[${k}] s:=x+t`
+			line: line++, op: "ADD", a: { V: 11 }, b: { V: 12 }, dest: 13, label: t( "sqrt.deck.add", { step: k } )
 		} );
 		deck.push( {
-			line: line++, op: "DIV", a: { V: 13 }, b: { V: 2 }, dest: 14, label: `[${k}] xn:=s/2`
+			line: line++, op: "DIV", a: { V: 13 }, b: { V: 2 }, dest: 14, label: t( "sqrt.deck.halve", { step: k } )
 		} );
 		deck.push( {
-			line: line++, op: "ADD", a: { V: 14 }, b: { V: 1 }, dest: 11, label: `[${k}] x:=xn`
+			line: line++, op: "ADD", a: { V: 14 }, b: { V: 1 }, dest: 11, label: t( "sqrt.deck.next", { step: k } )
 		} );
 		deck.push( {
-			line: line++, op: "ADD", a: { V: 16 }, b: { V: 5 }, dest: 16, label: `[${k}] iter++`
+			line: line++, op: "ADD", a: { V: 16 }, b: { V: 5 }, dest: 16, label: t( "sqrt.deck.iter", { step: k } )
 		} );
 	}
 
 	deck.push( {
-		line: line++, op: "ADD", a: { V: 11 }, b: { V: 1 }, dest: 21, label: "output x"
+		line: line++, op: "ADD", a: { V: 11 }, b: { V: 1 }, dest: 21, label: t( "sqrt.deck.output" )
 	} );
 	deck.push( {
-		line: line++, op: "MUL", a: { V: 21 }, b: { V: 21 }, dest: 22, label: "x^2"
+		line: line++, op: "MUL", a: { V: 21 }, b: { V: 21 }, dest: 22, label: t( "sqrt.deck.square" )
 	} );
 	deck.push( {
-		line: line++, op: "SUB", a: { V: 22 }, b: { V: 3 }, dest: 23, label: "x^2-N"
+		line: line++, op: "SUB", a: { V: 22 }, b: { V: 3 }, dest: 23, label: t( "sqrt.deck.delta" )
 	} );
 
 	return deck;
@@ -407,10 +417,10 @@ const traceText = ref( "" );
 const store = ref( null );
 const tab = ref( "deck" );
 
-const formulaTex = String.raw`
+const formulaTex = computed( () => String.raw`
 x_{k+1}=\frac{1}{2}\left(x_k+\frac{N}{x_k}\right)\\
-\text{Start }x_0>0,\;\text{dann }x_k\to\sqrt{N}
-`;
+\text{start }x_0>0,\;\text{then }x_k\to\sqrt{N}
+` );
 
 function storeView( i ) {
 	if ( !store.value ) {
@@ -440,19 +450,19 @@ async function run() {
 
 	try {
 		const N = parseBigIntInput( nInput.value, "N" );
-		const iterationsBig = parseBigIntInput( iterInput.value, "Iterationen" );
+		const iterationsBig = parseBigIntInput( iterInput.value, t( "sqrt.inputs.iterations" ) );
 		const x0 = parseRatInput( x0Input.value, "x0" );
 
 		if ( N <= 0n ) {
-			throw new Error( "N muss größer als 0 sein." );
+			throw new Error( t( "sqrt.errors.positiveN" ) );
 		}
 
 		if ( iterationsBig < 1n || iterationsBig > 20n ) {
-			throw new Error( "Iterationen bitte zwischen 1 und 20." );
+			throw new Error( t( "sqrt.errors.iterationsRange" ) );
 		}
 
 		if ( x0.num === 0n ) {
-			throw new Error( "x0 darf nicht 0 sein." );
+			throw new Error( t( "sqrt.errors.x0Zero" ) );
 		}
 
 		const iterations = Number( iterationsBig );

@@ -1,106 +1,80 @@
 <template>
-<AppFrame  :sub-chapter="{
-		einleitung: 'Einleitung',
-		'geschichte': 'Geschichte',
-		'basic-denke': 'BASIC-Denke',
-		'interaktiver-rechner': 'Interaktiver Rechner'
-	}"
-	title="Eddie rechnet: Der fx-7000G"
+<AppFrame
+	:languages="[ 'de', 'en' ]"
+	:sub-chapter
+	:title="t( 'fx.title' )"
 	:vue-date="__VITE_SFC_MTIME_MS__"
 >
 
 	<template #bookPart>
 		<figure class="exampleFigure">
-			<ImageZoomer title="Eddie feiert ihren fx-7000G">
-				<img loading="lazy" :src="titleImg" />
+			<ImageZoomer :title="t( 'fx.imageTitle' )">
+				<img :alt="t( 'fx.imageAlt' )" loading="lazy" :src="titleImg" />
 			</ImageZoomer>
 		</figure>
-		<h3 id="einleitung">Stockholm, 23. Oktober 1985</h3>
+		<h3 id="einleitung">{{ t( "fx.introDate" ) }}</h3>
 		<div class="eddie">
-			<p>Ich sitze noch mit Herzklopfen am Tisch, als hätte ich gerade einen Alarm ausgelöst. Erst schreit er
-				mich an, ich wolle den Rechner klauen und im nächsten Moment starrt er auf seine Zahlen, als wären
-				sie ihm eben erst aufgefallen. Ich zeige nur auf die Stelle, wo er sich doppelt verrechnet. Ein
-				paar Sekunden Tastenklappern, dann dieser Blick: kalt, schwer, erwischt.</p>
-			<p>Und dann schiebt er ihn mir rüber. Einfach so. <b>Casio fx-7000G</b>. Wie neu. Als Geschenk.
-				Ein kleines Wunder, das in eine Jackentasche passt. Ich spüre das Kribbeln bis in die Fingerspitzen,
-				als würde mein Gehirn endlich was zu beißen bekommen. Matrixdisplay, Tasten wie kleine Versprechen,
-				und <em>programmierbar</em>: Basic, wie Karis Heimcomputer, nur eben auf Handflächengröße.</p>
-			<p>Bevor ich wieder an Flucht, Angst und graue Männer denken kann, halte ich dieses Ding fest wie einen
-				Schatz. Und genau hier schalten wir kurz um: Weg von der Szene, hin zum Werkzeug.</p>
-			<p>Unten zeige ich dir, was der fx-7000G wirklich kann, vor allem beim Programmieren. Es gibt sogar
-				eine Simulation, in der du selbst tippen, testen und rumspinnen kannst.</p>
+			<p>{{ t( "fx.book.p1" ) }}</p>
+			<p v-html="t( 'fx.book.p2' )" />
+			<p>{{ t( "fx.book.p3" ) }}</p>
+			<p>{{ t( "fx.book.p4" ) }}</p>
 		</div>
 	</template>
 
 	<template #descriptionPart>
 
-		<h2 id="geschichte">Teil 1 - Warum der fx-7000G spannend ist</h2>
+		<h2 id="geschichte">{{ t( "fx.sections.part1.title" ) }}</h2>
 		<div class="eddie">
-			<p>
-				Stell dir 1985 vor: Du bist ein Kind in der DDR, Computer kennst du nur aus der Ferne,
-				aus Erzaehlungen, vielleicht aus einer Zeitschrift. Und plötzlich
-				liegt da etwas in der Hand, das man <b>programmieren</b> kann: der <b>Casio fx-7000G</b>.
-			</p>
-			<p>
-				Auch im Westen war das ein Meilenstein: ein früher grafikfähiger Rechner für die Tasche,
-				der BASIC und Grafik zusammenbrachte. Nicht nur rechnen, sondern denken in Schritten:
-				<b>Problem zerlegen</b>, Variablen setzen, prüfen, verbessern.
-			</p>
-			<p>
-				Die Daten waren für die Zeit stark: Matrix-Display mit <b>96x64 Pixel</b>,
-				<b>78 Zahlenspeicher</b>, <b>422 Zeichen Programmspeicher</b>.
-				Und der Preis von etwa <b>300 DM</b>&nbsp;(kaufkraftbereinigt, heute etwa 330 €) war für diese Funktionsfülle erstaunlich niedrig.
-			</p>
+			<p v-html="t( 'fx.sections.part1.p1' )" />
+			<p v-html="t( 'fx.sections.part1.p2' )" />
+			<p v-html="t( 'fx.sections.part1.p3' )" />
 		</div>
 
-		<h2 id="basic-denke" class="mt-8">Teil 2 - Eddie-Workflow auf dem Rechner</h2>
+		<h2 id="basic-denke" class="mt-8">{{ t( "fx.sections.part2.title" ) }}</h2>
 		<div class="eddie">
-			<p>Wenn ich mit dem fx-7000G arbeite, nutze ich immer denselben Ablauf:</p>
+			<p>{{ t( "fx.sections.part2.p1" ) }}</p>
 			<ol>
-				<li><b>Frage klären</b>: Was soll am Ende rauskommen?</li>
-				<li><b>Daten setzen</b>: Werte in Variablen speichern.</li>
-				<li><b>Regel bauen</b>: Formeln oder kleine BASIC-Schleifen definieren.</li>
-				<li><b>Testen</b>: Mit einfachen Zahlen starten, dann variieren.</li>
+				<li><b>{{ t( "fx.sections.part2.s1Title" ) }}</b>: {{ t( "fx.sections.part2.s1" ) }}</li>
+				<li><b>{{ t( "fx.sections.part2.s2Title" ) }}</b>: {{ t( "fx.sections.part2.s2" ) }}</li>
+				<li><b>{{ t( "fx.sections.part2.s3Title" ) }}</b>: {{ t( "fx.sections.part2.s3" ) }}</li>
+				<li><b>{{ t( "fx.sections.part2.s4Title" ) }}</b>: {{ t( "fx.sections.part2.s4" ) }}</li>
 			</ol>
 			<p class="muted">
-				So wird aus „rumprobieren“ ein reproduzierbarer Rechenweg.
+				{{ t( "fx.sections.part2.note" ) }}
 			</p>
 		</div>
 
-		<h2 class="mt-8">Teil 3 - BASIC in 6 Zeilen</h2>
+		<h2 class="mt-8">{{ t( "fx.sections.part3.title" ) }}</h2>
 		<div class="eddie">
-			<p>
-				Das hier ist ein Mini-Muster: Eingabe lesen, Quadrat und Wurzel ausgeben.
-				Genau dieses Schema steckt in vielen Schul- und Olympia-Helfern.
-			</p>
+			<p>{{ t( "fx.sections.part3.p1" ) }}</p>
 			<div class="kbox">
 				<div v-for="(line, idx) in miniProgram" :key="idx" class="mono">{{ line }}</div>
 			</div>
 			<p class="muted">
-				Merksatz: Erst kleine, sichere Bausteine. Dann erst große Programme.
+				{{ t( "fx.sections.part3.note" ) }}
 			</p>
 		</div>
 
-		<h2>Teil 4 - Eddie-Spickzettel</h2>
+		<h2>{{ t( "fx.sections.part4.title" ) }}</h2>
 		<div class="eddie d-flex flex-column ga-3">
 			<v-sheet border class="pa-3" rounded="lg">
-				<div class="text-subtitle-1 font-weight-medium mb-2">Schneller Start</div>
+				<div class="text-subtitle-1 font-weight-medium mb-2">{{ t( "fx.sections.part4.quickStart" ) }}</div>
 				<ol class="mb-0">
-					<li><code class="mono">RUN</code> für direkte Rechnungen nutzen.</li>
-					<li>Bei mehreren Schritten in <code class="mono">BASIC</code> wechseln.</li>
-					<li>Mit kleinen Testwerten prüfen, dann erst „echte“ Daten einsetzen.</li>
-					<li>Bei Chaos: <code class="mono">Reset</code>, dann sauber neu aufsetzen.</li>
+					<li>{{ t( "fx.sections.part4.q1" ) }}</li>
+					<li>{{ t( "fx.sections.part4.q2" ) }}</li>
+					<li>{{ t( "fx.sections.part4.q3" ) }}</li>
+					<li>{{ t( "fx.sections.part4.q4" ) }}</li>
 				</ol>
 			</v-sheet>
 
 			<v-sheet border class="pa-3" rounded="lg">
-				<div class="text-subtitle-1 font-weight-medium mb-2">Denkmuster</div>
+				<div class="text-subtitle-1 font-weight-medium mb-2">{{ t( "fx.sections.part4.patterns" ) }}</div>
 				<v-table density="compact">
 					<thead>
 						<tr>
-							<th>Muster</th>
-							<th>Rechenidee</th>
-							<th>Eddie-Satz</th>
+							<th>{{ t( "fx.sections.part4.table.pattern" ) }}</th>
+							<th>{{ t( "fx.sections.part4.table.logic" ) }}</th>
+							<th>{{ t( "fx.sections.part4.table.note" ) }}</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -116,14 +90,11 @@
 	</template>
 
 	<template #interactivePart>
-		<h2 id="interaktiver-rechner"> Interaktiv: fx-7000G ausprobieren</h2>
+		<h2 id="interaktiver-rechner">{{ t( "fx.interactive.title" ) }}</h2>
 		<div class="eddie d-flex flex-column ga-3">
-			<p>
-				Leider darf ich nicht den echten fx-700G zeigen. Casio hält eifersüchtig am Copyright fest.
-				Daher habe ich hier nur die Programmierfähigkeit des fx-7000G und die grundlegenden Funktionen simuliert.
-			</p>
+			<p>{{ t( "fx.interactive.p1" ) }}</p>
 			<v-alert type="info" variant="tonal">
-				Tipp: Starte mit dem Demo-Programm, ändere dann nur eine Zeile und beobachte den Effekt.
+				{{ t( "fx.interactive.tip" ) }}
 			</v-alert>
 		</div>
 		<FX7000G />
@@ -131,46 +102,58 @@
 
 	<template #footer>
 		<p class="muted">
-			<a href="https://github.com/Krevo/CasioBasicInterpreter">Thanks to Krevo for his CasioBasicInterpreter (BSD License)</a>
+			<a href="https://github.com/Krevo/CasioBasicInterpreter">{{ t( "fx.footer" ) }}</a>
 		</p>
 	</template>
 </AppFrame>
 </template>
 
 <script setup>
+import { computed } from "vue";
+import { useI18n } from "@/i18n.mjs";
+
 import FX7000G from "./FX_7000G.vue";
 import titleImg from "./FX.webp";
 
-const miniProgram = [
+const { t } = useI18n( "book1/FX" );
+
+const subChapter = computed( () => ( {
+	einleitung:             t( "fx.subChapter.einleitung" ),
+	geschichte:             t( "fx.subChapter.geschichte" ),
+	"basic-denke":          t( "fx.subChapter.basicDenke" ),
+	"interaktiver-rechner": t( "fx.subChapter.interaktiverRechner" )
+} ) );
+
+const miniProgram = computed( () => [
 	"Cls",
-	"Locate 1,1,\"ZAHL?\"",
+	t( "fx.demo.line1" ),
 	"?->A",
 	"Locate 1,3,\"A^2=\"",
 	"Locate 6,3,A^2",
 	"Locate 1,4,\"sqrt(A)=\"",
 	"Locate 9,4,Sqrt A"
-];
+] );
 
-const patterns = [
+const patterns = computed( () => [
 	{
-		title: "Eingabe -> Ergebnis",
-		logic: "?->A | Formel(A)",
-		note:  "Wenn der Weg kurz ist, bleibt der Kopf ruhig."
+		title: t( "fx.patterns.p1.title" ),
+		logic: t( "fx.patterns.p1.logic" ),
+		note:  t( "fx.patterns.p1.note" )
 	},
 	{
-		title: "Wiederholung",
-		logic: "For ... Next",
-		note:  "Alles, was sich wiederholt, gehört in eine Schleife."
+		title: t( "fx.patterns.p2.title" ),
+		logic: t( "fx.patterns.p2.logic" ),
+		note:  t( "fx.patterns.p2.note" )
 	},
 	{
-		title: "Fallunterscheidung",
-		logic: "If ... Then",
-		note:  "Jeder Ast braucht eine klare Bedingung."
+		title: t( "fx.patterns.p3.title" ),
+		logic: t( "fx.patterns.p3.logic" ),
+		note:  t( "fx.patterns.p3.note" )
 	},
 	{
-		title: "Anzeige",
-		logic: "Locate col,row,text",
-		note:  "Gute Ausgaben sparen Debug-Zeit."
+		title: t( "fx.patterns.p4.title" ),
+		logic: t( "fx.patterns.p4.logic" ),
+		note:  t( "fx.patterns.p4.note" )
 	}
-];
+] );
 </script>

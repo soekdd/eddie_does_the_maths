@@ -1,54 +1,43 @@
 <template>
-<AppFrame  nomd
-	:sub-chapter="{
-		'willkommen': 'Willkommen',
-		'ubersicht': 'Übersicht'
-	}"
-	title="Eddie rechnet"
+<AppFrame
+	:languages="[ 'de', 'en' ]"
+	nomd
+	:sub-chapter
+	:title="t( 'welcome.title' )"
 	:vue-date="__VITE_SFC_MTIME_MS__"
 >
 
 	<template #descriptionPart>
 		<figure class="exampleFigure">
-			<ImageZoomer title="Eddie">
+			<ImageZoomer :title="t( 'welcome.imageTitle' )">
 				<img loading="lazy" :src="welcomeImg" />
 			</ImageZoomer>
 		</figure>
-		<h2 id="willkommen">Willkommen</h2>
+		<h2 id="willkommen">{{ t( "welcome.heading" ) }}</h2>
 		<div class="eddie">
-			<p>
-				Hey, ich bin Eddie, und wenn du mein Buch kennst, weißt du: Meine Flucht aus der DDR ist kein
-				Zufall, sondern ein Plan aus Papier, Mut und Mathe.
-			</p>
-			<p>
-				In meinem Kopf werden Karten zu Geometrie, Angst zu Wahrscheinlichkeiten und „unmöglich“ zu
-				einer Gleichung, die ich knacken kann.
-			</p>
-			<p>
-				Genau darum gibt’s <strong>Eddie rechnet</strong>: damit du siehst, wie Mathe im echten Leben
-				plötzlich über Freiheit, Richtung und die nächsten Schritte entscheidet.
-			</p>
-			<p>
-				In den einzelnen Kapiteln werden all die Situationen meiner Flucht aufgegriffen, in denen ich mich
-				mit Mathe irgendwie gerettet habe. Im Buch hätte das gestört, aber hier habe ich den Raum, meine
-				Gedanken und Rechnungen zu vertiefen. Damit du mir nicht nur beim Denken zusehen musst, gibt es am Ende jedes
-				Kapitels einen interaktiven Teil, in dem du die Rechnung selbst ausprobieren kannst. Steinalte
-				Computer werden wieder zum Leben erweckt, und noch ältere Segelschiffe werden sinken.
-			</p>
-			<p>Und nun viel Spaß....</p>
+			<p>{{ t( "welcome.p1" ) }}</p>
+			<p>{{ t( "welcome.p2" ) }}</p>
+			<p v-html="t( 'welcome.p3' )" />
+			<p>{{ t( "welcome.p4" ) }}</p>
+			<p>{{ t( "welcome.p5" ) }}</p>
 
 			<div class="exampleClear"></div>
 		</div>
 	</template>
 
 	<template #interactivePart>
-		<h2 id="ubersicht">Index</h2>
+		<h2 id="ubersicht">{{ t( "welcome.index" ) }}</h2>
 		<ContentIndex />
 	</template>
 </AppFrame>
 </template>
 
 <script setup>
+import { computed } from "vue";
+import { useI18n } from "@/i18n.mjs";
 import ContentIndex from "@/components/ContentIndex.vue";
 import welcomeImg from "@/images/welcome.webp";
+
+const { t, tm } = useI18n( "components/lang" );
+const subChapter = computed( () => tm( "welcome.subChapter" ) ?? {} );
 </script>

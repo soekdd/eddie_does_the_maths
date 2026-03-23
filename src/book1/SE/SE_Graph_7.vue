@@ -1,7 +1,7 @@
 <template>
 <div class="seGraphWrap">
 	<svg
-		aria-label="Rechtecke im Raster"
+		:aria-label="t( 'graphs.rectangles.aria' )"
 		class="seGraphSvg"
 		role="img"
 		:viewBox="`0 0 ${size} ${size}`"
@@ -35,14 +35,17 @@
 	<div class="seGraphMeta mono">
 		<div><b>x</b> = {{ x }}</div>
 		<div><b>y</b> = {{ y }}</div>
-		<div><b>Rechtecke</b> = {{ rectangleCount }}</div>
+		<div><b>{{ t( "graphs.rectangles.count" ) }}</b> = {{ rectangleCount }}</div>
 	</div>
-	<p class="muted seGraphHint">Klick auf die Grafik</p>
+	<p class="muted seGraphHint">{{ t( "graphs.common.clickHint" ) }}</p>
 </div>
 </template>
 
 <script setup>
 import { computed, ref } from "vue";
+import { useI18n } from "@/i18n.mjs";
+
+const { t } = useI18n( "book1/SE" );
 
 const size = 420;
 const padding = 46;

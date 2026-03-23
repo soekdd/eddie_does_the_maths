@@ -1,33 +1,26 @@
 <template>
 <v-card class="pa-4" rounded="xl">
-	<h3 class="text-h6 mb-2">Standortbestimmung per Schnittverfahren</h3>
-	<p class="text-body-2 mb-4">
-		Zwei Landmarken und zwei Peilungen liefern deinen Standort als Schnitt der Rückwärtslinien.
-		Optional kannst du Distanzkreise zur Plausibilität einschalten.
-	</p>
+	<h3 class="text-h6 mb-2">{{ t( "schnitt.title" ) }}</h3>
+	<p class="text-body-2 mb-4">{{ t( "schnitt.intro" ) }}</p>
 
 	<v-row dense>
 		<v-col cols="12" md="6">
 			<v-sheet class="pa-3 rounded-lg" variant="tonal">
-				<div class="text-subtitle-2 mb-2">Landmarke A</div>
+				<div class="text-subtitle-2 mb-2">{{ t( "schnitt.landmarkA" ) }}</div>
 				<v-row dense>
 					<v-col cols="6">
-						<v-text-field v-model.number="ax" label="A_x" type="number" />
+						<v-text-field v-model.number="ax" :label="t( 'schnitt.labels.ax' )" type="number" />
 					</v-col>
 					<v-col cols="6">
-						<v-text-field v-model.number="ay" label="A_y" type="number" />
+						<v-text-field v-model.number="ay" :label="t( 'schnitt.labels.ay' )" type="number" />
 					</v-col>
 					<v-col cols="12">
-						<v-text-field
-							v-model.number="bearingA"
-							label="Peilung zu A (Grad ab Nord)"
-							type="number"
-						/>
+						<v-text-field v-model.number="bearingA" :label="t( 'schnitt.labels.bearingA' )" type="number" />
 					</v-col>
 					<v-col cols="12">
 						<v-text-field
 							v-model.number="distA"
-							label="Optionale Distanz zu A"
+							:label="t( 'schnitt.labels.distanceA' )"
 							min="0"
 							step="0.1"
 							type="number"
@@ -39,25 +32,21 @@
 
 		<v-col cols="12" md="6">
 			<v-sheet class="pa-3 rounded-lg" variant="tonal">
-				<div class="text-subtitle-2 mb-2">Landmarke B</div>
+				<div class="text-subtitle-2 mb-2">{{ t( "schnitt.landmarkB" ) }}</div>
 				<v-row dense>
 					<v-col cols="6">
-						<v-text-field v-model.number="bx" label="B_x" type="number" />
+						<v-text-field v-model.number="bx" :label="t( 'schnitt.labels.bx' )" type="number" />
 					</v-col>
 					<v-col cols="6">
-						<v-text-field v-model.number="by" label="B_y" type="number" />
+						<v-text-field v-model.number="by" :label="t( 'schnitt.labels.by' )" type="number" />
 					</v-col>
 					<v-col cols="12">
-						<v-text-field
-							v-model.number="bearingB"
-							label="Peilung zu B (Grad ab Nord)"
-							type="number"
-						/>
+						<v-text-field v-model.number="bearingB" :label="t( 'schnitt.labels.bearingB' )" type="number" />
 					</v-col>
 					<v-col cols="12">
 						<v-text-field
 							v-model.number="distB"
-							label="Optionale Distanz zu B"
+							:label="t( 'schnitt.labels.distanceB' )"
 							min="0"
 							step="0.1"
 							type="number"
@@ -70,15 +59,14 @@
 
 	<v-row class="mt-1" dense>
 		<v-col cols="12" md="6">
-			<v-slider
-				v-model="epsilonDeg"
+			<v-slider v-model="epsilonDeg"
 				color="primary"
 				:max="20"
 				:min="0"
 				step="0.5"
 			>
 				<template #prepend>
-					<span class="text-caption">Unsicherheit ±ε</span>
+					<span class="text-caption">{{ t( "schnitt.labels.epsilon" ) }}</span>
 				</template>
 				<template #append>
 					<v-chip size="small" variant="tonal">{{ fmt( epsilonDeg ) }}°</v-chip>
@@ -86,10 +74,7 @@
 			</v-slider>
 		</v-col>
 		<v-col class="d-flex align-center" cols="12" md="6">
-			<v-checkbox
-				v-model="showDistanceCircles"
-				label="Distanzkreise zeichnen"
-			/>
+			<v-checkbox v-model="showDistanceCircles" :label="t( 'schnitt.labels.showCircles' )" />
 		</v-col>
 	</v-row>
 
@@ -111,15 +96,13 @@
 				width="380"
 			/>
 
-			<line
-				class="lineA"
+			<line class="lineA"
 				:x1="rayA.x1"
 				:x2="rayA.x2"
 				:y1="rayA.y1"
 				:y2="rayA.y2"
 			/>
-			<line
-				class="lineB"
+			<line class="lineB"
 				:x1="rayB.x1"
 				:x2="rayB.x2"
 				:y1="rayB.y1"
@@ -136,15 +119,13 @@
 				:y2="line.y2"
 			/>
 
-			<circle
-				v-if="showDistanceCircles && distA > 0"
+			<circle v-if="showDistanceCircles && distA > 0"
 				class="circleA"
 				:cx="pointA.x"
 				:cy="pointA.y"
 				:r="distA * view.scale"
 			/>
-			<circle
-				v-if="showDistanceCircles && distB > 0"
+			<circle v-if="showDistanceCircles && distB > 0"
 				class="circleB"
 				:cx="pointB.x"
 				:cy="pointB.y"
@@ -178,18 +159,18 @@
 	<v-row class="mt-3" dense>
 		<v-col cols="12" md="6">
 			<v-sheet class="pa-3 rounded-lg" variant="outlined">
-				<div class="text-caption text-medium-emphasis mb-1">Rückwärtspeilungen</div>
+				<div class="text-caption text-medium-emphasis mb-1">{{ t( "schnitt.labels.backBearings" ) }}</div>
 				<div class="mono">A: {{ fmt( reverseBearingA ) }}°</div>
 				<div class="mono">B: {{ fmt( reverseBearingB ) }}°</div>
-				<div class="mono">Schnittwinkel: {{ fmt( intersectionAngleDeg ) }}°</div>
+				<div class="mono">{{ t( "schnitt.labels.intersectionAngle" ) }}: {{ fmt( intersectionAngleDeg ) }}°</div>
 			</v-sheet>
 		</v-col>
 		<v-col cols="12" md="6">
 			<v-sheet class="pa-3 rounded-lg" variant="outlined">
-				<div class="text-caption text-medium-emphasis mb-1">Distanzcheck</div>
+				<div class="text-caption text-medium-emphasis mb-1">{{ t( "schnitt.labels.distanceCheck" ) }}</div>
 				<div class="mono">|XA|: {{ fmt( distToA ) }}</div>
 				<div class="mono">|XB|: {{ fmt( distToB ) }}</div>
-				<div class="mono">Residuum: {{ fmt( distanceResidual ) }}</div>
+				<div class="mono">{{ t( "schnitt.labels.residual" ) }}: {{ fmt( distanceResidual ) }}</div>
 			</v-sheet>
 		</v-col>
 	</v-row>
@@ -198,6 +179,9 @@
 
 <script setup>
 import { computed, ref } from "vue";
+import { useI18n } from "@/i18n.mjs";
+
+const { t } = useI18n( "book1/NV" );
 
 const ax = ref( 2 );
 const ay = ref( 7 );
@@ -212,9 +196,7 @@ const showDistanceCircles = ref( true );
 
 const EPS = 1e-9;
 const CANVAS = {
-	w:   380,
-	h:   280,
-	pad: 20
+	w: 380, h: 280, pad: 20
 };
 
 function fmt( n, digits = 2 ) {
@@ -241,10 +223,7 @@ function degToRad( deg ) {
 
 function bearingToVec( bearingDeg ) {
 	const r = degToRad( bearingDeg );
-	return {
-		x: Math.sin( r ),
-		y: Math.cos( r )
-	};
+	return { x: Math.sin( r ), y: Math.cos( r ) };
 }
 
 function cross2( a, b ) {
@@ -252,39 +231,23 @@ function cross2( a, b ) {
 }
 
 function sub( a, b ) {
-	return {
-		x: a.x - b.x,
-		y: a.y - b.y
-	};
+	return { x: a.x - b.x, y: a.y - b.y };
 }
 
 function add( a, b ) {
-	return {
-		x: a.x + b.x,
-		y: a.y + b.y
-	};
+	return { x: a.x + b.x, y: a.y + b.y };
 }
 
 function mul( a, t ) {
-	return {
-		x: a.x * t,
-		y: a.y * t
-	};
+	return { x: a.x * t, y: a.y * t };
 }
 
 function dist( a, b ) {
 	return Math.hypot( a.x - b.x, a.y - b.y );
 }
 
-const landmarkA = computed( () => ( {
-	x: Number( ax.value ),
-	y: Number( ay.value )
-} ) );
-
-const landmarkB = computed( () => ( {
-	x: Number( bx.value ),
-	y: Number( by.value )
-} ) );
+const landmarkA = computed( () => ( { x: Number( ax.value ), y: Number( ay.value ) } ) );
+const landmarkB = computed( () => ( { x: Number( bx.value ), y: Number( by.value ) } ) );
 
 const reverseBearingA = computed( () => normDeg( Number( bearingA.value ) + 180 ) );
 const reverseBearingB = computed( () => normDeg( Number( bearingB.value ) + 180 ) );
@@ -298,33 +261,17 @@ const intersectionData = computed( () => {
 
 	if ( Math.abs( denom ) < EPS ) {
 		return {
-			ok:    false,
-			p,
-			q,
-			r,
-			s,
-			denom,
-			t:     NaN,
-			u:     NaN,
-			point: null
+			ok: false, p, q, r, s, denom, t: NaN, u: NaN, point: null
 		};
 	}
 
 	const qp = sub( q, p );
-	const t = cross2( qp, s ) / denom;
-	const u = cross2( qp, r ) / denom;
-	const point = add( p, mul( r, t ) );
+	const tLine = cross2( qp, s ) / denom;
+	const uLine = cross2( qp, r ) / denom;
+	const point = add( p, mul( r, tLine ) );
 
 	return {
-		ok: true,
-		p,
-		q,
-		r,
-		s,
-		denom,
-		t,
-		u,
-		point
+		ok: true, p, q, r, s, denom, t: tLine, u: uLine, point
 	};
 } );
 
@@ -380,34 +327,22 @@ const distanceResidual = computed( () => {
 
 const status = computed( () => {
 	if ( !hasIntersection.value ) {
-		return {
-			type:    "error",
-			message: "Die Linien sind nahezu parallel. Ändere mindestens eine Peilung."
-		};
+		return { type: "error", message: t( "schnitt.status.parallel" ) };
 	}
 
 	const gamma = intersectionAngleDeg.value;
-	const t = intersectionData.value.t;
-	const u = intersectionData.value.u;
+	const tLine = intersectionData.value.t;
+	const uLine = intersectionData.value.u;
 
 	if ( gamma < 30 || gamma > 150 ) {
-		return {
-			type:    "warning",
-			message: "Schnittwinkel ungünstig. Nutze möglichst 30 bis 150 Grad."
-		};
+		return { type: "warning", message: t( "schnitt.status.badAngle" ) };
 	}
 
-	if ( t < 0 || u < 0 ) {
-		return {
-			type:    "warning",
-			message: "Der Schnitt liegt hinter mindestens einer Landmarke. Peilung prüfen."
-		};
+	if ( tLine < 0 || uLine < 0 ) {
+		return { type: "warning", message: t( "schnitt.status.behind" ) };
 	}
 
-	return {
-		type:    "success",
-		message: "Geometrie stabil genug. Standort X ist als primäre Schätzung nutzbar."
-	};
+	return { type: "success", message: t( "schnitt.status.stable" ) };
 } );
 
 const texLines = computed( () => {
@@ -424,7 +359,7 @@ const texAngle = computed( () => {
 
 const texPoint = computed( () => {
 	if ( !hasIntersection.value ) {
-		return String.raw`\text{Kein stabiler Schnittpunkt}`;
+		return t( "schnitt.tex.noIntersection" );
 	}
 
 	return String.raw`X\approx\left(` +
@@ -453,28 +388,20 @@ const world = computed( () => {
 	maxY += padUnits;
 
 	return {
-		minX,
-		maxX,
-		minY,
-		maxY,
-		spanX: maxX - minX,
-		spanY: maxY - minY
+		minX, maxX, minY, maxY, spanX: maxX - minX, spanY: maxY - minY
 	};
 } );
 
 const view = computed( () => {
 	const ww = world.value;
-	const scale = Math.min( ( CANVAS.w - 2 * CANVAS.pad ) / ww.spanX,
-		( CANVAS.h - 2 * CANVAS.pad ) / ww.spanY );
+	const scale = Math.min( ( CANVAS.w - 2 * CANVAS.pad ) / ww.spanX, ( CANVAS.h - 2 * CANVAS.pad ) / ww.spanY );
 	const drawW = ww.spanX * scale;
 	const drawH = ww.spanY * scale;
 	const offsetX = ( CANVAS.w - drawW ) / 2;
 	const offsetY = ( CANVAS.h - drawH ) / 2;
 
 	return {
-		scale,
-		offsetX,
-		offsetY
+		scale, offsetX, offsetY
 	};
 } );
 
@@ -483,11 +410,7 @@ function mapPoint( p ) {
 	const v = view.value;
 	const x = v.offsetX + ( p.x - ww.minX ) * v.scale;
 	const yNorm = v.offsetY + ( p.y - ww.minY ) * v.scale;
-
-	return {
-		x,
-		y: CANVAS.h - yNorm
-	};
+	return { x, y: CANVAS.h - yNorm };
 }
 
 function fullLineForBearing( origin, bearingDeg ) {
@@ -498,12 +421,8 @@ function fullLineForBearing( origin, bearingDeg ) {
 	const p2 = add( origin, mul( v, len ) );
 	const a = mapPoint( p1 );
 	const b = mapPoint( p2 );
-
 	return {
-		x1: a.x,
-		y1: a.y,
-		x2: b.x,
-		y2: b.y
+		x1: a.x, y1: a.y, x2: b.x, y2: b.y
 	};
 }
 
@@ -529,10 +448,7 @@ const pointA = computed( () => mapPoint( landmarkA.value ) );
 const pointB = computed( () => mapPoint( landmarkB.value ) );
 const pointX = computed( () => {
 	if ( !hasIntersection.value ) {
-		return {
-			x: -100,
-			y: -100
-		};
+		return { x: -100, y: -100 };
 	}
 
 	return mapPoint( intersectionData.value.point );

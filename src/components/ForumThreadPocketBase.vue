@@ -2,14 +2,14 @@
 <div>
 	<div class="d-flex align-center justify-space-between mb-3">
 		<div>
-			<div class="text-h6">Kommentare</div>
+			<div class="text-h6">{{ t( "forumThread.title" ) }}</div>
 			<div class="text-caption text-medium-emphasis">
-				Thread: <code>{{ forumKey }}</code>
+				{{ t( "forumThread.thread" ) }}: <code>{{ forumKey }}</code>
 			</div>
 		</div>
 
 		<v-chip size="small" variant="tonal">
-			{{ flatComments.length }} Beiträge
+			{{ postCountLabel }}
 		</v-chip>
 	</div>
 
@@ -25,14 +25,14 @@
 
 	<!-- Neuer Kommentar -->
 	<v-card class="pa-3 mb-4" rounded="lg" variant="tonal">
-		<div class="text-subtitle-2 mb-2">Neuen Kommentar schreiben</div>
+		<div class="text-subtitle-2 mb-2">{{ t( "forumThread.newComment" ) }}</div>
 
 		<div class="composerFields mb-2">
 			<v-text-field
 				v-model="authorName"
 				density="comfortable"
 				hide-details="auto"
-				label="Name"
+				:label="t( 'forumThread.name' )"
 				maxlength="60"
 				variant="outlined"
 			/>
@@ -42,7 +42,7 @@
 				auto-grow
 				density="comfortable"
 				hide-details="auto"
-				label="Kommentar"
+				:label="t( 'forumThread.comment' )"
 				maxlength="4000"
 				rows="3"
 				variant="outlined"
@@ -59,13 +59,13 @@
 			>
 				<template #label>
 					<span class="consentText">
-						Ich akzeptiere die
+						{{ t( "forumThread.acceptRulesPrefix" ) }}
 						<button
 							class="rules-link"
 							type="button"
 							@click.stop="showForumRulesDialog = true"
 						>
-							Forumsregeln
+							{{ t( "forumThread.forumRules" ) }}
 						</button>.
 					</span>
 				</template>
@@ -77,7 +77,7 @@
 				:loading="submittingRoot"
 				@click="submitRootComment"
 			>
-				Kommentieren
+				{{ t( "forumThread.commentAction" ) }}
 			</v-btn>
 		</div>
 	</v-card>
@@ -91,7 +91,7 @@
 
 	<!-- Liste -->
 	<div v-if="!loading && flatComments.length === 0" class="text-medium-emphasis">
-		Noch keine Kommentare.
+		{{ t( "forumThread.empty" ) }}
 	</div>
 
 	<div v-else>
@@ -104,7 +104,7 @@
 			<v-card class="pa-3" rounded="lg" variant="outlined">
 				<div class="d-flex align-center justify-space-between gap-2 mb-2">
 					<div class="d-flex align-center flex-wrap" style="gap: 8px;">
-						<strong>{{ comment.authorName || 'Unbekannt' }}</strong>
+						<strong>{{ comment.authorName || t( "forumThread.unknownAuthor" ) }}</strong>
 						<span class="text-caption text-medium-emphasis">
 							{{ formatDate(comment.created) }}
 						</span>
@@ -113,7 +113,7 @@
 							size="x-small"
 							variant="tonal"
 						>
-							Antwort
+							{{ t( "forumThread.replyChip" ) }}
 						</v-chip>
 					</div>
 
@@ -122,7 +122,7 @@
 						variant="text"
 						@click="toggleReply(comment.id)"
 					>
-						{{ replyToId === comment.id ? 'Abbrechen' : 'Antworten' }}
+						{{ replyToId === comment.id ? t( "forumThread.cancel" ) : t( "forumThread.replyAction" ) }}
 					</v-btn>
 				</div>
 
@@ -139,7 +139,7 @@
 						counter
 						density="comfortable"
 						hide-details="auto"
-						label="Antwort"
+						:label="t( 'forumThread.replyLabel' )"
 						maxlength="4000"
 						rows="2"
 						variant="outlined"
@@ -155,13 +155,13 @@
 						>
 							<template #label>
 								<span class="consentText">
-									Ich akzeptiere die
+									{{ t( "forumThread.acceptRulesPrefix" ) }}
 									<button
 										class="rules-link"
 										type="button"
 										@click.stop="showForumRulesDialog = true"
 									>
-										Forumsregeln
+										{{ t( "forumThread.forumRules" ) }}
 									</button>.
 								</span>
 							</template>
@@ -172,7 +172,7 @@
 								variant="text"
 								@click="cancelReply"
 							>
-								Abbrechen
+								{{ t( "forumThread.cancel" ) }}
 							</v-btn>
 							<v-btn
 								color="primary"
@@ -180,7 +180,7 @@
 								:loading="submittingReply"
 								@click="submitReply"
 							>
-								Antworten
+								{{ t( "forumThread.replyAction" ) }}
 							</v-btn>
 						</div>
 					</div>
@@ -197,12 +197,12 @@
 		scrollable
 	>
 		<v-card>
-			<v-card-title class="text-h6">Forumsregeln</v-card-title>
+			<v-card-title class="text-h6">{{ t( "forumThread.forumRules" ) }}</v-card-title>
 			<v-card-text class="forumRulesContent" v-html="forumRulesHtml" />
 			<v-card-actions>
 				<v-spacer />
 				<v-btn variant="text" @click="showForumRulesDialog = false">
-					Schließen
+					{{ t( "forumThread.cancel" ) }}
 				</v-btn>
 			</v-card-actions>
 		</v-card>
@@ -215,6 +215,7 @@ import {
 	computed, inject, onBeforeUnmount, onMounted, ref, watch
 } from "vue";
 import PocketBase, { type RecordModel } from "pocketbase";
+import { useI18n } from "@/i18n.mjs";
 import netiquetteHtml from "../utils/disclaimer/netiquette_de.html?raw";
 
 type CommentRecord = RecordModel & {
@@ -237,6 +238,7 @@ const props = withDefaults( defineProps<{
 { collectionName: "forum_comments" } );
 
 const pbUrl = inject<string>( "pbUrl", "" );
+const { t, locale } = useI18n( "components/lang" );
 const pb = new PocketBase( pbUrl );
 pb.autoCancellation( false );
 
@@ -256,7 +258,8 @@ const showForumRulesDialog = ref( false );
 const clientReady = ref( false );
 
 const authorStorageKey = computed( () => `pb_forum_author_${props.collectionName}` );
-const forumRulesHtml = computed( () => netiquetteHtml.trim() || "<p>Forumsregeln sind derzeit nicht verfügbar.</p>" );
+const postCountLabel = computed( () => t( "forumThread.posts", { count: String( flatComments.value.length ) } ) );
+const forumRulesHtml = computed( () => netiquetteHtml.trim() || t( "forumThread.rulesUnavailable" ) );
 
 const canSubmitRoot = computed( () => {
 	return (
@@ -298,7 +301,7 @@ function formatDate( value: string ): string {
 		return value;
 	}
 
-	return d.toLocaleString( "de-DE", {
+	return d.toLocaleString( locale.value === "en" ? "en-US" : "de-DE", {
 		dateStyle: "short",
 		timeStyle: "short"
 	} );
@@ -370,7 +373,7 @@ async function loadComments() {
 		}
 
 		console.error( err );
-		errorMessage.value = err?.message || "Kommentare konnten nicht geladen werden.";
+		errorMessage.value = err?.message || t( "forumThread.loadFailed" );
 	} finally {
 		loading.value = false;
 	}
@@ -400,7 +403,7 @@ async function submitRootComment() {
 		// await loadComments()   <-- entfernen
 	} catch ( err: any ) {
 		console.error( err );
-		errorMessage.value = err?.message || "Kommentar konnte nicht gespeichert werden.";
+		errorMessage.value = err?.message || t( "forumThread.saveCommentFailed" );
 	} finally {
 		submittingRoot.value = false;
 	}
@@ -437,7 +440,7 @@ async function submitReply() {
 		// await loadComments()   <-- entfernen
 	} catch ( err: any ) {
 		console.error( err );
-		errorMessage.value = err?.message || "Antwort konnte nicht gespeichert werden.";
+		errorMessage.value = err?.message || t( "forumThread.saveReplyFailed" );
 	} finally {
 		submittingReply.value = false;
 	}
@@ -461,7 +464,7 @@ async function setupRealtime() {
 		} );
 	} catch ( err ) {
 		// Realtime ist nice-to-have; Thread soll auch ohne laufen
-		console.warn( "PocketBase realtime subscribe failed:", err );
+		console.warn( t( "forumThread.realtimeFailed" ), err );
 	}
 }
 

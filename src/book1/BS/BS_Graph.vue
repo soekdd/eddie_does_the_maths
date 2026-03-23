@@ -1,7 +1,7 @@
 <template>
 <div class="graphWrap">
 	<svg
-		aria-label="Interaktive Querschnittszeichnung eines Doppelt-T-Trägers mit Bemaßung"
+		:aria-label="t( 'bs.graph.aria' )"
 		class="graphSvg"
 		preserveAspectRatio="xMidYMid meet"
 		role="img"
@@ -228,6 +228,9 @@
 
 <script setup>
 import { computed } from "vue";
+import { useI18n } from "@/i18n.mjs";
+
+const { t } = useI18n( "book1/BS" );
 
 const props = defineProps( {
 	h: {
