@@ -285,7 +285,7 @@ import { useDisplay } from "vuetify";
 import {
 	mdiDownload, mdiHexagonSlice2, mdiHexagonSlice4, mdiHexagonSlice6
 } from "@mdi/js";
-import { i18nApi, useI18n } from "@/i18n.mjs";
+import { i18nApi, useI18n } from "@/utils/i18n.mjs";
 import faviconPng from "../images/favicon.png";
 import ForumThreadPocketBase from "./ForumThreadPocketBase.vue";
 import MarkdownDownload from "./MarkdownDownload.vue";

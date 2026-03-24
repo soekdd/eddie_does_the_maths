@@ -155,17 +155,14 @@
 
 <script setup>
 import { computed, ref } from "vue";
-import { useI18n } from "@/i18n.mjs";
+import { useI18n } from "@/utils/i18n.mjs";
 
 import SDDNA from "./SD_DNA.vue";
 import titleImg from "./SD.webp";
 import samiImg from "./SD_SAMI.webp";
 
 const { t: rawT, tm: rawTm } = useI18n( "book1/SD" );
-const t = (
-	k,
-	params = {}
-) => rawT( k, params );
+const t = ( k, params = {} ) => rawT( k, params );
 const tm = ( key = "" ) => rawTm( key );
 
 const subChapter = computed( () => tm( "subChapter" ) ?? {} );

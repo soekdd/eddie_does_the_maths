@@ -86,7 +86,7 @@
 
 <script setup>
 import { computed, ref } from "vue";
-import { useI18n } from "@/i18n.mjs";
+import { useI18n } from "@/utils/i18n.mjs";
 import titleImg from "./NV.webp";
 import NVAzimut from "./NV_Azimut.vue";
 import NVBayes from "./NV_Bayes.vue";

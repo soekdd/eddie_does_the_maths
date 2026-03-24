@@ -142,6 +142,7 @@ graph:
     busArrives: "Bus kommt"
     toSouth: "gen Süden"
     noBus: "Kein Bus"
+    oneBus: "mindesten ein Bus"
     toNorth: "gen Norden"
     dMark: "D-Mark"
     mielke: "Mielke"

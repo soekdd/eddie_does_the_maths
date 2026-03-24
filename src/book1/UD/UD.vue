@@ -303,7 +303,7 @@ import {
 	computed,
 	ref
 } from "vue";
-import { useI18n } from "@/i18n.mjs";
+import { useI18n } from "@/utils/i18n.mjs";
 import titleImg from "./UD.webp";
 import UDGraph from "./UD_Graph.vue";
 import UDMap from "./UD_Map.vue";

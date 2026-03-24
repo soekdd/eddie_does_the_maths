@@ -95,7 +95,7 @@ import {
 } from "@mdi/js";
 import { useRoute } from "vue-router";
 import PocketBase from "pocketbase";
-import { useI18n } from "@/i18n.mjs";
+import { useI18n } from "@/utils/i18n.mjs";
 import { resolveRouteMetaTitle, routes as appRoutes } from "@/router.js";
 
 const props = defineProps( { title: { type: String, default: "" } } );

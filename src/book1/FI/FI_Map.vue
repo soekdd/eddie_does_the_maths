@@ -183,7 +183,7 @@
 import {
 	computed, onMounted, reactive, ref, watch
 } from "vue";
-import { useI18n } from "@/i18n.mjs";
+import { useI18n } from "@/utils/i18n.mjs";
 
 const { t } = useI18n( "book1/FI" );
 

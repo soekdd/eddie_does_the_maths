@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
-import { getLocale } from "@/i18n.mjs";
+import { getLocale } from "@/utils/i18n.mjs";
 
 import DG from "@/book1/DG/DG.vue";
 import ST from "@/book1/ST/ST.vue";

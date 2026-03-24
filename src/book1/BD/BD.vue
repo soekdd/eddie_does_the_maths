@@ -404,7 +404,7 @@ import {
 	h,
 	reactive
 } from "vue";
-import { useI18n } from "@/i18n.mjs";
+import { useI18n } from "@/utils/i18n.mjs";
 
 import titleImg from "./BD.webp";
 import BDGraph from "./BD_Graph.vue";

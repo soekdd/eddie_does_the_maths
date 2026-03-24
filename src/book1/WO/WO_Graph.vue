@@ -330,7 +330,7 @@ import {
 	computed, onBeforeUnmount, onMounted, ref, watch, watchEffect
 } from "vue";
 import { useDisplay } from "vuetify";
-import { useI18n } from "@/i18n.mjs";
+import { useI18n } from "@/utils/i18n.mjs";
 /**
  * Parametrisierbar:
  *  - L: Länge des Hofs (m)

@@ -144,7 +144,7 @@
 import {
 	computed, onMounted, ref
 } from "vue";
-import { useI18n } from "@/i18n.mjs";
+import { useI18n } from "@/utils/i18n.mjs";
 import giacFactoryAssetUrl from "../../utils/giac/giacggb.js?url";
 import giacWasmAssetUrl from "../../utils/giac/giacggb.wasm?url";
 

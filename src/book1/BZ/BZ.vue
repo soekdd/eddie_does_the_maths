@@ -310,7 +310,7 @@
 
 <script setup>
 import { computed, reactive } from "vue";
-import { useI18n } from "@/i18n.mjs";
+import { useI18n } from "@/utils/i18n.mjs";
 import titleImg from "./BZ.webp";
 import BZGraph from "./BZ_Graph.vue";
 

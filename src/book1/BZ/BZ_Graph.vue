@@ -149,7 +149,7 @@
 
 <script setup>
 import { computed } from "vue";
-import { useI18n } from "@/i18n.mjs";
+import { useI18n } from "@/utils/i18n.mjs";
 import { useTheme } from "vuetify";
 import armadilloImg from "./BZ_Armadillo.webp";
 import elefantImg from "./BZ_Elefant.webp";

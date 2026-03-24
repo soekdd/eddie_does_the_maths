@@ -103,7 +103,7 @@
 
 <script setup>
 import { computed } from "vue";
-import { useI18n } from "@/i18n.mjs";
+import { useI18n } from "@/utils/i18n.mjs";
 import titleImg from "./MO.webp";
 
 const { t } = useI18n( "book1/MO" );

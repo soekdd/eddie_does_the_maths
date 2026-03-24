@@ -228,7 +228,7 @@ N_0 &=${fmtTex( graphN0, 0 )},\ b=${fmtTex( graphB, 3 )},\ c=${fmtTex( graphC, 4
 
 <script setup>
 import { computed, ref } from "vue";
-import { useI18n } from "@/i18n.mjs";
+import { useI18n } from "@/utils/i18n.mjs";
 
 import FSGraph from "./FS_Graph.vue";
 import titleImg from "./FS.webp";

@@ -310,7 +310,7 @@
 import {
 	computed, onBeforeUnmount, ref, watch
 } from "vue";
-import { useI18n } from "@/i18n.mjs";
+import { useI18n } from "@/utils/i18n.mjs";
 import titleImg from "./O2.webp";
 
 const { t, tm } = useI18n( "book1/O2" );

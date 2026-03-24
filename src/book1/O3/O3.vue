@@ -311,7 +311,7 @@
 
 <script setup>
 import { computed, ref } from "vue";
-import { useI18n } from "@/i18n.mjs";
+import { useI18n } from "@/utils/i18n.mjs";
 import titleImg from "./O3.webp";
 import O3Graph from "./O3_Graph.vue";
 

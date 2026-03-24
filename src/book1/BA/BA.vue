@@ -370,7 +370,7 @@
 import {
 	ref, computed, watch
 } from "vue";
-import { useI18n } from "@/i18n.mjs";
+import { useI18n } from "@/utils/i18n.mjs";
 import BAEmulator from "./BA_Emulator.vue";
 import titleImg from "./BA.webp";
 

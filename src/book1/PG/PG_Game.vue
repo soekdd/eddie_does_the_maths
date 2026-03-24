@@ -103,7 +103,7 @@ import {
 	computed, onMounted, ref
 } from "vue";
 import { useDisplay } from "vuetify";
-import { useI18n } from "@/i18n.mjs";
+import { useI18n } from "@/utils/i18n.mjs";
 import PokerCard from "./PG_Card.vue";
 import PGHand from "./PG_Hand.vue";
 import PokerSolver from "pokersolver";

@@ -28,7 +28,7 @@
 </template>
 
 <script setup>
-import { useI18n } from "@/i18n.mjs";
+import { useI18n } from "@/utils/i18n.mjs";
 import faviconPng from "@/images/favicon.png";
 
 const { t } = useI18n( "components/lang" );

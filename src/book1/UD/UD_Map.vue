@@ -60,7 +60,7 @@ import {
 	computed,
 	useId
 } from "vue";
-import { useI18n } from "@/i18n.mjs";
+import { useI18n } from "@/utils/i18n.mjs";
 import countries from "./UD_countries";
 
 const props = defineProps( {

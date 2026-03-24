@@ -102,7 +102,7 @@ p_{\text{ges}} &= P(S\cup N) \\
 				<li><Katex tex="a" />: {{ t( "sections.part4.list.a" ) }}</li>
 				<li><Katex tex="r" />: {{ t( "sections.part4.list.r" ) }}</li>
 			</ul>
-			<p>{{ t( "sections.part4.p3a" ) }} <Katex tex="P(\text{kein Bus})=(1-p)^2" /> {{ t( "sections.part4.p3b" ) }} <Katex tex="P(\text{mindestens ein Bus})=1-(1-p)^2=2p-p^2" />.</p>
+			<p>{{ t( "sections.part4.p3a" ) }} <Katex :tex="`P(\\text{${t('graph.labels.noBus')}})=(1-p)^2`" /> {{ t( "sections.part4.p3b" ) }} <Katex :tex="`P(\\text{${t('graph.labels.oneBus')}})=1-(1-p)^2=2p-p^2`" />.</p>
 			<p class="muted">{{ t( "sections.part4.p4a" ) }} <Katex tex="p" /> {{ t( "sections.part4.p4b" ) }} <Katex tex="p^2" /> {{ t( "sections.part4.p4c" ) }} <Katex tex="p_{\text{ges}}\approx p_S+p_N" /> {{ t( "sections.part4.p4d" ) }} <Katex tex="p_{\text{ges}}\approx 2p" />.</p>
 		</div>
 
@@ -110,9 +110,9 @@ p_{\text{ges}} &= P(S\cup N) \\
 		<div class="eddie">
 			<p>{{ t( "sections.part5.p1" ) }}</p>
 			<div class="kbox">
-				<Katex as="div" display tex="P(\text{Freiheit}) = \bigl(1-(1-p)^2\bigr)\cdot a\cdot (1-r) = (2p-p^2)\,a\,(1-r)." />
+				<Katex as="div" display :tex="`P(\\text{${t('graph.labels.freedom')}}) = \\bigl(1-(1-p)^2\\bigr)\\cdot a\\cdot (1-r) = (2p-p^2)\\,a\\,(1-r).`" />
 			</div>
-			<p class="muted">{{ t( "sections.part5.p2" ) }} <Katex tex="P(\text{Misserfolg})=1-P(\text{Freiheit})" />.</p>
+			<p class="muted">{{ t( "sections.part5.p2" ) }} <Katex :tex="`P(\\text{${t('graph.labels.failure')}})=1-P(\\text{${t('graph.labels.freedom')}})`" />.</p>
 		</div>
 
 		<h2 class="mt-8">{{ t( "sections.part6.title" ) }}</h2>
@@ -237,7 +237,7 @@ p_{\text{ges}} &= P(S\cup N) \\
 
 <script setup>
 import { computed, ref } from "vue";
-import { useI18n } from "@/i18n.mjs";
+import { useI18n } from "@/utils/i18n.mjs";
 import STGraph from "./ST_Graph.vue";
 import titleImg from "./ST.webp";
 

@@ -249,7 +249,7 @@
 import {
 	computed, ref, watch
 } from "vue";
-import { useI18n } from "@/i18n.mjs";
+import { useI18n } from "@/utils/i18n.mjs";
 import finlandData from "./maps/finland.json";
 import helsinkiData from "./maps/helsinki.json";
 import swedenData from "./maps/sweden.json";

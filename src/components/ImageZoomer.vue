@@ -64,7 +64,7 @@ import {
 	computed, nextTick, onBeforeUnmount, onMounted, ref, watch
 } from "vue";
 import { useDisplay } from "vuetify";
-import { useI18n } from "@/i18n.mjs";
+import { useI18n } from "@/utils/i18n.mjs";
 
 const props = defineProps( {
 	title:    { type: String, default: "" },

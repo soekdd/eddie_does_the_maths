@@ -117,7 +117,7 @@
  
 import { computed, ref } from "vue";
 import { mdiImageFilterBlackWhite } from "@mdi/js";
-import { useI18n } from "@/i18n.mjs";
+import { useI18n } from "@/utils/i18n.mjs";
 import titleImg from "./SE.webp";
 import SEGraph2 from "./SE_Graph_2.vue";
 import SEGraph3 from "./SE_Graph_3.vue";

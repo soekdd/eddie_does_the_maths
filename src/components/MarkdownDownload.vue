@@ -18,7 +18,7 @@ import { computed, ref } from "vue";
 import TurndownService from "turndown";
 import { gfm } from "turndown-plugin-gfm";
 import { mdiDownload } from "@mdi/js";
-import { useI18n } from "@/i18n.mjs";
+import { useI18n } from "@/utils/i18n.mjs";
 const props = defineProps( {
 	targetId:    { type: String, required: true },
 	fileName:    { type: String, default: "" },

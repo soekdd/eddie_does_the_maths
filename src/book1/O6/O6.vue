@@ -305,15 +305,13 @@
 
 <script setup>
 import { computed, ref } from "vue";
-import { useI18n } from "@/i18n.mjs";
+import { useI18n } from "@/utils/i18n.mjs";
 
 import titleImg from "./O6.webp";
 
 const { t: rawT, tm: rawTm } = useI18n( "book1/O6" );
-const t = (
-	key,
-	params = {}
-) => rawT( `o6.${key}`, params );
+const t = (key,
+	params = {}) => rawT( `o6.${key}`, params );
 const tm = ( key = "" ) => rawTm( key ? `o6.${key}` : "o6" );
 
 const EPS = 1e-13;

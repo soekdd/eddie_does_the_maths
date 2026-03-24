@@ -205,7 +205,7 @@
 
 <script setup>
 import { computed } from "vue";
-import { useI18n } from "@/i18n.mjs";
+import { useI18n } from "@/utils/i18n.mjs";
 
 const props = defineProps( {
 	beam:            { type: Number, default: 11.7 },

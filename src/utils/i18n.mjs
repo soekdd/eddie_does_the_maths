@@ -9,12 +9,12 @@ const FALLBACK_LOCALE = "en";
 const SUPPORTED_LOCALES = [ "de", "en", "sw", "fi" ];
 
 const rawModules = {
-	...import.meta.glob( "./**/*.yaml", {
+	...import.meta.glob( "../**/*.yaml", {
 		eager:  true,
 		import: "default",
 		query:  "?raw"
 	} ),
-	...import.meta.glob( "./**/*.yml", {
+	...import.meta.glob( "../**/*.yml", {
 		eager:  true,
 		import: "default",
 		query:  "?raw"
@@ -24,7 +24,7 @@ const rawModules = {
 const catalog = new Map();
 
 for ( const [ path, raw ] of Object.entries( rawModules ) ) {
-	const match = path.match( /^\.\/(.+)\/([a-z]{2})\.ya?ml$/i );
+	const match = path.match( /^\.\.\/(.+)\/([a-z]{2})\.ya?ml$/i );
 
 	if ( !match ) {
 		continue;

@@ -110,7 +110,7 @@
 
 <script setup>
 import { computed } from "vue";
-import { useI18n } from "@/i18n.mjs";
+import { useI18n } from "@/utils/i18n.mjs";
 
 import FX7000G from "./FX_7000G.vue";
 import titleImg from "./FX.webp";

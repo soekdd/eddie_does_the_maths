@@ -117,7 +117,7 @@
 
 <script setup>
 import { computed, ref } from "vue";
-import { useI18n } from "@/i18n.mjs";
+import { useI18n } from "@/utils/i18n.mjs";
 
 const VIEWBOX_WIDTH = 640;
 const VIEWBOX_HEIGHT = 420;

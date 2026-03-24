@@ -215,7 +215,7 @@ import {
 	computed, inject, onBeforeUnmount, onMounted, ref, watch
 } from "vue";
 import PocketBase, { type RecordModel } from "pocketbase";
-import { useI18n } from "@/i18n.mjs";
+import { useI18n } from "@/utils/i18n.mjs";
 import netiquetteHtml from "../utils/disclaimer/netiquette_de.html?raw";
 
 type CommentRecord = RecordModel & {
