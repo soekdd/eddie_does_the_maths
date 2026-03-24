@@ -30,7 +30,7 @@
 				<Katex
 					as="div"
 					display
-					tex="\exists\,a,b,c,d\in M\ \text{paarweise verschieden}:\quad abcd=t^4\ \text{für ein}\ t\in\mathbb Z."
+					:tex="t( 'sections.part1.proveBox' )"
 				/>
 			</div>
 		</div>
@@ -79,7 +79,7 @@
 			<p>{{ t( "sections.part3.bText2" ) }}</p>
 			<p><b>{{ t( "sections.part3.bMemo" ) }}</b></p>
 			<div class="kbox">
-				<Katex as="div" display tex="\varepsilon(x)=\varepsilon(y)\quad\Longrightarrow\quad xy\ \text{ist ein Quadrat}." />
+				<Katex as="div" display :tex="t( 'sections.part3.bMemoBox' )" />
 			</div>
 			<p v-html="t( 'sections.part3.bText3' )" />
 		</div>

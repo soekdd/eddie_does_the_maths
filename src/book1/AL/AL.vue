@@ -158,7 +158,7 @@
 				<Katex
 					as="div"
 					display
-					tex="\text{gedruckt (Bug): }\frac{2n+1}{2n-1}\qquad\text{korrekt: }\frac{2n-1}{2n+1}"
+					:tex="`\\text{${t( 'al.sections.part5.p2' )}: }\\frac{2n+1}{2n-1}\\qquad\\text{${t( 'al.sections.part5.p3' )}: }\\frac{2n-1}{2n+1}`"
 				/>
 			</div>
 		</div>
@@ -189,7 +189,7 @@
 		<div class="eddie">
 			<p>{{ t( "al.sections.part8.p1" ) }}</p>
 			<div class="kbox">
-				<Katex as="div" display tex="\frac{48}{18}=\frac{8}{3},\quad \text{weil }\gcd(48,18)=6." />
+				<Katex as="div" display :tex="`\\frac{48}{18}=\\frac{8}{3},\\quad \\text{${t( 'al.sections.part8.p2' )} }\\gcd(48,18)=6.`" />
 			</div>
 		</div>
 

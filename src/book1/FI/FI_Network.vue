@@ -2,29 +2,29 @@
 <div class="fin-network" :class="{ 'fin-network--interactive': props.interactiveMode }">
 	<div v-if="props.interactiveMode" class="toolbar">
 		<label class="modeCtrl">
-			<span>{{ t( "fi.network.transform" ) }}</span>
+			<span>{{ t( "network.transform" ) }}</span>
 			<select v-model="transformMode" class="modeSelect">
-				<option value="none">{{ t( "fi.network.transformNone" ) }}</option>
+				<option value="none">{{ t( "network.transformNone" ) }}</option>
 				<option value="powerN">z ↦ z³</option>
 				<option value="expScaled">z ↦ exp(0.85z)</option>
 				<option value="sinScaled">z ↦ z + 1.15·sin(1.8z)</option>
-				<option value="mobius">{{ t( "fi.network.transformMobius" ) }}</option>
-				<option value="joukowski">{{ t( "fi.network.transformJoukowski" ) }}</option>
+				<option value="mobius">{{ t( "network.transformMobius" ) }}</option>
+				<option value="joukowski">{{ t( "network.transformJoukowski" ) }}</option>
 				<option value="weierstrass">z + 0.95·sin(2.2z)</option>
 			</select>
 		</label>
 
 		<label class="modeCtrl">
-			<span>{{ t( "fi.network.labelMode" ) }}</span>
+			<span>{{ t( "network.labelMode" ) }}</span>
 			<select v-model="labelMode" class="modeSelect">
-				<option value="none">{{ t( "fi.network.none" ) }}</option>
-				<option value="abbr">{{ t( "fi.network.abbr" ) }}</option>
-				<option value="name">{{ t( "fi.network.names" ) }}</option>
+				<option value="none">{{ t( "network.none" ) }}</option>
+				<option value="abbr">{{ t( "network.abbr" ) }}</option>
+				<option value="name">{{ t( "network.names" ) }}</option>
 			</select>
 		</label>
 
 		<label class="modeCtrl">
-			<span>{{ t( "fi.network.labelSize" ) }}</span>
+			<span>{{ t( "network.labelSize" ) }}</span>
 			<input
 				v-model.number="svgFontSizePx"
 				class="sizeInput"
@@ -37,16 +37,16 @@
 
 		<label class="modeCtrl modeCtrl--check">
 			<input v-model="showComplexPlane" type="checkbox" />
-			<span>{{ t( "fi.network.showPlane" ) }}</span>
+			<span>{{ t( "network.showPlane" ) }}</span>
 		</label>
 
 		<label class="modeCtrl modeCtrl--check">
 			<input v-model="showDistraction" type="checkbox" />
-			<span>{{ t( "fi.network.showOverlay" ) }}</span>
+			<span>{{ t( "network.showOverlay" ) }}</span>
 		</label>
 
 		<div class="transformFormula">
-			<p class="transformFormulaTitle">{{ t( "fi.network.selectedMap" ) }}</p>
+			<p class="transformFormulaTitle">{{ t( "network.selectedMap" ) }}</p>
 			<Katex as="div" display :tex="selectedTransformTex" />
 		</div>
 
@@ -56,7 +56,7 @@
 	</div>
 
 	<div class="svgWrap">
-		<div :aria-label="t( 'fi.network.mapPicker' )" class="mapButtons" role="group">
+		<div :aria-label="t( 'network.mapPicker' )" class="mapButtons" role="group">
 			<button
 				v-for="option in mapOptions"
 				:key="option.value"
@@ -138,7 +138,7 @@
 					:x="realAxisLabel.x"
 					:y="realAxisLabel.y"
 				>
-					{{ t( "fi.network.axisRe" ) }}
+					{{ t( "network.axisRe" ) }}
 				</text>
 				<text
 					v-if="imagAxisLabel"
@@ -146,7 +146,7 @@
 					:x="imagAxisLabel.x"
 					:y="imagAxisLabel.y"
 				>
-					{{ t( "fi.network.axisIm" ) }}
+					{{ t( "network.axisIm" ) }}
 				</text>
 			</g>
 
@@ -469,15 +469,15 @@ const selectedTransformTex = computed( () => {
 const mapOptions: Array<{ value: MapKey; label: string }> = [
 	{
 		value: "HE",
-		label: t( "fi.network.mapLabelHE" )
+		label: t( "network.mapLabelHE" )
 	},
 	{
 		value: "FI",
-		label: t( "fi.network.mapLabelFI" )
+		label: t( "network.mapLabelFI" )
 	},
 	{
 		value: "SW",
-		label: t( "fi.network.mapLabelSW" )
+		label: t( "network.mapLabelSW" )
 	}
 ];
 const networkDataByMap: Record<MapKey, NetworkData> = {
@@ -488,18 +488,18 @@ const networkDataByMap: Record<MapKey, NetworkData> = {
 const activeNetworkData = computed( () => networkDataByMap[ activeMapKey.value ] );
 const svgAriaLabel = computed( () => {
 	const titleByMap = {
-		HE: t( "fi.network.titleHE" ),
-		FI: t( "fi.network.titleFI" ),
-		SW: t( "fi.network.titleSW" )
+		HE: t( "network.titleHE" ),
+		FI: t( "network.titleFI" ),
+		SW: t( "network.titleSW" )
 	};
-	const title = titleByMap[ activeMapKey.value ] ?? t( "fi.network.defaultTitle" );
-	return t( "fi.network.aria", { title } );
+	const title = titleByMap[ activeMapKey.value ] ?? t( "network.defaultTitle" );
+	return t( "network.aria", { title } );
 } );
 const networkNote = computed( () => {
 	const notesByMap = {
-		HE: t( "fi.network.noteHE" ),
-		FI: t( "fi.network.noteFI" ),
-		SW: t( "fi.network.noteSW" )
+		HE: t( "network.noteHE" ),
+		FI: t( "network.noteFI" ),
+		SW: t( "network.noteSW" )
 	};
 	return notesByMap[ activeMapKey.value ] ?? "";
 } );

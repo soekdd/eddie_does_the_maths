@@ -13,17 +13,17 @@
 		</figure>
 		<h3 id="einleitung">{{ t( "introDate" ) }}</h3>
 		<div class="eddie">
-			<p>{{ t( "book.p1" ) }}</p>
-			<p>{{ t( "book.p2" ) }}</p>
+			<p v-html="t( 'book.p1' )" />
+			<p v-html="t( 'book.p2' )" />
 			<p v-html="t( 'book.p3' )" />
-			<p>{{ t( "book.p4" ) }}</p>
+			<p v-html="t( 'book.p4' )" />
 		</div>
 	</template>
 
 	<template #descriptionPart>
 		<h2 id="rekursion">{{ t( "sections.part1.title" ) }}</h2>
 		<div class="eddie">
-			<p>{{ t( "sections.part1.p1" ) }}</p>
+			<p v-html="t( 'sections.part1.p1')"/>
 			<div class="kbox">
 				<Katex as="div" display tex="x_{n+1}=x_n\left(x_n+\frac{1}{n}\right),\quad n=1,2,3,\dots" />
 			</div>
@@ -32,7 +32,7 @@
 				{{ t( "sections.part1.p2c" ) }} <Katex tex="x_1" /> {{ t( "sections.part1.p2d" ) }}
 			</p>
 			<div class="kbox">
-				<Katex as="div" display tex="0<x_n<x_{n+1}<1\quad\text{für alle }n" />
+				<Katex as="div" display :tex="t( 'sections.part1.proveBox' )" />
 			</div>
 			<p>{{ t( "sections.part1.p3" ) }}</p>
 			<p>
@@ -52,11 +52,11 @@
 			</div>
 			<p>{{ t( "sections.part2.p2a" ) }} <Katex tex="x_1=x" /> {{ t( "sections.part2.p2b" ) }} <Katex tex="x_n=T_n(x)" />.</p>
 			<div class="kbox">
-				<Katex as="div" display tex="f_n'(t)=2t+\frac1n>0\quad\text{für }t\in[0,1]." />
+				<Katex as="div" display :tex="t( 'sections.part2.derivativeBox' )" />
 			</div>
-			<p>{{ t( "sections.part2.p3" ) }}</p>
+			<p v-html="t( 'sections.part2.p3' )"/>
 			<div class="kbox">
-				<Katex as="div" display tex="T_n(0)=0,\qquad T_1(1)=1,\qquad T_n(1)>1\ \text{für }n\ge2." />
+				<Katex as="div" display :tex="t( 'sections.part2.boundaryBox' )" />
 			</div>
 		</div>
 
@@ -70,11 +70,11 @@
 			<div class="kbox">
 				<Katex as="div" display tex="x_{n+1}-x_n=x_n\!\left(x_n+\frac{1}{n}-1\right)>0\quad\Longrightarrow\quad x_n<x_{n+1}." />
 			</div>
-			<p>{{ t( "sections.part3.p3" ) }}</p>
+			<p v-html="t( 'sections.part3.p3' )"/>
 			<div class="kbox">
 				<Katex as="div" display tex="0<x_n<x_{n+1}<1\ \Longleftrightarrow\ 1-\frac{1}{n}<x_n<1." />
 			</div>
-			<p>{{ t( "sections.part3.p4" ) }}</p>
+			<p v-html="t( 'sections.part3.p4' )"/>
 			<p>
 				{{ t( "sections.part3.p5a" ) }} <Katex tex="n=1" /> {{ t( "sections.part3.p5b" ) }}
 				<Katex tex="0<x_1<1" />; {{ t( "sections.part3.p5c" ) }} <Katex tex="a_1:=0" />
@@ -85,7 +85,7 @@
 			<div class="kbox">
 				<Katex as="div" display tex="T_n(a_n)=1-\frac{1}{n},\qquad T_n(b_n)=1." />
 			</div>
-			<p>{{ t( "sections.part3.p6" ) }}</p>
+			<p v-html="t( 'sections.part3.p6' )"/>
 			<p>{{ t( "sections.part3.p7" ) }} <Katex tex="n\ge2" />):</p>
 			<ul>
 				<li>
@@ -122,7 +122,7 @@
 
 		<h2 class="mt-8">{{ t( "sections.part4.title" ) }}</h2>
 		<div class="eddie">
-			<p>{{ t( "sections.part4.p1" ) }}</p>
+			<p v-html="t( 'sections.part4.p1' )"/>
 			<p>{{ t( "sections.part4.p2" ) }} <Katex tex="k=1,\dots,n" />:</p>
 			<div class="kbox">
 				<Katex as="div" display tex="u_k:=T_k(a_n),\qquad v_k:=T_k(b_n),\qquad d_k:=v_k-u_k." />
@@ -139,7 +139,7 @@
 			</div>
 			<p>{{ t( "sections.part4.p4" ) }}</p>
 			<div class="kbox">
-				<Katex as="div" display tex="d_k>0\quad\text{(da }a_n<b_n\text{ und }T_k\text{ streng wachsend ist).}" />
+				<Katex as="div" display :tex="t( 'sections.part4.positiveBox' )" />
 			</div>
 			<div class="kbox">
 				<Katex as="div" display tex="b_n>a_k\ \Longrightarrow\ v_k=T_k(b_n)>T_k(a_k)=1-\frac{1}{k}." />
@@ -155,19 +155,19 @@
 				<Katex as="div" display tex="0<b_n-a_n=d_1<\frac{1}{n}\xrightarrow[n\to\infty]{}0." />
 			</div>
 			<p>{{ t( "sections.part4.p6" ) }} <Katex tex="\bigcap_{n\ge2}I_n" /> {{ t( "sections.part4.p6b" ) }} <Katex tex="x^*" />.</p>
-			<p>{{ t( "sections.part4.p7" ) }}</p>
+			<p v-html="t( 'sections.part4.p7' )"/>
 			<div class="kbox">
 				<Katex as="div" display tex="1-\frac{1}{n}=T_n(a_n)<T_n(x^*)<T_n(b_n)=1\quad(n\ge2)." />
 			</div>
-			<p>{{ t( "sections.part4.p8" ) }}</p>
+			<p v-html="t( 'sections.part4.p8' )"/>
 			<div class="kbox">
-				<Katex as="div" display tex="x_n=T_n(x^*)\quad\Longrightarrow\quad 0<x_n<x_{n+1}<1\ \text{für alle }n." />
+				<Katex as="div" display :tex="t( 'sections.part4.conclusionBox' )" />
 			</div>
-			<p>{{ t( "sections.part4.p9" ) }}</p>
+			<p v-html="t( 'sections.part4.p9' )"/>
 			<div class="kbox">
 				<Katex as="div" display tex="|x_1-y_1|\le b_n-a_n<\frac1n\quad(n\ge2)." />
 			</div>
-			<p>{{ t( "sections.part4.p10" ) }}</p>
+			<p v-html="t( 'sections.part4.p10' )"/>
 		</div>
 
 		<EddieComment :subtitle="t( 'sections.part4.commentTitle' )">
@@ -310,9 +310,9 @@ import { useI18n } from "@/utils/i18n.mjs";
 import titleImg from "./O6.webp";
 
 const { t: rawT, tm: rawTm } = useI18n( "book1/O6" );
-const t = (key,
-	params = {}) => rawT( `o6.${key}`, params );
-const tm = ( key = "" ) => rawTm( key ? `o6.${key}` : "o6" );
+const t = ( key,
+	params = {} ) => rawT( `${key}`, params );
+const tm = ( key = "" ) => rawTm( key ? `${key}` : "o6" );
 
 const EPS = 1e-13;
 

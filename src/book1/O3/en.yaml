@@ -58,6 +58,7 @@ sections:
     caseBText4: "So we can count directly:"
     caseBText5: "Moreover <katex tex=\"o(A+B)+o(B)\\ge o(A)\" />. Looking coefficientwise modulo 2 shows that every odd coefficient of <katex tex=\"A\" /> is seen either in <katex tex=\"A+B\" /> or in <katex tex=\"B\" />."
     caseBText6: "So in total"
+    caseBBlockNote: "induction hypothesis on"
     commentTitle: "What was made 'hard', and what was not?"
     commentText: "The difficulty here is not some special theorem, but two explainable ideas:"
     commentItems:

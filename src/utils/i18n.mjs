@@ -2,11 +2,13 @@ import {
 	inject, readonly, ref
 } from "vue";
 import { parse } from "yaml";
+import { katexHTML } from "./katex.js";
 
 const I18N_KEY = Symbol( "eddie-i18n" );
 const STORAGE_KEY = "eddie.locale";
 const FALLBACK_LOCALE = "en";
 const SUPPORTED_LOCALES = [ "de", "en", "sw", "fi" ];
+const KATEX_MARKER_RE = /<katex\b((?:[^"'/>]|"[^"]*"|'[^']*')*)\s*\/?>/gi;
 
 const rawModules = {
 	...import.meta.glob( "../**/*.yaml", {
@@ -105,6 +107,109 @@ function formatMessage( message, params = {} ) {
 		params[ name ] == null ? `{${name}}` : String( params[ name ] ) );
 }
 
+function escapeHtmlAttribute( value ) {
+	return String( value ?? "" )
+		.replaceAll( "&", "&amp;" )
+		.replaceAll( "\"", "&quot;" )
+		.replaceAll( "<", "&lt;" )
+		.replaceAll( ">", "&gt;" );
+}
+
+function encodeBase64Utf8( value ) {
+	if ( typeof value !== "string" ) {
+		return "";
+	}
+
+	if ( typeof Buffer !== "undefined" ) {
+		return Buffer.from( value, "utf8" )
+			.toString( "base64" );
+	}
+
+	if ( typeof TextEncoder !== "undefined" && typeof btoa === "function" ) {
+		let binary = "";
+
+		for ( const byte of new TextEncoder().encode( value ) ) {
+			binary += String.fromCharCode( byte );
+		}
+
+		return btoa( binary );
+	}
+
+	return "";
+}
+
+function parseMarkerAttributes( source = "" ) {
+	const attrs = {};
+	const attrRe = /([:@\w-]+)(?:\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s"'=<>`]+)))?/g;
+	let match = null;
+
+	while ( ( match = attrRe.exec( source ) ) ) {
+		const name = String( match[ 1 ] ?? "" )
+			.trim()
+			.toLowerCase();
+
+		if ( !name ) {
+			continue;
+		}
+
+		attrs[ name ] = match[ 2 ] ?? match[ 3 ] ?? match[ 4 ] ?? true;
+	}
+
+	return attrs;
+}
+
+function parseBooleanAttribute(
+	attrs,
+	name,
+	defaultValue = false
+) {
+	if ( !( name in attrs ) ) {
+		return defaultValue;
+	}
+
+	if ( attrs[ name ] === true ) {
+		return true;
+	}
+
+	const normalized = String( attrs[ name ] ?? "" )
+		.trim()
+		.toLowerCase();
+
+	return ![ "0", "false", "no", "off" ].includes( normalized );
+}
+
+function renderKatexMarker( attrSource = "" ) {
+	const attrs = parseMarkerAttributes( attrSource );
+	const sourceTex = typeof attrs.tex === "string" ? attrs.tex : "";
+
+	if ( !sourceTex ) {
+		return "";
+	}
+
+	const aligned = parseBooleanAttribute( attrs, "aligned" );
+	const display = parseBooleanAttribute( attrs, "inline" ) ?
+		false :
+		parseBooleanAttribute( attrs, "display" );
+	const tagName = attrs.as === "div" || display ? "div" : "span";
+	const renderTex = aligned ?
+		`\\begin{aligned}${sourceTex}\\end{aligned}` :
+		sourceTex;
+	const html = katexHTML( renderTex, display );
+	const sourceTexB64 = encodeBase64Utf8( sourceTex );
+	const renderTexB64 = encodeBase64Utf8( renderTex );
+
+	return `<${tagName} data-katex-aligned="${aligned ? "1" : "0"}" data-katex-display="${display ? "1" : "0"}" data-katex-render-tex="${escapeHtmlAttribute( renderTex )}" data-katex-render-tex-b64="${escapeHtmlAttribute( renderTexB64 )}" data-katex-tex="${escapeHtmlAttribute( sourceTex )}" data-katex-tex-b64="${escapeHtmlAttribute( sourceTexB64 )}">${html}</${tagName}>`;
+}
+
+function renderRichMessage( message ) {
+	if ( typeof message !== "string" || !message.toLowerCase().includes( "<katex" ) ) {
+		return message;
+	}
+
+	return message.replace( KATEX_MARKER_RE, ( _match,
+		attrSource = "" ) => renderKatexMarker( attrSource ) );
+}
+
 function resolveMessage(
 	namespace,
 	key,
@@ -148,7 +253,21 @@ export function t(
 		namespace, key, params
 	);
 
-	return message == null ? `${namespace}.${key}` : message;
+	return message == null ?
+		`${namespace}.${key}` :
+		renderRichMessage( message );
+}
+
+export function th(
+	namespace, key, params = {}
+) {
+	const message = resolveMessage(
+		namespace, key, params
+	);
+
+	return message == null ?
+		`${namespace}.${key}` :
+		renderRichMessage( message );
 }
 
 export function tm( namespace, key = "" ) {
@@ -159,12 +278,22 @@ export function tm( namespace, key = "" ) {
 export function useI18n( namespace ) {
 	const injected = inject( I18N_KEY, null );
 	const api = injected ?? i18nApi;
+	const scopedTranslate = ( key,
+		params = {} ) => api.t(
+		namespace, key, params
+	);
+
+	scopedTranslate.html = ( key,
+		params = {} ) => api.th(
+		namespace, key, params
+	);
 
 	return {
 		locale:    api.locale,
 		setLocale: api.setLocale,
-		t:         ( key,
-			params = {} ) => api.t(
+		t:         scopedTranslate,
+		th:        ( key,
+			params = {} ) => api.th(
 			namespace, key, params
 		),
 		tm: ( key = "" ) => api.tm( namespace, key )
@@ -177,20 +306,38 @@ export const i18nApi = {
 	getLocale,
 	setLocale,
 	t,
+	th,
 	tm
 };
 
 export default {
 	install( app ) {
 		setHtmlLanguage( locale.value );
-		app.provide( I18N_KEY, i18nApi );
-		app.provide( "i18n", i18nApi );
-		app.config.globalProperties.$i18n = i18nApi;
-		app.config.globalProperties.$t = (
+		const globalTranslate = (
 			namespace,
 			key,
 			params = {}
 		) => t(
+			namespace, key, params
+		);
+
+		globalTranslate.html = (
+			namespace,
+			key,
+			params = {}
+		) => th(
+			namespace, key, params
+		);
+
+		app.provide( I18N_KEY, i18nApi );
+		app.provide( "i18n", i18nApi );
+		app.config.globalProperties.$i18n = i18nApi;
+		app.config.globalProperties.$t = globalTranslate;
+		app.config.globalProperties.$th = (
+			namespace,
+			key,
+			params = {}
+		) => th(
 			namespace, key, params
 		);
 	}

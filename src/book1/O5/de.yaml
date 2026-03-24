@@ -90,6 +90,7 @@ sections:
     title: "Teil 4 - Ein Schlüsselschritt:"
     titleSuffix: "liegen auf einem Kreis"
     p1: "Wir zeigen:"
+    proveBox: 'X,M,N,C \text{ liegen auf einem Kreis.}'
     p2: "Dazu zeigen wir die Winkelgleichheit"
     p3a: "In den folgenden Gleichungen verstehen wir Winkel als Winkel zwischen Geraden (also ohne Richtung; Winkel werden modulo"
     p3b: "betrachtet)."
@@ -162,6 +163,7 @@ sections:
     p3a: "Dabei gilt stets"
     p3b: "umgestellt ist das"
     p3c: "Entsprechend gilt dann auch"
+    p3Box: 'BX = BM - XM \quad\text{(als gerichtete Strecken)}.'
     p4: "Dann ist"
     p5: "Subtrahieren ergibt:"
     p6: "Setze das in (4) ein:"

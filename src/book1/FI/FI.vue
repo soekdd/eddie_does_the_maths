@@ -2,33 +2,33 @@
 <AppFrame
 	:languages="[ 'de', 'en' ]"
 	:sub-chapter
-	:title="t( 'fi.title' )"
+	:title="t( 'title' )"
 	:vue-date="__VITE_SFC_MTIME_MS__"
 >
 
 	<template #bookPart>
 		<figure class="exampleFigure">
-			<ImageZoomer :title="t( 'fi.imageTitle' )">
+			<ImageZoomer :title="t( 'imageTitle' )">
 				<img loading="lazy" :src="titleImg" />
 			</ImageZoomer>
 		</figure>
-		<h3 id="einleitung">{{ t( "fi.introDate" ) }}</h3>
+		<h3 id="einleitung">{{ t( "introDate" ) }}</h3>
 		<div class="eddie">
-			<p v-html="t( 'fi.book.p1' )" />
-			<p v-html="t( 'fi.book.p2' )" />
-			<p v-html="t( 'fi.book.p3' )" />
-			<p>{{ t( "fi.book.p4" ) }}</p>
-			<p v-html="t( 'fi.book.p5' )" />
-			<p>{{ t( "fi.book.p6" ) }}</p>
+			<p v-html="t( 'book.p1' )" />
+			<p v-html="t( 'book.p2' )" />
+			<p v-html="t( 'book.p3' )" />
+			<p>{{ t( "book.p4" ) }}</p>
+			<p v-html="t( 'book.p5' )" />
+			<p>{{ t( "book.p6" ) }}</p>
 		</div>
 	</template>
 
 	<template #descriptionPart>
-		<h2 id="beschreibung">{{ t( "fi.sections.title" ) }}</h2>
+		<h2 id="beschreibung">{{ t( "sections.title" ) }}</h2>
 		<div class="eddie d-flex flex-column ga-6">
 			<section>
 				<figure class="exampleFigure">
-					<ImageZoomer no-zoom :title="t( 'fi.sections.step1Figure' )">
+					<ImageZoomer no-zoom :title="t( 'sections.step1Figure' )">
 						<FINetwork
 							v-model="selectedMap"
 							:grid="false"
@@ -38,18 +38,18 @@
 						/>
 					</ImageZoomer>
 				</figure>
-				<h3>{{ t( "fi.sections.step11" ) }}</h3>
-				<p>{{ t( "fi.sections.p11" ) }}</p>
+				<h3>{{ t( "sections.step11" ) }}</h3>
+				<p>{{ t( "sections.p11" ) }}</p>
 				<ul>
-					<li v-html="t( 'fi.sections.s111' )" />
-					<li v-html="t( 'fi.sections.s112' )" />
-					<li v-html="t( 'fi.sections.s113' )" />
+					<li v-html="t( 'sections.s111' )" />
+					<li v-html="t( 'sections.s112' )" />
+					<li v-html="t( 'sections.s113' )" />
 				</ul>
 			</section>
 
 			<section>
 				<figure class="exampleFigure">
-					<ImageZoomer no-zoom :title="t( 'fi.sections.step2Figure' )">
+					<ImageZoomer no-zoom :title="t( 'sections.step2Figure' )">
 						<FINetwork
 							v-model="selectedMap"
 							:grid="false"
@@ -59,14 +59,14 @@
 						/>
 					</ImageZoomer>
 				</figure>
-				<h3>{{ t( "fi.sections.step12" ) }}</h3>
-				<p>{{ t( "fi.sections.p12" ) }}</p>
-				<p>{{ t( "fi.sections.p13" ) }}</p>
+				<h3>{{ t( "sections.step12" ) }}</h3>
+				<p>{{ t( "sections.p12" ) }}</p>
+				<p>{{ t( "sections.p13" ) }}</p>
 			</section>
 
 			<section>
 				<figure class="exampleFigure">
-					<ImageZoomer no-zoom :title="t( 'fi.sections.step3Figure' )">
+					<ImageZoomer no-zoom :title="t( 'sections.step3Figure' )">
 						<FINetwork
 							v-model="selectedMap"
 							:grid="true"
@@ -76,10 +76,10 @@
 						/>
 					</ImageZoomer>
 				</figure>
-				<h3>{{ t( "fi.sections.step13" ) }}</h3>
-				<p>{{ t( "fi.sections.p14" ) }}</p>
-				<p v-html="t( 'fi.sections.p15' )" />
-				<p>{{ t( "fi.sections.p16" ) }}</p>
+				<h3>{{ t( "sections.step13" ) }}</h3>
+				<p>{{ t( "sections.p14" ) }}</p>
+				<p v-html="t( 'sections.p15' )" />
+				<p>{{ t( "sections.p16" ) }}</p>
 				<div class="kbox mb-3">
 					<Katex
 						as="div"
@@ -104,13 +104,13 @@
 					<Katex
 						as="div"
 						display
-						tex="\text{Beispiel:}\quad f(z)=\exp(0.85\,z)"
+						:tex="t( 'sections.exampleBox' )"
 					/>
 				</div>
 			</section>
 			<section>
 				<figure class="exampleFigure">
-					<ImageZoomer no-zoom :title="t( 'fi.sections.step4Figure' )">
+					<ImageZoomer no-zoom :title="t( 'sections.step4Figure' )">
 						<FINetwork
 							v-model="selectedMap"
 							distraction
@@ -121,14 +121,14 @@
 						/>
 					</ImageZoomer>
 				</figure>
-				<h3>{{ t( "fi.sections.step14" ) }}</h3>
-				<p>{{ t( "fi.sections.p17" ) }}</p>
-				<EddieComment :subtitle="t( 'fi.sections.commentTitle' )">
+				<h3>{{ t( "sections.step14" ) }}</h3>
+				<p>{{ t( "sections.p17" ) }}</p>
+				<EddieComment :subtitle="t( 'sections.commentTitle' )">
 					<p>
-						{{ t( "fi.sections.comment1" ) }}
+						{{ t( "sections.comment1" ) }}
 					</p>
 					<p>
-						{{ t( "fi.sections.comment2" ) }}
+						{{ t( "sections.comment2" ) }}
 					</p>
 				</EddieComment>
 			</section>
@@ -141,7 +141,7 @@
 
 	<template #summaryPart>
 		<section>
-			<h3>{{ t( "fi.summary.title1" ) }}</h3>
+			<h3>{{ t( "summary.title1" ) }}</h3>
 			<div class="wrap">
 				<FINetwork
 					v-model="selectedMap"
@@ -151,7 +151,7 @@
 			</div>
 		</section>
 		<section>
-			<h3>{{ t( "fi.summary.title2" ) }}</h3>
+			<h3>{{ t( "summary.title2" ) }}</h3>
 			<FIMap/>
 		</section>
 	</template>
@@ -172,10 +172,10 @@ import FIMap from "./FI_Map.vue";
 const { t } = useI18n( "book1/FI" );
 
 const subChapter = computed( () => ( {
-	einleitung:   t( "fi.subChapter.einleitung" ),
-	beschreibung: t( "fi.subChapter.beschreibung" ),
-	ausprobieren: t( "fi.subChapter.ausprobieren" ),
-	karten:       t( "fi.subChapter.karten" )
+	einleitung:   t( "subChapter.einleitung" ),
+	beschreibung: t( "subChapter.beschreibung" ),
+	ausprobieren: t( "subChapter.ausprobieren" ),
+	karten:       t( "subChapter.karten" )
 } ) );
 
 const selectedMap = ref( "FI" );

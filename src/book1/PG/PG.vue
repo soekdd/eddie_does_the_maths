@@ -151,7 +151,7 @@
 			</figure>
 			<h3 id="bayes">{{ t( "sections.task5.title" ) }}</h3>
 			<div class="eddie">
-				<p><b>{{ t( "sections.task5.p1" ) }}</b></p>
+				<p v-html="t( 'sections.task5.p1' )"/>
 				<ul>
 					<li>{{ t( "sections.task5.l1" ) }}</li>
 					<li>{{ t( "sections.task5.l2" ) }}</li>
@@ -178,7 +178,7 @@
 			<h3>{{ t( "sections.task6.title" ) }}</h3>
 			<div class="eddie">
 				<p v-html="t( 'sections.task6.p1' )" />
-				<p><b>{{ t( "sections.task6.p2" ) }}</b></p>
+				<p v-html="t( 'sections.task6.p2' )" />
 				<div class="kbox">
 					<Katex as="div" display tex="f\cdot P-(1-f)\cdot B=0\Rightarrow f=\frac{B}{P+B}" />
 					<Katex as="div" display tex="P=20,\;B=10\Rightarrow f=\frac{10}{30}=\frac{1}{3}\approx 33{,}3\%" />
@@ -189,7 +189,7 @@
 		<section class="task">
 			<h3 id="ev">{{ t( "sections.task7.title" ) }}</h3>
 			<div class="eddie">
-				<p>{{ t( "sections.task7.p1" ) }}</p>
+				<p v-html="t( 'sections.task7.p1' )"/>
 				<ul>
 					<li>{{ t( "sections.task7.l1" ) }}</li>
 					<li>{{ t( "sections.task7.l2" ) }}</li>

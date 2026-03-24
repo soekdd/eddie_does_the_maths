@@ -286,7 +286,9 @@ import {
 	mdiDownload, mdiHexagonSlice2, mdiHexagonSlice4, mdiHexagonSlice6
 } from "@mdi/js";
 import { i18nApi, useI18n } from "@/utils/i18n.mjs";
-import { localizePath, resolveLocaleFromPath, stripLocalePrefix } from "@/router.js";
+import {
+	localizePath, resolveLocaleFromPath, stripLocalePrefix
+} from "@/router.js";
 import faviconPng from "../images/favicon.png";
 import ForumThreadPocketBase from "./ForumThreadPocketBase.vue";
 import MarkdownDownload from "./MarkdownDownload.vue";
@@ -403,9 +405,7 @@ const resolvedLanguage = computed( () =>
 		currentLanguage.value :
 		activeLanguages.value[ 0 ] || "en" );
 const routeLanguage = computed( () => resolveLocaleFromPath( route.path ) );
-const homeLinkTarget = computed( () => ( {
-	path: localizePath( "/", resolvedLanguage.value )
-} ) );
+const homeLinkTarget = computed( () => ( { path: localizePath( "/", resolvedLanguage.value ) } ) );
 const showLanguageSwitch = computed( () => supportedLanguages.value.length > 1 );
 const currentLanguageIndex = computed( () => activeLanguages.value.indexOf( resolvedLanguage.value ) );
 const nextLanguage = computed( () => {

@@ -148,7 +148,7 @@
 		<div class="eddie">
 			<p>{{ t( "sections.part4.p1" ) }}</p>
 			<div class="kbox">
-				<Katex as="div" display tex="X,M,N,C \text{ liegen auf einem Kreis.}" />
+				<Katex as="div" display :tex="t( 'sections.part4.proveBox' )" />
 			</div>
 			<p>{{ t( "sections.part4.p2" ) }}</p>
 			<div class="kbox">
@@ -271,7 +271,7 @@
 				<Katex tex="XB = XM - BM" />.
 			</p>
 			<div class="kbox">
-				<Katex as="div" display tex="BX = BM - XM \quad\text{(als gerichtete Strecken)}." />
+				<Katex as="div" display :tex="t( 'sections.part6.p3Box' )" />
 			</div>
 			<p>{{ t( "sections.part6.p4" ) }}</p>
 			<div class="kbox">

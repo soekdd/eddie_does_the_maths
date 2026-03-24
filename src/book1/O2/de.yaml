@@ -61,6 +61,7 @@ sections:
     step3Title: "Schritt 3 — Dann sind alle Zahlen gleichfarbig"
     step3p1: "Die Folge <katex tex=\"r_1,r_2,\\dots,r_{n-1}\" /> enthält (aus Schritt 1) jede Zahl aus <katex tex=\"M=\\{1,\\dots,n-1\\}\" /> genau einmal."
     step3p2: "Aus Schritt 2 wissen wir: Jede Nachbarzahl hat dieselbe Farbe. Also hat die ganze Kette dieselbe Farbe — und damit haben alle Zahlen in <katex tex=\"M\" /> dieselbe Farbe."
+    step3Box: '\boxed{\text{Alle Zahlen in }M\text{ sind gleichfarbig.}}'
     commentTitle: "Kurz gesagt"
     commentItems:
       - "Teilerfremd (<katex tex=\"\\gcd(n,k)=1\" />) sorgt dafür, dass die <katex tex=\"k\" />-Sprünge alle Zahlen besuchen."

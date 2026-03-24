@@ -20,6 +20,7 @@ sections:
     title: "Part 1 — Problem statement"
     p1: "Let <katex tex=\"M\" /> be a set of <b>1985 distinct positive integers</b>. None of these numbers has a prime divisor larger than <katex tex=\"23\" />. So all prime factors lie in <katex tex=\"\\{2,3,5,7,11,13,17,19,23\\}\" />."
     p2: "We must show that in <katex tex=\"M\" /> there exist <b>four distinct numbers</b> <katex tex=\"a,b,c,d\" /> whose product is a fourth power:"
+    proveBox: '\exists\,a,b,c,d\in M\ \text{pairwise distinct}:\quad abcd=t^4\ \text{for some}\ t\in\mathbb Z.'
   part2:
     title: "Part 2 — Mini crash course: when a square? when a fourth power?"
     p1: "Let <katex tex=\"p_1,\\dots,p_n\" /> be the allowed primes. Here we have"
@@ -40,6 +41,7 @@ sections:
     bText1: "Define"
     bText2: "This vector stores: exponent odd (=1) or even (=0)."
     bMemo: "Key fact:"
+    bMemoBox: '\varepsilon(x)=\varepsilon(y)\quad\Longrightarrow\quad xy\ \text{is a square}.'
     bText3: "Then every exponent in <katex tex=\"xy\" /> is even. There are only <katex tex=\"2^n\" /> parity classes in total."
   part4:
     title: "Part 4 — Why 1985 is safely enough (a more general statement)"

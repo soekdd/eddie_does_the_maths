@@ -66,7 +66,7 @@ sections:
   task6:
     title: "Schritt 1.6 - Aufgabe 6: Bluff-Mathe - Wie oft muss er funktionieren?"
     p1: "<b>Situation:</b> Nach dem Draw ist der Pot <katex tex=\"P\" />. Eddie blufft mit Einsatz <katex tex=\"B\" />."
-    p2: "Frage: Welche Mindest-Foldrate <katex tex=\"f\" /> braucht sie für Break-even?"
+    p2: "<b>Frage:</b> Welche Mindest-Foldrate <katex tex=\"f\" /> braucht sie für Break-even?"
   task7:
     title: "Schritt 1.7 - Aufgabe 7: EV statt Bauchgefühl - Welche Linie ist besser?"
     p1: "<b>Situation:</b> Eddie hat ein Paar und kann wählen:"

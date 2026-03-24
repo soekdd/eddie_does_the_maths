@@ -3,7 +3,7 @@
 	<div class="controls">
 		<div class="flex">
 			<label class="btn">
-				{{ t( "fi.map.upload" ) }}
+				{{ t( "map.upload" ) }}
 				<input accept="image/*"
 					hidden
 					type="file"
@@ -12,9 +12,9 @@
 			</label>
 
 			<label>
-				{{ t( "fi.map.travelMaps" ) }}
+				{{ t( "map.travelMaps" ) }}
 				<select v-model="selectedAssetKey" :disabled="assetKeys.length === 0" @change="loadSelectedAsset">
-					<option disabled value="">{{ t( "fi.map.choose" ) }}</option>
+					<option disabled value="">{{ t( "map.choose" ) }}</option>
 					<option v-for="k in assetKeys" :key="k" :value="k">
 						{{ prettyAssetName(k) }}
 					</option>
@@ -22,20 +22,20 @@
 			</label>
 
 			<label>
-				{{ t( "fi.map.distortion" ) }}
+				{{ t( "map.distortion" ) }}
 				<select v-model="mapName">
-					<option value="identity">{{ t( "fi.map.identity" ) }}</option>
-					<option value="powerN">{{ t( "fi.map.powerN" ) }}</option>
-					<option value="expScaled">{{ t( "fi.map.expScaled" ) }}</option>
-					<option value="sinScaled">{{ t( "fi.map.sinScaled" ) }}</option>
-					<option value="mobius">{{ t( "fi.map.mobius" ) }}</option>
-					<option value="joukowski">{{ t( "fi.map.joukowski" ) }}</option>
-					<option value="weierstrass">{{ t( "fi.map.weierstrass" ) }}</option>
+					<option value="identity">{{ t( "map.identity" ) }}</option>
+					<option value="powerN">{{ t( "map.powerN" ) }}</option>
+					<option value="expScaled">{{ t( "map.expScaled" ) }}</option>
+					<option value="sinScaled">{{ t( "map.sinScaled" ) }}</option>
+					<option value="mobius">{{ t( "map.mobius" ) }}</option>
+					<option value="joukowski">{{ t( "map.joukowski" ) }}</option>
+					<option value="weierstrass">{{ t( "map.weierstrass" ) }}</option>
 				</select>
 			</label>
 
 			<label>
-				{{ t( "fi.map.outputSize" ) }}
+				{{ t( "map.outputSize" ) }}
 				<select v-model.number="outSize">
 					<option :value="512">512×512</option>
 					<option :value="768">768×768</option>
@@ -44,7 +44,7 @@
 			</label>
 
 			<label>
-				{{ t( "fi.map.zoom" ) }}
+				{{ t( "map.zoom" ) }}
 				<input v-model.number="viewZoom"
 					max="6"
 					min="0.15"
@@ -55,7 +55,7 @@
 			</label>
 
 			<label>
-				{{ t( "fi.map.centerX" ) }}
+				{{ t( "map.centerX" ) }}
 				<input v-model.number="cx"
 					max="3"
 					min="-3"
@@ -66,7 +66,7 @@
 			</label>
 
 			<label>
-				{{ t( "fi.map.centerY" ) }}
+				{{ t( "map.centerY" ) }}
 				<input v-model.number="cy"
 					max="3"
 					min="-3"
@@ -117,7 +117,7 @@
 			</template>
 
 			<details v-if="mapName === 'mobius'" class="mobius">
-				<summary>{{ t( "fi.map.mobiusParams" ) }}</summary>
+				<summary>{{ t( "map.mobiusParams" ) }}</summary>
 				<div class="grid">
 					<div class="row">
 						<strong>a</strong><span>re</span><input v-model.number="A.re" step="0.01" type="number" />
@@ -136,11 +136,11 @@
 						<span>im</span><input v-model.number="D.im" step="0.01" type="number" />
 					</div>
 				</div>
-				<small class="hint">{{ t( "fi.map.mobiusHint" ) }}</small>
+				<small class="hint">{{ t( "map.mobiusHint" ) }}</small>
 			</details>
 
 			<label>
-				{{ t( "fi.map.iterations" ) }}
+				{{ t( "map.iterations" ) }}
 				<input v-model.number="iters"
 					max="25"
 					min="0"
@@ -150,12 +150,12 @@
 				<span class="mono">{{ iters }}</span>
 			</label>
 		</div>
-		<button class="btn2 ma-2" :disabled="!hasImage" @click="render">{{ t( "fi.map.render" ) }}</button>
-		<button class="btn2 ma-2" :disabled="!hasImage" @click="resetView">{{ t( "fi.map.reset" ) }}</button>
+		<button class="btn2 ma-2" :disabled="!hasImage" @click="render">{{ t( "map.render" ) }}</button>
+		<button class="btn2 ma-2" :disabled="!hasImage" @click="resetView">{{ t( "map.reset" ) }}</button>
 	</div>
 
 	<div class="formulaCard">
-		<div class="title">{{ t( "fi.map.activeMap" ) }}</div>
+		<div class="title">{{ t( "map.activeMap" ) }}</div>
 		<Katex
 			as="div"
 			class="formulaKatex"
@@ -166,16 +166,16 @@
 
 	<div class="canvases">
 		<div class="pane">
-			<div class="title">{{ t( "fi.map.source" ) }}</div>
+			<div class="title">{{ t( "map.source" ) }}</div>
 			<canvas ref="srcCanvas" class="canvas"></canvas>
 		</div>
 		<div class="pane">
-			<div class="title">{{ t( "fi.map.result" ) }}</div>
+			<div class="title">{{ t( "map.result" ) }}</div>
 			<canvas ref="dstCanvas" class="canvas"></canvas>
 		</div>
 	</div>
 
-	<p class="note" v-html="t( 'fi.map.note' )" />
+	<p class="note" v-html="t( 'map.note' )" />
 </div>
 </template>
 
@@ -249,15 +249,15 @@ function prettyAssetName( k: string ) {
 	const name = parts[ parts.length - 1 ];
 
 	if ( name.includes( "FI_Eddie" ) ) {
-		return t( "fi.map.assetEddie" );
+		return t( "map.assetEddie" );
 	}
 
 	if ( name.includes( "FI_Stockholm" ) ) {
-		return t( "fi.map.assetStockholm" );
+		return t( "map.assetStockholm" );
 	}
 
 	if ( name.includes( "FI_Vaasa" ) ) {
-		return t( "fi.map.assetVaasa" );
+		return t( "map.assetVaasa" );
 	}
 
 	return name;
@@ -346,7 +346,7 @@ async function loadImageUrl( url: string ) {
 	img.crossOrigin = "anonymous";
 	await new Promise<void>( ( resolve, reject ) => {
 		img.onload = () => resolve();
-		img.onerror = () => reject( new Error( t( "fi.map.loadError" ) ) );
+		img.onerror = () => reject( new Error( t( "map.loadError" ) ) );
 		img.src = url;
 	} );
 

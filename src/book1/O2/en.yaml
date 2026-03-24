@@ -61,6 +61,7 @@ sections:
     step3Title: "Step 3 — Therefore all numbers have the same color"
     step3p1: "The sequence <katex tex=\"r_1,r_2,\\dots,r_{n-1}\" /> contains every number in <katex tex=\"M=\\{1,\\dots,n-1\\}\" /> exactly once."
     step3p2: "From Step 2 we know that every neighboring pair has the same color. So the whole chain has one color, and therefore all numbers in <katex tex=\"M\" /> have the same color."
+    step3Box: '\boxed{\text{All numbers in }M\text{ have the same color.}}'
     commentTitle: "In short"
     commentItems:
       - "Coprime (<katex tex=\"\\gcd(n,k)=1\" />) guarantees that the <katex tex=\"k\" />-jumps visit all numbers."

@@ -64,6 +64,8 @@ al:
     part5:
       title: "Part 5 - Historical typo: the first bug?"
       p1: "In Ada's printed <i>Note G</i> there is a well-known swapped division. It is often told as one of the earliest documented programming errors: a quotient was printed upside down."
+      p2: "printed (bug)"
+      p3: "correct"
     part6:
       title: "Part 6 - Why this is more than number play"
       p1Prefix: "Bernoulli numbers appear in summation formulas such as"
@@ -84,6 +86,7 @@ al:
     part8:
       title: "Part 8 - Eddie reduces fractions with Ada"
       p1: "Reducing fractions works via the greatest common divisor:"
+      p2: "because"
     part9:
       title: "Part 9 - The algorithm in words"
       step1Prefix: "Take two numbers"

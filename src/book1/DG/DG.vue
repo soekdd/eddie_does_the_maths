@@ -2,35 +2,33 @@
 <AppFrame
 	:languages="[ 'de', 'en' ]"
 	:sub-chapter
-	:title="t( 'dg.title' )"
+	:title="t( 'title' )"
 	:vue-date="__VITE_SFC_MTIME_MS__"
 >
 
 	<template #bookPart>
 		<figure class="exampleFigure">
-			<ImageZoomer :title="t( 'dg.imageTitle' )">
+			<ImageZoomer :title="t( 'imageTitle' )">
 				<img loading="lazy" :src="titleImg" />
 			</ImageZoomer>
 		</figure>
-		<h3 id="einleitung">{{ t( "dg.introDate" ) }}</h3>
+		<h3 id="einleitung">{{ t( "introDate" ) }}</h3>
 		<div class="eddie">
-			<p v-html="t( 'dg.book.p1' )" />
-			<p v-html="t( 'dg.book.p2' )" />
-			<p v-html="t( 'dg.book.p3' )" />
+			<p v-html="t( 'book.p1' )" />
+			<p v-html="t( 'book.p2' )" />
+			<p v-html="t( 'book.p3' )" />
 		</div>
 	</template>
 
 	<template #descriptionPart>
-		<h2 id="einfuhrungsbeispiel">{{ t( "dg.sections.part1.title" ) }}</h2>
+		<h2 id="einfuhrungsbeispiel">{{ t( "sections.part1.title" ) }}</h2>
 
 		<div class="eddie">
-			<p>{{ t( "dg.sections.part1.p1" ) }}</p>
-			<p v-html="t( 'dg.sections.part1.p2' )" />
-			<p v-html="t( 'dg.sections.part1.p3' )" />
-
+			<p>{{ t( "sections.part1.p1" ) }}</p>
+			<p v-html="t( 'sections.part1.p2' )" />
+			<p v-html="t( 'sections.part1.p3' )" />
 			<Katex as="div" display tex="17k + 6s = 200,\quad k,s\in\mathbb{N}_0" />
-
-			<p v-html="t( 'dg.sections.part1.p4' )" />
+			<p v-html="t( 'sections.part1.p4' )" />
 
 			<div class="exampleClear"></div>
 
@@ -43,9 +41,9 @@
 					<thead>
 						<tr>
 							<th>t</th>
-							<th>{{ t( "dg.sections.part1.cows" ) }}</th>
-							<th>{{ t( "dg.sections.part1.pigs" ) }}</th>
-							<th>{{ t( "dg.sections.part1.check" ) }}</th>
+							<th>{{ t( "sections.part1.cows" ) }}</th>
+							<th>{{ t( "sections.part1.pigs" ) }}</th>
+							<th>{{ t( "sections.part1.check" ) }}</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -65,52 +63,52 @@
 				</v-table>
 			</div>
 
-			<p class="muted" v-html="t( 'dg.sections.part1.hint' )" />
+			<p class="muted" v-html="t( 'sections.part1.hint' )" />
 		</div>
 
-		<h2 id="erklarung" class="mt-8">{{ t( "dg.sections.part2.title" ) }}</h2>
+		<h2 id="erklarung" class="mt-8">{{ t( "sections.part2.title" ) }}</h2>
 
 		<figure class="exampleFigure">
-			<ImageZoomer :title="t( 'dg.sections.part2.graphTitle', { a: example.a, b: example.b, c: example.c } )">
+			<ImageZoomer :title="t( 'sections.part2.graphTitle', { a: example.a, b: example.b, c: example.c } )">
 				<DGGraph
 					:a="example.a"
 					:b="example.b"
 					:c="example.c"
-					:x-label="t( 'dg.sections.part2.xLabel' )"
+					:x-label="t( 'sections.part2.xLabel' )"
 					x-var="k"
-					:y-label="t( 'dg.sections.part2.yLabel' )"
+					:y-label="t( 'sections.part2.yLabel' )"
 					y-var="s"
 				/>
 			</ImageZoomer>
 		</figure>
 
 		<div class="eddie">
-			<p v-html="t( 'dg.sections.part2.p1' )" />
-			<p v-html="t( 'dg.sections.part2.p2' )" />
-			<p v-html="t( 'dg.sections.part2.p3' )" />
-			<p v-html="t( 'dg.sections.part2.p4' )" />
+			<p v-html="t( 'sections.part2.p1' )" />
+			<p v-html="t( 'sections.part2.p2' )" />
+			<p v-html="t( 'sections.part2.p3' )" />
+			<p v-html="t( 'sections.part2.p4' )" />
 			<Katex
 				as="div"
 				display
 				tex="x_0 = u\cdot \frac{c}{g},\quad y_0 = v\cdot \frac{c}{g}"
 			/>
-			<p v-html="t( 'dg.sections.part2.p5' )" />
-			<p v-html="t( 'dg.sections.part2.p6' )" />
+			<p v-html="t( 'sections.part2.p5' )" />
+			<p v-html="t( 'sections.part2.p6' )" />
 			<Katex
 				as="div"
 				display
 				tex="x = x_0 + \frac{b}{g}\,t,\quad y = y_0 - \frac{a}{g}\,t,\quad t\in\mathbb{Z}"
 			/>
-			<p v-html="t( 'dg.sections.part2.p7' )" />
+			<p v-html="t( 'sections.part2.p7' )" />
 
-			<EddieComment :subtitle="t( 'dg.sections.part2.commentTitle' )">
-				<p>{{ t( "dg.sections.part2.commentBody" ) }}</p>
+			<EddieComment :subtitle="t( 'sections.part2.commentTitle' )">
+				<p>{{ t( "sections.part2.commentBody" ) }}</p>
 			</EddieComment>
 		</div>
 	</template>
 
 	<template #interactivePart>
-		<h2 id="rechner" v-html="t( 'dg.sections.part3.title' )" />
+		<h2 id="rechner" v-html="t( 'sections.part3.title' )" />
 
 		<v-card class="panel pa-5">
 			<v-form autocomplete="off" @submit.prevent="submit">
@@ -121,21 +119,21 @@
 				</div>
 
 				<div class="actions">
-					<v-btn color="primary" type="submit" variant="flat">{{ t( "dg.sections.part3.calc" ) }}</v-btn>
-					<v-btn type="button" variant="outlined" @click="randomize">{{ t( "dg.sections.part3.random" ) }}</v-btn>
-					<v-btn type="button" variant="text" @click="reset">{{ t( "dg.sections.part3.reset" ) }}</v-btn>
+					<v-btn color="primary" type="submit" variant="flat">{{ t( "sections.part3.calc" ) }}</v-btn>
+					<v-btn type="button" variant="outlined" @click="randomize">{{ t( "sections.part3.random" ) }}</v-btn>
+					<v-btn type="button" variant="text" @click="reset">{{ t( "sections.part3.reset" ) }}</v-btn>
 				</div>
 
-				<p class="mini" v-html="t( 'dg.sections.part3.mini' )" />
+				<p class="mini" v-html="t( 'sections.part3.mini' )" />
 			</v-form>
 		</v-card>
 
 		<v-card class="panel pa-3 mt-4">
-			<h3>{{ t( "dg.sections.part3.graphInput" ) }}</h3>
-			<ImageZoomer :title="t( 'dg.sections.part3.graphTitle', { a: String( a ), b: String( b ), c: String( c ) } )">
+			<h3>{{ t( "sections.part3.graphInput" ) }}</h3>
+			<ImageZoomer :title="t( 'sections.part3.graphTitle', { a: String( a ), b: String( b ), c: String( c ) } )">
 				<DGGraph :a :b :c />
 			</ImageZoomer>
-			<p class="mini muted">{{ t( "dg.sections.part3.graphHint" ) }}</p>
+			<p class="mini muted">{{ t( "sections.part3.graphHint" ) }}</p>
 		</v-card>
 	</template>
 
@@ -171,11 +169,11 @@
 			</div>
 
 			<div v-if="steps" class="stepWrap">
-				<h3 id="schritt-fur-schritt">{{ t( "dg.steps.title" ) }}</h3>
+				<h3 id="schritt-fur-schritt">{{ t( "steps.title" ) }}</h3>
 
 				<v-expansion-panels multiple variant="accordion">
 					<v-expansion-panel :value="0">
-						<v-expansion-panel-title>{{ t( "dg.steps.s1" ) }}</v-expansion-panel-title>
+						<v-expansion-panel-title>{{ t( "steps.s1" ) }}</v-expansion-panel-title>
 						<v-expansion-panel-text eager>
 							<div class="kbox">
 								<Katex
@@ -188,16 +186,16 @@
 								<Katex
 									as="div"
 									display
-									:tex="`${fmt( steps.g )}\\mid ${fmt( steps.c )}\\Rightarrow\\text{${t( 'dg.steps.divisible' )}}`"
+									:tex="`${fmt( steps.g )}\\mid ${fmt( steps.c )}\\Rightarrow\\text{${t( 'steps.divisible' )}}`"
 								/>
 							</div>
 						</v-expansion-panel-text>
 					</v-expansion-panel>
 
 					<v-expansion-panel>
-						<v-expansion-panel-title>{{ t( "dg.steps.s2" ) }}</v-expansion-panel-title>
+						<v-expansion-panel-title>{{ t( "steps.s2" ) }}</v-expansion-panel-title>
 						<v-expansion-panel-text eager>
-							<p class="muted">{{ t( "dg.steps.uv" ) }}</p>
+							<p class="muted">{{ t( "steps.uv" ) }}</p>
 							<div class="kbox">
 								<Katex
 									as="div"
@@ -207,12 +205,12 @@
 								/>
 							</div>
 
-							<p class="muted">{{ t( "dg.steps.trace" ) }}</p>
+							<p class="muted">{{ t( "steps.trace" ) }}</p>
 							<div class="tableScroller">
 								<v-table density="compact">
 									<thead>
 										<tr>
-											<th>{{ t( "dg.steps.step" ) }}</th>
+											<th>{{ t( "steps.step" ) }}</th>
 											<th>q</th>
 											<th>old_r</th>
 											<th>r</th>
@@ -234,7 +232,7 @@
 											<td class="mono">{{ st.t }}</td>
 										</tr>
 										<tr v-if="steps.euclidSteps.length <= 1">
-											<td class="muted" colspan="8">{{ t( "dg.steps.noSteps" ) }}</td>
+											<td class="muted" colspan="8">{{ t( "steps.noSteps" ) }}</td>
 										</tr>
 									</tbody>
 								</v-table>
@@ -243,9 +241,9 @@
 					</v-expansion-panel>
 
 					<v-expansion-panel :value="2">
-						<v-expansion-panel-title>{{ t( "dg.steps.s3" ) }}</v-expansion-panel-title>
+						<v-expansion-panel-title>{{ t( "steps.s3" ) }}</v-expansion-panel-title>
 						<v-expansion-panel-text eager>
-							<p class="muted">{{ t( "dg.steps.scaleText" ) }}</p>
+							<p class="muted">{{ t( "steps.scaleText" ) }}</p>
 							<div class="kbox">
 								<Katex
 									as="div"
@@ -266,7 +264,7 @@
 					</v-expansion-panel>
 
 					<v-expansion-panel :value="3">
-						<v-expansion-panel-title>{{ t( "dg.steps.s4" ) }}</v-expansion-panel-title>
+						<v-expansion-panel-title>{{ t( "steps.s4" ) }}</v-expansion-panel-title>
 						<v-expansion-panel-text eager>
 							<div class="kbox">
 								<Katex as="div" display :tex="`x=x_0+\\frac{b}{g}t=${fmt( steps.x0 )}+${fmt( steps.dx )}t`" />
@@ -275,36 +273,36 @@
 								<Katex as="div" display :tex="`y=y_0-\\frac{a}{g}t=${fmt( steps.y0 )}-${fmt( steps.dy )}t`" />
 							</div>
 							<p v-if="steps.tShift !== 0" class="muted">
-								{{ t( "dg.steps.normalized", { tShift: steps.tShift } ) }}
+								{{ t( "steps.normalized", { tShift: steps.tShift } ) }}
 							</p>
-							<p class="muted" v-html="t( 'dg.steps.withT' )" />
+							<p class="muted" v-html="t( 'steps.withT' )" />
 						</v-expansion-panel-text>
 					</v-expansion-panel>
 				</v-expansion-panels>
 			</div>
 
 			<div v-if="lastSolution" class="tableWrap">
-				<h3 id="losungstabelle">{{ t( "dg.table.title" ) }}</h3>
+				<h3 id="losungstabelle">{{ t( "table.title" ) }}</h3>
 
 				<v-row dense>
 					<v-col cols="12" md="4">
-						<v-text-field v-model="tableControls.tMin" inputmode="numeric" :label="t( 'dg.table.tFrom' )" />
+						<v-text-field v-model="tableControls.tMin" inputmode="numeric" :label="t( 'table.tFrom' )" />
 					</v-col>
 					<v-col cols="12" md="4">
-						<v-text-field v-model="tableControls.tMax" inputmode="numeric" :label="t( 'dg.table.tTo' )" />
+						<v-text-field v-model="tableControls.tMax" inputmode="numeric" :label="t( 'table.tTo' )" />
 					</v-col>
 					<v-col cols="12" md="4" />
 				</v-row>
 
 				<v-row dense>
 					<v-col cols="12" md="4">
-						<v-checkbox v-model="tableControls.rangeFilter" :label="t( 'dg.table.rangeOnly' )" />
+						<v-checkbox v-model="tableControls.rangeFilter" :label="t( 'table.rangeOnly' )" />
 					</v-col>
 					<v-col cols="12" md="4">
-						<v-text-field v-model="tableControls.xAbs" inputmode="numeric" :label="t( 'dg.table.xAbs' )" />
+						<v-text-field v-model="tableControls.xAbs" inputmode="numeric" :label="t( 'table.xAbs' )" />
 					</v-col>
 					<v-col cols="12" md="4">
-						<v-text-field v-model="tableControls.yAbs" inputmode="numeric" :label="t( 'dg.table.yAbs' )" />
+						<v-text-field v-model="tableControls.yAbs" inputmode="numeric" :label="t( 'table.yAbs' )" />
 					</v-col>
 				</v-row>
 
@@ -314,10 +312,10 @@
 					<v-table density="compact">
 						<thead>
 							<tr>
-								<th>{{ t( "dg.table.t" ) }}</th>
-								<th>{{ t( "dg.table.x" ) }}</th>
-								<th>{{ t( "dg.table.y" ) }}</th>
-								<th>{{ t( "dg.table.check" ) }} <Katex tex="ax+by" /></th>
+								<th>{{ t( "table.t" ) }}</th>
+								<th>{{ t( "table.x" ) }}</th>
+								<th>{{ t( "table.y" ) }}</th>
+								<th>{{ t( "table.check" ) }} <Katex tex="ax+by" /></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -330,7 +328,7 @@
 								</td>
 							</tr>
 							<tr v-if="table.rows.length === 0">
-								<td class="muted" colspan="4">{{ t( "dg.table.noHits" ) }}</td>
+								<td class="muted" colspan="4">{{ t( "table.noHits" ) }}</td>
 							</tr>
 						</tbody>
 					</v-table>
@@ -341,7 +339,7 @@
 
 	<template #footer>
 		<p class="muted">
-			{{ t( "dg.footer" ) }}
+			{{ t( "footer" ) }}
 		</p>
 	</template>
 </AppFrame>
@@ -362,10 +360,10 @@ import titleImg from "./DG.webp";
 const { t } = useI18n( "book1/DG" );
 
 const subChapter = computed( () => ( {
-	einleitung:          t( "dg.subChapter.einleitung" ),
-	einfuhrungsbeispiel: t( "dg.subChapter.einfuhrungsbeispiel" ),
-	erklarung:           t( "dg.subChapter.erklarung" ),
-	rechner:             t( "dg.subChapter.rechner" )
+	einleitung:          t( "subChapter.einleitung" ),
+	einfuhrungsbeispiel: t( "subChapter.einfuhrungsbeispiel" ),
+	erklarung:           t( "subChapter.erklarung" ),
+	rechner:             t( "subChapter.rechner" )
 } ) );
 
 const example = {
@@ -378,7 +376,7 @@ const c = ref( "200" );
 
 const status = reactive( {
 	kind: "",
-	text: t( "dg.result.ready" )
+	text: t( "result.ready" )
 } );
 
 const equationTex = computed( () => {
@@ -395,7 +393,7 @@ const equationTex = computed( () => {
 
 const output = ref( {
 	title:       "",
-	body:        t( "dg.result.prompt" ),
+	body:        t( "result.prompt" ),
 	bodyIsKatex: false
 } );
 
@@ -476,10 +474,10 @@ function reset() {
 	a.value = "17";
 	b.value = "6";
 	c.value = "200";
-	setStatus( "", t( "dg.result.ready" ) );
+	setStatus( "", t( "result.ready" ) );
 	output.value = {
 		title:       "",
-		body:        t( "dg.result.prompt" ),
+		body:        t( "result.prompt" ),
 		bodyIsKatex: false
 	};
 	steps.value = null;
@@ -500,16 +498,16 @@ function solveAndRender(
 
 	if ( an === 0 && bn === 0 ) {
 		if ( cn === 0 ) {
-			setStatus( "warn", t( "dg.result.infinite" ) );
+			setStatus( "warn", t( "result.infinite" ) );
 			output.value = {
-				title:       t( "dg.result.effective" ),
+				title:       t( "result.effective" ),
 				body:        "0 = 0",
 				bodyIsKatex: true
 			};
 		} else {
-			setStatus( "bad", t( "dg.result.none" ) );
+			setStatus( "bad", t( "result.none" ) );
 			output.value = {
-				title:       t( "dg.result.effective" ),
+				title:       t( "result.effective" ),
 				body:        `0 = ${fmt( cn )}`,
 				bodyIsKatex: true
 			};
@@ -520,9 +518,9 @@ function solveAndRender(
 
 	if ( an === 0 ) {
 		if ( cn % bn !== 0 ) {
-			setStatus( "bad", t( "dg.result.none" ) );
+			setStatus( "bad", t( "result.none" ) );
 			output.value = {
-				title: t( "dg.result.becauseA0" ),
+				title: t( "result.becauseA0" ),
 				body:  [
 					`${fmt( bn )}y = ${fmt( cn )}`,
 					"\\;\\Rightarrow\\;\\text{nicht teilbar}",
@@ -534,9 +532,9 @@ function solveAndRender(
 		}
 
 		const y0 = cn / bn;
-		setStatus( "ok", t( "dg.result.solvable" ) );
+		setStatus( "ok", t( "result.solvable" ) );
 		output.value = {
-			title:       t( "dg.result.becauseA0" ),
+			title:       t( "result.becauseA0" ),
 			body:        `y = ${fmt( y0 )}\\quad\\text{und}\\quad x=t\\ \\text{frei}`,
 			bodyIsKatex: true
 		};
@@ -545,9 +543,9 @@ function solveAndRender(
 
 	if ( bn === 0 ) {
 		if ( cn % an !== 0 ) {
-			setStatus( "bad", t( "dg.result.none" ) );
+			setStatus( "bad", t( "result.none" ) );
 			output.value = {
-				title: t( "dg.result.becauseB0" ),
+				title: t( "result.becauseB0" ),
 				body:  [
 					`${fmt( an )}x = ${fmt( cn )}`,
 					"\\;\\Rightarrow\\;\\text{nicht teilbar}",
@@ -559,9 +557,9 @@ function solveAndRender(
 		}
 
 		const x0 = cn / an;
-		setStatus( "ok", t( "dg.result.solvable" ) );
+		setStatus( "ok", t( "result.solvable" ) );
 		output.value = {
-			title:       t( "dg.result.becauseB0" ),
+			title:       t( "result.becauseB0" ),
 			body:        `x = ${fmt( x0 )}\\quad\\text{und}\\quad y=t\\ \\text{frei}`,
 			bodyIsKatex: true
 		};
@@ -571,9 +569,9 @@ function solveAndRender(
 	const g = gcd( an, bn );
 
 	if ( cn % g !== 0 ) {
-		setStatus( "bad", t( "dg.result.none" ) );
+		setStatus( "bad", t( "result.none" ) );
 		output.value = {
-			title:       t( "dg.result.gcdCheck" ),
+			title:       t( "result.gcdCheck" ),
 			body:        `g=\\gcd(${fmt( an )},${fmt( bn )})=${fmt( g )},\\quad ${fmt( g )}\\nmid ${fmt( cn )}`,
 			bodyIsKatex: true
 		};
@@ -603,9 +601,9 @@ function solveAndRender(
 	const x0 = normalized.x0;
 	const y0 = normalized.y0;
 
-	setStatus( "ok", t( "dg.result.solvable" ) );
+	setStatus( "ok", t( "result.solvable" ) );
 	output.value = {
-		title: t( "dg.result.resultTitle" ),
+		title: t( "result.resultTitle" ),
 		body:  [
 			`(x_0,y_0)=(${fmt( x0 )},${fmt( y0 )})`,
 			`\\quad\\text{und}\\quad x=${fmt( x0 )}+${fmt( dx )}t,`,
@@ -644,10 +642,10 @@ function submit() {
 	const cn = parseIntStrict( c.value );
 
 	if ( an === null || bn === null || cn === null ) {
-		setStatus( "warn", t( "dg.result.inputQuestion" ) );
+		setStatus( "warn", t( "result.inputQuestion" ) );
 		output.value = {
 			title:       "",
-			body:        t( "dg.result.inputBody" ),
+			body:        t( "result.inputBody" ),
 			bodyIsKatex: false
 		};
 		steps.value = null;
@@ -684,7 +682,7 @@ function updateTable() {
 	const yAbs = parseIntStrict( tableControls.yAbs );
 
 	if ( tMin === null || tMax === null || xAbs === null || yAbs === null ) {
-		table.meta = t( "dg.table.invalidInput" );
+		table.meta = t( "table.invalidInput" );
 		table.rows = [];
 		table.clipped = false;
 		return;
@@ -713,12 +711,12 @@ function updateTable() {
 	table.clipped = rows.length > maxShow;
 	table.rows = table.clipped ? rows.slice( 0, maxShow ) : rows;
 
-	table.meta = t( "dg.table.meta", {
+	table.meta = t( "table.meta", {
 		lo,
 		hi,
 		count:   rows.length,
-		clipped: table.clipped ? t( "dg.table.clipped", { maxShow } ) : "",
-		filter:  tableControls.rangeFilter ? t( "dg.table.filter", { xAbs, yAbs } ) : ""
+		clipped: table.clipped ? t( "table.clipped", { maxShow } ) : "",
+		filter:  tableControls.rangeFilter ? t( "table.filter", { xAbs, yAbs } ) : ""
 	} );
 }
 

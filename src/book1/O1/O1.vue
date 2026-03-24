@@ -147,7 +147,7 @@
 
 			<h3 class="mt-6" v-html="t( 'sections.part6.s2Title' )" />
 			<p v-html="t( 'sections.part6.s2p1' )" />
-			<p>{{ t( "sections.part6.s2p2" ) }}</p>
+			<p v-html="t( 'sections.part6.s2p2' )" />
 			<div class="kbox">
 				<Katex as="div" display tex="\angle OYB = \frac{180^\circ-\angle ABC}{2}=90^\circ-\frac{\angle ABC}{2}." />
 			</div>

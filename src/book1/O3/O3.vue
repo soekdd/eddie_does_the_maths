@@ -327,8 +327,8 @@ const texStep1Block = "(1+x)^mA&\\equiv (1+x^m)A=A+x^mA\\\\" +
 	"o\\bigl((1+x)^mA\\bigr)&=2\\,o(A).";
 const texFallABlock = "o\\!\\left(\\sum_{j=1}^n Q_{i_j}\\right)&=o\\bigl((1+x)^mA\\bigr)=2\\,o(A)\\\\" +
 	"o(Q_{i_1})&=o\\bigl((1+x)^mQ_{i_1-m}\\bigr)=2\\,o(Q_{i_1-m}).";
-const texFallBBlock = "o\\!\\left(\\sum_{j=1}^n Q_{i_j}\\right)&=o(A+B)+o(B)\\ge o(A)\\\\" +
-	"o(A)&\\ge o(Q_{i_1})\\quad\\text{(Induktionsannahme auf }A\\text{)}.";
+const texFallBBlock = computed( () => "o\\!\\left(\\sum_{j=1}^n Q_{i_j}\\right)&=o(A+B)+o(B)\\ge o(A)\\\\" +
+	`o(A)&\\ge o(Q_{i_1})\\quad\\text{(${t( "sections.part3.caseBBlockNote" )} }A\\text{)}.` );
 
 function popcount( n ) {
 	let x = n;

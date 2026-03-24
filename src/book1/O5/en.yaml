@@ -90,6 +90,7 @@ sections:
     title: "Part 4 - A Key Step:"
     titleSuffix: "lie on a circle"
     p1: "We show:"
+    proveBox: 'X,M,N,C \text{ lie on a circle.}'
     p2: "For this, we prove the angle equality"
     p3a: "In the following equations we view angles as angles between lines (so without orientation; angles are taken modulo"
     p3b: ")."
@@ -162,6 +163,7 @@ sections:
     p3a: "We always have"
     p3b: "rewriting this gives"
     p3c: "Accordingly we also get"
+    p3Box: 'BX = BM - XM \quad\text{(as directed segments)}.'
     p4: "Then"
     p5: "Subtracting yields:"
     p6: "Insert this into (4):"

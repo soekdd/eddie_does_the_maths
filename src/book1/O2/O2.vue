@@ -119,7 +119,7 @@
 			<p v-html="t( 'sections.part3.step3p1' )" />
 			<p v-html="t( 'sections.part3.step3p2' )" />
 			<div class="kbox">
-				<Katex as="div" display tex="\boxed{\text{Alle Zahlen in }M\text{ sind gleichfarbig.}}" />
+				<Katex as="div" display :tex="t( 'sections.part3.step3Box' )" />
 			</div>
 		</div>
 

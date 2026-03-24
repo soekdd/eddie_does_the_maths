@@ -64,6 +64,8 @@ al:
     part5:
       title: "Teil 5 - Historischer Druckfehler: der erste Bug?"
       p1: "In Adas gedruckter <i>Note G</i> gibt es eine bekannte vertauschte Division. Sie wird oft als einer der frühesten dokumentierten Programmierfehler erzählt: ein Quotient steht auf dem Kopf."
+      p2: "gedruckt (Bug)"
+      p3: "korrekt"
     part6:
       title: "Teil 6 - Warum das mehr ist als Zahlenspielerei"
       p1Prefix: "Bernoulli-Zahlen stecken in Summenformeln wie"
@@ -84,6 +86,7 @@ al:
     part8:
       title: "Teil 8 - Eddie kürzt Brüche mit Ada"
       p1: "Brüche kürzen geht über den grössten gemeinsamen Teiler:"
+      p2: "weil"
     part9:
       title: "Teil 9 - Algorithmus in Worten"
       step1Prefix: "Nimm zwei Zahlen"

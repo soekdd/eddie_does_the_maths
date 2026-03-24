@@ -66,7 +66,7 @@ sections:
   task6:
     title: "Step 1.6 - Problem 6: Bluff math - How often must it work?"
     p1: "<b>Situation:</b> After the draw, the pot is <katex tex=\"P\" />. Eddie bluffs with a bet <katex tex=\"B\" />."
-    p2: "Question: What minimum fold rate <katex tex=\"f\" /> does she need to break even?"
+    p2: "<b>Question:</b> What minimum fold rate <katex tex=\"f\" /> does she need to break even?"
   task7:
     title: "Step 1.7 - Problem 7: EV instead of gut feeling - Which line is better?"
     p1: "<b>Situation:</b> Eddie has a pair and can choose:"

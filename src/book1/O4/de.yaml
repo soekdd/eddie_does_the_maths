@@ -20,6 +20,7 @@ sections:
     title: "Teil 1 — Aufgabenstellung"
     p1: "Gegeben sei eine Menge <katex tex=\"M\" /> aus <b>1985 verschiedenen positiven ganzen Zahlen</b>. Keine dieser Zahlen besitzt einen Primteiler größer als <katex tex=\"23\" />. Alle Primfaktoren liegen also in <katex tex=\"\\{2,3,5,7,11,13,17,19,23\\}\" />."
     p2: "Zu zeigen ist: In <katex tex=\"M\" /> gibt es <b>vier verschiedene Zahlen</b> <katex tex=\"a,b,c,d\" />, deren Produkt eine vierte Potenz ist:"
+    proveBox: '\exists\,a,b,c,d\in M\ \text{paarweise verschieden}:\quad abcd=t^4\ \text{für ein}\ t\in\mathbb Z.'
   part2:
     title: "Teil 2 — Mini-Crashkurs: Wann Quadrat? Wann vierte Potenz?"
     p1: "Sei <katex tex=\"p_1,\\dots,p_n\" /> die Liste der erlaubten Primzahlen. Hier ist"
@@ -40,6 +41,7 @@ sections:
     bText1: "Definiere"
     bText2: "Dieser Vektor speichert: Exponent ungerade (=1) oder gerade (=0)."
     bMemo: "Wichtiger Merksatz:"
+    bMemoBox: '\varepsilon(x)=\varepsilon(y)\quad\Longrightarrow\quad xy\ \text{ist ein Quadrat}.'
     bText3: "Denn dann ist in <katex tex=\"xy\" /> jeder Exponent <katex tex=\"e_j(x)+e_j(y)\" /> gerade. Es gibt insgesamt nur <katex tex=\"2^n\" /> Paritätsklassen."
   part4:
     title: "Teil 4 — Warum 1985 sicher reicht (allgemeinere Aussage)"

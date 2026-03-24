@@ -58,6 +58,7 @@ sections:
     caseBText4: "Damit kann man direkt zählen:"
     caseBText5: "Außerdem gilt <katex tex=\"o(A+B)+o(B)\\ge o(A)\" />: Betrachte einen Exponenten <katex tex=\"r<m\" /> mit Koeffizienten <katex tex=\"a_r\" /> in <katex tex=\"A\" /> und <katex tex=\"b_r\" /> in <katex tex=\"B\" />. Modulo 2 gilt <katex tex=\"a_r \\equiv (a_r+b_r)+b_r\" />. Ist <katex tex=\"a_r\" /> ungerade, dann ist mindestens einer der beiden Koeffizienten in <katex tex=\"A+B\" /> oder <katex tex=\"B\" /> ungerade; daher deckt <katex tex=\"o(A+B)+o(B)\" /> alle ungeraden Koeffizienten von <katex tex=\"A\" /> ab. Damit:"
     caseBText6: "Also insgesamt:"
+    caseBBlockNote: "Induktionsannahme auf"
     commentTitle: "Was wurde „schwer“ gemacht und was nicht?"
     commentText: "Die Schwierigkeit steckt hier nicht in einem Spezialtheorem, sondern in zwei gut erklärbaren Ideen:"
     commentItems:
