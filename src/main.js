@@ -9,9 +9,11 @@ import ImageZoomer from "@/components/ImageZoomer.vue";
 import Katex from "@/components/Katex.vue";
 import RouteSeoHead from "@/components/RouteSeoHead.vue";
 import EddieComment from "@/components/EddieComment.vue";
-import i18n from "@/utils/i18n.mjs";
+import i18n, { setLocale } from "@/utils/i18n.mjs";
 import "katex/dist/katex.min.css";
-import { routes, scrollBehavior } from "@/router.js";
+import {
+	resolveLocaleFromPath, routes, scrollBehavior
+} from "@/router.js";
 import { vuetify } from "@/utils/vuetify";
 import "@/eddie.css";
 
@@ -202,6 +204,8 @@ export const createApp = ViteSSG(
 	( {
 		app, router, isClient
 	} ) => {
+		setLocale( resolveLocaleFromPath( router.currentRoute.value.path ) );
+
 		app.use( vuetify );
 		app.use( i18n );
 
