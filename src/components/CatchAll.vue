@@ -10,6 +10,8 @@ const subChapter = computed( () => tm( "catchAll.subChapter" ) ?? {} );
 
 <template>
 <AppFrame
+	:languages="[ 'de', 'en' ]"
+	nomd
 	:sub-chapter
 	:title="t( 'catchAll.title' )"
 	:vue-date="__VITE_SFC_MTIME_MS__"

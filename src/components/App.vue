@@ -11,14 +11,15 @@
 				>
 					<button
 						class="lang-btn"
+						:class="`lang-btn--${resolvedLanguage}`"
+						:data-lang="resolvedLanguage"
 						type="button"
 						@click="toggleLanguage"
 					>
-						{{ nextLanguageLabel }}
+						{{ currentLanguageLabel }}
 					</button>
 				</div>
 				<router-link
-					v-if="showHomeBadge"
 					:aria-label="t( 'app.home' )"
 					class="homeBadgeLink badge"
 					:title="t( 'app.home' )"
@@ -26,28 +27,33 @@
 				>
 					<img :alt="t( 'app.home' )" class="homeBadgeIcon" :src="faviconPng" />
 				</router-link>
+				<!-- <div v-else-if="shortText" class="badge">{{ shortText }}</div> -->
 				<template v-if="showFormalTitle">
-					<div v-if="shortText" class="badge">{{ shortText }}</div>
 					<div>
 						<h1 v-if="titleText" class="titleRow">
-							<span>{{ titleText }}</span>
-							<template v-if="difficultyIcon">
-								<v-tooltip
-									v-if="hasMounted"
-									location="bottom"
-									:text="difficultyLabel"
-								>
-									<template #activator="{ props: tooltipProps }">
-										<span class="difficultyStars" :class="{ 'is-wip': routeIsWip }" v-bind="tooltipProps">
+							<span class="titleTextWrap">
+								<span>{{ t( "welcome.title" ) }}:</span>
+								<span class="titleTextValue">{{ titleText }}
+									<template v-if="difficultyIcon">
+										<v-tooltip
+											v-if="hasMounted"
+											location="bottom"
+											:text="difficultyLabel"
+										>
+											<template #activator="{ props: tooltipProps }">
+												<span class="difficultyStars" :class="{ 'is-wip': routeIsWip }" v-bind="tooltipProps">
+													<v-icon :icon="difficultyIcon" size="18" />
+												</span>
+											</template>
+										</v-tooltip>
+										<span v-else class="difficultyStars" :class="{ 'is-wip': routeIsWip }">
 											<v-icon :icon="difficultyIcon" size="18" />
 										</span>
 									</template>
-								</v-tooltip>
-								<span v-else class="difficultyStars" :class="{ 'is-wip': routeIsWip }">
-									<v-icon :icon="difficultyIcon" size="18" />
 								</span>
-							</template>
+							</span>
 						</h1>
+						<h1 v-else>{{t('welcome.title')}}</h1>
 						<p v-if="subChapterEntries.length" class="sub">
 							<template v-for="( chapter ) in subChapterEntries" :key="chapter.id">
 								<router-link
@@ -315,7 +321,7 @@ const hasMounted = ref( false );
 // Vuetify's built-in "mobile" flag defaults to < lg (1280px), which is too wide for our
 // header-wrapping case. Match the app's existing "mobile-ish" breakpoint (see eddie.css).
 const isMobile = computed( () => hasMounted.value ? width.value < 860 : false );
-const appBarHeight = computed( () => isMobile.value ? 108 : 72 );
+const appBarHeight = computed( () => isMobile.value ? 122 : 72 );
 const uiLocale = computed( () => locale.value === "en" ? "en-US" : "de-DE" );
 const fileDate = computed( () => new Date( props.vueDate ).toLocaleString( uiLocale.value ) );
 const errorMessage = computed( () => {
@@ -386,7 +392,7 @@ const supportedLanguages = computed( () =>
 		.filter( (
 			value, index, values
 		) => value && values.indexOf( value ) === index ) );
-const currentLanguage = computed( () => String( locale.value || "de" ).trim()
+const currentLanguage = computed( () => String( locale.value || "en" ).trim()
 	.toLowerCase() );
 const disclaimerLanguage = computed( () => currentLanguage.value === "en" ? "en" : "de" );
 const activeLanguages = computed( () =>
@@ -394,7 +400,7 @@ const activeLanguages = computed( () =>
 const resolvedLanguage = computed( () =>
 	activeLanguages.value.includes( currentLanguage.value ) ?
 		currentLanguage.value :
-		activeLanguages.value[ 0 ] || "de" );
+		activeLanguages.value[ 0 ] || "en" );
 const languageQuery = computed( () => ( {
 	...route.query,
 	lang: resolvedLanguage.value
@@ -404,9 +410,18 @@ const homeLinkTarget = computed( () => ( {
 	query: languageQuery.value
 } ) );
 const showLanguageSwitch = computed( () => supportedLanguages.value.length > 1 );
-const nextLanguage = computed( () =>
-	supportedLanguages.value.find( ( value ) => value !== resolvedLanguage.value ) || "" );
-const nextLanguageLabel = computed( () => nextLanguage.value.toUpperCase() );
+const currentLanguageIndex = computed( () => activeLanguages.value.indexOf( resolvedLanguage.value ) );
+const nextLanguage = computed( () => {
+	if ( activeLanguages.value.length < 2 ) {
+		return "";
+	}
+
+	const currentIndex = currentLanguageIndex.value;
+	const safeIndex = currentIndex >= 0 ? currentIndex : 0;
+	const nextIndex = ( safeIndex + 1 ) % activeLanguages.value.length;
+	return activeLanguages.value[ nextIndex ] || "";
+} );
+const currentLanguageLabel = computed( () => resolvedLanguage.value.toUpperCase() );
 const routeLanguage = computed( () => String( route.query.lang ?? "" ).trim()
 	.toLowerCase() );
 const showHomeBadge = computed( () => route.path !== "/" );
@@ -414,7 +429,7 @@ const showHomeBadge = computed( () => route.path !== "/" );
 function resolveDisclaimerHtml( name,
 	locale ) {
 	const localizedPath = `../utils/disclaimer/${name}_${locale}.html`;
-	const fallbackPath = `../utils/disclaimer/${name}_de.html`;
+	const fallbackPath = `../utils/disclaimer/${name}_en.html`;
 	const localized = disclaimerModules[ localizedPath ];
 
 	if ( typeof localized === "string" ) {
@@ -528,10 +543,8 @@ function routePdfSlug( routePath ) {
 	return segments.length > 0 ? segments[ 0 ] : "index";
 }
 
-function routePdfFileName(
-	routePath,
-	localeValue
-) {
+function routePdfFileName( routePath,
+	localeValue ) {
 	return `${routePdfSlug( routePath )}_${localeValue}.pdf`;
 }
 
@@ -668,7 +681,7 @@ watch(
 	( [
 		requestedLanguage
 	] ) => {
-		const fallbackLanguage = activeLanguages.value[ 0 ] || "de";
+		const fallbackLanguage = activeLanguages.value[ 0 ] || "en";
 		const nextLanguage = activeLanguages.value.includes( requestedLanguage ) ?
 			requestedLanguage :
 			fallbackLanguage;
@@ -721,33 +734,114 @@ onMounted( () => {
 <style scoped>
 .lang-switch {
 	position: absolute;
-	top: 0;
+	top: 8px;
 	right: 0;
 	display: flex;
 	align-items: center;
 }
 
 .lang-btn {
-	border: 1px solid rgba(var(--v-theme-on-surface), 0.18);
-	background: rgba(var(--v-theme-surface), 0.88);
-	color: inherit;
+	/*border: 1px solid rgba(var(--v-theme-on-surface), 0.18);*/
+	background: transparent;
+	color: #fff;
+	text-shadow: 0 1px 2px rgba(0, 0, 0, 0.45);
+	box-shadow: 0 1px 2px rgba(15, 23, 42, 0.18);
 	border-radius: 999px;
-	padding: 4px 10px;
+	padding: 2px;
+	min-width: 2.6rem;
 	font: inherit;
 	font-size: 0.78rem;
 	font-weight: 700;
+	text-align: center;
 	letter-spacing: 0.06em;
 	cursor: pointer;
-	transition: background-color 0.18s ease, border-color 0.18s ease;
+	position: relative;
+	isolation: isolate;
+	overflow: hidden;
+	transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.lang-btn::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	border-radius: inherit;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	opacity: 0.5;
+	z-index: -1;
 }
 
 .lang-btn:hover {
-	background: rgba(var(--v-theme-primary), 0.12);
 	border-color: rgba(var(--v-theme-primary), 0.38);
+	box-shadow: 0 4px 12px rgba(15, 23, 42, 0.18);
+	transform: translateY( -1px );
+}
+
+.lang-btn--de {
+	--lang-flag:
+		linear-gradient(180deg, #111 0 33.333%, #d00 33.333% 66.666%, #ffce00 66.666% 100%);
+}
+
+.lang-btn--fi {
+	--lang-flag:
+		linear-gradient(
+			90deg,
+			#fff0 0 24%,
+			#003580 24% 38%,
+			#fff0 38% 100%
+		),
+		linear-gradient(
+			180deg,
+			#fff 0 38%,
+			#003580 38% 62%,
+			#fff 62% 100%
+		);
+}
+
+.lang-btn--sw {
+	--lang-flag:
+		linear-gradient(
+			90deg,
+			#006aa700 0 28%,
+			#fecc00 28% 40%,
+			#006aa700 40% 100%
+		),
+		linear-gradient(
+			180deg,
+			#006aa7 0 42%,
+			#fecc00 42% 58%,
+			#006aa7 58% 100%
+		);
+}
+
+.lang-btn--en {
+	--lang-flag:
+		linear-gradient(33deg, transparent 45.8%, #c8102e 45.8%, #c8102e 54.2%, transparent 54.2%),
+		linear-gradient(-33deg, transparent 45.8%, #c8102e 45.8%, #c8102e 54.2%, transparent 54.2%),
+		linear-gradient(90deg, transparent 0 43%, #c8102e 43% 57%, transparent 57% 100%),
+		linear-gradient(180deg, transparent 0 41.3%, #c8102e 41.3% 58.7%, transparent 58.7% 100%),
+		linear-gradient(33deg, transparent 43%, #fff 43%, #fff 57%, transparent 57%),
+		linear-gradient(-33deg, transparent 43%, #fff 43%, #fff 57%, transparent 57%),
+		linear-gradient(90deg, transparent 0 38.6%, #fff 38.6% 61.4%, transparent 61.4% 100%),
+		linear-gradient(180deg, transparent 0 36%, #fff 36% 64%, transparent 64% 100%),
+		linear-gradient(180deg, #012169 0 100%);
+}
+
+.lang-btn--de::before,
+.lang-btn--fi::before,
+.lang-btn--sw::before,
+.lang-btn--en::before {
+	background-image: var(--lang-flag);
 }
 
 .brand {
 	position: relative;
+}
+
+.brand, .wrap {
+	height: 100%;
 }
 
 .wipAlert {
@@ -821,6 +915,7 @@ onMounted( () => {
 
 .homeBadgeLink.badge {
   overflow: visible;
+  min-width:44px;
 }
 
 .homeBadgeIcon {
@@ -839,8 +934,12 @@ onMounted( () => {
   flex-wrap: wrap;
 }
 
+.titleTextValue {
+  margin-left: 0.25em;
+}
+
 .difficultyStars {
-  margin-left:1em;
+  margin-left:0.3em;
   cursor: help;
   color: rgb(var(--v-theme-warning));
   letter-spacing: 0.08em;
@@ -863,8 +962,15 @@ onMounted( () => {
 }
 
 @media (max-width: 860px) {
-	.lang-switch {
-		top: -2px;
+	.lang-btn {
+		background-position: center;
+		background-repeat: no-repeat;
+		background-size: cover;
+	}
+
+	.titleTextValue {
+		display: block;
+		margin-left: 0;
 	}
 
 	#forum {

@@ -20,7 +20,7 @@ app:
     hard: "Schwierigkeitsgrad: schwer"
   markdownFallback: "beschreibung"
 catchAll:
-  title: "Eddie rechnet: Thema in Arbeit"
+  title: "Thema in Arbeit"
   subChapter:
     dieses-thema-ist-noch-nicht-ausgearbeitet: "Dieses Thema ist noch nicht ausgearbeitet"
   heading: "Oh nein - das ist gerade eine echte <strong>404</strong>... sorry!"
@@ -48,7 +48,7 @@ contentIndex:
 eddieComment:
   label: "Eddie:"
 empty:
-  title: "Eddie rechnet: Internationale Matheolympiade 1885 Aufgabe 1"
+  title: "Internationale Matheolympiade 1885 Aufgabe 1"
   subChapter:
     entscheidungsbaum: "Entscheidungsbaum"
     wahrscheinlichkeiten: "Wahrscheinlichkeiten"

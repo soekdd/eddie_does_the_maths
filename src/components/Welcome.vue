@@ -1,9 +1,8 @@
 <template>
 <AppFrame
-	:languages="[ 'de', 'en' ]"
+	:languages="[ 'de', 'en' , 'sw', 'fi' ]"
 	nomd
 	:sub-chapter
-	:title="t( 'welcome.title' )"
 	:vue-date="__VITE_SFC_MTIME_MS__"
 >
 

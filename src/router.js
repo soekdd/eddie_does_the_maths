@@ -34,7 +34,8 @@ import Welcome from "@/components/Welcome.vue";
 const error = true;
 const warning = true;
 const wip = true;
-const FALLBACK_LOCALE = "de";
+const FALLBACK_LOCALE = "en";
+const SUPPORTED_LOCALES = [ "de", "en", "sw", "fi" ];
 const fallbackDescription = {
 	de: "Interaktive Mathematik mit Eddie: Rechenwege, Visualisierungen und Übungen zum Mitmachen.",
 	en: "Interactive mathematics with Eddie: calculations, visualizations, and hands-on exercises."
@@ -44,6 +45,31 @@ function normalizeMetaLocale( value ) {
 	return String( value ?? FALLBACK_LOCALE ).trim()
 		.toLowerCase()
 		.split( /[-_]/ )[ 0 ] || FALLBACK_LOCALE;
+}
+
+function normalizeSupportedLocale( value ) {
+	const normalized = normalizeMetaLocale( value );
+	return SUPPORTED_LOCALES.includes( normalized ) ? normalized : FALLBACK_LOCALE;
+}
+
+function detectBrowserLocale() {
+	if ( typeof navigator === "undefined" ) {
+		return FALLBACK_LOCALE;
+	}
+
+	const browserLocales = Array.isArray( navigator.languages ) ?
+		navigator.languages :
+		[ navigator.language ];
+
+	for ( const browserLocale of browserLocales ) {
+		const normalized = normalizeSupportedLocale( browserLocale );
+
+		if ( SUPPORTED_LOCALES.includes( normalized ) ) {
+			return normalized;
+		}
+	}
+
+	return FALLBACK_LOCALE;
 }
 
 export function normalizeSeoText( value ) {
@@ -719,11 +745,30 @@ export const routes = [
 ];
 
 export function createClientRouter() {
-	return createRouter( {
+	const router = createRouter( {
 		history: createWebHistory( import.meta.env.BASE_URL ),
 		scrollBehavior,
 		routes
 	} );
+
+	router.beforeEach( ( to ) => {
+		if ( typeof to.query.lang === "string" && to.query.lang.trim() ) {
+			return true;
+		}
+
+		return {
+			path:   to.path,
+			hash:   to.hash,
+			params: to.params,
+			query:  {
+				...to.query,
+				lang: normalizeSupportedLocale( detectBrowserLocale() )
+			},
+			replace: true
+		};
+	} );
+
+	return router;
 }
 
 // Backward-compatible export for pure SPA entry points.

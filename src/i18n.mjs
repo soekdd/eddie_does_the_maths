@@ -5,8 +5,8 @@ import { parse } from "yaml";
 
 const I18N_KEY = Symbol( "eddie-i18n" );
 const STORAGE_KEY = "eddie.locale";
-const FALLBACK_LOCALE = "de";
-const SUPPORTED_LOCALES = [ "de", "en" ];
+const FALLBACK_LOCALE = "en";
+const SUPPORTED_LOCALES = [ "de", "en", "sw", "fi" ];
 
 const rawModules = {
 	...import.meta.glob( "./**/*.yaml", {

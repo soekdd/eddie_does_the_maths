@@ -1,0 +1,98 @@
+app:
+  languageAria: "Kieli"
+  home: "Etusivu"
+  forum: "Foorumi"
+  reviewInProgress: "Tätä lukua tarkastaa parhaillaan {name}."
+  pdf: "PDF"
+  lastUpdate: "Päivitetty viimeksi"
+  correctedCredit: "{name} on ystävällisesti tarkistanut ja korjannut"
+  github: "GitHub"
+  reportError: "Ilmoita virheestä"
+  impressum: "Julkaisijatiedot"
+  privacyPolicy: "Tietosuojaseloste"
+  build: "Koonti"
+  close: "Sulje"
+  knownError: "Varoitus: tämän sisällön tiedetään sisältävän vielä virheitä. Teksti, grafiikka ja laskut voivat olla virheellisiä."
+  uncheckedWarning: "Huomio: tätä sisältöä ei ole vielä tarkistettu. Teksti, grafiikka ja laskut voivat yhä sisältää virheitä. Apua otetaan mielellään vastaan."
+  difficulty:
+    easy: "Vaikeus: helppo"
+    medium: "Vaikeus: keskitaso"
+    hard: "Vaikeus: vaikea"
+  markdownFallback: "kuvaus"
+catchAll:
+  title: "Aihe työn alla"
+  subChapter:
+    dieses-thema-ist-noch-nicht-ausgearbeitet: "Tätä aihetta ei ole vielä työstetty valmiiksi"
+  heading: "Voi ei - tämä on juuri nyt oikea <strong>404</strong>... anteeksi!"
+  p1: "Etsimäsi sisältö ei ole vielä saatavilla, mutta työstän sitä jo ja rakennan sitä askel askeleelta, kuin laskua, joka lopulta ratkeaa."
+  p2: "Palaa myöhemmin, sopiiko? Toivottavasti juuri se, mitä etsit, odottaa silloin täällä."
+  back: "Takaisin"
+  tip: "Vinkki: Jos käytät URL-osoitetta kyselyoikopolulla (esimerkiksi <code class=\"mono\">?DG</code>), se kirjoitetaan muotoon <code class=\"mono\">/DG/</code>."
+contentIndex:
+  defaultTitle: "Tällä hetkellä valmiit sisällöt ovat:"
+  emptyBook: "Tälle kirjalle ei ole vielä rekisteröity sisältöä."
+  emptyAll: "Sisältöä ei ole vielä rekisteröity."
+  books:
+    one:
+      title: "Eddie ja diofanttinen yhtälö"
+      short: "Eddie &#9312;"
+    two:
+      title: "Eddie ja Monty Hall -ongelma"
+      short: "Eddie &#9313;"
+  difficulty:
+    easy: "Vaikeus: helppo"
+    medium: "Vaikeus: keskitaso"
+    hard: "Vaikeus: vaikea"
+  comments:
+    loadFailed: "Kommenttimäärien lataaminen epäonnistui:"
+eddieComment:
+  label: "Eddie:"
+empty:
+  title: "Kansainvälinen matematiikkaolympialainen 1885 Tehtävä 1"
+  subChapter:
+    entscheidungsbaum: "Päätöspuu"
+    wahrscheinlichkeiten: "Todennäköisyydet"
+    rechner: "Laskin"
+forumThread:
+  title: "Kommentit"
+  thread: "Ketju"
+  posts: "{count} viestiä"
+  newComment: "Kirjoita uusi kommentti"
+  name: "Nimi"
+  comment: "Kommentti"
+  acceptRulesPrefix: "Hyväksyn"
+  forumRules: "foorumin säännöt"
+  commentAction: "Kommentoi"
+  empty: "Ei vielä kommentteja."
+  unknownAuthor: "Tuntematon"
+  replyChip: "Vastaa"
+  cancel: "Peruuta"
+  replyAction: "Vastaa"
+  replyLabel: "Vastaus"
+  rulesUnavailable: "<p>Foorumin säännöt eivät ole tällä hetkellä saatavilla.</p>"
+  loadFailed: "Kommentteja ei voitu ladata."
+  saveCommentFailed: "Kommenttia ei voitu tallentaa."
+  saveReplyFailed: "Vastausta ei voitu tallentaa."
+  realtimeFailed: "PocketBase realtime -tilauksen muodostaminen epäonnistui:"
+imageZoomer:
+  zoom: "Suurenna"
+  close: "Sulje"
+  contentAria: "Zoomattu sisältö"
+markdownDownload:
+  fileNameFallback: "kuvaus"
+  buttonLabel: "Markdown"
+routeSeoHead:
+  siteName: "Eddie laskee"
+welcome:
+  title: "Eddie laskee"
+  subChapter:
+    willkommen: "Tervetuloa"
+    ubersicht: "Yleiskatsaus"
+  imageTitle: "Eddie"
+  heading: "Tervetuloa"
+  p1: "Hei, minä olen Eddie, ja jos tunnet kirjani, tiedät tämän: pakoni Itä-Saksasta ei ollut onnea, vaan paperista, rohkeudesta ja matematiikasta tehty suunnitelma."
+  p2: "Päässäni kartat muuttuvat geometriaksi, pelko todennäköisyydeksi ja \"mahdoton\" yhtälöksi, jonka voin ratkaista."
+  p3: "Juuri siksi <strong>Eddie laskee</strong> on olemassa: jotta voit nähdä, miten matematiikka oikeassa elämässä yhtäkkiä ratkaisee vapauden, suunnan ja seuraavat askeleet."
+  p4: "Yksittäisissä luvuissa palataan kaikkiin pakoni tilanteisiin, joissa matematiikka auttoi jollain tavalla pelastamaan minut. Kirjassa se olisi ollut häiritsevää, mutta täällä minulla on tilaa syventää ajatuksiani ja laskujani. Ja jotta sinun ei tarvitse vain katsoa minun ajattelevan, jokainen luku päättyy interaktiiviseen osaan, jossa voit kokeilla laskua itse. Vanhat tietokoneet herätetään henkiin, ja vielä vanhemmat purjelaivat ovat uppoamassa."
+  p5: "Ja nyt, pidä hauskaa...."
+  index: "Hakemisto"

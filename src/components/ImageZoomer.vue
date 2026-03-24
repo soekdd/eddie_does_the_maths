@@ -334,6 +334,7 @@ onBeforeUnmount( () => stopObservers() );
 
 .zoomerTitleText {
   font-weight: 900;
+  overflow: scroll;
 }
 
 .zoomerCloseGlyph {

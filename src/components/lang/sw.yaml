@@ -1,0 +1,98 @@
+app:
+  languageAria: "Språk"
+  home: "Hem"
+  forum: "Forum"
+  reviewInProgress: "Detta kapitel granskas just nu av {name}."
+  pdf: "PDF"
+  lastUpdate: "Senast uppdaterad"
+  correctedCredit: "Vänligt granskad och korrigerad av {name}"
+  github: "GitHub"
+  reportError: "Rapportera fel"
+  impressum: "Impressum"
+  privacyPolicy: "Integritetspolicy"
+  build: "Bygge"
+  close: "Stäng"
+  knownError: "Varning: detta innehåll är känt för att fortfarande innehålla fel. Text, grafik och beräkningar kan vara felaktiga."
+  uncheckedWarning: "Observera: detta innehåll har ännu inte granskats. Text, grafik och beräkningar kan fortfarande innehålla fel. Hjälp välkomnas."
+  difficulty:
+    easy: "Svårighetsgrad: lätt"
+    medium: "Svårighetsgrad: medel"
+    hard: "Svårighetsgrad: svår"
+  markdownFallback: "beskrivning"
+catchAll:
+  title: "Ämne under arbete"
+  subChapter:
+    dieses-thema-ist-noch-nicht-ausgearbeitet: "Detta ämne är ännu inte färdigutvecklat"
+  heading: "Åh nej - detta är just nu en riktig <strong>404</strong>... förlåt!"
+  p1: "Innehållet du letar efter är inte tillgängligt ännu, men jag arbetar redan på det och bygger upp det steg för steg, som en beräkning som till slut går ihop."
+  p2: "Kom tillbaka senare, okej? Förhoppningsvis väntar då exakt det du letade efter här."
+  back: "Tillbaka"
+  tip: "Tips: Om du använder en URL med en frågegenväg (till exempel <code class=\"mono\">?DG</code>) skrivs den om till <code class=\"mono\">/DG/</code>."
+contentIndex:
+  defaultTitle: "Det innehåll som för närvarande är klart är:"
+  emptyBook: "Inget innehåll registrerat för denna bok ännu."
+  emptyAll: "Inget innehåll registrerat ännu."
+  books:
+    one:
+      title: "Eddie och den diofantiska ekvationen"
+      short: "Eddie &#9312;"
+    two:
+      title: "Eddie och Monty Hall-problemet"
+      short: "Eddie &#9313;"
+  difficulty:
+    easy: "Svårighetsgrad: lätt"
+    medium: "Svårighetsgrad: medel"
+    hard: "Svårighetsgrad: svår"
+  comments:
+    loadFailed: "Kunde inte ladda antalet kommentarer:"
+eddieComment:
+  label: "Eddie:"
+empty:
+  title: "Internationella matematikolympiaden 1885 problem 1"
+  subChapter:
+    entscheidungsbaum: "Beslutsträd"
+    wahrscheinlichkeiten: "Sannolikheter"
+    rechner: "Kalkylator"
+forumThread:
+  title: "Kommentarer"
+  thread: "Tråd"
+  posts: "{count} inlägg"
+  newComment: "Skriv en ny kommentar"
+  name: "Namn"
+  comment: "Kommentar"
+  acceptRulesPrefix: "Jag accepterar"
+  forumRules: "forumreglerna"
+  commentAction: "Kommentera"
+  empty: "Inga kommentarer ännu."
+  unknownAuthor: "Okänd"
+  replyChip: "Svara"
+  cancel: "Avbryt"
+  replyAction: "Svara"
+  replyLabel: "Svar"
+  rulesUnavailable: "<p>Forumreglerna är för närvarande inte tillgängliga.</p>"
+  loadFailed: "Kommentarerna kunde inte laddas."
+  saveCommentFailed: "Kommentaren kunde inte sparas."
+  saveReplyFailed: "Svaret kunde inte sparas."
+  realtimeFailed: "PocketBase realtime-prenumeration misslyckades:"
+imageZoomer:
+  zoom: "Zooma"
+  close: "Stäng"
+  contentAria: "Zoomat innehåll"
+markdownDownload:
+  fileNameFallback: "beskrivning"
+  buttonLabel: "Markdown"
+routeSeoHead:
+  siteName: "Eddie räknar"
+welcome:
+  title: "Eddie räknar"
+  subChapter:
+    willkommen: "Välkommen"
+    ubersicht: "Översikt"
+  imageTitle: "Eddie"
+  heading: "Välkommen"
+  p1: "Hej, jag är Eddie, och om du känner till min bok vet du detta: min flykt från Östtyskland var inte tur, utan en plan gjord av papper, mod och matematik."
+  p2: "I mitt huvud blir kartor geometri, rädsla blir sannolikhet och \"omöjligt\" blir en ekvation jag kan knäcka."
+  p3: "Det är precis därför <strong>Eddie räknar</strong> finns: så att du kan se hur matematik i verkliga livet plötsligt avgör frihet, riktning och nästa steg."
+  p4: "I de enskilda kapitlen tas alla situationer från min flykt upp där matematiken på något sätt hjälpte till att rädda mig. I boken skulle det ha varit distraherande, men här har jag utrymme att fördjupa mina tankar och beräkningar. Och så att du inte bara behöver se mig tänka avslutas varje kapitel med en interaktiv del där du själv kan prova beräkningen. Uråldriga datorer väcks till liv igen, och ännu äldre segelfartyg kommer att sjunka."
+  p5: "Och nu, ha så roligt...."
+  index: "Index"
