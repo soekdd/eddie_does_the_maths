@@ -9,6 +9,7 @@
 </template>
 
 <script setup lang="ts">
+/* eslint-disable vue/max-len */
 import {
 	computed, nextTick, onBeforeUnmount, onMounted, ref
 } from "vue";
@@ -39,9 +40,7 @@ function toFixed3( value: number ) {
 	return Number( value.toFixed( 3 ) ).toString();
 }
 
-function setBoxSize(
-	nextWidthPx: number, nextHeightPx: number
-) {
+function setBoxSize( nextWidthPx: number, nextHeightPx: number ) {
 	const width = Math.max( 1, nextWidthPx );
 	const height = Math.max( 1, nextHeightPx );
 
@@ -62,14 +61,10 @@ function readBoxSize() {
 	}
 
 	const rect = el.getBoundingClientRect();
-	setBoxSize(
-		rect.width, rect.height
-	);
+	setBoxSize( rect.width, rect.height );
 }
 
-function buildPageSvgDataUrl(
-	widthPx: number, heightPx: number
-) {
+function buildPageSvgDataUrl( widthPx: number, heightPx: number ) {
 	const width = toFixed3( widthPx );
 	const height = toFixed3( heightPx );
 
@@ -107,11 +102,7 @@ function buildPageSvgDataUrl(
 	return `url("data:image/svg+xml,${encodeURIComponent( svg )}")`;
 }
 
-const cardStyle = computed( () => ( {
-	backgroundImage: buildPageSvgDataUrl(
-		boxWidthPx.value, boxHeightPx.value
-	)
-} ) );
+const cardStyle = computed( () => ( { backgroundImage: buildPageSvgDataUrl( boxWidthPx.value, boxHeightPx.value ) } ) );
 
 onMounted( async() => {
 	await nextTick();
@@ -124,10 +115,8 @@ onMounted( async() => {
 			return;
 		}
 
-		setBoxSize(
-			entry.contentRect.width,
-			entry.contentRect.height
-		);
+		setBoxSize( entry.contentRect.width,
+			entry.contentRect.height );
 	} );
 
 	if ( cardRef.value ) {
@@ -171,7 +160,7 @@ onBeforeUnmount( () => {
 }
 @media (max-width: 860px) {
 	.pageCard {
-		padding: 1em 1.5em 0.5em 2em;
+		padding: 1em 1.5em 1.5em 2em;
 	}
 }
 </style>

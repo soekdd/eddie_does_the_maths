@@ -50,16 +50,17 @@ function setupThemeSync() {
 	const nameFromSystem = () => darkModeMql?.matches ? "eddieDark" : "eddieLight";
 
 	const apply = () => {
-		const nameRef = vuetify.theme?.global?.name;
+		const theme = vuetify.theme;
 
-		if ( !nameRef ) {
+		if ( !theme ) {
 			return;
 		}
 
 		const next = isPrinting ? "eddieLight" : nameFromSystem();
+		const current = theme.global?.name?.value;
 
-		if ( nameRef.value !== next ) {
-			nameRef.value = next;
+		if ( current !== next ) {
+			theme.change( next );
 		}
 	};
 

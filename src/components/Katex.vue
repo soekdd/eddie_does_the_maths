@@ -1,7 +1,9 @@
 <script setup>
-import { computed } from "vue";
+import { computed, useAttrs } from "vue";
 
 import { katexHTML } from "@/utils/katex";
+
+defineOptions( { inheritAttrs: false } );
 
 const props = defineProps( {
 	tex:     { type: String, required: true },
@@ -9,6 +11,8 @@ const props = defineProps( {
 	aligned: { type: Boolean, default: false },
 	as:      { type: String, default: "span" }
 } );
+
+const attrs = useAttrs();
 
 function encodeBase64Utf8( value ) {
 	if ( typeof value !== "string" ) {
@@ -52,6 +56,7 @@ const safeAs = computed( () => {
 <client-only>
 	<component
 		:is="safeAs"
+		v-bind="attrs"
 		:data-katex-aligned="alignedFlag"
 		:data-katex-display="displayFlag"
 		:data-katex-render-tex="renderTex"
