@@ -52,6 +52,12 @@ function normalizeLocale( value ) {
 
 function detectInitialLocale() {
 	if ( typeof window !== "undefined" ) {
+		const pathLocale = window.location.pathname.match( /^\/([a-z]{2})(?=\/|$)/i )?.[ 1 ];
+
+		if ( pathLocale ) {
+			return normalizeLocale( pathLocale );
+		}
+
 		const urlLang = new URLSearchParams( window.location.search ).get( "lang" );
 
 		if ( urlLang ) {

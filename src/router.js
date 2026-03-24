@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
-import { getLocale } from "@/utils/i18n.mjs";
+import { getLocale, setLocale } from "@/utils/i18n.mjs";
 
 import DG from "@/book1/DG/DG.vue";
 import ST from "@/book1/ST/ST.vue";
@@ -36,6 +36,8 @@ const warning = true;
 const wip = true;
 const FALLBACK_LOCALE = "en";
 const SUPPORTED_LOCALES = [ "de", "en", "sw", "fi" ];
+const DEFAULT_ROUTE_LOCALES = [ "de", "en" ];
+const LOCALE_ROUTE_PATTERN = SUPPORTED_LOCALES.join( "|" );
 const fallbackDescription = {
 	de: "Interaktive Mathematik mit Eddie: Rechenwege, Visualisierungen und Übungen zum Mitmachen.",
 	en: "Interactive mathematics with Eddie: calculations, visualizations, and hands-on exercises."
@@ -50,6 +52,94 @@ function normalizeMetaLocale( value ) {
 function normalizeSupportedLocale( value ) {
 	const normalized = normalizeMetaLocale( value );
 	return SUPPORTED_LOCALES.includes( normalized ) ? normalized : FALLBACK_LOCALE;
+}
+
+export { SUPPORTED_LOCALES };
+
+export function stripLocalePrefix( pathValue ) {
+	const normalizedPath = String( pathValue || "/" ).trim() || "/";
+	const match = normalizedPath.match( new RegExp( `^/(${LOCALE_ROUTE_PATTERN})(?=/|$)` ) );
+
+	if ( !match ) {
+		return normalizedPath;
+	}
+
+	const stripped = normalizedPath.slice( match[ 0 ].length );
+	return stripped ? stripped.startsWith( "/" ) ? stripped : `/${stripped}` : "/";
+}
+
+export function localizePath( pathValue,
+	localeValue ) {
+	const locale = normalizeSupportedLocale( localeValue );
+	const strippedPath = stripLocalePrefix( pathValue );
+
+	if ( strippedPath === "/" ) {
+		return `/${locale}`;
+	}
+
+	return `/${locale}${strippedPath}`;
+}
+
+export function resolveLocaleFromPath( pathValue ) {
+	const normalizedPath = String( pathValue || "/" ).trim() || "/";
+	const match = normalizedPath.match( new RegExp( `^/(${LOCALE_ROUTE_PATTERN})(?=/|$)` ) );
+	return normalizeSupportedLocale( match?.[ 1 ] || FALLBACK_LOCALE );
+}
+
+function normalizeConcretePath( pathValue ) {
+	const normalizedPath = String( pathValue || "/" ).trim() || "/";
+	return normalizedPath === "/" ? "/" : normalizedPath.endsWith( "/" ) ? normalizedPath.slice( 0, -1 ) : normalizedPath;
+}
+
+function withTrailingSlash( pathValue ) {
+	const normalizedPath = String( pathValue || "/" ).trim() || "/";
+
+	if ( normalizedPath.includes( ":" ) ) {
+		return normalizedPath;
+	}
+
+	return normalizedPath === "/" || normalizedPath.endsWith( "/" ) ? normalizedPath : `${normalizedPath}/`;
+}
+
+function localizedRouteName( name,
+	locale ) {
+	const normalizedName = String( name ?? "" ).trim();
+	return normalizedName ? `${normalizedName}__${locale}` : undefined;
+}
+
+function getRouteSupportedLocales( route ) {
+	const routeLocales = Array.isArray( route?.meta?.languages ) ? route.meta.languages : DEFAULT_ROUTE_LOCALES;
+	const normalizedLocales = routeLocales
+		.map( normalizeSupportedLocale )
+		.filter( (
+			value, index, values
+		) => value && values.indexOf( value ) === index );
+
+	return normalizedLocales.length > 0 ? normalizedLocales : [ FALLBACK_LOCALE ];
+}
+
+function findContentRouteForBasePath( pathValue ) {
+	const normalizedPath = normalizeConcretePath( stripLocalePrefix( pathValue ) );
+	const catchAllRoute = contentRoutes.find( ( route ) => route.path === "/:pathMatch(.*)*" ) ?? null;
+	const matchedRoute = contentRoutes.find( ( route ) =>
+		route.path !== "/:pathMatch(.*)*" && normalizeConcretePath( route.path ) === normalizedPath );
+
+	return matchedRoute ?? catchAllRoute;
+}
+
+function resolveRouteLocaleForPath(
+	pathValue,
+	requestedLocale
+) {
+	const matchedRoute = findContentRouteForBasePath( pathValue );
+	const supportedRouteLocales = getRouteSupportedLocales( matchedRoute );
+	const normalizedRequestedLocale = normalizeSupportedLocale( requestedLocale );
+
+	return supportedRouteLocales.includes( normalizedRequestedLocale ) ?
+		normalizedRequestedLocale :
+		supportedRouteLocales.includes( FALLBACK_LOCALE ) ?
+			FALLBACK_LOCALE :
+			supportedRouteLocales[ 0 ];
 }
 
 function detectBrowserLocale() {
@@ -158,12 +248,13 @@ export const scrollBehavior = (
 	};
 };
 
-export const routes = [
+export const contentRoutes = [
 	{
 		path:      "/",
 		name:      "ER",
 		component: Welcome,
 		meta:      {
+			languages: [ "de", "en", "sw", "fi" ],
 			title: {
 				de: "Welcome",
 				en: "Welcome"
@@ -744,6 +835,36 @@ export const routes = [
 	}
 ];
 
+const localizedRoutes = SUPPORTED_LOCALES.flatMap( ( locale ) =>
+	contentRoutes
+		.filter( ( route ) => getRouteSupportedLocales( route ).includes( locale ) )
+		.map( ( route ) => ( {
+			...route,
+			path: withTrailingSlash( localizePath( route.path, locale ) ),
+			name: localizedRouteName( route.name, locale )
+		} ) ) );
+
+export const routes = [
+	{
+		path:     "/",
+		name:     "LocaleRoot",
+		redirect: ( to ) => {
+			const queryLocale = typeof to.query.lang === "string" ? to.query.lang : "";
+			const nextLocale = resolveRouteLocaleForPath( "/", queryLocale || detectBrowserLocale() );
+			const nextQuery = { ...to.query };
+			delete nextQuery.lang;
+
+			return {
+				path:    withTrailingSlash( localizePath( "/", nextLocale ) ),
+				query:   nextQuery,
+				hash:    to.hash,
+				replace: true
+			};
+		}
+	},
+	...localizedRoutes
+];
+
 export function createClientRouter() {
 	const router = createRouter( {
 		history: createWebHistory( import.meta.env.BASE_URL ),
@@ -752,18 +873,50 @@ export function createClientRouter() {
 	} );
 
 	router.beforeEach( ( to ) => {
-		if ( typeof to.query.lang === "string" && to.query.lang.trim() ) {
+		const rawPath = typeof to.path === "string" && to.path.trim() ? to.path : "/";
+		const pathLocaleMatch = rawPath.match( new RegExp( `^/(${LOCALE_ROUTE_PATTERN})(?=/|$)` ) );
+		const queryLocale = typeof to.query.lang === "string" ? to.query.lang : "";
+		const requestedLocale = pathLocaleMatch?.[ 1 ] || queryLocale || detectBrowserLocale();
+		const nextLocale = resolveRouteLocaleForPath( rawPath, requestedLocale );
+
+		if ( pathLocaleMatch ) {
+			if ( pathLocaleMatch[ 1 ] !== nextLocale ) {
+				const nextQuery = { ...to.query };
+				delete nextQuery.lang;
+
+				return {
+					path:    withTrailingSlash( localizePath( rawPath, nextLocale ) ),
+					hash:    to.hash,
+					params:  to.params,
+					query:   nextQuery,
+					replace: true
+				};
+			}
+
+			setLocale( nextLocale );
+
+			if ( queryLocale ) {
+				const nextQuery = { ...to.query };
+				delete nextQuery.lang;
+
+				return {
+					path:    withTrailingSlash( rawPath ),
+					hash:    to.hash,
+					params:  to.params,
+					query:   nextQuery,
+					replace: true
+				};
+			}
+
 			return true;
 		}
 
 		return {
-			path:   to.path,
+			path:   withTrailingSlash( localizePath( rawPath, nextLocale ) ),
 			hash:   to.hash,
 			params: to.params,
-			query:  {
-				...to.query,
-				lang: normalizeSupportedLocale( detectBrowserLocale() )
-			},
+			query:  Object.fromEntries( Object.entries( to.query )
+				.filter( ( [ key ] ) => key !== "lang" ) ),
 			replace: true
 		};
 	} );

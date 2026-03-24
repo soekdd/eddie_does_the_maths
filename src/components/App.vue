@@ -57,7 +57,7 @@
 						<p v-if="subChapterEntries.length" class="sub">
 							<template v-for="( chapter ) in subChapterEntries" :key="chapter.id">
 								<router-link
-									:to="{ path: routePathForHashLinks, hash: `#${chapter.id}`, query: languageQuery }"
+									:to="{ path: routePathForHashLinks, hash: `#${chapter.id}` }"
 									@click="handleHashLinkClick( `#${chapter.id}` )"
 								>
 									{{ chapter.label }}
@@ -65,7 +65,7 @@
 								<span> • </span>
 							</template>
 							<router-link
-								:to="{ path: routePathForHashLinks, hash: '#forum', query: languageQuery }"
+								:to="{ path: routePathForHashLinks, hash: '#forum' }"
 								@click="handleHashLinkClick( '#forum' )"
 							>
 								{{ t( "app.forum" ) }}
@@ -286,6 +286,7 @@ import {
 	mdiDownload, mdiHexagonSlice2, mdiHexagonSlice4, mdiHexagonSlice6
 } from "@mdi/js";
 import { i18nApi, useI18n } from "@/utils/i18n.mjs";
+import { localizePath, resolveLocaleFromPath, stripLocalePrefix } from "@/router.js";
 import faviconPng from "../images/favicon.png";
 import ForumThreadPocketBase from "./ForumThreadPocketBase.vue";
 import MarkdownDownload from "./MarkdownDownload.vue";
@@ -401,13 +402,9 @@ const resolvedLanguage = computed( () =>
 	activeLanguages.value.includes( currentLanguage.value ) ?
 		currentLanguage.value :
 		activeLanguages.value[ 0 ] || "en" );
-const languageQuery = computed( () => ( {
-	...route.query,
-	lang: resolvedLanguage.value
-} ) );
+const routeLanguage = computed( () => resolveLocaleFromPath( route.path ) );
 const homeLinkTarget = computed( () => ( {
-	path:  "/",
-	query: languageQuery.value
+	path: localizePath( "/", resolvedLanguage.value )
 } ) );
 const showLanguageSwitch = computed( () => supportedLanguages.value.length > 1 );
 const currentLanguageIndex = computed( () => activeLanguages.value.indexOf( resolvedLanguage.value ) );
@@ -422,9 +419,9 @@ const nextLanguage = computed( () => {
 	return activeLanguages.value[ nextIndex ] || "";
 } );
 const currentLanguageLabel = computed( () => resolvedLanguage.value.toUpperCase() );
-const routeLanguage = computed( () => String( route.query.lang ?? "" ).trim()
-	.toLowerCase() );
-const showHomeBadge = computed( () => route.path !== "/" );
+const routeBasePath = computed( () => stripLocalePrefix( route.path ) );
+const routeBaseName = computed( () => String( route.name ?? "" ).split( "__" )[ 0 ] || "" );
+const showHomeBadge = computed( () => routeBaseName.value !== "ER" );
 
 function resolveDisclaimerHtml( name,
 	locale ) {
@@ -536,7 +533,7 @@ function normalizeBasePath( basePath ) {
 }
 
 function routePdfSlug( routePath ) {
-	const segments = String( routePath || "" )
+	const segments = stripLocalePrefix( routePath )
 		.split( "/" )
 		.filter( Boolean );
 
@@ -578,13 +575,8 @@ async function replaceLanguageInUrl( nextLanguage ) {
 
 	try {
 		await router.replace( {
-			path:   route.path,
-			hash:   route.hash,
-			params: route.params,
-			query:  {
-				...route.query,
-				lang: normalizedLanguage
-			}
+			path: localizePath( routeBasePath.value, normalizedLanguage ),
+			hash: route.hash
 		} );
 	} finally {
 		if ( languageNavigationTarget === normalizedLanguage ) {
@@ -689,10 +681,6 @@ watch(
 		if ( currentLanguage.value !== nextLanguage ) {
 			i18nApi.setLocale( nextLanguage );
 		}
-
-		if ( hasMounted.value && requestedLanguage !== nextLanguage ) {
-			void replaceLanguageInUrl( nextLanguage );
-		}
 	},
 	{ immediate: true }
 );
@@ -712,10 +700,6 @@ watch(
 
 onMounted( () => {
 	hasMounted.value = true;
-
-	if ( supportedLanguages.value.length > 0 && routeLanguage.value !== resolvedLanguage.value ) {
-		void replaceLanguageInUrl( resolvedLanguage.value );
-	}
 
 	if ( route.hash ) {
 		nextTick( () => {

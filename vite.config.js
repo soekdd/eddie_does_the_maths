@@ -3,7 +3,7 @@ import { fileURLToPath, URL } from "node:url";
 import vue from "@vitejs/plugin-vue";
 import { defineConfig } from "vite";
 import vuetify from "vite-plugin-vuetify";
-import { explicitDynamicRoutes } from "./src/utils/ssg-routes.js";
+import { localizedExplicitDynamicRoutes } from "./src/utils/ssg-routes.js";
 import fs from "node:fs";
 
 const buildDate = String( process.env.VITE_BULD_DATE || "" ).trim();
@@ -137,7 +137,7 @@ export default defineConfig( {
 				.map( ( route ) => route?.path )
 				.filter( isConcretePath );
 			const concreteFromDefaults = ( paths ?? [] ).filter( isConcretePath );
-			const concreteDynamic = explicitDynamicRoutes.filter( isConcretePath );
+			const concreteDynamic = localizedExplicitDynamicRoutes.filter( isConcretePath );
 
 			return Array.from( new Set( [
 				...concreteFromDefaults,

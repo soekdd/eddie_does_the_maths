@@ -1,3 +1,5 @@
+export const supportedLocales = [ "de", "en", "sw", "fi" ];
+
 /**
  * SSG helper for concrete dynamic paths.
  *
@@ -9,3 +11,14 @@ export const explicitDynamicRoutes = [
 	// "/artikel/mein-erster-artikel",
 	// "/kapitel/intro"
 ];
+
+export const localizedExplicitDynamicRoutes = supportedLocales.flatMap( ( locale ) =>
+	explicitDynamicRoutes.map( ( path ) => {
+		const normalizedPath = String( path || "/" ).trim() || "/";
+
+		if ( normalizedPath === "/" ) {
+			return `/${locale}/`;
+		}
+
+		return `/${locale}${normalizedPath.startsWith( "/" ) ? normalizedPath : `/${normalizedPath}`}`;
+	} ) );

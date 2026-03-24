@@ -96,7 +96,7 @@ import {
 import { useRoute } from "vue-router";
 import PocketBase from "pocketbase";
 import { useI18n } from "@/utils/i18n.mjs";
-import { resolveRouteMetaTitle, routes as appRoutes } from "@/router.js";
+import { contentRoutes as appRoutes, localizePath, resolveRouteMetaTitle } from "@/router.js";
 
 const props = defineProps( { title: { type: String, default: "" } } );
 
@@ -195,11 +195,6 @@ function parseIsoDateToTimestamp( value ) {
 	return Number.isFinite( timestamp ) ? timestamp : null;
 }
 
-const languageQuery = computed( () => ( {
-	...route.query,
-	lang: locale.value
-} ) );
-
 const bookTabs = computed( () => Object.values( books )
 	.map( ( book ) => ( {
 		value: normalizeBookIndex( book?.index ),
@@ -246,8 +241,7 @@ const items = computed( () => {
 			key:   String( r.name ?? r.path ),
 			title: title.replace( /&shy;/gi, "\u00AD" ),
 			to:    {
-				path:  normalizeRouteLinkPath( r.path ),
-				query: languageQuery.value
+				path: normalizeRouteLinkPath( localizePath( r.path, locale.value ) )
 			},
 			order:      Number.isFinite( r?.meta?.order ) ? Number( r.meta.order ) : null,
 			path:       r.path,

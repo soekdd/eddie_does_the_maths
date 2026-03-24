@@ -37,10 +37,24 @@ const cacheDir = path.join(
 	distRootDir, ".pdf-cache", ...baseSegments
 );
 const navigationTimeoutMs = Number.parseInt( process.env.PDF_NAV_TIMEOUT_MS || "120000", 10 );
-const supportedLocales = [ "de", "en" ];
+const supportedLocales = [ "de", "en", "sw", "fi" ];
+
+function parseLocalizedRoute( route ) {
+	const segments = String( route || "/" )
+		.split( "/" )
+		.filter( Boolean );
+	const firstSegment = segments[ 0 ] || "";
+	const routeLocale = supportedLocales.includes( firstSegment ) ? firstSegment : "";
+	const routeSlug = routeLocale ? segments[ 1 ] || "index" : segments[ 0 ] || "index";
+
+	return {
+		routeLocale,
+		routeSlug
+	};
+}
 
 function routeSlugFromRoute( route ) {
-	return route === "/" ? "index" : route.replace( /\//g, "__" ).replace( /^__/, "" );
+	return parseLocalizedRoute( route ).routeSlug;
 }
 
 function pdfFileNameFromRouteAndLocale(
@@ -69,9 +83,20 @@ function resolvePdfSourcePaths(
 	);
 
 	return {
+		localeSupported:  fs.existsSync( sourceLocaleYamlPath ),
 		sourceLocaleYamlPath: fs.existsSync( sourceLocaleYamlPath ) ? sourceLocaleYamlPath : null,
 		sourceVuePath
 	};
+}
+
+async function removeFileIfPresent( filePath ) {
+	try {
+		await fsp.unlink( filePath );
+	} catch ( error ) {
+		if ( error?.code !== "ENOENT" ) {
+			throw error;
+		}
+	}
 }
 
 async function statIfFile( filePath ) {
@@ -89,6 +114,12 @@ async function shouldGeneratePdf(
 ) {
 	if ( !sourcePaths?.sourceVuePath ) {
 		return { shouldGenerate: false, reason: "no source Vue mapping" };
+	}
+
+	if ( !sourcePaths.localeSupported ) {
+		await removeFileIfPresent( pdfOutPath );
+		await removeFileIfPresent( pdfCachePath );
+		return { shouldGenerate: false, reason: "locale yaml missing" };
 	}
 
 	const candidateSourcePaths = [ sourcePaths.sourceVuePath ];
@@ -179,13 +210,9 @@ function routeToBasePath( routePath ) {
 
 function buildPdfUrl(
 	baseUrl,
-	route,
-	locale
+	route
 ) {
 	const routeUrl = new URL( routeToBasePath( route ), baseUrl );
-
-	routeUrl.searchParams.set( "lang", locale );
-
 	return routeUrl.toString();
 }
 
@@ -254,10 +281,11 @@ export async function generatePdfs() {
 
 	try {
 		for ( const route of routes ) {
-			for ( const locale of supportedLocales ) {
-				const pdfFileName = pdfFileNameFromRouteAndLocale(
-					route, locale
-				);
+			const { routeLocale } = parseLocalizedRoute( route );
+			const locale = routeLocale || "en";
+			const pdfFileName = pdfFileNameFromRouteAndLocale(
+				route, locale
+			);
 				const filePath = path.join( outDir, pdfFileName );
 				const cachePath = path.join( cacheDir, pdfFileName );
 				const sourcePaths = resolvePdfSourcePaths(
@@ -290,7 +318,7 @@ export async function generatePdfs() {
 				}
 
 				const url = buildPdfUrl(
-					baseUrl, route, locale
+					baseUrl, route
 				);
 				const page = await browser.newPage();
 				console.log( "PDF URL:", url );
@@ -330,7 +358,6 @@ export async function generatePdfs() {
 				console.log(
 					"PDF OK:", `${route} [${locale}]`, "->", path.relative( projectRoot, filePath )
 				);
-			}
 		}
 	} finally {
 		await browser.close();
