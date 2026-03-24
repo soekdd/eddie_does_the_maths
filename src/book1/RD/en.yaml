@@ -1,4 +1,4 @@
-title: "Eddie Calculates: Breakfast Note #2 The Reindeer Problem"
+title: "Eddie Does The Maths: Breakfast Note #2 The Reindeer Problem"
 imageTitle: "Eddie as a reindeer guide"
 imageAlt: "Eddie as a reindeer guide"
 introDate: "Vaasa, August 9, 1985"
@@ -9,7 +9,7 @@ subChapter:
 book:
   p1: "On the second morning I am already awake before Sini has even properly shut the door. Curiosity is my alarm clock. The note shows a reindeer that looks like a dog with antennae, and underneath it the nasty question: how far can I get into the wilderness and back out again if I can only carry limited food, but may leave little supply caches along the way? This is not an \"just keep walking\" problem. It is a \"carry, drop, turn around, carry again, and do not starve while doing it\" problem."
   p2: "I am lying there again with my legs up, the bandages tighter, my head clearer. In my notebook, rations become little dots, routes become arrows, turnaround points become decisions. And yes: the trick is not courage, but order. Not trying to do everything at once. First build depots, then make distance."
-  p3: "In Eddie Calculates I show you the clever depot logic for a discipline that feels almost like five-card draw: calculate coldly first, only then start moving. And below there is an interactive scheme where you can try your own strategy."
+  p3: "In Eddie Does The Maths I show you the clever depot logic for a discipline that feels almost like five-card draw: calculate coldly first, only then start moving. And below there is an interactive scheme where you can try your own strategy."
 sections:
   part1:
     title: "Part 1 — The Problem (Lapland Version)"

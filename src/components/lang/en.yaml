@@ -20,7 +20,7 @@ app:
     hard: "Difficulty: hard"
   markdownFallback: "description"
 catchAll:
-  title: "Eddie Calculates: Topic in Progress"
+  title: "Eddie Does The Maths: Topic in Progress"
   subChapter:
     dieses-thema-ist-noch-nicht-ausgearbeitet: "This topic is not yet developed"
   heading: "Oh no - this is a real <strong>404</strong> right now... sorry!"
@@ -48,7 +48,7 @@ contentIndex:
 eddieComment:
   label: "Eddie:"
 empty:
-  title: "Eddie Calculates: International Mathematical Olympiad 1885 Problem 1"
+  title: "Eddie Does The Maths: International Mathematical Olympiad 1885 Problem 1"
   subChapter:
     entscheidungsbaum: "Decision tree"
     wahrscheinlichkeiten: "Probabilities"
@@ -82,9 +82,9 @@ markdownDownload:
   fileNameFallback: "description"
   buttonLabel: "Markdown"
 routeSeoHead:
-  siteName: "Eddie Calculates"
+  siteName: "Eddie Does The Maths"
 welcome:
-  title: "Eddie Calculates"
+  title: "Eddie Does The Maths"
   subChapter:
     willkommen: "Welcome"
     ubersicht: "Overview"
@@ -92,7 +92,7 @@ welcome:
   heading: "Welcome"
   p1: "Hey, I'm Eddie, and if you know my book, you know this: my escape from East Germany was not luck, but a plan made of paper, courage, and mathematics."
   p2: "In my head, maps become geometry, fear becomes probability, and \"impossible\" becomes an equation I can crack."
-  p3: "That is exactly why <strong>Eddie Calculates</strong> exists: so you can see how mathematics in real life suddenly decides freedom, direction, and the next steps."
+  p3: "That is exactly why <strong>Eddie Does The Maths</strong> exists: so you can see how mathematics in real life suddenly decides freedom, direction, and the next steps."
   p4: "In the individual chapters, all the situations from my escape are picked up in which mathematics somehow helped save me. In the book that would have been distracting, but here I have the space to deepen my thoughts and calculations. And so you do not only have to watch me think, every chapter ends with an interactive part where you can try the calculation yourself. Ancient computers are brought back to life, and even older sailing ships are going to sink."
   p5: "And now, have fun...."
   index: "Index"
