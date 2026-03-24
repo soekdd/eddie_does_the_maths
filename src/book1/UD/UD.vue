@@ -30,9 +30,9 @@
 			</p>
 			<p>
 				{{ t( "sections.part1.p2Before" ) }}
-				<Katex tex="A_{\text{Ufer}}(h)" />
+				<Katex :tex="t( 'sections.part1.shoreAreaVar' )" />
 				{{ t( "sections.part1.p2Middle" ) }}
-				<Katex tex="A_{\text{Land}}" />.
+				<Katex :tex="t( 'sections.part1.landAreaVar' )" />.
 			</p>
 		</div>
 
@@ -47,7 +47,7 @@
 				{{ t( "sections.part2.p1After" ) }}
 			</p>
 			<div class="kbox">
-				<Katex as="div" display tex="A_{\text{Ufer}}(h)=h\cdot d+\pi h^2" />
+				<Katex as="div" display :tex="t( 'sections.part2.shoreAreaBox' )" />
 			</div>
 			<p>
 				{{ t( "sections.part2.p2Before" ) }}
@@ -64,7 +64,7 @@
 				<Katex tex="n\pi h^2" />:
 			</p>
 			<div class="kbox">
-				<Katex as="div" display tex="A_{\text{Ufer,add}}(h)=h\cdot d+n\pi h^2" />
+				<Katex as="div" display :tex="t( 'sections.part2.shoreAreaAddBox' )" />
 			</div>
 			<p class="muted">{{ t( "sections.part2.note" ) }}</p>
 		</div>
@@ -84,7 +84,7 @@
 					aligned
 					as="div"
 					display
-					tex="A_{\text{Ecken}} &= \frac{h^2}{2}\sum_i \varphi_i \\ \sum_i \varphi_i &= 2\pi \;\Longrightarrow\; A_{\text{Ecken}}=\pi h^2"
+					:tex="t( 'sections.part3.cornersBox' )"
 				/>
 			</div>
 			<p>
@@ -93,11 +93,11 @@
 				{{ t( "sections.part3.p2Middle" ) }}
 				<Katex tex="\sum \varphi = 2\pi n" />
 				{{ t( "sections.part3.p2After" ) }}
-				<Katex tex="A_{\text{Ecken,add}}=n\pi h^2" />.
+				<Katex :tex="t( 'sections.part3.cornersAddVar' )" />.
 			</p>
 			<p class="muted">{{ t( "sections.part3.note" ) }}</p>
 			<div class="kbox">
-				<Katex as="div" display tex="P(\mathrm{Distanz}\le h)\approx \frac{A_{\text{Ufer}}(h)}{A_{\text{Land}}}" />
+				<Katex as="div" display :tex="t( 'sections.part3.distanceProbBox' )" />
 			</div>
 		</div>
 
@@ -110,7 +110,7 @@
 					aligned
 					as="div"
 					display
-					tex="A_{\text{add}}(h) &= h\cdot d+n\pi h^2 \\ P_1(h) &\approx\frac{A_{\text{add}}(h)}{A_{\text{Land}}}"
+					:tex="t( 'sections.part4.stage1Box' )"
 				/>
 			</div>
 			<p class="muted">
@@ -132,12 +132,12 @@
 					aligned
 					as="div"
 					display
-					tex="A_{\text{wahr}}(h) &= \left|\left((W\oplus B_h)\setminus W\right)\cap L\right| \\ P(h) &= \frac{A_{\text{wahr}}(h)}{A_{\text{Land}}}"
+					:tex="t( 'sections.part4.stage2ActualBox' )"
 				/>
 			</div>
 			<p>
 				{{ t( "sections.part4.stage2ApproxBefore" ) }}
-				<Katex tex="n,d,A_{\text{Land}}" />
+				<Katex :tex="t( 'sections.part4.aggregateVars' )" />
 				{{ t( "sections.part4.stage2ApproxAfter" ) }}
 			</p>
 			<div class="kbox">
@@ -145,12 +145,12 @@
 					aligned
 					as="div"
 					display
-					tex="P_2(h) &= 1-\exp\!\left(-\frac{A_{\text{add}}(h)}{A_{\text{Land}}}\right) \\ A_2(h) &= A_{\text{Land}}\cdot P_2(h)"
+					:tex="t( 'sections.part4.stage2PoissonBox' )"
 				/>
 			</div>
 			<p>
 				{{ t( "sections.part4.stage2IdeaBefore" ) }}
-				<Katex tex="\lambda(h)=\frac{A_{\text{add}}(h)}{A_{\text{Land}}}" />.
+				<Katex :tex="t( 'sections.part4.lambdaBox' )" />.
 				{{ t( "sections.part4.stage2IdeaMiddle" ) }}
 				<Katex tex="\lambda" />
 				{{ t( "sections.part4.stage2IdeaAfter" ) }}
@@ -182,7 +182,7 @@
 				{{ t( "sections.part4.stage2DisclaimerBefore" ) }}
 				<Katex tex="(W\oplus B_h)" />
 				{{ t( "sections.part4.stage2DisclaimerMiddle" ) }}
-				<Katex tex="n,d,A_{\text{Land}}" />
+				<Katex :tex="t( 'sections.part4.aggregateVars' )" />
 				{{ t( "sections.part4.stage2DisclaimerAfter" ) }}
 			</p>
 		</div>

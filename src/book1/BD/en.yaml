@@ -19,17 +19,18 @@ bd:
   sections:
     part1:
       title: "Part 1 - Midspan point load + self-weight on a steel beam with pinned supports on both sides"
-      p1: "We consider a simply supported beam (rotatable/pinned at both ends) with span <code>L</code>, a point load <code>P</code> at midspan (<code>x=L/2</code>), and a uniformly distributed load from self-weight <code>q_g\\,[\\mathrm{kN/m}]</code>."
+      p1: 'We consider a simply supported beam (rotatable/pinned at both ends) with span <katex tex="L" />, a point load <katex tex="P" /> at midspan (<katex tex="x=L/2" />), and a uniformly distributed load from self-weight <katex tex="q_g\,[\mathrm{kN/m}]" />.'
       p2: "Verification is performed by comparing bending moment demand and resistance:"
-      p3: "In doing so, we combine actions (loads with safety factors <code>\\gamma</code>) and resistance (material side with <code>f_{yd}=f_y/\\gamma_M</code>)."
+      p3: 'In doing so, we combine actions (loads with safety factors <katex tex="\gamma" />) and resistance (material side with <katex tex="f_{yd}=f_y/\gamma_M" />).'
       p4: "Today DIN also uses separate partial safety factors. But we are in 1985, and many DIN standards did not yet do that. That is why the task here compares DIN load components with a single common factor against a TGL variant with a lower self-weight factor."
     part2:
-      title: "Part 2 - Self-weight as distributed load <code>q_g</code>"
-      p1: "The self-weight per meter follows from the cross-sectional area <code>A</code>:"
-      p2: "with <code>\\rho_{\\text{steel}}\\approx 7850\\,\\mathrm{kg/m^3}</code> and <code>g\\approx 9.81\\,\\mathrm{m/s^2}</code>."
-      p3: "Important: <code>q_g</code> depends on the chosen cross-section. The design process is therefore mildly iterative."
-      step1: "Assume a section and calculate <code>q_g</code>."
-      step2: "Determine <code>M_{Ed}</code> and derive the required <code>W</code>."
+      title: 'Part 2 - Self-weight as distributed load <katex tex="q_g" />'
+      p1: 'The self-weight per meter follows from the cross-sectional area <katex tex="A" />:'
+      selfWeightBox: 'q_g&=\rho_{\text{steel}}\,g\,A\\q_g\,[\mathrm{kN/m}]&=\frac{\rho g}{1000}\,A'
+      p2: 'with <katex tex="\rho_{\text{steel}}\approx 7850\,\mathrm{kg/m^3}" /> and <katex tex="g\approx 9.81\,\mathrm{m/s^2}" />.'
+      p3: 'Important: <katex tex="q_g" /> depends on the chosen cross-section. The design process is therefore mildly iterative.'
+      step1: 'Assume a section and calculate <katex tex="q_g" />.'
+      step2: 'Determine <katex tex="M_{Ed}" /> and derive the required <katex tex="W" />.'
       step3: "Adjust the section and check again."
       graphTitle: "Simple point load + self-weight"
     part3:
@@ -47,17 +48,18 @@ bd:
       step43: "Step 4.3 - Core mathematical expression"
       p3: "The difference arises only from the self-weight contribution and grows for large spans or heavy beams."
     part5:
-      title: "Part 5 - Section verification via section modulus <code>W</code>"
-      p1: "The DIN/TGL comparison remains consistent as long as <code>f_{yd}</code> is treated identically."
+      title: 'Part 5 - Section verification via section modulus <katex tex="W" />'
+      p1: 'The DIN/TGL comparison remains consistent as long as <katex tex="f_{yd}" /> is treated identically.'
       graphTitle: "Sizing of an I-beam"
     part6:
       title: "Part 6 - Numerical example"
       step61: "Step 6.1 - Chosen parameters"
       pointLoadMid: "Point load at midspan"
       sameLoads: "same on both loads"
-      weldedBeam: "Welded I-beam (sized via <code>t_f</code>):"
+      steelLabel: "Steel"
+      weldedBeam: 'Welded I-beam (sized via <katex tex="t_f" />):'
       step62: "Step 6.2 - Self-weight from geometry"
-      step63: "Step 6.3 - DIN design (same <code>\\gamma</code>)"
+      step63: 'Step 6.3 - DIN design (same <katex tex="\gamma" />)'
       practicalRounded: "Practically rounded:"
       dinOk: "DIN satisfied."
       dinNotOk: "DIN not satisfied."
@@ -67,13 +69,13 @@ bd:
       step65: "Step 6.5 - Visible result"
       dinNeeds: "DIN requires in this configuration:"
       tglAllows: "TGL allows:"
-      p1: "The TGL beam is therefore computationally weaker: lower required <code>W</code> (here about <code>{wReduction}</code> less) and lower self-weight (about <code>{qgDin}-{qgTgl}\\approx {weightDelta}\\,\\mathrm{kg/m}</code>)."
+      p1: 'The TGL beam is therefore computationally weaker: lower required <katex tex="W" /> (here about <katex tex="{wReduction}" /> less) and lower self-weight (about <katex tex="{qgDin}-{qgTgl}\approx {weightDelta}\,\mathrm{kg/m}" />).'
     part7:
       title: "Part 7 - Final assessment"
       step71: "Step 7.1 - Why the TGL idea seems plausible"
-      p1: "Self-weight is often known better (smaller scatter) than live load. Therefore a smaller surcharge for <code>G</code> and a larger one for <code>Q</code> is understandable from a probabilistic point of view."
+      p1: 'Self-weight is often known better (smaller scatter) than live load. Therefore a smaller surcharge for <katex tex="G" /> and a larger one for <katex tex="Q" /> is understandable from a probabilistic point of view.'
       step72: "Step 7.2 - Why computationally weaker components result"
-      p2: "If <code>M_{Ed}</code> decreases, <code>W_{\\text{req}}</code> also decreases. That makes smaller sections or thinner flanges permissible. As visible in the interactive part, this occasionally leads to a lighter beam. Overall, however, the difference is moderate (here about 10% less self-weight)."
+      p2: 'If <katex tex="M_{Ed}" /> decreases, <katex tex="W_{\text{req}}" /> also decreases. That makes smaller sections or thinner flanges permissible. As visible in the interactive part, this occasionally leads to a lighter beam. Overall, however, the difference is moderate (here about 10% less self-weight).'
       step73: "Step 7.3 - The safety-philosophical catch"
       p3: "Weaker does not automatically mean unsafe, as long as load side and resistance side are calibrated consistently. But if only the self-weight factor is reduced and everything else remains unchanged, the computational reserve against unmodeled effects decreases (for example corrosion, imperfections, erection states, additional loads, dynamics)."
       p4: "That also fits the historical development: DIN was later adjusted and today also works with separate safety factors for permanent and variable actions."
@@ -83,7 +85,7 @@ bd:
     intro: "The inputs control the load assumptions and safety factors. The SVG sketch shows the structural system in the usual engineering-mechanics representation for the DIN and TGL cases."
     systemLoads: "System and loads"
     sectionMaterial: "Section and material"
-    alert: "For DIN and TGL, <code>t_f</code> is calculated from the verification; this then determines the self-weight <code>q_g</code>."
+    alert: 'For DIN and TGL, <katex tex="t_f" /> is calculated from the verification; this then determines the self-weight <katex tex="q_g" />.'
   graph:
     aria: "Beam system: pinned on both sides, point load at midspan, and distributed load from self-weight"
     title: "Single-span beam (pinned on both sides) with P at midspan and q_g"

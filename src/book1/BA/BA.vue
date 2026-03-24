@@ -44,11 +44,11 @@
 				<div class="text-subtitle-2 mb-2">{{ t( "ba.sections.part2.circle" ) }}</div>
 				<div class="text-body-2" v-html="t( 'ba.sections.part2.circleText' )" />
 				<div class="mt-2">
-					<Katex
-						as="div"
-						display
-						:tex="String.raw`\text{Beispiel: } 25+3=28 \equiv 2 \pmod{26}\ \Rightarrow\ Z \xrightarrow{+3} C`"
-					/>
+						<Katex
+							as="div"
+							display
+							:tex="t( 'ba.sections.part2.circleExampleBox' )"
+						/>
 				</div>
 			</div>
 
@@ -62,15 +62,11 @@
 			<p class="mb-3" v-html="t( 'ba.sections.part3.p1' )" />
 
 			<div class="kbox">
-				<Katex
-					as="div"
-					display
-					:tex="String.raw`
-						\textbf{Verschlüsselung:}\quad C \equiv P + k \pmod{26}
-						\\\\
-						\textbf{Entschlüsselung:}\quad P \equiv C - k \pmod{26}
-					`"
-				/>
+					<Katex
+						as="div"
+						display
+						:tex="t( 'ba.sections.part3.formulaBox' )"
+					/>
 			</div>
 
 			<v-row>
@@ -126,14 +122,11 @@
 			<p class="mb-3" v-html="t( 'ba.sections.part4.p1' )" />
 
 			<div class="kbox">
-				<Katex
-					as="div"
-					display
-					:tex="String.raw`
-						C_i \equiv P_i + K_i \pmod{26}
-						\\\\\text{wobei } K_i \text{ zyklisch aus dem Schlüssel kommt.}
-					`"
-				/>
+					<Katex
+						as="div"
+						display
+						:tex="t( 'ba.sections.part4.formulaBox' )"
+					/>
 			</div>
 
 			<v-row>

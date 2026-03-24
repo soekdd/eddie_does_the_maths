@@ -21,10 +21,12 @@ ba:
       mapping: "Zuordnung"
       circle: "Rechnen „im Kreis“"
       circleText: "Nach Z kommt wieder A. Mathematisch ist das Rechnen <em>modulo 26</em>."
+      circleExampleBox: '\text{Beispiel: } 25+3=28 \equiv 2 \pmod{26}\ \Rightarrow\ Z \xrightarrow{+3} C'
       cleanup: "Und ja: In echten Texten muss man vorher meist „aufräumen“: Großbuchstaben, Umlaute ersetzen (Ä→AE, Ö→OE, Ü→UE), Satzzeichen raus - oder man behandelt sie getrennt."
     part3:
       title: "Teil 3 - Cäsar-Verschlüsselung"
       p1: "Cäsar ist die Minimalversion: ein fester Shift <span class=\"font-weight-medium\">k</span>. Jeder Buchstabe wird um <span class=\"font-weight-medium\">k</span> Stellen weitergeschoben."
+      formulaBox: '\textbf{Verschlüsselung:}\quad C \equiv P + k \pmod{26} \\\\ \textbf{Entschlüsselung:}\quad P \equiv C - k \pmod{26}'
       example: "Beispiel"
       plainShift: "Klartext: <code>{plain}</code> | Shift: <code>k={k}</code>"
       result: "Ergebnis: <code>{cipher}</code>"
@@ -40,6 +42,7 @@ ba:
     part4:
       title: "Teil 4 - Vigenère-Verschlüsselung"
       p1: "Vigenère ist wie Cäsar - nur mit einem <strong>rotierenden Schlüssel</strong>. Statt immer denselben Shift zu nehmen, hast du eine Folge von Shifts, die sich wiederholt."
+      formulaBox: 'C_i \equiv P_i + K_i \pmod{26} \\\\ \text{wobei } K_i \text{ zyklisch aus dem Schlüssel kommt.}'
       classicTitle: "Beispiel (klassisch mit Wortschlüssel)"
       classicText: "Klartext: <code>{plain}</code><br />Schlüssel: <code>{key}</code> (wird wiederholt)"
       classicResult: "Ergebnis: <code>{cipher}</code>"
@@ -92,4 +95,3 @@ ba:
     send: "SEND"
     clearQueue: "Queue leeren"
     awaitingInput: "Interpreter wartet auf INPUT. Eingabe senden und das Programm laeuft direkt weiter."
-

@@ -86,6 +86,20 @@ export function resolveLocaleFromPath( pathValue ) {
 	return normalizeSupportedLocale( match?.[ 1 ] || FALLBACK_LOCALE );
 }
 
+function buildLocalizedRedirect( to,
+	nextLocale ) {
+	const nextQuery = { ...to.query };
+	delete nextQuery.lang;
+
+	return {
+		path:    withTrailingSlash( localizePath( to.path, nextLocale ) ),
+		hash:    to.hash,
+		params:  to.params,
+		query:   nextQuery,
+		replace: true
+	};
+}
+
 function normalizeConcretePath( pathValue ) {
 	const normalizedPath = String( pathValue || "/" ).trim() || "/";
 	return normalizedPath === "/" ? "/" : normalizedPath.endsWith( "/" ) ? normalizedPath.slice( 0, -1 ) : normalizedPath;
@@ -127,10 +141,8 @@ function findContentRouteForBasePath( pathValue ) {
 	return matchedRoute ?? catchAllRoute;
 }
 
-function resolveRouteLocaleForPath(
-	pathValue,
-	requestedLocale
-) {
+function resolveRouteLocaleForPath( pathValue,
+	requestedLocale ) {
 	const matchedRoute = findContentRouteForBasePath( pathValue );
 	const supportedRouteLocales = getRouteSupportedLocales( matchedRoute );
 	const normalizedRequestedLocale = normalizeSupportedLocale( requestedLocale );
@@ -255,7 +267,7 @@ export const contentRoutes = [
 		component: Welcome,
 		meta:      {
 			languages: [ "de", "en", "sw", "fi" ],
-			title: {
+			title:     {
 				de: "Welcome",
 				en: "Welcome"
 			}
@@ -862,7 +874,35 @@ export const routes = [
 			};
 		}
 	},
-	...localizedRoutes
+	...localizedRoutes,
+	{
+		path:      `/:locale(${LOCALE_ROUTE_PATTERN})/:pathMatch(.*)*`,
+		name:      "LocalizedCatchAll",
+		component: CatchAll,
+		beforeEnter: ( to ) => {
+			const matchedRoute = findContentRouteForBasePath( to.path );
+
+			if ( !matchedRoute || matchedRoute.path === "/:pathMatch(.*)*" ) {
+				return true;
+			}
+
+			const requestedLocale = typeof to.params.locale === "string" ? to.params.locale : resolveLocaleFromPath( to.path );
+			const nextLocale = resolveRouteLocaleForPath( to.path, requestedLocale );
+
+			if ( requestedLocale !== nextLocale ) {
+				return buildLocalizedRedirect( to, nextLocale );
+			}
+
+			return true;
+		},
+		meta:      {
+			languages: SUPPORTED_LOCALES,
+			title:     {
+				de: "Thema in Arbeit",
+				en: "Topic in Progress"
+			}
+		}
+	}
 ];
 
 export function createClientRouter() {
@@ -881,16 +921,7 @@ export function createClientRouter() {
 
 		if ( pathLocaleMatch ) {
 			if ( pathLocaleMatch[ 1 ] !== nextLocale ) {
-				const nextQuery = { ...to.query };
-				delete nextQuery.lang;
-
-				return {
-					path:    withTrailingSlash( localizePath( rawPath, nextLocale ) ),
-					hash:    to.hash,
-					params:  to.params,
-					query:   nextQuery,
-					replace: true
-				};
+				return buildLocalizedRedirect( to, nextLocale );
 			}
 
 			setLocale( nextLocale );

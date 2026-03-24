@@ -38,7 +38,7 @@
 				<Katex aligned
 					as="div"
 					display
-					tex="q_g&=\rho_{\text{Stahl}}\,g\,A\\q_g\,[\mathrm{kN/m}]&=\frac{\rho g}{1000}\,A"
+					:tex="t( 'bd.sections.part2.selfWeightBox' )"
 				/>
 			</div>
 			<p v-html="t( 'bd.sections.part2.p2' )" />
@@ -150,7 +150,7 @@
 					<Katex :tex="`\\gamma_Q=${fmtMath( inputs.gammaQ, 2 )},\\;\\gamma_G=${fmtMath( inputs.gammaG, 2 )}`" />
 				</li>
 				<li>
-					Stahl:
+					{{ t( "bd.sections.part6.steelLabel" ) }}:
 					<Katex :tex="`f_y=${fmtMath( materialBase.fyNmm2, 0 )}\\,\\mathrm{N/mm^2},\\;\\gamma_M=${fmtMath( materialBase.gammaM, 1 )}\\Rightarrow f_{yd}=${fmtMath( fyd, 0 )}\\,\\mathrm{N/mm^2}`" />
 				</li>
 			</ul>

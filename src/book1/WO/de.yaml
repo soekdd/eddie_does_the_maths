@@ -29,6 +29,7 @@ sections:
     p7Before: "Entlang der unteren Kante (bei "
     p7Middle: ") liegt Schatten (Terminal/Zaun). Eddie kann dort unauffällig schleichen. Irgendwo bei "
     p7After: " entscheidet sie sich, diagonal quer über den Hof direkt zum Tor "
+    p7PointBox: 'P=(x,0)\;\text{mit}\;0\le x\le \frac{L}{2}'
   part3:
     title: "Teil 3 - Risiko-Modell"
     l1: "Im Schatten: 1 Risikopunkt pro Meter"
@@ -55,6 +56,7 @@ sections:
     s2p1Middle: "also"
     s3: "Schritt 5.3 - Quadrieren - Polynom 2. Ordnung"
     s3p1Before: "Zurück zu"
+    s3Box: '\left(\frac{L}{2}-x\right)^2 &= \frac{a^2W^2}{b^2-a^2} \\ x^2-Lx+\left(\frac{L^2}{4}-\frac{a^2W^2}{b^2-a^2}\right) &= 0 \\ x^* &= \frac{L}{2}-\frac{aW}{\sqrt{b^2-a^2}} \\ \text{mit }r=\frac{b}{a}: \quad x^* &= \frac{L}{2}-\frac{W}{\sqrt{r^2-1}}'
     s4: "Schritt 5.4 - Jetzt mit konkreten Werten"
     s4p1Before: "Jetzt mit"
     s5: "Schritt 5.5 - Interpretation (für die Szene)"

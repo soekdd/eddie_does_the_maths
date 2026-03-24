@@ -29,6 +29,7 @@ sections:
     p7Before: "Along the bottom edge (at "
     p7Middle: ") there is shadow from the terminal and the fence. Eddie can creep along there unnoticed. Somewhere at "
     p7After: " she decides to sprint diagonally across the yard directly to the gate "
+    p7PointBox: 'P=(x,0)\;\text{with}\;0\le x\le \frac{L}{2}'
   part3:
     title: "Part 3 - Risk model"
     l1: "In the shadow: 1 risk point per meter"
@@ -55,6 +56,7 @@ sections:
     s2p1Middle: "that is"
     s3: "Step 5.3 - Squaring: quadratic polynomial"
     s3p1Before: "Back to"
+    s3Box: '\left(\frac{L}{2}-x\right)^2 &= \frac{a^2W^2}{b^2-a^2} \\ x^2-Lx+\left(\frac{L^2}{4}-\frac{a^2W^2}{b^2-a^2}\right) &= 0 \\ x^* &= \frac{L}{2}-\frac{aW}{\sqrt{b^2-a^2}} \\ \text{with }r=\frac{b}{a}: \quad x^* &= \frac{L}{2}-\frac{W}{\sqrt{r^2-1}}'
     s4: "Step 5.4 - Now with concrete values"
     s4p1Before: "Now with"
     s5: "Step 5.5 - Interpretation (for the scene)"

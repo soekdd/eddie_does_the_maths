@@ -21,10 +21,12 @@ ba:
       mapping: "Mapping"
       circle: "Arithmetic “in a circle”"
       circleText: "After Z comes A again. Mathematically this is arithmetic <em>modulo 26</em>."
+      circleExampleBox: '\text{Example: } 25+3=28 \equiv 2 \pmod{26}\ \Rightarrow\ Z \xrightarrow{+3} C'
       cleanup: "And yes: in real texts you usually have to “clean things up” first: uppercase letters, replace umlauts, remove punctuation, or handle them separately."
     part3:
       title: "Part 3 - Caesar cipher"
       p1: "Caesar is the minimal version: one fixed shift <span class=\"font-weight-medium\">k</span>. Every letter is shifted forward by <span class=\"font-weight-medium\">k</span> positions."
+      formulaBox: '\textbf{Encryption:}\quad C \equiv P + k \pmod{26} \\\\ \textbf{Decryption:}\quad P \equiv C - k \pmod{26}'
       example: "Example"
       plainShift: "Plaintext: <code>{plain}</code> | Shift: <code>k={k}</code>"
       result: "Result: <code>{cipher}</code>"
@@ -40,6 +42,7 @@ ba:
     part4:
       title: "Part 4 - Vigenere cipher"
       p1: "Vigenere is like Caesar, but with a <strong>rotating key</strong>. Instead of always taking the same shift, you use a sequence of shifts that repeats."
+      formulaBox: 'C_i \equiv P_i + K_i \pmod{26} \\\\ \text{where } K_i \text{ comes cyclically from the key.}'
       classicTitle: "Example (classic word key)"
       classicText: "Plaintext: <code>{plain}</code><br />Key: <code>{key}</code> (repeated)"
       classicResult: "Result: <code>{cipher}</code>"

@@ -19,38 +19,50 @@ sections:
     p1After: " away from the nearest lake shore."
     p2Before: "For that we compare "
     p2Middle: " with the total land area "
+    shoreAreaVar: 'A_{\text{shore}}(h)'
+    landAreaVar: 'A_{\text{land}}'
   part2:
     title: "Part 2 - Formula for the shoreline area"
     p1Before: "Let "
     p1Middle: " denote the total shoreline length and "
     p1After: " the shoreline width. For a single lake, meaning one closed shoreline, we have:"
+    shoreAreaBox: 'A_{\text{shore}}(h)=h\cdot d+\pi h^2'
     p2Before: "The first term is the sum of all edge rectangles: "
     p3Before: "The second term is the full corner correction, convex pie slices minus concave pie slices, and it equals exactly "
     p4Before: "For "
     p4Middle: " separate lakes, this corner term adds up in the additive model to "
+    shoreAreaAddBox: 'A_{\text{shore,add}}(h)=h\cdot d+n\pi h^2'
     note: "The real shoreline area is the union area of all shoreline zones and is therefore, because of overlaps, never larger than this additive sum."
   part3:
     title: "Part 3 - Why concave versus convex does not matter"
     p1Before: "Let "
     p1Middle: " be the signed exterior turning angle at corner "
     p1After: " with convex positive and concave negative. The sector area at that corner is "
+    cornersBox: 'A_{\text{corners}} &= \frac{h^2}{2}\sum_i \varphi_i \\ \sum_i \varphi_i &= 2\pi \;\Longrightarrow\; A_{\text{corners}}=\pi h^2'
     p2Before: "For "
     p2Middle: " separate lakes we similarly get "
     p2After: " and therefore in the additive model "
+    cornersAddVar: 'A_{\text{corners,add}}=n\pi h^2'
     note: "That is why the formula stays valid independently of polygon resolution and also for concave parts."
+    distanceProbBox: 'P(\mathrm{distance}\le h)\approx \frac{A_{\text{shore}}(h)}{A_{\text{land}}}'
   part4:
     title: "Part 4 - A two-stage view"
     stage1Title: "Step 4.1 - Stage 1: Additive approximation"
     stage1Text: "In the first step we add all local contributions independently: rectangle parts along the shores plus corner parts. For many separate lakes this gives a simple starting formula that is easy to interpret."
+    stage1Box: 'A_{\text{add}}(h) &= h\cdot d+n\pi h^2 \\ P_1(h) &\approx\frac{A_{\text{add}}(h)}{A_{\text{land}}}'
     stage1NoteBefore: "This stage counts overlaps multiple times. That is why it is often useful for small "
     stage1NoteMiddle: ", but for larger "
     stage1NoteAfter: " it can become implausible."
     stage2Title: "Step 4.2 - Stage 2: Minkowski-oriented correction"
     stage2TextBefore: "Mathematically, the shoreline area we seek is the union area of a thickening of all water bodies by radius "
     stage2TextAfter: ", subtracting the water bodies themselves and restricting everything to land."
+    stage2ActualBox: 'A_{\text{actual}}(h) &= \left|\left((W\oplus B_h)\setminus W\right)\cap L\right| \\ P(h) &= \frac{A_{\text{actual}}(h)}{A_{\text{land}}}'
     stage2ApproxBefore: "If only aggregated data are available ("
     stage2ApproxAfter: "), we use a pragmatic overlap correction as a second stage:"
+    aggregateVars: 'n,d,A_{\text{land}}'
+    stage2PoissonBox: 'P_2(h) &= 1-\exp\!\left(-\frac{A_{\text{add}}(h)}{A_{\text{land}}}\right) \\ A_2(h) &= A_{\text{land}}\cdot P_2(h)'
     stage2IdeaBefore: "The idea is this: set "
+    lambdaBox: '\lambda(h)=\frac{A_{\text{add}}(h)}{A_{\text{land}}}'
     stage2IdeaMiddle: " Then "
     stage2IdeaAfter: " is the additive mean hit count at a random land point. Under a random coverage assumption, the probability of no hit is about "
     stage2IdeaEnd: ", hence "

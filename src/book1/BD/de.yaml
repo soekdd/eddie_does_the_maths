@@ -19,17 +19,18 @@ bd:
   sections:
     part1:
       title: "Teil 1 - Punktlast mittig + Eigengewicht auf beidseitig gelenkig gelagertem Stahlträger"
-      p1: "Wir betrachten einen einfach gelagerten Träger (beidseitig drehbar/gelenkig) mit Stützweite <code>L</code>, einer Punktlast <code>P</code> in Feldmitte (<code>x=L/2</code>) und einer gleichmäßig verteilten Streckenlast aus Eigengewicht <code>q_g\\,[\\mathrm{kN/m}]</code>."
+      p1: 'Wir betrachten einen einfach gelagerten Träger (beidseitig drehbar/gelenkig) mit Stützweite <katex tex="L" />, einer Punktlast <katex tex="P" /> in Feldmitte (<katex tex="x=L/2" />) und einer gleichmäßig verteilten Streckenlast aus Eigengewicht <katex tex="q_g\,[\mathrm{kN/m}]" />.'
       p2: "Der Nachweis erfolgt über den Biegemomenten-Tragfähigkeitsvergleich:"
-      p3: "Dabei koppeln wir Einwirkungen (Lasten mit Sicherheitsbeiwerten <code>\\gamma</code>) und Widerstand (Materialseite mit <code>f_{yd}=f_y/\\gamma_M</code>)."
+      p3: 'Dabei koppeln wir Einwirkungen (Lasten mit Sicherheitsbeiwerten <katex tex="\gamma" />) und Widerstand (Materialseite mit <katex tex="f_{yd}=f_y/\gamma_M" />).'
       p4: "Heute führt die DIN ebenfalls getrennte Sicherheitsbeiwerte. Doch wir sind ja im Jahre 1985, da war das bei vielen DIN-Normen noch nicht so. Deshalb wird hier die Aufgabenlogik mit gleich faktorisierten DIN-Lastanteilen einer TGL-Variante mit niedrigerem Eigengewichtsbeiwert gegenübergestellt."
     part2:
-      title: "Teil 2 - Eigengewicht als Streckenlast <code>q_g</code>"
-      p1: "Das Eigengewicht pro Meter folgt aus der Querschnittsfläche <code>A</code>:"
-      p2: "mit <code>\\rho_{\\text{Stahl}}\\approx 7850\\,\\mathrm{kg/m^3}</code> und <code>g\\approx 9{,}81\\,\\mathrm{m/s^2}</code>."
-      p3: "Wichtig: <code>q_g</code> hängt vom gewählten Querschnitt ab. Der Entwurf ist daher leicht iterativ."
-      step1: "Querschnitt annehmen und <code>q_g</code> berechnen."
-      step2: "<code>M_{Ed}</code> bestimmen und erforderliches <code>W</code> ableiten."
+      title: 'Teil 2 - Eigengewicht als Streckenlast <katex tex="q_g" />'
+      p1: 'Das Eigengewicht pro Meter folgt aus der Querschnittsfläche <katex tex="A" />:'
+      selfWeightBox: 'q_g&=\rho_{\text{Stahl}}\,g\,A\\q_g\,[\mathrm{kN/m}]&=\frac{\rho g}{1000}\,A'
+      p2: 'mit <katex tex="\rho_{\text{Stahl}}\approx 7850\,\mathrm{kg/m^3}" /> und <katex tex="g\approx 9{,}81\,\mathrm{m/s^2}" />.'
+      p3: 'Wichtig: <katex tex="q_g" /> hängt vom gewählten Querschnitt ab. Der Entwurf ist daher leicht iterativ.'
+      step1: 'Querschnitt annehmen und <katex tex="q_g" /> berechnen.'
+      step2: '<katex tex="M_{Ed}" /> bestimmen und erforderliches <katex tex="W" /> ableiten.'
       step3: "Querschnitt anpassen und erneut prüfen."
       graphTitle: "Einfache Punktlast + Eigengewicht"
     part3:
@@ -47,17 +48,18 @@ bd:
       step43: "Schritt 4.3 - Mathematischer Kernausdruck"
       p3: "Der Unterschied entsteht nur über den Eigengewichtsanteil und wächst bei großen Spannweiten oder schweren Trägern."
     part5:
-      title: "Teil 5 - Querschnittsnachweis über Widerstandsmoment <code>W</code>"
-      p1: "Die Gegenüberstellung DIN/TGL bleibt konsistent, solange <code>f_{yd}</code> identisch behandelt wird."
+      title: 'Teil 5 - Querschnittsnachweis über Widerstandsmoment <katex tex="W" />'
+      p1: 'Die Gegenüberstellung DIN/TGL bleibt konsistent, solange <katex tex="f_{yd}" /> identisch behandelt wird.'
       graphTitle: "Dimensionierung eines I-Trägers"
     part6:
       title: "Teil 6 - Zahlenbeispiel"
       step61: "Schritt 6.1 - Gewählte Parameter"
       pointLoadMid: "Punktlast in Feldmitte"
       sameLoads: "auf beide Lasten gleich"
-      weldedBeam: "Geschweißter I-Träger (Dimensionierung über <code>t_f</code>):"
+      steelLabel: "Stahl"
+      weldedBeam: 'Geschweißter I-Träger (Dimensionierung über <katex tex="t_f" />):'
       step62: "Schritt 6.2 - Eigengewicht aus Geometrie"
-      step63: "Schritt 6.3 - DIN-Entwurf (gleiches <code>\\gamma</code>)"
+      step63: 'Schritt 6.3 - DIN-Entwurf (gleiches <katex tex="\gamma" />)'
       practicalRounded: "Praktisch gerundet:"
       dinOk: "DIN erfüllt."
       dinNotOk: "DIN nicht erfüllt."
@@ -67,13 +69,13 @@ bd:
       step65: "Schritt 6.5 - Sichtbares Ergebnis"
       dinNeeds: "DIN benötigt in dieser Konstellation:"
       tglAllows: "TGL erlaubt:"
-      p1: "Der TGL-Träger ist damit rechnerisch schwächer: geringeres erforderliches <code>W</code> (hier etwa <code>{wReduction}</code> weniger) und geringeres Eigengewicht (ca. <code>{qgDin}-{qgTgl}\\approx {weightDelta}\\,\\mathrm{kg/m}</code>)."
+      p1: 'Der TGL-Träger ist damit rechnerisch schwächer: geringeres erforderliches <katex tex="W" /> (hier etwa <katex tex="{wReduction}" /> weniger) und geringeres Eigengewicht (ca. <katex tex="{qgDin}-{qgTgl}\approx {weightDelta}\,\mathrm{kg/m}" />).'
     part7:
       title: "Teil 7 - Abschließende Bewertung"
       step71: "Schritt 7.1 - Warum der TGL-Gedanke plausibel wirkt"
-      p1: "Eigengewicht ist oft besser bekannt (kleinere Streuung) als Verkehrslast. Daher ist ein kleinerer Zuschlag für <code>G</code> und ein größerer für <code>Q</code> aus probabilistischer Sicht nachvollziehbar."
+      p1: 'Eigengewicht ist oft besser bekannt (kleinere Streuung) als Verkehrslast. Daher ist ein kleinerer Zuschlag für <katex tex="G" /> und ein größerer für <katex tex="Q" /> aus probabilistischer Sicht nachvollziehbar.'
       step72: "Schritt 7.2 - Warum rechnerisch schwächere Bauteile herauskommen"
-      p2: "Wenn <code>M_{Ed}</code> sinkt, sinkt auch <code>W_{\\text{erf}}</code>. Damit werden kleinere Profile bzw. dünnere Flansche zulässig. Wie im interaktiven Teil sichtbar, führt das gelegentlich zu einem leichteren Träger. Ingesamt ist der Unterschied aber moderat (hier ca. 10% weniger Eigengewicht)."
+      p2: 'Wenn <katex tex="M_{Ed}" /> sinkt, sinkt auch <katex tex="W_{\text{erf}}" />. Damit werden kleinere Profile bzw. dünnere Flansche zulässig. Wie im interaktiven Teil sichtbar, führt das gelegentlich zu einem leichteren Träger. Ingesamt ist der Unterschied aber moderat (hier ca. 10% weniger Eigengewicht).'
       step73: "Schritt 7.3 - Sicherheitsphilosophischer Haken"
       p3: "Schwächer bedeutet nicht automatisch unsicher, solange Last- und Widerstandsseite konsistent kalibriert sind. Wenn jedoch nur der Eigengewichtsfaktor reduziert wird und alles andere gleich bleibt, sinkt die rechnerische Reserve gegen nicht modellierte Effekte (z.B. Korrosion, Imperfektionen, Montagezustände, Zusatzlasten, Dynamik)."
       p4: "Dazu passt auch die historische Entwicklung: Die DIN wurde später angepasst und rechnet heute ebenfalls mit getrennten Sicherheitsbeiwerten für ständige und veränderliche Einwirkungen."
@@ -83,7 +85,7 @@ bd:
     intro: "Die Eingaben steuern die Lastannahmen und Sicherheitsbeiwerte. Die SVG-Skizze zeigt das statische System in üblicher TM-Darstellung für DIN- und TGL-Fall."
     systemLoads: "System und Lasten"
     sectionMaterial: "Querschnitt und Material"
-    alert: "Für DIN und TGL wird jeweils <code>t_f</code> aus dem Nachweis berechnet; daraus folgt das Eigengewicht <code>q_g</code>."
+    alert: 'Für DIN und TGL wird jeweils <katex tex="t_f" /> aus dem Nachweis berechnet; daraus folgt das Eigengewicht <katex tex="q_g" />.'
   graph:
     aria: "Träger-System: beidseitig gelenkig gelagert, Punktlast in Feldmitte und Streckenlast aus Eigengewicht"
     title: "Einfeldträger (beidseitig gelenkig) mit P in Feldmitte und q_g"

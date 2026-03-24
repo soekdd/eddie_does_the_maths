@@ -26,7 +26,7 @@ sections:
     title: "Part 4 — One-Depot Formula (Warm-up)"
     p1: "For the warm-up model with one depot at <katex tex=\"x\" />, a drop amount <katex tex=\"d\" /> per shuttle, and <katex tex=\"k\" /> shuttles, we have:"
   summary:
-    title: "Part 7 - Graphical Representation"
+    title: "Part 5 - Graphical Representation"
 calculator:
   errors:
     fillAll: "Please fill in all fields with valid numbers (k must be an integer)."

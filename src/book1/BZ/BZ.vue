@@ -32,7 +32,7 @@
 					aligned
 					as="div"
 					display
-					tex="J &= \int_{t_0}^{t_1}F(t)\,\mathrm{d}t=\Delta p=m(v_1-v_0) \\ \int_{t_0}^{t_1}\big(F_K(t)-m g\big)\,\mathrm{d}t &= m(v_1-v_0) \\ F_{K,\mathrm{mittel}} &= m g+\frac{m(v_1-v_0)}{\Delta t}"
+					:tex="texImpulseBlock"
 				/>
 			</div>
 			<p v-html="t( 'bz.sections.part1.p2' )" />
@@ -66,7 +66,7 @@
 				<li><Katex :tex="`m_K=${kFmt( inputs.mKkg, 0 )}\\,\\mathrm{kg}`" /></li>
 				<li><Katex :tex="`g\\approx ${kFmt( inputs.gMs2, 2 )}\\,\\mathrm{m/s^2}`" /></li>
 				<li>
-					<Katex :tex="`k_{\\text{ruhig}}=${kFmt( inputs.kRuhig, 1 )},\\quad k_{\\text{knall}}=${kFmt( inputs.kKnall, 1 )},\\quad k_{\\text{DIN}}=${kFmt( inputs.kDIN, 1 )}`" />
+					<Katex :tex="`${texKCalm}=${kFmt( inputs.kRuhig, 1 )},\\quad ${texKBang}=${kFmt( inputs.kKnall, 1 )},\\quad ${texKDin}=${kFmt( inputs.kDIN, 1 )}`" />
 				</li>
 			</ul>
 			<h3 id="beispiel" class="mt-4">{{ t( "bz.sections.part3.step31" ) }}</h3>
@@ -130,13 +130,13 @@
 			<v-row dense>
 				<v-col cols="12" md="4">
 					<v-card class="compareCard pa-4" variant="outlined">
-						<Katex as="div" display :tex="`k_{\\text{ruhig}}=${kFmt( inputs.kRuhig, 1 )}`" />
+						<Katex as="div" display :tex="`${texKCalm}=${kFmt( inputs.kRuhig, 1 )}`" />
 						<p class="cellNote">{{ t( "bz.sections.part3.cell2Left" ) }}</p>
 					</v-card>
 				</v-col>
 				<v-col cols="12" md="4">
 					<v-card class="compareCard pa-4" variant="outlined">
-						<Katex as="div" display :tex="`k_{\\text{knall}}=${kFmt( inputs.kKnall, 1 )}`" />
+						<Katex as="div" display :tex="`${texKBang}=${kFmt( inputs.kKnall, 1 )}`" />
 						<p class="cellNote">{{ t( "bz.sections.part3.cell2Mid" ) }}</p>
 					</v-card>
 				</v-col>
@@ -155,7 +155,7 @@
 							aligned
 							as="div"
 							display
-							:tex="`F_{d,M} &= k_{\\text{ruhig}}\\,F_{k,M} \\\\ F_{d,M} &\\approx ${kFmt( inputs.kRuhig, 1 )}\\cdot ${kFmt( fkMkN, 2 )}=${kFmt( fdM, 2 )}\\,\\mathrm{kN}`"
+							:tex="`F_{d,M} &= ${texKCalm}\\,F_{k,M} \\\\ F_{d,M} &\\approx ${kFmt( inputs.kRuhig, 1 )}\\cdot ${kFmt( fkMkN, 2 )}=${kFmt( fdM, 2 )}\\,\\mathrm{kN}`"
 						/>
 					</v-card>
 				</v-col>
@@ -165,7 +165,7 @@
 							aligned
 							as="div"
 							display
-							:tex="`F_{d,K} &= k_{\\text{knall}}\\,F_{k,K} \\\\ F_{d,K} &\\approx ${kFmt( inputs.kKnall, 1 )}\\cdot ${kFmt( fkKkN, 2 )}=${kFmt( fdK, 2 )}\\,\\mathrm{kN}`"
+							:tex="`F_{d,K} &= ${texKBang}\\,F_{k,K} \\\\ F_{d,K} &\\approx ${kFmt( inputs.kKnall, 1 )}\\cdot ${kFmt( fkKkN, 2 )}=${kFmt( fdK, 2 )}\\,\\mathrm{kN}`"
 						/>
 					</v-card>
 				</v-col>
@@ -260,7 +260,7 @@
 
 					<v-col cols="12" md="6">
 						<div class="sliderHeader">
-							<span><Katex inline tex="k_{\text{ruhig}}" /> {{ t( "bz.interactive.surchargeCalm" ) }}</span>
+							<span><Katex inline :tex="texKCalm" /> {{ t( "bz.interactive.surchargeCalm" ) }}</span>
 							<v-chip color="primary" size="small" variant="flat">
 								{{ uiFmt( inputs.kRuhig, 2 ) }}
 							</v-chip>
@@ -279,7 +279,7 @@
 
 					<v-col cols="12" md="6">
 						<div class="sliderHeader">
-							<span><Katex inline tex="k_{\text{knall}}" /> {{ t( "bz.interactive.surchargeBang" ) }}</span>
+							<span><Katex inline :tex="texKBang" /> {{ t( "bz.interactive.surchargeBang" ) }}</span>
 							<v-chip color="primary" size="small" variant="flat">
 								{{ uiFmt( inputs.kKnall, 2 ) }}
 							</v-chip>
@@ -324,6 +324,13 @@ const subChapter = computed( () => ( {
 	beispiel:   t( "bz.subChapter.beispiel" ),
 	fazit:      t( "bz.subChapter.fazit" )
 } ) );
+
+const texKCalm = computed( () => `k_{\\text{${t( "bz.katex.calm" )}}}` );
+const texKBang = computed( () => `k_{\\text{${t( "bz.katex.bang" )}}}` );
+const texKDin = "k_{\\text{DIN}}";
+const texImpulseBlock = computed( () => `J &= \\int_{t_0}^{t_1}F(t)\\,\\mathrm{d}t=\\Delta p=m(v_1-v_0) \\\\
+\\int_{t_0}^{t_1}\\big(F_K(t)-m g\\big)\\,\\mathrm{d}t &= m(v_1-v_0) \\\\
+F_{K,\\mathrm{${t( "bz.katex.mean" )}}} &= m g+\\frac{m(v_1-v_0)}{\\Delta t}` );
 
 const inputs = reactive( {
 	mMkg:   120,

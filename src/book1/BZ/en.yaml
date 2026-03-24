@@ -63,6 +63,10 @@ bz:
     massChild: "Child mass"
     surchargeCalm: "Calm surcharge"
     surchargeBang: "Bang surcharge"
+  katex:
+    calm: "calm"
+    bang: "bang"
+    mean: "mean"
   graph:
     aria: "Seesaw comparing the design loads Fd,M and Fd,K"
     balanceStart: "Seesaw in balance:"

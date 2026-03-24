@@ -26,7 +26,7 @@ sections:
     title: "Teil 4 — Ein-Depot-Formel (Vorstufe)"
     p1: "Für die Vorstufe mit einem Depot bei <katex tex=\"x\" />, Ablage <katex tex=\"d\" /> pro Shuttle und <katex tex=\"k\" /> Shuttles gilt:"
   summary:
-    title: "Teil 7 - Grafische Darstellung"
+    title: "Teil 5 - Grafische Darstellung"
 calculator:
   errors:
     fillAll: "Bitte alle Felder mit gültigen Zahlen ausfüllen (k ganzzahlig)."

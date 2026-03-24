@@ -63,6 +63,10 @@ bz:
     massChild: "Masse Kind"
     surchargeCalm: "Zuschlag ruhig"
     surchargeBang: "Zuschlag knallt"
+  katex:
+    calm: "ruhig"
+    bang: "knall"
+    mean: "mittel"
   graph:
     aria: "Wippe zum Vergleich der Bemessungslasten Fd,M und Fd,K"
     balanceStart: "Wippe in Waage:"

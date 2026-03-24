@@ -33,7 +33,7 @@
 
 		<h2 id="depot-strategie" class="mt-8">{{ t( "sections.part3.title" ) }}</h2>
 		<div class="eddie">
-			<p>{{ t( "sections.part3.p1" ) }}</p>
+			<p v-html="t( 'sections.part3.p1' )"/>
 
 			<div class="kbox">
 				<Katex
@@ -49,7 +49,7 @@
 
 		<h2 class="mt-8">{{ t( "sections.part4.title" ) }}</h2>
 		<div class="eddie">
-			<p>{{ t( "sections.part4.p1" ) }}</p>
+			<p v-html="t( 'sections.part4.p1' )"/>
 
 			<div class="kbox">
 				<Katex as="div" display tex="d + 2c\frac{x}{v} \le C" />

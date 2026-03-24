@@ -39,7 +39,7 @@
 				{{ t( "sections.part2.p7Before" ) }}
 				<Katex inline tex="y=0" />
 				{{ t( "sections.part2.p7Middle" ) }}
-				<Katex inline tex="P=(x,0)\;\text{mit}\;0\le x\le \frac{L}{2}" />
+				<Katex inline :tex="t( 'sections.part2.p7PointBox' )" />
 				{{ t( "sections.part2.p7After" ) }}
 				<Katex inline tex="B" />.
 			</p>
@@ -122,7 +122,7 @@
 					aligned
 					as="div"
 					display
-					tex="\left(\frac{L}{2}-x\right)^2 &= \frac{a^2W^2}{b^2-a^2} \\ x^2-Lx+\left(\frac{L^2}{4}-\frac{a^2W^2}{b^2-a^2}\right) &= 0 \\ x^* &= \frac{L}{2}-\frac{aW}{\sqrt{b^2-a^2}} \\ \text{mit }r=\frac{b}{a}: \quad x^* &= \frac{L}{2}-\frac{W}{\sqrt{r^2-1}}"
+					:tex="t( 'sections.part5.s3Box' )"
 				/>
 			</div>
 
