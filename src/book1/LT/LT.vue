@@ -47,7 +47,7 @@
 				<li>{{ t( "sections.part2.s4" ) }}</li>
 			</ul>
 
-			<p>{{ t( "sections.part2.p2" ) }}</p>
+			<p v-html="t( 'sections.part2.p2' )"/>
 			<ol>
 				<li>{{ t( "sections.part2.o1" ) }}</li>
 				<li>{{ t( "sections.part2.o2" ) }}</li>
@@ -55,7 +55,7 @@
 				<li>{{ t( "sections.part2.o4" ) }}</li>
 			</ol>
 
-			<p>{{ t( "sections.part2.p3" ) }}</p>
+			<p v-html="t( 'sections.part2.p3' )"/>
 			<div class="kbox">
 				<Katex as="div" display tex="\mathcal{L}\{f'(t)\} = sF(s) - f(0)" />
 			</div>
@@ -72,14 +72,14 @@
 			</ul>
 
 			<h3>{{ t( "sections.part2.h2" ) }}</h3>
-			<p>{{ t( "sections.part2.p5" ) }}</p>
+			<p v-html="t( 'sections.part2.p5' )"/>
 			<ul>
 				<li>{{ t( "sections.part2.g1" ) }}</li>
 				<li>{{ t( "sections.part2.g2" ) }}</li>
 				<li>{{ t( "sections.part2.g3" ) }}</li>
 			</ul>
 
-			<p>{{ t( "sections.part2.p6" ) }}</p>
+			<p v-html="t( 'sections.part2.p6' )"/>
 			<ul>
 				<li>{{ t( "sections.part2.w1" ) }}</li>
 				<li>{{ t( "sections.part2.w2" ) }}</li>
@@ -87,12 +87,12 @@
 				<li>{{ t( "sections.part2.w4" ) }}</li>
 			</ul>
 
-			<p>{{ t( "sections.part2.p7" ) }}</p>
+			<p v-html="t( 'sections.part2.p7' )"/>
 		</div>
 
 		<h2 id="vorgehen" class="mt-8">{{ t( "sections.part3.title" ) }}</h2>
 		<div class="eddie">
-			<p>{{ t( "sections.part3.p1" ) }}</p>
+			<p v-html="t( 'sections.part3.p1' )"/>
 			<ol>
 				<li>
 					<b>{{ t( "sections.part3.s1Title" ) }}</b><br>
@@ -115,11 +115,11 @@
 
 		<h2 id="beispielrechnung" class="mt-8">{{ t( "sections.part4.title" ) }}</h2>
 		<div class="eddie">
-			<p>{{ t( "sections.part4.p1" ) }}</p>
+			<p v-html="t( 'sections.part4.p1' )"/>
 			<div class="kbox">
 				<Katex as="div" display tex="y'(t) + 2y(t) = 4" />
 			</div>
-			<p>{{ t( "sections.part4.p2" ) }}</p>
+			<p v-html="t( 'sections.part4.p2' )"/>
 			<div class="kbox">
 				<Katex as="div" display tex="y(0) = 1" />
 			</div>
@@ -139,7 +139,7 @@
 					</div>
 
 					<h4>{{ t( "sections.part4.left.h2" ) }}</h4>
-					<p>{{ t( "sections.part4.left.p1" ) }}</p>
+					<p v-html="t( 'sections.part4.left.p1' )"/>
 					<div class="kbox">
 						<Katex
 							aligned
@@ -168,12 +168,12 @@
 				<section class="methodCard">
 					<h3>{{ t( "sections.part4.right.title" ) }}</h3>
 
-					<p>{{ t( "sections.part4.right.p1" ) }}</p>
+					<p v-html="t( 'sections.part4.right.p1' )"/>
 					<div class="kbox">
 						<Katex as="div" display tex="y' + 2y = 4" />
 					</div>
 
-					<p>{{ t( "sections.part4.right.p2" ) }}</p>
+					<p v-html="t( 'sections.part4.right.p2' )"/>
 					<div class="kbox">
 						<Katex
 							aligned
@@ -203,7 +203,7 @@
 
 		<h2 id="fazit" class="mt-8">{{ t( "sections.part5.title" ) }}</h2>
 		<div class="eddie">
-			<p>{{ t( "sections.part5.p1" ) }}</p>
+			<p v-html="t( 'sections.part5.p1' )"/>
 
 			<div class="tableWrap">
 				<table class="compareTable">
@@ -236,7 +236,7 @@
 
 			<p v-html="t( 'sections.part5.p2' )" />
 			<p v-html="t( 'sections.part5.p3' )" />
-			<p>{{ t( "sections.part5.p4" ) }}</p>
+			<p v-html="t( 'sections.part5.p4' )"/>
 		</div>
 	</template>
 

@@ -13,16 +13,16 @@
 		</figure>
 		<h3 id="einleitung">{{ t( "fs.introDate" ) }}</h3>
 		<div class="eddie">
-			<p>{{ t( "fs.book.p1" ) }}</p>
-			<p>{{ t( "fs.book.p2" ) }}</p>
+			<p v-html="t( 'fs.book.p1' )"/>
+			<p v-html="t( 'fs.book.p2' )"/>
 		</div>
 	</template>
 
 	<template #descriptionPart>
 		<h2 id="aufgabe">{{ t( "fs.sections.task.title" ) }}</h2>
 		<div class="eddie">
-			<p>{{ t( "fs.sections.task.p1" ) }}</p>
-			<p>{{ t( "fs.sections.task.p2" ) }}</p>
+			<p v-html="t( 'fs.sections.task.p1' )"/>
+			<p v-html="t( 'fs.sections.task.p2' )"/>
 			<ol>
 				<li>
 					{{ t( "fs.sections.task.r1" ) }}
@@ -41,7 +41,7 @@
 					{{ t( "fs.sections.task.r4" ) }}
 				</li>
 			</ol>
-			<p>{{ t( "fs.sections.task.p3" ) }}</p>
+			<p v-html="t( 'fs.sections.task.p3' )"/>
 			<ul>
 				<li><b>a)</b> {{ t( "fs.sections.task.q1" ) }}</li>
 				<li><b>b)</b> {{ t( "fs.sections.task.q2" ) }}</li>
@@ -52,11 +52,11 @@
 		<h2 id="loesung" class="mt-8">{{ t( "fs.sections.solution.title" ) }}</h2>
 		<div class="eddie">
 			<h3>{{ t( "fs.sections.solution.step21" ) }}</h3>
-			<p>{{ t( "fs.sections.solution.p21" ) }}</p>
+			<p v-html="t( 'fs.sections.solution.p21' )"/>
 			<div class="kbox">
 				<Katex as="div" display tex="N_{t+1}=bN_t\cdot\frac{1}{1+cN_t}=\frac{bN_t}{1+cN_t}" />
 			</div>
-			<p>{{ t( "fs.sections.solution.p22" ) }}</p>
+			<p v-html="t( 'fs.sections.solution.p22' )"/>
 			<div class="kbox">
 				<Katex as="div" display tex="\boxed{N_{t+1}=\frac{bN_t}{1+cN_t}}" />
 			</div>
@@ -64,7 +64,7 @@
 
 		<div class="eddie">
 			<h3>{{ t( "fs.sections.solution.step22" ) }}</h3>
-			<p>{{ t( "fs.sections.solution.p23" ) }}</p>
+			<p v-html="t( 'fs.sections.solution.p23' )"/>
 			<div class="kbox">
 				<Katex as="div" display tex="N^*=\frac{bN^*}{1+cN^*}" />
 			</div>
@@ -73,15 +73,15 @@
 			<div class="kbox">
 				<Katex as="div" display tex="N^*=0" />
 			</div>
-			<p>{{ t( "fs.sections.solution.p24" ) }}</p>
+			<p v-html="t( 'fs.sections.solution.p24' )"/>
 
 			<h4>{{ t( "fs.sections.solution.positiveTitle" ) }}</h4>
-			<p>{{ t( "fs.sections.solution.p25" ) }}</p>
+			<p v-html="t( 'fs.sections.solution.p25' )"/>
 			<div class="kbox">
 				<Katex as="div" display tex="1=\frac{b}{1+cN^*}" />
 				<Katex as="div" display tex="1+cN^*=b\Rightarrow N^*=\frac{b-1}{c}" />
 			</div>
-			<p>{{ t( "fs.sections.solution.p26" ) }}</p>
+			<p v-html="t( 'fs.sections.solution.p26' )"/>
 		</div>
 
 		<div class="eddie">
@@ -100,7 +100,7 @@
 				<li>{{ t( "fs.sections.solution.case2b" ) }}</li>
 				<li>{{ t( "fs.sections.solution.case2c" ) }}</li>
 			</ul>
-			<p>{{ t( "fs.sections.solution.p27" ) }}</p>
+			<p v-html="t( 'fs.sections.solution.p27' )"/>
 		</div>
 
 		<h2 id="zusammenfassung" class="mt-8">{{ t( "fs.sections.summary.title" ) }}</h2>
@@ -110,14 +110,14 @@
 				<li>{{ t( "fs.sections.summary.s2" ) }}</li>
 				<li>{{ t( "fs.sections.summary.s3" ) }}</li>
 			</ul>
-			<p>{{ t( "fs.sections.summary.p1" ) }}</p>
+			<p v-html="t( 'fs.sections.summary.p1' )"/>
 		</div>
 	</template>
 
 	<template #interactivePart>
 		<h2 id="simulation">{{ t( "fs.interactive.title" ) }}</h2>
 		<div class="eddie">
-			<p>{{ t( "fs.interactive.p1" ) }}</p>
+			<p v-html="t( 'fs.interactive.p1' )"/>
 		</div>
 		<v-sheet border class="pa-4" rounded="lg">
 			<v-row dense>

@@ -13,9 +13,9 @@
 		</figure>
 		<h3 id="einleitung">{{ t( "introDate" ) }}</h3>
 		<div class="eddie">
-			<p>{{ t( "book.p1" ) }}</p>
-			<p>{{ t( "book.p2" ) }}</p>
-			<p>{{ t( "book.p3" ) }}</p>
+			<p v-html="t( 'book.p1' )"/>
+			<p v-html="t( 'book.p2' )"/>
+			<p v-html="t( 'book.p3' )"/>
 		</div>
 	</template>
 
@@ -45,7 +45,7 @@
 	<template #interactivePart>
 		<h2 id="quiz">{{ t( "sections.quiz.title" ) }}</h2>
 		<div class="eddie d-flex flex-column ga-3">
-			<p>{{ t( "sections.quiz.p1" ) }}</p>
+			<p v-html="t( 'sections.quiz.p1' )"/>
 			<v-select
 				v-model="mode"
 				class="w-100"

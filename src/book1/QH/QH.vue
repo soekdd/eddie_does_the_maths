@@ -22,7 +22,7 @@
 	<template #descriptionPart>
 		<h2 id="quantisierung" class="mt-8">{{ t( "sections.part1.title" ) }}</h2>
 		<div class="eddie">
-			<p>{{ t( "sections.part1.p1" ) }}</p>
+			<p v-html="t( 'sections.part1.p1' )"/>
 			<div class="kbox">
 				<Katex as="div" display tex="R_{xy}=\frac{V_H}{I}=\frac{h}{\nu e^2}=\frac{R_{\mathrm K}}{\nu},\qquad \nu\in\mathbb{N}." />
 			</div>
@@ -38,7 +38,7 @@
 			<div class="kbox">
 				<Katex as="div" display tex="R_{xx}\approx 0." />
 			</div>
-			<p>{{ t( "sections.part1.p3" ) }}</p>
+			<p v-html="t( 'sections.part1.p3' )"/>
 
 			<div class="tableScroller mt-3">
 				<v-table density="compact">
@@ -60,7 +60,7 @@
 
 		<h2 id="metrologie" class="mt-8">{{ t( "sections.part2.title" ) }}</h2>
 		<div class="eddie">
-			<p>{{ t( "sections.part2.p1" ) }}</p>
+			<p v-html="t( 'sections.part2.p1' )"/>
 			<p v-html="t( 'sections.part2.p2' )" />
 		</div>
 

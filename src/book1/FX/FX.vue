@@ -14,10 +14,10 @@
 		</figure>
 		<h3 id="einleitung">{{ t( "fx.introDate" ) }}</h3>
 		<div class="eddie">
-			<p>{{ t( "fx.book.p1" ) }}</p>
+			<p v-html="t( 'fx.book.p1' )"/>
 			<p v-html="t( 'fx.book.p2' )" />
-			<p>{{ t( "fx.book.p3" ) }}</p>
-			<p>{{ t( "fx.book.p4" ) }}</p>
+			<p v-html="t( 'fx.book.p3' )"/>
+			<p v-html="t( 'fx.book.p4' )"/>
 		</div>
 	</template>
 
@@ -32,7 +32,7 @@
 
 		<h2 id="basic-denke" class="mt-8">{{ t( "fx.sections.part2.title" ) }}</h2>
 		<div class="eddie">
-			<p>{{ t( "fx.sections.part2.p1" ) }}</p>
+			<p v-html="t( 'fx.sections.part2.p1' )"/>
 			<ol>
 				<li><b>{{ t( "fx.sections.part2.s1Title" ) }}</b>: {{ t( "fx.sections.part2.s1" ) }}</li>
 				<li><b>{{ t( "fx.sections.part2.s2Title" ) }}</b>: {{ t( "fx.sections.part2.s2" ) }}</li>
@@ -46,7 +46,7 @@
 
 		<h2 class="mt-8">{{ t( "fx.sections.part3.title" ) }}</h2>
 		<div class="eddie">
-			<p>{{ t( "fx.sections.part3.p1" ) }}</p>
+			<p v-html="t( 'fx.sections.part3.p1' )"/>
 			<div class="kbox">
 				<div v-for="(line, idx) in miniProgram" :key="idx" class="mono">{{ line }}</div>
 			</div>
@@ -92,7 +92,7 @@
 	<template #interactivePart>
 		<h2 id="interaktiver-rechner">{{ t( "fx.interactive.title" ) }}</h2>
 		<div class="eddie d-flex flex-column ga-3">
-			<p>{{ t( "fx.interactive.p1" ) }}</p>
+			<p v-html="t( 'fx.interactive.p1' )"/>
 			<v-alert type="info" variant="tonal">
 				{{ t( "fx.interactive.tip" ) }}
 			</v-alert>

@@ -14,16 +14,16 @@
 		</figure>
 		<h3 id="einleitung">{{ t( "gd.introDate" ) }}</h3>
 		<div class="eddie">
-			<p>{{ t( "gd.book.p1" ) }}</p>
-			<p>{{ t( "gd.book.p2" ) }}</p>
-			<p>{{ t( "gd.book.p3" ) }}</p>
+			<p v-html="t( 'gd.book.p1' )"/>
+			<p v-html="t( 'gd.book.p2' )"/>
+			<p v-html="t( 'gd.book.p3' )"/>
 		</div>
 	</template>
 
 	<template #descriptionPart>
 		<h2 id="diophantos-raetsel">{{ t( "gd.sections.part1.title" ) }}</h2>
 		<div class="eddie">
-			<p>{{ t( "gd.sections.part1.p1" ) }}</p>
+			<p v-html="t( 'gd.sections.part1.p1' )"/>
 			<div class="cContainer">
 				<blockquote class="storyQuote">
 					<div class="plateHeader">
@@ -33,7 +33,7 @@
 					<div v-html="t( 'gd.sections.part1.epitaph' )" />
 				</blockquote>
 			</div>
-			<p>{{ t( "gd.sections.part1.p2" ) }}</p>
+			<p v-html="t( 'gd.sections.part1.p2' )"/>
 			<ul>
 				<li>{{ t( "gd.sections.part1.s1" ) }}</li>
 				<li>{{ t( "gd.sections.part1.s2" ) }}</li>
@@ -46,7 +46,7 @@
 
 		<h2 id="in-formeln" class="mt-8">{{ t( "gd.sections.part2.title" ) }}</h2>
 		<div class="eddie">
-			<p>{{ t( "gd.sections.part2.p1" ) }}</p>
+			<p v-html="t( 'gd.sections.part2.p1' )"/>
 			<div class="kbox">
 				<Katex as="div" display tex="\frac16x+\frac1{12}x+\frac17x+5+\frac12x+4=x" />
 			</div>
@@ -54,7 +54,7 @@
 
 		<h2 id="loesen" class="mt-8">{{ t( "gd.sections.part3.title" ) }}</h2>
 		<div class="eddie">
-			<p>{{ t( "gd.sections.part3.p1" ) }}</p>
+			<p v-html="t( 'gd.sections.part3.p1' )"/>
 			<div class="kbox">
 				<Katex
 					as="div"
@@ -96,7 +96,7 @@
 					<div v-html="t( 'gd.sections.part5.poem' )" />
 				</blockquote>
 			</div>
-			<p>{{ t( "gd.sections.part5.p1" ) }}</p>
+			<p v-html="t( 'gd.sections.part5.p1' )"/>
 			<div class="kbox">
 				<Katex
 					aligned
@@ -105,8 +105,8 @@
 					tex="T_{\text{klein}} &= \frac13T \\ T_{\text{schule}} &= \frac49T \\ T_{\text{zahlen}} &= \frac16T \\ T_{\text{Edmilla}} &= \frac23\cdot T_{\text{zahlen}}=\frac23\cdot\frac16T=\frac19T \\ T_{\text{frei}} &= \frac{2}{12}=\frac16\;\text{Jahr}"
 				/>
 			</div>
-			<p>{{ t( "gd.sections.part5.p2" ) }}</p>
-			<p>{{ t( "gd.sections.part5.p3" ) }}</p>
+			<p v-html="t( 'gd.sections.part5.p2' )"/>
+			<p v-html="t( 'gd.sections.part5.p3' )"/>
 			<div class="kbox">
 				<Katex
 					aligned
@@ -115,12 +115,12 @@
 					tex="T_{\text{Flucht}} &= T-\left(\frac13T+\frac49T+\frac16T+\frac16\right) \\ \frac13T+\frac49T+\frac16T &= \frac{6}{18}T+\frac{8}{18}T+\frac{3}{18}T=\frac{17}{18}T \\ T_{\text{Flucht}} &= T-\left(\frac{17}{18}T+\frac16\right)=\frac1{18}T-\frac16"
 				/>
 			</div>
-			<p>{{ t( "gd.sections.part5.p4" ) }}</p>
+			<p v-html="t( 'gd.sections.part5.p4' )"/>
 		</div>
 
 		<h2 id="mit-t18" class="mt-8">{{ t( "gd.sections.part6.title" ) }}</h2>
 		<div class="eddie">
-			<p>{{ t( "gd.sections.part6.p1" ) }}</p>
+			<p v-html="t( 'gd.sections.part6.p1' )"/>
 			<div class="kbox">
 				<Katex
 					aligned
@@ -136,7 +136,7 @@
 	<template #interactivePart>
 		<h2 id="deine-grabplatte">{{ t( "gd.interactive.title" ) }}</h2>
 		<div class="eddie">
-			<p>{{ t( "gd.interactive.p1" ) }}</p>
+			<p v-html="t( 'gd.interactive.p1' )"/>
 		</div>
 		<GDPlate />
 	</template>

@@ -15,8 +15,8 @@
 		<div class="eddie">
 			<p v-html="t( 'book.p1' )" />
 			<p v-html="t( 'book.p2' )" />
-			<p>{{ t( "book.p3" ) }}</p>
-			<p>{{ t( "book.p4" ) }}</p>
+			<p v-html="t( 'book.p3' )"/>
+			<p v-html="t( 'book.p4' )"/>
 		</div>
 	</template>
 
@@ -30,7 +30,7 @@
 					<O1Graph notitle />
 				</ImageZoomer>
 			</figure>
-			<p>{{ t( "sections.part1.prove" ) }}</p>
+			<p v-html="t( 'sections.part1.prove' )"/>
 			<div class="kbox">
 				<Katex as="div" display tex="\boxed{AD + BC = AB.}" />
 			</div>
@@ -38,7 +38,7 @@
 
 		<h2>{{ t( "sections.part2.title" ) }}</h2>
 		<div class="eddie">
-			<p>{{ t( "sections.part2.intro" ) }}</p>
+			<p v-html="t( 'sections.part2.intro' )"/>
 			<ul>
 				<li v-html="t( 'sections.part2.l1' )" />
 				<li v-html="t( 'sections.part2.l2' )" />
@@ -51,13 +51,13 @@
 		<h2 id="tangenten">{{ t( "sections.part3.title" ) }}</h2>
 		<div class="eddie">
 			<h3 v-html="t( 'sections.part3.rule1Title' )" />
-			<p>{{ t( "sections.part3.rule1Text" ) }}</p>
+			<p v-html="t( 'sections.part3.rule1Text' )"/>
 			<div class="kbox">
 				<Katex as="div" display tex="OL\perp AD,\quad OM\perp CD,\quad ON\perp BC." />
 			</div>
 
 			<h3 class="mt-6">{{ t( "sections.part3.rule2Title" ) }}</h3>
-			<p>{{ t( "sections.part3.rule2Text" ) }}</p>
+			<p v-html="t( 'sections.part3.rule2Text' )"/>
 			<ul>
 				<li v-html="t( 'sections.part3.rule2Item1' )" />
 				<li v-html="t( 'sections.part3.rule2Item2' )" />
@@ -79,12 +79,12 @@
 			<div class="kbox">
 				<Katex as="div" display tex="AB=(AL+MC)+(BN+MD)=AL+BN+MC+MD." />
 			</div>
-			<p>{{ t( "sections.part4.p3" ) }}</p>
+			<p v-html="t( 'sections.part4.p3' )"/>
 			<div class="kbox">
 				<Katex as="div" display tex="MC=CN,\quad MD=DL," />
 				<Katex as="div" display tex="AL+DL=AD,\quad BN+CN=BC." />
 			</div>
-			<p>{{ t( "sections.part4.p4" ) }}</p>
+			<p v-html="t( 'sections.part4.p4' )"/>
 			<div class="kbox">
 				<Katex as="div" display tex="AB=AD+BC." />
 			</div>
@@ -110,7 +110,7 @@
 				<Katex as="div" display tex="\angle OCM=\frac{\angle DCB}{2}" />
 			</div>
 			<p v-html="t( 'sections.part5.s3p2' )" />
-			<p>{{ t( "sections.part5.s3p3" ) }}</p>
+			<p v-html="t( 'sections.part5.s3p3' )"/>
 			<div class="kbox">
 				<Katex as="div" display tex="\angle DCB = 180^\circ-\angle DAB \Rightarrow \frac{\angle DCB}{2}=90^\circ-\frac{\angle DAB}{2}." />
 			</div>
@@ -124,7 +124,7 @@
 				<li v-html="t( 'sections.part5.s4l3' )" />
 				<li v-html="t( 'sections.part5.s4l4' )" />
 			</ul>
-			<p>{{ t( "sections.part5.s4p2" ) }}</p>
+			<p v-html="t( 'sections.part5.s4p2' )"/>
 			<div class="kbox">
 				<Katex as="div" display tex="LX=MC." />
 			</div>
@@ -159,11 +159,11 @@
 				<Katex as="div" display tex="\angle ODM = \frac{\angle ADC}{2}" />
 			</div>
 			<p v-html="t( 'sections.part6.s3p2' )" />
-			<p>{{ t( "sections.part6.s3p3" ) }}</p>
+			<p v-html="t( 'sections.part6.s3p3' )"/>
 			<div class="kbox">
 				<Katex as="div" display tex="\angle ABC+\angle ADC=180^\circ \Rightarrow \frac{\angle ADC}{2}=90^\circ-\frac{\angle ABC}{2}." />
 			</div>
-			<p>{{ t( "sections.part6.s3p4" ) }}</p>
+			<p v-html="t( 'sections.part6.s3p4' )"/>
 			<div class="kbox">
 				<Katex as="div" display tex="\angle ODM = 90^\circ-\frac{\angle ABC}{2} = \angle OYN." />
 			</div>
@@ -176,7 +176,7 @@
 				<li v-html="t( 'sections.part6.s4l3' )" />
 				<li v-html="t( 'sections.part6.s4l4' )" />
 			</ul>
-			<p>{{ t( "sections.part6.s4p2" ) }}</p>
+			<p v-html="t( 'sections.part6.s4p2' )"/>
 			<div class="kbox">
 				<Katex as="div" display tex="NY=MD." />
 			</div>
@@ -192,11 +192,11 @@
 
 		<h2>{{ t( "sections.part7.title" ) }}</h2>
 		<div class="eddie">
-			<p>{{ t( "sections.part7.p1" ) }}</p>
+			<p v-html="t( 'sections.part7.p1' )"/>
 			<div class="kbox">
 				<Katex as="div" display tex="AB=AO+OB=(AL+MC)+(BN+MD)." />
 			</div>
-			<p>{{ t( "sections.part7.p2" ) }}</p>
+			<p v-html="t( 'sections.part7.p2' )"/>
 			<div class="kbox">
 				<Katex as="div" display tex="MC=CN,\quad MD=DL," />
 				<Katex as="div" display tex="AB = AL + CN + BN + DL = (AL+DL) + (BN+CN) = AD + BC." />

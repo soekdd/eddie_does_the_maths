@@ -40,7 +40,7 @@
 					{{ t( "al.sections.part2.item2Suffix" ) }}
 				</li>
 			</ul>
-			<p>{{ t( "al.sections.part2.cardsLead" ) }}</p>
+			<p v-html="t( 'al.sections.part2.cardsLead' )"/>
 			<ol>
 				<li>{{ t( "al.sections.part2.cards1" ) }}</li>
 				<li>{{ t( "al.sections.part2.cards2" ) }}</li>
@@ -62,7 +62,7 @@
 				{{ t( "al.sections.part3.p1Suffix" ) }}
 			</p>
 
-			<p>{{ t( "al.sections.part3.p2" ) }}</p>
+			<p v-html="t( 'al.sections.part3.p2' )"/>
 
 			<div class="kbox">
 				<Katex
@@ -171,7 +171,7 @@
 				{{ t( "al.sections.part6.p1Middle" ) }}
 				<Katex inline tex="1^2+2^2+\dots+n^2" />{{ t( "al.sections.part6.p1Suffix" ) }}
 			</p>
-			<p>{{ t( "al.sections.part6.p2" ) }}</p>
+			<p v-html="t( 'al.sections.part6.p2' )"/>
 		</div>
 
 		<h2>{{ t( "al.sections.part7.title" ) }}</h2>
@@ -187,7 +187,7 @@
 
 		<h2 id="gcd" class="mt-2">{{ t( "al.sections.part8.title" ) }}</h2>
 		<div class="eddie">
-			<p>{{ t( "al.sections.part8.p1" ) }}</p>
+			<p v-html="t( 'al.sections.part8.p1' )"/>
 			<div class="kbox">
 				<Katex as="div" display :tex="`\\frac{48}{18}=\\frac{8}{3},\\quad \\text{${t( 'al.sections.part8.p2' )} }\\gcd(48,18)=6.`" />
 			</div>

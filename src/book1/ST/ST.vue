@@ -14,10 +14,10 @@
 		</figure>
 		<h3 id="einleitung">{{ t( "introDate" ) }}</h3>
 		<div class="eddie">
-			<p>{{ t( "book.p1" ) }}</p>
-			<p>{{ t( "book.p2" ) }}</p>
-			<p>{{ t( "book.p3" ) }}</p>
-			<p>{{ t( "book.p4" ) }}</p>
+			<p v-html="t( 'book.p1' )"/>
+			<p v-html="t( 'book.p2' )"/>
+			<p v-html="t( 'book.p3' )"/>
+			<p v-html="t( 'book.p4' )"/>
 		</div>
 	</template>
 
@@ -25,8 +25,8 @@
 		<h2 id="entscheidungsbaum">{{ t( "sections.part1.title" ) }}</h2>
 		<div class="eddie">
 			<p class="muted"><i>{{ t( "sections.part1.kicker" ) }}</i></p>
-			<p>{{ t( "sections.part1.p1" ) }}</p>
-			<p>{{ t( "sections.part1.p2" ) }}</p>
+			<p v-html="t( 'sections.part1.p1' )"/>
+			<p v-html="t( 'sections.part1.p2' )"/>
 			<ol>
 				<li v-for="item in treeLevels" :key="item">{{ item }}</li>
 			</ol>
@@ -35,7 +35,7 @@
 
 		<h2 id="wahrscheinlichkeiten" class="mt-8">{{ t( "sections.part2.title" ) }}</h2>
 		<div class="eddie">
-			<p>{{ t( "sections.part2.p1" ) }}</p>
+			<p v-html="t( 'sections.part2.p1' )"/>
 			<p class="muted">
 				{{ t( "sections.part2.p2a" ) }}
 				<Katex tex="f" />
@@ -108,7 +108,7 @@ p_{\text{ges}} &= P(S\cup N) \\
 
 		<h2 class="mt-8">{{ t( "sections.part5.title" ) }}</h2>
 		<div class="eddie">
-			<p>{{ t( "sections.part5.p1" ) }}</p>
+			<p v-html="t( 'sections.part5.p1' )"/>
 			<div class="kbox">
 				<Katex as="div" display :tex="`P(\\text{${t('graph.labels.freedom')}}) = \\bigl(1-(1-p)^2\\bigr)\\cdot a\\cdot (1-r) = (2p-p^2)\\,a\\,(1-r).`" />
 			</div>

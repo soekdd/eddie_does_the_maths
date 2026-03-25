@@ -14,9 +14,9 @@
 		</figure>
 		<h3 id="einleitung">{{ t( "introDate" ) }}</h3>
 		<div class="eddie">
-			<p>{{ t( "book.p1" ) }}</p>
-			<p>{{ t( "book.p2" ) }}</p>
-			<p>{{ t( "book.p3" ) }}</p>
+			<p v-html="t( 'book.p1' )"/>
+			<p v-html="t( 'book.p2' )"/>
+			<p v-html="t( 'book.p3' )"/>
 		</div>
 	</template>
 
@@ -194,7 +194,7 @@
 					<li>{{ t( "sections.task7.l1" ) }}</li>
 					<li>{{ t( "sections.task7.l2" ) }}</li>
 				</ul>
-				<p>{{ t( "sections.task7.p2" ) }}</p>
+				<p v-html="t( 'sections.task7.p2' )"/>
 				<div class="kbox">
 					<Katex
 						as="div"
@@ -211,8 +211,8 @@
 		</section>
 
 		<EddieComment class="mt-4" :subtitle="t( 'sections.comment.title' )">
-			<p>{{ t( "sections.comment.p1" ) }}</p>
-			<p>{{ t( "sections.comment.p2" ) }}</p>
+			<p v-html="t( 'sections.comment.p1' )"/>
+			<p v-html="t( 'sections.comment.p2' )"/>
 			<p class="muted">{{ t( "sections.comment.p3" ) }}</p>
 		</EddieComment>
 	</template>

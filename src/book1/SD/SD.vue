@@ -13,17 +13,17 @@
 		</figure>
 		<h3 id="einleitung">{{ t( "introDate" ) }}</h3>
 		<div class="eddie">
-			<p>{{ t( "book.p1" ) }}</p>
-			<p>{{ t( "book.p2" ) }}</p>
-			<p>{{ t( "book.p3" ) }}</p>
+			<p v-html="t( 'book.p1' )"/>
+			<p v-html="t( 'book.p2' )"/>
+			<p v-html="t( 'book.p3' )"/>
 		</div>
 	</template>
 	<template #descriptionPart>
 		<h2 id="bits-zu-basen" class="mt-8">{{ t( "sections.part1.title" ) }}</h2>
 		<div class="eddie">
-			<p>{{ t( "sections.part1.p1" ) }}</p>
-			<p>{{ t( "sections.part1.p2" ) }}</p>
-			<p>{{ t( "sections.part1.p3" ) }}</p>
+			<p v-html="t( 'sections.part1.p1' )"/>
+			<p v-html="t( 'sections.part1.p2' )"/>
+			<p v-html="t( 'sections.part1.p3' )"/>
 			<div class="kbox">
 				<div v-for="row in baseEncodingRows" :key="row.bits" class="mono">
 					{{ row.bits }} = {{ row.base }}
@@ -41,17 +41,17 @@
 
 		<h2 id="codons" class="mt-8">{{ t( "sections.part2.title" ) }}</h2>
 		<div class="eddie">
-			<p>{{ t( "sections.part2.p1" ) }}</p>
+			<p v-html="t( 'sections.part2.p1' )"/>
 			<div class="kbox">
 				<Katex as="div" display tex="3\ \text{Basen} = 3\cdot 2\ \text{Bits} = 6\ \text{Bits}" />
 			</div>
-			<p>{{ t( "sections.part2.p2" ) }}</p>
+			<p v-html="t( 'sections.part2.p2' )"/>
 		</div>
 
 		<h2 class="mt-8">{{ t( "sections.part3.title" ) }}</h2>
 		<div class="eddie">
-			<p>{{ t( "sections.part3.p1" ) }}</p>
-			<p>{{ t( "sections.part3.p2" ) }}</p>
+			<p v-html="t( 'sections.part3.p1' )"/>
+			<p v-html="t( 'sections.part3.p2' )"/>
 		</div>
 
 		<h2 id="vergleich" class="mt-8">{{ t( "sections.part4.title" ) }}</h2>
@@ -76,22 +76,22 @@
 
 		<h2 id="frameshift" class="mt-8">{{ t( "sections.part5.title" ) }}</h2>
 		<div class="eddie">
-			<p>{{ t( "sections.part5.p1" ) }}</p>
-			<p>{{ t( "sections.part5.p2" ) }}</p>
-			<p>{{ t( "sections.part5.p3" ) }}</p>
+			<p v-html="t( 'sections.part5.p1' )"/>
+			<p v-html="t( 'sections.part5.p2' )"/>
+			<p v-html="t( 'sections.part5.p3' )"/>
 		</div>
 
 		<EddieComment id="warum" :subtitle="t( 'comment.title' )">
-			<p>{{ t( "comment.p1" ) }}</p>
-			<p>{{ t( "comment.p2" ) }}</p>
-			<p>{{ t( "comment.p3" ) }}</p>
+			<p v-html="t( 'comment.p1' )"/>
+			<p v-html="t( 'comment.p2' )"/>
+			<p v-html="t( 'comment.p3' )"/>
 		</EddieComment>
 	</template>
 
 	<template #interactivePart>
 		<h2 id="gift-code">{{ t( "gift.title" ) }}</h2>
 		<div class="eddie d-flex flex-column ga-3">
-			<p>{{ t( "gift.p1" ) }}</p>
+			<p v-html="t( 'gift.p1' )"/>
 
 			<v-text-field
 				v-model="giftInput"

@@ -14,11 +14,11 @@
 		</figure>
 		<h2 id="willkommen">{{ t( "welcome.heading" ) }}</h2>
 		<div class="eddie">
-			<p>{{ t( "welcome.p1" ) }}</p>
-			<p>{{ t( "welcome.p2" ) }}</p>
+			<p v-html="t( 'welcome.p1' )"/>
+			<p v-html="t( 'welcome.p2' )"/>
 			<p v-html="t( 'welcome.p3' )" />
-			<p>{{ t( "welcome.p4" ) }}</p>
-			<p>{{ t( "welcome.p5" ) }}</p>
+			<p v-html="t( 'welcome.p4' )"/>
+			<p v-html="t( 'welcome.p5' )"/>
 
 			<div class="exampleClear"></div>
 		</div>

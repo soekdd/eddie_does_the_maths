@@ -14,11 +14,11 @@
 		</figure>
 		<h3 id="einleitung">{{ t( "introDate1" ) }}</h3>
 		<div class="eddie">
-			<p>{{ t( "book.day1p1" ) }}</p><p>{{ t( "book.day1p2" ) }}</p><p>{{ t( "book.day1p3" ) }}</p>
+			<p v-html="t( 'book.day1p1' )"/><p v-html="t( 'book.day1p2' )"/><p v-html="t( 'book.day1p3' )"/>
 		</div>
 		<h3>{{ t( "introDate2" ) }}</h3>
 		<div class="eddie">
-			<p>{{ t( "book.day2p1" ) }}</p><p>{{ t( "book.day2p2" ) }}</p><p>{{ t( "book.day2p3" ) }}</p>
+			<p v-html="t( 'book.day2p1' )"/><p v-html="t( 'book.day2p2' )"/><p v-html="t( 'book.day2p3' )"/>
 		</div>
 	</template>
 
@@ -36,7 +36,7 @@
 				<h3 id="a1">{{ t( "tasks.a1.heading" ) }}</h3>
 				<RouterLink class="task-link" to="/O1">{{ t( "tasks.a1.link" ) }}</RouterLink>
 			</div>
-			<p>{{ t( "tasks.a1.p1" ) }}</p>
+			<p v-html="t( 'tasks.a1.p1' )"/>
 		</section>
 
 		<section class="problem">
@@ -44,12 +44,12 @@
 				<h3 id="a2">{{ t( "tasks.a2.heading" ) }}</h3>
 				<RouterLink class="task-link" to="/O2">{{ t( "tasks.a2.link" ) }}</RouterLink>
 			</div>
-			<p>{{ t( "tasks.a2.p1" ) }}</p>
+			<p v-html="t( 'tasks.a2.p1' )"/>
 			<ul>
 				<li>{{ t( "tasks.a2.l1" ) }}</li>
 				<li>{{ t( "tasks.a2.l2" ) }}</li>
 			</ul>
-			<p>{{ t( "tasks.a2.p2" ) }}</p>
+			<p v-html="t( 'tasks.a2.p2' )"/>
 		</section>
 
 		<section class="problem">
@@ -57,8 +57,8 @@
 				<h3 id="a3">{{ t( "tasks.a3.heading" ) }}</h3>
 				<RouterLink class="task-link" to="/O3">{{ t( "tasks.a3.link" ) }}</RouterLink>
 			</div>
-			<p>{{ t( "tasks.a3.p1" ) }}</p>
-			<p>{{ t( "tasks.a3.p2" ) }}</p>
+			<p v-html="t( 'tasks.a3.p1' )"/>
+			<p v-html="t( 'tasks.a3.p2' )"/>
 			<Katex
 				tex="o\!\bigl(Q_{i_1}+Q_{i_2}+\dots+Q_{i_n}\bigr)\;\ge\;o\!\bigl(Q_{i_1}\bigr)."
 			/>
@@ -69,8 +69,8 @@
 				<h3 id="b1">{{ t( "tasks.b1.heading" ) }}</h3>
 				<RouterLink class="task-link" to="/O4">{{ t( "tasks.b1.link" ) }}</RouterLink>
 			</div>
-			<p>{{ t( "tasks.b1.p1" ) }}</p>
-			<p>{{ t( "tasks.b1.p2" ) }}</p>
+			<p v-html="t( 'tasks.b1.p1' )"/>
+			<p v-html="t( 'tasks.b1.p2' )"/>
 		</section>
 
 		<section class="problem">
@@ -78,8 +78,8 @@
 				<h3 id="b2">{{ t( "tasks.b2.heading" ) }}</h3>
 				<RouterLink class="task-link" to="/O5">{{ t( "tasks.b2.link" ) }}</RouterLink>
 			</div>
-			<p>{{ t( "tasks.b2.p1" ) }}</p>
-			<p>{{ t( "tasks.b2.p2" ) }}</p>
+			<p v-html="t( 'tasks.b2.p1' )"/>
+			<p v-html="t( 'tasks.b2.p2' )"/>
 		</section>
 
 		<section class="problem">
@@ -87,9 +87,9 @@
 				<h3 id="b3">{{ t( "tasks.b3.heading" ) }}</h3>
 				<RouterLink class="task-link" to="/O6">{{ t( "tasks.b3.link" ) }}</RouterLink>
 			</div>
-			<p>{{ t( "tasks.b3.p1" ) }}</p>
+			<p v-html="t( 'tasks.b3.p1' )"/>
 			<Katex tex="x_{n+1}=x_n\left(x_n+\frac{1}{n}\right)\quad (n=1,2,3,\dots)." />
-			<p>{{ t( "tasks.b3.p2" ) }}</p>
+			<p v-html="t( 'tasks.b3.p2' )"/>
 		</section>
 	</template>
 

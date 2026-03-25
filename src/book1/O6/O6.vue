@@ -34,7 +34,7 @@
 			<div class="kbox">
 				<Katex as="div" display :tex="t( 'sections.part1.proveBox' )" />
 			</div>
-			<p>{{ t( "sections.part1.p3" ) }}</p>
+			<p v-html="t( 'sections.part1.p3' )"/>
 			<p>
 				{{ t( "sections.part1.p4a" ) }} <Katex tex="x_n" /> {{ t( "sections.part1.p4b" ) }}
 				<Katex tex="x_{n+1}" /> {{ t( "sections.part1.p4c" ) }}
@@ -43,7 +43,7 @@
 
 		<h2 id="monotonie" class="mt-8">{{ t( "sections.part2.title" ) }}</h2>
 		<div class="eddie">
-			<p>{{ t( "sections.part2.p1" ) }}</p>
+			<p v-html="t( 'sections.part2.p1' )"/>
 			<div class="kbox">
 				<Katex as="div" display tex="f_n(t):=t\left(t+\frac{1}{n}\right),\qquad n\ge1." />
 			</div>
@@ -137,7 +137,7 @@
 			<div class="kbox">
 				<Katex as="div" display tex="=(v_k-u_k)\!\left(u_k+v_k+\frac1k\right)=d_k\!\left(u_k+v_k+\frac1k\right)." />
 			</div>
-			<p>{{ t( "sections.part4.p4" ) }}</p>
+			<p v-html="t( 'sections.part4.p4' )"/>
 			<div class="kbox">
 				<Katex as="div" display :tex="t( 'sections.part4.positiveBox' )" />
 			</div>
@@ -171,7 +171,7 @@
 		</div>
 
 		<EddieComment :subtitle="t( 'sections.part4.commentTitle' )">
-			<p>{{ t( "sections.part4.commentText" ) }}</p>
+			<p v-html="t( 'sections.part4.commentText' )"/>
 		</EddieComment>
 	</template>
 

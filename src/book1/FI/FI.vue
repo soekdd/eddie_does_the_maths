@@ -17,9 +17,9 @@
 			<p v-html="t( 'book.p1' )" />
 			<p v-html="t( 'book.p2' )" />
 			<p v-html="t( 'book.p3' )" />
-			<p>{{ t( "book.p4" ) }}</p>
+			<p v-html="t( 'book.p4' )"/>
 			<p v-html="t( 'book.p5' )" />
-			<p>{{ t( "book.p6" ) }}</p>
+			<p v-html="t( 'book.p6' )"/>
 		</div>
 	</template>
 
@@ -39,7 +39,7 @@
 					</ImageZoomer>
 				</figure>
 				<h3>{{ t( "sections.step11" ) }}</h3>
-				<p>{{ t( "sections.p11" ) }}</p>
+				<p v-html="t( 'sections.p11' )"/>
 				<ul>
 					<li v-html="t( 'sections.s111' )" />
 					<li v-html="t( 'sections.s112' )" />
@@ -60,8 +60,8 @@
 					</ImageZoomer>
 				</figure>
 				<h3>{{ t( "sections.step12" ) }}</h3>
-				<p>{{ t( "sections.p12" ) }}</p>
-				<p>{{ t( "sections.p13" ) }}</p>
+				<p v-html="t( 'sections.p12' )"/>
+				<p v-html="t( 'sections.p13' )"/>
 			</section>
 
 			<section>
@@ -77,9 +77,9 @@
 					</ImageZoomer>
 				</figure>
 				<h3>{{ t( "sections.step13" ) }}</h3>
-				<p>{{ t( "sections.p14" ) }}</p>
+				<p v-html="t( 'sections.p14' )"/>
 				<p v-html="t( 'sections.p15' )" />
-				<p>{{ t( "sections.p16" ) }}</p>
+				<p v-html="t( 'sections.p16' )"/>
 				<div class="kbox mb-3">
 					<Katex
 						as="div"
@@ -122,7 +122,7 @@
 					</ImageZoomer>
 				</figure>
 				<h3>{{ t( "sections.step14" ) }}</h3>
-				<p>{{ t( "sections.p17" ) }}</p>
+				<p v-html="t( 'sections.p17' )"/>
 				<EddieComment :subtitle="t( 'sections.commentTitle' )">
 					<p>
 						{{ t( "sections.comment1" ) }}

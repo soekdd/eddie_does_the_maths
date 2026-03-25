@@ -14,9 +14,9 @@
 		</figure>
 		<h3 id="einleitung">{{ t( "introDate" ) }}</h3>
 		<div class="eddie">
-			<p>{{ t( "book.p1" ) }}</p>
-			<p>{{ t( "book.p2" ) }}</p>
-			<p>{{ t( "book.p3" ) }}</p>
+			<p v-html="t( 'book.p1' )"/>
+			<p v-html="t( 'book.p2' )"/>
+			<p v-html="t( 'book.p3' )"/>
 		</div>
 	</template>
 
@@ -25,16 +25,16 @@
 
 		<h2 id="setting-geometrie" class="mt-8">{{ t( "sections.part2.title" ) }}</h2>
 		<div class="eddie">
-			<p>{{ t( "sections.part2.p1" ) }}</p>
+			<p v-html="t( 'sections.part2.p1' )"/>
 			<ul>
 				<li>{{ t( "sections.part2.l1Before" ) }} <Katex inline tex="L = 70\,\text{m}" /></li>
 				<li>{{ t( "sections.part2.l2Before" ) }} <Katex inline tex="W = 30\,\text{m}" /></li>
 			</ul>
-			<p>{{ t( "sections.part2.p2" ) }}</p>
+			<p v-html="t( 'sections.part2.p2' )"/>
 			<p>{{ t( "sections.part2.p3Before" ) }} <Katex inline tex="A=(0,0)" />.</p>
-			<p>{{ t( "sections.part2.p4" ) }}</p>
+			<p v-html="t( 'sections.part2.p4' )"/>
 			<p>{{ t( "sections.part2.p5Before" ) }} <Katex inline tex="B=\left(\frac{L}{2},W\right)" />.</p>
-			<p>{{ t( "sections.part2.p6" ) }}</p>
+			<p v-html="t( 'sections.part2.p6' )"/>
 			<p>
 				{{ t( "sections.part2.p7Before" ) }}
 				<Katex inline tex="y=0" />
@@ -88,7 +88,7 @@
 			<div class="kbox">
 				<Katex as="div" display tex="PB=\sqrt{\left(\frac{L}{2}-x\right)^2+W^2}" />
 			</div>
-			<p>{{ t( "sections.part5.s1p4" ) }}</p>
+			<p v-html="t( 'sections.part5.s1p4' )"/>
 			<div class="kbox">
 				<Katex as="div" display tex="R(x)=a\,x+b\sqrt{\left(\frac{L}{2}-x\right)^2+W^2}" />
 			</div>
@@ -143,15 +143,15 @@
 				<Katex inline tex="24{,}39\,\text{m}" />
 				{{ t( "sections.part5.s5p1After" ) }}
 			</p>
-			<p>{{ t( "sections.part5.s5p2" ) }}</p>
+			<p v-html="t( 'sections.part5.s5p2' )"/>
 			<div class="kbox">
 				<Katex as="div" display tex="u^*=\frac{15\sqrt2}{2}\approx 10{,}61\,\text{m}" />
 			</div>
-			<p>{{ t( "sections.part5.s5p3" ) }}</p>
+			<p v-html="t( 'sections.part5.s5p3' )"/>
 			<div class="kbox">
 				<Katex as="div" display tex="PB^*=\frac{45\sqrt2}{2}\approx 31{,}82\,\text{m}" />
 			</div>
-			<p>{{ t( "sections.part5.s5p4" ) }}</p>
+			<p v-html="t( 'sections.part5.s5p4' )"/>
 		</div>
 	</template>
 

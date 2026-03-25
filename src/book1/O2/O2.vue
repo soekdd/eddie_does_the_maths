@@ -14,10 +14,10 @@
 		</figure>
 		<h3 id="einleitung">{{ t( "introDate" ) }}</h3>
 		<div class="eddie">
-			<p>{{ t( "book.p1" ) }}</p>
-			<p>{{ t( "book.p2" ) }}</p>
-			<p>{{ t( "book.p3" ) }}</p>
-			<p>{{ t( "book.p4" ) }}</p>
+			<p v-html="t( 'book.p1' )"/>
+			<p v-html="t( 'book.p2' )"/>
+			<p v-html="t( 'book.p3' )"/>
+			<p v-html="t( 'book.p4' )"/>
 		</div>
 	</template>
 
@@ -53,7 +53,7 @@
 		<h2 id="entscheidungsbaum" class="mt-8">{{ t( "sections.part3.title" ) }}</h2>
 		<div class="eddie">
 			<h3 v-html="t( 'sections.part3.step1Title' )" />
-			<p>{{ t( "sections.part3.step1p1" ) }}</p>
+			<p v-html="t( 'sections.part3.step1p1' )"/>
 			<div class="kbox">
 				<Katex as="div" display tex="k,\;2k,\;3k,\;\dots,\;(n-1)k \quad (\bmod n)" />
 			</div>
@@ -62,7 +62,7 @@
 			<div class="kbox">
 				<Katex as="div" display tex="ak \equiv bk \pmod n." />
 			</div>
-			<p>{{ t( "sections.part3.step1p4" ) }}</p>
+			<p v-html="t( 'sections.part3.step1p4' )"/>
 			<div class="kbox">
 				<Katex as="div" display tex="(a-b)k \equiv 0 \pmod n," />
 			</div>
@@ -82,30 +82,30 @@
 			<div class="kbox">
 				<Katex as="div" display tex="r_{i+1}\equiv r_i+k \pmod n." />
 			</div>
-			<p>{{ t( "sections.part3.step2p4" ) }}</p>
+			<p v-html="t( 'sections.part3.step2p4' )"/>
 
 			<h4>{{ t( "sections.part3.caseATitle" ) }}</h4>
-			<p>{{ t( "sections.part3.caseAp1" ) }}</p>
+			<p v-html="t( 'sections.part3.caseAp1' )"/>
 			<div class="kbox">
 				<Katex as="div" display tex="r_{i+1}=r_i+k." />
 			</div>
-			<p>{{ t( "sections.part3.caseAp2" ) }}</p>
+			<p v-html="t( 'sections.part3.caseAp2' )"/>
 			<div class="kbox">
 				<Katex as="div" display tex="r_i=r_{i+1}-k=|r_{i+1}-k|." />
 			</div>
 			<p v-html="t( 'sections.part3.caseAp3' )" />
 
 			<h4>{{ t( "sections.part3.caseBTitle" ) }}</h4>
-			<p>{{ t( "sections.part3.caseBp1" ) }}</p>
+			<p v-html="t( 'sections.part3.caseBp1' )"/>
 			<div class="kbox">
 				<Katex as="div" display tex="r_{i+1}=r_i+k-n \quad\Rightarrow\quad r_i=r_{i+1}+n-k." />
 			</div>
-			<p>{{ t( "sections.part3.caseBp2" ) }}</p>
+			<p v-html="t( 'sections.part3.caseBp2' )"/>
 			<div class="kbox">
 				<Katex as="div" display tex="t:=k-r_{i+1}." />
 			</div>
 			<p v-html="t( 'sections.part3.caseBp3' )" />
-			<p>{{ t( "sections.part3.caseBp4" ) }}</p>
+			<p v-html="t( 'sections.part3.caseBp4' )"/>
 			<ul>
 				<li v-html="t( 'sections.part3.caseBl1' )" />
 				<li v-html="t( 'sections.part3.caseBl2' )" />
@@ -133,7 +133,7 @@
 	<template #interactivePart>
 		<h2 id="rechner">{{ t( "sections.interactive.title" ) }}</h2>
 		<div class="eddie d-flex flex-column ga-3">
-			<p>{{ t( "sections.interactive.intro" ) }}</p>
+			<p v-html="t( 'sections.interactive.intro' )"/>
 
 			<div class="d-flex flex-wrap ga-3 align-center">
 				<v-text-field

@@ -15,7 +15,7 @@
 		<div class="eddie">
 			<p v-html="t( 'book.p1' )" />
 			<p v-html="t( 'book.p2' )" />
-			<p>{{ t( "book.p3" ) }}</p>
+			<p v-html="t( 'book.p3' )"/>
 		</div>
 	</template>
 
@@ -27,11 +27,11 @@
 				<Katex tex="1300\,\mathrm{m}" />.
 				{{ t( "sections.part1.p1After" ) }}
 			</p>
-			<p>{{ t( "sections.part1.p2" ) }}</p>
+			<p v-html="t( 'sections.part1.p2' )"/>
 			<div class="kbox">
 				<Katex as="div" display tex="W = m g,\qquad A = \rho_{\mathrm{W}} g V,\qquad W=A\Rightarrow m=\rho_{\mathrm{W}}V." />
 			</div>
-			<p>{{ t( "sections.part1.p3" ) }}</p>
+			<p v-html="t( 'sections.part1.p3' )"/>
 			<v-table class="mt-3" density="compact">
 				<thead>
 					<tr>
@@ -121,7 +121,7 @@
 			<div class="kbox">
 				<Katex as="div" display tex="GZ(\varphi)\approx GM\sin\varphi,\qquad M_{\mathrm{R}}(\varphi)\approx \Delta g\,GM\sin\varphi." />
 			</div>
-			<p>{{ t( "sections.part3.p4" ) }}</p>
+			<p v-html="t( 'sections.part3.p4' )"/>
 			<div class="kbox">
 				<Katex
 					as="div"
@@ -133,7 +133,7 @@
 				{{ t( "sections.part3.p5Before" ) }}
 				<Katex tex="M_{\mathrm{W}}\gtrsim M_{\mathrm{R}}" />.
 			</p>
-			<p>{{ t( "sections.part3.p6" ) }}</p>
+			<p v-html="t( 'sections.part3.p6' )"/>
 			<div class="kbox">
 				<Katex as="div" display tex="\frac{H}{B}\approx\frac{52{,}5}{11{,}7}\approx 4{,}49." />
 			</div>
@@ -146,7 +146,7 @@
 
 		<h2 id="downflooding" class="mt-8">{{ t( "sections.part4.title" ) }}</h2>
 		<div class="eddie">
-			<p>{{ t( "sections.part4.p1" ) }}</p>
+			<p v-html="t( 'sections.part4.p1' )"/>
 			<div class="kbox">
 				<Katex as="div" display tex="GM_{\mathrm{eff}}\approx GM-\frac{\rho_{\mathrm{W}}I_{\mathrm{FS}}}{\Delta}." />
 			</div>
@@ -157,8 +157,8 @@
 				<Katex tex="GM_{\mathrm{eff}}" />
 				{{ t( "sections.part4.p2After" ) }}
 			</p>
-			<p>{{ t( "sections.part4.p3" ) }}</p>
-			<p>{{ t( "sections.part4.p4" ) }}</p>
+			<p v-html="t( 'sections.part4.p3' )"/>
+			<p v-html="t( 'sections.part4.p4' )"/>
 			<div class="kbox">
 				<Katex as="div" display tex="T\approx 2\pi\sqrt{\frac{I_{\varphi}}{\Delta g\,GM}}\approx 2\pi\sqrt{\frac{k^2}{g\,GM}}." />
 			</div>
@@ -166,13 +166,13 @@
 
 		<h2 id="schluss" class="mt-8">{{ t( "sections.part5.title" ) }}</h2>
 		<div class="eddie">
-			<p>{{ t( "sections.part5.p1" ) }}</p>
+			<p v-html="t( 'sections.part5.p1' )"/>
 			<ol>
 				<li><Katex tex="KG" /> {{ t( "sections.part5.items.kg" ) }}</li>
 				<li><Katex tex="I_{\mathrm{W}}" /> {{ t( "sections.part5.items.iw" ) }}</li>
 				<li>{{ t( "sections.part5.items.downflooding" ) }}</li>
 			</ol>
-			<p>{{ t( "sections.part5.p2" ) }}</p>
+			<p v-html="t( 'sections.part5.p2' )"/>
 			<p class="muted">{{ t( "sections.part5.note" ) }}</p>
 		</div>
 	</template>

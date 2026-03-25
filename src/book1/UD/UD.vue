@@ -14,9 +14,9 @@
 		</figure>
 		<h3 id="einleitung">{{ t( "introDate" ) }}</h3>
 		<div class="eddie">
-			<p>{{ t( "book.p1" ) }}</p>
-			<p>{{ t( "book.p2" ) }}</p>
-			<p>{{ t( "book.p3" ) }}</p>
+			<p v-html="t( 'book.p1' )"/>
+			<p v-html="t( 'book.p2' )"/>
+			<p v-html="t( 'book.p3' )"/>
 		</div>
 	</template>
 
@@ -104,7 +104,7 @@
 		<h2 class="mt-8">{{ t( "sections.part4.title" ) }}</h2>
 		<div class="eddie">
 			<h3>{{ t( "sections.part4.stage1Title" ) }}</h3>
-			<p>{{ t( "sections.part4.stage1Text" ) }}</p>
+			<p v-html="t( 'sections.part4.stage1Text' )"/>
 			<div class="kbox">
 				<Katex
 					aligned
@@ -240,7 +240,7 @@
 			:shore-width
 		/>
 		<div class="eddie">
-			<p>{{ t( "interactive.scaleNote" ) }}</p>
+			<p v-html="t( 'interactive.scaleNote' )"/>
 		</div>
 	</template>
 

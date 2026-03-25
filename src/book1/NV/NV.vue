@@ -15,7 +15,7 @@
 		<div class="eddie">
 			<p v-html="t( 'book.p1' )" />
 			<p v-html="t( 'book.p2' )" />
-			<p>{{ t( "book.p3" ) }}</p>
+			<p v-html="t( 'book.p3' )"/>
 		</div>
 	</template>
 
@@ -68,7 +68,7 @@
 	<template #interactivePart>
 		<h2 id="interaktiv">{{ t( "sections.interactiveTitle" ) }}</h2>
 		<div class="eddie d-flex flex-column ga-3">
-			<p>{{ t( "sections.interactiveBody" ) }}</p>
+			<p v-html="t( 'sections.interactiveBody' )"/>
 			<v-select
 				v-model="interactiveMode"
 				class="w-100"

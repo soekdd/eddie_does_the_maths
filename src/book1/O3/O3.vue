@@ -14,10 +14,10 @@
 		</figure>
 		<h3 id="einleitung">{{ t( "introDate" ) }}</h3>
 		<div class="eddie">
-			<p>{{ t( "book.p1" ) }}</p>
-			<p>{{ t( "book.p2" ) }}</p>
-			<p>{{ t( "book.p3" ) }}</p>
-			<p>{{ t( "book.p4" ) }}</p>
+			<p v-html="t( 'book.p1' )"/>
+			<p v-html="t( 'book.p2' )"/>
+			<p v-html="t( 'book.p3' )"/>
+			<p v-html="t( 'book.p4' )"/>
 		</div>
 	</template>
 
@@ -57,11 +57,11 @@
 				</figure>
 
 				<h3>{{ t( "sections.part2.graphHeading" ) }}</h3>
-				<p>{{ t( "sections.part2.graphText1" ) }}</p>
+				<p v-html="t( 'sections.part2.graphText1' )"/>
 				<div class="kbox">
 					<Katex as="div" display tex="\binom{i}{r}=\binom{i-1}{r-1}+\binom{i-1}{r}." />
 				</div>
-				<p>{{ t( "sections.part2.graphText2" ) }}</p>
+				<p v-html="t( 'sections.part2.graphText2' )"/>
 
 				<h3 v-html="t( 'sections.part2.rulesHeading' )" />
 				<p><b>{{ t( "sections.part2.lemma1" ) }}</b></p>
@@ -118,7 +118,7 @@
 			<div class="kbox">
 				<Katex as="div" display tex="\sum_{j=1}^n Q_{i_j}(x)=(1+x)^mA(x)." />
 			</div>
-			<p>{{ t( "sections.part3.caseAText2" ) }}</p>
+			<p v-html="t( 'sections.part3.caseAText2' )"/>
 			<div class="kbox">
 				<Katex aligned
 					as="div"
@@ -129,11 +129,11 @@
 			<p v-html="t( 'sections.part3.caseAText3' )" />
 
 			<h3 v-html="t( 'sections.part3.caseBTitle' )" />
-			<p>{{ t( "sections.part3.caseBText1" ) }}</p>
+			<p v-html="t( 'sections.part3.caseBText1' )"/>
 			<div class="kbox">
 				<Katex as="div" display tex="A(x):=\sum_{i_j<m}Q_{i_j}(x),\qquad B(x):=\sum_{i_j\ge m}Q_{i_j-m}(x)." />
 			</div>
-			<p>{{ t( "sections.part3.caseBText2" ) }}</p>
+			<p v-html="t( 'sections.part3.caseBText2' )"/>
 			<div class="kbox">
 				<Katex as="div" display tex="\sum_{j=1}^n Q_{i_j}(x)=A(x)+(1+x)^mB(x)." />
 			</div>
@@ -141,7 +141,7 @@
 			<div class="kbox">
 				<Katex as="div" display tex="A+(1+x)^mB\equiv A+(1+x^m)B=(A+B)+x^mB." />
 			</div>
-			<p>{{ t( "sections.part3.caseBText4" ) }}</p>
+			<p v-html="t( 'sections.part3.caseBText4' )"/>
 			<div class="kbox">
 				<Katex as="div" display tex="o\bigl(A+(1+x)^mB\bigr)=o(A+B)+o(B)." />
 			</div>
@@ -153,18 +153,18 @@
 					:tex="texFallBBlock"
 				/>
 			</div>
-			<p>{{ t( "sections.part3.caseBText6" ) }}</p>
+			<p v-html="t( 'sections.part3.caseBText6' )"/>
 			<div class="kbox">
 				<Katex as="div" display tex="o\!\left(\sum_{j=1}^n Q_{i_j}\right)\ge o(Q_{i_1})." />
 			</div>
 		</div>
 
 		<EddieComment :subtitle="t( 'sections.part3.commentTitle' )">
-			<p>{{ t( "sections.part3.commentText" ) }}</p>
+			<p v-html="t( 'sections.part3.commentText' )"/>
 			<ol>
 				<li v-for="(item, idx) in commentItems" :key="`comment-${idx}`" v-html="item" />
 			</ol>
-			<p>{{ t( "sections.part3.commentEnd" ) }}</p>
+			<p v-html="t( 'sections.part3.commentEnd' )"/>
 		</EddieComment>
 	</template>
 

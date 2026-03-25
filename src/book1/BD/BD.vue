@@ -23,7 +23,7 @@
 		<h2 id="system">{{ t( "bd.sections.part1.title" ) }}</h2>
 		<div class="eddie">
 			<p v-html="t( 'bd.sections.part1.p1' )" />
-			<p>{{ t( "bd.sections.part1.p2" ) }}</p>
+			<p v-html="t( 'bd.sections.part1.p2' )"/>
 			<div class="kbox">
 				<Katex as="div" display tex="M_{Ed}\le M_{Rd}" />
 			</div>
@@ -57,7 +57,7 @@
 		<h2 id="schnittgroessen" class="mt-8">{{ t( "bd.sections.part3.title" ) }}</h2>
 		<div class="eddie">
 			<h3>{{ t( "bd.sections.part3.step31" ) }}</h3>
-			<p>{{ t( "bd.sections.part3.p1" ) }}</p>
+			<p v-html="t( 'bd.sections.part3.p1' )"/>
 			<div class="kbox">
 				<Katex as="div" display tex="R_A=R_B=\frac{P}{2}+\frac{q_g L}{2}" />
 			</div>
@@ -89,7 +89,7 @@
 							tex="P_d&=\gamma_{\text{DIN}}P\\q_{g,d}&=\gamma_{\text{DIN}}q_g\\M_{Ed,\text{DIN}}&=\gamma_{\text{DIN}}\left(\frac{P L}{4}+\frac{q_g L^2}{8}\right)"
 						/>
 					</div>
-					<p>{{ t( "bd.sections.part4.p1" ) }}</p>
+					<p v-html="t( 'bd.sections.part4.p1' )"/>
 				</v-col>
 				<v-col cols="12" md="6">
 					<h3>{{ t( "bd.sections.part4.step42" ) }}</h3>
@@ -100,7 +100,7 @@
 							tex="P_d&=\gamma_Q P\\q_{g,d}&=\gamma_G q_g,\qquad \gamma_G<\gamma_{\text{DIN}}\\M_{Ed,\text{TGL}}&=\gamma_Q\frac{P L}{4}+\gamma_G\frac{q_g L^2}{8}\\"
 						/>
 					</div>
-					<p>{{ t( "bd.sections.part4.p2" ) }}</p>
+					<p v-html="t( 'bd.sections.part4.p2' )"/>
 				</v-col>
 			</v-row>
 
@@ -108,7 +108,7 @@
 			<div class="kbox">
 				<Katex as="div" display tex="M_{Ed,\text{DIN}}-M_{Ed,\text{TGL}}=(\gamma_{\text{DIN}}-\gamma_G)\,\frac{q_g L^2}{8}" />
 			</div>
-			<p>{{ t( "bd.sections.part4.p3" ) }}</p>
+			<p v-html="t( 'bd.sections.part4.p3' )"/>
 		</div>
 
 		<h2 id="nachweis" class="mt-8" v-html="t( 'bd.sections.part5.title' )" />
@@ -229,7 +229,7 @@
 
 			<h3>{{ t( "bd.sections.part7.step73" ) }}</h3>
 			<p v-html="t( 'bd.sections.part7.p3' )" />
-			<p>{{ t( "bd.sections.part7.p4" ) }}</p>
+			<p v-html="t( 'bd.sections.part7.p4' )"/>
 			<p class="muted">{{ t( "bd.sections.part7.p5" ) }}</p>
 		</div>
 	</template>
@@ -237,7 +237,7 @@
 	<template #interactivePart>
 		<h2 id="interaktiv">{{ t( "bd.interactive.title" ) }}</h2>
 		<div class="eddie">
-			<p>{{ t( "bd.interactive.intro" ) }}</p>
+			<p v-html="t( 'bd.interactive.intro' )"/>
 		</div>
 
 		<v-sheet border class="pa-4" rounded="lg">

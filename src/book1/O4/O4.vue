@@ -15,9 +15,9 @@
 		<h3 id="einleitung">{{ t( "introDate" ) }}</h3>
 		<div class="eddie">
 			<p v-html="t( 'book.p1' )" />
-			<p>{{ t( "book.p2" ) }}</p>
-			<p>{{ t( "book.p3" ) }}</p>
-			<p>{{ t( "book.p4" ) }}</p>
+			<p v-html="t( 'book.p2' )"/>
+			<p v-html="t( 'book.p3' )"/>
+			<p v-html="t( 'book.p4' )"/>
 		</div>
 	</template>
 
@@ -49,12 +49,12 @@
 			<div class="kbox">
 				<Katex as="div" display tex="x=\prod_{j=1}^{n} p_j^{e_j}\quad \text{mit } e_j\in\mathbb N_0." />
 			</div>
-			<p>{{ t( "sections.part2.p3" ) }}</p>
+			<p v-html="t( 'sections.part2.p3' )"/>
 			<ul>
 				<li v-html="t( 'sections.part2.l1' )" />
 				<li v-html="t( 'sections.part2.l2' )" />
 			</ul>
-			<p>{{ t( "sections.part2.p4" ) }}</p>
+			<p v-html="t( 'sections.part2.p4' )"/>
 			<ol>
 				<li>{{ t( "sections.part2.o1" ) }}</li>
 				<li>{{ t( "sections.part2.o2" ) }}</li>
@@ -72,11 +72,11 @@
 			<p v-html="t( 'sections.part3.aText2' )" />
 
 			<h3>{{ t( "sections.part3.bTitle" ) }}</h3>
-			<p>{{ t( "sections.part3.bText1" ) }}</p>
+			<p v-html="t( 'sections.part3.bText1' )"/>
 			<div class="kbox">
 				<Katex as="div" display tex="\varepsilon(x)=(e_1,\dots,e_n)\bmod 2\in\{0,1\}^n." />
 			</div>
-			<p>{{ t( "sections.part3.bText2" ) }}</p>
+			<p v-html="t( 'sections.part3.bText2' )"/>
 			<p><b>{{ t( "sections.part3.bMemo" ) }}</b></p>
 			<div class="kbox">
 				<Katex as="div" display :tex="t( 'sections.part3.bMemoBox' )" />
@@ -86,7 +86,7 @@
 
 		<h2 id="allgemein" class="mt-8">{{ t( "sections.part4.title" ) }}</h2>
 		<div class="eddie">
-			<p>{{ t( "sections.part4.p1" ) }}</p>
+			<p v-html="t( 'sections.part4.p1' )"/>
 			<p v-html="t( 'sections.part4.p2' )" />
 			<p v-html="t( 'sections.part4.p3' )" />
 			<div class="kbox">
@@ -105,17 +105,17 @@
 					tex="3\cdot 2^9+1&=3\cdot 512+1=1537\\|M|=1985&\ge 1537."
 				/>
 			</div>
-			<p>{{ t( "sections.part4.p6" ) }}</p>
+			<p v-html="t( 'sections.part4.p6' )"/>
 			<p v-html="t( 'sections.part4.p7' )" />
 		</div>
 
 		<h2 id="schubfachprinzip" class="mt-8">{{ t( "sections.part5.title" ) }}</h2>
 		<div class="eddie">
-			<p>{{ t( "sections.part5.p1" ) }}</p>
+			<p v-html="t( 'sections.part5.p1' )"/>
 			<h3>{{ t( "sections.part5.stageATitle" ) }}</h3>
 			<p v-html="t( 'sections.part5.stageAText1' )" />
 			<p v-html="t( 'sections.part5.stageAText2' )" />
-			<p>{{ t( "sections.part5.stageAText3" ) }}</p>
+			<p v-html="t( 'sections.part5.stageAText3' )"/>
 			<div class="kbox">
 				<Katex as="div" display tex="P=\sum_v\left\lfloor \frac{c_v}{2}\right\rfloor." />
 			</div>
@@ -151,12 +151,12 @@
 				<Katex as="div" display tex="abcd=(u^2)(v^2)=(uv)^2=(s^2)^2=s^4." />
 			</div>
 			<p v-html="t( 'sections.part5.stageBText4' )" />
-			<p>{{ t( "sections.part5.stageBText5" ) }}</p>
+			<p v-html="t( 'sections.part5.stageBText5' )"/>
 		</div>
 
 		<h2 id="beispiel" class="mt-8">{{ t( "sections.part6.title" ) }}</h2>
 		<div class="eddie">
-			<p>{{ t( "sections.part6.p1" ) }}</p>
+			<p v-html="t( 'sections.part6.p1' )"/>
 			<div class="kbox">
 				<Katex as="div" display tex="\{6,24,54,216,8,75\}." />
 			</div>
@@ -165,7 +165,7 @@
 				<Katex as="div" display tex="6\cdot24\cdot54\cdot216=36^4." />
 			</div>
 			<EddieComment :subtitle="t( 'sections.part6.commentTitle' )">
-				<p>{{ t( "sections.part6.commentText" ) }}</p>
+				<p v-html="t( 'sections.part6.commentText' )"/>
 			</EddieComment>
 		</div>
 	</template>

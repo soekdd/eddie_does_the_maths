@@ -26,7 +26,7 @@
 
 		<h2 id="impuls">{{ t( "bz.sections.part1.title" ) }}</h2>
 		<div class="eddie">
-			<p>{{ t( "bz.sections.part1.p1" ) }}</p>
+			<p v-html="t( 'bz.sections.part1.p1' )"/>
 			<div class="kbox">
 				<Katex
 					aligned
@@ -36,7 +36,7 @@
 				/>
 			</div>
 			<p v-html="t( 'bz.sections.part1.p2' )" />
-			<p>{{ t( "bz.sections.part1.p3" ) }}</p>
+			<p v-html="t( 'bz.sections.part1.p3' )"/>
 			<div class="kbox">
 				<Katex as="div" display tex="F_d=k\,F_k,\qquad F_k=m g" />
 			</div>
@@ -50,7 +50,7 @@
 				<li v-html="t( 'bz.sections.part2.slow' )" />
 				<li v-html="t( 'bz.sections.part2.fast' )" />
 			</ul>
-			<p>{{ t( "bz.sections.part2.p1" ) }}</p>
+			<p v-html="t( 'bz.sections.part2.p1' )"/>
 			<ul>
 				<li v-html="t( 'bz.sections.part2.baseLoad' )" />
 				<li v-html="t( 'bz.sections.part2.surcharge' )" />
@@ -184,22 +184,22 @@
 			<v-row dense>
 				<v-col cols="12" md="4">
 					<v-card class="compareCard pa-4" variant="outlined">
-						<p>{{ t( "bz.sections.part3.max1" ) }}</p>
+						<p v-html="t( 'bz.sections.part3.max1' )"/>
 					</v-card>
 				</v-col>
 				<v-col cols="12" md="4">
 					<v-card class="compareCard pa-4" variant="outlined">
-						<p>{{ t( "bz.sections.part3.max2" ) }}</p>
+						<p v-html="t( 'bz.sections.part3.max2' )"/>
 					</v-card>
 				</v-col>
 				<v-col cols="12" md="4">
 					<v-card class="compareCard pa-4" variant="outlined">
-						<p>{{ t( "bz.sections.part3.max3" ) }}</p>
+						<p v-html="t( 'bz.sections.part3.max3' )"/>
 					</v-card>
 				</v-col>
 			</v-row>
 
-			<p>{{ t( "bz.sections.part3.summaryLead" ) }}</p>
+			<p v-html="t( 'bz.sections.part3.summaryLead' )"/>
 			<ul>
 				<li>{{ t( "bz.sections.part3.summary1" ) }}</li>
 				<li>{{ t( "bz.sections.part3.summary2" ) }}</li>

@@ -24,7 +24,7 @@
 		<h2 id="einfuhrungsbeispiel">{{ t( "sections.part1.title" ) }}</h2>
 
 		<div class="eddie">
-			<p>{{ t( "sections.part1.p1" ) }}</p>
+			<p v-html="t( 'sections.part1.p1' )"/>
 			<p v-html="t( 'sections.part1.p2' )" />
 			<p v-html="t( 'sections.part1.p3' )" />
 			<Katex as="div" display tex="17k + 6s = 200,\quad k,s\in\mathbb{N}_0" />
@@ -102,7 +102,7 @@
 			<p v-html="t( 'sections.part2.p7' )" />
 
 			<EddieComment :subtitle="t( 'sections.part2.commentTitle' )">
-				<p>{{ t( "sections.part2.commentBody" ) }}</p>
+				<p v-html="t( 'sections.part2.commentBody' )"/>
 			</EddieComment>
 		</div>
 	</template>

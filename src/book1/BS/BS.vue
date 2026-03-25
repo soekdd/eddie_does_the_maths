@@ -26,7 +26,7 @@
 		<h2 id="ziel">{{ t( "bs.sections.part1.title" ) }}</h2>
 		<div class="eddie">
 			<p v-html="t( 'bs.sections.part1.p1' )" />
-			<p>{{ t( "bs.sections.part1.p2" ) }}</p>
+			<p v-html="t( 'bs.sections.part1.p2' )"/>
 		</div>
 
 		<h2 id="steiner" class="mt-8">{{ t( "bs.sections.part2.title" ) }}</h2>
@@ -49,7 +49,7 @@
 				</ImageZoomer>
 			</figure>
 			<p v-html="t( 'bs.sections.part2.p2' )" />
-			<p>{{ t( "bs.sections.part2.p3" ) }}</p>
+			<p v-html="t( 'bs.sections.part2.p3' )"/>
 			<ol>
 				<li v-html="t( 'bs.sections.part2.step1' )" />
 				<li v-html="t( 'bs.sections.part2.step2' )" />
@@ -58,7 +58,7 @@
 			</ol>
 			<p v-html="t( 'bs.sections.part2.p4' )" />
 			<p v-html="t( 'bs.sections.part2.p5' )" />
-			<p>{{ t( "bs.sections.part2.p6" ) }}</p>
+			<p v-html="t( 'bs.sections.part2.p6' )"/>
 			<div class="kbox">
 				<Katex aligned
 					as="div"
@@ -85,7 +85,7 @@
 	<template #interactivePart>
 		<h2>{{ t( "bs.interactive.title" ) }}</h2>
 		<div class="eddie interactive">
-			<p>{{ t( "bs.interactive.intro" ) }}</p>
+			<p v-html="t( 'bs.interactive.intro' )"/>
 			<v-row class="mt-1" dense>
 				<v-col cols="12" md="4">
 					<v-select

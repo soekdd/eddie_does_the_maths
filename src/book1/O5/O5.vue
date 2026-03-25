@@ -13,11 +13,11 @@
 		</figure>
 		<h3 id="einleitung">{{ t( "introDate" ) }}</h3>
 		<div class="eddie">
-			<p>{{ t( "book.p1" ) }}</p>
-			<p>{{ t( "book.p2" ) }}</p>
-			<p>{{ t( "book.p3" ) }}</p>
-			<p>{{ t( "book.p4" ) }}</p>
-			<p>{{ t( "book.p5" ) }}</p>
+			<p v-html="t( 'book.p1' )"/>
+			<p v-html="t( 'book.p2' )"/>
+			<p v-html="t( 'book.p3' )"/>
+			<p v-html="t( 'book.p4' )"/>
+			<p v-html="t( 'book.p5' )"/>
 		</div>
 	</template>
 
@@ -37,7 +37,7 @@
 				<Katex tex="KBN" /> {{ t( "sections.part1.p2c" ) }} {{ t( "sections.part1.p2d" ) }}
 				<Katex tex="B" />) {{ t( "sections.part1.p2e" ) }} <Katex tex="M" />.
 			</p>
-			<p>{{ t( "sections.part1.prove" ) }}</p>
+			<p v-html="t( 'sections.part1.prove' )"/>
 			<div class="kbox">
 				<Katex as="div" display tex="\angle OMB = 90^\circ." />
 			</div>
@@ -59,7 +59,7 @@
 			<div class="kbox">
 				<Katex as="div" display tex="\operatorname{Pot}_{\omega}(P)." />
 			</div>
-			<p>{{ t( "sections.part2.s1p2" ) }}</p>
+			<p v-html="t( 'sections.part2.s1p2' )"/>
 			<p><b>{{ t( "sections.part2.s1a" ) }}</b></p>
 			<p>
 				{{ t( "sections.part2.s1p3a" ) }} <Katex tex="P" /> {{ t( "sections.part2.s1p3b" ) }}
@@ -78,7 +78,7 @@
 			<div class="kbox">
 				<Katex as="div" display tex="\operatorname{Pot}_{\omega}(P)=PS^2-r^2." />
 			</div>
-			<p>{{ t( "sections.part2.s1p5" ) }}</p>
+			<p v-html="t( 'sections.part2.s1p5' )"/>
 
 			<h3 class="mt-6">{{ t( "sections.part2.s2Title" ) }}</h3>
 			<p>
@@ -89,15 +89,15 @@
 			<div class="kbox">
 				<Katex as="div" display tex="\operatorname{Pot}_{\omega_1}(P)=\operatorname{Pot}_{\omega_2}(P)." />
 			</div>
-			<p>{{ t( "sections.part2.s2p2" ) }}</p>
-			<p>{{ t( "sections.part2.s2p3" ) }}</p>
+			<p v-html="t( 'sections.part2.s2p2' )"/>
+			<p v-html="t( 'sections.part2.s2p3' )"/>
 			<ul>
 				<li>
 					{{ t( "sections.part2.s2l1a" ) }} <Katex tex="\omega_1" /> {{ t( "sections.part2.s2l1b" ) }}
 					<Katex tex="\omega_2" /> {{ t( "sections.part2.s2l1c" ) }}
 				</li>
 			</ul>
-			<p>{{ t( "sections.part2.s2p4" ) }}</p>
+			<p v-html="t( 'sections.part2.s2p4' )"/>
 			<ul>
 				<li>{{ t( "sections.part2.s2l2" ) }}</li>
 			</ul>
@@ -105,7 +105,7 @@
 
 		<h2 id="geometrie" class="mt-8">{{ t( "sections.part3.title" ) }}</h2>
 		<div class="eddie">
-			<p>{{ t( "sections.part3.p1" ) }}</p>
+			<p v-html="t( 'sections.part3.p1' )"/>
 			<ul>
 				<li>
 					<Katex tex="\omega" />{{ t( "sections.part3.l1a" ) }} <Katex tex="O" />
@@ -116,7 +116,7 @@
 				<li><Katex tex="\Gamma" />{{ t( "sections.part3.l2" ) }} <Katex tex="ABC" />.</li>
 				<li><Katex tex="\gamma" />{{ t( "sections.part3.l3" ) }} <Katex tex="KBN" />.</li>
 			</ul>
-			<p>{{ t( "sections.part3.p2" ) }}</p>
+			<p v-html="t( 'sections.part3.p2' )"/>
 			<ol>
 				<li>
 					<Katex tex="\omega" /> {{ t( "sections.part3.o1a" ) }} <Katex tex="\Gamma" />
@@ -137,7 +137,7 @@
 					<Katex tex="BM" />.
 				</li>
 			</ol>
-			<p>{{ t( "sections.part3.p3" ) }}</p>
+			<p v-html="t( 'sections.part3.p3' )"/>
 			<div class="kbox">
 				<Katex as="div" display tex="X := AC \cap KN \cap BM." />
 			</div>
@@ -146,18 +146,18 @@
 
 		<h2 class="mt-8">{{ t( "sections.part4.title" ) }} <Katex tex="X,M,N,C" /> {{ t( "sections.part4.titleSuffix" ) }}</h2>
 		<div class="eddie">
-			<p>{{ t( "sections.part4.p1" ) }}</p>
+			<p v-html="t( 'sections.part4.p1' )"/>
 			<div class="kbox">
 				<Katex as="div" display :tex="t( 'sections.part4.proveBox' )" />
 			</div>
-			<p>{{ t( "sections.part4.p2" ) }}</p>
+			<p v-html="t( 'sections.part4.p2' )"/>
 			<div class="kbox">
 				<Katex as="div" display tex="\angle XMN = \angle XCN." />
 			</div>
 			<p>
 				{{ t( "sections.part4.p3a" ) }} <Katex tex="180^\circ" /> {{ t( "sections.part4.p3b" ) }}
 			</p>
-			<p>{{ t( "sections.part4.p4" ) }}</p>
+			<p v-html="t( 'sections.part4.p4' )"/>
 			<ul>
 				<li>
 					{{ t( "sections.part4.l1a" ) }} <Katex tex="B,X,M" /> {{ t( "sections.part4.l1b" ) }}
@@ -255,7 +255,7 @@
 
 		<h2 class="mt-8">{{ t( "sections.part6.title" ) }}</h2>
 		<div class="eddie">
-			<p>{{ t( "sections.part6.p1" ) }}</p>
+			<p v-html="t( 'sections.part6.p1' )"/>
 			<div class="kbox">
 				<Katex as="div" display tex="(XB\cdot XM) - (BM\cdot BX) = (XO^2-ON^2) - (BO^2-ON^2)," />
 				<Katex as="div" display tex="XB\cdot XM - BM\cdot BX = XO^2-BO^2." />
@@ -273,16 +273,16 @@
 			<div class="kbox">
 				<Katex as="div" display :tex="t( 'sections.part6.p3Box' )" />
 			</div>
-			<p>{{ t( "sections.part6.p4" ) }}</p>
+			<p v-html="t( 'sections.part6.p4' )"/>
 			<div class="kbox">
 				<Katex as="div" display tex="BM\cdot BX = BM(BM - XM)=BM^2 - BM\cdot XM," />
 				<Katex as="div" display tex="XM\cdot XB = XM(XM - BM)=XM^2 - BM\cdot XM." />
 			</div>
-			<p>{{ t( "sections.part6.p5" ) }}</p>
+			<p v-html="t( 'sections.part6.p5' )"/>
 			<div class="kbox">
 				<Katex as="div" display tex="XM\cdot XB - BM\cdot BX = XM^2 - BM^2." />
 			</div>
-			<p>{{ t( "sections.part6.p6" ) }}</p>
+			<p v-html="t( 'sections.part6.p6' )"/>
 			<div class="kbox">
 				<Katex as="div" display tex="XM^2 - BM^2 = XO^2 - BO^2," />
 				<Katex as="div" display tex="XO^2 - XM^2 = BO^2 - BM^2." />
@@ -290,7 +290,7 @@
 			<p><Katex tex="\text{(5)}" /></p>
 
 			<h3 class="mt-6">{{ t( "sections.part6.s1Title" ) }}</h3>
-			<p>{{ t( "sections.part6.s1p1" ) }}</p>
+			<p v-html="t( 'sections.part6.s1p1' )"/>
 			<ul>
 				<li>
 					{{ t( "sections.part6.s1l1" ) }} <Katex tex="\tau" /> {{ t( "sections.part6.s1l1b" ) }}
@@ -342,7 +342,7 @@
 	<template #interactivePart>
 		<h2>{{ t( "sections.interactive.title" ) }}</h2>
 		<div class="eddie d-flex flex-column ga-3">
-			<p>{{ t( "sections.interactive.intro" ) }}</p>
+			<p v-html="t( 'sections.interactive.intro' )"/>
 
 			<div class="d-flex flex-wrap ga-3 align-center">
 				<v-text-field

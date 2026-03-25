@@ -20,8 +20,8 @@ const subChapter = computed( () => tm( "catchAll.subChapter" ) ?? {} );
 	<template #descriptionPart>
 		<h2 id="dieses-thema-ist-noch-nicht-ausgearbeitet" v-html="t( 'catchAll.heading' )" />
 		<div class="eddie">
-			<p>{{ t( "catchAll.p1" ) }}</p>
-			<p>{{ t( "catchAll.p2" ) }}</p>
+			<p v-html="t( 'catchAll.p1' )"/>
+			<p v-html="t( 'catchAll.p2' )"/>
 		</div>
 	</template>
 
