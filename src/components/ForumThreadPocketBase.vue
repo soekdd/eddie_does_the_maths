@@ -216,7 +216,8 @@ import {
 } from "vue";
 import PocketBase, { type RecordModel } from "pocketbase";
 import { useI18n } from "@/utils/i18n.mjs";
-import netiquetteHtml from "../utils/disclaimer/netiquette_de.html?raw";
+import netiquetteDeHtml from "../utils/disclaimer/netiquette_de.html?raw";
+import netiquetteEnHtml from "../utils/disclaimer/netiquette_en.html?raw";
 
 type CommentRecord = RecordModel & {
   forumKey: string
@@ -259,7 +260,10 @@ const clientReady = ref( false );
 
 const authorStorageKey = computed( () => `pb_forum_author_${props.collectionName}` );
 const postCountLabel = computed( () => t( "forumThread.posts", { count: String( flatComments.value.length ) } ) );
-const forumRulesHtml = computed( () => netiquetteHtml.trim() || t( "forumThread.rulesUnavailable" ) );
+const forumRulesHtml = computed( () => {
+	const html = locale.value === "de" ? netiquetteDeHtml : netiquetteEnHtml;
+	return html.trim() || t( "forumThread.rulesUnavailable" );
+} );
 
 const canSubmitRoot = computed( () => {
 	return (
