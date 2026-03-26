@@ -44,11 +44,11 @@
 				<div class="text-subtitle-2 mb-2">{{ t( "ba.sections.part2.circle" ) }}</div>
 				<div class="text-body-2" v-html="t( 'ba.sections.part2.circleText' )" />
 				<div class="mt-2">
-						<Katex
-							as="div"
-							display
-							:tex="t( 'ba.sections.part2.circleExampleBox' )"
-						/>
+					<Katex
+						as="div"
+						display
+						:tex="t( 'ba.sections.part2.circleExampleBox' )"
+					/>
 				</div>
 			</div>
 
@@ -62,11 +62,11 @@
 			<p class="mb-3" v-html="t( 'ba.sections.part3.p1' )" />
 
 			<div class="kbox">
-					<Katex
-						as="div"
-						display
-						:tex="t( 'ba.sections.part3.formulaBox' )"
-					/>
+				<Katex
+					as="div"
+					display
+					:tex="t( 'ba.sections.part3.formulaBox' )"
+				/>
 			</div>
 
 			<v-row>
@@ -122,11 +122,11 @@
 			<p class="mb-3" v-html="t( 'ba.sections.part4.p1' )" />
 
 			<div class="kbox">
-					<Katex
-						as="div"
-						display
-						:tex="t( 'ba.sections.part4.formulaBox' )"
-					/>
+				<Katex
+					as="div"
+					display
+					:tex="t( 'ba.sections.part4.formulaBox' )"
+				/>
 			</div>
 
 			<v-row>
@@ -373,7 +373,7 @@ const emulatorKey = ref( 0 );
 const emulatorRef = ref( null );
 const emulatorReady = ref( false );
 const emulatorRunning = ref( false );
-const encodedHAMMessage = "OJUTXTLJNNUTXNZGMIKN";
+const encodedHAMMessage = "OJUTXTLJNNFJNXAGHTWN";
 const subChapter = computed( () => ( {
 	einleitung:     t( "ba.subChapter.einleitung" ),
 	casar:          t( "ba.subChapter.casar" ),
@@ -457,7 +457,7 @@ const programs = [
 		source: [
 			"10 PRINT CHR$(147)",
 			"20 K$=\"295\"",
-			"30 P$=\"MAPROOJAILLOVEUEDDIE\": GOSUB 200",
+			"30 P$=\"MAPROOJAILWELOVEYOUE\": GOSUB 200",
 			"40 P$=\"ERISSAFE\": GOSUB 200",
 			"50 P$=\"ERSTILLONTOUR\": GOSUB 200",
 			"60 PRINT",

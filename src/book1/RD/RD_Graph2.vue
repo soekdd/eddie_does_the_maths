@@ -227,7 +227,9 @@
 import { computed } from "vue";
 import { useI18n } from "@/utils/i18n.mjs";
 
-const { t } = useI18n( "book1/RD" );
+const {
+	t, parseLocalizedNumber
+} = useI18n( "book1/RD" );
 
 const props = defineProps( {
 	mode: { type: String, default: "light" },
@@ -261,22 +263,7 @@ const palette = [
 ];
 
 function toNumber( v ) {
-	if ( typeof v === "number" ) {
-		return Number.isFinite( v ) ? v : null;
-	}
-
-	if ( typeof v !== "string" ) {
-		return null;
-	}
-
-	const s = v.trim().replace( ",", "." );
-
-	if ( !s ) {
-		return null;
-	}
-
-	const n = Number( s );
-	return Number.isFinite( n ) ? n : null;
+	return parseLocalizedNumber( v );
 }
 
 function toInt( v ) {

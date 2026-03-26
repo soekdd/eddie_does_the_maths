@@ -309,7 +309,9 @@ import { useI18n } from "@/utils/i18n.mjs";
 
 import titleImg from "./O6.webp";
 
-const { t: rawT, tm: rawTm } = useI18n( "book1/O6" );
+const {
+	t: rawT, tm: rawTm, parseLocalizedNumber
+} = useI18n( "book1/O6" );
 const t = ( key,
 	params = {} ) => rawT( `${key}`, params );
 const tm = ( key = "" ) => rawTm( key ? `${key}` : "o6" );
@@ -324,16 +326,15 @@ const result = ref( null );
 const subChapter = computed( () => tm( "subChapter" ) ?? {} );
 
 function parseNumber( v, label ) {
-	const s = String( v ?? "" ).trim()
-		.replace( ",", "." );
+	const s = String( v ?? "" ).trim();
 
 	if ( !s ) {
 		throw new Error( t( "sections.interactive.errors.empty", { label } ) );
 	}
 
-	const x = Number( s );
+	const x = parseLocalizedNumber( s );
 
-	if ( !Number.isFinite( x ) ) {
+	if ( x === null ) {
 		throw new Error( t( "sections.interactive.errors.invalid", { label } ) );
 	}
 

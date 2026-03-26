@@ -71,7 +71,9 @@ import { useI18n } from "@/utils/i18n.mjs";
 import titleImg from "./RD.webp";
 import RDGraph from "./RD_Graph.vue";
 
-const { t, tm } = useI18n( "book1/RD" );
+const {
+	t, tm, parseLocalizedNumber
+} = useI18n( "book1/RD" );
 
 const mode = ref( "classic" );
 const modeItems = [
@@ -93,23 +95,7 @@ const mInput = ref( 6 );
 const subChapter = computed( () => tm( "subChapter" ) ?? {} );
 
 function parseMaybeFloat( v ) {
-	if ( typeof v === "number" ) {
-		return Number.isFinite( v ) ? v : null;
-	}
-
-	const s = String( v ).trim()
-		.replace( ",", "." );
-
-	if ( !s ) {
-		return null;
-	}
-
-	if ( !/^[-+]?(\d+(\.\d+)?|\.\d+)$/.test( s ) ) {
-		return null;
-	}
-
-	const n = Number( s );
-	return Number.isFinite( n ) ? n : null;
+	return parseLocalizedNumber( v );
 }
 
 function parseMaybeInt( v ) {

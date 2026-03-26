@@ -336,7 +336,9 @@
 import { computed } from "vue";
 import { useI18n } from "@/utils/i18n.mjs";
 
-const { t, locale } = useI18n( "book1/ST" );
+const {
+	t, locale, parseLocalizedNumber
+} = useI18n( "book1/ST" );
 
 const props = defineProps( {
 	busPerHour:   { type: [ Number, String ], required: true },
@@ -346,23 +348,7 @@ const props = defineProps( {
 } );
 
 function parseMaybeFloat( v ) {
-	if ( typeof v === "number" ) {
-		return Number.isFinite( v ) ? v : null;
-	}
-
-	const s = String( v ).trim()
-		.replace( ",", "." );
-
-	if ( !s ) {
-		return null;
-	}
-
-	if ( !/^[-+]?(\d+(\.\d+)?|\.\d+)$/.test( s ) ) {
-		return null;
-	}
-
-	const n = Number( s );
-	return Number.isFinite( n ) ? n : null;
+	return parseLocalizedNumber( v );
 }
 
 function in01( n ) {

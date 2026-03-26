@@ -82,6 +82,133 @@ function detectInitialLocale() {
 	return FALLBACK_LOCALE;
 }
 
+function resolveLocaleArgument( value ) {
+	if ( typeof value === "string" ) {
+		return normalizeLocale( value );
+	}
+
+	if ( value && typeof value === "object" && "value" in value ) {
+		return normalizeLocale( value.value );
+	}
+
+	return locale.value;
+}
+
+function escapeRegExp( value ) {
+	return String( value ?? "" ).replace( /[.*+?^${}()|[\]\\]/g, "\\$&" );
+}
+
+function parseWithNumberFormat(
+	raw,
+	{
+		decimal,
+		group
+	}
+) {
+	let normalized = String( raw ?? "" ).trim()
+		.replace( /[\s\u00A0\u202F']/g, "" );
+
+	if ( !normalized ) {
+		return null;
+	}
+
+	if ( group && group !== decimal ) {
+		normalized = normalized.replace( new RegExp( escapeRegExp( group ), "g" ), "" );
+	}
+
+	if ( decimal && decimal !== "." ) {
+		normalized = normalized.replace( new RegExp( escapeRegExp( decimal ), "g" ), "." );
+	}
+
+	if ( !/^[-+]?(\d+(\.\d+)?|\.\d+)$/.test( normalized ) ) {
+		return null;
+	}
+
+	const parsed = Number( normalized );
+	return Number.isFinite( parsed ) ? parsed : null;
+}
+
+function getNumberFormatsForLocale( targetLocale = locale.value ) {
+	const parts = new Intl.NumberFormat( resolveLocaleArgument( targetLocale ) ).formatToParts( 12345.6 );
+	const decimal = parts.find( ( part ) => part.type === "decimal" )?.value ?? ".";
+	const group = parts.find( ( part ) => part.type === "group" )?.value ?? ",";
+	const formats = [
+		{
+			decimal,
+			group
+		},
+		{
+			decimal: ",",
+			group:   "."
+		},
+		{
+			decimal: ".",
+			group:   ","
+		},
+		{
+			decimal: ",",
+			group:   ""
+		},
+		{
+			decimal: ".",
+			group:   ""
+		}
+	];
+
+	return formats.filter( ( format,
+		index,
+		all ) => all.findIndex( ( candidate ) => candidate.decimal === format.decimal && candidate.group === format.group ) === index );
+}
+
+function chooseClosestNumber(
+	values,
+	fallback
+) {
+	return values.slice()
+		.sort( ( a, b ) => Math.abs( a - fallback ) - Math.abs( b - fallback ) )[ 0 ];
+}
+
+export function parseLocalizedNumber(
+	raw,
+	{
+		locale: targetLocale = locale.value,
+		fallback = Number.NaN
+	} = {}
+) {
+	if ( typeof raw === "number" ) {
+		return Number.isFinite( raw ) ? raw : null;
+	}
+
+	const normalized = String( raw ?? "" ).trim();
+
+	if ( !normalized ) {
+		return null;
+	}
+
+	const candidates = [];
+
+	for ( const format of getNumberFormatsForLocale( targetLocale ) ) {
+		const parsed = parseWithNumberFormat(
+			normalized,
+			format
+		);
+
+		if ( parsed !== null && !candidates.some( ( value ) => value === parsed ) ) {
+			candidates.push( parsed );
+		}
+	}
+
+	if ( !candidates.length ) {
+		return null;
+	}
+
+	return Number.isFinite( fallback ) ?
+		chooseClosestNumber(
+			candidates, fallback
+		) :
+		candidates[ 0 ];
+}
+
 function setHtmlLanguage( value ) {
 	if ( typeof document !== "undefined" ) {
 		document.documentElement.lang = value;
@@ -290,6 +417,7 @@ export function useI18n( namespace ) {
 
 	return {
 		locale:    api.locale,
+		parseLocalizedNumber: api.parseLocalizedNumber,
 		setLocale: api.setLocale,
 		t:         scopedTranslate,
 		th:        ( key,
@@ -304,6 +432,7 @@ export const i18nApi = {
 	availableLocales: SUPPORTED_LOCALES,
 	locale:           readonly( locale ),
 	getLocale,
+	parseLocalizedNumber,
 	setLocale,
 	t,
 	th,

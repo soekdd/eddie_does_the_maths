@@ -452,7 +452,9 @@ import { useI18n } from "@/utils/i18n.mjs";
 import O5Graph from "./O5_Graph.vue";
 import titleImg from "./O5.webp";
 
-const { t, tm } = useI18n( "book1/O5" );
+const {
+	t, tm, parseLocalizedNumber
+} = useI18n( "book1/O5" );
 
 const R = 1;
 const EPS = 1e-9;
@@ -659,16 +661,15 @@ function angleAt(
 }
 
 function parseNumber( v, label ) {
-	const s = String( v ?? "" ).trim()
-		.replace( ",", "." );
+	const s = String( v ?? "" ).trim();
 
 	if ( !s ) {
 		throw new Error( t( "sections.interactive.errors.empty", { label } ) );
 	}
 
-	const x = Number( s );
+	const x = parseLocalizedNumber( s );
 
-	if ( !Number.isFinite( x ) ) {
+	if ( x === null ) {
 		throw new Error( t( "sections.interactive.errors.invalidNumber", { label } ) );
 	}
 

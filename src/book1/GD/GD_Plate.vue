@@ -166,7 +166,8 @@ import { useI18n } from "@/utils/i18n.mjs";
 
 const {
 	locale,
-	t
+	t,
+	parseLocalizedNumber
 } = useI18n( "book1/GD" );
 
 const FRACTION_OPTIONS = computed( () => [
@@ -287,16 +288,7 @@ function toKatexNumber( value ) {
 }
 
 function normalizeYears( rawValue ) {
-	const normalized = String( rawValue ?? "" )
-		.trim()
-		.replace( ",", "." );
-	const parsed = Number( normalized );
-
-	if ( !Number.isFinite( parsed ) ) {
-		return null;
-	}
-
-	return parsed;
+	return parseLocalizedNumber( rawValue );
 }
 
 function formatYears( value ) {

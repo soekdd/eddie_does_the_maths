@@ -350,7 +350,7 @@ const RHO_WATER = 1025;
 const G = 9.81;
 
 const {
-	locale, t, tm
+	locale, parseLocalizedNumber, t, tm
 } = useI18n( "book1/VA" );
 
 const presetDefaults = [
@@ -491,25 +491,37 @@ function fmt( value, digits = 2 ) {
 	} ).format( Number( value ) );
 }
 
+function fmtInput( value, digits = 2 ) {
+	if ( !Number.isFinite( value ) ) {
+		return "";
+	}
+
+	return new Intl.NumberFormat( locale.value, {
+		useGrouping:           false,
+		maximumFractionDigits: digits,
+		minimumFractionDigits: digits
+	} ).format( Number( value ) );
+}
+
 function getPreset() {
 	return geometryPresets.value.find( ( preset ) => preset.value === presetId.value ) ?? geometryPresets.value[ 0 ];
 }
 
 function setInputsFromPreset( preset ) {
-	inputs.beam = fmt( preset.beam, 2 );
-	inputs.depth = fmt( preset.depth, 2 );
-	inputs.draft = fmt( preset.draft, 2 );
-	inputs.length = fmt( preset.length, 2 );
-	inputs.cwp = fmt( preset.cwp, 3 );
-	inputs.openingHeight = fmt( preset.openingHeight, 2 );
-	inputs.displacement = fmt( preset.displacement, 1 );
-	inputs.kg = fmt( preset.kg, 2 );
-	inputs.kb = fmt( preset.kb, 2 );
-	inputs.freeSurface = fmt( preset.freeSurface, 2 );
-	inputs.sailArea = fmt( preset.sailArea, 0 );
-	inputs.windSpeed = fmt( preset.windSpeed, 1 );
-	inputs.cd = fmt( preset.cd, 2 );
-	inputs.hCe = fmt( preset.hCe, 2 );
+	inputs.beam = fmtInput( preset.beam, 2 );
+	inputs.depth = fmtInput( preset.depth, 2 );
+	inputs.draft = fmtInput( preset.draft, 2 );
+	inputs.length = fmtInput( preset.length, 2 );
+	inputs.cwp = fmtInput( preset.cwp, 3 );
+	inputs.openingHeight = fmtInput( preset.openingHeight, 2 );
+	inputs.displacement = fmtInput( preset.displacement, 1 );
+	inputs.kg = fmtInput( preset.kg, 2 );
+	inputs.kb = fmtInput( preset.kb, 2 );
+	inputs.freeSurface = fmtInput( preset.freeSurface, 2 );
+	inputs.sailArea = fmtInput( preset.sailArea, 0 );
+	inputs.windSpeed = fmtInput( preset.windSpeed, 1 );
+	inputs.cd = fmtInput( preset.cd, 2 );
+	inputs.hCe = fmtInput( preset.hCe, 2 );
 }
 
 function loadPreset() {
@@ -526,8 +538,8 @@ function randomizeWind() {
 	const windSpeed = 6 + Math.random() * 20;
 	const areaFactor = 0.85 + Math.random() * 0.35;
 	const baseArea = getPreset().sailArea;
-	inputs.windSpeed = fmt( windSpeed, 1 );
-	inputs.sailArea = fmt( baseArea * areaFactor, 0 );
+	inputs.windSpeed = fmtInput( windSpeed, 1 );
+	inputs.sailArea = fmtInput( baseArea * areaFactor, 0 );
 }
 
 function issueForInvalid( label, fallback ) {
@@ -551,8 +563,7 @@ function readNumber(
 	min = -Number.POSITIVE_INFINITY,
 	max = Number.POSITIVE_INFINITY
 ) {
-	const normalized = String( raw ?? "" ).trim()
-		.replace( ",", "." );
+	const normalized = String( raw ?? "" ).trim();
 
 	if ( !normalized ) {
 		return {
@@ -563,7 +574,7 @@ function readNumber(
 		};
 	}
 
-	const parsed = Number( normalized );
+	const parsed = parseLocalizedNumber( normalized, { fallback } );
 
 	if ( !Number.isFinite( parsed ) ) {
 		return {

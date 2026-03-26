@@ -242,7 +242,7 @@ import STGraph from "./ST_Graph.vue";
 import titleImg from "./ST.webp";
 
 const {
-	t, tm, locale
+	t, tm, locale, parseLocalizedNumber
 } = useI18n( "book1/ST" );
 
 const subChapter = computed( () => tm( "subChapter" ) ?? {} );
@@ -265,23 +265,7 @@ exampleOut.pBus = 1 - ( 1 - exampleOut.p ) ** 2;
 exampleOut.freedom = exampleOut.pBus * example.a * ( 1 - example.r );
 
 function parseMaybeFloat( v ) {
-	if ( typeof v === "number" ) {
-		return Number.isFinite( v ) ? v : null;
-	}
-
-	const s = String( v ).trim()
-		.replace( ",", "." );
-
-	if ( !s ) {
-		return null;
-	}
-
-	if ( !/^[-+]?(\d+(\.\d+)?|\.\d+)$/.test( s ) ) {
-		return null;
-	}
-
-	const n = Number( s );
-	return Number.isFinite( n ) ? n : null;
+	return parseLocalizedNumber( v );
 }
 
 function in01( n ) {
