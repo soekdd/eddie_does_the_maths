@@ -43,7 +43,7 @@ sections:
     measuredRxy: "Gemessenes Rxy [Ohm]"
     measuredRxx: "Gemessenes Rxx [mOhm]"
     setIdeal: "Ideal setzen"
-    addNoise: "realistische Abweichung"
+    addNoise: "realistische<br>Abweichung"
     status:
       largeRxx: "Rxx ist deutlich größer als 0: Das sieht nicht wie ein sauberes Hall-Plateau aus."
       success: "Sehr nah am Sollwert und kleines Rxx: metrologisch plausibles Plateau."

@@ -43,7 +43,7 @@ sections:
     measuredRxy: "Measured Rxy [ohm]"
     measuredRxx: "Measured Rxx [mohm]"
     setIdeal: "Set ideal"
-    addNoise: "realistic deviation"
+    addNoise: "realistic<br>deviation"
     status:
       largeRxx: "Rxx is clearly larger than 0. This does not look like a clean Hall plateau."
       success: "Very close to the target value and small Rxx: a metrologically plausible plateau."

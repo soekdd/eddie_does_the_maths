@@ -114,9 +114,7 @@
 						<v-btn color="primary" variant="flat" @click="setIdealMeasurement">
 							{{ t( "sections.interactive.setIdeal" ) }}
 						</v-btn>
-						<v-btn variant="tonal" @click="addMeasurementNoise">
-							{{ t( "sections.interactive.addNoise" ) }}
-						</v-btn>
+						<v-btn variant="tonal" @click="addMeasurementNoise" v-html="t( 'sections.interactive.addNoise' )"/>
 					</v-col>
 				</v-row>
 			</v-card>
