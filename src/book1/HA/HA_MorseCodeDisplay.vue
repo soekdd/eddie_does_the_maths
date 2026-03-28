@@ -43,6 +43,7 @@
 import {
 	computed, onBeforeUnmount, ref, watch
 } from "vue";
+import { HA_SPECIAL_MORSE_BY_TOKEN } from "./HA_specialSymbols.mjs";
 
 const MORSE_MAP = {
 	A:    ".-",
@@ -132,21 +133,34 @@ const activeGroupIndex = ref( null );
 const playbackState = ref( null );
 const stopTimerId = ref( null );
 
+function normalizeLineEndings( value ) {
+	return String( value ?? "" ).replace( /\r\n?/g, "\n" );
+}
+
+function splitPrefixedLine( line ) {
+	const match = String( line ?? "" ).match( /^(\s*)(.*)$/s );
+
+	return {
+		linePrefix: match?.[ 1 ] ?? "",
+		content:    match?.[ 2 ] ?? ""
+	};
+}
+
+function isCommentLine( content ) {
+	return String( content ?? "" ).trimStart().startsWith( "#" );
+}
+
 const audioSupported = computed( () => typeof window !== "undefined" &&
 	Boolean( window.AudioContext || window.webkitAudioContext ) );
-const normalizedInput = computed( () => String( props.text ?? "" ).trim() );
+const normalizedInput = computed( () => normalizeLineEndings( props.text ).trim() );
 const morseModel = computed( () => {
-	const words = String( props.text ?? "" )
-		.toUpperCase()
-		.trim()
-		.split( /\s+/ )
-		.filter( Boolean );
+	const lines = normalizeLineEndings( props.text ).split( "\n" );
 	const displaySegments = [];
 	const events = [];
 	let groupIndex = 0;
 	let cursor = 0;
 
-	if ( !words.length ) {
+	if ( lines.length === 1 && lines[ 0 ] === "" ) {
 		return {
 			displaySegments,
 			events,
@@ -154,55 +168,132 @@ const morseModel = computed( () => {
 		};
 	}
 
-	for ( let wordIndex = 0; wordIndex < words.length; wordIndex += 1 ) {
-		const characters = words[ wordIndex ].split( "" );
+	for ( let lineIndex = 0; lineIndex < lines.length; lineIndex += 1 ) {
+		const sourceLine = String( lines[ lineIndex ] ?? "" );
+		const {
+			linePrefix,
+			content
+		} = splitPrefixedLine( sourceLine );
+		const trimmedContent = content.trim();
+		const shouldRenderComment = trimmedContent && isCommentLine( content );
+		const words = shouldRenderComment ?
+			[] :
+			trimmedContent.toUpperCase()
+				.split( /\s+/ )
+				.filter( Boolean );
 
-		for ( let characterIndex = 0; characterIndex < characters.length; characterIndex += 1 ) {
-			const character = characters[ characterIndex ];
-			const code = MORSE_MAP[ character ] ?? "?";
-			const playable = code !== "?";
-			const currentGroupIndex = playable ? groupIndex : null;
-
+		if ( shouldRenderComment ) {
 			displaySegments.push( {
-				groupIndex: currentGroupIndex,
-				text:       code
+				groupIndex: null,
+				text:       sourceLine
 			} );
+		} else {
+			if ( linePrefix ) {
+				displaySegments.push( {
+					groupIndex: null,
+					text:       linePrefix
+				} );
+			}
 
-			if ( playable ) {
-				for ( let symbolIndex = 0; symbolIndex < code.length; symbolIndex += 1 ) {
-					const symbol = code[ symbolIndex ];
-					const duration = symbol === "-" ? DASH_DURATION : DOT_DURATION;
+			for ( let wordIndex = 0; wordIndex < words.length; wordIndex += 1 ) {
+				const specialCode = HA_SPECIAL_MORSE_BY_TOKEN[ words[ wordIndex ] ] ?? "";
 
-					events.push( {
-						duration,
-						groupIndex: currentGroupIndex,
-						start:      cursor
+				if ( specialCode ) {
+					displaySegments.push( {
+						groupIndex,
+						text: specialCode
 					} );
-					cursor += duration;
 
-					if ( symbolIndex < code.length - 1 ) {
-						cursor += SYMBOL_GAP;
+					for ( let symbolIndex = 0; symbolIndex < specialCode.length; symbolIndex += 1 ) {
+						const symbol = specialCode[ symbolIndex ];
+						const duration = symbol === "-" ? DASH_DURATION : DOT_DURATION;
+
+						events.push( {
+							duration,
+							groupIndex,
+							start: cursor
+						} );
+						cursor += duration;
+
+						if ( symbolIndex < specialCode.length - 1 ) {
+							cursor += SYMBOL_GAP;
+						}
+					}
+
+					groupIndex += 1;
+
+					if ( wordIndex < words.length - 1 ) {
+						displaySegments.push( {
+							groupIndex: null,
+							text:       " / "
+						} );
+						cursor += WORD_GAP;
+					}
+
+					continue;
+				}
+
+				const characters = words[ wordIndex ].split( "" );
+
+				for ( let characterIndex = 0; characterIndex < characters.length; characterIndex += 1 ) {
+					const character = characters[ characterIndex ];
+					const code = MORSE_MAP[ character ] ?? "?";
+					const playable = code !== "?";
+					const currentGroupIndex = playable ? groupIndex : null;
+
+					displaySegments.push( {
+						groupIndex: currentGroupIndex,
+						text:       code
+					} );
+
+					if ( playable ) {
+						for ( let symbolIndex = 0; symbolIndex < code.length; symbolIndex += 1 ) {
+							const symbol = code[ symbolIndex ];
+							const duration = symbol === "-" ? DASH_DURATION : DOT_DURATION;
+
+							events.push( {
+								duration,
+								groupIndex: currentGroupIndex,
+								start:      cursor
+							} );
+							cursor += duration;
+
+							if ( symbolIndex < code.length - 1 ) {
+								cursor += SYMBOL_GAP;
+							}
+						}
+
+						groupIndex += 1;
+					}
+
+					if ( characterIndex < characters.length - 1 ) {
+						displaySegments.push( {
+							groupIndex: null,
+							text:       " "
+						} );
+						cursor += LETTER_GAP;
 					}
 				}
 
-				groupIndex += 1;
-			}
-
-			if ( characterIndex < characters.length - 1 ) {
-				displaySegments.push( {
-					groupIndex: null,
-					text:       " "
-				} );
-				cursor += LETTER_GAP;
+				if ( wordIndex < words.length - 1 ) {
+					displaySegments.push( {
+						groupIndex: null,
+						text:       " / "
+					} );
+					cursor += WORD_GAP;
+				}
 			}
 		}
 
-		if ( wordIndex < words.length - 1 ) {
+		if ( lineIndex < lines.length - 1 ) {
 			displaySegments.push( {
 				groupIndex: null,
-				text:       " / "
+				text:       "\n"
 			} );
-			cursor += WORD_GAP;
+
+			if ( words.length > 0 ) {
+				cursor += WORD_GAP;
+			}
 		}
 	}
 

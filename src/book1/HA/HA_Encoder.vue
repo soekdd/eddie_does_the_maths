@@ -188,6 +188,8 @@ import StarterKit from "@tiptap/starter-kit";
 import { EditorContent, useEditor } from "@tiptap/vue-3";
 import { useI18n } from "@/utils/i18n.mjs";
 import HAMorseCodeDisplay from "./HA_MorseCodeDisplay.vue";
+import { buildCommentDecorationSet } from "./HA_commentDecorations.mjs";
+import { findSpecialSymbolByInput, HA_SPECIAL_TOKEN_SET } from "./HA_specialSymbols.mjs";
 
 const props = defineProps( {
 	modelValue: {
@@ -327,6 +329,22 @@ const PALETTE_GROUPS = [
 	}
 ];
 
+const CONTEXTUAL_CODE_TOKENS = new Set( [
+	"ANT",
+	"CONDX",
+	"NR",
+	"OP",
+	"OPR",
+	"PWR",
+	"QRA",
+	"QRG",
+	"QTH",
+	"QTR",
+	"RIG",
+	"TEMP",
+	"WX"
+] );
+
 const EMPTY_RESULT = Object.freeze( {
 	codeText:        "",
 	items:           [],
@@ -397,8 +415,12 @@ const contextualPrefixes = computed( () => [
 	}
 ] );
 
+function normalizeLineEndings( value ) {
+	return String( value ?? "" ).replace( /\r\n?/g, "\n" );
+}
+
 function createDocFromText( text ) {
-	const lines = String( text ?? "" ).split( /\n+/ );
+	const lines = normalizeLineEndings( text ).split( "\n" );
 	const paragraphs = lines.length === 1 && lines[ 0 ] === "" ?
 		[ { type: "paragraph" } ] :
 		lines.map( ( line ) => line ?
@@ -418,14 +440,13 @@ function createDocFromText( text ) {
 }
 
 function extractPlainText( instance ) {
-	return instance.state.doc.textBetween(
-		0,
-		instance.state.doc.content.size,
-		" ",
-		" "
-	)
-		.replace( /\s+/g, " " )
-		.trim();
+	const lines = [];
+
+	instance.state.doc.forEach( ( node ) => {
+		lines.push( node.textContent );
+	} );
+
+	return lines.join( "\n" );
 }
 
 const editor = useEditor( {
@@ -442,6 +463,7 @@ const editor = useEditor( {
 		} )
 	],
 	editorProps: {
+		decorations: ( state ) => buildCommentDecorationSet( state.doc ),
 		attributes: {
 			autocapitalize: "sentences",
 			autocomplete:   "off",
@@ -472,6 +494,19 @@ function normalizeCodeValue( value ) {
 	return normalizeWhitespace( value ).toUpperCase();
 }
 
+function splitPrefixedLine( line ) {
+	const match = String( line ?? "" ).match( /^(\s*)(.*)$/s );
+
+	return {
+		linePrefix: match?.[ 1 ] ?? "",
+		content:    match?.[ 2 ] ?? ""
+	};
+}
+
+function isCommentLine( content ) {
+	return String( content ?? "" ).trimStart().startsWith( "#" );
+}
+
 function escapeRegExp( value ) {
 	return String( value ?? "" ).replace( /[.*+?^${}()|[\]\\]/g, "\\$&" );
 }
@@ -481,6 +516,15 @@ function getDescriptionAliases( description ) {
 		.split( "/" )
 		.map( ( alias ) => normalizeWhitespace( alias ) )
 		.filter( Boolean );
+}
+
+function getDescriptionMatchAliases( description ) {
+	const normalizedDescription = normalizeWhitespace( description );
+
+	return Array.from( new Set( [
+		normalizedDescription,
+		...getDescriptionAliases( description )
+	].filter( Boolean ) ) );
 }
 
 function getPrimaryAlias( description ) {
@@ -496,7 +540,65 @@ function isCQTargetPrefix( token ) {
 		!isCallsign( token ) &&
 		!qCodeEntries.value?.[ token ] &&
 		!cwCodeEntries.value?.[ token ] &&
+		!HA_SPECIAL_TOKEN_SET.has( token ) &&
 		token !== "RST";
+}
+
+function isNumberWithUnit( token ) {
+	return /^\d+(?:[.,]\d+)?(?:[A-Z%]+)?$/.test( token );
+}
+
+function isKnownCodeToken( token ) {
+	return Boolean(
+		qCodeEntries.value?.[ token ] ||
+		cwCodeEntries.value?.[ token ] ||
+		HA_SPECIAL_TOKEN_SET.has( token ) ||
+		token === "RST"
+	);
+}
+
+function buildSpecialSymbolMatch( phrase ) {
+	const entry = findSpecialSymbolByInput( phrase );
+
+	if ( !entry ) {
+		return null;
+	}
+
+	return {
+		phrase,
+		type:      "pattern",
+		typeLabel: getTypeLabel( "pattern" ),
+		code:      entry.token,
+		mapped:    true
+	};
+}
+
+function looksLikeEncodedLine( value ) {
+	const tokens = normalizeCodeValue( value ).split( " " ).filter( Boolean );
+
+	if ( !tokens.length ) {
+		return false;
+	}
+
+	for ( let index = 0; index < tokens.length; index += 1 ) {
+		const token = tokens[ index ];
+		const previousToken = tokens[ index - 1 ] ?? "";
+
+		if (
+			isKnownCodeToken( token ) ||
+			( previousToken === "RST" && /^\d{2,3}$/.test( token ) ) ||
+			( previousToken === "CQ" && isCQTargetPrefix( token ) ) ||
+			isCallsign( token ) ||
+			isNumberWithUnit( token ) ||
+			( CONTEXTUAL_CODE_TOKENS.has( previousToken ) && !isKnownCodeToken( token ) )
+		) {
+			continue;
+		}
+
+		return false;
+	}
+
+	return true;
 }
 
 function buildPaletteItem(
@@ -584,7 +686,7 @@ function buildMeaningMatch( phrase ) {
 			continue;
 		}
 
-		for ( const alias of getDescriptionAliases( entry.description ) ) {
+		for ( const alias of getDescriptionMatchAliases( entry.description ) ) {
 			if ( normalizeMatch( alias ) === normalizedPhrase ) {
 				return {
 					phrase,
@@ -604,7 +706,7 @@ function buildMeaningMatch( phrase ) {
 			continue;
 		}
 
-		for ( const alias of getDescriptionAliases( entry.description ) ) {
+		for ( const alias of getDescriptionMatchAliases( entry.description ) ) {
 			if ( normalizeMatch( alias ) === normalizedPhrase ) {
 				return {
 					phrase,
@@ -618,6 +720,56 @@ function buildMeaningMatch( phrase ) {
 	}
 
 	return null;
+}
+
+function buildLabeledValueMatch( phrase ) {
+	const valueTemplate = t( "decoder.patterns.value", { token: "__TOKEN__" } );
+	const regex = new RegExp( `^${escapeRegExp( valueTemplate )
+		.replace( "__TOKEN__", "(.+?)" )}$`, "i" );
+	const match = normalizeWhitespace( phrase ).match( regex );
+
+	if ( !match ) {
+		return null;
+	}
+
+	const token = normalizeCodeValue( match[ 1 ] );
+
+	if ( !isNumberWithUnit( token ) ) {
+		return null;
+	}
+
+	return {
+		phrase,
+		type:      "pattern",
+		typeLabel: getTypeLabel( "pattern" ),
+		code:      token,
+		mapped:    true
+	};
+}
+
+function buildLabeledCallsignMatch( phrase ) {
+	const callsignTemplate = t( "decoder.patterns.callsign", { token: "__TOKEN__" } );
+	const regex = new RegExp( `^${escapeRegExp( callsignTemplate )
+		.replace( "__TOKEN__", "(.+?)" )}$`, "i" );
+	const match = normalizeWhitespace( phrase ).match( regex );
+
+	if ( !match ) {
+		return null;
+	}
+
+	const callsign = normalizeCodeValue( match[ 1 ] );
+
+	if ( !isCallsign( callsign ) ) {
+		return null;
+	}
+
+	return {
+		phrase,
+		type:      "pattern",
+		typeLabel: getTypeLabel( "pattern" ),
+		code:      callsign,
+		mapped:    true
+	};
 }
 
 function buildCallPatternMatch( phrase ) {
@@ -696,7 +848,7 @@ function buildTargetedCQMatch( phrase ) {
 
 function buildSignalReportMatch( phrase ) {
 	const normalizedPhrase = normalizeWhitespace( phrase );
-	const directMatch = normalizedPhrase.match( /^RST\s+(\d{2,3})$/i );
+	const directMatch = normalizedPhrase.match( /^RST\s+(\d{2,3})(?::.*)?$/i );
 
 	if ( directMatch ) {
 		return {
@@ -728,28 +880,61 @@ function buildContextualMatch( phrase ) {
 	const normalizedPhrase = normalizeWhitespace( phrase );
 
 	for ( const entry of contextualPrefixes.value ) {
-		const match = normalizedPhrase.match( new RegExp( `^${escapeRegExp( entry.prefix )}(.+)$`, "i" ) );
+		const candidatePrefixes = new Set( [ entry.prefix ] );
+		const description = qCodeEntries.value?.[ entry.token ]?.description ??
+			cwCodeEntries.value?.[ entry.token ]?.description ??
+			"";
 
-		if ( !match ) {
-			continue;
+		getDescriptionMatchAliases( description ).forEach( ( alias ) => {
+			candidatePrefixes.add( `${alias}: ` );
+		} );
+
+		for ( const prefix of candidatePrefixes ) {
+			const match = normalizedPhrase.match( new RegExp( `^${escapeRegExp( prefix )}(.+)$`, "i" ) );
+
+			if ( !match ) {
+				continue;
+			}
+
+			const payload = normalizeCodeValue( match[ 1 ] );
+
+			if ( !payload ) {
+				continue;
+			}
+
+			return {
+				phrase,
+				type:      "pattern",
+				typeLabel: getTypeLabel( "pattern" ),
+				code:      `${entry.token} ${payload}`,
+				mapped:    true
+			};
 		}
-
-		const payload = normalizeCodeValue( match[ 1 ] );
-
-		if ( !payload ) {
-			continue;
-		}
-
-		return {
-			phrase,
-			type:      "pattern",
-			typeLabel: getTypeLabel( "pattern" ),
-			code:      `${entry.token} ${payload}`,
-			mapped:    true
-		};
 	}
 
 	return null;
+}
+
+function buildLiteralTokenMatch( phrase ) {
+	const normalizedPhrase = normalizeWhitespace( phrase );
+	const token = normalizeCodeValue( phrase );
+
+	if (
+		!normalizedPhrase ||
+		normalizedPhrase !== token ||
+		token.includes( " " ) ||
+		!/^[A-Z0-9?]+$/.test( token )
+	) {
+		return null;
+	}
+
+	return {
+		phrase,
+		type:      "pattern",
+		typeLabel: getTypeLabel( "pattern" ),
+		code:      token,
+		mapped:    true
+	};
 }
 
 function buildCallsignMatch( phrase ) {
@@ -770,11 +955,15 @@ function buildCallsignMatch( phrase ) {
 
 function encodePhrase( phrase ) {
 	return buildTemplateMatch( phrase ) ??
+		buildLabeledCallsignMatch( phrase ) ??
 		buildCallPatternMatch( phrase ) ??
 		buildTargetedCQMatch( phrase ) ??
 		buildSignalReportMatch( phrase ) ??
 		buildContextualMatch( phrase ) ??
+		buildSpecialSymbolMatch( phrase ) ??
 		buildMeaningMatch( phrase ) ??
+		buildLabeledValueMatch( phrase ) ??
+		buildLiteralTokenMatch( phrase ) ??
 		buildCallsignMatch( phrase ) ??
 		{
 			phrase,
@@ -786,22 +975,60 @@ function encodePhrase( phrase ) {
 }
 
 function encodeSequence( text ) {
-	const phrases = String( text ?? "" )
-		.split( "|" )
-		.map( ( part ) => normalizeWhitespace( part ) )
-		.filter( Boolean );
+	const lines = normalizeLineEndings( text ).split( "\n" );
+	const encodedLines = lines.map( ( line ) => {
+		const sourceLine = String( line ?? "" );
+		const {
+			linePrefix,
+			content
+		} = splitPrefixedLine( sourceLine );
+		const trimmedContent = content.trim();
 
-	if ( !phrases.length ) {
-		return EMPTY_RESULT;
-	}
+		if ( !trimmedContent ) {
+			return {
+				codeLine:        sourceLine,
+				items:           [],
+				unmappedPhrases: []
+			};
+		}
 
-	const items = phrases.map( ( phrase ) => encodePhrase( phrase ) );
+		if ( isCommentLine( content ) ) {
+			return {
+				codeLine:        sourceLine,
+				items:           [],
+				unmappedPhrases: []
+			};
+		}
+
+		if ( !content.includes( "|" ) && looksLikeEncodedLine( content ) ) {
+			return {
+				codeLine:        `${linePrefix}${normalizeCodeValue( content )}`,
+				items:           [],
+				unmappedPhrases: []
+			};
+		}
+
+		const phrases = content
+			.split( "|" )
+			.map( ( part ) => normalizeWhitespace( part ) )
+			.filter( Boolean );
+		const items = phrases.map( ( phrase ) => encodePhrase( phrase ) );
+
+		return {
+			codeLine: `${linePrefix}${items.filter( ( item ) => item.mapped && item.code )
+				.map( ( item ) => item.code )
+				.join( " " )}`,
+			items,
+			unmappedPhrases: items.filter( ( item ) => !item.mapped ).map( ( item ) => item.phrase )
+		};
+	} );
+	const items = encodedLines.flatMap( ( line ) => line.items );
+	const unmappedPhrases = encodedLines.flatMap( ( line ) => line.unmappedPhrases );
 
 	return {
-		codeText: items.filter( ( item ) => item.mapped && item.code ).map( ( item ) => item.code )
-			.join( " " ),
+		codeText: encodedLines.map( ( line ) => line.codeLine ).join( "\n" ),
 		items,
-		unmappedPhrases: items.filter( ( item ) => !item.mapped ).map( ( item ) => item.phrase )
+		unmappedPhrases
 	};
 }
 
@@ -811,7 +1038,7 @@ const encoded = computed( () => plainText.value.trim() ?
 
 watch(
 	() => props.modelValue, ( nextValue ) => {
-		if ( normalizeWhitespace( nextValue ) === normalizeWhitespace( plainText.value ) ) {
+		if ( normalizeLineEndings( nextValue ) === normalizeLineEndings( plainText.value ) ) {
 			return;
 		}
 
@@ -831,13 +1058,14 @@ watch(
 
 function setEditorText( text ) {
 	const instance = editor.value;
+	const normalizedText = normalizeLineEndings( text );
 
 	if ( !instance ) {
-		plainText.value = String( text ?? "" );
+		plainText.value = normalizedText;
 		return;
 	}
 
-	instance.commands.setContent( createDocFromText( text ),
+	instance.commands.setContent( createDocFromText( normalizedText ),
 		false );
 	plainText.value = extractPlainText( instance );
 }
@@ -967,6 +1195,20 @@ function tokenTypeColor( type ) {
 
 :deep(.haEncoderEditor p) {
 	margin: 0;
+}
+
+:deep(.haEncoderEditor .haCommentLine) {
+	color: rgb(var(--v-theme-success));
+}
+
+:deep(.haEncoderEditor .haQxxToken) {
+	color: rgb(var(--v-theme-info));
+	font-weight: 600;
+}
+
+:deep(.haEncoderEditor .haQerToken) {
+	color: rgb(var(--v-theme-error));
+	font-weight: 700;
 }
 
 :deep(.haEncoderEditor:focus) {

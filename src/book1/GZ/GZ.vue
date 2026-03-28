@@ -91,7 +91,7 @@
 			<p>{{ t( "interactive.intro" ) }}</p>
 		</div>
 
-		<v-card class="panel pa-5">
+		<v-card class="panel pa-2">
 			<div class="presetWrap">
 				<v-btn
 					color="primary"
@@ -494,11 +494,14 @@ const part2Tex = computed( () => locale.value === "de" ?
 		String.raw`P(\text{at least one hit}) = 1-(1-p)^n`
 	] );
 const step1Tex = computed( () =>
-	String.raw`P(\text{${formulaLabels.value.noHitOne}}) &= 1-p \\ &= 1-${fmtTex( p.value, 4 )} \\ &= ${fmtTex( singleFailure.value, 4 )}` );
+	String.raw`P(\text{${formulaLabels.value.noHitOne}}) &= 1-p 
+	\\ &= 1-${fmtTex( p.value, 4 )} \\ &= ${fmtTex( singleFailure.value, 4 )}` );
 const step2Tex = computed( () =>
-	String.raw`P(\text{${formulaLabels.value.noHitCurrent}}) &= (1-p)^{${tries.value}} \\ &= (${fmtTex( singleFailure.value, 4 )})^{${tries.value}} \\ &= ${fmtTex( exactNoSuccess.value, 6 )}` );
+	String.raw`P(\text{${formulaLabels.value.noHitCurrent}}) &= (1-p)^{${tries.value}} 
+	\\ &= (${fmtTex( singleFailure.value, 4 )})^{${tries.value}} \\ &= ${fmtTex( exactNoSuccess.value, 6 )}` );
 const step3Tex = computed( () =>
-	String.raw`P(\text{${formulaLabels.value.atLeastOne}}) &= 1 - P(\text{${formulaLabels.value.noHitCurrent}}) \\ &= 1-${fmtTex( exactNoSuccess.value, 6 )} \\ &= ${fmtTex( exactAtLeastOne.value, 6 )}` );
+	String.raw`P(\text{${formulaLabels.value.atLeastOne}}) &= 1 - P(\text{${formulaLabels.value.noHitCurrent}}) 
+	\\ &= 1-${fmtTex( exactNoSuccess.value, 6 )} \\ &= ${fmtTex( exactAtLeastOne.value, 6 )}` );
 
 const interpretationText = computed( () =>
 	explanationMode.value === "story" ?

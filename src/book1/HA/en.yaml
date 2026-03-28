@@ -110,16 +110,79 @@ encoder:
   placeholder: "Y41ZL calls SM5ABC | thanks | Location: Dresden"
   sampleSequence: "Y41ZL calls SM5ABC | thanks | call | signal report 559 | Location: DRESDEN | Transmit power: 100W | Antenna: DIPOLE | Weather: FINE | only the addressed station should answer"
   examples:
+    - label: The strange call from East Germany
+      value: |-
+        # Call from TU Dresden
+        General call to SM | General call to SM | from / this is | callsign Y41ZL | callsign Y41ZL | go ahead / response invited
+        General call to OH | General call to OH | from / this is | callsign Y41ZL | callsign Y41ZL | go ahead / response invited
+        # Reply from Sweden
+        SM5ABC calls Y41ZL | go ahead / response invited
+        # TU Dresden asks about Eddie
+        Y41ZL calls SM5ABC | RST 559: readability perfectly readable, signal strength fairly good, tone perfectly pure tone | Location: QER? | Location: DRESDEN | go ahead / response invited
+        # Sweden replies
+        SM5ABC calls Y41ZL | roger / copied | RST 579: readability perfectly readable, signal strength moderately strong, tone perfectly pure tone | station location / operating position | number or near / ambiguous: NYKOPING
+        QER? | SRI | NO | copy / understood | Eddie Riedel | go ahead / response invited
+        # TU Dresden starts with the payload DNXAG.EHTWN.AOJUT.CNNFJ.BXTLJ
+        Y41ZL calls SM5ABC | DN | radio / equipment: JENA85 | XA | Transmit power: 10W | G
+        E | Antenna: DIPOLE | HT | Weather: FINE | WN
+        interference from other stations | nothing / none | AUJ | static / atmospheric noise | value 2 | U | fading | little / small | T
+        CN | Temperature: 24 | N | Propagation: FAIR | FJ
+        B | thanks | X | for | TLJ | radio contact / QSO | only the addressed station should answer
+        # The Swede notices that something is off
+        SM5ABC calls Y41ZL | roger / copied | very good | copy / understood | MOST
+        SRI | SOME | LETTERS | MISSED
+        Eddie Riedel | STILL | NOT | UNDERSTOOD | go ahead / response invited
+        # TU Dresden deliberately stays relaxed
+        Y41ZL calls SM5ABC | roger / copied | roger / copied | thanks
+        nothing / none | IMP
+        thanks | for | PATIENCE
+        radio contact / QSO | very good | only the addressed station should answer
+        # In the end, the Swede openly admits that not everything was clear
+        SM5ABC calls Y41ZL | roger / copied
+        thanks | radio contact / QSO
+        SRI | NOT | copy / understood | ALL
+        best regards | go ahead / response invited
+        # The station from Dresden gives relaxed thanks and signs off
+        Y41ZL calls SM5ABC | roger / copied | thank you | thank you
+        NO | PROB
+        thanks | for | call
+        best regards | end of contact
+        # Sweden says goodbye
+        SM5ABC calls Y41ZL | best regards | end of contact
     - label: Classic contact
-      value: "Y41ZL calls SM5ABC | thanks | signal report 559 | Location: DRESDEN | Transmit power: 100W | Antenna: DIPOLE | Weather: FINE | only the addressed station should answer"
+      value: |-
+        # Call from Dresden
+        Y41ZL calls SM5ABC | thanks | signal report 559 | Location: DRESDEN
+        # Station details
+        Transmit power: 100W | Antenna: DIPOLE | Weather: FINE
+        # Closing
+        only the addressed station should answer
     - label: General CQ call
-      value: "General call | best regards"
+      value: |-
+        # General call
+        General call
+        # Friendly closing
+        best regards
     - label: CQ call to DL
-      value: "General call to DL | best regards"
+      value: |-
+        # Call to Germany
+        General call to DL
+        # Short closing
+        best regards
     - label: Eddie on air
-      value: "Eddie Riedel | Location: DRESDEN | Weather: FINE | best regards"
+      value: |-
+        # Eddie is on the air from Dresden
+        Eddie Riedel | Location: DRESDEN | Weather: FINE
+        # Eddie sends his regards
+        best regards
     - label: Gear and conditions
-      value: "call | signal report 599 | Radio: FT-857 | Antenna: VERTICAL | Propagation: GOOD | thanks"
+      value: |-
+        # Technical details
+        call | signal report 599 | Radio: FT-857
+        # Setup and conditions
+        Antenna: VERTICAL | Propagation: GOOD
+        # Closing
+        thanks
   actions:
     sample: Load sample
     clear: Clear
@@ -229,18 +292,87 @@ decoder:
   placeholder: CQ CQ DE DL1XYZ K
   sampleSequence: SM5ABC DE Y41ZL TNX FER CALL RST 559 QTH DRESDEN PWR 100W ANT DIPOLE WX FINE KN
   examples:
+    - label: The strange call from East Germany
+      value: |-
+        # Call from TU Dresden
+        CQ SM CQ SM DE Y41ZL Y41ZL K
+        CQ OH CQ OH DE Y41ZL Y41ZL K
+        # Reply from Sweden
+        Y41ZL DE SM5ABC K
+        # TU Dresden asks about Eddie
+        SM5ABC DE Y41ZL RST 559 QTH QER? QTH DRESDEN K
+        # Sweden replies
+        Y41ZL DE SM5ABC R RST 579 QTH NR NYKOPING
+        QER? SRI NO CPY QER K
+        # TU Dresden starts with the payload DNXAG.EHTWN.AOJUT.CNNFJ.BXTLJ
+        SM5ABC DE Y41ZL DN RIG JENA85 XA PWR 10W G
+        E ANT DIPOLE HT WX FINE WN
+        QRM NIL AUJ QRN 2 U QSB LIL T
+        CN TEMP 24 N CONDX FAIR FJ
+        B TNX X FER TLJ QSO KN
+        # The Swede notices that something is off
+        Y41ZL DE SM5ABC R FB CPY MOST
+        SRI SOME LETTERS MISSED
+        QER STILL NOT UNDERSTOOD K
+        # TU Dresden deliberately stays relaxed
+        SM5ABC DE Y41ZL R R TNX
+        NIL IMP
+        TNX FER PATIENCE
+        QSO FB KN
+        # In the end, the Swede openly admits that not everything was clear
+        Y41ZL DE SM5ABC R
+        TNX QSO
+        SRI NOT CPY ALL
+        73 K
+        # The station from Dresden gives relaxed thanks and signs off
+        SM5ABC DE Y41ZL R TU TU
+        NO PROB
+        TNX FER CALL
+        73 SK
+        # Sweden says goodbye
+        Y41ZL DE SM5ABC 73 SK
     - label: Classic contact
-      value: "SM5ABC DE Y41ZL TNX RST 559 QTH DRESDEN PWR 100W ANT DIPOLE WX FINE KN"
+      value: |-
+        # Call from Dresden
+        SM5ABC DE Y41ZL TNX RST 559 QTH DRESDEN
+        # Station details
+        PWR 100W ANT DIPOLE WX FINE
+        # Closing
+        KN
     - label: General CQ call
-      value: "CQ CQ DE DL1XYZ K 73"
+      value: |-
+        # General call
+        CQ CQ DE DL1XYZ K
+        # Friendly closing
+        73
     - label: CQ call to DL
-      value: "CQ DL 73"
+      value: |-
+        # Call to Germany
+        CQ DL
+        # Short closing
+        73
     - label: Eddie with QER
-      value: "QER QTH DRESDEN WX FINE 73"
+      value: |-
+        # Eddie is on the air from Dresden
+        QER QTH DRESDEN WX FINE
+        # Eddie sends his regards
+        73
     - label: Gear and conditions
-      value: "CALL RST 599 RIG FT-857 ANT VERTICAL CONDX GOOD TNX"
+      value: |-
+        # Technical details
+        CALL RST 599 RIG FT-857
+        # Setup and conditions
+        ANT VERTICAL CONDX GOOD
+        # Closing
+        TNX
     - label: With secret payload
-      value: "SM5ABC DE Y41ZL QTH DRESDEN ALPHA OMEGA KN"
+      value: |-
+        # Opening contact
+        SM5ABC DE Y41ZL QTH DRESDEN
+        # Hidden test
+        ALPHA OMEGA
+        # Closing
+        KN
   actions:
     sample: Load sample
     clear: Clear

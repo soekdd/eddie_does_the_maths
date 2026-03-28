@@ -181,6 +181,8 @@ import StarterKit from "@tiptap/starter-kit";
 import { EditorContent, useEditor } from "@tiptap/vue-3";
 import { useI18n } from "@/utils/i18n.mjs";
 import HAMorseCodeDisplay from "./HA_MorseCodeDisplay.vue";
+import { buildCommentDecorationSet } from "./HA_commentDecorations.mjs";
+import { HA_SPECIAL_SYMBOL_BY_TOKEN, HA_SPECIAL_TOKEN_SET } from "./HA_specialSymbols.mjs";
 
 const props = defineProps( {
 	modelValue: {
@@ -346,6 +348,23 @@ const CONTEXT_PREFIX_KEYS = {
 	WX:  "decoder.patterns.weatherPrefix"
 };
 
+const PAYLOAD_BLACKLIST = new Set( [
+	"MOST",
+	"QER?",
+	"SRI",
+	"SOME",
+	"LETTERS",
+	"MISSED",
+	"STILL",
+	"NOT",
+	"UNDERSTOOD",
+	"IMP",
+	"PATIENCE",
+	"ALL",
+	"NO",
+	"PROB"
+] );
+
 const EMPTY_RESULT = Object.freeze( {
 	normalized:      "",
 	naturalSegments: [],
@@ -367,8 +386,12 @@ const rstEntries = computed( () => tm( "decoder.rst" ) ?? {} );
 const typeLabels = computed( () => tm( "decoder.typeLabels" ) ?? {} );
 const exampleItems = computed( () => tm( "decoder.examples" ) ?? [] );
 
+function normalizeLineEndings( value ) {
+	return String( value ?? "" ).replace( /\r\n?/g, "\n" );
+}
+
 function createDocFromText( text ) {
-	const lines = String( text ?? "" ).split( /\n+/ );
+	const lines = normalizeLineEndings( text ).split( "\n" );
 	const paragraphs = lines.length === 1 && lines[ 0 ] === "" ?
 		[ { type: "paragraph" } ] :
 		lines.map( ( line ) => line ?
@@ -388,14 +411,13 @@ function createDocFromText( text ) {
 }
 
 function extractPlainText( instance ) {
-	return instance.state.doc.textBetween(
-		0,
-		instance.state.doc.content.size,
-		" ",
-		" "
-	)
-		.replace( /\s+/g, " " )
-		.trim();
+	const lines = [];
+
+	instance.state.doc.forEach( ( node ) => {
+		lines.push( node.textContent );
+	} );
+
+	return lines.join( "\n" );
 }
 
 const editor = useEditor( {
@@ -412,6 +434,7 @@ const editor = useEditor( {
 		} )
 	],
 	editorProps: {
+		decorations: ( state ) => buildCommentDecorationSet( state.doc ),
 		attributes: {
 			autocapitalize: "characters",
 			autocomplete:   "off",
@@ -435,6 +458,20 @@ function normalize( text ) {
 		.trim();
 }
 
+function splitPrefixedLine( line ) {
+	const match = String( line ?? "" ).match( /^(\s*)(.*)$/s );
+
+	return {
+		linePrefix: match?.[ 1 ] ?? "",
+		content:    match?.[ 2 ] ?? ""
+	};
+}
+
+function isCommentLine( content ) {
+	return String( content ?? "" ).trimStart()
+		.startsWith( "#" );
+}
+
 function isCallsign( token ) {
 	return /^[A-Z0-9]{1,4}\d[A-Z0-9]{1,4}(?:\/[A-Z0-9]{1,4})?$/.test( token );
 }
@@ -454,7 +491,10 @@ function isCQTargetPrefix( token ) {
 }
 
 function isKnownCode( token ) {
-	return Boolean( qCodeEntries.value?.[ token ] || cwCodeEntries.value?.[ token ] || isRSTToken( token ) );
+	return Boolean( qCodeEntries.value?.[ token ] ||
+		cwCodeEntries.value?.[ token ] ||
+		HA_SPECIAL_TOKEN_SET.has( token ) ||
+		isRSTToken( token ) );
 }
 
 function resolvePaletteEntry( groupId,
@@ -541,6 +581,15 @@ function decodeRST( token ) {
 
 function decodeToken( token,
 	previousToken = "" ) {
+	if ( HA_SPECIAL_SYMBOL_BY_TOKEN[ token ] ) {
+		return {
+			token,
+			type:      "cw-abbrev",
+			typeLabel: getTypeLabel( "cw-abbrev" ),
+			natural:   HA_SPECIAL_SYMBOL_BY_TOKEN[ token ]
+		};
+	}
+
 	if ( qCodeEntries.value?.[ token ] ) {
 		return {
 			token,
@@ -638,6 +687,10 @@ function getContextPrefix( current ) {
 	return `${current.natural}: `;
 }
 
+function isPayloadToken( token ) {
+	return Boolean( token ) && !PAYLOAD_BLACKLIST.has( token );
+}
+
 function buildNaturalText( decodedTokens ) {
 	const parts = [];
 	const payloadTokens = [];
@@ -685,7 +738,7 @@ function buildNaturalText( decodedTokens ) {
 		parts.push( createSegment( current?.natural ?? "",
 			unknown ) );
 
-		if ( unknown ) {
+		if ( unknown && isPayloadToken( current.token ) ) {
 			payloadTokens.push( current.token );
 		}
 
@@ -711,24 +764,74 @@ function buildNaturalText( decodedTokens ) {
 }
 
 function decodeSequence( text ) {
-	const normalized = normalize( text );
+	const lines = normalizeLineEndings( text ).split( "\n" );
+	const decodedLines = lines.map( ( line ) => {
+		const sourceLine = String( line ?? "" );
+		const {
+			linePrefix,
+			content
+		} = splitPrefixedLine( sourceLine );
+		const trimmedContent = content.trim();
 
-	if ( !normalized ) {
-		return EMPTY_RESULT;
-	}
+		if ( !trimmedContent ) {
+			return {
+				normalizedLine:  sourceLine,
+				naturalSegments: sourceLine ? [ createSegment( sourceLine ) ] : [],
+				tokens:          [],
+				naturalText:     sourceLine,
+				payloadText:     ""
+			};
+		}
 
-	const rawTokens = normalized.split( " " ).filter( Boolean );
-	const decodedTokens = rawTokens.map( ( token,
-		index ) => decodeToken( token,
-		rawTokens[ index - 1 ] ?? "" ) );
-	const natural = buildNaturalText( decodedTokens );
+		if ( isCommentLine( content ) ) {
+			return {
+				normalizedLine:  sourceLine,
+				naturalSegments: [ createSegment( sourceLine ) ],
+				tokens:          [],
+				naturalText:     sourceLine,
+				payloadText:     ""
+			};
+		}
+
+		const normalizedContent = normalize( content );
+		const rawTokens = normalizedContent.split( " " ).filter( Boolean );
+		const decodedTokens = rawTokens.map( ( token,
+			index ) => decodeToken( token,
+			rawTokens[ index - 1 ] ?? "" ) );
+		const natural = buildNaturalText( decodedTokens );
+		const naturalSegments = linePrefix ?
+			[
+				createSegment( linePrefix ),
+				...natural.segments
+			] :
+			natural.segments;
+
+		return {
+			normalizedLine: `${linePrefix}${normalizedContent}`,
+			naturalSegments,
+			tokens:         decodedTokens,
+			naturalText:    `${linePrefix}${natural.text}`,
+			payloadText:    natural.payloadText
+		};
+	} );
+	const naturalSegments = [];
+
+	decodedLines.forEach( ( line,
+		index ) => {
+		if ( index > 0 ) {
+			naturalSegments.push( createSegment( "\n" ) );
+		}
+
+		naturalSegments.push( ...line.naturalSegments );
+	} );
 
 	return {
-		normalized,
-		naturalSegments: natural.segments,
-		tokens:          decodedTokens,
-		naturalText:     natural.text,
-		payloadText:     natural.payloadText
+		normalized:  decodedLines.map( ( line ) => line.normalizedLine ).join( "\n" ),
+		naturalSegments,
+		tokens:      decodedLines.flatMap( ( line ) => line.tokens ),
+		naturalText: decodedLines.map( ( line ) => line.naturalText ).join( "\n" ),
+		payloadText: decodedLines.map( ( line ) => line.payloadText ).filter( Boolean )
+			.join( "\n" )
 	};
 }
 
@@ -738,7 +841,7 @@ const decoded = computed( () => plainText.value.trim() ?
 
 watch(
 	() => props.modelValue, ( nextValue ) => {
-		if ( normalize( nextValue ) === normalize( plainText.value ) ) {
+		if ( normalizeLineEndings( nextValue ) === normalizeLineEndings( plainText.value ) ) {
 			return;
 		}
 
@@ -758,13 +861,14 @@ watch(
 
 function setEditorText( text ) {
 	const instance = editor.value;
+	const normalizedText = normalizeLineEndings( text );
 
 	if ( !instance ) {
-		plainText.value = String( text ?? "" );
+		plainText.value = normalizedText;
 		return;
 	}
 
-	instance.commands.setContent( createDocFromText( text ),
+	instance.commands.setContent( createDocFromText( normalizedText ),
 		false );
 	plainText.value = extractPlainText( instance );
 }
@@ -893,6 +997,20 @@ function tokenTypeColor( type ) {
 
 :deep(.haDecoderEditor p) {
 	margin: 0;
+}
+
+:deep(.haDecoderEditor .haCommentLine) {
+	color: rgb(var(--v-theme-success));
+}
+
+:deep(.haDecoderEditor .haQxxToken) {
+	color: rgb(var(--v-theme-info));
+	font-weight: 600;
+}
+
+:deep(.haDecoderEditor .haQerToken) {
+	color: rgb(var(--v-theme-error));
+	font-weight: 700;
 }
 
 :deep(.haDecoderEditor:focus) {

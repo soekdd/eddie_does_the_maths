@@ -168,7 +168,7 @@ import titleImg from "./HA.webp";
 
 const { t, tm } = useI18n( "book1/HA" );
 
-const visibleMode = ref( "encoder" );
+const visibleMode = ref( "decoder" );
 const encoderInput = ref( "" );
 const decoderInput = ref( "" );
 
