@@ -28,6 +28,8 @@
 
 			<div class="kbox formulaStack">
 				<Katex :tex="tex.cEqualsLambdaF" />
+				<Katex :tex="tex.lambdaEqualsCOverF" />
+				<Katex :tex="tex.lambdaWithUnits" />
 				<Katex :tex="tex.lambdaApprox" />
 			</div>
 
@@ -193,12 +195,14 @@ const subChapter = computed( () => {
 } );
 
 const tex = computed( () => ( {
-	cEqualsLambdaF: String.raw`c = \lambda \cdot f`,
-	lambdaApprox:   String.raw`\lambda[\mathrm{m}] \approx \frac{300}{f[\mathrm{MHz}]}`,
-	example7MHz:    String.raw`\lambda \approx \frac{300}{7} \approx ${t( "description.formulas.example7Value" )}` +
-		`\\ \\mathrm{m} \\;\\Rightarrow\\; \\text{${t( "description.formulas.band40Label" )}}`,
+	cEqualsLambdaF:     String.raw`c = \lambda \cdot f`,
+	lambdaEqualsCOverF: String.raw`\lambda = \frac{c}{f}`,
+	lambdaWithUnits:    String.raw`\lambda[\mathrm{m}] = \frac{299\,792\,458\ \mathrm{m/s}}{f[\mathrm{MHz}] \cdot 10^6\ \mathrm{s}^{-1}} \approx \frac{299.792458}{f[\mathrm{MHz}]}`,
+	lambdaApprox:       String.raw`\lambda[\mathrm{m}] \approx \frac{300}{f[\mathrm{MHz}]}`,
+	example7MHz:        String.raw`\lambda \approx \frac{300}{7} \approx ${t( "description.formulas.example7Value" )}` +
+			`\\ \\mathrm{m} \\;\\Rightarrow\\; \\text{${t( "description.formulas.band40Label" )}}`,
 	example14MHz: String.raw`\lambda \approx \frac{300}{14} \approx ${t( "description.formulas.example14Value" )}` +
-		`\\ \\mathrm{m} \\;\\Rightarrow\\; \\text{${t( "description.formulas.band20Label" )}}`
+			`\\ \\mathrm{m} \\;\\Rightarrow\\; \\text{${t( "description.formulas.band20Label" )}}`
 } ) );
 
 const familyChips = computed( () => tm( "description.sections.zahlenfamilie.chips" ) ?? [] );
