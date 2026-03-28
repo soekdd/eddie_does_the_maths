@@ -22,6 +22,7 @@ import SE from "@/book1/SE/SE.vue";
 import RD from "@/book1/RD/RD.vue";
 import SD from "@/book1/SD/SD.vue";
 import FX from "@/book1/FX/FX.vue";
+import HA from "@/book1/HA/HA.vue";
 import GD from "@/book1/GD/GD.vue";
 import UD from "@/book1/UD/UD.vue";
 import VA from "@/book1/VA/VA.vue";
@@ -617,6 +618,22 @@ export const contentRoutes = [
 		}
 	},
 	{
+		path:      "/HA",
+		name:      "HA",
+		component: HA,
+		meta:      {
+			difficulty: 1,
+			title:      {
+				de: "Amateurfunk-Decoder",
+				en: "HAM-Radio Decoder"
+			},
+			index: true,
+			error,
+			book:  1,
+			order: 215
+		}
+	},
+	{
 		path:      "/VA",
 		name:      "VA",
 		component: VA,
@@ -876,9 +893,9 @@ export const routes = [
 	},
 	...localizedRoutes,
 	{
-		path:      `/:locale(${LOCALE_ROUTE_PATTERN})/:pathMatch(.*)*`,
-		name:      "LocalizedCatchAll",
-		component: CatchAll,
+		path:        `/:locale(${LOCALE_ROUTE_PATTERN})/:pathMatch(.*)*`,
+		name:        "LocalizedCatchAll",
+		component:   CatchAll,
 		beforeEnter: ( to ) => {
 			const matchedRoute = findContentRouteForBasePath( to.path );
 
@@ -895,7 +912,7 @@ export const routes = [
 
 			return true;
 		},
-		meta:      {
+		meta: {
 			languages: SUPPORTED_LOCALES,
 			title:     {
 				de: "Thema in Arbeit",

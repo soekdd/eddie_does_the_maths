@@ -1,0 +1,486 @@
+title: Amateurfunk-Encoder und -Decoder
+subChapter:
+  einleitung: Einleitung
+  frequenzen-baender: Frequenzen und Bänder
+  bandnamen: Bandnamen
+  zahlenfamilie: Zahlenfamilie
+  banduebersicht: Bandübersicht
+  bandlogik: Bandlogik
+  weitere-baender: Weitere Bänder
+  eddies-schluss: Eddies Schluss
+  encoder: Encoder
+  decoder: Decoder
+bookPart:
+  introText: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
+description:
+  formulas:
+    example7Value: "42{,}9"
+    example14Value: "21{,}4"
+    band40Label: 40-m-Band
+    band20Label: 20-m-Band
+  sections:
+    frequenzen:
+      title: Frequenzen, Bänder und Zahlenfamilien
+      p1: "Als ich die Zahlen am Funkgerät sah, wirkten sie erst zufällig: 3,5&nbsp;MHz. 7&nbsp;MHz. 14&nbsp;MHz. 21&nbsp;MHz. 28&nbsp;MHz. Aber dann war klar: Das ist keine lose Sammlung. Das ist fast eine Familie."
+      lead: "Die Grundidee ist einfach: Frequenz und Wellenlänge beschreiben dieselbe Sache nur in zwei verschiedenen Sprachen."
+      p2: "Weil elektromagnetische Wellen sich fast mit Lichtgeschwindigkeit ausbreiten, kann man im Funk mit einer praktischen Näherung rechnen:"
+      p3: "<strong>Wellenlänge in Metern</strong> ist ungefähr <strong>300 geteilt durch die Frequenz in Megahertz</strong>."
+    bandnamen:
+      title: "1. Warum heißen die Bänder so?"
+      p1: "Der Bandname ist meistens nur die <strong>gerundete Wellenlänge</strong>. Darum ist das 7-MHz-Band das „40-Meter-Band“, obwohl die Rechnung genauer knapp 42,9 Meter ergibt."
+      p2: "Funker reden also mal in <strong>MHz</strong> und mal in <strong>Metern</strong>. Gemeint ist dasselbe Band, nur aus zwei Blickwinkeln."
+    zahlenfamilie:
+      title: "2. Die alte Zahlenfamilie"
+      p1: "Die klassische Kurzwellenfamilie sieht fast wie eine Verdopplungsreihe aus:"
+      chips:
+        - 3,5 MHz → 80 m
+        - 7 MHz → 40 m
+        - 14 MHz → 20 m
+        - 21 MHz → 15 m
+        - 28 MHz → 10 m
+      p2: Verdoppelt man die Frequenz, halbiert sich die Wellenlänge. Genau deshalb fühlen sich 80&nbsp;m, 40&nbsp;m, 20&nbsp;m und 10&nbsp;m wie Verwandte an. 15&nbsp;m passt nicht perfekt in das alte Verdopplungsschema, ergänzt die Familie aber sehr sinnvoll.
+    banduebersicht:
+      title: "3. Die wichtigsten Bänder auf einen Blick"
+      table:
+        band: Band
+        frequency: Typische Mittenfrequenz
+        lambda: Rechnerische Wellenlänge
+        note: Gedanke dahinter
+      bands:
+        - name: 80 m
+          frequency: 3,5 MHz
+          lambda: "≈ 85,7 m"
+          note: Tiefe Kurzwelle, klassisches Nacht- und Nahbereichsband
+        - name: 40 m
+          frequency: 7 MHz
+          lambda: "≈ 42,9 m"
+          note: Sehr vielseitig, guter Übergang zwischen Nähe und Weite
+        - name: 30 m
+          frequency: 10,1 MHz
+          lambda: "≈ 29,7 m"
+          note: Brücke zwischen 40 m und 20 m
+        - name: 20 m
+          frequency: 14 MHz
+          lambda: "≈ 21,4 m"
+          note: Das klassische internationale DX-Band
+        - name: 17 m
+          frequency: 18,068 MHz
+          lambda: "≈ 16,6 m"
+          note: Ruhigere Alternative zu 20 m
+        - name: 15 m
+          frequency: 21 MHz
+          lambda: "≈ 14,3 m"
+          note: Stark bei Tageslicht und guter Sonnenaktivität
+        - name: 12 m
+          frequency: 24,89 MHz
+          lambda: "≈ 12,1 m"
+          note: Ergänzt die hohen Kurzwellenbänder
+        - name: 10 m
+          frequency: 28 MHz
+          lambda: "≈ 10,7 m"
+          note: Hohe Kurzwelle, spannend bei starker Öffnung
+    bandlogik:
+      title: "4. Warum hat man die Bänder so gewählt?"
+      p1: "Historisch wollte man nicht bloß ein paar willkürliche Inseln im Spektrum, sondern <strong>brauchbare, gut merkbare und technisch unterschiedliche Bereiche</strong>. Die alte Kernfamilie ist deshalb so elegant, weil man mit verwandten Zahlen sehr verschiedene Funkwelten bekommt."
+      cards:
+        - title: a) Leicht zu merken
+          text: 3,5 → 7 → 14 → 28 ist fast schon Musik. Wer das Muster kennt, versteht sofort die Bandnamen.
+        - title: b) Unterschiedliche Ausbreitung
+          text: Tiefe Bänder funktionieren anders als hohe. So bekommt man für Tag, Nacht, Nähe und Weite verschiedene Werkzeuge.
+        - title: c) Praktisch für Antennen
+          text: Mit der Wellenlänge ändert sich auch die Größe sinnvoller Antennen. Das macht die Unterschiede nicht nur hörbar, sondern buchstäblich messbar.
+    weitereBaender:
+      title: "5. Und warum kamen später noch weitere Bänder dazu?"
+      p1: "Weil die alte Familie schön ist, aber nicht alle Lücken füllt. Manche späteren Bänder sind wie Brücken oder Ausweichstreifen:"
+      items:
+        - label: 30 m
+          text: Liegt zwischen 40 m und 20 m und ist deshalb ein echtes Zwischenband.
+        - label: 17 m
+          text: Dient oft als ruhigeres Gegenstück zum stark genutzten 20-m-Band.
+        - label: 12 m
+          text: Ergänzt 15 m und 10 m in einem Bereich, der besonders tagsüber spannend sein kann.
+      p2: Die späteren Ergänzungen zerstören also das alte System nicht. Sie machen es nur feiner und alltagstauglicher.
+    schluss:
+      title: Schluss
+      quote: Erst dachte ich, Funker geben ihren Bändern bloß Namen. Dann sah ich die Reihe. Nicht Chaos. Nicht Gewohnheit. Fast eine Zahlenfamilie. Und plötzlich wirkte das Unsichtbare, als hätte es jemand sauber sortiert.
+encoder:
+  editorTitle: Natürliche Sprache
+  editorHint: Klicke Sprachbausteine in den Editor oder schreibe eigene Aussagen. Trenne mehrere Aussagen mit |.
+  examplesLabel: Beispiele
+  placeholder: "Y41ZL ruft SM5ABC | danke | Standort: Dresden"
+  sampleSequence: "Y41ZL ruft SM5ABC | danke | Anruf | Signalbericht 559 | Standort: DRESDEN | Sendeleistung: 100W | Antenne: DIPOLE | Wetter: FINE | Nur die angesprochene Station soll antworten"
+  examples:
+    - label: Klassische Verbindung
+      value: "Y41ZL ruft SM5ABC | danke | Signalbericht 559 | Standort: DRESDEN | Sendeleistung: 100W | Antenne: DIPOLE | Wetter: FINE | Nur die angesprochene Station soll antworten"
+    - label: Allgemeiner CQ-Anruf
+      value: "Allgemeiner Anruf | beste Grüße"
+    - label: Eddie auf Sendung
+      value: "Eddie Riedel | Standort: DRESDEN | Wetter: FINE | beste Grüße"
+    - label: Technik und Bedingungen
+      value: "Anruf | Signalbericht 599 | Funkgerät: FT-857 | Antenne: VERTICAL | Ausbreitungsbedingungen: GOOD | danke"
+  actions:
+    sample: Beispiel laden
+    clear: Leeren
+  paletteTitle: Sprach-Palette
+  paletteHint: Jeder Button fügt eine natürliche Aussage mit Trenner | an der Cursorposition ein.
+  translationTitle: Funkcode
+  translationHint: Die Codierung aktualisiert sich parallel zur Eingabe.
+  unmappedTitle: Nicht codierbar
+  emptyTranslation: Gib oder klicke zuerst natürliche Sprache ein.
+  encodedLabel: Codiert
+  table:
+    phrase: Aussage
+    type: Typ
+    code: Code
+  paletteGroups:
+    templates: Sprachbausteine
+    qCodes: Q-Code-Bedeutungen
+    cwCodes: CW-Bedeutungen
+  typeLabels:
+    snippet: Sprachbaustein
+    q-code: Q-Code
+    cw-abbrev: CW-Kürzel
+    pattern: Muster
+    unknown: Unbekannt
+  patterns:
+    signalReportPrefix: "Signalbericht "
+    locationPrefix: "Standort: "
+    weatherPrefix: "Wetter: "
+    powerPrefix: "Sendeleistung: "
+    antennaPrefix: "Antenne: "
+    namePrefix: "Name: "
+    frequencyPrefix: "Frequenz: "
+    operatorPrefix: "Operator: "
+    equipmentPrefix: "Funkgerät: "
+    conditionPrefix: "Ausbreitungsbedingungen: "
+    numberPrefix: "Nummer: "
+    temperaturePrefix: "Temperatur: "
+    timePrefix: "Uhrzeit: "
+  snippets:
+    cq_general_call:
+      label: Allgemeiner Anruf
+      phrase: Allgemeiner Anruf
+      insertText: "Allgemeiner Anruf | "
+      code: "CQ CQ DE DL1XYZ K"
+    rst_599:
+      label: Signalbericht 599
+      phrase: Signalbericht 599
+      insertText: "Signalbericht 599 | "
+      code: "RST 599"
+    qth_dresden:
+      label: Standort DRESDEN
+      phrase: "Standort: DRESDEN"
+      insertText: "Standort: DRESDEN | "
+      code: "QTH DRESDEN"
+    pwr_100w:
+      label: Sendeleistung 100W
+      phrase: "Sendeleistung: 100W"
+      insertText: "Sendeleistung: 100W | "
+      code: "PWR 100W"
+    ant_dipole:
+      label: Antenne Dipol
+      phrase: "Antenne: DIPOLE"
+      insertText: "Antenne: DIPOLE | "
+      code: "ANT DIPOLE"
+    wx_sunny:
+      label: Wetter Fine
+      phrase: "Wetter: FINE"
+      insertText: "Wetter: FINE | "
+      code: "WX FINE"
+    best_regards:
+      label: Beste Grüße
+      phrase: Beste Grüße
+      insertText: "Beste Grüße | "
+      code: "73"
+    only_reply:
+      label: Nur die angesprochene Station soll antworten
+      phrase: Nur die angesprochene Station soll antworten
+      insertText: "Nur die angesprochene Station soll antworten | "
+      code: "KN"
+decoder:
+  editorTitle: Funktext
+  editorHint: Klicke Codes in den Editor oder schreibe deine Sequenz direkt hinein.
+  examplesLabel: Beispiele
+  placeholder: CQ CQ DE DL1XYZ K
+  sampleSequence: SM5ABC DE Y41ZL TNX FER CALL RST 559 QTH DRESDEN PWR 100W ANT DIPOLE WX FINE KN
+  examples:
+    - label: Klassische Verbindung
+      value: "SM5ABC DE Y41ZL TNX RST 559 QTH DRESDEN PWR 100W ANT DIPOLE WX FINE KN"
+    - label: Allgemeiner CQ-Anruf
+      value: "CQ CQ DE DL1XYZ K 73"
+    - label: Eddie mit QER
+      value: "QER QTH DRESDEN WX FINE 73"
+    - label: Technik und Bedingungen
+      value: "CALL RST 599 RIG FT-857 ANT VERTICAL CONDX GOOD TNX"
+    - label: Mit geheimem Payload
+      value: "SM5ABC DE Y41ZL QTH DRESDEN ALPHA OMEGA KN"
+  actions:
+    sample: Beispiel laden
+    clear: Leeren
+  paletteTitle: Code-Palette
+  paletteHint: Jeder Button fügt seinen Code direkt an der Cursorposition ein.
+  translationTitle: Natürliche Sprache
+  translationHint: Die Dekodierung aktualisiert sich parallel zur Eingabe.
+  secretPayloadTitle: Geheimer Payload
+  emptyTranslation: Gib oder klicke zuerst einen Amateurfunk-Text ein.
+  normalizedLabel: Normalisiert
+  table:
+    token: Token
+    type: Typ
+    meaning: Bedeutung
+  paletteGroups:
+    templates: Schnellbausteine
+    qCodes: Q-Codes
+    cwCodes: CW-Kürzel
+  typeLabels:
+    q-code: Q-Code
+    cw-abbrev: CW-Kürzel
+    rst: RST
+    label: Marker
+    callsign: Rufzeichen
+    value: Wert
+    free-text: Freitext
+  patterns:
+    signalReportFollows: Signalbericht folgt
+    callsign: Rufzeichen {token}
+    value: Wert {token}
+    callPattern: "{caller} ruft {called}"
+    locationPrefix: "Standort: "
+    weatherPrefix: "Wetter: "
+    powerPrefix: "Sendeleistung: "
+    antennaPrefix: "Antenne: "
+    namePrefix: "Name: "
+    frequencyPrefix: "Frequenz: "
+    timePrefix: "Uhrzeit: "
+  rst:
+    template: "RST {code}: Lesbarkeit {readability}, Signalstärke {strength}, Ton {tone}"
+    readability:
+      "1": unlesbar
+      "2": kaum lesbar
+      "3": schwer lesbar
+      "4": lesbar mit Mühe
+      "5": mittel lesbar
+    strength:
+      "1": sehr schwach
+      "2": schwach
+      "3": eher schwach
+      "4": ordentlich
+      "5": ziemlich gut
+      "6": gut
+      "7": kräftig
+      "8": stark
+      "9": sehr stark
+    tone:
+      "1": sehr rauer Ton
+      "2": rauer Ton
+      "3": unsauberer Ton
+      "4": etwas rau
+      "5": brauchbar
+      "6": ordentlich
+      "7": ziemlich rein
+      "8": nahezu rein
+      "9": vollkommen rein
+  snippets:
+    cq_general_call:
+      token: CQ CQ DE DL1XYZ K
+      insertText: "CQ CQ DE DL1XYZ K "
+      description: Beispiel für einen allgemeinen Anruf
+    rst_599:
+      token: RST 599
+      insertText: "RST 599 "
+      description: Typischer Signalbericht
+    qth_dresden:
+      token: QTH DRESDEN
+      insertText: "QTH DRESDEN "
+      description: Beispiel für eine Standortangabe   
+    pwr_100w:
+      token: PWR 100W
+      insertText: "PWR 100W "
+      description: Beispiel für eine Leistungsangabe
+    ant_dipole:
+      token: ANT DIPOLE
+      insertText: "ANT DIPOLE "
+      description: Beispiel für einen Antennentyp
+    wx_sunny:
+      token: WX SUNNY
+      insertText: "WX SUNNY "
+      description: Beispiel für eine Wetterangabe
+    best_regards:
+      token: "73"
+      insertText: "73 "
+      description: Beste Grüße
+    only_reply:
+      token: KN
+      insertText: "KN "
+      description: Nur die angesprochene Station soll antworten
+  qCodes:
+    QAP:
+      description: hörbereit auf der Frequenz / standby
+    QRA:
+      description: Name der Station / Stationsname
+    QRG:
+      description: genaue Frequenz
+    QER:
+      description: Eddie Riedel
+      color: pink
+    QRL:
+      description: Frequenz belegt / ich bin beschäftigt
+    QRM:
+      description: Störung durch andere Stationen
+    QRN:
+      description: atmosphärische Störungen / Rauschen
+    QRP:
+      description: niedrige Sendeleistung
+    QRQ:
+      description: schneller geben
+    QRS:
+      description: langsamer geben
+    QRV:
+      description: bereit / empfangsbereit
+    QRX:
+      description: Bitte warten / Stand by
+    QRZ:
+      description: Wer hat mich gerufen?
+    QRT:
+      description: Betrieb beenden / gehe von der Frequenz
+    QRO:
+      description: hohe Sendeleistung
+    QSB:
+      description: Schwund / Fading
+    QSL:
+      description: Bestätigung / ich bestätige
+    QSO:
+      description: Funkverbindung / Kontakt
+    QSP:
+      description: weiterleiten / bitte weiterleiten
+    QSY:
+      description: Frequenzwechsel
+    QTC:
+      description: ich habe Nachrichten für dich
+    QTH:
+      description: Standort / Aufenthaltsort der Station
+    QTR:
+      description: Uhrzeit
+  cwCodes:
+    "73":
+      description: beste Grüße
+    "88":
+      description: Liebe und Küsse
+    AGN:
+      description: noch einmal / again
+    ANT:
+      description: Antenne
+    AR:
+      description: Ende der Aussendung
+    AS:
+      description: warte / Pause
+    BK:
+      description: Unterbrechung / break
+    CALL:
+      description: Anruf
+    CFM:
+      description: ich bestätige
+    CL:
+      description: Station schließt
+    CPI:
+      description: kopiere / verstanden
+    CPY:
+      description: kopiere / verstanden
+    CQ:
+      description: allgemeiner Anruf
+    CONDX:
+      description: Ausbreitungsbedingungen
+    CUL:
+      description: bis später
+    DE:
+      description: von / hier ist
+    DR:
+      description: lieber / dear
+    ES:
+      description: und
+    FB:
+      description: sehr gut / ausgezeichnet
+    FER:
+      description: für
+    GA:
+      description: Guten Tag oder mach weiter / mehrdeutig
+    GD:
+      description: gut
+    GE:
+      description: Guten Abend
+    GL:
+      description: viel Glück
+    GM:
+      description: Guten Morgen
+    GN:
+      description: Gute Nacht
+    GUD:
+      description: gut
+    HI:
+      description: Lachen / Hehe
+    HR:
+      description: hier
+    HW:
+      description: wie?
+    K:
+      description: kommen / Antwort erbeten
+    KN:
+      description: nur die angesprochene Station soll antworten
+    LIL:
+      description: wenig / leicht
+    NIL:
+      description: nichts / keine
+    NR:
+      description: Nummer oder nahe / mehrdeutig
+    NW:
+      description: jetzt
+    OM:
+      description: Funkfreund / old man
+    OP:
+      description: Operator / Funker
+    OPR:
+      description: Operator / Funker
+    PSE:
+      description: bitte
+    PWR:
+      description: Sendeleistung
+    R:
+      description: Roger / verstanden / empfangen
+    RCVR:
+      description: Empfänger
+    RIG:
+      description: Funkgerät / Ausrüstung
+    MSG:
+      description: Nachricht
+    RPRT:
+      description: Bericht / report
+    RPT:
+      description: wiederholen
+    RX:
+      description: Empfänger
+    SK:
+      description: Ende der Verbindung
+    SOS:
+      description: Notruf / Seenotruf
+    TEMP:
+      description: Temperatur
+    TEST:
+      description: Test
+    TKS:
+      description: danke
+    TNX:
+      description: danke
+    TU:
+      description: danke
+    TX:
+      description: Sender
+    UR:
+      description: dein / euer
+    VY:
+      description: sehr
+    WX:
+      description: Wetter
+    XYL:
+      description: Ehefrau / Partnerin
+    YL:
+      description: junge Frau
