@@ -2,6 +2,8 @@ app:
   languageAria: "Language"
   home: "Home"
   forum: "Forum"
+  previousChapter: "Previous chapter"
+  nextChapter: "Next chapter"
   reviewInProgress: "This chapter is currently being reviewed by {name}."
   pdf: "PDF"
   lastUpdate: "Last updated"

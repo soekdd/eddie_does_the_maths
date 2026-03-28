@@ -203,8 +203,12 @@ const emit = defineEmits( [
 
 const TEMPLATE_IDS = [
 	"cq_general_call",
+	"cq_sm",
+	"cq_oh",
+	"cq_y4",
+	"cq_dl",
 	"rst_599",
-	"qth_berlin",
+	"qth_dresden",
 	"pwr_100w",
 	"ant_dipole",
 	"wx_sunny",
@@ -340,6 +344,7 @@ const qCodeEntries = computed( () => tm( "decoder.qCodes" ) ?? {} );
 const cwCodeEntries = computed( () => tm( "decoder.cwCodes" ) ?? {} );
 const typeLabels = computed( () => tm( "encoder.typeLabels" ) ?? {} );
 const exampleItems = computed( () => tm( "encoder.examples" ) ?? [] );
+const targetedCallPrefixes = computed( () => tm( "encoder.patterns.targetedCallPrefixes" ) ?? [] );
 
 const contextualPrefixes = computed( () => [
 	{
@@ -484,6 +489,14 @@ function getPrimaryAlias( description ) {
 
 function isCallsign( token ) {
 	return /^[A-Z0-9]{1,4}\d[A-Z0-9]{1,4}(?:\/[A-Z0-9]{1,4})?$/.test( token );
+}
+
+function isCQTargetPrefix( token ) {
+	return /^(?=.*[A-Z])[A-Z0-9]{1,3}$/.test( token ) &&
+		!isCallsign( token ) &&
+		!qCodeEntries.value?.[ token ] &&
+		!cwCodeEntries.value?.[ token ] &&
+		token !== "RST";
 }
 
 function buildPaletteItem(
@@ -638,6 +651,49 @@ function buildCallPatternMatch( phrase ) {
 	};
 }
 
+function buildTargetedCQMatch( phrase ) {
+	const normalizedPhrase = normalizeWhitespace( phrase );
+	const directMatch = normalizedPhrase.match( /^CQ\s+([A-Z0-9]{1,3})$/i );
+
+	if ( directMatch ) {
+		const target = normalizeCodeValue( directMatch[ 1 ] );
+
+		if ( isCQTargetPrefix( target ) ) {
+			return {
+				phrase,
+				type:      "pattern",
+				typeLabel: getTypeLabel( "pattern" ),
+				code:      `CQ ${target}`,
+				mapped:    true
+			};
+		}
+	}
+
+	for ( const prefix of targetedCallPrefixes.value ) {
+		const match = normalizedPhrase.match( new RegExp( `^${escapeRegExp( prefix )}(.+)$`, "i" ) );
+
+		if ( !match ) {
+			continue;
+		}
+
+		const target = normalizeCodeValue( match[ 1 ] );
+
+		if ( !isCQTargetPrefix( target ) ) {
+			continue;
+		}
+
+		return {
+			phrase,
+			type:      "pattern",
+			typeLabel: getTypeLabel( "pattern" ),
+			code:      `CQ ${target}`,
+			mapped:    true
+		};
+	}
+
+	return null;
+}
+
 function buildSignalReportMatch( phrase ) {
 	const normalizedPhrase = normalizeWhitespace( phrase );
 	const directMatch = normalizedPhrase.match( /^RST\s+(\d{2,3})$/i );
@@ -715,6 +771,7 @@ function buildCallsignMatch( phrase ) {
 function encodePhrase( phrase ) {
 	return buildTemplateMatch( phrase ) ??
 		buildCallPatternMatch( phrase ) ??
+		buildTargetedCQMatch( phrase ) ??
 		buildSignalReportMatch( phrase ) ??
 		buildContextualMatch( phrase ) ??
 		buildMeaningMatch( phrase ) ??

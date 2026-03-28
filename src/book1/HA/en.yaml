@@ -114,6 +114,8 @@ encoder:
       value: "Y41ZL calls SM5ABC | thanks | signal report 559 | Location: DRESDEN | Transmit power: 100W | Antenna: DIPOLE | Weather: FINE | only the addressed station should answer"
     - label: General CQ call
       value: "General call | best regards"
+    - label: CQ call to DL
+      value: "General call to DL | best regards"
     - label: Eddie on air
       value: "Eddie Riedel | Location: DRESDEN | Weather: FINE | best regards"
     - label: Gear and conditions
@@ -156,12 +158,35 @@ encoder:
     numberPrefix: "Number: "
     temperaturePrefix: "Temperature: "
     timePrefix: "Time: "
+    targetedCallPrefixes:
+      - "General call to "
+      - "CQ to "
   snippets:
     cq_general_call:
       label: General call
       phrase: General call
       insertText: "General call | "
       code: "CQ CQ DE DL1XYZ K"
+    cq_sm:
+      label: General call to SM
+      phrase: General call to SM
+      insertText: "General call to SM | "
+      code: "CQ SM"
+    cq_oh:
+      label: General call to OH
+      phrase: General call to OH
+      insertText: "General call to OH | "
+      code: "CQ OH"
+    cq_y4:
+      label: General call to Y4
+      phrase: General call to Y4
+      insertText: "General call to Y4 | "
+      code: "CQ Y4"
+    cq_dl:
+      label: General call to DL
+      phrase: General call to DL
+      insertText: "General call to DL | "
+      code: "CQ DL"
     rst_599:
       label: Signal report 599
       phrase: signal report 599
@@ -208,6 +233,8 @@ decoder:
       value: "SM5ABC DE Y41ZL TNX RST 559 QTH DRESDEN PWR 100W ANT DIPOLE WX FINE KN"
     - label: General CQ call
       value: "CQ CQ DE DL1XYZ K 73"
+    - label: CQ call to DL
+      value: "CQ DL 73"
     - label: Eddie with QER
       value: "QER QTH DRESDEN WX FINE 73"
     - label: Gear and conditions
@@ -245,6 +272,8 @@ decoder:
     callsign: callsign {token}
     value: value {token}
     callPattern: "{caller} calls {called}"
+    targetPrefix: country prefix {token}
+    targetedCallPattern: "General call to {target}"
     locationPrefix: "Location: "
     weatherPrefix: "Weather: "
     powerPrefix: "Transmit power: "
@@ -285,6 +314,22 @@ decoder:
       token: CQ CQ DE DL1XYZ K
       insertText: "CQ CQ DE DL1XYZ K "
       description: Example for a general call
+    cq_sm:
+      token: CQ SM
+      insertText: "CQ SM "
+      description: Example for a general call to SM
+    cq_oh:
+      token: CQ OH
+      insertText: "CQ OH "
+      description: Example for a general call to OH
+    cq_y4:
+      token: CQ Y4
+      insertText: "CQ Y4 "
+      description: Example for a general call to Y4
+    cq_dl:
+      token: CQ DL
+      insertText: "CQ DL "
+      description: Example for a general call to DL
     rst_599:
       token: RST 599
       insertText: "RST 599 "

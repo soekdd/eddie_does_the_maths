@@ -115,6 +115,34 @@
 				{{ t( "app.reviewInProgress", { name: correctorName } ) }}
 			</v-alert>
 
+			<nav v-if="showBookCard && showChapterPager" class="chapterPager chapterPager--beforeBook">
+				<div class="chapterPagerSlot">
+					<v-btn
+						v-if="previousChapter"
+						:aria-label="chapterButtonLabel( 'previous', previousChapter )"
+						class="chapterPagerBtn"
+						density="comfortable"
+						:title="chapterButtonLabel( 'previous', previousChapter )"
+						:to="previousChapter.to"
+						variant="outlined"
+					>
+						&lt;&lt;
+					</v-btn>
+				</div>
+				<div class="chapterPagerSlot chapterPagerSlot--end">
+					<v-btn
+						v-if="nextChapter"
+						:aria-label="chapterButtonLabel( 'next', nextChapter )"
+						class="chapterPagerBtn"
+						density="comfortable"
+						:title="chapterButtonLabel( 'next', nextChapter )"
+						:to="nextChapter.to"
+						variant="outlined"
+					>
+						&gt;&gt;
+					</v-btn>
+				</div>
+			</nav>
 			<Page v-if="showBookCard">
 				<slot name="bookPart" />
 			</Page>
@@ -168,6 +196,34 @@
 					</v-col>
 				</v-row>
 			</section>
+			<nav v-if="showChapterPager" class="chapterPager">
+				<div class="chapterPagerSlot">
+					<v-btn
+						v-if="previousChapter"
+						:aria-label="chapterButtonLabel( 'previous', previousChapter )"
+						class="chapterPagerBtn"
+						density="comfortable"
+						:title="chapterButtonLabel( 'previous', previousChapter )"
+						:to="previousChapter.to"
+						variant="outlined"
+					>
+						&lt;&lt;
+					</v-btn>
+				</div>
+				<div class="chapterPagerSlot chapterPagerSlot--end">
+					<v-btn
+						v-if="nextChapter"
+						:aria-label="chapterButtonLabel( 'next', nextChapter )"
+						class="chapterPagerBtn"
+						density="comfortable"
+						:title="chapterButtonLabel( 'next', nextChapter )"
+						:to="nextChapter.to"
+						variant="outlined"
+					>
+						&gt;&gt;
+					</v-btn>
+				</div>
+			</nav>
 			<section id="forum" class="card">
 				<ForumThreadPocketBase
 					:forum-key="shortText"
@@ -287,7 +343,7 @@ import {
 } from "@mdi/js";
 import { i18nApi, useI18n } from "@/utils/i18n.mjs";
 import {
-	localizePath, resolveLocaleFromPath, stripLocalePrefix
+	contentRoutes, localizePath, resolveLocaleFromPath, resolveRouteMetaTitle, stripLocalePrefix
 } from "@/router.js";
 import faviconPng from "../images/favicon.png";
 import ForumThreadPocketBase from "./ForumThreadPocketBase.vue";
@@ -359,6 +415,38 @@ function normalizeMetaPersonName( value ) {
 	return value.trim();
 }
 
+function normalizeBookIndex( value ) {
+	const normalized = Number( value );
+	return Number.isFinite( normalized ) ? normalized : null;
+}
+
+function normalizeChapterPath( pathValue ) {
+	const normalizedPath = String( pathValue || "/" ).trim() || "/";
+	return normalizedPath === "/" ? "/" : normalizedPath.endsWith( "/" ) ? normalizedPath.slice( 0, -1 ) : normalizedPath;
+}
+
+function compareChapterEntries( a,
+	b ) {
+	if ( a.order !== null && b.order !== null ) {
+		if ( a.order !== b.order ) {
+			return a.order - b.order;
+		}
+
+		return a.path.localeCompare( b.path, "en" );
+	}
+
+	if ( a.order !== null ) {
+		return -1;
+	}
+
+	if ( b.order !== null ) {
+		return 1;
+	}
+
+	const byTitle = a.title.localeCompare( b.title, locale.value );
+	return byTitle !== 0 ? byTitle : a.path.localeCompare( b.path, "en" );
+}
+
 const correctorName = computed( () => normalizeMetaPersonName( route.meta?.corrector ) );
 const correctedName = computed( () => normalizeMetaPersonName( route.meta?.corrected ) );
 const showCorrectorAlert = computed( () => Boolean( correctorName.value ) );
@@ -421,7 +509,42 @@ const nextLanguage = computed( () => {
 const currentLanguageLabel = computed( () => resolvedLanguage.value.toUpperCase() );
 const routeBasePath = computed( () => stripLocalePrefix( route.path ) );
 const routeBaseName = computed( () => String( route.name ?? "" ).split( "__" )[ 0 ] || "" );
+const routeBook = computed( () => normalizeBookIndex( route.meta?.book ) );
 const showHomeBadge = computed( () => routeBaseName.value !== "ER" );
+const bookChapterRoutes = computed( () => {
+	if ( routeBook.value === null ) {
+		return [];
+	}
+
+	return contentRoutes
+		.filter( ( entry ) =>
+			entry?.meta?.index === true &&
+			entry?.meta?.wip !== true &&
+			normalizeBookIndex( entry?.meta?.book ) === routeBook.value )
+		.map( ( entry ) => ( {
+			key:   String( entry.name ?? entry.path ),
+			path:  normalizeChapterPath( entry.path ),
+			title: resolveRouteMetaTitle( entry.meta, locale.value ).replace( /&shy;/gi, "\u00AD" ).trim(),
+			order: Number.isFinite( entry?.meta?.order ) ? Number( entry.meta.order ) : null,
+			to:    {
+				path: normalizePathForHashLinks( localizePath( entry.path, routeLanguage.value ) )
+			}
+		} ) )
+		.sort( compareChapterEntries );
+} );
+const currentChapterIndex = computed( () => {
+	const currentPath = normalizeChapterPath( routeBasePath.value );
+
+	return bookChapterRoutes.value.findIndex( ( entry ) =>
+		entry.path === currentPath || entry.key === routeBaseName.value );
+} );
+const previousChapter = computed( () =>
+	currentChapterIndex.value > 0 ? bookChapterRoutes.value[ currentChapterIndex.value - 1 ] : null );
+const nextChapter = computed( () =>
+	currentChapterIndex.value >= 0 && currentChapterIndex.value < bookChapterRoutes.value.length - 1 ?
+		bookChapterRoutes.value[ currentChapterIndex.value + 1 ] :
+		null );
+const showChapterPager = computed( () => Boolean( previousChapter.value || nextChapter.value ) );
 
 function resolveDisclaimerHtml( name,
 	locale ) {
@@ -663,6 +786,13 @@ function handleHashLinkClick( hash ) {
 	if ( hash === route.hash ) {
 		scrollToHashId( hash, "smooth" );
 	}
+}
+
+function chapterButtonLabel( direction,
+	chapter ) {
+	const baseLabel = direction === "previous" ? t( "app.previousChapter" ) : t( "app.nextChapter" );
+	const chapterTitle = String( chapter?.title ?? "" ).trim();
+	return chapterTitle ? `${baseLabel}: ${chapterTitle}` : baseLabel;
 }
 
 watch(
@@ -939,6 +1069,32 @@ onMounted( () => {
 	display: flex;
 	justify-content: flex-end;
 	margin-bottom: 8px;
+}
+
+.chapterPager {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	margin: 24px 0 16px;
+}
+
+.chapterPager--beforeBook {
+	margin: 8px 0 12px;
+}
+
+.chapterPagerSlot {
+	flex: 1 1 50%;
+	display: flex;
+}
+
+.chapterPagerSlot--end {
+	justify-content: flex-end;
+}
+
+.chapterPagerBtn {
+	min-width: 3.25rem;
+	font-weight: 700;
+	letter-spacing: 0.08em;
 }
 
 #forum {

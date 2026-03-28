@@ -196,8 +196,12 @@ const emit = defineEmits( [
 
 const TEMPLATE_IDS = [
 	"cq_general_call",
+	"cq_sm",
+	"cq_oh",
+	"cq_y4",
+	"cq_dl",
 	"rst_599",
-	"qth_berlin",
+	"qth_dresden",
 	"pwr_100w",
 	"ant_dipole",
 	"wx_sunny",
@@ -443,6 +447,12 @@ function isNumberWithUnit( token ) {
 	return /^\d+(?:[.,]\d+)?(?:[A-Z%]+)?$/.test( token );
 }
 
+function isCQTargetPrefix( token ) {
+	return /^(?=.*[A-Z])[A-Z0-9]{1,3}$/.test( token ) &&
+		!isCallsign( token ) &&
+		!isKnownCode( token );
+}
+
 function isKnownCode( token ) {
 	return Boolean( qCodeEntries.value?.[ token ] || cwCodeEntries.value?.[ token ] || isRSTToken( token ) );
 }
@@ -567,6 +577,15 @@ function decodeToken( token,
 		};
 	}
 
+	if ( previousToken === "CQ" && isCQTargetPrefix( token ) ) {
+		return {
+			token,
+			type:      "label",
+			typeLabel: getTypeLabel( "label" ),
+			natural:   t( "decoder.patterns.targetPrefix", { token } )
+		};
+	}
+
 	if ( isCallsign( token ) ) {
 		return {
 			token,
@@ -644,6 +663,12 @@ function buildNaturalText( decodedTokens ) {
 
 		if ( current?.token === "RST" && next?.type === "rst" ) {
 			parts.push( createSegment( next.natural ) );
+			index += 2;
+			continue;
+		}
+
+		if ( current?.token === "CQ" && next?.type === "label" ) {
+			parts.push( createSegment( t( "decoder.patterns.targetedCallPattern", { target: next.token } ) ) );
 			index += 2;
 			continue;
 		}

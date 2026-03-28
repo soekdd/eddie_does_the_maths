@@ -2,6 +2,8 @@ app:
   languageAria: "Språk"
   home: "Hem"
   forum: "Forum"
+  previousChapter: "Föregående kapitel"
+  nextChapter: "Nästa kapitel"
   reviewInProgress: "Detta kapitel granskas just nu av {name}."
   pdf: "PDF"
   lastUpdate: "Senast uppdaterad"

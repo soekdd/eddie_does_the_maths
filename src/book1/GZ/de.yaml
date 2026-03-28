@@ -1,0 +1,97 @@
+title: "Das Prinzip der großen Zahl"
+imageTitle: "Eddie erlebt Demütigung in Serie"
+imageAlt: "Illustration zu Eddies Kapitel über viele kleine Wahrscheinlichkeiten"
+introDate: "Vaasa, 15. September 1985"
+subChapter:
+  grundidee: "Grundidee"
+  gegenwahrscheinlichkeit: "Gegenwahrscheinlichkeit"
+  zielquote: "Zielquote"
+  rechner: "Rechner"
+  schritt-fur-schritt: "Schritt für Schritt"
+book:
+  p1: "Manchmal sieht Mathe von außen ziemlich traurig aus."
+  p2: "Zum Beispiel so: Ich klopfe an die Bustür, versuche freundlich zu lächeln, und kriege wieder ein Nein. Dann laufe ich zum nächsten Bus und kassiere noch eins. Und noch eins. Irgendwann fühlt es sich nicht mehr nach Taktik an, sondern nur noch nach Demütigung in Serie. Aber genau da wird es mathematisch interessant. Denn jede einzelne Frage hat nur eine miese kleine Chance auf Erfolg. Vielleicht reicht schon ein Fahrer, der selbst schlechte Laune hat. Vielleicht ist wirklich kein Ticket übrig. Vielleicht nuschele ich zu sehr. Ein einzelner Versuch kann also grandios scheitern, ohne dass das irgendetwas beweist."
+  p3: "Die spannende Frage ist nicht: Wie gut ist ein Versuch? Die spannende Frage ist: Was passiert, wenn ich es oft genug versuche?"
+  p4: "Plötzlich ist Scheitern nicht mehr einfach Scheitern, sondern nur eines von vielen Feldern in einer langen Reihe. Und Erfolg ist nicht mehr das Wunder, auf das man hofft, sondern ein Ereignis, dessen Chance mit jedem weiteren Versuch wächst."
+  p5: "Mit anderen Worten: Vielleicht rettet mich diesmal nicht Mut. Nicht Charme. Nicht gutes Englisch."
+  p6: "Vielleicht rettet mich einfach Statistik."
+sections:
+  part1:
+    title: "Teil 1 — Kleine Chance, große Wirkung"
+    p1: "Ein einzelner Versuch kann winzig sein und die Gesamtchance trotzdem nicht. Der Punkt ist: Wiederholung verändert das Bild. Nicht magisch. Rechenbar."
+    p2: "Wenn jeder Versuch nur <b>{chance}</b> Erfolgschance hat und du <b>{tries}</b> unabhängige Versuche bekommst, liegt die Chance auf <b>mindestens einen Treffer</b> schon bei <b>{total}</b>."
+    p3: "Viele sagen dazu locker „Prinzip der großen Zahl“. Mathematisch sauberer ist: <b>Viele unabhängige Wiederholungen machen eine kleine Einzelchance als Gesamtchance oft überraschend groß.</b>"
+  part2:
+    title: "Teil 2 — Rechne das Gegenteil"
+    p1: "Direkt „mindestens einmal“ zu zählen ist oft unübersichtlich. Viel angenehmer ist das Gegenteil: <b>kein Treffer</b>."
+    p2: "Bei einem Versuch ist das <katex tex=\"1-p\" />. Bei <katex tex=\"n\" /> unabhängigen Versuchen multipliziert sich das zu <katex tex=\"(1-p)^n\" />. Und dann drehst du das Ergebnis nur noch um."
+    p3: "Das ist der ganze Trick. Kein Zauber, kein Bauchgefühl, nur ein sauber gewählter Blickwinkel."
+  part3:
+    title: "Teil 3 — Wie viele Versuche brauche ich?"
+    p1: "Manchmal willst du nicht nur die Chance ausrechnen, sondern eine Zielmarke knacken: 50 %, 90 % oder 95 %."
+    p2: "Dann löst du die Formel nach <katex tex=\"n\" /> auf. Das sieht kurz ein bisschen nach Logarithmus aus, ist aber nur die Rückwärtsfrage zur Potenz."
+    p3: "Wichtig bleibt: Die Formel passt nur dann, wenn die Versuche ungefähr unabhängig sind und die Einzelchance <katex tex=\"p\" /> von Versuch zu Versuch nicht heimlich kippt."
+  comment:
+    title: "Nicht verwechseln"
+    p1: "Das hier ist die alltagssprachliche Idee „viele kleine Chancen summieren sich irgendwann zu etwas Ernstem“. Das <b>Gesetz der großen Zahlen</b> im strengen Sinn sagt etwas anderes: dass sich Häufigkeiten bei vielen Wiederholungen stabilisieren."
+    p2: "Und noch ein Klassiker: Aus vielen Fehlversuchen folgt nicht, dass der nächste Versuch „jetzt endlich dran“ wäre. Die nächste Einzelchance bleibt, wenn das Modell gleich bleibt, immer dieselbe."
+interactive:
+  title: "Rechner und Simulation"
+  intro: "Verändere Einzelchance, Versuchszahl und Anzahl der Simulationen. Links siehst du die exakte Formel, rechts eine Zufallssimulation mit vielen Serien."
+  fields:
+    p: "Trefferwahrscheinlichkeit p pro Versuch"
+    n: "Anzahl Versuche n"
+    runs: "Anzahl der Simulationsserien"
+  presets:
+    tiny: "1 % · 70 Versuche"
+    medium: "5 % · 20 Versuche"
+    bold: "20 % · 8 Versuche"
+  buttons:
+    reroll: "Neu simulieren"
+    reset: "Reset"
+  modes:
+    story: "Alltagssprache"
+    math: "Mathemodus"
+  exactTitle: "Exakte Rechnung"
+  exactNo: "Kein Treffer"
+  exactYes: "Mindestens ein Treffer"
+  simulationTitle: "Simulation"
+  simulationHits: "Treffer-Serien"
+  simulationShare: "Anteil Treffer-Serien"
+  delta: "Abstand zur Formel"
+  targetTitle: "Wie viele Versuche bis zur Zielquote?"
+  targetRow: "{target}: mindestens {trials}"
+  sampleTitle: "Erste {count} Simulationsserien"
+  sampleLegendSuccess: "mindestens ein Treffer"
+  sampleLegendFail: "gar kein Treffer"
+  sampleHitTitle: "Treffer in dieser Serie, erster Treffer bei Versuch {hit}"
+  sampleFailTitle: "In dieser Serie gab es keinen Treffer."
+  storyModeText: "Wenn jeder Versuch nur {p} Chance hat, dann ist nach {n} Versuchen die Chance auf wenigstens einen Treffer schon {hit}. Komplett leer auszugehen hat nur noch {miss}."
+  mathModeText: "Mit p={p} und n={n} gilt: P(kein Treffer)={miss}, also P(mindestens ein Treffer)={hit}."
+calculation:
+  title: "Schritt für Schritt"
+  step1Title: "1) Ein Versuch scheitert mit 1-p"
+  step1Body: "Wenn ein Treffer mit p eintritt, dann bleibt für „kein Treffer“ genau das Komplement übrig."
+  step2Title: "2) Viele Fehlversuche multiplizieren sich"
+  step2Body: "Bei unabhängigen Versuchen darfst du die Wahrscheinlichkeiten für „kein Treffer“ miteinander multiplizieren."
+  step3Title: "3) Jetzt das Komplement nehmen"
+  step3Body: "Was nicht „kein Treffer“ ist, ist automatisch „mindestens ein Treffer“."
+  step4Title: "4) Zielquote rückwärts lösen"
+  step4Body: "Für eine gewünschte Gesamtchance T suchst du die kleinste Versuchszahl n, die die Grenze überschreitet."
+  table:
+    target: "Zielquote"
+    trials: "Benötigte Versuche"
+summary:
+  title: "Kurzfassung"
+  cards:
+    one:
+      title: "Kleine p können groß werden"
+      text: "Mit wachsendem n schrumpft (1-p)^n. Genau deshalb wächst die Chance auf mindestens einen Treffer."
+    two:
+      title: "Das Gegenteil ist leichter"
+      text: "Oft ist „kein Treffer“ einfacher zu berechnen als „mindestens einer“. Danach nimmst du nur noch das Komplement."
+    three:
+      title: "Unabhängigkeit ist die Bedingung"
+      text: "Wenn frühere Versuche spätere Chancen verändern, musst du genauer modellieren. Die Standardformel setzt gleiche, unabhängige Versuche voraus."
+  commentTitle: "Eddies Version"
+  commentBody: "Viele Chancen sind keine Garantie. Aber sie sind eben auch nicht nichts. Und manchmal reicht genau dieser Unterschied, damit aus Resignation wieder Rechnung wird."

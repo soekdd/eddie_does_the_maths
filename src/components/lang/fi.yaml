@@ -2,6 +2,8 @@ app:
   languageAria: "Kieli"
   home: "Etusivu"
   forum: "Foorumi"
+  previousChapter: "Edellinen luku"
+  nextChapter: "Seuraava luku"
   reviewInProgress: "Tätä lukua tarkastaa parhaillaan {name}."
   pdf: "PDF"
   lastUpdate: "Päivitetty viimeksi"

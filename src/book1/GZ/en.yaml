@@ -1,0 +1,97 @@
+title: "The Principle of Large Numbers"
+imageTitle: "Eddie suffers a string of humiliations"
+imageAlt: "Illustration for Eddie's chapter about many small probabilities"
+introDate: "Vaasa, September 15, 1985"
+subChapter:
+  grundidee: "Core idea"
+  gegenwahrscheinlichkeit: "Complement"
+  zielquote: "Target rate"
+  rechner: "Calculator"
+  schritt-fur-schritt: "Step by step"
+book:
+  p1: "Sometimes math looks pretty sad from the outside."
+  p2: "For example like this: I knock on the bus door, try to smile politely, and get another no. Then I run to the next bus and get turned down again. And again. At some point it no longer feels like strategy, only like humiliation in series. But that is exactly where it becomes mathematically interesting. Because each individual question has only a miserable little chance of success. Maybe one driver being in a bad mood is enough. Maybe there really is no ticket left. Maybe I mumble too much. So a single attempt can fail spectacularly without proving anything at all."
+  p3: "The interesting question is not: How good is one attempt? The interesting question is: What happens if I try often enough?"
+  p4: "Suddenly failure is no longer simply failure, but only one of many spaces in a long row. And success is no longer the miracle you hope for, but an event whose probability grows with every additional attempt."
+  p5: "In other words: maybe this time I will not be saved by courage. Not by charm. Not by good English."
+  p6: "Maybe statistics will save me."
+sections:
+  part1:
+    title: "Part 1 — Small chance, big effect"
+    p1: "A single try can be tiny and the total chance can still be far from tiny. Repetition changes the picture. Not magically. Computably."
+    p2: "If every try has only a <b>{chance}</b> chance of success and you get <b>{tries}</b> independent tries, then the chance of <b>at least one hit</b> is already <b>{total}</b>."
+    p3: "People casually call this the “principle of large numbers.” More precisely: <b>many independent repetitions often turn a small single chance into a surprisingly large overall chance.</b>"
+  part2:
+    title: "Part 2 — Calculate the opposite"
+    p1: "Counting “at least once” directly is often messy. The opposite is much nicer: <b>no hit</b>."
+    p2: "For one try that is <katex tex=\"1-p\" />. For <katex tex=\"n\" /> independent tries it multiplies to <katex tex=\"(1-p)^n\" />. Then you just flip the result."
+    p3: "That is the whole trick. No magic, no gut feeling, just a carefully chosen viewpoint."
+  part3:
+    title: "Part 3 — How many tries do I need?"
+    p1: "Sometimes you do not just want the total chance. You want to hit a target: 50%, 90%, or 95%."
+    p2: "Then you solve the formula for <katex tex=\"n\" />. For a moment it looks logarithmic, but really it is just the backwards version of the power."
+    p3: "The important condition remains the same: the formula works only if the tries are roughly independent and the single-trial chance <katex tex=\"p\" /> does not secretly change from one try to the next."
+  comment:
+    title: "Do not mix them up"
+    p1: "This chapter uses the everyday idea that “many small chances eventually add up to something serious.” The strict <b>law of large numbers</b> says something else: relative frequencies stabilize when you repeat an experiment many times."
+    p2: "And one more classic trap: many failures do not mean the next try is “finally due.” If the model stays the same, the next single-trial chance stays the same too."
+interactive:
+  title: "Calculator and simulation"
+  intro: "Change the single-trial chance, the number of tries, and the number of simulations. On the left you see the exact formula, on the right a random simulation with many series."
+  fields:
+    p: "Hit probability p per try"
+    n: "Number of tries n"
+    runs: "Number of simulated series"
+  presets:
+    tiny: "1% · 70 tries"
+    medium: "5% · 20 tries"
+    bold: "20% · 8 tries"
+  buttons:
+    reroll: "Simulate again"
+    reset: "Reset"
+  modes:
+    story: "Everyday language"
+    math: "Math mode"
+  exactTitle: "Exact calculation"
+  exactNo: "No hit"
+  exactYes: "At least one hit"
+  simulationTitle: "Simulation"
+  simulationHits: "Successful series"
+  simulationShare: "Share of successful series"
+  delta: "Distance from formula"
+  targetTitle: "How many tries until the target rate?"
+  targetRow: "{target}: at least {trials}"
+  sampleTitle: "First {count} simulated series"
+  sampleLegendSuccess: "at least one hit"
+  sampleLegendFail: "no hit at all"
+  sampleHitTitle: "This series had a hit, first hit on try {hit}"
+  sampleFailTitle: "This series had no hit."
+  storyModeText: "If every try has only {p} chance, then after {n} tries the chance of at least one hit is already {hit}. Coming away empty has dropped to just {miss}."
+  mathModeText: "With p={p} and n={n} we get: P(no hit)={miss}, so P(at least one hit)={hit}."
+calculation:
+  title: "Step by step"
+  step1Title: "1) One try fails with 1-p"
+  step1Body: "If a hit occurs with probability p, then the complement is exactly what remains for “no hit.”"
+  step2Title: "2) Many failures multiply"
+  step2Body: "For independent tries you may multiply the probabilities for “no hit.”"
+  step3Title: "3) Now take the complement"
+  step3Body: "Whatever is not “no hit” is automatically “at least one hit.”"
+  step4Title: "4) Solve the target rate backwards"
+  step4Body: "For a desired overall chance T you look for the smallest number of tries n that crosses the threshold."
+  table:
+    target: "Target rate"
+    trials: "Required tries"
+summary:
+  title: "In short"
+  cards:
+    one:
+      title: "Small p can grow large"
+      text: "As n grows, (1-p)^n shrinks. That is exactly why the chance of at least one hit grows."
+    two:
+      title: "The opposite is easier"
+      text: "Often “no hit” is easier to compute than “at least one.” After that you only need the complement."
+    three:
+      title: "Independence is the condition"
+      text: "If earlier tries change later chances, you need a better model. The standard formula assumes equal, independent tries."
+  commentTitle: "Eddie's version"
+  commentBody: "Many chances are not a guarantee. But they are not nothing either. And sometimes exactly that difference is enough to turn resignation back into calculation."

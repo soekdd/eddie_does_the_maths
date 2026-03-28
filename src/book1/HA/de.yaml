@@ -114,6 +114,8 @@ encoder:
       value: "Y41ZL ruft SM5ABC | danke | Signalbericht 559 | Standort: DRESDEN | Sendeleistung: 100W | Antenne: DIPOLE | Wetter: FINE | Nur die angesprochene Station soll antworten"
     - label: Allgemeiner CQ-Anruf
       value: "Allgemeiner Anruf | beste Grüße"
+    - label: CQ-Anruf an DL
+      value: "Allgemeiner Anruf an DL | beste Grüße"
     - label: Eddie auf Sendung
       value: "Eddie Riedel | Standort: DRESDEN | Wetter: FINE | beste Grüße"
     - label: Technik und Bedingungen
@@ -156,12 +158,35 @@ encoder:
     numberPrefix: "Nummer: "
     temperaturePrefix: "Temperatur: "
     timePrefix: "Uhrzeit: "
+    targetedCallPrefixes:
+      - "Allgemeiner Anruf an "
+      - "Allgemeiner Ruf an "
   snippets:
     cq_general_call:
       label: Allgemeiner Anruf
       phrase: Allgemeiner Anruf
       insertText: "Allgemeiner Anruf | "
       code: "CQ CQ DE DL1XYZ K"
+    cq_sm:
+      label: Allgemeiner Anruf an SM
+      phrase: Allgemeiner Anruf an SM
+      insertText: "Allgemeiner Anruf an SM | "
+      code: "CQ SM"
+    cq_oh:
+      label: Allgemeiner Anruf an OH
+      phrase: Allgemeiner Anruf an OH
+      insertText: "Allgemeiner Anruf an OH | "
+      code: "CQ OH"
+    cq_y4:
+      label: Allgemeiner Anruf an Y4
+      phrase: Allgemeiner Anruf an Y4
+      insertText: "Allgemeiner Anruf an Y4 | "
+      code: "CQ Y4"
+    cq_dl:
+      label: Allgemeiner Anruf an DL
+      phrase: Allgemeiner Anruf an DL
+      insertText: "Allgemeiner Anruf an DL | "
+      code: "CQ DL"
     rst_599:
       label: Signalbericht 599
       phrase: Signalbericht 599
@@ -208,6 +233,8 @@ decoder:
       value: "SM5ABC DE Y41ZL TNX RST 559 QTH DRESDEN PWR 100W ANT DIPOLE WX FINE KN"
     - label: Allgemeiner CQ-Anruf
       value: "CQ CQ DE DL1XYZ K 73"
+    - label: CQ-Anruf an DL
+      value: "CQ DL 73"
     - label: Eddie mit QER
       value: "QER QTH DRESDEN WX FINE 73"
     - label: Technik und Bedingungen
@@ -245,6 +272,8 @@ decoder:
     callsign: Rufzeichen {token}
     value: Wert {token}
     callPattern: "{caller} ruft {called}"
+    targetPrefix: Länderpräfix {token}
+    targetedCallPattern: "Allgemeiner Anruf an {target}"
     locationPrefix: "Standort: "
     weatherPrefix: "Wetter: "
     powerPrefix: "Sendeleistung: "
@@ -285,6 +314,22 @@ decoder:
       token: CQ CQ DE DL1XYZ K
       insertText: "CQ CQ DE DL1XYZ K "
       description: Beispiel für einen allgemeinen Anruf
+    cq_sm:
+      token: CQ SM
+      insertText: "CQ SM "
+      description: Beispiel für einen allgemeinen Anruf an SM
+    cq_oh:
+      token: CQ OH
+      insertText: "CQ OH "
+      description: Beispiel für einen allgemeinen Anruf an OH
+    cq_y4:
+      token: CQ Y4
+      insertText: "CQ Y4 "
+      description: Beispiel für einen allgemeinen Anruf an Y4
+    cq_dl:
+      token: CQ DL
+      insertText: "CQ DL "
+      description: Beispiel für einen allgemeinen Anruf an DL
     rst_599:
       token: RST 599
       insertText: "RST 599 "
