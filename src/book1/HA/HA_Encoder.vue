@@ -49,7 +49,7 @@
 						{{ t( "encoder.paletteHint" ) }}
 					</div>
 
-					<v-expansion-panels v-model="openPanels" multiple variant="accordion">
+					<v-expansion-panels v-model="openPanels" variant="accordion">
 						<v-expansion-panel
 							v-for="group in phraseGroups"
 							:key="group.id"
@@ -331,11 +331,7 @@ const EMPTY_RESULT = Object.freeze( {
 
 const { t, tm } = useI18n( "book1/HA" );
 
-const openPanels = ref( [
-	"templates",
-	"q-codes",
-	"cw"
-] );
+const openPanels = ref( "templates" );
 const plainText = ref( "" );
 const selectedExample = ref( null );
 

@@ -116,7 +116,7 @@
 
 		<EddieComment :subtitle="t( 'description.sections.schluss.title' )">
 			{{ t( "description.sections.schluss.quote" ) }}
-		</EddieComment>"
+		</EddieComment>
 	</template>
 	<template #summaryPart>
 		<v-sheet border class="mb-6 pa-3" rounded="xl">
@@ -196,9 +196,9 @@ const tex = computed( () => ( {
 	cEqualsLambdaF: String.raw`c = \lambda \cdot f`,
 	lambdaApprox:   String.raw`\lambda[\mathrm{m}] \approx \frac{300}{f[\mathrm{MHz}]}`,
 	example7MHz:    String.raw`\lambda \approx \frac{300}{7} \approx ${t( "description.formulas.example7Value" )}` +
-		`\ \mathrm{m} \;\Rightarrow\; \text{${t( "description.formulas.band40Label" )}}`,
+		`\\ \\mathrm{m} \\;\\Rightarrow\\; \\text{${t( "description.formulas.band40Label" )}}`,
 	example14MHz: String.raw`\lambda \approx \frac{300}{14} \approx ${t( "description.formulas.example14Value" )}` +
-		`\ \mathrm{m} \;\Rightarrow\; \text{${t( "description.formulas.band20Label" )}}`
+		`\\ \\mathrm{m} \\;\\Rightarrow\\; \\text{${t( "description.formulas.band20Label" )}}`
 } ) );
 
 const familyChips = computed( () => tm( "description.sections.zahlenfamilie.chips" ) ?? [] );
