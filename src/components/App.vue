@@ -83,7 +83,7 @@
 		<div aria-hidden="true" class="mainBackdrop">
 			<EinsteinHatFill
 				class="mainBackdropFill"
-				fill-opacity="0"
+				fill-opacity="0.05"
 				:generation-steps="3"
 				:stroke-width="1.35"
 				:world-scale="34"
