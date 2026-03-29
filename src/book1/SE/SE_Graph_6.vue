@@ -1,3 +1,4 @@
+<!-- i18n-ally-scope: useI18n("book1.SE") -->
 <template>
 <div class="sePrimeWrap">
 	<div class="sePrimeStage"
@@ -43,7 +44,7 @@ import {
 	mdiNumeric9Box
 } from "@mdi/js";
 
-const { t } = useI18n( "book1/SE" );
+const { t } = useI18n( "book1.SE" );
 
 /**
  * Interaktive Primzahlen-Anzeige:

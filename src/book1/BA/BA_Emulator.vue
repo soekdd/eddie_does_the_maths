@@ -1,3 +1,4 @@
+<!-- i18n-ally-scope: useI18n("book1.BA") -->
 <template>
 <v-card class="pa-4">
 	<div class="c64-wrap">
@@ -84,7 +85,7 @@ import cbmbasicFactoryAssetUrl from "./cbmbasic/cbmbasic.mjs?url";
 import cbmbasicWasmAssetUrl from "./cbmbasic/cbmbasic.wasm?url";
 import CbmbasicWorker from "./cbmbasic/cbmbasic.worker.ts?worker";
 
-const { t } = useI18n( "book1/BA" );
+const { t } = useI18n( "book1.BA" );
 
 const DEFAULT_CBMBASIC_FACTORY_URL = cbmbasicFactoryAssetUrl;
 const DEFAULT_WASM_URL = cbmbasicWasmAssetUrl;

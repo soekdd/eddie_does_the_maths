@@ -1,3 +1,4 @@
+<!-- i18n-ally-scope: useI18n("book1.O5") -->
 <template>
 <div class="wrap">
 	<template v-if="geom">
@@ -166,7 +167,7 @@
 import { computed } from "vue";
 import { useI18n } from "@/utils/i18n.mjs";
 
-const { t } = useI18n( "book1/O5" );
+const { t } = useI18n( "book1.O5" );
 
 const EPS = 1e-9;
 

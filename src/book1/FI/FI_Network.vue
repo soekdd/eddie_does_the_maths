@@ -1,3 +1,4 @@
+<!-- i18n-ally-scope: useI18n("book1.FI") -->
 <template>
 <div class="fin-network" :class="{ 'fin-network--interactive': props.interactiveMode }">
 	<div v-if="props.interactiveMode" class="toolbar">
@@ -254,7 +255,7 @@ import finlandData from "./maps/finland.json";
 import helsinkiData from "./maps/helsinki.json";
 import swedenData from "./maps/sweden.json";
 
-const { t } = useI18n( "book1/FI" );
+const { t } = useI18n( "book1.FI" );
 
 type Node = {
 	id: string;

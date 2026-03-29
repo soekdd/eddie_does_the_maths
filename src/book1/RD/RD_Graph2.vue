@@ -1,3 +1,4 @@
+<!-- i18n-ally-scope: useI18n("book1.RD") -->
 <template>
 <svg
 	:aria-label
@@ -229,7 +230,7 @@ import { useI18n } from "@/utils/i18n.mjs";
 
 const {
 	t, parseLocalizedNumber
-} = useI18n( "book1/RD" );
+} = useI18n( "book1.RD" );
 
 const props = defineProps( {
 	mode: { type: String, default: "light" },

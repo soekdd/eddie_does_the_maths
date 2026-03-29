@@ -4,7 +4,7 @@ import { useI18n } from "@/utils/i18n.mjs";
 
 import ContentIndex from "@/components/ContentIndex.vue";
 
-const { t, tm } = useI18n( "components/lang" );
+const { t, tm } = useI18n( "components.lang" );
 const subChapter = computed( () => tm( "catchAll.subChapter" ) ?? {} );
 </script>
 

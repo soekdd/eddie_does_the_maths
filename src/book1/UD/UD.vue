@@ -1,3 +1,4 @@
+<!-- i18n-ally-scope: useI18n("book1.UD") -->
 <!-- eslint-disable vue/max-len -->
 <template>
 <AppFrame
@@ -312,7 +313,7 @@ const {
 	locale,
 	t,
 	tm
-} = useI18n( "book1/UD" );
+} = useI18n( "book1.UD" );
 
 const BASE_COUNTRY_DATA = [
 	{

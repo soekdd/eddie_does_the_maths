@@ -1,3 +1,4 @@
+<!-- i18n-ally-scope: useI18n("book1.ST") -->
 <!-- eslint-disable vue/max-len -->
 <template>
 <svg :aria-label
@@ -338,7 +339,7 @@ import { useI18n } from "@/utils/i18n.mjs";
 
 const {
 	t, locale, parseLocalizedNumber
-} = useI18n( "book1/ST" );
+} = useI18n( "book1.ST" );
 
 const props = defineProps( {
 	busPerHour:   { type: [ Number, String ], required: true },

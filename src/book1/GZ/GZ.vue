@@ -1,3 +1,4 @@
+<!-- i18n-ally-scope: useI18n("book1.GZ") -->
 <!-- eslint-disable vue/max-len -->
 <template>
 <AppFrame
@@ -417,7 +418,7 @@ import titleImg from "./GZ.webp";
 
 const {
 	t, tm, locale
-} = useI18n( "book1/GZ" );
+} = useI18n( "book1.GZ" );
 
 const SAMPLE_SIZE = 180;
 const DEFAULT_STATE = Object.freeze( {

@@ -1,3 +1,4 @@
+<!-- i18n-ally-scope: useI18n("book1.BZ") -->
 <template>
 <div class="bzGraphWrap">
 	<svg
@@ -153,7 +154,7 @@ import { useI18n } from "@/utils/i18n.mjs";
 import { useTheme } from "vuetify";
 import armadilloImg from "./BZ_Armadillo.webp";
 import elefantImg from "./BZ_Elefant.webp";
-const { t } = useI18n( "book1/BZ" );
+const { t } = useI18n( "book1.BZ" );
 const imageSize = 280;
 const props = defineProps( {
 	fdM: {

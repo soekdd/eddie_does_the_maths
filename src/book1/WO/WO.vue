@@ -1,3 +1,4 @@
+<!-- i18n-ally-scope: useI18n("book1.WO") -->
 <!-- eslint-disable vue/max-len -->
 <template>
 <AppFrame
@@ -168,6 +169,6 @@ import { useI18n } from "@/utils/i18n.mjs";
 import titleImg from "./WO.webp";
 import WOGraph from "./WO_Graph.vue";
 
-const { t, tm } = useI18n( "book1/WO" );
+const { t, tm } = useI18n( "book1.WO" );
 const subChapter = computed( () => tm( "subChapter" ) ?? {} );
 </script>

@@ -1,3 +1,4 @@
+<!-- i18n-ally-scope: useI18n("book1.LT") -->
 <!-- eslint-disable vue/max-len -->
 <template>
 <AppFrame
@@ -262,7 +263,7 @@ import { useI18n } from "@/utils/i18n.mjs";
 import titleImg from "./LT.webp";
 import LTTransform from "./LT_Transform.vue";
 
-const { t } = useI18n( "book1/LT" );
+const { t } = useI18n( "book1.LT" );
 
 const subChapter = computed( () => Object.fromEntries( [
 	[ "einleitung", t( "subChapter.einleitung" ) ],

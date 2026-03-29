@@ -1,3 +1,4 @@
+<!-- i18n-ally-scope: useI18n("components.lang") -->
 <template>
 <v-alert
 	id="eddieComment"
@@ -31,7 +32,7 @@
 import { useI18n } from "@/utils/i18n.mjs";
 import faviconPng from "@/images/favicon.png";
 
-const { t } = useI18n( "components/lang" );
+const { t } = useI18n( "components.lang" );
 
 defineProps( {
 	subtitle: {

@@ -52,6 +52,12 @@ function normalizeLocale( value ) {
 	return SUPPORTED_LOCALES.includes( normalized ) ? normalized : FALLBACK_LOCALE;
 }
 
+function normalizeNamespace( value ) {
+	return String( value ?? "" )
+		.trim()
+		.replace( /\./g, "/" );
+}
+
 function detectInitialLocale() {
 	if ( typeof window !== "undefined" ) {
 		const pathLocale = window.location.pathname.match( /^\/([a-z]{2})(?=\/|$)/i )?.[ 1 ];
@@ -342,7 +348,7 @@ function resolveMessage(
 	key,
 	params
 ) {
-	const scopedCatalog = catalog.get( namespace ) ?? {};
+	const scopedCatalog = catalog.get( normalizeNamespace( namespace ) ) ?? {};
 	const current = getNestedValue( scopedCatalog[ locale.value ], key );
 
 	if ( current != null ) {
@@ -398,7 +404,7 @@ export function th(
 }
 
 export function tm( namespace, key = "" ) {
-	const scopedCatalog = catalog.get( namespace ) ?? {};
+	const scopedCatalog = catalog.get( normalizeNamespace( namespace ) ) ?? {};
 	return getNestedValue( scopedCatalog[ locale.value ] ?? scopedCatalog[ FALLBACK_LOCALE ] ?? {}, key );
 }
 

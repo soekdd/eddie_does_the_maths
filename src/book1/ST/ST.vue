@@ -1,3 +1,4 @@
+<!-- i18n-ally-scope: useI18n("book1.ST") -->
 <!-- eslint-disable vue/max-len -->
 <template>
 <AppFrame
@@ -243,7 +244,7 @@ import titleImg from "./ST.webp";
 
 const {
 	t, tm, locale, parseLocalizedNumber
-} = useI18n( "book1/ST" );
+} = useI18n( "book1.ST" );
 
 const subChapter = computed( () => tm( "subChapter" ) ?? {} );
 const treeLevels = computed( () => tm( "sections.part1.levels" ) ?? [] );

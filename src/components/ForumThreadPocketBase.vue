@@ -1,3 +1,4 @@
+<!-- i18n-ally-scope: useI18n("components.lang") -->
 <template>
 <div>
 	<div class="d-flex align-center justify-space-between mb-3">
@@ -239,7 +240,7 @@ const props = withDefaults( defineProps<{
 { collectionName: "forum_comments" } );
 
 const pbUrl = inject<string>( "pbUrl", "" );
-const { t, locale } = useI18n( "components/lang" );
+const { t, locale } = useI18n( "components.lang" );
 const pb = new PocketBase( pbUrl );
 pb.autoCancellation( false );
 

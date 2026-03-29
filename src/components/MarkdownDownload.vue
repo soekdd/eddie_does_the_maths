@@ -1,3 +1,4 @@
+<!-- i18n-ally-scope: useI18n("components.lang") -->
 <template>
 <v-btn
 	:append-icon="mdiDownload"
@@ -25,7 +26,7 @@ const props = defineProps( {
 	buttonLabel: { type: String, default: "" }
 } );
 
-const { t } = useI18n( "components/lang" );
+const { t } = useI18n( "components.lang" );
 const isBusy = ref( false );
 const effectiveButtonLabel = computed( () => props.buttonLabel || t( "markdownDownload.buttonLabel" ) );
 const effectiveFileName = computed( () => props.fileName || t( "markdownDownload.fileNameFallback" ) );

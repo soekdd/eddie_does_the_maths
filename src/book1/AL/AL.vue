@@ -1,3 +1,4 @@
+<!-- i18n-ally-scope: useI18n("book1.AL") -->
 <!-- eslint-disable vue/max-len -->
 <template>
 <AppFrame
@@ -300,7 +301,7 @@ import ALHorner from "./AL_Horner.vue";
 import ALSqrt from "./AL_Sqrt.vue";
 import ALPrimeTest from "./AL_PrimeTest.vue";
 
-const { t } = useI18n( "book1/AL" );
+const { t } = useI18n( "book1.AL" );
 
 const selectedProgram = ref( "bernoulli" );
 

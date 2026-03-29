@@ -1,3 +1,4 @@
+<!-- i18n-ally-scope: useI18n("book1.AL") -->
 <template>
 <ALCalculation
 	:deck
@@ -168,7 +169,7 @@ import { useI18n } from "@/utils/i18n.mjs";
 
 import ALCalculation from "./AL_Calculation.vue";
 
-const { t } = useI18n( "book1/AL" );
+const { t } = useI18n( "book1.AL" );
 
 // ---------- Rational arithmetic (BigInt) ----------
 const bigAbs = ( x ) => x < 0n ? -x : x;

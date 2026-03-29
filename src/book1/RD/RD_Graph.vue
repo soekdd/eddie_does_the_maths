@@ -1,3 +1,4 @@
+<!-- i18n-ally-scope: useI18n("book1.RD") -->
 <!-- JeepProblemDiagram.vue
      Vue 3 + Vuetify 3, Single-File-Component
 
@@ -350,7 +351,7 @@ type Phase = {
 
 type PathPoint = { xKm: number; tH: number };
 
-const { t } = useI18n( "book1/RD" );
+const { t } = useI18n( "book1.RD" );
 
 const variant = ref<Variant>( "oneway" );
 const variantItems = computed( () => [

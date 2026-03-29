@@ -1,3 +1,4 @@
+<!-- i18n-ally-scope: useI18n("book1.VA") -->
 <template>
 <div class="vaShipWrap" :class="{ noLegendMode: props.nolegend }">
 	<svg
@@ -227,7 +228,7 @@ const props = defineProps( {
 	nolegend:        { type: Boolean, default: false },
 	zoom:            { type: [ Number, String ], default: 1 }
 } );
-const { locale, t } = useI18n( "book1/VA" );
+const { locale, t } = useI18n( "book1.VA" );
 
 function clamp(
 	v, lo, hi

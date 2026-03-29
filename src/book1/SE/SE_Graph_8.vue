@@ -1,3 +1,4 @@
+<!-- i18n-ally-scope: useI18n("book1.SE") -->
 <template>
 <div class="seCodeWrap">
 	<svg
@@ -104,7 +105,7 @@
 import { computed } from "vue";
 import { useI18n } from "@/utils/i18n.mjs";
 
-const { t } = useI18n( "book1/SE" );
+const { t } = useI18n( "book1.SE" );
 
 /**
  * 0–31 als Binär (5 Bit) und Graycode.

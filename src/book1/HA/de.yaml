@@ -123,7 +123,7 @@ encoder:
         SM5ABC ruft Y41ZL | Roger / verstanden / empfangen | RST 579: Lesbarkeit mittel lesbar, Signalstärke kräftig, Ton vollkommen rein | Standort / Aufenthaltsort der Station | Nummer oder nahe / mehrdeutig: NYKOPING
         QER? | SRI | NO | kopiere / verstanden | Eddie Riedel | kommen / Antwort erbeten
         # TU Dresden startet mit dem Payload DNXAG.EHTWN.AOJUT.CNNFJ.BXTLJ 
-        Y41ZL ruft SM5ABC | DN | Funkgerät / Ausrüstung: JENA85 | XA | Sendeleistung: 10W | G
+        Y41ZL ruft SM5ABC | D | Funkgerät / Ausrüstung: JENA85 | NXA | Sendeleistung: 10W | G
         E | Antenne: DIPOLE | HT | Wetter: FINE | WN
         Störung durch andere Stationen | nichts / keine | AUJ | atmosphärische Störungen / Rauschen | Wert 2 | U | Schwund / Fading | wenig / leicht | T
         CN | Temperatur: 24 | N | Ausbreitungsbedingungen: FAIR | FJ
@@ -305,7 +305,7 @@ decoder:
         Y41ZL DE SM5ABC R RST 579 QTH NR NYKOPING
         QER? SRI NO CPY QER K
         # TU Dresden startet mit dem Payload DNXAG.EHTWN.AOJUT.CNNFJ.BXTLJ 
-        SM5ABC DE Y41ZL DN RIG JENA85 XA PWR 10W G
+        SM5ABC DE Y41ZL D RIG JENA85 NXA PWR 10W G
         E ANT DIPOLE HT WX FINE WN
         QRM NIL AUJ QRN 2 U QSB LIL T
         CN TEMP 24 N CONDX FAIR FJ 

@@ -1,3 +1,4 @@
+<!-- i18n-ally-scope: useI18n("book1.NV") -->
 <template>
 <v-card class="pa-4" rounded="xl">
 	<h3 class="text-h6 mb-2">{{ t( "zeit.title" ) }}</h3>
@@ -117,7 +118,7 @@
 import { computed, ref } from "vue";
 import { useI18n } from "@/utils/i18n.mjs";
 
-const { t } = useI18n( "book1/NV" );
+const { t } = useI18n( "book1.NV" );
 
 const terrainFactor = ref( 1 );
 const segments = ref( [

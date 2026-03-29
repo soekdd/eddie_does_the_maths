@@ -1,3 +1,4 @@
+<!-- i18n-ally-scope: useI18n("book1.DG") -->
 <template>
 <AppFrame
 	:languages="[ 'de', 'en' ]"
@@ -357,7 +358,7 @@ import {
 } from "./DG_diophantine";
 import titleImg from "./DG.webp";
 
-const { t } = useI18n( "book1/DG" );
+const { t } = useI18n( "book1.DG" );
 
 const subChapter = computed( () => ( {
 	einleitung:          t( "subChapter.einleitung" ),

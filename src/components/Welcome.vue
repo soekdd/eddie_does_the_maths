@@ -1,3 +1,4 @@
+<!-- i18n-ally-scope: useI18n("components.lang") -->
 <template>
 <AppFrame
 	:languages="[ 'de', 'en' , 'sw', 'fi' ]"
@@ -37,6 +38,6 @@ import { useI18n } from "@/utils/i18n.mjs";
 import ContentIndex from "@/components/ContentIndex.vue";
 import welcomeImg from "@/images/welcome.webp";
 
-const { t, tm } = useI18n( "components/lang" );
+const { t, tm } = useI18n( "components.lang" );
 const subChapter = computed( () => tm( "welcome.subChapter" ) ?? {} );
 </script>

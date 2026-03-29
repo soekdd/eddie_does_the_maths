@@ -1,3 +1,4 @@
+<!-- i18n-ally-scope: useI18n("book1.FS") -->
 <template>
 <div class="fsGraph">
 	<svg
@@ -105,7 +106,7 @@ import { useI18n } from "@/utils/i18n.mjs";
 const {
 	locale,
 	t
-} = useI18n( "book1/FS" );
+} = useI18n( "book1.FS" );
 
 const props = defineProps( {
 	n0:      { type: Number, default: 40 },

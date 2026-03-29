@@ -1,3 +1,4 @@
+<!-- i18n-ally-scope: useI18n("book1.AL") -->
 <template>
 <v-container class="py-6" fluid>
 	<v-row>
@@ -123,7 +124,7 @@
 import { computed } from "vue";
 import { useI18n } from "@/utils/i18n.mjs";
 
-const { t } = useI18n( "book1/AL" );
+const { t } = useI18n( "book1.AL" );
 
 const props = defineProps( {
 	title:         { type: String, required: true },

@@ -1,3 +1,4 @@
+<!-- i18n-ally-scope: useI18n("book1.RD") -->
 <template>
 <AppFrame
 	:languages="[ 'de', 'en' ]"
@@ -73,7 +74,7 @@ import RDGraph from "./RD_Graph.vue";
 
 const {
 	t, tm, parseLocalizedNumber
-} = useI18n( "book1/RD" );
+} = useI18n( "book1.RD" );
 
 const mode = ref( "classic" );
 const modeItems = [

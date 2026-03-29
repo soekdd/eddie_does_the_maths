@@ -1,7 +1,7 @@
+<!-- i18n-ally-scope: useI18n("book1.HA") -->
 <template>
 <AppFrame
 	:languages="[ 'de', 'en' ]"
-	nomd
 	:sub-chapter
 	:title="t( 'title' )"
 	:vue-date="__VITE_SFC_MTIME_MS__"
@@ -166,7 +166,7 @@ import HAEncoder from "./HA_Encoder.vue";
 import HADecoder from "./HA_Decoder.vue";
 import titleImg from "./HA.webp";
 
-const { t, tm } = useI18n( "book1/HA" );
+const { t, tm } = useI18n( "book1.HA" );
 
 const visibleMode = ref( "decoder" );
 const encoderInput = ref( "" );

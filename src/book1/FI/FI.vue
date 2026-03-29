@@ -1,3 +1,4 @@
+<!-- i18n-ally-scope: useI18n("book1.FI") -->
 <template>
 <AppFrame
 	:languages="[ 'de', 'en' ]"
@@ -169,7 +170,7 @@ import titleImg from "./FI.webp";
 import FINetwork from "./FI_Network.vue";
 import FIMap from "./FI_Map.vue";
 
-const { t } = useI18n( "book1/FI" );
+const { t } = useI18n( "book1.FI" );
 
 const subChapter = computed( () => ( {
 	einleitung:   t( "subChapter.einleitung" ),

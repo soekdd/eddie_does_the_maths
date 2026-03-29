@@ -1,3 +1,4 @@
+<!-- i18n-ally-scope: useI18n("book1.FI") -->
 <template>
 <div class="wrap">
 	<div class="controls">
@@ -185,7 +186,7 @@ import {
 } from "vue";
 import { useI18n } from "@/utils/i18n.mjs";
 
-const { t } = useI18n( "book1/FI" );
+const { t } = useI18n( "book1.FI" );
 
 /**
  * Assets aus dem Projekt:

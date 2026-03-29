@@ -1,3 +1,4 @@
+<!-- i18n-ally-scope: useI18n("book1.NV") -->
 <template>
 <AppFrame
 	:languages="[ 'de', 'en' ]"
@@ -93,7 +94,7 @@ import NVBayes from "./NV_Bayes.vue";
 import NVSchnitt from "./NV_Schnitt.vue";
 import NVZeit from "./NV_Zeit.vue";
 
-const { t, tm } = useI18n( "book1/NV" );
+const { t, tm } = useI18n( "book1.NV" );
 
 const subChapter = computed( () => tm( "subChapter" ) ?? {} );
 const lessons = computed( () => tm( "lessons" ) ?? [] );

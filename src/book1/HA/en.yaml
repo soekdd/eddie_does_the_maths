@@ -123,7 +123,7 @@ encoder:
         SM5ABC calls Y41ZL | roger / copied | RST 579: readability perfectly readable, signal strength moderately strong, tone perfectly pure tone | station location / operating position | number or near / ambiguous: NYKOPING
         QER? | SRI | NO | copy / understood | Eddie Riedel | go ahead / response invited
         # TU Dresden starts with the payload DNXAG.EHTWN.AOJUT.CNNFJ.BXTLJ
-        Y41ZL calls SM5ABC | DN | radio / equipment: JENA85 | XA | Transmit power: 10W | G
+        Y41ZL calls SM5ABC | D | radio / equipment: JENA85 | NXA | Transmit power: 10W | G
         E | Antenna: DIPOLE | HT | Weather: FINE | WN
         interference from other stations | nothing / none | AUJ | static / atmospheric noise | value 2 | U | fading | little / small | T
         CN | Temperature: 24 | N | Propagation: FAIR | FJ
@@ -305,7 +305,7 @@ decoder:
         Y41ZL DE SM5ABC R RST 579 QTH NR NYKOPING
         QER? SRI NO CPY QER K
         # TU Dresden starts with the payload DNXAG.EHTWN.AOJUT.CNNFJ.BXTLJ
-        SM5ABC DE Y41ZL DN RIG JENA85 XA PWR 10W G
+        SM5ABC DE Y41ZL D RIG JENA85 NXA PWR 10W G
         E ANT DIPOLE HT WX FINE WN
         QRM NIL AUJ QRN 2 U QSB LIL T
         CN TEMP 24 N CONDX FAIR FJ

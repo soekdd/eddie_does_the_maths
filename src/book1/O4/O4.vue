@@ -1,3 +1,4 @@
+<!-- i18n-ally-scope: useI18n("book1.O4") -->
 <template>
 <AppFrame
 	:languages="[ 'de', 'en' ]"
@@ -302,7 +303,7 @@ import { computed, ref } from "vue";
 import { useI18n } from "@/utils/i18n.mjs";
 import titleImg from "./O4.webp";
 
-const { t, tm } = useI18n( "book1/O4" );
+const { t, tm } = useI18n( "book1.O4" );
 
 const subChapter = computed( () => tm( "subChapter" ) ?? {} );
 

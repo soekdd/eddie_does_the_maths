@@ -1,3 +1,4 @@
+<!-- i18n-ally-scope: useI18n("components.lang") -->
 <template>
 <div class="frame">
 	<v-app-bar class="topBar pa-0" flat :height="appBarHeight">
@@ -78,8 +79,17 @@
 		</v-container>
 	</v-app-bar>
 
-	<v-main>
-		<v-container class="wrap mainWrap">
+	<v-main class="mainArea">
+		<div aria-hidden="true" class="mainBackdrop">
+			<EinsteinHatFill
+				class="mainBackdropFill"
+				fill-opacity="0"
+				:generation-steps="3"
+				:stroke-width="1.35"
+				:world-scale="34"
+			/>
+		</div>
+		<v-container class="wrap mainContent mainWrap">
 			<v-alert
 				v-if="showError"
 				border="start"
@@ -120,7 +130,7 @@
 					<v-btn
 						v-if="previousChapter"
 						:aria-label="chapterButtonLabel( 'previous', previousChapter )"
-						class="chapterPagerBtn"
+						class="chapterPagerBtn glassSection"
 						density="comfortable"
 						:title="chapterButtonLabel( 'previous', previousChapter )"
 						:to="previousChapter.to"
@@ -133,7 +143,7 @@
 					<v-btn
 						v-if="nextChapter"
 						:aria-label="chapterButtonLabel( 'next', nextChapter )"
-						class="chapterPagerBtn"
+						class="chapterPagerBtn glassSection"
 						density="comfortable"
 						:title="chapterButtonLabel( 'next', nextChapter )"
 						:to="nextChapter.to"
@@ -146,7 +156,7 @@
 			<Page v-if="showBookCard">
 				<slot name="bookPart" />
 			</Page>
-			<section class="card" if="description">
+			<section id="description" class="card glassSection">
 				<div v-if="!nomd" class="descriptionPartHeader">
 					<v-btn
 						:append-icon="mdiDownload"
@@ -169,7 +179,7 @@
 				<div class="lastUpdate">{{ t( "app.lastUpdate" ) }}: {{fileDate}}</div>
 			</section>
 
-			<section v-if="showPartsCard" id="interactiv" class="card">
+			<section v-if="showPartsCard" id="interactiv" class="card glassSection">
 				<v-row class="gridRow" dense>
 					<v-col
 						v-if="hasInteractivePart"
@@ -201,7 +211,7 @@
 					<v-btn
 						v-if="previousChapter"
 						:aria-label="chapterButtonLabel( 'previous', previousChapter )"
-						class="chapterPagerBtn"
+						class="chapterPagerBtn glassSection"
 						density="comfortable"
 						:title="chapterButtonLabel( 'previous', previousChapter )"
 						:to="previousChapter.to"
@@ -214,7 +224,7 @@
 					<v-btn
 						v-if="nextChapter"
 						:aria-label="chapterButtonLabel( 'next', nextChapter )"
-						class="chapterPagerBtn"
+						class="chapterPagerBtn glassSection"
 						density="comfortable"
 						:title="chapterButtonLabel( 'next', nextChapter )"
 						:to="nextChapter.to"
@@ -224,7 +234,7 @@
 					</v-btn>
 				</div>
 			</nav>
-			<section id="forum" class="card">
+			<section id="forum" class="card glassSection">
 				<ForumThreadPocketBase
 					:forum-key="shortText"
 				/>
@@ -346,6 +356,7 @@ import {
 	contentRoutes, localizePath, resolveLocaleFromPath, resolveRouteMetaTitle, stripLocalePrefix
 } from "@/router.js";
 import faviconPng from "../images/favicon.png";
+import EinsteinHatFill from "./EinsteinHatFill.vue";
 import ForumThreadPocketBase from "./ForumThreadPocketBase.vue";
 import MarkdownDownload from "./MarkdownDownload.vue";
 import Page from "./Page.vue";
@@ -371,7 +382,7 @@ const props = defineProps( {
 } );
 
 const { width } = useDisplay();
-const { t, locale } = useI18n( "components/lang" );
+const { t, locale } = useI18n( "components.lang" );
 const slots = useSlots();
 const route = useRoute();
 const router = useRouter();
@@ -422,7 +433,8 @@ function normalizeBookIndex( value ) {
 
 function normalizeChapterPath( pathValue ) {
 	const normalizedPath = String( pathValue || "/" ).trim() || "/";
-	return normalizedPath === "/" ? "/" : normalizedPath.endsWith( "/" ) ? normalizedPath.slice( 0, -1 ) : normalizedPath;
+	return normalizedPath === "/" ? "/" : normalizedPath.endsWith( "/" ) ?
+		normalizedPath.slice( 0, -1 ) : normalizedPath;
 }
 
 function compareChapterEntries( a,
@@ -524,11 +536,10 @@ const bookChapterRoutes = computed( () => {
 		.map( ( entry ) => ( {
 			key:   String( entry.name ?? entry.path ),
 			path:  normalizeChapterPath( entry.path ),
-			title: resolveRouteMetaTitle( entry.meta, locale.value ).replace( /&shy;/gi, "\u00AD" ).trim(),
+			title: resolveRouteMetaTitle( entry.meta, locale.value ).replace( /&shy;/gi, "\u00AD" )
+				.trim(),
 			order: Number.isFinite( entry?.meta?.order ) ? Number( entry.meta.order ) : null,
-			to:    {
-				path: normalizePathForHashLinks( localizePath( entry.path, routeLanguage.value ) )
-			}
+			to:    { path: normalizePathForHashLinks( localizePath( entry.path, routeLanguage.value ) ) }
 		} ) )
 		.sort( compareChapterEntries );
 } );
@@ -956,6 +967,63 @@ onMounted( () => {
 
 .brand, .wrap {
 	height: 100%;
+}
+
+.mainArea {
+	position: relative;
+	isolation: isolate;
+}
+
+.mainBackdrop {
+	position: absolute;
+	top: var(--v-layout-top, 0px);
+	right: 0;
+	bottom: var(--v-layout-bottom, 0px);
+	left: 0;
+	z-index: 0;
+	pointer-events: none;
+	overflow: hidden;
+}
+
+.mainBackdropFill {
+	--hat-fill-background: transparent;
+	--hat-fill-stroke: var(--theme-hat-fill-backdrop-stroke, rgba(15, 23, 42, 0.18));
+	width: 100%;
+	height: 100%;
+	min-height: 100%;
+}
+
+.mainContent {
+	position: relative;
+	z-index: 1;
+}
+
+.glassSection {
+	position: relative;
+	overflow: hidden;
+	background:
+		linear-gradient( 180deg, var(--glass-card-top), var(--glass-card-bottom) );
+	border-color: var(--glass-card-line);
+	backdrop-filter: blur( 8px ) saturate( 145% );
+	-webkit-backdrop-filter: blur( 8px ) saturate( 145% );
+}
+
+:global(.v-theme--eddieLight) .glassSection {
+	--glass-card-top: rgba(255, 255, 255, 0.34);
+	--glass-card-bottom: rgba(245, 247, 251, 0.22);
+	--glass-card-line: rgba(15, 23, 42, 0.12);
+	box-shadow:
+		0 18px 34px rgba(15, 23, 42, 0.08),
+		inset 0 1px 0 rgba(255, 255, 255, 0.42);
+}
+
+:global(.v-theme--eddieDark) .glassSection {
+	--glass-card-top: rgba(11, 15, 26, 0.54);
+	--glass-card-bottom: rgba(15, 23, 42, 0.38);
+	--glass-card-line: rgba(255, 255, 255, 0.1);
+	box-shadow:
+		0 18px 38px rgba(0, 0, 0, 0.28),
+		inset 0 1px 0 rgba(255, 255, 255, 0.06);
 }
 
 .wipAlert {

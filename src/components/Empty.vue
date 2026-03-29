@@ -1,3 +1,4 @@
+<!-- i18n-ally-scope: useI18n("components.lang") -->
 <template>
 <AppFrame
 	:sub-chapter
@@ -30,6 +31,6 @@
 import { computed } from "vue";
 import { useI18n } from "@/utils/i18n.mjs";
 
-const { t, tm } = useI18n( "components/lang" );
+const { t, tm } = useI18n( "components.lang" );
 const subChapter = computed( () => tm( "empty.subChapter" ) ?? {} );
 </script>

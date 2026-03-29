@@ -1,3 +1,4 @@
+<!-- i18n-ally-scope: useI18n("book1.GD") -->
 <template>
 <div class="gdPlateBuilder">
 	<v-row dense>
@@ -168,7 +169,7 @@ const {
 	locale,
 	t,
 	parseLocalizedNumber
-} = useI18n( "book1/GD" );
+} = useI18n( "book1.GD" );
 
 const FRACTION_OPTIONS = computed( () => [
 	{

@@ -1,3 +1,4 @@
+<!-- i18n-ally-scope: useI18n("book1.SD") -->
 <template>
 <div class="sdDna">
 	<div class="canvasFrame">
@@ -156,7 +157,7 @@ import { computed } from "vue";
 import { useI18n } from "@/utils/i18n.mjs";
 
 const props = defineProps( { dna: { type: String, default: "" } } );
-const { t: rawT, tm: rawTm } = useI18n( "book1/SD" );
+const { t: rawT, tm: rawTm } = useI18n( "book1.SD" );
 const t = ( key,
 	params = {} ) => rawT( key, params );
 const tm = ( key = "" ) => rawTm( key ? key : "sd" );

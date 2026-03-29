@@ -1,3 +1,4 @@
+<!-- i18n-ally-scope: useI18n("components.lang") -->
 <template>
 <div class="contentIndex">
 	<p class="muted mb-2">{{ displayTitle }}</p>
@@ -101,7 +102,7 @@ import { contentRoutes as appRoutes, localizePath, resolveRouteMetaTitle } from 
 const props = defineProps( { title: { type: String, default: "" } } );
 
 const route = useRoute();
-const { locale, t } = useI18n( "components/lang" );
+const { locale, t } = useI18n( "components.lang" );
 const TILE_SIZE_PX = 195;
 const RECENT_COMMENT_MAX_AGE_MS = 24 * 60 * 60 * 1000;
 const commentBubbleIcon = mdiMessageOutline;

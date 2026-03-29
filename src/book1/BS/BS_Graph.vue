@@ -1,3 +1,4 @@
+<!-- i18n-ally-scope: useI18n("book1.BS") -->
 <template>
 <div class="graphWrap">
 	<svg
@@ -230,7 +231,7 @@
 import { computed } from "vue";
 import { useI18n } from "@/utils/i18n.mjs";
 
-const { t } = useI18n( "book1/BS" );
+const { t } = useI18n( "book1.BS" );
 
 const props = defineProps( {
 	h: {

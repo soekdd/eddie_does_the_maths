@@ -1,3 +1,4 @@
+<!-- i18n-ally-scope: useI18n("book1.FX") -->
 <template>
 <v-container fluid>
 	<v-row align="start" class="ga-0" justify="center">
@@ -235,7 +236,7 @@ declare global {
 const {
 	t,
 	tm
-} = useI18n( "book1/FX" );
+} = useI18n( "book1.FX" );
 
 const cbiReady = ref( false );
 const status = ref( "idle" );

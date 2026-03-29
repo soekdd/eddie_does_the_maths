@@ -1,3 +1,4 @@
+<!-- i18n-ally-scope: useI18n("components.lang") -->
 <template>
 <div class="imageZoomer">
 	<div ref="activatorRef"
@@ -74,7 +75,7 @@ const props = defineProps( {
 	maxWidth: { type: [ Number, String ], default: 1400 }
 } );
 
-const { t } = useI18n( "components/lang" );
+const { t } = useI18n( "components.lang" );
 const open = ref( false );
 const { smAndDown } = useDisplay();
 const hasMounted = ref( false );

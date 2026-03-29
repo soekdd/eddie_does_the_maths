@@ -1,3 +1,4 @@
+<!-- i18n-ally-scope: useI18n("components.lang") -->
 <template>
 <span class="sr-only" />
 </template>
@@ -12,7 +13,7 @@ import {
 } from "@/router.js";
 
 const route = useRoute();
-const { locale, t } = useI18n( "components/lang" );
+const { locale, t } = useI18n( "components.lang" );
 const siteName = computed( () => t( "routeSeoHead.siteName" ) );
 
 const pageTitle = computed( () => {

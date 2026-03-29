@@ -1,6 +1,6 @@
 import { Decoration, DecorationSet } from "@tiptap/pm/view";
 
-export function buildCommentDecorationSet( doc ) {
+function collectBaseDecorations( doc ) {
 	const decorations = [];
 
 	doc.descendants( ( node, pos ) => {
@@ -39,5 +39,12 @@ export function buildCommentDecorationSet( doc ) {
 		}
 	} );
 
-	return DecorationSet.create( doc, decorations );
+	return decorations;
+}
+
+export function buildCommentDecorationSet( doc, extraDecorations = [] ) {
+	return DecorationSet.create( doc, [
+		...collectBaseDecorations( doc ),
+		...extraDecorations
+	] );
 }

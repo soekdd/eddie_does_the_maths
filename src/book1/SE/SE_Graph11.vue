@@ -1,3 +1,4 @@
+<!-- i18n-ally-scope: useI18n("book1.SE") -->
 <template>
 <div class="seGraphWrap">
 	<div class="seGraphStage">
@@ -76,7 +77,7 @@
 import { computed, ref } from "vue";
 import { useI18n } from "@/utils/i18n.mjs";
 
-const { t } = useI18n( "book1/SE" );
+const { t } = useI18n( "book1.SE" );
 
 const size = 420;
 

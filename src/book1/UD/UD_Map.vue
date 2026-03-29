@@ -1,3 +1,4 @@
+<!-- i18n-ally-scope: useI18n("book1.UD") -->
 <!-- eslint-disable vue/max-len -->
 <template>
 <div class="udGermany">
@@ -75,7 +76,7 @@ const props = defineProps( {
 const landClipPathId = `ud-land-clip-${useId()}`;
 const THEME_SHORE_COLOR = "rgb(var(--v-theme-warning, 245, 158, 11))";
 const THEME_WATER_COLOR = "rgb(var(--v-theme-info, 37, 99, 235))";
-const { locale } = useI18n( "book1/UD" );
+const { locale } = useI18n( "book1.UD" );
 const resolvedShoreColor = computed( () => props.shoreColor || THEME_SHORE_COLOR );
 const resolvedWaterColor = computed( () => props.waterColor || THEME_WATER_COLOR );
 const landPath = computed( () => countries[ props.country ].land );

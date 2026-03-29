@@ -1,3 +1,4 @@
+<!-- i18n-ally-scope: useI18n("book1.SE") -->
 <template>
 <AppFrame
 	:languages="[ 'de', 'en' ]"
@@ -130,7 +131,7 @@ import SEGraph11 from "./SE_Graph11.vue";
 
 const {
 	t, tm, locale
-} = useI18n( "book1/SE" );
+} = useI18n( "book1.SE" );
 
 const graphMap = {
 	2:  SEGraph2,

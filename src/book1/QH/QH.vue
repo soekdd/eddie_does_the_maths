@@ -1,3 +1,4 @@
+<!-- i18n-ally-scope: useI18n("book1.QH") -->
 <template>
 <AppFrame
 	:languages="[ 'de', 'en' ]"
@@ -161,7 +162,7 @@ import { computed, ref } from "vue";
 import { useI18n } from "@/utils/i18n.mjs";
 import titleImg from "./QH.webp";
 
-const { t, tm } = useI18n( "book1/QH" );
+const { t, tm } = useI18n( "book1.QH" );
 
 const H_EXACT = 6.62607015e-34;
 const E_EXACT = 1.602176634e-19;

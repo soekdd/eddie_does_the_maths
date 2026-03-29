@@ -644,7 +644,6 @@ export const contentRoutes = [
 				en: "HAM-Radio Decoder"
 			},
 			index: true,
-			error,
 			book:  1,
 			order: 215
 		}

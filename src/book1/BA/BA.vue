@@ -1,3 +1,4 @@
+<!-- i18n-ally-scope: useI18n("book1.BA") -->
 <template>
 <AppFrame
 	:languages="[ 'de', 'en' ]"
@@ -367,7 +368,7 @@ import { useI18n } from "@/utils/i18n.mjs";
 import BAEmulator from "./BA_Emulator.vue";
 import titleImg from "./BA.webp";
 
-const { t } = useI18n( "book1/BA" );
+const { t } = useI18n( "book1.BA" );
 
 const emulatorKey = ref( 0 );
 const emulatorRef = ref( null );

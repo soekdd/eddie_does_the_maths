@@ -1,3 +1,4 @@
+<!-- i18n-ally-scope: useI18n("book1.FS") -->
 <template>
 <AppFrame
 	:languages="[ 'de', 'en' ]"
@@ -236,7 +237,7 @@ import titleImg from "./FS.webp";
 const {
 	locale,
 	t
-} = useI18n( "book1/FS" );
+} = useI18n( "book1.FS" );
 
 const subChapter = computed( () => ( {
 	einleitung:      t( "fs.subChapter.einleitung" ),

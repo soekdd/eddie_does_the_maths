@@ -1,3 +1,4 @@
+<!-- i18n-ally-scope: useI18n("book1.HA") -->
 <template>
 <div class="haEncoder">
 	<v-row dense>
@@ -107,7 +108,9 @@
 						<div class="text-caption text-medium-emphasis mb-2">
 							{{ t( "encoder.encodedLabel" ) }}
 						</div>
-						<code class="encodedText">{{ encoded.codeText || "—" }}</code>
+						<div class="outputEditorShell">
+							<EditorContent :editor="encodedOutputEditor" />
+						</div>
 					</v-sheet>
 					<HAMorseCodeDisplay
 						class="mt-4"
@@ -351,7 +354,7 @@ const EMPTY_RESULT = Object.freeze( {
 	unmappedPhrases: []
 } );
 
-const { t, tm } = useI18n( "book1/HA" );
+const { t, tm } = useI18n( "book1.HA" );
 
 const openPanels = ref( "templates" );
 const plainText = ref( "" );
@@ -449,9 +452,8 @@ function extractPlainText( instance ) {
 	return lines.join( "\n" );
 }
 
-const editor = useEditor( {
-	content:    createDocFromText( props.modelValue ),
-	extensions: [
+function createTextEditorExtensions() {
+	return [
 		StarterKit.configure( {
 			blockquote:     false,
 			bulletList:     false,
@@ -461,16 +463,31 @@ const editor = useEditor( {
 			listItem:       false,
 			orderedList:    false
 		} )
-	],
+	];
+}
+
+function createTextEditorAttributes(
+	className,
+	autocapitalize = "off"
+) {
+	return {
+		autocapitalize,
+		autocomplete: "off",
+		autocorrect:  "off",
+		class:        className,
+		spellcheck:   "false"
+	};
+}
+
+const editor = useEditor( {
+	content:    createDocFromText( props.modelValue ),
+	extensions: createTextEditorExtensions(),
 	editorProps: {
 		decorations: ( state ) => buildCommentDecorationSet( state.doc ),
-		attributes: {
-			autocapitalize: "sentences",
-			autocomplete:   "off",
-			autocorrect:    "off",
-			class:          "haEncoderEditor",
-			spellcheck:     "false"
-		}
+		attributes: createTextEditorAttributes(
+			"haEncoderTextEditor haEncoderEditor",
+			"sentences"
+		)
 	},
 	onCreate: ( { editor: instance } ) => {
 		plainText.value = extractPlainText( instance );
@@ -1035,6 +1052,17 @@ function encodeSequence( text ) {
 const encoded = computed( () => plainText.value.trim() ?
 	encodeSequence( plainText.value ) :
 	EMPTY_RESULT );
+const encodedDisplayText = computed( () => encoded.value.codeText || "—" );
+
+const encodedOutputEditor = useEditor( {
+	content:    createDocFromText( encodedDisplayText.value ),
+	editable:   false,
+	extensions: createTextEditorExtensions(),
+	editorProps: {
+		decorations: ( state ) => buildCommentDecorationSet( state.doc ),
+		attributes:  createTextEditorAttributes( "haEncoderTextEditor haReadonlyEditor haEncoderOutputEditor" )
+	}
+} );
 
 watch(
 	() => props.modelValue, ( nextValue ) => {
@@ -1053,6 +1081,23 @@ watch( plainText, ( nextValue ) => {
 watch(
 	() => encoded.value.codeText, ( nextValue ) => {
 		emit( "update:output", nextValue );
+	}, { immediate: true }
+);
+
+watch(
+	[
+		() => encodedOutputEditor.value,
+		() => encodedDisplayText.value
+	], ( [
+		instance,
+		nextValue
+	] ) => {
+		if ( !instance ) {
+			return;
+		}
+
+		instance.commands.setContent( createDocFromText( nextValue ),
+			false );
 	}, { immediate: true }
 );
 
@@ -1153,6 +1198,10 @@ function tokenTypeColor( type ) {
 	gap: 10px;
 }
 
+.outputEditorShell {
+	min-height: 28px;
+}
+
 .phraseButton {
 	height: auto;
 	max-width: 100%;
@@ -1193,20 +1242,20 @@ function tokenTypeColor( type ) {
 	padding: 18px;
 }
 
-:deep(.haEncoderEditor p) {
+:deep(.haEncoderTextEditor p) {
 	margin: 0;
 }
 
-:deep(.haEncoderEditor .haCommentLine) {
+:deep(.haEncoderTextEditor .haCommentLine) {
 	color: rgb(var(--v-theme-success));
 }
 
-:deep(.haEncoderEditor .haQxxToken) {
+:deep(.haEncoderTextEditor .haQxxToken) {
 	color: rgb(var(--v-theme-info));
 	font-weight: 600;
 }
 
-:deep(.haEncoderEditor .haQerToken) {
+:deep(.haEncoderTextEditor .haQerToken) {
 	color: rgb(var(--v-theme-error));
 	font-weight: 700;
 }
@@ -1214,6 +1263,19 @@ function tokenTypeColor( type ) {
 :deep(.haEncoderEditor:focus) {
 	border-color: rgba(var(--v-theme-primary), 0.5);
 	box-shadow: 0 0 0 3px rgba(var(--v-theme-primary), 0.12);
+}
+
+:deep(.haReadonlyEditor) {
+	min-height: 0;
+	outline: none;
+	padding: 0;
+}
+
+:deep(.haEncoderOutputEditor) {
+	font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+	line-height: 1.6;
+	white-space: pre-wrap;
+	word-break: break-word;
 }
 
 @media ( max-width: 960px ) {

@@ -1,3 +1,4 @@
+<!-- i18n-ally-scope: useI18n("book1.GD") -->
 <!-- eslint-disable vue/max-len -->
 <template>
 <AppFrame
@@ -149,7 +150,7 @@ import { useI18n } from "@/utils/i18n.mjs";
 import titleImg from "./GD.webp";
 import GDPlate from "./GD_Plate.vue";
 
-const { t } = useI18n( "book1/GD" );
+const { t } = useI18n( "book1.GD" );
 
 const subChapter = computed( () => Object.fromEntries( [
 	[ "einleitung", t( "gd.subChapter.einleitung" ) ],

@@ -1,3 +1,4 @@
+<!-- i18n-ally-scope: useI18n("book1.PG") -->
 <!-- PokerCard.vue -->
 <template>
 <v-card class="poker-card"
@@ -58,7 +59,7 @@
 import { computed } from "vue";
 import { useI18n } from "@/utils/i18n.mjs";
 
-const { t } = useI18n( "book1/PG" );
+const { t } = useI18n( "book1.PG" );
 
 type Rank = number | string;
 

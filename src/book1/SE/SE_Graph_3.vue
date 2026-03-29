@@ -1,3 +1,4 @@
+<!-- i18n-ally-scope: useI18n("book1.SE") -->
 <template>
 <div class="seGraphWrap">
 	<svg
@@ -45,7 +46,7 @@
 import { computed, ref } from "vue";
 import { useI18n } from "@/utils/i18n.mjs";
 
-const { t } = useI18n( "book1/SE" );
+const { t } = useI18n( "book1.SE" );
 
 const viewWidth = 640;
 const viewHeight = 360;

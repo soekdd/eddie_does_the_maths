@@ -1,3 +1,4 @@
+<!-- i18n-ally-scope: useI18n("book1.FX") -->
 <template>
 <AppFrame
 	:languages="[ 'de', 'en' ]"
@@ -115,7 +116,7 @@ import { useI18n } from "@/utils/i18n.mjs";
 import FX7000G from "./FX_7000G.vue";
 import titleImg from "./FX.webp";
 
-const { t } = useI18n( "book1/FX" );
+const { t } = useI18n( "book1.FX" );
 
 const subChapter = computed( () => ( {
 	einleitung:             t( "fx.subChapter.einleitung" ),

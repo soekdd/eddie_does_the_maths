@@ -1,3 +1,4 @@
+<!-- i18n-ally-scope: useI18n("book1.VA") -->
 <template>
 <AppFrame
 	:languages="[ 'de', 'en' ]"
@@ -351,7 +352,7 @@ const G = 9.81;
 
 const {
 	locale, parseLocalizedNumber, t, tm
-} = useI18n( "book1/VA" );
+} = useI18n( "book1.VA" );
 
 const presetDefaults = [
 	{

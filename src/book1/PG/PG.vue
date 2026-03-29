@@ -1,3 +1,4 @@
+<!-- i18n-ally-scope: useI18n("book1.PG") -->
 <!-- eslint-disable vue/max-len -->
 <template>
 <AppFrame
@@ -237,7 +238,7 @@ import eddieImg from "./PG_Eddie.webp";
 import PGGame from "./PG_Game.vue";
 import PGHand from "./PG_Hand.vue";
 
-const { t, tm } = useI18n( "book1/PG" );
+const { t, tm } = useI18n( "book1.PG" );
 const subChapter = computed( () => tm( "subChapter" ) ?? {} );
 </script>
 

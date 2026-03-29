@@ -1,3 +1,4 @@
+<!-- i18n-ally-scope: useI18n("book1.DG") -->
 <template>
 <svg
 	:aria-label
@@ -206,7 +207,7 @@ import { useI18n } from "@/utils/i18n.mjs";
 
 import { gcd, parseIntStrict } from "./DG_diophantine";
 
-const { t } = useI18n( "book1/DG" );
+const { t } = useI18n( "book1.DG" );
 
 const props = defineProps( {
 	a: { type: [ Number, String ], required: true },

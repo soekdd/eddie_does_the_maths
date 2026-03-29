@@ -1,3 +1,4 @@
+<!-- i18n-ally-scope: useI18n("book1.PG") -->
 <!-- RandomHandWithSolver.vue -->
 <template>
 <v-card class="pa-4" elevation="4">
@@ -111,7 +112,7 @@ import PokerSolver from "pokersolver";
 const { Hand } = PokerSolver as any;
 const {
 	locale, t, tm
-} = useI18n( "book1/PG" );
+} = useI18n( "book1.PG" );
 
 type SuitChar = "s" | "h" | "d" | "c";
 

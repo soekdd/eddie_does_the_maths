@@ -1,3 +1,4 @@
+<!-- i18n-ally-scope: useI18n("book1.HA") -->
 <template>
 <div class="haDecoder">
 	<v-row dense>
@@ -114,14 +115,8 @@
 						<div class="text-caption text-medium-emphasis mb-2">
 							{{ t( "decoder.translationTitle" ) }}
 						</div>
-						<div class="naturalText">
-							<span
-								v-for="( segment, index ) in decoded.naturalSegments"
-								:key="`segment-${index}`"
-								:class="{ unknownText: segment.unknown }"
-							>
-								{{ segment.text }}
-							</span>
+						<div class="outputEditorShell">
+							<EditorContent :editor="naturalOutputEditor" />
 						</div>
 					</v-sheet>
 
@@ -178,6 +173,7 @@ import {
 	computed, ref, watch
 } from "vue";
 import StarterKit from "@tiptap/starter-kit";
+import { Decoration } from "@tiptap/pm/view";
 import { EditorContent, useEditor } from "@tiptap/vue-3";
 import { useI18n } from "@/utils/i18n.mjs";
 import HAMorseCodeDisplay from "./HA_MorseCodeDisplay.vue";
@@ -367,13 +363,14 @@ const PAYLOAD_BLACKLIST = new Set( [
 
 const EMPTY_RESULT = Object.freeze( {
 	normalized:      "",
+	naturalLines:    [],
 	naturalSegments: [],
 	tokens:          [],
 	naturalText:     "",
 	payloadText:     ""
 } );
 
-const { t, tm } = useI18n( "book1/HA" );
+const { t, tm } = useI18n( "book1.HA" );
 
 const openPanels = ref( "templates" );
 const plainText = ref( "" );
@@ -420,9 +417,8 @@ function extractPlainText( instance ) {
 	return lines.join( "\n" );
 }
 
-const editor = useEditor( {
-	content:    createDocFromText( props.modelValue ),
-	extensions: [
+function createTextEditorExtensions() {
+	return [
 		StarterKit.configure( {
 			blockquote:     false,
 			bulletList:     false,
@@ -432,16 +428,27 @@ const editor = useEditor( {
 			listItem:       false,
 			orderedList:    false
 		} )
-	],
+	];
+}
+
+function createTextEditorAttributes( className,
+	autocapitalize = "off" ) {
+	return {
+		autocapitalize,
+		autocomplete: "off",
+		autocorrect:  "off",
+		class:        className,
+		spellcheck:   "false"
+	};
+}
+
+const editor = useEditor( {
+	content:     createDocFromText( props.modelValue ),
+	extensions:  createTextEditorExtensions(),
 	editorProps: {
 		decorations: ( state ) => buildCommentDecorationSet( state.doc ),
-		attributes: {
-			autocapitalize: "characters",
-			autocomplete:   "off",
-			autocorrect:    "off",
-			class:          "haDecoderEditor",
-			spellcheck:     "false"
-		}
+		attributes:  createTextEditorAttributes( "haDecoderTextEditor haDecoderEditor",
+			"characters" )
 	},
 	onCreate: ( { editor: instance } ) => {
 		plainText.value = extractPlainText( instance );
@@ -691,6 +698,39 @@ function isPayloadToken( token ) {
 	return Boolean( token ) && !PAYLOAD_BLACKLIST.has( token );
 }
 
+function buildUnknownSegmentDecorations( doc,
+	naturalLines ) {
+	const decorations = [];
+	let lineIndex = 0;
+
+	doc.descendants( ( node, pos ) => {
+		if ( !node.isTextblock ) {
+			return;
+		}
+
+		const lineSegments = naturalLines[ lineIndex ] ?? [];
+		let offset = 0;
+
+		lineSegments.forEach( ( segment ) => {
+			const segmentText = String( segment?.text ?? "" );
+
+			if ( segment.unknown && segmentText ) {
+				decorations.push( Decoration.inline(
+					pos + 1 + offset,
+					pos + 1 + offset + segmentText.length,
+					{ class: "haUnknownToken" }
+				) );
+			}
+
+			offset += segmentText.length;
+		} );
+
+		lineIndex += 1;
+	} );
+
+	return decorations;
+}
+
 function buildNaturalText( decodedTokens ) {
 	const parts = [];
 	const payloadTokens = [];
@@ -826,11 +866,12 @@ function decodeSequence( text ) {
 	} );
 
 	return {
-		normalized:  decodedLines.map( ( line ) => line.normalizedLine ).join( "\n" ),
+		naturalLines: decodedLines.map( ( line ) => line.naturalSegments ),
+		normalized:   decodedLines.map( ( line ) => line.normalizedLine ).join( "\n" ),
 		naturalSegments,
-		tokens:      decodedLines.flatMap( ( line ) => line.tokens ),
-		naturalText: decodedLines.map( ( line ) => line.naturalText ).join( "\n" ),
-		payloadText: decodedLines.map( ( line ) => line.payloadText ).filter( Boolean )
+		tokens:       decodedLines.flatMap( ( line ) => line.tokens ),
+		naturalText:  decodedLines.map( ( line ) => line.naturalText ).join( "\n" ),
+		payloadText:  decodedLines.map( ( line ) => line.payloadText ).filter( Boolean )
 			.join( "\n" )
 	};
 }
@@ -838,6 +879,19 @@ function decodeSequence( text ) {
 const decoded = computed( () => plainText.value.trim() ?
 	decodeSequence( plainText.value ) :
 	EMPTY_RESULT );
+const naturalDisplayText = computed( () => decoded.value.naturalText || "—" );
+
+const naturalOutputEditor = useEditor( {
+	content:     createDocFromText( naturalDisplayText.value ),
+	editable:    false,
+	extensions:  createTextEditorExtensions(),
+	editorProps: {
+		decorations: ( state ) => buildCommentDecorationSet( state.doc,
+			buildUnknownSegmentDecorations( state.doc,
+				decoded.value.naturalLines ) ),
+		attributes: createTextEditorAttributes( "haDecoderTextEditor haReadonlyEditor haDecoderOutputEditor" )
+	}
+} );
 
 watch(
 	() => props.modelValue, ( nextValue ) => {
@@ -856,6 +910,23 @@ watch( plainText, ( nextValue ) => {
 watch(
 	() => decoded.value.naturalText, ( nextValue ) => {
 		emit( "update:output", nextValue );
+	}, { immediate: true }
+);
+
+watch(
+	[
+		() => naturalOutputEditor.value,
+		() => naturalDisplayText.value
+	], ( [
+		instance,
+		nextValue
+	] ) => {
+		if ( !instance ) {
+			return;
+		}
+
+		instance.commands.setContent( createDocFromText( nextValue ),
+			false );
 	}, { immediate: true }
 );
 
@@ -958,6 +1029,10 @@ function tokenTypeColor( type ) {
 	gap: 10px;
 }
 
+.outputEditorShell {
+	min-height: 28px;
+}
+
 .codeButton {
 	font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
 	letter-spacing: 0.02em;
@@ -965,7 +1040,6 @@ function tokenTypeColor( type ) {
 }
 
 .normalizedText,
-.naturalText,
 .payloadText {
 	display: block;
 	font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
@@ -995,20 +1069,20 @@ function tokenTypeColor( type ) {
 	padding: 18px;
 }
 
-:deep(.haDecoderEditor p) {
+:deep(.haDecoderTextEditor p) {
 	margin: 0;
 }
 
-:deep(.haDecoderEditor .haCommentLine) {
+:deep(.haDecoderTextEditor .haCommentLine) {
 	color: rgb(var(--v-theme-success));
 }
 
-:deep(.haDecoderEditor .haQxxToken) {
+:deep(.haDecoderTextEditor .haQxxToken) {
 	color: rgb(var(--v-theme-info));
 	font-weight: 600;
 }
 
-:deep(.haDecoderEditor .haQerToken) {
+:deep(.haDecoderTextEditor .haQerToken) {
 	color: rgb(var(--v-theme-error));
 	font-weight: 700;
 }
@@ -1016,6 +1090,24 @@ function tokenTypeColor( type ) {
 :deep(.haDecoderEditor:focus) {
 	border-color: rgba(var(--v-theme-primary), 0.5);
 	box-shadow: 0 0 0 3px rgba(var(--v-theme-primary), 0.12);
+}
+
+:deep(.haReadonlyEditor) {
+	min-height: 0;
+	outline: none;
+	padding: 0;
+}
+
+:deep(.haDecoderOutputEditor) {
+	font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+	line-height: 1.6;
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+:deep(.haDecoderOutputEditor .haUnknownToken) {
+	color: rgb(var(--v-theme-error));
+	font-weight: 700;
 }
 
 @media ( max-width: 960px ) {

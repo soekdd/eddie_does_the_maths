@@ -1,3 +1,4 @@
+<!-- i18n-ally-scope: useI18n("book1.O6") -->
 <template>
 <AppFrame
 	:languages="[ 'de', 'en' ]"
@@ -311,7 +312,7 @@ import titleImg from "./O6.webp";
 
 const {
 	t: rawT, tm: rawTm, parseLocalizedNumber
-} = useI18n( "book1/O6" );
+} = useI18n( "book1.O6" );
 const t = ( key,
 	params = {} ) => rawT( `${key}`, params );
 const tm = ( key = "" ) => rawTm( key ? `${key}` : "o6" );

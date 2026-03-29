@@ -1,3 +1,4 @@
+<!-- i18n-ally-scope: useI18n("book1.UD") -->
 <template>
 <div class="udGraph">
 	<div class="toolbar">
@@ -136,7 +137,7 @@ const SLICE_PACK_CENTER = {
 const vertexCountTarget = ref( 6 );
 const model = ref( createPolygonModel( vertexCountTarget.value ) );
 const hoveredIndex = ref( -1 );
-const { locale, t } = useI18n( "book1/UD" );
+const { locale, t } = useI18n( "book1.UD" );
 
 const ariaLabel = computed( () => t( "graph.aria", { count: model.value.vertexCount } ) );
 

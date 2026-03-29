@@ -15,6 +15,15 @@
   --heading: rgba(255, 255, 255, 0.86);
   --muted: rgba(255, 255, 255, 0.7);
   --line: rgba(255, 255, 255, 0.12);
+  --theme-hat-fill-background: rgba(11, 15, 26, 0.56);
+  --theme-hat-fill-stroke: rgba(226, 232, 240, 0.29);
+  --theme-hat-fill-backdrop-stroke: rgba(226, 232, 240, 0.11);
+  --theme-hat-fill-color-h1: rgba(56, 189, 248, 0.56);
+  --theme-hat-fill-color-h: rgba(125, 211, 252, 0.46);
+  --theme-hat-fill-color-t: rgba(250, 204, 21, 0.4);
+  --theme-hat-fill-color-p: rgba(251, 146, 60, 0.42);
+  --theme-hat-fill-color-f: rgba(163, 230, 53, 0.38);
+  --theme-hat-fill-color-fallback: rgba(148, 163, 184, 0.34);
 
   --shadow: 0 12px 36px rgba(0, 0, 0, 0.35);
   --radius: 18px;
@@ -39,6 +48,15 @@
   --heading: rgba(0, 0, 0, 0.78);
   --muted: rgba(0, 0, 0, 0.6);
   --line: rgba(0, 0, 0, 0.12);
+  --theme-hat-fill-background: rgba(245, 247, 251, 0.68);
+  --theme-hat-fill-stroke: rgba(15, 23, 42, 0.36);
+  --theme-hat-fill-backdrop-stroke: rgba(15, 23, 42, 0.09);
+  --theme-hat-fill-color-h1: rgba(2, 132, 199, 0.86);
+  --theme-hat-fill-color-h: rgba(125, 211, 252, 0.82);
+  --theme-hat-fill-color-t: rgba(245, 158, 11, 0.72);
+  --theme-hat-fill-color-p: rgba(249, 115, 22, 0.72);
+  --theme-hat-fill-color-f: rgba(132, 204, 22, 0.7);
+  --theme-hat-fill-color-fallback: rgba(148, 163, 184, 0.65);
 
   --shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
   --radius: 18px;

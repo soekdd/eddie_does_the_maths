@@ -1,3 +1,4 @@
+<!-- i18n-ally-scope: useI18n("book1.O1") -->
 <template>
 <AppFrame
 	:languages="[ 'de', 'en' ]"
@@ -246,7 +247,7 @@ import { useI18n } from "@/utils/i18n.mjs";
 import O1Graph from "./O1_Graph.vue";
 import titleImg from "./O1.webp";
 
-const { t, tm } = useI18n( "book1/O1" );
+const { t, tm } = useI18n( "book1.O1" );
 
 const graphRef = ref( null );
 const graphState = computed( () => graphRef.value?.state ?? null );

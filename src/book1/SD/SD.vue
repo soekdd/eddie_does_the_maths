@@ -1,3 +1,4 @@
+<!-- i18n-ally-scope: useI18n("book1.SD") -->
 <template>
 <AppFrame
 	:languages="[ 'de', 'en' ]"
@@ -161,7 +162,7 @@ import SDDNA from "./SD_DNA.vue";
 import titleImg from "./SD.webp";
 import samiImg from "./SD_SAMI.webp";
 
-const { t: rawT, tm: rawTm } = useI18n( "book1/SD" );
+const { t: rawT, tm: rawTm } = useI18n( "book1.SD" );
 const t = ( k, params = {} ) => rawT( k, params );
 const tm = ( key = "" ) => rawTm( key );
 

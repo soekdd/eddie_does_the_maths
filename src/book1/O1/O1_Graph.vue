@@ -1,3 +1,4 @@
+<!-- i18n-ally-scope: useI18n("book1.O1") -->
 <template>
 <div class="wrap">
 	<svg
@@ -139,7 +140,7 @@
 import { onMounted, reactive } from "vue";
 import { useI18n } from "@/utils/i18n.mjs";
 
-const { t } = useI18n( "book1/O1" );
+const { t } = useI18n( "book1.O1" );
 
 const FIXED_AB = 100;
 const FIXED_A_X = -50;

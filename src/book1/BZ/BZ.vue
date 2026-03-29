@@ -1,3 +1,4 @@
+<!-- i18n-ally-scope: useI18n("book1.BZ") -->
 <!-- eslint-disable vue/max-len -->
 <template>
 <AppFrame
@@ -314,7 +315,7 @@ import { useI18n } from "@/utils/i18n.mjs";
 import titleImg from "./BZ.webp";
 import BZGraph from "./BZ_Graph.vue";
 
-const { t } = useI18n( "book1/BZ" );
+const { t } = useI18n( "book1.BZ" );
 
 const subChapter = computed( () => ( {
 	einleitung: t( "bz.subChapter.einleitung" ),

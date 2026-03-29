@@ -1,3 +1,4 @@
+<!-- i18n-ally-scope: useI18n("book1.LT") -->
 <template>
 <v-card>
 	<div class="topbar">
@@ -166,7 +167,7 @@ declare global {
   }
 }
 
-const { t } = useI18n( "book1/LT" );
+const { t } = useI18n( "book1.LT" );
 
 const giacReady = ref( false );
 const busy = ref( false );

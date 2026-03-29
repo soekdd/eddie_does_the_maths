@@ -1,3 +1,4 @@
+<!-- i18n-ally-scope: useI18n("book1.O3") -->
 <template>
 <AppFrame
 	:languages="[ 'de', 'en' ]"
@@ -315,7 +316,7 @@ import { useI18n } from "@/utils/i18n.mjs";
 import titleImg from "./O3.webp";
 import O3Graph from "./O3_Graph.vue";
 
-const { t, tm } = useI18n( "book1/O3" );
+const { t, tm } = useI18n( "book1.O3" );
 
 const subChapter = computed( () => tm( "subChapter" ) ?? {} );
 const commentItems = computed( () => tm( "sections.part3.commentItems" ) ?? [] );

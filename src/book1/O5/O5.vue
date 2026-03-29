@@ -1,3 +1,4 @@
+<!-- i18n-ally-scope: useI18n("book1.O5") -->
 <template>
 <AppFrame
 	:languages="[ 'de', 'en' ]"
@@ -454,7 +455,7 @@ import titleImg from "./O5.webp";
 
 const {
 	t, tm, parseLocalizedNumber
-} = useI18n( "book1/O5" );
+} = useI18n( "book1.O5" );
 
 const R = 1;
 const EPS = 1e-9;

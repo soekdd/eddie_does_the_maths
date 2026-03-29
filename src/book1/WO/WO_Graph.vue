@@ -344,7 +344,7 @@ const props = defineProps( {
 	showControls:   { type: Boolean, default: true },
 	showOuterRoute: { type: Boolean, default: false }
 } );
-const { locale, t } = useI18n( "book1/WO" );
+const { locale, t } = useI18n( "book1.WO" );
 const { smAndDown } = useDisplay();
 const rotateMobile = computed( () => smAndDown.value );
 
