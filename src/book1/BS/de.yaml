@@ -53,12 +53,12 @@ bs:
     noMatch: "Diese Kombination entspricht keinem Eintrag in der DR-Liste."
     invalidGeometry: "Geometrisch nicht möglich: <code>h_w=h-2t_f</code> ist negativ."
   calc:
-    exampleTitle: "3) Beispielwerte"
-    calcTitle: "4) Rechnung"
-    flangeTitle: "4.1 Flansche (mit Steiner)"
-    webTitle: "4.2 Steg (ohne Steiner)"
+    exampleTitle: "1) Beispielwerte"
+    calcTitle: "2) Rechnung"
+    flangeTitle: "2.1 Flansche (mit Steiner)"
+    webTitle: "2.2 Steg (ohne Steiner)"
     webText: "Der Steg liegt auf der Schwerpunktachse, also <code>d=0</code>."
-    resultTitle: "5) Ergebnis"
-    bonusTitle: "6) Bonus: Widerstandsmoment"
+    resultTitle: "3) Ergebnis"
+    bonusTitle: "4) Bonus: Widerstandsmoment"
   graph:
     aria: "Interaktive Querschnittszeichnung eines Doppelt-T-Trägers mit Bemaßung"

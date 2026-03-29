@@ -368,13 +368,9 @@ const disclaimerModules = import.meta.glob( "../utils/disclaimer/*_{de,en}.html"
 } );
 
 const props = defineProps( {
-	title:     { type: String, default: "" },
-	nomd:      { type: Boolean, default: false },
-	vueDate:   { type: Number || String, default: null },
-	languages: {
-		type:    Array,
-		default: () => []
-	},
+	title:      { type: String, default: "" },
+	nomd:       { type: Boolean, default: false },
+	vueDate:    { type: Number || String, default: null },
 	subChapter: {
 		type:    Object,
 		default: () => ( {} )
@@ -476,6 +472,7 @@ const showPartsCard = computed( () => hasInteractivePart.value || hasCalculation
 const showReportErrorDialog = ref( false );
 const showImpressumDialog = ref( false );
 const showPrivacyDialog = ref( false );
+const DEFAULT_ROUTE_LANGUAGES = [ "de", "en" ];
 
 function normalizePathForHashLinks( pathValue ) {
 	const asString = String( pathValue || "/" ).trim();
@@ -489,9 +486,10 @@ function normalizePathForHashLinks( pathValue ) {
 
 const routePathForHashLinks = computed( () => normalizePathForHashLinks( route.path ) );
 const supportedLanguages = computed( () =>
-	props.languages
+	( Array.isArray( route.meta?.languages ) ? route.meta.languages : DEFAULT_ROUTE_LANGUAGES )
 		.map( ( value ) => String( value ?? "" ).trim()
 			.toLowerCase() )
+		.filter( ( value ) => i18nApi.availableLocales.includes( value ) )
 		.filter( (
 			value, index, values
 		) => value && values.indexOf( value ) === index ) );
@@ -925,7 +923,7 @@ onMounted( () => {
 		);
 }
 
-.lang-btn--sw {
+.lang-btn--se {
 	--lang-flag:
 		linear-gradient(
 			90deg,
@@ -956,7 +954,7 @@ onMounted( () => {
 
 .lang-btn--de::before,
 .lang-btn--fi::before,
-.lang-btn--sw::before,
+.lang-btn--se::before,
 .lang-btn--en::before {
 	background-image: var(--lang-flag);
 }

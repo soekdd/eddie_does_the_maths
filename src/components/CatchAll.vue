@@ -10,7 +10,6 @@ const subChapter = computed( () => tm( "catchAll.subChapter" ) ?? {} );
 
 <template>
 <AppFrame
-	:languages="[ 'de', 'en' ]"
 	nomd
 	:sub-chapter
 	:title="t( 'catchAll.title' )"

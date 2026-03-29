@@ -7,7 +7,7 @@ import { katexHTML } from "./katex.js";
 const I18N_KEY = Symbol( "eddie-i18n" );
 const STORAGE_KEY = "eddie.locale";
 const FALLBACK_LOCALE = "en";
-const SUPPORTED_LOCALES = [ "de", "en", "sw", "fi" ];
+const SUPPORTED_LOCALES = [ "de", "en", "se", "fi" ];
 const KATEX_MARKER_RE = /<katex\b((?:[^"'/>]|"[^"]*"|'[^']*')*)\s*\/?>/gi;
 
 const rawModules = {
@@ -104,13 +104,11 @@ function escapeRegExp( value ) {
 	return String( value ?? "" ).replace( /[.*+?^${}()|[\]\\]/g, "\\$&" );
 }
 
-function parseWithNumberFormat(
-	raw,
+function parseWithNumberFormat( raw,
 	{
 		decimal,
 		group
-	}
-) {
+	} ) {
 	let normalized = String( raw ?? "" ).trim()
 		.replace( /[\s\u00A0\u202F']/g, "" );
 
@@ -161,26 +159,24 @@ function getNumberFormatsForLocale( targetLocale = locale.value ) {
 		}
 	];
 
-	return formats.filter( ( format,
+	return formats.filter( (
+		format,
 		index,
-		all ) => all.findIndex( ( candidate ) => candidate.decimal === format.decimal && candidate.group === format.group ) === index );
+		all
+	) => all.findIndex( ( candidate ) => candidate.decimal === format.decimal && candidate.group === format.group ) === index );
 }
 
-function chooseClosestNumber(
-	values,
-	fallback
-) {
+function chooseClosestNumber( values,
+	fallback ) {
 	return values.slice()
 		.sort( ( a, b ) => Math.abs( a - fallback ) - Math.abs( b - fallback ) )[ 0 ];
 }
 
-export function parseLocalizedNumber(
-	raw,
+export function parseLocalizedNumber( raw,
 	{
 		locale: targetLocale = locale.value,
 		fallback = Number.NaN
-	} = {}
-) {
+	} = {} ) {
 	if ( typeof raw === "number" ) {
 		return Number.isFinite( raw ) ? raw : null;
 	}
@@ -194,10 +190,8 @@ export function parseLocalizedNumber(
 	const candidates = [];
 
 	for ( const format of getNumberFormatsForLocale( targetLocale ) ) {
-		const parsed = parseWithNumberFormat(
-			normalized,
-			format
-		);
+		const parsed = parseWithNumberFormat( normalized,
+			format );
 
 		if ( parsed !== null && !candidates.some( ( value ) => value === parsed ) ) {
 			candidates.push( parsed );
@@ -209,9 +203,7 @@ export function parseLocalizedNumber(
 	}
 
 	return Number.isFinite( fallback ) ?
-		chooseClosestNumber(
-			candidates, fallback
-		) :
+		chooseClosestNumber( candidates, fallback ) :
 		candidates[ 0 ];
 }
 
@@ -276,7 +268,7 @@ function parseMarkerAttributes( source = "" ) {
 	const attrRe = /([:@\w-]+)(?:\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s"'=<>`]+)))?/g;
 	let match = null;
 
-	while ( ( match = attrRe.exec( source ) ) ) {
+	while ( match = attrRe.exec( source ) ) {
 		const name = String( match[ 1 ] ?? "" )
 			.trim()
 			.toLowerCase();
@@ -422,11 +414,11 @@ export function useI18n( namespace ) {
 	);
 
 	return {
-		locale:    api.locale,
+		locale:               api.locale,
 		parseLocalizedNumber: api.parseLocalizedNumber,
-		setLocale: api.setLocale,
-		t:         scopedTranslate,
-		th:        ( key,
+		setLocale:            api.setLocale,
+		t:                    scopedTranslate,
+		th:                   ( key,
 			params = {} ) => api.th(
 			namespace, key, params
 		),

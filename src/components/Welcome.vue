@@ -1,7 +1,6 @@
 <!-- i18n-ally-scope: useI18n("components.lang") -->
 <template>
 <AppFrame
-	:languages="[ 'de', 'en' , 'sw', 'fi' ]"
 	nomd
 	:sub-chapter
 	:vue-date="__VITE_SFC_MTIME_MS__"

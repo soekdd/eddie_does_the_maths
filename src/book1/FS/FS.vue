@@ -1,7 +1,6 @@
 <!-- i18n-ally-scope: useI18n("book1.FS") -->
 <template>
 <AppFrame
-	:languages="[ 'de', 'en' ]"
 	:sub-chapter
 	:title="t( 'fs.title' )"
 	:vue-date="__VITE_SFC_MTIME_MS__"

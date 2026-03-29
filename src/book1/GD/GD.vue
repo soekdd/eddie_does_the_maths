@@ -2,7 +2,6 @@
 <!-- eslint-disable vue/max-len -->
 <template>
 <AppFrame
-	:languages="[ 'de', 'en' ]"
 	:sub-chapter
 	:title="t( 'gd.title' )"
 	:vue-date="__VITE_SFC_MTIME_MS__"

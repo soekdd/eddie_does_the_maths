@@ -37,7 +37,7 @@ const error = true;
 const warning = true;
 const wip = true;
 const FALLBACK_LOCALE = "en";
-const SUPPORTED_LOCALES = [ "de", "en", "sw", "fi" ];
+const SUPPORTED_LOCALES = [ "de", "en", "se", "fi" ];
 const DEFAULT_ROUTE_LOCALES = [ "de", "en" ];
 const LOCALE_ROUTE_PATTERN = SUPPORTED_LOCALES.join( "|" );
 const fallbackDescription = {
@@ -268,7 +268,7 @@ export const contentRoutes = [
 		name:      "ER",
 		component: Welcome,
 		meta:      {
-			languages: [ "de", "en", "sw", "fi" ],
+			languages: [ "de", "en", "se", "fi" ],
 			title:     {
 				de: "Welcome",
 				en: "Welcome"
@@ -579,6 +579,7 @@ export const contentRoutes = [
 		component: AL,
 		meta:      {
 			difficulty: 2,
+			languages:  [ "de", "en", "se" ],
 			title:      {
 				de: "Karten&shy;spiel mit Ada Lovelace",
 				en: "Card Game with Ada Lovelace"

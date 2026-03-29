@@ -1,4 +1,4 @@
-export const supportedLocales = [ "de", "en", "sw", "fi" ];
+export const supportedLocales = [ "de", "en", "se", "fi" ];
 
 /**
  * SSG helper for concrete dynamic paths.

@@ -53,12 +53,12 @@ bs:
     noMatch: "This combination does not match any entry in the DR list."
     invalidGeometry: "Geometrically impossible: <code>h_w=h-2t_f</code> is negative."
   calc:
-    exampleTitle: "3) Example values"
-    calcTitle: "4) Calculation"
-    flangeTitle: "4.1 Flanges (with Steiner)"
-    webTitle: "4.2 Web (without Steiner)"
+    exampleTitle: "1) Example values"
+    calcTitle: "2) Calculation"
+    flangeTitle: "2.1 Flanges (with Steiner)"
+    webTitle: "2.2 Web (without Steiner)"
     webText: "The web lies on the centroidal axis, so <code>d=0</code>."
-    resultTitle: "5) Result"
-    bonusTitle: "6) Bonus: Section modulus"
+    resultTitle: "3) Result"
+    bonusTitle: "4) Bonus: Section modulus"
   graph:
     aria: "Interactive cross-section drawing of a double-T beam with dimensions"
