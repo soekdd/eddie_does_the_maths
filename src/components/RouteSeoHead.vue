@@ -17,11 +17,11 @@ const { locale, t } = useI18n( "components.lang" );
 const siteName = computed( () => t( "routeSeoHead.siteName" ) );
 
 const pageTitle = computed( () => {
-	const titleFromRoute = normalizeSeoText( resolveRouteMetaTitle( route.meta, locale.value ) );
+	const titleFromRoute = normalizeSeoText( resolveRouteMetaTitle( route, locale.value ) );
 	return titleFromRoute ? `${siteName.value}: ${titleFromRoute}` : siteName.value;
 } );
 
-const pageDescription = computed( () => normalizeSeoText( resolveRouteMetaDescription( route.meta, locale.value ) ) );
+const pageDescription = computed( () => normalizeSeoText( resolveRouteMetaDescription( route, locale.value ) ) );
 
 useHead( () => ( {
 	title: pageTitle.value,

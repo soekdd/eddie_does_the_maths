@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
-import { getLocale, setLocale } from "@/utils/i18n.mjs";
+import {
+	getLocale, setLocale, tm
+} from "@/utils/i18n.mjs";
 
 import DG from "@/book1/DG/DG.vue";
 import ST from "@/book1/ST/ST.vue";
@@ -123,6 +125,34 @@ function localizedRouteName( name,
 	return normalizedName ? `${normalizedName}__${locale}` : undefined;
 }
 
+function resolveBaseRouteName( value ) {
+	const normalized = String( value ?? "" ).trim();
+	return normalized ? normalized.split( "__" )[ 0 ] || "" : "";
+}
+
+function resolveRouteMetaObject( routeOrMeta ) {
+	if ( !routeOrMeta || typeof routeOrMeta !== "object" ) {
+		return {};
+	}
+
+	return "meta" in routeOrMeta ? routeOrMeta.meta ?? {} : routeOrMeta;
+}
+
+function resolveRouteTranslationNamespace( routeOrMeta,
+	routeName = "" ) {
+	const meta = resolveRouteMetaObject( routeOrMeta );
+	const baseRouteName = resolveBaseRouteName( routeOrMeta && typeof routeOrMeta === "object" && "name" in routeOrMeta ?
+		routeOrMeta.name :
+		routeName );
+	const book = Number( meta?.book );
+
+	if ( !Number.isInteger( book ) || book < 1 || !baseRouteName ) {
+		return "";
+	}
+
+	return `book${book}/${baseRouteName}`;
+}
+
 function getRouteSupportedLocales( route ) {
 	const routeLocales = Array.isArray( route?.meta?.languages ) ? route.meta.languages : DEFAULT_ROUTE_LOCALES;
 	const normalizedLocales = routeLocales
@@ -213,13 +243,33 @@ export function resolveLocalizedMetaText( value,
 	return "";
 }
 
-export function resolveRouteMetaTitle( meta,
-	locale = getLocale() ) {
+export function resolveRouteMetaTitle(
+	routeOrMeta,
+	locale = getLocale(),
+	routeName = ""
+) {
+	const namespace = resolveRouteTranslationNamespace( routeOrMeta, routeName );
+
+	if ( namespace ) {
+		const localizedTitle = tm(
+			namespace, "title", locale
+		);
+
+		if ( typeof localizedTitle === "string" && localizedTitle.trim() ) {
+			return localizedTitle;
+		}
+	}
+
+	const meta = resolveRouteMetaObject( routeOrMeta );
 	return resolveLocalizedMetaText( meta?.title, locale );
 }
 
-export function resolveRouteMetaDescription( meta,
-	locale = getLocale() ) {
+export function resolveRouteMetaDescription(
+	routeOrMeta,
+	locale = getLocale(),
+	routeName = ""
+) {
+	const meta = resolveRouteMetaObject( routeOrMeta );
 	const nextLocale = normalizeMetaLocale( locale );
 	const fromMeta = normalizeSeoText( resolveLocalizedMetaText( meta?.description, nextLocale ) );
 
@@ -227,7 +277,9 @@ export function resolveRouteMetaDescription( meta,
 		return fromMeta;
 	}
 
-	const title = normalizeSeoText( resolveRouteMetaTitle( meta, nextLocale ) );
+	const title = normalizeSeoText( resolveRouteMetaTitle(
+		routeOrMeta, nextLocale, routeName
+	) );
 
 	if ( title ) {
 		return nextLocale === "en" ?
@@ -267,13 +319,7 @@ export const contentRoutes = [
 		path:      "/",
 		name:      "ER",
 		component: Welcome,
-		meta:      {
-			languages: [ "de", "en", "se", "fi" ],
-			title:     {
-				de: "Welcome",
-				en: "Welcome"
-			}
-		}
+		meta:      { languages: [ "de", "en", "se", "fi" ] }
 	},
 	{
 		path:      "/ST",
@@ -281,13 +327,9 @@ export const contentRoutes = [
 		component: ST,
 		meta:      {
 			difficulty: 1,
-			title:      {
-				de: "Spiel&shy;theorie am Bus&shy;bahnhof",
-				en: "Game Theory at the Bus Station"
-			},
-			index: true,
-			book:  1,
-			order: 10
+			index:      true,
+			book:       1,
+			order:      10
 		}
 	},
 	{
@@ -296,13 +338,9 @@ export const contentRoutes = [
 		component: DG,
 		meta:      {
 			difficulty: 2,
-			title:      {
-				de: "Dio&shy;phan&shy;tische Gleichung",
-				en: "Diophantine Equation"
-			},
-			index: true,
-			book:  1,
-			order: 20
+			index:      true,
+			book:       1,
+			order:      20
 		}
 	},
 	{
@@ -311,11 +349,8 @@ export const contentRoutes = [
 		component: MO,
 		meta:      {
 			difficulty: 3,
-			title:      {
-				de: "IMO 1985 Aufgaben 1-6",
-				en: "IMO 1985 Problems 1-6"
-			},
-			index: false
+			book:       1,
+			index:      false
 		}
 	},
 	{
@@ -324,13 +359,9 @@ export const contentRoutes = [
 		component: O1,
 		meta:      {
 			difficulty: 3,
-			title:      {
-				de: "IMO 1985 Aufgabe A1",
-				en: "IMO 1985 Problem A1"
-			},
-			index: true,
-			book:  1,
-			order: 30
+			index:      true,
+			book:       1,
+			order:      30
 		}
 	},
 	{
@@ -339,13 +370,9 @@ export const contentRoutes = [
 		component: O2,
 		meta:      {
 			difficulty: 3,
-			title:      {
-				de: "IMO 1985 Aufgabe A2",
-				en: "IMO 1985 Problem A2"
-			},
-			index: true,
-			book:  1,
-			order: 40
+			index:      true,
+			book:       1,
+			order:      40
 		}
 	},
 	{
@@ -354,13 +381,9 @@ export const contentRoutes = [
 		component: O3,
 		meta:      {
 			difficulty: 3,
-			title:      {
-				de: "IMO 1985 Aufgabe A3",
-				en: "IMO 1985 Problem A3"
-			},
-			index: true,
-			book:  1,
-			order: 50
+			index:      true,
+			book:       1,
+			order:      50
 		}
 	},
 	{
@@ -369,13 +392,9 @@ export const contentRoutes = [
 		component: O4,
 		meta:      {
 			difficulty: 3,
-			title:      {
-				de: "IMO 1985 Aufgabe B1",
-				en: "IMO 1985 Problem B1"
-			},
-			index: true,
-			book:  1,
-			order: 60
+			index:      true,
+			book:       1,
+			order:      60
 		}
 	},
 	{
@@ -384,13 +403,9 @@ export const contentRoutes = [
 		component: O5,
 		meta:      {
 			difficulty: 3,
-			title:      {
-				de: "IMO 1985 Aufgabe B2",
-				en: "IMO 1985 Problem B2"
-			},
-			index: true,
-			book:  1,
-			order: 70
+			index:      true,
+			book:       1,
+			order:      70
 		}
 	},
 	{
@@ -399,13 +414,9 @@ export const contentRoutes = [
 		component: O6,
 		meta:      {
 			difficulty: 3,
-			title:      {
-				de: "IMO 1985 Aufgabe B3",
-				en: "IMO 1985 Problem B3"
-			},
-			index: true,
-			book:  1,
-			order: 80
+			index:      true,
+			book:       1,
+			order:      80
 		}
 	},
 	{
@@ -414,13 +425,9 @@ export const contentRoutes = [
 		component: FI,
 		meta:      {
 			difficulty: 2,
-			title:      {
-				de: "Land&shy;karten Geo&shy;metrie",
-				en: "Map Geometry"
-			},
-			index: true,
-			book:  1,
-			order: 90
+			index:      true,
+			book:       1,
+			order:      90
 		}
 	},
 	{
@@ -429,13 +436,9 @@ export const contentRoutes = [
 		component: PG,
 		meta:      {
 			difficulty: 1,
-			title:      {
-				de: "Mit Eddie zum Poker&shy;genie",
-				en: "Become a Poker Genius with Eddie"
-			},
-			index: true,
-			book:  1,
-			order: 100
+			index:      true,
+			book:       1,
+			order:      100
 		}
 	},
 	{
@@ -444,13 +447,9 @@ export const contentRoutes = [
 		component: NV,
 		meta:      {
 			difficulty: 1,
-			title:      {
-				de: "Navi&shy;gation im Wald",
-				en: "Navigation in the Forest"
-			},
-			index: true,
-			book:  1,
-			order: 120
+			index:      true,
+			book:       1,
+			order:      120
 		}
 	},
 	{
@@ -459,13 +458,9 @@ export const contentRoutes = [
 		component: SE,
 		meta:      {
 			difficulty: 1,
-			title:      {
-				de: "Gute-Nacht-Rechen&shy;routine",
-				en: "Bedtime Calculation Routine"
-			},
-			index: true,
-			book:  1,
-			order: 125
+			index:      true,
+			book:       1,
+			order:      125
 		}
 	},
 	{
@@ -474,13 +469,9 @@ export const contentRoutes = [
 		component: FS,
 		meta:      {
 			difficulty: 2,
-			title:      {
-				de: "Fischsee",
-				en: "Fish Lake"
-			},
-			index: true,
-			book:  1,
-			order: 130
+			index:      true,
+			book:       1,
+			order:      130
 		}
 	},
 	{
@@ -489,13 +480,9 @@ export const contentRoutes = [
 		component: RD,
 		meta:      {
 			difficulty: 2,
-			title:      {
-				de: "Rentier-Depot",
-				en: "Reindeer Depot"
-			},
-			index: true,
-			book:  1,
-			order: 140
+			index:      true,
+			book:       1,
+			order:      140
 		}
 	},
 	{
@@ -504,13 +491,9 @@ export const contentRoutes = [
 		component: UD,
 		meta:      {
 			difficulty: 3,
-			title:      {
-				de: "Minkow&shy;skis Ufer&shy;auf&shy;dickung",
-				en: "Minkowski's Shore Thickening"
-			},
-			index: true,
-			book:  1,
-			order: 150
+			index:      true,
+			book:       1,
+			order:      150
 		}
 	},
 	{
@@ -519,13 +502,9 @@ export const contentRoutes = [
 		component: BA,
 		meta:      {
 			difficulty: 1,
-			title:      {
-				de: "BASIC for Runaways",
-				en: "BASIC for Runaways"
-			},
-			index: true,
-			book:  1,
-			order: 160
+			index:      true,
+			book:       1,
+			order:      160
 		}
 	},
 	{
@@ -534,13 +513,9 @@ export const contentRoutes = [
 		component: SD,
 		meta:      {
 			difficulty: 1,
-			title:      {
-				de: "Ich zeig dir deine DNA",
-				en: "Let Me Show You Your DNA"
-			},
-			index: true,
-			book:  1,
-			order: 170
+			index:      true,
+			book:       1,
+			order:      170
 		}
 	},
 	{
@@ -549,13 +524,9 @@ export const contentRoutes = [
 		component: BS,
 		meta:      {
 			difficulty: 2,
-			title:      {
-				de: "Baustatik #1, Satz v. Steiner",
-				en: "Structural Analysis #1, Steiner's Theorem"
-			},
-			index: true,
-			book:  1,
-			order: 180
+			index:      true,
+			book:       1,
+			order:      180
 		}
 	},
 	{
@@ -564,13 +535,9 @@ export const contentRoutes = [
 		component: GZ,
 		meta:      {
 			difficulty: 1,
-			title:      {
-				de: "Das Prinzip der großen Zahl",
-				en: "The Principle of Large Numbers"
-			},
-			index: true,
-			book:  1,
-			order: 185
+			index:      true,
+			book:       1,
+			order:      185
 		}
 	},
 	{
@@ -580,13 +547,9 @@ export const contentRoutes = [
 		meta:      {
 			difficulty: 2,
 			languages:  [ "de", "en", "se" ],
-			title:      {
-				de: "Karten&shy;spiel mit Ada Lovelace",
-				en: "Card Game with Ada Lovelace"
-			},
-			index: true,
-			book:  1,
-			order: 190
+			index:      true,
+			book:       1,
+			order:      190
 		}
 	},
 	{
@@ -595,13 +558,9 @@ export const contentRoutes = [
 		component: WO,
 		meta:      {
 			difficulty: 2,
-			title:      {
-				de: "Weg&shy;optimierung",
-				en: "Route Optimization"
-			},
-			index: true,
-			book:  1,
-			order: 200
+			index:      true,
+			book:       1,
+			order:      200
 		}
 	},
 	{
@@ -610,13 +569,9 @@ export const contentRoutes = [
 		component: BD,
 		meta:      {
 			difficulty: 2,
-			title:      {
-				de: "Baustatik #2, DIN vs. TGL",
-				en: "Structural Analysis #2, DIN vs. TGL"
-			},
-			index: true,
-			book:  1,
-			order: 205
+			index:      true,
+			book:       1,
+			order:      205
 		}
 	},
 	{
@@ -625,13 +580,9 @@ export const contentRoutes = [
 		component: FX,
 		meta:      {
 			difficulty: 1,
-			title:      {
-				de: "Mein fx-7000G",
-				en: "My fx-7000G"
-			},
-			index: true,
-			book:  1,
-			order: 210
+			index:      true,
+			book:       1,
+			order:      210
 		}
 	},
 	{
@@ -640,13 +591,9 @@ export const contentRoutes = [
 		component: HA,
 		meta:      {
 			difficulty: 1,
-			title:      {
-				de: "Amateurfunk-Decoder",
-				en: "HAM-Radio Decoder"
-			},
-			index: true,
-			book:  1,
-			order: 215
+			index:      true,
+			book:       1,
+			order:      215
 		}
 	},
 	{
@@ -655,13 +602,9 @@ export const contentRoutes = [
 		component: VA,
 		meta:      {
 			difficulty: 2,
-			title:      {
-				de: "Warum die Vasa sinken musste",
-				en: "Why the Vasa Had to Sink"
-			},
-			index: true,
-			book:  1,
-			order: 220
+			index:      true,
+			book:       1,
+			order:      220
 		}
 	},
 	{
@@ -670,13 +613,9 @@ export const contentRoutes = [
 		component: BZ,
 		meta:      {
 			difficulty: 1,
-			title:      {
-				de: "Baustatik #3 Dynamik",
-				en: "Structural Analysis #3, Dynamics"
-			},
-			index: true,
-			book:  1,
-			order: 230
+			index:      true,
+			book:       1,
+			order:      230
 		}
 	},
 	{
@@ -685,13 +624,9 @@ export const contentRoutes = [
 		component: GD,
 		meta:      {
 			difficulty: 1,
-			title:      {
-				de: "Diophantos Grab&shy;platte",
-				en: "Diophantus' Tombstone"
-			},
-			index: true,
-			book:  1,
-			order: 240
+			index:      true,
+			book:       1,
+			order:      240
 		}
 	},
 	{
@@ -700,13 +635,9 @@ export const contentRoutes = [
 		component: QH,
 		meta:      {
 			difficulty: 2,
-			title:      {
-				de: "Der Quanten-Hall-Effekt",
-				en: "The Quantum Hall Effect"
-			},
-			index: true,
-			book:  1,
-			order: 250
+			index:      true,
+			book:       1,
+			order:      250
 		}
 	},
 	{
@@ -715,13 +646,9 @@ export const contentRoutes = [
 		component: LT,
 		meta:      {
 			difficulty: 3,
-			title:      {
-				de: "Laplace-Trans&shy;formation",
-				en: "Laplace Transform"
-			},
-			index: true,
-			book:  1,
-			order: 260
+			index:      true,
+			book:       1,
+			order:      260
 		}
 	},
 	{
@@ -730,13 +657,9 @@ export const contentRoutes = [
 		component: CatchAll,
 		meta:      {
 			difficulty: 2,
-			title:      {
-				de: "Atomare Zerfalls&shy;reihen",
-				en: "Atomic Decay Chains"
-			},
-			index: true,
-			book:  2,
-			order: 10,
+			index:      true,
+			book:       2,
+			order:      10,
 			wip
 		}
 	},
@@ -746,13 +669,9 @@ export const contentRoutes = [
 		component: CatchAll,
 		meta:      {
 			difficulty: 2,
-			title:      {
-				de: "Aus&shy;sage&shy;wahrs&shy;cheinlichkeit",
-				en: "Probability of Statements"
-			},
-			index: true,
-			book:  2,
-			order: 20,
+			index:      true,
+			book:       2,
+			order:      20,
 			wip
 		}
 	},{
@@ -761,13 +680,9 @@ export const contentRoutes = [
 		component: CatchAll,
 		meta:      {
 			difficulty: 2,
-			title:      {
-				de: "Spaß mit Kugel&shy;koordinaten",
-				en: "Fun with Spherical Coordinates"
-			},
-			index: true,
-			book:  2,
-			order: 20,
+			index:      true,
+			book:       2,
+			order:      20,
 			wip
 		}
 	},
@@ -778,13 +693,9 @@ export const contentRoutes = [
 		meta:      {
 			wip,
 			difficulty: 3,
-			title:      {
-				de: "IMO 1987 Aufgabe A1",
-				en: "IMO 1987 Problem A1"
-			},
-			index: true,
-			book:  2,
-			order: 30
+			index:      true,
+			book:       2,
+			order:      30
 		}
 	},
 	{
@@ -794,13 +705,9 @@ export const contentRoutes = [
 		meta:      {
 			wip,
 			difficulty: 3,
-			title:      {
-				de: "IMO 1987 Aufgabe A2",
-				en: "IMO 1987 Problem A2"
-			},
-			index: true,
-			book:  2,
-			order: 30
+			index:      true,
+			book:       2,
+			order:      30
 		}
 	},
 	{
@@ -810,13 +717,9 @@ export const contentRoutes = [
 		meta:      {
 			wip,
 			difficulty: 3,
-			title:      {
-				de: "IMO 1987 Aufgabe A3",
-				en: "IMO 1987 Problem A3"
-			},
-			index: true,
-			book:  2,
-			order: 30
+			index:      true,
+			book:       2,
+			order:      30
 		}
 	},
 	{
@@ -826,13 +729,9 @@ export const contentRoutes = [
 		meta:      {
 			wip,
 			difficulty: 3,
-			title:      {
-				de: "IMO 1987 Aufgabe B1",
-				en: "IMO 1987 Problem B1"
-			},
-			index: true,
-			book:  2,
-			order: 30
+			index:      true,
+			book:       2,
+			order:      30
 		}
 	},
 	{
@@ -842,13 +741,9 @@ export const contentRoutes = [
 		meta:      {
 			wip,
 			difficulty: 3,
-			title:      {
-				de: "IMO 1987 Aufgabe B2",
-				en: "IMO 1987 Problem B2"
-			},
-			index: true,
-			book:  2,
-			order: 30
+			index:      true,
+			book:       2,
+			order:      30
 		}
 	},
 	{
@@ -858,13 +753,9 @@ export const contentRoutes = [
 		meta:      {
 			wip,
 			difficulty: 3,
-			title:      {
-				de: "IMO 1987 Aufgabe B3",
-				en: "IMO 1987 Problem B3"
-			},
-			index: true,
-			book:  2,
-			order: 30
+			index:      true,
+			book:       2,
+			order:      30
 		}
 	},
 	{

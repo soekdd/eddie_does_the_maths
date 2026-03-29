@@ -34,7 +34,7 @@
 		<section class="problem">
 			<div class="problem-head">
 				<h3 id="a1">{{ t( "tasks.a1.heading" ) }}</h3>
-				<RouterLink class="task-link" to="/O1">{{ t( "tasks.a1.link" ) }}</RouterLink>
+				<RouterLink class="task-link" :to="taskLink( '/O1' )">{{ t( "tasks.a1.link" ) }}</RouterLink>
 			</div>
 			<p v-html="t( 'tasks.a1.p1' )"/>
 		</section>
@@ -42,7 +42,7 @@
 		<section class="problem">
 			<div class="problem-head">
 				<h3 id="a2">{{ t( "tasks.a2.heading" ) }}</h3>
-				<RouterLink class="task-link" to="/O2">{{ t( "tasks.a2.link" ) }}</RouterLink>
+				<RouterLink class="task-link" :to="taskLink( '/O2' )">{{ t( "tasks.a2.link" ) }}</RouterLink>
 			</div>
 			<p v-html="t( 'tasks.a2.p1' )"/>
 			<ul>
@@ -55,7 +55,7 @@
 		<section class="problem">
 			<div class="problem-head">
 				<h3 id="a3">{{ t( "tasks.a3.heading" ) }}</h3>
-				<RouterLink class="task-link" to="/O3">{{ t( "tasks.a3.link" ) }}</RouterLink>
+				<RouterLink class="task-link" :to="taskLink( '/O3' )">{{ t( "tasks.a3.link" ) }}</RouterLink>
 			</div>
 			<p v-html="t( 'tasks.a3.p1' )"/>
 			<p v-html="t( 'tasks.a3.p2' )"/>
@@ -67,7 +67,7 @@
 		<section class="problem">
 			<div class="problem-head">
 				<h3 id="b1">{{ t( "tasks.b1.heading" ) }}</h3>
-				<RouterLink class="task-link" to="/O4">{{ t( "tasks.b1.link" ) }}</RouterLink>
+				<RouterLink class="task-link" :to="taskLink( '/O4' )">{{ t( "tasks.b1.link" ) }}</RouterLink>
 			</div>
 			<p v-html="t( 'tasks.b1.p1' )"/>
 			<p v-html="t( 'tasks.b1.p2' )"/>
@@ -76,7 +76,7 @@
 		<section class="problem">
 			<div class="problem-head">
 				<h3 id="b2">{{ t( "tasks.b2.heading" ) }}</h3>
-				<RouterLink class="task-link" to="/O5">{{ t( "tasks.b2.link" ) }}</RouterLink>
+				<RouterLink class="task-link" :to="taskLink( '/O5' )">{{ t( "tasks.b2.link" ) }}</RouterLink>
 			</div>
 			<p v-html="t( 'tasks.b2.p1' )"/>
 			<p v-html="t( 'tasks.b2.p2' )"/>
@@ -85,7 +85,7 @@
 		<section class="problem">
 			<div class="problem-head">
 				<h3 id="b3">{{ t( "tasks.b3.heading" ) }}</h3>
-				<RouterLink class="task-link" to="/O6">{{ t( "tasks.b3.link" ) }}</RouterLink>
+				<RouterLink class="task-link" :to="taskLink( '/O6' )">{{ t( "tasks.b3.link" ) }}</RouterLink>
 			</div>
 			<p v-html="t( 'tasks.b3.p1' )"/>
 			<Katex tex="x_{n+1}=x_n\left(x_n+\frac{1}{n}\right)\quad (n=1,2,3,\dots)." />
@@ -103,10 +103,18 @@
 
 <script setup>
 import { computed } from "vue";
+import { useRoute } from "vue-router";
 import { useI18n } from "@/utils/i18n.mjs";
+import { localizePath, resolveLocaleFromPath } from "@/router.js";
 import titleImg from "./MO.webp";
 
+const route = useRoute();
 const { t } = useI18n( "book1.MO" );
+const routeLanguage = computed( () => resolveLocaleFromPath( route.path ) );
+
+function taskLink( path ) {
+	return { path: localizePath( path, routeLanguage.value ) };
+}
 
 const subChapter = computed( () => Object.fromEntries( [
 	[ "a1", "A1" ],

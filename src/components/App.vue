@@ -534,7 +534,7 @@ const bookChapterRoutes = computed( () => {
 		.map( ( entry ) => ( {
 			key:   String( entry.name ?? entry.path ),
 			path:  normalizeChapterPath( entry.path ),
-			title: resolveRouteMetaTitle( entry.meta, locale.value ).replace( /&shy;/gi, "\u00AD" )
+			title: resolveRouteMetaTitle( entry, locale.value ).replace( /&shy;/gi, "\u00AD" )
 				.trim(),
 			order: Number.isFinite( entry?.meta?.order ) ? Number( entry.meta.order ) : null,
 			to:    { path: normalizePathForHashLinks( localizePath( entry.path, routeLanguage.value ) ) }

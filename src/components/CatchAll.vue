@@ -1,18 +1,22 @@
 <script setup>
 import { computed } from "vue";
+import { useRoute } from "vue-router";
 import { useI18n } from "@/utils/i18n.mjs";
+import { resolveRouteMetaTitle } from "@/router.js";
 
 import ContentIndex from "@/components/ContentIndex.vue";
 
-const { t, tm } = useI18n( "components.lang" );
+const route = useRoute();
+const { locale, t, tm } = useI18n( "components.lang" );
 const subChapter = computed( () => tm( "catchAll.subChapter" ) ?? {} );
+const routeTitle = computed( () => resolveRouteMetaTitle( route, locale.value ) || t( "catchAll.title" ) );
 </script>
 
 <template>
 <AppFrame
 	nomd
 	:sub-chapter
-	:title="t( 'catchAll.title' )"
+	:title="routeTitle"
 	:vue-date="__VITE_SFC_MTIME_MS__"
 >
 

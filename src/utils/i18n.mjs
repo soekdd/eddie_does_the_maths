@@ -335,22 +335,40 @@ function renderRichMessage( message ) {
 		attrSource = "" ) => renderKatexMarker( attrSource ) );
 }
 
+function resolveScopedCatalog(
+	namespace,
+	localeValue = locale.value
+) {
+	const scopedCatalog = catalog.get( normalizeNamespace( namespace ) ) ?? {};
+	const targetLocale = resolveLocaleArgument( localeValue );
+	return {
+		current:  scopedCatalog[ targetLocale ],
+		fallback: scopedCatalog[ FALLBACK_LOCALE ]
+	};
+}
+
 function resolveMessage(
 	namespace,
 	key,
-	params
+	params,
+	localeValue = locale.value
 ) {
-	const scopedCatalog = catalog.get( normalizeNamespace( namespace ) ) ?? {};
-	const current = getNestedValue( scopedCatalog[ locale.value ], key );
+	const {
+		current,
+		fallback
+	} = resolveScopedCatalog(
+		namespace, localeValue
+	);
+	const localized = getNestedValue( current, key );
 
-	if ( current != null ) {
-		return formatMessage( current, params );
+	if ( localized != null ) {
+		return formatMessage( localized, params );
 	}
 
-	const fallback = getNestedValue( scopedCatalog[ FALLBACK_LOCALE ], key );
+	const fallbackMessage = getNestedValue( fallback, key );
 
-	if ( fallback != null ) {
-		return formatMessage( fallback, params );
+	if ( fallbackMessage != null ) {
+		return formatMessage( fallbackMessage, params );
 	}
 
 	return null;
@@ -372,10 +390,10 @@ export function getLocale() {
 }
 
 export function t(
-	namespace, key, params = {}
+	namespace, key, params = {}, localeValue = locale.value
 ) {
 	const message = resolveMessage(
-		namespace, key, params
+		namespace, key, params, localeValue
 	);
 
 	return message == null ?
@@ -384,10 +402,10 @@ export function t(
 }
 
 export function th(
-	namespace, key, params = {}
+	namespace, key, params = {}, localeValue = locale.value
 ) {
 	const message = resolveMessage(
-		namespace, key, params
+		namespace, key, params, localeValue
 	);
 
 	return message == null ?
@@ -395,9 +413,18 @@ export function th(
 		renderRichMessage( message );
 }
 
-export function tm( namespace, key = "" ) {
-	const scopedCatalog = catalog.get( normalizeNamespace( namespace ) ) ?? {};
-	return getNestedValue( scopedCatalog[ locale.value ] ?? scopedCatalog[ FALLBACK_LOCALE ] ?? {}, key );
+export function tm(
+	namespace,
+	key = "",
+	localeValue = locale.value
+) {
+	const {
+		current,
+		fallback
+	} = resolveScopedCatalog(
+		namespace, localeValue
+	);
+	return getNestedValue( current ?? fallback ?? {}, key );
 }
 
 export function useI18n( namespace ) {

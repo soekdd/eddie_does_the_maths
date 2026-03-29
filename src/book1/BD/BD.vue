@@ -3,7 +3,7 @@
 <template>
 <AppFrame
 	:sub-chapter
-	:title="t( 'bd.title' )"
+	:title="t( 'title' )"
 	:vue-date="__VITE_SFC_MTIME_MS__"
 >
 	<template #bookPart>

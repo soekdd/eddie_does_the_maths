@@ -97,7 +97,9 @@ import {
 import { useRoute } from "vue-router";
 import PocketBase from "pocketbase";
 import { useI18n } from "@/utils/i18n.mjs";
-import { contentRoutes as appRoutes, localizePath, resolveRouteMetaTitle } from "@/router.js";
+import {
+	contentRoutes as appRoutes, localizePath, resolveRouteMetaTitle
+} from "@/router.js";
 
 const props = defineProps( { title: { type: String, default: "" } } );
 
@@ -235,15 +237,13 @@ const items = computed( () => {
 	return appRoutes
 		.map( ( r ) => ( {
 			route: r,
-			title: resolveRouteMetaTitle( r?.meta, locale.value )
+			title: resolveRouteMetaTitle( r, locale.value )
 		} ) )
 		.filter( ( entry ) => entry.route?.meta?.index === true && entry.title.trim() )
 		.map( ( { route: r, title } ) => ( {
-			key:   String( r.name ?? r.path ),
-			title: title.replace( /&shy;/gi, "\u00AD" ),
-			to:    {
-				path: normalizeRouteLinkPath( localizePath( r.path, locale.value ) )
-			},
+			key:        String( r.name ?? r.path ),
+			title:      title.replace( /&shy;/gi, "\u00AD" ),
+			to:         { path: normalizeRouteLinkPath( localizePath( r.path, locale.value ) ) },
 			order:      Number.isFinite( r?.meta?.order ) ? Number( r.meta.order ) : null,
 			path:       r.path,
 			forumKey:   toForumKey( r.name ),

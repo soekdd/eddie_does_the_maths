@@ -66,21 +66,32 @@ function resolvePdfSourcePaths( route,
 	locale ) {
 	const slug = routeSlugFromRoute( route );
 
-	// mapping is only defined for <XX>.pdf -> src/book1/<XX>/<XX>.vue
 	if ( !slug || slug === "index" || slug.includes( "__" ) || slug.includes( "/" ) || slug.includes( "\\" ) ) {
 		return null;
 	}
 
-	const sourceVuePath = path.join(
-		projectRoot, "src", "book1", slug, `${slug}.vue`
-	);
-	const sourceLocaleYamlPath = path.join(
-		projectRoot, "src", "book1", slug, `${locale}.yaml`
-	);
+	const sourceDirectories = fg.sync( `src/book*/${slug}`, {
+		cwd:             projectRoot,
+		absolute:        true,
+		onlyDirectories: true
+	} );
+	const vueSourceDir = sourceDirectories.find( ( dirPath ) => fs.existsSync( path.join(
+		dirPath, `${slug}.vue`
+	) ) );
+	const localeSourceDir = sourceDirectories.find( ( dirPath ) => fs.existsSync( path.join(
+		dirPath, `${locale}.yaml`
+	) ) );
+
+	const sourceVuePath = vueSourceDir ? path.join(
+		vueSourceDir, `${slug}.vue`
+	) : null;
+	const sourceLocaleYamlPath = localeSourceDir ? path.join(
+		localeSourceDir, `${locale}.yaml`
+	) : null;
 
 	return {
-		localeSupported:      fs.existsSync( sourceLocaleYamlPath ),
-		sourceLocaleYamlPath: fs.existsSync( sourceLocaleYamlPath ) ? sourceLocaleYamlPath : null,
+		localeSupported:      Boolean( sourceLocaleYamlPath ),
+		sourceLocaleYamlPath,
 		sourceVuePath
 	};
 }
