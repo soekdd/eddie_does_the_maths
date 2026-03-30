@@ -7,7 +7,7 @@
 				class="topBarBackdropFill"
 				:fill-opacity="0.5"
 				:generation-steps="3"
-				:height="100"
+				:height="150"
 				instant-fill
 				:stroke-width="1.1"
 				:world-scale="34"
