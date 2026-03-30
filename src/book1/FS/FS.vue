@@ -7,7 +7,7 @@
 >
 	<template #bookPart>
 		<figure class="exampleFigure">
-			<ImageZoomer :title="t( 'fs.imageTitle' )">
+			<ImageZoomer is-ai :title="t( 'fs.imageTitle' )">
 				<img :alt="t( 'fs.imageAlt' )" loading="lazy" :src="titleImg" />
 			</ImageZoomer>
 		</figure>

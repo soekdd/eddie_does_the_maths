@@ -80,7 +80,7 @@ sections:
       h2: "Partikuläre Lösung"
       p1: "Da rechte Seite konstant:"
       h3: "Gesamtlösung"
-      h4: "Endlösung"
+      h4: "Endergebnis"
     right:
       title: "Lösung 2 - Laplace-Methode (Zarah)"
       p1: "Ausgangsgleichung:"

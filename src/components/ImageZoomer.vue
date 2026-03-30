@@ -52,6 +52,13 @@
 						@click="open = false"
 					>
 						<slot :alt="effectiveImgAlt" />
+						<span
+							v-if="props.isAi"
+							aria-hidden="true"
+							class="zoomerAiBadge"
+						>
+							{{ t( "imageZoomer.aiGenerated" ) }}
+						</span>
 					</div>
 				</div>
 			</v-card-text>
@@ -71,6 +78,7 @@ const props = defineProps( {
 	title:    { type: String, default: "" },
 	imgAlt:   { type: String, default: "" },
 	noZoom:   { type: Boolean, default: false },
+	isAi:     { type: Boolean, default: false },
 	//hint:     { type: String, default: "Zum Zoomen klicken" },
 	maxWidth: { type: [ Number, String ], default: 1400 }
 } );
@@ -365,11 +373,29 @@ onBeforeUnmount( () => stopObservers() );
 }
 
 .zoomerFit {
+  position: relative;
   flex: 0 0 auto;
   max-width: 100%;
   max-height: 100%;
   min-width: 0;
   min-height: 0;
+}
+
+.zoomerAiBadge {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  z-index: 1;
+  padding: 5px 9px;
+  border-radius: 999px;
+  border: 1px solid rgba(var(--v-theme-on-surface), 0.12);
+  background: rgba(var(--v-theme-surface), 0.82);
+  color: rgba(var(--v-theme-on-surface), 0.84);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  backdrop-filter: blur(6px);
+  pointer-events: none;
 }
 
 .zoomerFit :deep(svg),

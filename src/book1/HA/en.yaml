@@ -1,4 +1,5 @@
 title: HAM Radio Encoder and Decoder
+imageTitle: "Eddie is radioing home again"
 subChapter:
   einleitung: Kungsholmen, October 24, 1985
   frequenzen-baender: Frequencies and Bands
@@ -11,7 +12,7 @@ subChapter:
   encoder: Encoder
   decoder: Decoder
 bookPart:
-  introText: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
+  introText: "This section is still missing from the book. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
 description:
   formulas:
     example7Value: "42.9"
@@ -149,6 +150,31 @@ encoder:
         best regards | end of contact
         # Sweden says goodbye
         SM5ABC calls Y41ZL | best regards | end of contact
+    - label: Eddie's first reply via Helsinki
+      value: |-
+        # Direct call from Helsinki to the station in Dresden.
+        # No CQ this time, because the Finn wants to reach Y41ZL directly.
+        OH2ABC calls Y41ZL | callsign OH2ABC | go ahead / response invited
+        # Dresden replies briefly and normally.
+        Y41ZL calls OH2ABC | RST 559: readability perfectly readable, signal strength fairly good, tone perfectly pure tone | Location: DRESDEN | DRESDEN | go ahead / response invited
+        # The Finn reports back from Helsinki and inserts the agreed signal early.
+        # "QTH QER" is meant to stand out: the people in Dresden should hesitate for a moment.
+        OH2ABC calls Y41ZL | roger / copied | RST 579: readability perfectly readable, signal strength moderately strong, tone perfectly pure tone | Location: HELSINKI | station location / operating position | Eddie Riedel | go ahead / response invited
+        # Dresden audibly stumbles over the strange QER, but stays polite.
+        Y41ZL calls OH2ABC | roger / copied
+        sorry | QER? | copy / understood | Location: HELSINKIvK
+        # The Finn brushes it off and immediately pushes the real message next.
+        # Not split up, not hidden in casual phrases, but sent as one block.
+        OH2ABC calls Y41ZL | roger / copied | station location / operating position | Eddie Riedel | GANUBFHN | go ahead / response invited
+        # In Dresden they notice: this is not a normal radio exchange.
+        # That is exactly why they respond cautiously and not too smoothly.
+        Y41ZL calls OH2ABC | roger / copied | sorry | NOT | ALL | copy / understood | message | STRANGE | thanks | go ahead / response invited
+        # The Finn pretends it is nothing unusual.
+        OH2ABC calls Y41ZL | roger / copied | roger / copied | thanks | best regards | go ahead / response invited
+        # The station in Dresden ends the exchange with deliberate correctness and no fuss.
+        Y41ZL calls OH2ABC | roger / copied | thank you | best regards | end of contact
+        # Formal sign-off from Helsinki.
+        OH2ABC calls Y41ZL | best regards | end of contact 
     - label: Classic contact
       value: |-
         # Call from Dresden
@@ -168,12 +194,6 @@ encoder:
         # Call to Germany
         General call to DL
         # Short closing
-        best regards
-    - label: Eddie on air
-      value: |-
-        # Eddie is on the air from Dresden
-        Eddie Riedel | Location: DRESDEN | Weather: FINE
-        # Eddie sends his regards
         best regards
     - label: Gear and conditions
       value: |-
@@ -313,7 +333,7 @@ decoder:
         # The Swede notices that something is off
         Y41ZL DE SM5ABC R FB CPY MOST
         SRI SOME LETTERS MISSED
-        QER STILL NOT UNDERSTOOD K
+        QER STILL IMI K
         # TU Dresden deliberately stays relaxed
         SM5ABC DE Y41ZL R R TNX
         NIL IMP
@@ -331,6 +351,76 @@ decoder:
         73 SK
         # Sweden says goodbye
         Y41ZL DE SM5ABC 73 SK
+    - label: Eddie's first reply via Helsinki
+      value: |-
+        # Direct call from Helsinki to the station in Dresden.
+        # No CQ this time, because the Finn wants to reach Y41ZL directly.
+        Y41ZL DE OH2ABC OH2ABC K
+        # Dresden replies briefly and normally.
+        OH2ABC DE Y41ZL RST 559 QTH DRESDEN DRESDEN K
+        # The Finn reports back from Helsinki and inserts the agreed signal early.
+        # "QTH QER" is meant to stand out: the people in Dresden should hesitate for a moment.
+        Y41ZL DE OH2ABC R RST 579 QTH HELSINKI QTH QER K
+        # Dresden audibly stumbles over the strange QER, but stays polite.
+        OH2ABC DE Y41ZL R
+        SRI QER? CPY QTH HELSINKIvK
+        # The Finn brushes it off and immediately pushes the real message next.
+        # Not split up, not hidden in casual phrases, but sent as one block.
+        Y41ZL DE OH2ABC R QTH QER GANUBFHN K
+        # In Dresden they notice: this is not a normal radio exchange.
+        # That is exactly why they respond cautiously and not too smoothly.
+        OH2ABC DE Y41ZL R SRI NOT ALL CPY MSG STRANGE TNX K
+        # The Finn pretends it is nothing unusual.
+        Y41ZL DE OH2ABC R R TNX 73 K
+        # The station in Dresden ends the exchange with deliberate correctness and no fuss.
+        OH2ABC DE Y41ZL R TU 73 SK
+        # Formal sign-off from Helsinki.
+        Y41ZL DE OH2ABC 73 SK
+    - label: The Titanic's final radio traffic
+      value: |-
+        # Titanic's callsign
+        MGY DE ...
+        # Early distress call after the collision
+        CQD CQD CQD DE MGY
+        # "CQD" was the Marconi distress signal in common use at the time.
+        # Later on, the Titanic also used "SOS".
+        # Approximate meaning:
+        # Struck an iceberg. Need immediate help.
+        MGY DE ... STRUCK ICEBERG
+        REQUIRE IMMEDIATE ASSISTANCE
+        POSITION 41.46 N 50.14 W
+        # In surviving transcripts, the position was passed on in this corrected form.
+        # Traffic with nearby ships, especially Carpathia
+        MGY DE MPA
+        # MPA was Carpathia's callsign.
+        MPA DE MGY
+        COME AT ONCE
+        WE ARE SINKING
+        # In the surviving records, the exchange with Carpathia reads roughly like this:
+        # Come quickly, we are sinking, the situation is becoming critical.
+        # Approximate reply from Carpathia:
+        MGY DE MPA
+        COMING HARD
+        AS FAST AS POSSIBLE
+        # Carpathia heads out at full speed.
+        # Later phase: CQD and SOS side by side
+        CQD CQD SOS SOS DE MGY
+        REQUIRE ASSISTANCE IMMEDIATELY
+        # As events progressed, Titanic transmitted both: the older CQD and the newer SOS.
+        # Further calls for help to other stations and ships
+        DE MGY
+        WE HAVE COLLISION WITH ICEBERG
+        SINKING
+        PLEASE TELL CAPTAIN TO COME
+        # Requests of this kind to other ships are reflected in several transcripts in approximate form.
+        # Very late phase: only short, weakening signals
+        CQD DE MGY
+        CQD DE MGY
+        # Towards the end, the messages became shorter and more fragmentary.
+        # Last surviving fragment shortly before the end
+        CQ ... CQ ...
+        # According to the later British inquiry, Virginian was hearing, around 2:17 a.m.,
+        # only a broken "CQ" before the signal suddenly cut off.           
     - label: Classic contact
       value: |-
         # Call from Dresden
@@ -350,12 +440,6 @@ decoder:
         # Call to Germany
         CQ DL
         # Short closing
-        73
-    - label: Eddie with QER
-      value: |-
-        # Eddie is on the air from Dresden
-        QER QTH DRESDEN WX FINE
-        # Eddie sends his regards
         73
     - label: Gear and conditions
       value: |-
@@ -599,6 +683,8 @@ decoder:
       description: here
     HW:
       description: how?
+    IMI:
+      description: not understood
     K:
       description: go ahead / response invited
     KN:
@@ -639,6 +725,8 @@ decoder:
       description: end of contact
     SOS:
       description: distress / emergency
+    SRI:
+      description: sorry
     TEMP:
       description: temperature
     TEST:

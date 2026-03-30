@@ -91,6 +91,7 @@ imageZoomer:
   zoom: Suurenna
   close: Sulje
   contentAria: Zoomattu sisältö
+  aiGenerated: AI generated
 markdownDownload:
   fileNameFallback: kuvaus
   buttonLabel: Markdown

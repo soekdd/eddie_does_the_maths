@@ -121,7 +121,7 @@
 					</v-sheet>
 
 					<v-sheet
-						v-if="decoded.payloadText"
+						v-if="decoded.hasPayloadTrigger && decoded.payloadText"
 						border
 						class="mt-4 pa-3"
 						rounded="lg"
@@ -264,6 +264,7 @@ const CW_CODE_TOKENS = [
 	"HI",
 	"HR",
 	"HW",
+	"IMI",
 	"K",
 	"KN",
 	"LIL",
@@ -284,6 +285,7 @@ const CW_CODE_TOKENS = [
 	"RX",
 	"SK",
 	"SOS",
+	"SRI",
 	"TEMP",
 	"TEST",
 	"TKS",
@@ -358,10 +360,14 @@ const PAYLOAD_BLACKLIST = new Set( [
 	"PATIENCE",
 	"ALL",
 	"NO",
-	"PROB"
+	"PROB",
+	"DRESDEN",
+	"STRANGE",
+	"NOT"
 ] );
 
 const EMPTY_RESULT = Object.freeze( {
+	hasPayloadTrigger: false,
 	normalized:      "",
 	naturalLines:    [],
 	naturalSegments: [],
@@ -699,7 +705,12 @@ function isPayloadToken( token ) {
 }
 
 function buildUnknownSegmentDecorations( doc,
-	naturalLines ) {
+	naturalLines,
+	highlightUnknownSegments = false ) {
+	if ( !highlightUnknownSegments ) {
+		return [];
+	}
+
 	const decorations = [];
 	let lineIndex = 0;
 
@@ -731,7 +742,8 @@ function buildUnknownSegmentDecorations( doc,
 	return decorations;
 }
 
-function buildNaturalText( decodedTokens ) {
+function buildNaturalText( decodedTokens,
+	hasPayloadTrigger = false ) {
 	const parts = [];
 	const payloadTokens = [];
 	let index = 0;
@@ -778,7 +790,7 @@ function buildNaturalText( decodedTokens ) {
 		parts.push( createSegment( current?.natural ?? "",
 			unknown ) );
 
-		if ( unknown && isPayloadToken( current.token ) ) {
+		if ( hasPayloadTrigger && unknown && isPayloadToken( current.token ) ) {
 			payloadTokens.push( current.token );
 		}
 
@@ -805,6 +817,16 @@ function buildNaturalText( decodedTokens ) {
 
 function decodeSequence( text ) {
 	const lines = normalizeLineEndings( text ).split( "\n" );
+	const hasPayloadTrigger = lines.some( ( line ) => {
+		const { content } = splitPrefixedLine( line );
+		const trimmedContent = content.trim();
+
+		if ( !trimmedContent || isCommentLine( content ) ) {
+			return false;
+		}
+
+		return normalize( content ).split( " " ).includes( "QER" );
+	} );
 	const decodedLines = lines.map( ( line ) => {
 		const sourceLine = String( line ?? "" );
 		const {
@@ -838,7 +860,8 @@ function decodeSequence( text ) {
 		const decodedTokens = rawTokens.map( ( token,
 			index ) => decodeToken( token,
 			rawTokens[ index - 1 ] ?? "" ) );
-		const natural = buildNaturalText( decodedTokens );
+		const natural = buildNaturalText( decodedTokens,
+			hasPayloadTrigger );
 		const naturalSegments = linePrefix ?
 			[
 				createSegment( linePrefix ),
@@ -866,6 +889,7 @@ function decodeSequence( text ) {
 	} );
 
 	return {
+		hasPayloadTrigger,
 		naturalLines: decodedLines.map( ( line ) => line.naturalSegments ),
 		normalized:   decodedLines.map( ( line ) => line.normalizedLine ).join( "\n" ),
 		naturalSegments,
@@ -888,7 +912,8 @@ const naturalOutputEditor = useEditor( {
 	editorProps: {
 		decorations: ( state ) => buildCommentDecorationSet( state.doc,
 			buildUnknownSegmentDecorations( state.doc,
-				decoded.value.naturalLines ) ),
+				decoded.value.naturalLines,
+				decoded.value.hasPayloadTrigger ) ),
 		attributes: createTextEditorAttributes( "haDecoderTextEditor haReadonlyEditor haDecoderOutputEditor" )
 	}
 } );

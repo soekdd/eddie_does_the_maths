@@ -80,6 +80,7 @@ imageZoomer:
   zoom: "Zoom"
   close: "Close"
   contentAria: "Zoom content"
+  aiGenerated: "AI generated"
 markdownDownload:
   fileNameFallback: "description"
   buttonLabel: "Markdown"
