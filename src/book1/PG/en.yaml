@@ -19,7 +19,7 @@ sections:
     p2: "Important counting note for the draw problems: on a 1-card draw there are <b>47 drawable cards</b>, so <katex tex=\"52-5=47\" />. Reason: the 4 kept cards <i>and</i> the discarded card are not in the draw stack."
   task1:
     imageTitle: "Example hand: One pair"
-    title: "Step 1.1 - Problem 1: The classic pair - Is \"draw 3\" worth it?"
+    title: "Problem 1: The classic pair - Is \"draw 3\" worth it?"
     p1: "<b>Situation:</b> After the deal, Eddie holds a pair and discards the other three cards. She draws <b>3 new cards</b>."
     questions: "Questions:"
     q1: "How likely is she to improve to two pair, three of a kind, full house, or four of a kind?"
@@ -35,19 +35,19 @@ sections:
     storyHook: "Story hook: \"Seven times out of ten, I stay on the pair.\""
   task2:
     imageTitle: "Example hand: Two pair"
-    title: "Step 1.2 - Problem 2: Two pair - Do I draw 1 card or stand pat?"
+    title: "Problem 2: Two pair - Do I draw 1 card or stand pat?"
     p1: "<b>Situation:</b> Eddie has two pair plus a kicker, throws away the kicker, and draws <b>1 card</b>."
     p2: "Question: How likely is this to become a full house?"
     p3: "Drawable cards: <katex tex=\"52-5=47\" /> (not 48), because the 5th hand card was discarded. Outs: 2 kings + 2 fours = 4 of 47"
   task3:
     imageTitle: "Example hand: Four to a flush"
-    title: "Step 1.3 - Problem 3: Four cards to a flush - How good is the 1-card draw?"
+    title: "Problem 3: Four cards to a flush - How good is the 1-card draw?"
     p1: "<b>Situation:</b> Eddie has 4 cards of one suit and draws <b>1 card</b>."
     p2: "Question: How often does she hit the flush?"
     p3: "Drawable cards: <katex tex=\"52-5=47\" />, of which 9 are of the desired suit."
   task4:
     imageTitle: "Example hand: Open-ended draw"
-    title: "Step 1.4 - Problem 4: Four cards to a straight - open-ended vs. gutshot"
+    title: "Problem 4: Four cards to a straight - open-ended vs. gutshot"
     p1: "<b>Situation:</b> Eddie has 4 cards to a straight and draws <b>1 card</b>."
     l1: "Open-ended draw, e.g. 6-7-8-9 missing 5 or 10"
     l2: "Gutshot draw, e.g. 6-7-9-10 missing 8"
@@ -55,7 +55,7 @@ sections:
   task5:
     imageTitle: "Eddie, poker queen"
     imageAlt: "Eddie, poker queen"
-    title: "Step 1.5 - Problem 5: Bayes from draw count - Opponent draws 1 card"
+    title: "Problem 5: Bayes from draw count - Opponent draws 1 card"
     p1: "Simplified model assumption:"
     l1: "Whoever has two pair draws exactly 1 card, aiming for a full house."
     l2: "Whoever has a 4-flush draws exactly 1 card, aiming for a flush."
@@ -64,11 +64,11 @@ sections:
     p3: "The opponent draws 1 card. We want"
     p4: "So: about 52.6% two pair vs. 47.4% 4-flush."
   task6:
-    title: "Step 1.6 - Problem 6: Bluff math - How often must it work?"
+    title: "Problem 6: Bluff math - How often must it work?"
     p1: "<b>Situation:</b> After the draw, the pot is <katex tex=\"P\" />. Eddie bluffs with a bet <katex tex=\"B\" />."
     p2: "<b>Question:</b> What minimum fold rate <katex tex=\"f\" /> does she need to break even?"
   task7:
-    title: "Step 1.7 - Problem 7: EV instead of gut feeling - Which line is better?"
+    title: "Problem 7: EV instead of gut feeling - Which line is better?"
     p1: "<b>Situation:</b> Eddie has a pair and can choose:"
     l1: "Line A: draw 3 cards, the classic line"
     l2: "Line B: draw 0 cards and stand pat to represent strength"

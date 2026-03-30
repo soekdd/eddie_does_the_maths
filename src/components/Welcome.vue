@@ -8,7 +8,7 @@
 
 	<template #descriptionPart>
 		<figure class="exampleFigure">
-			<ImageZoomer :title="t( 'welcome.imageTitle' )">
+			<ImageZoomer is-ai :title="t( 'welcome.imageTitle' )">
 				<img loading="lazy" :src="welcomeImg" />
 			</ImageZoomer>
 		</figure>

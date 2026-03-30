@@ -145,7 +145,7 @@
 
 		<section class="task">
 			<figure class="exampleFigure">
-				<ImageZoomer :title="t( 'sections.task5.imageTitle' )">
+				<ImageZoomer is-ai :title="t( 'sections.task5.imageTitle' )">
 					<img :alt="t( 'sections.task5.imageAlt' )" loading="lazy" :src="eddieImg" />
 				</ImageZoomer>
 			</figure>
