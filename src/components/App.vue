@@ -2,7 +2,18 @@
 <template>
 <div class="frame">
 	<v-app-bar class="topBar pa-0" flat :height="appBarHeight">
-		<v-container class="wrap pa-0">
+		<div aria-hidden="true" class="topBarBackdrop">
+			<EinsteinHatFill
+				class="topBarBackdropFill"
+				:fill-opacity="0.5"
+				:generation-steps="3"
+				:height="100"
+				instant-fill
+				:stroke-width="1.1"
+				:world-scale="34"
+			/>
+		</div>
+		<v-container class="wrap pa-0 topBarContent">
 			<div class="brand">
 				<div
 					v-if="showLanguageSwitch"
@@ -967,6 +978,32 @@ onMounted( () => {
 	height: 100%;
 }
 
+.topBar {
+	position: relative;
+	isolation: isolate;
+	overflow: hidden;
+}
+
+.topBarBackdrop {
+	position: absolute;
+	inset: 0;
+	z-index: 0;
+	pointer-events: none;
+	overflow: hidden;
+}
+
+.topBarBackdropFill {
+	--hat-fill-background: transparent;
+	--hat-fill-stroke: var(--theme-hat-fill-backdrop-stroke, rgba(15, 23, 42, 0.18));
+	width: 100%;
+	height: 100%;
+}
+
+.topBarContent {
+	position: relative;
+	z-index: 1;
+}
+
 .mainArea {
 	position: relative;
 	isolation: isolate;
@@ -1100,8 +1137,8 @@ onMounted( () => {
 
 .homeBadgeIcon {
   display: block;
-  width: 24px;
-  height: 24px;
+  width: 32px;
+  height: 32px;
   box-sizing: border-box;
   object-fit: contain;
   object-position: center;

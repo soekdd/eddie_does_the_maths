@@ -57,9 +57,17 @@ const props = defineProps( {
 		type:    String,
 		default: ""
 	},
+	height: {
+		type:    [ Number, String ],
+		default: ""
+	},
 	generationSteps: {
 		type:    Number,
 		default: 3
+	},
+	instantFill: {
+		type:    Boolean,
+		default: false
 	},
 	stepDelayMs: {
 		type:    Number,
@@ -89,13 +97,37 @@ const props = defineProps( {
 
 const containerRef = ref( null );
 const renderedTiles = ref( [] );
-const rootStyle = computed( () => props.background ?
-	{ "--hat-fill-background-override": props.background } :
-	{} );
+const hasFixedHeight = computed( () => props.height !== null &&
+	props.height !== undefined &&
+	String( props.height ).trim() !== "" );
+const cssHeight = computed( () => {
+	if ( !hasFixedHeight.value ) {
+		return "";
+	}
+
+	return typeof props.height === "number" ?
+		`${props.height}px` :
+		String( props.height );
+} );
+const rootStyle = computed( () => {
+	const style = {};
+
+	if ( props.background ) {
+		style[ "--hat-fill-background-override" ] = props.background;
+	}
+
+	if ( hasFixedHeight.value ) {
+		style.height = cssHeight.value;
+		style.minHeight = cssHeight.value;
+	}
+
+	return style;
+} );
 const viewport = ref( {
 	height: 1,
 	width:  1
 } );
+const lockedViewportHeight = ref( null );
 
 let animationTimer = null;
 let resizeHandle = null;
@@ -698,6 +730,19 @@ function updateViewport( width, height ) {
 	return didChange;
 }
 
+function resolveViewportHeight( measuredHeight ) {
+	if ( !hasFixedHeight.value ) {
+		lockedViewportHeight.value = null;
+		return measuredHeight;
+	}
+
+	if ( lockedViewportHeight.value === null ) {
+		lockedViewportHeight.value = clampDimension( measuredHeight );
+	}
+
+	return lockedViewportHeight.value;
+}
+
 function readViewportFromContainer() {
 	const el = containerRef.value;
 
@@ -707,7 +752,8 @@ function readViewportFromContainer() {
 
 	const rect = el.getBoundingClientRect();
 
-	return updateViewport( rect.width, rect.height );
+	return updateViewport( rect.width,
+		resolveViewportHeight( rect.height ) );
 }
 
 function restartAnimation() {
@@ -724,6 +770,11 @@ function restartAnimation() {
 	);
 
 	if ( !tiles.length ) {
+		return;
+	}
+
+	if ( props.instantFill ) {
+		renderedTiles.value = tiles;
 		return;
 	}
 
@@ -756,6 +807,12 @@ function restartAnimation() {
 }
 
 function scheduleRestart() {
+	if ( props.instantFill ) {
+		readViewportFromContainer();
+		restartAnimation();
+		return;
+	}
+
 	stopResizeDebounce();
 	resizeHandle = window.setTimeout( () => {
 		resizeHandle = null;
@@ -766,11 +823,15 @@ function scheduleRestart() {
 
 watch( () => [
 	props.generationSteps,
+	props.height,
+	props.instantFill,
 	props.stepDelayMs,
 	props.worldScale
 ],
 () => {
 	if ( containerRef.value ) {
+		lockedViewportHeight.value = null;
+		readViewportFromContainer();
 		restartAnimation();
 	}
 } );
@@ -786,7 +847,8 @@ onMounted( () => {
 			return;
 		}
 
-		if ( updateViewport( entry.contentRect.width, entry.contentRect.height ) ) {
+		if ( updateViewport( entry.contentRect.width,
+			resolveViewportHeight( entry.contentRect.height ) ) ) {
 			scheduleRestart();
 		}
 	} );
