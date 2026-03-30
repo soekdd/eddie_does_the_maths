@@ -591,6 +591,7 @@ export const contentRoutes = [
 		component: HA,
 		meta:      {
 			difficulty: 1,
+			languages:  [ "de", "en", "se" ],
 			index:      true,
 			book:       1,
 			order:      215

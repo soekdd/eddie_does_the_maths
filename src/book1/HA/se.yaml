@@ -1,0 +1,756 @@
+title: "Amatörradio – kodare och avkodare"
+imageTitle: "Eddie radioar hem igen"
+
+subChapter:
+  einleitung: "Kungsholmen, 24 oktober 1985"
+  frequenzen-baender: "Frekvenser och band"
+  bandnamen: "Bandnamn"
+  zahlenfamilie: "Talfamilj"
+  banduebersicht: "Bandöversikt"
+  bandlogik: "Varför just dessa band"
+  weitere-baender: "Fler band"
+  eddies-schluss: "Eddies slutsats"
+  encoder: "Kodare"
+  decoder: "Avkodare"
+
+bookPart:
+  introText: "Det här avsnittet saknas fortfarande i boken. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
+
+description:
+  formulas:
+    example7Value: "42.9"
+    example14Value: "21.4"
+    band40Label: "40-metersbandet"
+    band20Label: "20-metersbandet"
+  sections:
+    frequenzen:
+      title: "Frekvenser, band och talfamiljer"
+      p1: "När jag först såg siffrorna på radion verkade de slumpmässiga: 3.5&nbsp;MHz. 7&nbsp;MHz. 14&nbsp;MHz. 21&nbsp;MHz. 28&nbsp;MHz. Men sedan blev det tydligt: det här är inte en lös samling. Det är nästan en familj."
+      lead: "Grundidén är enkel. Frekvens och våglängd beskriver samma sak, bara på två olika språk."
+      p2: "Eftersom elektromagnetiska vågor färdas nästan med ljusets hastighet kan radioamatörer använda en praktisk approximation:"
+      p3: "<strong>Våglängden i meter</strong> är ungefär <strong>300 dividerat med frekvensen i megahertz</strong>."
+    bandnamen:
+      title: "1. Varför heter banden så?"
+      p1: "Ett bandnamn är vanligtvis bara den <strong>avrundade våglängden</strong>. Därför kallas 7 MHz-bandet för ”40-metersbandet”, även om beräkningen mer exakt ger ungefär 42.9 meter."
+      p2: "Därför talar amatörer ibland i <strong>MHz</strong> och ibland i <strong>meter</strong>. Det är samma band, bara sett ur två olika vinklar."
+    zahlenfamilie:
+      title: "2. Den klassiska talfamiljen"
+      p1: "Den klassiska kortvågsfamiljen ser nästan ut som en fördubblingsserie:"
+      chips:
+        - "3.5 MHz → 80 m"
+        - "7 MHz → 40 m"
+        - "14 MHz → 20 m"
+        - "21 MHz → 15 m"
+        - "28 MHz → 10 m"
+      p2: "Fördubblar man frekvensen halveras våglängden. Det är precis därför 80&nbsp;m, 40&nbsp;m, 20&nbsp;m och 10&nbsp;m känns besläktade. 15&nbsp;m passar inte perfekt in i det gamla fördubblingsmönstret, men kompletterar familjen mycket väl."
+    banduebersicht:
+      title: "3. De viktigaste banden i överblick"
+      table:
+        band: "Band"
+        frequency: "Typisk mittfrekvens"
+        lambda: "Beräknad våglängd"
+        note: "Huvudidé"
+      bands:
+        - name: "80 m"
+          frequency: "3.5 MHz"
+          lambda: "≈ 85.7 m"
+          note: "Låg kortvåg, klassiskt natt- och regionband"
+        - name: "40 m"
+          frequency: "7 MHz"
+          lambda: "≈ 42.9 m"
+          note: "Mycket mångsidigt, en bra brygga mellan nära och långt"
+        - name: "30 m"
+          frequency: "10.1 MHz"
+          lambda: "≈ 29.7 m"
+          note: "En brygga mellan 40 m och 20 m"
+        - name: "20 m"
+          frequency: "14 MHz"
+          lambda: "≈ 21.4 m"
+          note: "Det klassiska internationella DX-bandet"
+        - name: "17 m"
+          frequency: "18.068 MHz"
+          lambda: "≈ 16.6 m"
+          note: "Ett lugnare alternativ till 20 m"
+        - name: "15 m"
+          frequency: "21 MHz"
+          lambda: "≈ 14.3 m"
+          note: "Starkt i dagsljus och vid god solaktivitet"
+        - name: "12 m"
+          frequency: "24.89 MHz"
+          lambda: "≈ 12.1 m"
+          note: "Kompletterar de högre kortvågsbanden"
+        - name: "10 m"
+          frequency: "28 MHz"
+          lambda: "≈ 10.7 m"
+          note: "Hög kortvåg, spännande vid starka öppningar"
+    bandlogik:
+      title: "4. Varför valdes banden så här?"
+      p1: "Historiskt ville man inte bara ha några godtyckliga öar i spektrumet. Man ville ha <strong>användbara, minnesvänliga och tekniskt tydligt olika områden</strong>. Den gamla kärnfamiljen är så elegant därför att besläktade tal skapar mycket olika radiovärldar."
+      cards:
+        - title: "a) Lätta att minnas"
+          text: "3.5 → 7 → 14 → 28 låter nästan musikaliskt. När man väl känner igen mönstret blir bandnamnen genast begripliga."
+        - title: "b) Olika konditioner"
+          text: "Låga band beter sig annorlunda än höga. Det ger olika verktyg för dag, natt, lokala kontakter och långdistans."
+        - title: "c) Praktiskt för antenner"
+          text: "När våglängden förändras ändras också storleken på användbara antenner. Därför är skillnaderna inte bara hörbara, utan bokstavligen mätbara."
+    weitereBaender:
+      title: "5. Och varför lades fler band till senare?"
+      p1: "Därför att den gamla familjen är elegant, men inte fyller varje lucka. Några senare band fungerar som bryggor eller sidospår:"
+      items:
+        - label: "30 m"
+          text: "Det ligger mellan 40 m och 20 m och är därför verkligen ett mellanband."
+        - label: "17 m"
+          text: "Det fungerar ofta som en lugnare motsvarighet till det hårt använda 20 m-bandet."
+        - label: "12 m"
+          text: "Det kompletterar 15 m och 10 m i ett område som kan vara särskilt intressant under dagen."
+      p2: "Dessa senare tillägg förstör inte det gamla systemet. De gör det bara finare och mer användbart i praktiken."
+    schluss:
+      title: "Slutsats"
+      quote: "Först trodde jag att radioamatörerna bara gav sina band namn. Sedan såg jag mönstret. Inte kaos. Inte vana. Nästan en familj av tal. Och plötsligt kändes det osynliga som om någon hade sorterat det prydligt."
+
+encoder:
+  editorTitle: "Klarspråk"
+  editorHint: "Klicka in fraser i editorn eller skriv egna formuleringar. Separera flera delar med |."
+  examplesLabel: "Exempel"
+  placeholder: "Y41ZL anropar SM5ABC | tack | QTH: Dresden"
+  sampleSequence: "Y41ZL anropar SM5ABC | tack | anrop | signalrapport 559 | QTH: DRESDEN | PWR: 100W | ANT: DIPOLE | WX: FINE | endast anropad station svarar"
+  examples:
+    - label: "Det märkliga anropet från Östtyskland"
+      value: |-
+        # Anrop från TU Dresden
+        General call to SM | General call to SM | from / this is | callsign Y41ZL | callsign Y41ZL | go ahead / response invited
+        General call to OH | General call to OH | from / this is | callsign Y41ZL | callsign Y41ZL | go ahead / response invited
+        # Svar från Sverige
+        SM5ABC calls Y41ZL | go ahead / response invited
+        # TU Dresden frågar efter Eddie
+        Y41ZL calls SM5ABC | RST 559: readability perfectly readable, signal strength fairly good, tone perfectly pure tone | Location: QER? | Location: DRESDEN | go ahead / response invited
+        # Sverige svarar
+        SM5ABC calls Y41ZL | roger / copied | RST 579: readability perfectly readable, signal strength moderately strong, tone perfectly pure tone | station location / operating position | number or near / ambiguous: NYKOPING
+        QER? | SRI | NO | copy / understood | Eddie Riedel | go ahead / response invited
+        # TU Dresden börjar med nyttolasten DNXAG.EHTWN.AOJUT.CNNFJ.BXTLJ
+        Y41ZL calls SM5ABC | D | radio / equipment: JENA85 | NXA | Transmit power: 10W | G
+        E | Antenna: DIPOLE | HT | Weather: FINE | WN
+        interference from other stations | nothing / none | AUJ | static / atmospheric noise | value 2 | U | fading | little / small | T
+        CN | Temperature: 24 | N | Propagation: FAIR | FJ
+        B | thanks | X | for | TLJ | radio contact / QSO | only the addressed station should answer
+        # Svensken märker att något inte stämmer
+        SM5ABC calls Y41ZL | roger / copied | very good | copy / understood | MOST
+        SRI | SOME | LETTERS | MISSED
+        Eddie Riedel | STILL | NOT | UNDERSTOOD | go ahead / response invited
+        # TU Dresden håller sig medvetet avslappnad
+        Y41ZL calls SM5ABC | roger / copied | roger / copied | thanks
+        nothing / none | IMP
+        thanks | for | PATIENCE
+        radio contact / QSO | very good | only the addressed station should answer
+        # Till slut erkänner svensken öppet att allt inte var tydligt
+        SM5ABC calls Y41ZL | roger / copied
+        thanks | radio contact / QSO
+        SRI | NOT | copy / understood | ALL
+        best regards | go ahead / response invited
+        # Stationen i Dresden tackar lugnt och loggar ut
+        Y41ZL calls SM5ABC | roger / copied | thank you | thank you
+        NO | PROB
+        thanks | for | call
+        best regards | end of contact
+        # Sverige säger adjö
+        SM5ABC calls Y41ZL | best regards | end of contact
+    - label: "Eddies första svar via Helsingfors"
+      value: |-
+        # Direktanrop från Helsingfors till stationen i Dresden.
+        # Ingen CQ den här gången, eftersom finländaren vill nå Y41ZL direkt.
+        OH2ABC calls Y41ZL | callsign OH2ABC | go ahead / response invited
+        # Dresden svarar kort och normalt.
+        Y41ZL calls OH2ABC | RST 559: readability perfectly readable, signal strength fairly good, tone perfectly pure tone | Location: DRESDEN | DRESDEN | go ahead / response invited
+        # Finländaren rapporterar tillbaka från Helsingfors och lägger in den överenskomna signalen tidigt.
+        # "QTH QER" är tänkt att sticka ut: människorna i Dresden ska tveka ett ögonblick.
+        OH2ABC calls Y41ZL | roger / copied | RST 579: readability perfectly readable, signal strength moderately strong, tone perfectly pure tone | Location: HELSINKI | station location / operating position | Eddie Riedel | go ahead / response invited
+        # Dresden snubblar hörbart över det märkliga QER, men förblir artigt.
+        Y41ZL calls OH2ABC | roger / copied
+        sorry | QER? | copy / understood | Location: HELSINKIvK
+        # Finländaren viftar bort det och trycker genast fram det verkliga meddelandet därefter.
+        # Inte uppdelat, inte gömt i vardagliga fraser, utan sänt som ett enda block.
+        OH2ABC calls Y41ZL | roger / copied | station location / operating position | Eddie Riedel | GANUBFHN | go ahead / response invited
+        # I Dresden märker man: det här är inte ett normalt radioutbyte.
+        # Just därför svarar de försiktigt och inte alltför smidigt.
+        Y41ZL calls OH2ABC | roger / copied | sorry | NOT | ALL | copy / understood | message | STRANGE | thanks | go ahead / response invited
+        # Finländaren låtsas att det inte är något ovanligt.
+        OH2ABC calls Y41ZL | roger / copied | roger / copied | thanks | best regards | go ahead / response invited
+        # Stationen i Dresden avslutar utbytet med avsiktlig korrekthet och utan väsen.
+        Y41ZL calls OH2ABC | roger / copied | thank you | best regards | end of contact
+        # Formell avslutning från Helsingfors.
+        OH2ABC calls Y41ZL | best regards | end of contact
+    - label: "Klassisk kontakt"
+      value: |-
+        # Anrop från Dresden
+        Y41ZL calls SM5ABC | thanks | signal report 559 | Location: DRESDEN
+        # Stationsdata
+        Transmit power: 100W | Antenna: DIPOLE | Weather: FINE
+        # Avslutning
+        only the addressed station should answer
+    - label: "Allmänt CQ-anrop"
+      value: |-
+        # Allmänt anrop
+        General call
+        # Vänlig avslutning
+        best regards
+    - label: "CQ-anrop till DL"
+      value: |-
+        # Anrop till Tyskland
+        General call to DL
+        # Kort avslutning
+        best regards
+    - label: "Rigg och konditioner"
+      value: |-
+        # Tekniska detaljer
+        call | signal report 599 | Radio: FT-857
+        # Rigg och konditioner
+        Antenna: VERTICAL | Propagation: GOOD
+        # Avslutning
+        thanks
+  actions:
+    sample: "Ladda exempel"
+    clear: "Rensa"
+  paletteTitle: "Fraspalett"
+  paletteHint: "Varje knapp lägger in en fras med |-avskiljare vid markören."
+  translationTitle: "Radiokod"
+  translationHint: "Kodningen uppdateras löpande medan du skriver."
+  unmappedTitle: "Kan inte kodas"
+  emptyTranslation: "Skriv eller klicka först in klarspråk."
+  encodedLabel: "Kodad text"
+  table:
+    phrase: "Fras"
+    type: "Typ"
+    code: "Kod"
+  paletteGroups:
+    templates: "Snabbfraser"
+    qCodes: "Q-koder"
+    cwCodes: "CW-förkortningar"
+  typeLabels:
+    snippet: "Fras"
+    q-code: "Q-kod"
+    cw-abbrev: "CW-förkortning"
+    pattern: "Mönster"
+    unknown: "Okänd"
+  patterns:
+    signalReportPrefix: "signalrapport "
+    locationPrefix: "QTH: "
+    weatherPrefix: "WX: "
+    powerPrefix: "PWR: "
+    antennaPrefix: "ANT: "
+    namePrefix: "Namn: "
+    frequencyPrefix: "QRG: "
+    operatorPrefix: "OP: "
+    equipmentPrefix: "RIG: "
+    conditionPrefix: "CONDX: "
+    numberPrefix: "Nr: "
+    temperaturePrefix: "Temp: "
+    timePrefix: "Tid: "
+    targetedCallPrefixes:
+      - "Allmänt anrop till "
+      - "CQ till "
+  snippets:
+    cq_general_call:
+      label: "Allmänt CQ-anrop"
+      phrase: "Allmänt anrop"
+      insertText: "Allmänt anrop | "
+      code: "CQ CQ DE DL1XYZ K"
+    cq_sm:
+      label: "CQ till SM"
+      phrase: "Allmänt anrop till SM"
+      insertText: "Allmänt anrop till SM | "
+      code: "CQ SM"
+    cq_oh:
+      label: "CQ till OH"
+      phrase: "Allmänt anrop till OH"
+      insertText: "Allmänt anrop till OH | "
+      code: "CQ OH"
+    cq_y4:
+      label: "CQ till Y4"
+      phrase: "Allmänt anrop till Y4"
+      insertText: "Allmänt anrop till Y4 | "
+      code: "CQ Y4"
+    cq_dl:
+      label: "CQ till DL"
+      phrase: "Allmänt anrop till DL"
+      insertText: "Allmänt anrop till DL | "
+      code: "CQ DL"
+    rst_599:
+      label: "Signalrapport 599"
+      phrase: "signalrapport 599"
+      insertText: "signalrapport 599 | "
+      code: "RST 599"
+    qth_dresden:
+      label: "QTH DRESDEN"
+      phrase: "QTH: DRESDEN"
+      insertText: "QTH: DRESDEN | "
+      code: "QTH DRESDEN"
+    pwr_100w:
+      label: "PWR 100W"
+      phrase: "PWR: 100W"
+      insertText: "PWR: 100W | "
+      code: "PWR 100W"
+    ant_dipole:
+      label: "ANT DIPOLE"
+      phrase: "ANT: DIPOLE"
+      insertText: "ANT: DIPOLE | "
+      code: "ANT DIPOLE"
+    wx_sunny:
+      label: "WX FINE"
+      phrase: "WX: FINE"
+      insertText: "WX: FINE | "
+      code: "WX FINE"
+    best_regards:
+      label: "73"
+      phrase: "vänliga hälsningar"
+      insertText: "vänliga hälsningar | "
+      code: "73"
+    only_reply:
+      label: "KN"
+      phrase: "endast anropad station svarar"
+      insertText: "endast anropad station svarar | "
+      code: "KN"
+
+decoder:
+  editorTitle: "Radiotext"
+  editorHint: "Klicka in koder i editorn eller skriv din egen sekvens direkt."
+  examplesLabel: "Exempel"
+  placeholder: "CQ CQ DE DL1XYZ K"
+  sampleSequence: "SM5ABC DE Y41ZL TNX FER CALL RST 559 QTH DRESDEN PWR 100W ANT DIPOLE WX FINE KN"
+  examples:
+    - label: "Det märkliga anropet från Östtyskland"
+      value: |-
+        # Anrop från TU Dresden
+        CQ SM CQ SM DE Y41ZL Y41ZL K
+        CQ OH CQ OH DE Y41ZL Y41ZL K
+        # Svar från Sverige
+        Y41ZL DE SM5ABC K
+        # TU Dresden frågar efter Eddie
+        SM5ABC DE Y41ZL RST 559 QTH QER? QTH DRESDEN K
+        # Sverige svarar
+        Y41ZL DE SM5ABC R RST 579 QTH NR NYKOPING
+        QER? SRI NO CPY QER K
+        # TU Dresden börjar med nyttolasten DNXAG.EHTWN.AOJUT.CNNFJ.BXTLJ
+        SM5ABC DE Y41ZL D RIG JENA85 NXA PWR 10W G
+        E ANT DIPOLE HT WX FINE WN
+        QRM NIL AUJ QRN 2 U QSB LIL T
+        CN TEMP 24 N CONDX FAIR FJ
+        B TNX X FER TLJ QSO KN
+        # Svensken märker att något inte stämmer
+        Y41ZL DE SM5ABC R FB CPY MOST
+        SRI SOME LETTERS MISSED
+        QER STILL IMI K
+        # TU Dresden håller sig medvetet avslappnad
+        SM5ABC DE Y41ZL R R TNX
+        NIL IMP
+        TNX FER PATIENCE
+        QSO FB KN
+        # Till slut erkänner svensken öppet att allt inte var tydligt
+        Y41ZL DE SM5ABC R
+        TNX QSO
+        SRI NOT CPY ALL
+        73 K
+        # Stationen i Dresden tackar lugnt och loggar ut
+        SM5ABC DE Y41ZL R TU TU
+        NO PROB
+        TNX FER CALL
+        73 SK
+        # Sverige säger adjö
+        Y41ZL DE SM5ABC 73 SK
+    - label: "Eddies första svar via Helsingfors"
+      value: |-
+        # Direktanrop från Helsingfors till stationen i Dresden.
+        # Ingen CQ den här gången, eftersom finländaren vill nå Y41ZL direkt.
+        Y41ZL DE OH2ABC OH2ABC K
+        # Dresden svarar kort och normalt.
+        OH2ABC DE Y41ZL RST 559 QTH DRESDEN DRESDEN K
+        # Finländaren rapporterar tillbaka från Helsingfors och lägger in den överenskomna signalen tidigt.
+        # "QTH QER" är tänkt att sticka ut: människorna i Dresden ska tveka ett ögonblick.
+        Y41ZL DE OH2ABC R RST 579 QTH HELSINKI QTH QER K
+        # Dresden snubblar hörbart över det märkliga QER, men förblir artigt.
+        OH2ABC DE Y41ZL R
+        SRI QER? CPY QTH HELSINKIvK
+        # Finländaren viftar bort det och trycker genast fram det verkliga meddelandet därefter.
+        # Inte uppdelat, inte gömt i vardagliga fraser, utan sänt som ett enda block.
+        Y41ZL DE OH2ABC R QTH QER GANUBFHN K
+        # I Dresden märker man: det här är inte ett normalt radioutbyte.
+        # Just därför svarar de försiktigt och inte alltför smidigt.
+        OH2ABC DE Y41ZL R SRI NOT ALL CPY MSG STRANGE TNX K
+        # Finländaren låtsas att det inte är något ovanligt.
+        Y41ZL DE OH2ABC R R TNX 73 K
+        # Stationen i Dresden avslutar utbytet med avsiktlig korrekthet och utan väsen.
+        OH2ABC DE Y41ZL R TU 73 SK
+        # Formell avslutning från Helsingfors.
+        Y41ZL DE OH2ABC 73 SK
+    - label: "Titanics sista radiotrafik"
+      value: |-
+        # Titanics anropssignal
+        MGY DE ...
+        # Tidigt nödanrop efter kollisionen
+        CQD CQD CQD DE MGY
+        # "CQD" var Marconis nödsignal som då användes allmänt.
+        # Senare använde Titanic också "SOS".
+        # Ungefärlig betydelse:
+        # Träffat ett isberg. Behöver omedelbar hjälp.
+        MGY DE ... STRUCK ICEBERG
+        REQUIRE IMMEDIATE ASSISTANCE
+        POSITION 41.46 N 50.14 W
+        # I bevarade utskrifter förmedlades positionen i denna korrigerade form.
+        # Trafik med närliggande fartyg, särskilt Carpathia
+        MGY DE MPA
+        # MPA var Carpathias anropssignal.
+        MPA DE MGY
+        COME AT ONCE
+        WE ARE SINKING
+        # I de bevarade uppteckningarna lyder utbytet med Carpathia ungefär så här:
+        # Kom snabbt, vi sjunker, situationen blir kritisk.
+        # Ungefärligt svar från Carpathia:
+        MGY DE MPA
+        COMING HARD
+        AS FAST AS POSSIBLE
+        # Carpathia går ut med full fart.
+        # Senare fas: CQD och SOS sida vid sida
+        CQD CQD SOS SOS DE MGY
+        REQUIRE ASSISTANCE IMMEDIATELY
+        # När händelserna fortskred sände Titanic båda: det äldre CQD och det nyare SOS.
+        # Ytterligare nödanrop till andra stationer och fartyg
+        DE MGY
+        WE HAVE COLLISION WITH ICEBERG
+        SINKING
+        PLEASE TELL CAPTAIN TO COME
+        # Begäranden av detta slag till andra fartyg avspeglas i flera utskrifter i ungefärlig form.
+        # Mycket sen fas: bara korta, avtagande signaler
+        CQD DE MGY
+        CQD DE MGY
+        # Mot slutet blev meddelandena kortare och mer fragmentariska.
+        # Sista bevarade fragmentet strax före slutet
+        CQ ... CQ ...
+        # Enligt den senare brittiska utredningen hörde Virginian omkring kl. 2:17
+        # bara ett brutet "CQ" innan signalen plötsligt tystnade.
+    - label: "Klassisk kontakt"
+      value: |-
+        # Anrop från Dresden
+        SM5ABC DE Y41ZL TNX RST 559 QTH DRESDEN
+        # Stationsdata
+        PWR 100W ANT DIPOLE WX FINE
+        # Avslutning
+        KN
+    - label: "Allmänt CQ-anrop"
+      value: |-
+        # Allmänt anrop
+        CQ CQ DE DL1XYZ K
+        # Vänlig avslutning
+        73
+    - label: "CQ-anrop till DL"
+      value: |-
+        # Anrop till Tyskland
+        CQ DL
+        # Kort avslutning
+        73
+    - label: "Rigg och konditioner"
+      value: |-
+        # Tekniska detaljer
+        CALL RST 599 RIG FT-857
+        # Rigg och konditioner
+        ANT VERTICAL CONDX GOOD
+        # Avslutning
+        TNX
+    - label: "Med hemlig nyttolast"
+      value: |-
+        # Inledande kontakt
+        SM5ABC DE Y41ZL QTH DRESDEN
+        # Dolt test
+        ALPHA OMEGA
+        # Avslutning
+        KN
+  actions:
+    sample: "Ladda exempel"
+    clear: "Rensa"
+  paletteTitle: "Kodpalett"
+  paletteHint: "Varje knapp lägger in sin kod vid markören."
+  translationTitle: "Klarspråk"
+  translationHint: "Avkodningen uppdateras löpande medan du skriver."
+  secretPayloadTitle: "Hemlig nyttolast"
+  emptyTranslation: "Skriv eller klicka först in en amatörradiosekvens."
+  normalizedLabel: "Normaliserad text"
+  table:
+    token: "Token"
+    type: "Typ"
+    meaning: "Betydelse"
+  paletteGroups:
+    templates: "Snabbfraser"
+    qCodes: "Q-koder"
+    cwCodes: "CW-förkortningar"
+  typeLabels:
+    q-code: "Q-kod"
+    cw-abbrev: "CW-förkortning"
+    rst: "RST"
+    label: "Etikett"
+    callsign: "Anropssignal"
+    value: "Värde"
+    free-text: "Fri text"
+  patterns:
+    signalReportFollows: "signalrapport följer"
+    callsign: "anropssignal {token}"
+    value: "värde {token}"
+    callPattern: "{caller} anropar {called}"
+    targetPrefix: "prefix {token}"
+    targetedCallPattern: "CQ till {target}"
+    locationPrefix: "QTH: "
+    weatherPrefix: "WX: "
+    powerPrefix: "PWR: "
+    antennaPrefix: "ANT: "
+    namePrefix: "Namn: "
+    frequencyPrefix: "QRG: "
+    timePrefix: "Tid: "
+  rst:
+    template: "RST {code}: läsbarhet {readability}, signalstyrka {strength}, ton {tone}"
+    readability:
+      "1": "oläslig"
+      "2": "knappt läsbar"
+      "3": "läsbar med svårighet"
+      "4": "läsbar"
+      "5": "perfekt läsbar"
+    strength:
+      "1": "mycket svag"
+      "2": "svag"
+      "3": "ganska svag"
+      "4": "medelmåttig"
+      "5": "ganska god"
+      "6": "god"
+      "7": "måttligt stark"
+      "8": "stark"
+      "9": "extremt stark"
+    tone:
+      "1": "mycket rå ton"
+      "2": "rå ton"
+      "3": "dålig ton"
+      "4": "något rå"
+      "5": "godtagbar ton"
+      "6": "god ton"
+      "7": "ganska ren ton"
+      "8": "nästan ren ton"
+      "9": "perfekt ren ton"
+  snippets:
+    cq_general_call:
+      token: "CQ CQ DE DL1XYZ K"
+      insertText: "CQ CQ DE DL1XYZ K "
+      description: "Exempel på allmänt anrop"
+    cq_sm:
+      token: "CQ SM"
+      insertText: "CQ SM "
+      description: "Exempel på allmänt anrop till SM"
+    cq_oh:
+      token: "CQ OH"
+      insertText: "CQ OH "
+      description: "Exempel på allmänt anrop till OH"
+    cq_y4:
+      token: "CQ Y4"
+      insertText: "CQ Y4 "
+      description: "Exempel på allmänt anrop till Y4"
+    cq_dl:
+      token: "CQ DL"
+      insertText: "CQ DL "
+      description: "Exempel på allmänt anrop till DL"
+    rst_599:
+      token: "RST 599"
+      insertText: "RST 599 "
+      description: "Typisk signalrapport"
+    qth_dresden:
+      token: "QTH DRESDEN"
+      insertText: "QTH DRESDEN "
+      description: "Exempel på QTH"
+    pwr_100w:
+      token: "PWR 100W"
+      insertText: "PWR 100W "
+      description: "Exempel på uteffekt"
+    ant_dipole:
+      token: "ANT DIPOLE"
+      insertText: "ANT DIPOLE "
+      description: "Exempel på antenn"
+    wx_sunny:
+      token: "WX SUNNY"
+      insertText: "WX SUNNY "
+      description: "Exempel på väder"
+    best_regards:
+      token: "73"
+      insertText: "73 "
+      description: "Vänliga hälsningar"
+    only_reply:
+      token: "KN"
+      insertText: "KN "
+      description: "Endast anropad station svarar"
+  qCodes:
+    QAP:
+      description: "lyssnar på frekvensen / redo"
+    QRA:
+      description: "namn / operatörens namn"
+    QRG:
+      description: "exakt frekvens"
+    QER:
+      description: "Eddie Riedel"
+      color: "pink"
+    QRL:
+      description: "frekvensen upptagen / jag är upptagen"
+    QRM:
+      description: "störningar från andra stationer"
+    QRN:
+      description: "atmosfäriskt brus"
+    QRP:
+      description: "låg uteffekt"
+    QRQ:
+      description: "sänd snabbare"
+    QRS:
+      description: "sänd långsammare"
+    QRV:
+      description: "redo / klar att ta emot"
+    QRX:
+      description: "vänta / stand by"
+    QRZ:
+      description: "vem anropar mig?"
+    QRT:
+      description: "stänger stationen / lämnar frekvensen"
+    QRO:
+      description: "hög uteffekt"
+    QSB:
+      description: "fading"
+    QSL:
+      description: "bekräftelse / jag bekräftar"
+    QSO:
+      description: "förbindelse / QSO"
+    QSP:
+      description: "relä / vidarebefordra"
+    QSY:
+      description: "byt frekvens"
+    QTC:
+      description: "jag har trafik åt dig"
+    QTH:
+      description: "plats / stationsläge"
+    QTR:
+      description: "tid"
+  cwCodes:
+    "73":
+      description: "vänliga hälsningar"
+    "88":
+      description: "kärlek och kyssar"
+    AGN:
+      description: "igen"
+    ANT:
+      description: "antenn"
+    AR:
+      description: "slut på sändning"
+    AS:
+      description: "vänta / stand by"
+    BK:
+      description: "paus"
+    CALL:
+      description: "anrop"
+    CFM:
+      description: "jag bekräftar"
+    CL:
+      description: "station stänger"
+    CPI:
+      description: "uppfattat / förstått"
+    CPY:
+      description: "uppfattat / förstått"
+    CQ:
+      description: "allmänt anrop"
+    CONDX:
+      description: "konditioner"
+    CUL:
+      description: "vi hörs senare"
+    DE:
+      description: "från / här är"
+    DR:
+      description: "käre"
+    ES:
+      description: "och"
+    FB:
+      description: "mycket bra"
+    FER:
+      description: "för"
+    GA:
+      description: "god eftermiddag eller kom / tvetydigt"
+    GD:
+      description: "god"
+    GE:
+      description: "god kväll"
+    GL:
+      description: "lycka till"
+    GM:
+      description: "god morgon"
+    GN:
+      description: "god natt"
+    GUD:
+      description: "god"
+    HI:
+      description: "skratt / hi hi"
+    HR:
+      description: "här"
+    HW:
+      description: "hur?"
+    IMI:
+      description: "inte förstått"
+    K:
+      description: "kom / svar inbjuds"
+    KN:
+      description: "endast anropad station svarar"
+    LIL:
+      description: "liten / litet"
+    NIL:
+      description: "inget / ingen"
+    NR:
+      description: "nummer eller nära / tvetydigt"
+    NW:
+      description: "nu"
+    OM:
+      description: "radio vän / OM"
+    OP:
+      description: "operatör"
+    OPR:
+      description: "operatör"
+    PSE:
+      description: "snälla"
+    PWR:
+      description: "uteffekt"
+    R:
+      description: "roger / mottaget"
+    RCVR:
+      description: "mottagare"
+    RIG:
+      description: "rigg / radio"
+    MSG:
+      description: "meddelande"
+    RPRT:
+      description: "rapport"
+    RPT:
+      description: "upprepa"
+    RX:
+      description: "mottagare"
+    SK:
+      description: "slut på kontakt"
+    SOS:
+      description: "nöd / nödläge"
+    SRI:
+      description: "ursäkta"
+    TEMP:
+      description: "temperatur"
+    TEST:
+      description: "test"
+    TKS:
+      description: "tack"
+    TNX:
+      description: "tack"
+    TU:
+      description: "tack så mycket"
+    TX:
+      description: "sändare"
+    UR:
+      description: "din / du är"
+    VY:
+      description: "mycket"
+    WX:
+      description: "väder"
+    XYL:
+      description: "fru / partner"
+    YL:
+      description: "ung dam"
