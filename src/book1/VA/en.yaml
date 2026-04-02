@@ -16,7 +16,7 @@ book:
 sections:
   part1:
     title: "Part 1 - Equilibrium: the first sentence that decides everything"
-    p1Before: "The <b>Vasa</b> was a floating palace and still sank after about "
+    p1Before: "The Vasa was a floating palace and still sank after about "
     p1After: " It looks like bad luck, but above all it was geometry plus physics."
     p2: "A ship floats when weight and buoyancy are equal:"
     p3: "For the Vasa, the following orders of magnitude are known:"

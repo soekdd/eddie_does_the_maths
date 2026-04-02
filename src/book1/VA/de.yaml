@@ -16,7 +16,7 @@ book:
 sections:
   part1:
     title: "Teil 1 - Gleichgewicht: Der erste Satz, der alles entscheidet"
-    p1Before: "Die <b>Vasa</b> war ein schwimmender Palast und sank trotzdem nach etwa "
+    p1Before: "Die Vasa war ein schwimmender Palast und sank trotzdem nach etwa "
     p1After: " Das wirkt wie Pech, ist aber vor allem Geometrie plus Physik."
     p2: "Ein Schiff schwimmt, wenn Gewicht und Auftrieb gleich groß sind:"
     p3: "Für die Vasa sind folgende Größenordnungen bekannt:"
