@@ -1,0 +1,37 @@
+title: "Four colors and a computer proof"
+subChapter:
+  stockholm: "Stockholm 1985"
+  problem: "The problem"
+  idea: "Appel and Haken's idea"
+  computer: "Why a computer was needed"
+  interactive: "Interactive"
+book:
+  p1: "I now have a notebook that does not get dog-eared just by looking at it. Linen. Squared. Thick paper. And this new mechanical pencil with the fine lead. A magic device. Click the top and there is a sharp tip again. No carving. No splinters. No black thumb. The pencil simply never becomes blunt. This must be what wealth feels like."
+  p2: "I open the first page and wait a moment before writing the first symbol. In the past I often had soaked pages on which numbers looked like exhausted refugees. Now the empty page itself demands order. So I write more neatly. And because I write more neatly, I think more neatly. Probably an illusion. But a useful one."
+  p3: "Somewhere I read that two mathematicians, Kenneth Appel and Wolfgang Haken, proved the four-color theorem with the help of a computer. A machine checked something people had struggled with for more than a hundred years. I immediately understand why this fascinates me. A map, four colors, no neighboring region equal – it sounds like colored pencils and then like a trap."
+  p4: "So I start calculating. Not the entire proof — I am not crazy and I do not have a mainframe in the cupboard. But I want to follow the thoughts. How do you go from infinitely many maps to finitely many cases? How do you force a complicated map to contain a small pattern? And how do you show that this pattern cannot occur in a minimal counterexample?"
+  p5: "I draw regions, turn them into graphs, number vertices, cross out, start again. The new paper endures it. The new pencil too. The longer I write, the less I think about Stockholm and borders. Instead I think about local configurations and unavoidable patterns."
+  p6: "Perhaps that is the comforting thing about mathematics: something complicated is not conquered all at once but by looking closely at the right place."
+sections:
+  problem:
+    title: "The problem"
+    p1: "The four-color theorem states that every planar map can be colored with at most four colors so that adjacent regions never share the same color."
+    p2: "Mathematicians translate maps into planar graphs. Each region becomes a vertex, shared borders become edges."
+  idea:
+    title: "Appel and Haken's idea"
+    p1: "Assume a smallest counterexample exists. Such a minimal map would have strong structural properties."
+    p2: "The proof has two steps:"
+    l1: "Every map contains one configuration from a finite unavoidable set."
+    l2: "Each configuration is reducible and cannot appear in a minimal counterexample."
+    p3: "Hence no counterexample exists."
+  computer:
+    title: "Why a computer was needed"
+    p1: "The list of configurations was large. The computer checked all cases."
+    p2: "Humans provided the ideas, the machine verified thousands of details."
+    p3: "This changed the notion of proof."
+  interactive:
+    title: "Interactive configurations"
+    intro: "We visualize sample configurations to understand the idea."
+    graphTitle: "Unavoidable configurations"
+footnote:
+  p1: "These configurations are shown with modern data. Steinberger's full lists belong to a later perspective."
