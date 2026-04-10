@@ -1,0 +1,37 @@
+title: "Vier Farben und der Computerbeweis"
+subChapter:
+  stockholm: "Stockholm 1985"
+  problem: "Das Problem"
+  idea: "Die Idee von Appel und Haken"
+  computer: "Warum der Computer nötig war"
+  interactive: "Interaktiv"
+book:
+  p1: "Ich habe jetzt ein Notizbuch, das nicht schon beim bloßen Anschauen Eselsohren bekommt. Leinen. Kariert. Dickes Papier. Und dazu diesen neuen Druckbleistift mit der feinen Mine. Ein Zauberding. Oben klicken, und da ist schon wieder eine scharfe Spitze. Kein Schnitzen. Kein Holzsplitter. Kein schwarzer Daumen. Der Stift wird einfach nicht stumpf. So ungefähr muss sich Reichtum anfühlen."
+  p2: "Ich schlage die erste Seite auf und warte einen Moment, bevor ich das erste Zeichen setze. Früher hatte ich oft nur durchgeweichte Blätter, auf denen Zahlen aussahen wie erschöpfte Flüchtlinge. Jetzt sieht schon die leere Seite so aus, als wolle sie Ordnung. Also schreibe ich sauberer. Und weil ich sauberer schreibe, denke ich sauberer. Das ist wahrscheinlich Einbildung. Aber eine nützliche Einbildung."
+  p3: "Irgendwo habe ich gelesen, dass zwei Mathematiker, Kenneth Appel und Wolfgang Haken, den Vierfarbensatz mit Hilfe eines Computers bewiesen haben. Eine Maschine soll also etwas überprüft haben, woran Menschen über hundert Jahre lang herumgedacht haben. Ich verstehe sofort, warum mich das packt. Eine Landkarte, vier Farben, kein benachbartes Gebiet gleich gefärbt – das klingt erst nach Buntstiften und dann nach einer Falle."
+  p4: "Also beginne ich zu rechnen. Nicht den ganzen Beweis, dazu bin ich weder verrückt noch habe ich hier einen Großrechner im Schrank. Aber ich will den Gedanken nachgehen. Wie kommt man von unendlich vielen möglichen Landkarten zu endlich vielen Fällen? Wie zwingt man eine komplizierte Karte, irgendwo ein kleines Muster zu enthalten? Und wie zeigt man dann, dass genau dieses Muster in einem kleinsten Gegenbeispiel gar nicht vorkommen darf?"
+  p5: "Ich male Gebiete, mache daraus Graphen, nummeriere Knoten, streiche wieder durch, beginne neu. Das neue Papier hält das aus. Der neue Stift auch. Je länger ich schreibe, desto weniger denke ich an Stockholm, an Geld, an Papiere, an Grenzen. Stattdessen denke ich an lokale Konfigurationen, unvermeidbare Muster und daran, dass selbst eine verworrene Karte vielleicht an einer kleinen Stelle verrät, wie sie gebaut ist."
+  p6: "Vielleicht ist das überhaupt das Tröstliche an Mathematik: Dass etwas Unübersichtliches nicht dadurch bezwungen wird, dass man es auf einen Schlag versteht, sondern dadurch, dass man an der richtigen Stelle genau hinschaut."
+sections:
+  problem:
+    title: "Das Problem"
+    p1: "Der Vierfarbensatz behauptet: Jede Landkarte in der Ebene lässt sich mit höchstens vier Farben so färben, dass benachbarte Gebiete nie dieselbe Farbe haben. „Benachbart“ bedeutet dabei: gemeinsame Grenze, nicht bloß ein Berührpunkt."
+    p2: "Mathematiker übersetzen Landkarten dafür in <strong>planare Graphen</strong>. Jedes Gebiet wird zu einem Knoten, gemeinsame Grenzen werden zu Kanten. Dann lautet die Frage: Kann man die Knoten jedes planaren Graphen mit höchstens vier Farben färben, ohne dass zwei verbundene Knoten dieselbe Farbe tragen?"
+  idea:
+    title: "Die Idee von Appel und Haken"
+    p1: "Appel und Haken griffen den klassischen Gedanken des <strong>minimalen Gegenbeispiels</strong> auf. Man nimmt also an, der Satz sei falsch, und betrachtet eine kleinste Karte, die sich <em>nicht</em> mit vier Farben färben lässt. Diese kleinste Karte müsste sehr besondere Eigenschaften haben, weil jede noch kleinere Teilkarte plötzlich wieder vierfärbbar wäre."
+    p2: "Der Beweis besteht aus zwei großen Schritten:"
+    l1: "Man zeigt, dass jede hinreichend komplizierte planare Karte <strong>mindestens eine Konfiguration aus einer endlichen Liste</strong> enthalten muss."
+    l2: "Man zeigt für jede Konfiguration auf dieser Liste, dass sie in einem kleinsten Gegenbeispiel <strong>nicht vorkommen kann</strong>, weil sie reduzierbar ist."
+    p3: "Wenn jede Karte eine Konfiguration aus der Liste enthalten muss, aber keine davon in einem minimalen Gegenbeispiel vorkommen darf, dann kann es ein solches Gegenbeispiel nicht geben. Also ist der Vierfarbensatz wahr."
+  computer:
+    title: "Warum der Computer nötig war"
+    p1: "Die Grundidee ist menschlich und konzeptionell schön. Der mühsame Teil ist die schiere Menge an Fällen. Die Liste unvermeidbarer Konfigurationen war groß, und für jede einzelne musste nachgewiesen werden, dass sie reduzierbar ist. Genau diese systematische Fallprüfung übernahm der Computer."
+    p2: "Das war der eigentliche Schock der Sache: Nicht der Computer hatte die Idee, sondern er trug einen Teil der Beweislast. Menschen legten die Strategie fest, formulierten die Regeln, reduzierten das unendliche Problem auf endlich viele lokale Muster – und die Maschine kontrollierte dann tausende Einzelheiten, die man von Hand kaum zuverlässig hätte durchrechnen können."
+    p3: "1985 war das noch frisch genug, um philosophisch zu wirken. Was ist ein Beweis, wenn kein Mensch jede einzelne Fallprüfung Zeile für Zeile selbst liest? Appel und Haken haben nicht nur einen Satz bewiesen. Sie haben auch gezeigt, dass sich Mathematik verändert, sobald Computer nicht mehr nur rechnen, sondern beim Beweisen mitarbeiten."
+  interactive:
+    title: "Interaktiver Blick auf Konfigurationen"
+    intro: "Eddie hätte 1985 natürlich nicht Steinbergers vollständige Datensätze gehabt. Aber wir können heute einige solcher Konfigurationen sichtbar machen und so wenigstens den Geist der Idee nachvollziehen: lokale Muster anschauen, sie nummerieren, sie drehen, vergleichen und sich fragen, warum genau solche kleinen Formen in großen Karten unvermeidbar werden."
+    graphTitle: "Unvermeidbare Konfigurationen"
+footnote:
+  p1: "<strong>Fußnote.</strong> Die hier gezeigten Beispielkonfigurationen werden mit einem modernen Parser geladen und visualisiert. Vollständig explizite, maschinenlesbare Listen wie die von Richard Steinberger gehören natürlich in eine spätere Perspektive und nicht in Eddies Wissensstand von 1985."
