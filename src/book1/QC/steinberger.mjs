@@ -370,7 +370,7 @@ export async function loadConfigurations( path ) {
 }
 
 export async function loadBundledConfigurations() {
-	const { default: text } = await import( "./U_2822.conf?raw" );
+	const { default: text } = await import( "./original/U_2822.conf?raw" );
 	return parseConfigurations( text );
 }
 

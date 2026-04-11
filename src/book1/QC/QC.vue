@@ -11,7 +11,7 @@
 				<img :alt="t( 'imageAlt' )" loading="lazy" :src="titleImg" />
 			</ImageZoomer>
 		</figure>
-		<h3 id="stockholm">{{ t('subChapter.stockholm') }}</h3>
+		<h3 id="stockholm">{{ t('subChapter.einleitung') }}</h3>
 		<div class="eddie">
 			<p v-html="t('book.p1')" />
 			<p v-html="t('book.p2')" />
@@ -53,7 +53,7 @@
 		<div class="eddie d-flex flex-column ga-4">
 			<QCGraph
 				v-model="currentIndex"
-				:configurations="sampleConfigurations"
+				:configurations="configurations"
 				:height="720"
 				:intro="t('sections.interactive.intro')"
 				:node-radius="5"
@@ -76,11 +76,12 @@ import { computed, ref } from "vue";
 import titleImg from "./QC.webp";
 import { useI18n } from "@/utils/i18n.mjs";
 import QCGraph from "./QCGraph.vue";
-import { loadBundledConfigurations } from "./steinberger.mjs";
+import rawConfigurations from "./original/U_2822.conf?raw";
+import { parseU2822Conf } from "./parser";
 
 const { t, tm } = useI18n( "book1.QC" );
 
-const sampleConfigurations = await loadBundledConfigurations();
+const configurations = parseU2822Conf( rawConfigurations );
 const currentIndex = ref( 1 );
 const subChapter = computed( () => tm( "subChapter" ) ?? {} );
 </script>
