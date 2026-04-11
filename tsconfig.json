@@ -8,5 +8,5 @@
     "types": ["vite/client"],
     "skipLibCheck": true
   },
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "src/book1/QC/steinberger.mjs"]
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "src/book1/QC/steinberger.mjs", "src/book1/QC/testStaticList.mjs", "src/book1/QC/tests/staticList.test.tmjs"]
 }
