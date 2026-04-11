@@ -11,7 +11,7 @@
 				<img :alt="t( 'imageAlt' )" loading="lazy" :src="titleImg" />
 			</ImageZoomer>
 		</figure>
-		<h3 id="stockholm">{{ t('subChapter.einleitung') }}</h3>
+		<h3 id="introduce">{{ t( "introDate" ) }}</h3>
 		<div class="eddie">
 			<p v-html="t('book.p1')" />
 			<p v-html="t('book.p2')" />
@@ -53,7 +53,7 @@
 		<div class="eddie d-flex flex-column ga-4">
 			<QCGraph
 				v-model="currentIndex"
-				:configurations="configurations"
+				:configurations
 				:height="720"
 				:intro="t('sections.interactive.intro')"
 				:node-radius="5"

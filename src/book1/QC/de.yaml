@@ -1,8 +1,9 @@
 title: "Vier Farben und der Computer\u00ADbeweis"
 imageTitle: "Eddie und das Vier-Farben-Problem"
 imageAlt: "Eddie und das Vier-Farben-Problem"
+introDate: "Stockholm, 22. Dezember 1985"
 subChapter:
-  einleitung: "Einleitung"
+  introduce: "Einleitung"
   problem: "Das Problem"
   idea: "Die Idee von Appel und Haken"
   computer: "Warum der Computer nötig war"
@@ -35,5 +36,13 @@ sections:
     title: "Interaktiver Blick auf Konfigurationen"
     intro: "Appel und Haken kamen am Ende auf <strong>1936 verschiedene unvermeidbare Konfigurationen</strong>. Diese Menge ließ sich aber nicht einfach mit einem sauberen Algorithmus erzeugen, also kann ich sie hier nicht einfach Zeile für Zeile aus ein paar klaren Rechenregeln herleiten. Später arbeiteten <a href=\"https://www.researchgate.net/publication/259914175_Reducibility_in_the_Four-Color_Theorem\">Robertson, Sanders, Seymour und Thomas</a> den rechnergestützten Teil des Beweises systematischer aus. Darum schaue ich mir hier Konfigurationen an, wie sie in ihrer Fassung auftreten, auch wenn es dort ein paar mehr (2822) sind."
     graphTitle: "Unvermeidbare Konfigurationen"
+    graphControls:
+      empty: "Keine QC-Konfigurationen vorhanden."
+      previous: "Zurück"
+      next: "Weiter"
+      index: "Index"
+      choose: "Konfiguration wählen"
+      noneLoaded: "Keine Konfiguration geladen"
+      summary: "#{name} · |V|={vertexCount} · Ring={ringSize} · Ext={extendableColorings}"
 footnote:
   p1: "<strong>Fußnote.</strong> Die hier gezeigten unvermeidbaren Konfigurationen stammen aus der späteren rechnergestützten Fassung von <a href=\"https://www.researchgate.net/publication/259914175_Reducibility_in_the_Four-Color_Theorem\">Robertson, Sanders, Seymour und Thomas</a> und gehören nicht zum Wissensstand von 1985."

@@ -1,8 +1,9 @@
+<!-- i18n-ally-scope: useI18n("book1.QC") -->
 <template>
-<v-card rounded="lg" variant="outlined">
+<v-card>
 	<v-card-title class="d-flex flex-wrap align-center ga-3">
 		<div>
-			<div class="text-h6">{{ title }}</div>
+			<div class="text-h6">{{ displayTitle }}</div>
 			<div class="text-body-2 text-medium-emphasis">{{ subtitle }}</div>
 		</div>
 	</v-card-title>
@@ -14,53 +15,76 @@
 			v-html="intro"
 		/>
 
-		<div v-if="!currentConfiguration" class="text-body-1 text-medium-emphasis">
-			Keine QC-Konfigurationen vorhanden.
-		</div>
+		<v-alert
+			v-if="!currentConfiguration"
+			border="start"
+			density="comfortable"
+			type="info"
+			variant="tonal"
+		>
+			{{ t( "sections.interactive.graphControls.empty" ) }}
+		</v-alert>
 
 		<template v-else>
-			<div class="d-flex flex-wrap align-center ga-3 mb-4">
-				<v-btn :disabled="clampedIndex <= 1" variant="outlined" @click="previous">
-					Zurück
-				</v-btn>
+			<v-sheet border class="control-panel mb-4 pa-3">
+				<div class="control-row">
+					<v-btn-group color="primary" density="comfortable" variant="tonal">
+						<v-btn
+							class="mr-2"
+							:disabled="clampedIndex <= 1"
+							prepend-icon="mdi-chevron-left"
+							@click="previous"
+						>
+							{{ t( "sections.interactive.graphControls.previous" ) }}
+						</v-btn>
+						<v-btn
+							append-icon="mdi-chevron-right"
+							:disabled="clampedIndex >= total"
+							@click="next"
+						>
+							{{ t( "sections.interactive.graphControls.next" ) }}
+						</v-btn>
+					</v-btn-group>
 
-				<div class="index-field">
-					<v-text-field
-						v-model.number="clampedIndex"
+					<v-number-input
+						v-model="indexFieldValue"
+						class="index-field"
+						control-variant="stacked"
 						density="compact"
-						hide-details
-						label="Index"
+						hide-details="auto"
+						:label="t( 'sections.interactive.graphControls.index' )"
 						:max="total"
-						min="1"
-						type="number"
+						:min="1"
+						:precision="0"
+						:step="1"
+						variant="outlined"
 					/>
+
+					<v-chip color="primary" size="default" variant="tonal">
+						{{ clampedIndex }} / {{ total }}
+					</v-chip>
 				</div>
 
-				<v-btn :disabled="clampedIndex >= total" variant="outlined" @click="next">
-					Weiter
-				</v-btn>
-
-				<div class="text-body-2 text-medium-emphasis">
-					{{ clampedIndex }} / {{ total }}
+				<div class="text-caption text-medium-emphasis mb-2 mt-3">
+					{{ t( "sections.interactive.graphControls.choose" ) }}
 				</div>
-			</div>
 
-			<v-slider
-				v-model="clampedIndex"
-				class="mb-4"
-				color="primary"
-				hide-details
-				:max="Math.max(1, total)"
-				:min="1"
-				:step="1"
-				thumb-label
-			/>
+				<v-slider
+					v-model="clampedIndex"
+					color="primary"
+					hide-details
+					:max="Math.max(1, total)"
+					:min="1"
+					:step="1"
+					thumb-label
+				/>
+			</v-sheet>
 
-			<div class="graph-shell">
+			<v-sheet border class="graph-shell" rounded="xl">
 				<Transition mode="out-in" :name="transitionName">
 					<div :key="stageKey" class="graph-stage" v-html="currentSvg" />
 				</Transition>
-			</div>
+			</v-sheet>
 		</template>
 	</v-card-text>
 </v-card>
@@ -70,6 +94,7 @@
 import {
 	computed, ref, watch
 } from "vue";
+import { useI18n } from "@/utils/i18n.mjs";
 import type { QCConfiguration } from "./parser";
 import { renderSVG } from "./visualize";
 
@@ -80,7 +105,7 @@ const props = withDefaults( defineProps<{
   height?: number
   nodeRadius?: number
   intro?: string
-  title?: string
+	title?: string
 }>(), {
 	configurations: () => [],
 	modelValue:     1,
@@ -88,12 +113,13 @@ const props = withDefaults( defineProps<{
 	height:         640,
 	nodeRadius:     6,
 	intro:          "",
-	title:          "QC Graph"
+	title:          ""
 } );
 
 const emit = defineEmits<{
   ( e: "update:modelValue", value: number ): void
 }>();
+const { t } = useI18n( "book1.QC" );
 
 const localIndex = ref( Math.max( 1, props.modelValue ) );
 const stageKey = ref( 0 );
@@ -129,6 +155,16 @@ const clampedIndex = computed( {
 	}
 } );
 
+const indexFieldValue = computed( {
+	get() {
+		return clampedIndex.value;
+	},
+	set( value ) {
+		const normalized = typeof value === "number" ? value : Number( value );
+		clampedIndex.value = Number.isFinite( normalized ) ? normalized : 1;
+	}
+} );
+
 const currentConfiguration = computed( () => {
 	if ( total.value === 0 ) {
 		return null;
@@ -152,14 +188,21 @@ const currentSvg = computed( () => {
 	} );
 } );
 
+const displayTitle = computed( () => props.title || t( "sections.interactive.graphTitle" ) );
+
 const subtitle = computed( () => {
 	const cfg = currentConfiguration.value;
 
 	if ( !cfg ) {
-		return "Keine Konfiguration geladen";
+		return t( "sections.interactive.graphControls.noneLoaded" );
 	}
 
-	return `#${cfg.name} · |V|=${cfg.vertexCount} · Ring=${cfg.ringSize} · Ext=${cfg.extendableColorings}`;
+	return t( "sections.interactive.graphControls.summary", {
+		name:                cfg.name,
+		vertexCount:         cfg.vertexCount,
+		ringSize:            cfg.ringSize,
+		extendableColorings: cfg.extendableColorings
+	} );
 } );
 
 const transitionName = computed( () => {
@@ -177,14 +220,23 @@ function next() {
 
 <style scoped>
 .index-field {
-  width: 110px;
+  min-width: 160px;
+  max-width: 200px;
+}
+
+.control-panel {
+}
+
+.control-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
 }
 
 .graph-shell {
   width: 100%;
   overflow: auto;
-  border: 1px solid rgba(var(--v-border-color), var(--v-border-opacity));
-  border-radius: 16px;
   background: rgb(var(--v-theme-surface));
   position: relative;
   display: flex;
