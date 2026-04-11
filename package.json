@@ -9,7 +9,8 @@
     "build": "VITE_PUBLIC_BASE=${VITE_PUBLIC_BASE:-/math/} VITE_BUILD_DATE=${VITE_BUILD_DATE:-$(date -u +%Y-%m-%dT%H:%M:%SZ)} vite-ssg build",
     "build:debug": "VITE_PUBLIC_BASE=${VITE_PUBLIC_BASE:-/math/} VITE_BUILD_DATE=${VITE_BUILD_DATE:-$(date -u +%Y-%m-%dT%H:%M:%SZ)} VITE_DEBUG_NO_MINIFY=1 vite-ssg build",
     "preview": "vite preview",
-    "http": "npx serve ./dist -l 4173"
+    "http": "npx serve ./dist -l 4173",
+    "test": "NODE_OPTIONS=--experimental-vm-modules jest --runInBand"
   },
   "dependencies": {
     "@mdi/js": "^7.4.47",
@@ -37,6 +38,7 @@
     "eslint-plugin-svgo": "^0.12.0",
     "eslint-plugin-vue": "10.8.0",
     "fast-glob": "^3.3.3",
+    "jest": "^30.3.0",
     "puppeteer": "^24.37.5",
     "sass": "^1.77.0",
     "sirv": "^3.0.2",

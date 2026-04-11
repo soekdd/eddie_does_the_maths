@@ -132,6 +132,12 @@ export function validateConfiguration(cfg: QCConfiguration): true {
   for (let i = 1; i <= n; i++) {
     const nbrs = cfg.vertices[i - 1].neighbors;
     for (let j = 0; j < nbrs.length; j++) {
+      // Ring vertices store the outer face between the last and first neighbor.
+      // That boundary sector is not paired with a local face at the opposite end.
+      if (i <= r && j === nbrs.length - 1) {
+        continue;
+      }
+
       const k = nbrs[j];
       const a = nbrs[(j + 1) % nbrs.length];
       const kNbrs = cfg.vertices[k - 1].neighbors;

@@ -1,9 +1,11 @@
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue'
-import type { QCConfiguration } from './parser'
-import { renderSVG } from './visualize'
+import {
+	computed, ref, watch
+} from "vue";
+import type { QCConfiguration } from "./parser";
+import { renderSVG } from "./visualize";
 
-const props = withDefaults(defineProps<{
+const props = withDefaults( defineProps<{
   configurations?: QCConfiguration[]
   modelValue?: number
   width?: number
@@ -11,161 +13,179 @@ const props = withDefaults(defineProps<{
   nodeRadius?: number
   title?: string
 }>(), {
-  configurations: () => [],
-  modelValue: 1,
-  width: 640,
-  height: 640,
-  nodeRadius: 6,
-  title: 'QC Graph'
-})
+	configurations: () => [],
+	modelValue:     1,
+	width:          640,
+	height:         640,
+	nodeRadius:     6,
+	title:          "QC Graph"
+} );
 
 const emit = defineEmits<{
-  (e: 'update:modelValue', value: number): void
-}>()
+  ( e: "update:modelValue", value: number ): void
+}>();
 
-const localIndex = ref(Math.max(1, props.modelValue))
-const showLabels = ref(true)
-const animateNext = ref(true)
-const stageKey = ref(0)
-const navDirection = ref<'next' | 'prev'>('next')
+const localIndex = ref( Math.max( 1, props.modelValue ) );
+const showLabels = ref( true );
+const animateNext = ref( true );
+const stageKey = ref( 0 );
+const navDirection = ref<"next" | "prev">( "next" );
 
-watch(() => props.modelValue, (value) => {
-  localIndex.value = Math.max(1, value)
-})
+watch( () => props.modelValue, ( value ) => {
+	localIndex.value = Math.max( 1, value );
+} );
 
-watch(localIndex, (value, oldValue) => {
-  navDirection.value = value >= (oldValue ?? value) ? 'next' : 'prev'
-  stageKey.value += 1
-  emit('update:modelValue', value)
-})
+watch( localIndex, ( value, oldValue ) => {
+	navDirection.value = value >= ( oldValue ?? value ) ? "next" : "prev";
+	stageKey.value += 1;
+	emit( "update:modelValue", value );
+} );
 
-const total = computed(() => props.configurations.length)
+const total = computed( () => props.configurations.length );
 
-const clampedIndex = computed({
-  get() {
-    if (total.value === 0) return 1
-    return Math.min(Math.max(1, localIndex.value), total.value)
-  },
-  set(value: number) {
-    if (total.value === 0) {
-      localIndex.value = 1
-      return
-    }
-    localIndex.value = Math.min(Math.max(1, value), total.value)
-  }
-})
+const clampedIndex = computed( {
+	get() {
+		if ( total.value === 0 ) {
+			return 1;
+		}
 
-const currentConfiguration = computed(() => {
-  if (total.value === 0) return null
-  return props.configurations[clampedIndex.value - 1] ?? null
-})
+		return Math.min( Math.max( 1, localIndex.value ), total.value );
+	},
+	set( value: number ) {
+		if ( total.value === 0 ) {
+			localIndex.value = 1;
+			return;
+		}
 
-const currentSvg = computed(() => {
-  const cfg = currentConfiguration.value
-  if (!cfg) return ''
-  return renderSVG(cfg, {
-    width: props.width,
-    height: props.height,
-    showLabels: showLabels.value,
-    nodeRadius: props.nodeRadius
-  })
-})
+		localIndex.value = Math.min( Math.max( 1, value ), total.value );
+	}
+} );
 
-const subtitle = computed(() => {
-  const cfg = currentConfiguration.value
-  if (!cfg) return 'Keine Konfiguration geladen'
-  return `#${cfg.name} · |V|=${cfg.vertexCount} · Ring=${cfg.ringSize} · Ext=${cfg.extendableColorings}`
-})
+const currentConfiguration = computed( () => {
+	if ( total.value === 0 ) {
+		return null;
+	}
 
-const transitionName = computed(() => {
-  if (!animateNext.value) return ''
-  return navDirection.value === 'next' ? 'graph-next' : 'graph-prev'
-})
+	return props.configurations[ clampedIndex.value - 1 ] ?? null;
+} );
+
+const currentSvg = computed( () => {
+	const cfg = currentConfiguration.value;
+
+	if ( !cfg ) {
+		return "";
+	}
+
+	return renderSVG( cfg, {
+		width:      props.width,
+		height:     props.height,
+		showLabels: showLabels.value,
+		nodeRadius: props.nodeRadius
+	} );
+} );
+
+const subtitle = computed( () => {
+	const cfg = currentConfiguration.value;
+
+	if ( !cfg ) {
+		return "Keine Konfiguration geladen";
+	}
+
+	return `#${cfg.name} · |V|=${cfg.vertexCount} · Ring=${cfg.ringSize} · Ext=${cfg.extendableColorings}`;
+} );
+
+const transitionName = computed( () => {
+	if ( !animateNext.value ) {
+		return "";
+	}
+
+	return navDirection.value === "next" ? "graph-next" : "graph-prev";
+} );
 
 function previous() {
-  clampedIndex.value = clampedIndex.value - 1
+	clampedIndex.value = clampedIndex.value - 1;
 }
 
 function next() {
-  clampedIndex.value = clampedIndex.value + 1
+	clampedIndex.value = clampedIndex.value + 1;
 }
 </script>
 
 <template>
-  <v-card rounded="lg" variant="outlined">
-    <v-card-title class="d-flex flex-wrap align-center ga-3">
-      <div>
-        <div class="text-h6">{{ title }}</div>
-        <div class="text-body-2 text-medium-emphasis">{{ subtitle }}</div>
-      </div>
-      <v-spacer />
-      <v-switch
-        v-model="showLabels"
-        color="primary"
-        density="compact"
-        hide-details
-        label="Labels"
-      />
-      <v-switch
-        v-model="animateNext"
-        color="primary"
-        density="compact"
-        hide-details
-        label="Animate next"
-      />
-    </v-card-title>
+<v-card rounded="lg" variant="outlined">
+	<v-card-title class="d-flex flex-wrap align-center ga-3">
+		<div>
+			<div class="text-h6">{{ title }}</div>
+			<div class="text-body-2 text-medium-emphasis">{{ subtitle }}</div>
+		</div>
+		<v-spacer />
+		<v-switch
+			v-model="showLabels"
+			color="primary"
+			density="compact"
+			hide-details
+			label="Labels"
+		/>
+		<v-switch
+			v-model="animateNext"
+			color="primary"
+			density="compact"
+			hide-details
+			label="Animate next"
+		/>
+	</v-card-title>
 
-    <v-card-text>
-      <div v-if="!currentConfiguration" class="text-body-1 text-medium-emphasis">
-        Keine QC-Konfigurationen vorhanden.
-      </div>
+	<v-card-text>
+		<div v-if="!currentConfiguration" class="text-body-1 text-medium-emphasis">
+			Keine QC-Konfigurationen vorhanden.
+		</div>
 
-      <template v-else>
-        <div class="d-flex flex-wrap align-center ga-3 mb-4">
-          <v-btn variant="outlined" @click="previous" :disabled="clampedIndex <= 1">
-            Zurück
-          </v-btn>
+		<template v-else>
+			<div class="d-flex flex-wrap align-center ga-3 mb-4">
+				<v-btn :disabled="clampedIndex <= 1" variant="outlined" @click="previous">
+					Zurück
+				</v-btn>
 
-          <div class="index-field">
-            <v-text-field
-              v-model.number="clampedIndex"
-              type="number"
-              density="compact"
-              hide-details
-              label="Index"
-              min="1"
-              :max="total"
-            />
-          </div>
+				<div class="index-field">
+					<v-text-field
+						v-model.number="clampedIndex"
+						density="compact"
+						hide-details
+						label="Index"
+						:max="total"
+						min="1"
+						type="number"
+					/>
+				</div>
 
-          <v-btn variant="outlined" @click="next" :disabled="clampedIndex >= total">
-            Weiter
-          </v-btn>
+				<v-btn :disabled="clampedIndex >= total" variant="outlined" @click="next">
+					Weiter
+				</v-btn>
 
-          <div class="text-body-2 text-medium-emphasis">
-            {{ clampedIndex }} / {{ total }}
-          </div>
-        </div>
+				<div class="text-body-2 text-medium-emphasis">
+					{{ clampedIndex }} / {{ total }}
+				</div>
+			</div>
 
-        <v-slider
-          v-model="clampedIndex"
-          :min="1"
-          :max="Math.max(1, total)"
-          :step="1"
-          thumb-label
-          color="primary"
-          hide-details
-          class="mb-4"
-        />
+			<v-slider
+				v-model="clampedIndex"
+				class="mb-4"
+				color="primary"
+				hide-details
+				:max="Math.max(1, total)"
+				:min="1"
+				:step="1"
+				thumb-label
+			/>
 
-        <div class="graph-shell">
-          <Transition :name="transitionName" mode="out-in">
-            <div :key="stageKey" class="graph-stage" v-html="currentSvg" />
-          </Transition>
-        </div>
-      </template>
-    </v-card-text>
-  </v-card>
+			<div class="graph-shell">
+				<Transition mode="out-in" :name="transitionName">
+					<div :key="stageKey" class="graph-stage" v-html="currentSvg" />
+				</Transition>
+			</div>
+		</template>
+	</v-card-text>
+</v-card>
 </template>
 
 <style scoped>

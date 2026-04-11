@@ -1,5 +1,5 @@
 import {
-	h, nextTick, onMounted
+	h, nextTick, onMounted, Suspense
 } from "vue";
 import { RouterView } from "vue-router";
 import { ViteSSG } from "vite-ssg";
@@ -186,7 +186,23 @@ const Root = {
 		return () => h(
 			VApp,
 			null,
-			{ default: () => [ h( RouteSeoHead ), h( RouterView ) ] }
+			{
+				default: () => [
+					h( RouteSeoHead ),
+					h(
+						Suspense,
+						null,
+						{
+							default:  () => h( RouterView ),
+							fallback: () => h(
+								"div",
+								{ class: "pa-6 text-body-1 text-medium-emphasis" },
+								"Loading..."
+							)
+						}
+					)
+				]
+			}
 		);
 	}
 };

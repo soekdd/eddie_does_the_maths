@@ -35,6 +35,7 @@ import LT from "@/book1/LT/LT.vue";
 import WO from "@/book1/WO/WO.vue";
 import CatchAll from "@/components/CatchAll.vue";
 import Welcome from "@/components/Welcome.vue";
+const QC = () => import( "@/book1/QC/QC.vue" );
 const error = true;
 const warning = true;
 const wip = true;
@@ -639,6 +640,16 @@ export const contentRoutes = [
 			index:      true,
 			book:       1,
 			order:      250
+		}
+	},{
+		path:      "/QC",
+		name:      "QC",
+		component: QC,
+		meta:      {
+			difficulty: 2,
+			index:      true,
+			book:       1,
+			order:      251
 		}
 	},
 	{
