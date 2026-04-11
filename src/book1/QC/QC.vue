@@ -23,6 +23,15 @@
 	</template>
 
 	<template #descriptionPart>
+		<figure class="exampleFigure">
+			<ImageZoomer title="Europa 1985">
+				<QCEurope
+					:height="720"
+					:width="720"
+				/>
+			</ImageZoomer>
+		</figure>
+
 		<h2 id="problem">{{ t('sections.problem.title') }}</h2>
 		<div class="eddie">
 			<p v-html="t('sections.problem.p1')" />
@@ -50,17 +59,17 @@
 
 	<template #interactivePart>
 		<h2 id="interactive">{{ t('sections.interactive.title') }}</h2>
-		<div class="eddie d-flex flex-column ga-4">
-			<QCGraph
-				v-model="currentIndex"
-				:configurations
-				:height="720"
-				:intro="t('sections.interactive.intro')"
-				:node-radius="5"
-				:title="t('sections.interactive.graphTitle')"
-				:width="720"
-			/>
-		</div>
+		
+		<QCGraph
+			v-model="currentIndex"
+			:configurations
+			:height="720"
+			:intro="t('sections.interactive.intro')"
+			:node-radius="5"
+			:title="t('sections.interactive.graphTitle')"
+			:width="720"
+		/>
+
 	</template>
 
 	<template #footer>
@@ -75,6 +84,7 @@
 import { computed, ref } from "vue";
 import titleImg from "./QC.webp";
 import { useI18n } from "@/utils/i18n.mjs";
+import QCEurope from "./QCEurope.vue";
 import QCGraph from "./QCGraph.vue";
 import rawConfigurations from "./original/U_2822.conf?raw";
 import { parseU2822Conf } from "./parser";
