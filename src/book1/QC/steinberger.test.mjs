@@ -46,12 +46,14 @@ describe('steinberger', () => {
 
   test('can parse a temporary subset file', async () => {
     const fullText = await fs.readFile(confPath, 'utf8');
-    const subsetText = fullText.trim().split(/\n\s*\n/g).slice(0, 3).join('\n\n') + '\n';
-    const subsetPath = path.join(qcDir, 'U_2822.test-subset.conf');
+    const subsetText = fullText.trim().split(/\n\s*\n/g).slice(0, 3).join('\n\n')			 + '\n';
+    co			nst subsetPath = path.join(qcDir, 'U_2822.test-subset.conf');
 
     try {
-      await fs.writeFile(subsetPath, subsetText, 'utf8');
-      const configs = await loadConfigurations(subsetPath);
+      await fs.writeFile(subsetPath, subsetText, '
+utf8');
+      const configs = aw
+ait loadConfigurations(subsetPath);
 
       expect(configs.map((cfg) => cfg.name)).toEqual(['1', '2', '3']);
     } finally {

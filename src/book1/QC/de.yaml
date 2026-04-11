@@ -1,6 +1,6 @@
 title: "Vier Farben und der Computerbeweis"
 subChapter:
-  stockholm: "Stockholm 1985"
+  stockholm: "Stockholm, 22. Dezember 1985"
   problem: "Das Problem"
   idea: "Die Idee von Appel und Haken"
   computer: "Warum der Computer nötig war"
@@ -31,7 +31,7 @@ sections:
     p3: "1985 war das noch frisch genug, um philosophisch zu wirken. Was ist ein Beweis, wenn kein Mensch jede einzelne Fallprüfung Zeile für Zeile selbst liest? Appel und Haken haben nicht nur einen Satz bewiesen. Sie haben auch gezeigt, dass sich Mathematik verändert, sobald Computer nicht mehr nur rechnen, sondern beim Beweisen mitarbeiten."
   interactive:
     title: "Interaktiver Blick auf Konfigurationen"
-    intro: "Eddie hätte 1985 natürlich nicht Steinbergers vollständige Datensätze gehabt. Aber wir können heute einige solcher Konfigurationen sichtbar machen und so wenigstens den Geist der Idee nachvollziehen: lokale Muster anschauen, sie nummerieren, sie drehen, vergleichen und sich fragen, warum genau solche kleinen Formen in großen Karten unvermeidbar werden."
+    intro: "Appel und Haken kamen am Ende auf <strong>1936 verschiedene unvermeidbare Konfigurationen</strong>. Diese Menge ließ sich aber nicht einfach mit einem sauberen Algorithmus erzeugen, also kann ich sie hier nicht einfach Zeile für Zeile aus ein paar klaren Rechenregeln herleiten. Später arbeiteten <a href=\"https://www.researchgate.net/publication/259914175_Reducibility_in_the_Four-Color_Theorem\">Robertson, Sanders, Seymour und Thomas</a> den rechnergestützten Teil des Beweises systematischer aus. Darum schaue ich mir hier Konfigurationen an, wie sie in ihrer Fassung auftreten, auch wenn es dort ein paar mehr (2822) sind."
     graphTitle: "Unvermeidbare Konfigurationen"
 footnote:
-  p1: "<strong>Fußnote.</strong> Die hier gezeigten Beispielkonfigurationen wurden nach dem <a href=\"https://arxiv.org/abs/0905.0043\">Algorithmus von John Steinberger</a> berechnet und gehören nicht zum Wissensstand von 1985."
+  p1: "<strong>Fußnote.</strong> Die hier gezeigten unvermeidbaren Konfigurationen stammen aus der späteren rechnergestützten Fassung von <a href=\"https://www.researchgate.net/publication/259914175_Reducibility_in_the_Four-Color_Theorem\">Robertson, Sanders, Seymour und Thomas</a> und gehören nicht zum Wissensstand von 1985."

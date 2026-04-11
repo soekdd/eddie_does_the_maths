@@ -1,116 +1,3 @@
-<script setup lang="ts">
-import {
-	computed, ref, watch
-} from "vue";
-import type { QCConfiguration } from "./parser";
-import { renderSVG } from "./visualize";
-
-const props = withDefaults( defineProps<{
-  configurations?: QCConfiguration[]
-  modelValue?: number
-  width?: number
-  height?: number
-  nodeRadius?: number
-  title?: string
-}>(), {
-	configurations: () => [],
-	modelValue:     1,
-	width:          640,
-	height:         640,
-	nodeRadius:     6,
-	title:          "QC Graph"
-} );
-
-const emit = defineEmits<{
-  ( e: "update:modelValue", value: number ): void
-}>();
-
-const localIndex = ref( Math.max( 1, props.modelValue ) );
-const showLabels = ref( true );
-const animateNext = ref( true );
-const stageKey = ref( 0 );
-const navDirection = ref<"next" | "prev">( "next" );
-
-watch( () => props.modelValue, ( value ) => {
-	localIndex.value = Math.max( 1, value );
-} );
-
-watch( localIndex, ( value, oldValue ) => {
-	navDirection.value = value >= ( oldValue ?? value ) ? "next" : "prev";
-	stageKey.value += 1;
-	emit( "update:modelValue", value );
-} );
-
-const total = computed( () => props.configurations.length );
-
-const clampedIndex = computed( {
-	get() {
-		if ( total.value === 0 ) {
-			return 1;
-		}
-
-		return Math.min( Math.max( 1, localIndex.value ), total.value );
-	},
-	set( value: number ) {
-		if ( total.value === 0 ) {
-			localIndex.value = 1;
-			return;
-		}
-
-		localIndex.value = Math.min( Math.max( 1, value ), total.value );
-	}
-} );
-
-const currentConfiguration = computed( () => {
-	if ( total.value === 0 ) {
-		return null;
-	}
-
-	return props.configurations[ clampedIndex.value - 1 ] ?? null;
-} );
-
-const currentSvg = computed( () => {
-	const cfg = currentConfiguration.value;
-
-	if ( !cfg ) {
-		return "";
-	}
-
-	return renderSVG( cfg, {
-		width:      props.width,
-		height:     props.height,
-		showLabels: showLabels.value,
-		nodeRadius: props.nodeRadius
-	} );
-} );
-
-const subtitle = computed( () => {
-	const cfg = currentConfiguration.value;
-
-	if ( !cfg ) {
-		return "Keine Konfiguration geladen";
-	}
-
-	return `#${cfg.name} · |V|=${cfg.vertexCount} · Ring=${cfg.ringSize} · Ext=${cfg.extendableColorings}`;
-} );
-
-const transitionName = computed( () => {
-	if ( !animateNext.value ) {
-		return "";
-	}
-
-	return navDirection.value === "next" ? "graph-next" : "graph-prev";
-} );
-
-function previous() {
-	clampedIndex.value = clampedIndex.value - 1;
-}
-
-function next() {
-	clampedIndex.value = clampedIndex.value + 1;
-}
-</script>
-
 <template>
 <v-card rounded="lg" variant="outlined">
 	<v-card-title class="d-flex flex-wrap align-center ga-3">
@@ -118,24 +5,15 @@ function next() {
 			<div class="text-h6">{{ title }}</div>
 			<div class="text-body-2 text-medium-emphasis">{{ subtitle }}</div>
 		</div>
-		<v-spacer />
-		<v-switch
-			v-model="showLabels"
-			color="primary"
-			density="compact"
-			hide-details
-			label="Labels"
-		/>
-		<v-switch
-			v-model="animateNext"
-			color="primary"
-			density="compact"
-			hide-details
-			label="Animate next"
-		/>
 	</v-card-title>
 
 	<v-card-text>
+		<p
+			v-if="intro"
+			class="text-body-1 text-medium-emphasis mb-4"
+			v-html="intro"
+		/>
+
 		<div v-if="!currentConfiguration" class="text-body-1 text-medium-emphasis">
 			Keine QC-Konfigurationen vorhanden.
 		</div>
@@ -188,6 +66,115 @@ function next() {
 </v-card>
 </template>
 
+<script setup lang="ts">
+import {
+	computed, ref, watch
+} from "vue";
+import type { QCConfiguration } from "./parser";
+import { renderSVG } from "./visualize";
+
+const props = withDefaults( defineProps<{
+  configurations?: QCConfiguration[]
+  modelValue?: number
+  width?: number
+  height?: number
+  nodeRadius?: number
+  intro?: string
+  title?: string
+}>(), {
+	configurations: () => [],
+	modelValue:     1,
+	width:          640,
+	height:         640,
+	nodeRadius:     6,
+	intro:          "",
+	title:          "QC Graph"
+} );
+
+const emit = defineEmits<{
+  ( e: "update:modelValue", value: number ): void
+}>();
+
+const localIndex = ref( Math.max( 1, props.modelValue ) );
+const stageKey = ref( 0 );
+const navDirection = ref<"next" | "prev">( "next" );
+
+watch( () => props.modelValue, ( value ) => {
+	localIndex.value = Math.max( 1, value );
+} );
+
+watch( localIndex, ( value, oldValue ) => {
+	navDirection.value = value >= ( oldValue ?? value ) ? "next" : "prev";
+	stageKey.value += 1;
+	emit( "update:modelValue", value );
+} );
+
+const total = computed( () => props.configurations.length );
+
+const clampedIndex = computed( {
+	get() {
+		if ( total.value === 0 ) {
+			return 1;
+		}
+
+		return Math.min( Math.max( 1, localIndex.value ), total.value );
+	},
+	set( value: number ) {
+		if ( total.value === 0 ) {
+			localIndex.value = 1;
+			return;
+		}
+
+		localIndex.value = Math.min( Math.max( 1, value ), total.value );
+	}
+} );
+
+const currentConfiguration = computed( () => {
+	if ( total.value === 0 ) {
+		return null;
+	}
+
+	return props.configurations[ clampedIndex.value - 1 ] ?? null;
+} );
+
+const currentSvg = computed( () => {
+	const cfg = currentConfiguration.value;
+
+	if ( !cfg ) {
+		return "";
+	}
+
+	return renderSVG( cfg, {
+		width:      props.width,
+		height:     props.height,
+		showLabels: true,
+		nodeRadius: props.nodeRadius
+	} );
+} );
+
+const subtitle = computed( () => {
+	const cfg = currentConfiguration.value;
+
+	if ( !cfg ) {
+		return "Keine Konfiguration geladen";
+	}
+
+	return `#${cfg.name} · |V|=${cfg.vertexCount} · Ring=${cfg.ringSize} · Ext=${cfg.extendableColorings}`;
+} );
+
+const transitionName = computed( () => {
+	return navDirection.value === "next" ? "graph-next" : "graph-prev";
+} );
+
+function previous() {
+	clampedIndex.value = clampedIndex.value - 1;
+}
+
+function next() {
+	clampedIndex.value = clampedIndex.value + 1;
+}
+</script>
+
 <style scoped>
 .index-field {
   width: 110px;
@@ -200,17 +187,21 @@ function next() {
   border-radius: 16px;
   background: rgb(var(--v-theme-surface));
   position: relative;
+  display: flex;
+  justify-content: center;
 }
 
 .graph-stage {
-  min-width: max-content;
+  width: max-content;
   padding: 12px;
+  margin-inline: auto;
 }
 
 .graph-stage :deep(svg) {
   display: block;
   max-width: 100%;
   height: auto;
+  margin-inline: auto;
 }
 
 .graph-next-enter-active,

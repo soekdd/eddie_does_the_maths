@@ -51,12 +51,11 @@
 	<template #interactivePart>
 		<h2 id="interactive">{{ t('sections.interactive.title') }}</h2>
 		<div class="eddie d-flex flex-column ga-4">
-			<p v-html="t('sections.interactive.intro')" />
-
 			<QCGraph
 				v-model="currentIndex"
 				:configurations="sampleConfigurations"
 				:height="720"
+				:intro="t('sections.interactive.intro')"
 				:node-radius="5"
 				:title="t('sections.interactive.graphTitle')"
 				:width="720"
