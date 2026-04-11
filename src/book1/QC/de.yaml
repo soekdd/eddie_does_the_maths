@@ -18,6 +18,7 @@ book:
 sections:
   problem:
     title: "Das Problem"
+    europe85: "Europa 1985"
     p1: "Der Vierfarbensatz behauptet: Jede Landkarte in der Ebene lässt sich mit höchstens vier Farben so färben, dass benachbarte Gebiete nie dieselbe Farbe haben. „Benachbart“ bedeutet dabei: gemeinsame Grenze, nicht bloß ein Berührpunkt."
     p2: "Mathematiker übersetzen Landkarten dafür in <strong>planare Graphen</strong>. Jedes Gebiet wird zu einem Knoten, gemeinsame Grenzen werden zu Kanten. Dann lautet die Frage: Kann man die Knoten jedes planaren Graphen mit höchstens vier Farben färben, ohne dass zwei verbundene Knoten dieselbe Farbe tragen?"
   idea:
@@ -36,6 +37,7 @@ sections:
     title: "Interaktiver Blick auf Konfigurationen"
     intro: "Appel und Haken kamen am Ende auf <strong>1936 verschiedene unvermeidbare Konfigurationen</strong>. Diese Menge ließ sich aber nicht einfach mit einem sauberen Algorithmus erzeugen, also kann ich sie hier nicht einfach Zeile für Zeile aus ein paar klaren Rechenregeln herleiten. Später arbeiteten <a href=\"https://www.researchgate.net/publication/259914175_Reducibility_in_the_Four-Color_Theorem\">Robertson, Sanders, Seymour und Thomas</a> den rechnergestützten Teil des Beweises systematischer aus. Darum schaue ich mir hier Konfigurationen an, wie sie in ihrer Fassung auftreten, auch wenn es dort ein paar mehr (2822) sind."
     graphTitle: "Unvermeidbare Konfigurationen"
+    europeSummary: "{countryCount} Länder · {edgeCount} Grenzbeziehungen · 4 Farben"
     graphControls:
       empty: "Keine QC-Konfigurationen vorhanden."
       previous: "Zurück"

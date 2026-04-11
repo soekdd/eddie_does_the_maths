@@ -24,9 +24,10 @@
 
 	<template #descriptionPart>
 		<figure class="exampleFigure">
-			<ImageZoomer title="Europa 1985">
+			<ImageZoomer :title="t('sections.problem.europe85')">
 				<QCEurope
 					:height="720"
+					:title="t('sections.problem.europe85')"
 					:width="720"
 				/>
 			</ImageZoomer>

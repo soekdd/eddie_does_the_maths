@@ -23,6 +23,7 @@
 
 <script setup lang="ts">
 import { computed } from "vue";
+import { useI18n } from "@/utils/i18n.mjs";
 import rawMap from "./map85.svg?raw";
 
 interface Point {
@@ -108,6 +109,7 @@ const props = withDefaults( defineProps<{
 	height:     720,
 	nodeRadius: 5
 } );
+const { t } = useI18n( "book1.QC" );
 
 const adjacency: Record<CountryId, CountryId[]> = {
 	NO: [ "SE", "FI", "SU" ],
@@ -534,7 +536,10 @@ const edgePairs = Object.entries( adjacency )
 
 const displayTitle = computed( () => props.title || "Europa 1985" );
 const displaySubtitle = computed( () => {
-	return props.subtitle || `${mapPaths.length} Länder, ${edgePairs.length} Grenzbeziehungen, 4 Farben`;
+	return props.subtitle || t( "sections.interactive.europeSummary", {
+		countryCount: mapPaths.length,
+		edgeCount:    edgePairs.length
+	} );
 } );
 
 const svgMarkup = computed( () => {
