@@ -37,7 +37,7 @@
 					:title="t( 'app.home' )"
 					:to="homeLinkTarget"
 				>
-					<img :alt="t( 'app.home' )" class="homeBadgeIcon" :src="faviconPng" />
+					<img :alt="t( 'app.home' )" class="homeBadgeIcon" :src="favicon" />
 				</router-link>
 				<!-- <div v-else-if="shortText" class="badge">{{ shortText }}</div> -->
 				<template v-if="showFormalTitle">
@@ -366,7 +366,7 @@ import { i18nApi, useI18n } from "@/utils/i18n.mjs";
 import {
 	contentRoutes, localizePath, resolveLocaleFromPath, resolveRouteMetaTitle, stripLocalePrefix
 } from "@/router.js";
-import faviconPng from "../images/favicon.png";
+import favicon from "../images/favicon.webp";
 import EinsteinHatFill from "./EinsteinHatFill.vue";
 import ForumThreadPocketBase from "./ForumThreadPocketBase.vue";
 import MarkdownDownload from "./MarkdownDownload.vue";

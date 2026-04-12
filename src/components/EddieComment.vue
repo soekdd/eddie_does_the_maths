@@ -14,7 +14,7 @@
 			alt=""
 			aria-hidden="true"
 			class="eddieCommentIcon"
-			:src="faviconPng"
+			:src="favicon"
 		/>
 	</template>
 
@@ -30,7 +30,7 @@
 
 <script setup>
 import { useI18n } from "@/utils/i18n.mjs";
-import faviconPng from "@/images/favicon.png";
+import favicon from "@/images/favicon.webp";
 
 const { t } = useI18n( "components.lang" );
 
