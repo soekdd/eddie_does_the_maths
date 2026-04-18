@@ -1,109 +1,204 @@
 title: HAM Radio Encoder and Decoder
 imageTitle: "Eddie is radioing home again"
+imageAlt: "Eddie is sitting at the radio and sending a message home"
 subChapter:
   einleitung: Kungsholmen, October 24, 1985
-  frequenzen-baender: Frequencies and Bands
-  bandnamen: Band Names
-  zahlenfamilie: Number Family
-  banduebersicht: Band Overview
-  bandlogik: Why These Bands
-  weitere-baender: More Bands
+  baumgedanke: Tree Idea
+  tiefe: Depth and Time
+  zeitformel: Time Formula
+  beispiele: Examples
+  ueberraschung: Surprises
+  optimierung: Optimization
+  huffman: Huffman
+  menschen-code: Human Code
+  pointe: Point
   eddies-schluss: Eddie's Conclusion
   encoder: Encoder
   decoder: Decoder
 bookPart:
   introText: "This section is still missing from the book. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
 description:
-  formulas:
-    example7Value: "42.9"
-    example14Value: "21.4"
-    band40Label: 40 meter band
-    band20Label: 20 meter band
+  figureTitle: Morse tree
+  tree:
+    ariaLabel: Morse tree with time-based vertical spacing
+    timeAxis: Time
+    rootLabel: Start
+    legendTitle: Legend
+    legendEdge: Connection
+    legendTerminal: Node with character
+    legendIntermediate: Intermediate node
+    tooltipCode: Morse code
+    tooltipDuration: Duration
+    durationSingle: "{count} time unit"
+    durationPlural: "{count} time units"
+    letterTitle: "Letter {value}"
+    intermediateTitle: Intermediate node
   sections:
-    frequenzen:
-      title: Frequencies, Bands, and Number Families
-      p1: "When I first saw the numbers on the radio, they looked random: 3.5&nbsp;MHz. 7&nbsp;MHz. 14&nbsp;MHz. 21&nbsp;MHz. 28&nbsp;MHz. But then it became clear: this is not a loose collection. It is almost a family."
-      lead: "The core idea is simple. Frequency and wavelength describe the same thing, just in two different languages."
-      p2: "Because electromagnetic waves travel at almost the speed of light, radio operators can work with a practical approximation:"
-      p3: "<strong>Wavelength in meters</strong> is approximately <strong>300 divided by the frequency in megahertz</strong>."
-    bandnamen:
-      title: "1. Why are the bands named that way?"
-      p1: "A band name is usually just the <strong>rounded wavelength</strong>. That is why the 7 MHz band is called the “40 meter band” even though the calculation is more precisely about 42.9 meters."
-      p2: "So operators sometimes talk in <strong>MHz</strong> and sometimes in <strong>meters</strong>. It is the same band, just viewed from two angles."
-    zahlenfamilie:
-      title: "2. The old number family"
-      p1: "The classic shortwave family almost looks like a doubling sequence:"
-      chips:
-        - 3.5 MHz → 80 m
-        - 7 MHz → 40 m
-        - 14 MHz → 20 m
-        - 21 MHz → 15 m
-        - 28 MHz → 10 m
-      p2: Double the frequency and the wavelength is cut in half. That is exactly why 80&nbsp;m, 40&nbsp;m, 20&nbsp;m, and 10&nbsp;m feel related. 15&nbsp;m does not fit the old doubling pattern perfectly, but it complements the family very well.
-    banduebersicht:
-      title: "3. The most important bands at a glance"
-      table:
-        band: Band
-        frequency: Typical center frequency
-        lambda: Calculated wavelength
-        note: Main idea
-      bands:
-        - name: 80 m
-          frequency: 3.5 MHz
-          lambda: "≈ 85.7 m"
-          note: Low shortwave, classic night-time and regional band
-        - name: 40 m
-          frequency: 7 MHz
-          lambda: "≈ 42.9 m"
-          note: Very versatile, a good bridge between near and far
-        - name: 30 m
-          frequency: 10.1 MHz
-          lambda: "≈ 29.7 m"
-          note: A bridge between 40 m and 20 m
-        - name: 20 m
-          frequency: 14 MHz
-          lambda: "≈ 21.4 m"
-          note: The classic international DX band
-        - name: 17 m
-          frequency: 18.068 MHz
-          lambda: "≈ 16.6 m"
-          note: A calmer alternative to 20 m
-        - name: 15 m
-          frequency: 21 MHz
-          lambda: "≈ 14.3 m"
-          note: Strong in daylight and during good solar activity
-        - name: 12 m
-          frequency: 24.89 MHz
-          lambda: "≈ 12.1 m"
-          note: Complements the higher shortwave bands
-        - name: 10 m
-          frequency: 28 MHz
-          lambda: "≈ 10.7 m"
-          note: High shortwave, exciting during strong openings
-    bandlogik:
-      title: "4. Why were the bands chosen like this?"
-      p1: "Historically, people did not want just a few arbitrary islands in the spectrum. They wanted <strong>useful, memorable, and technically distinct ranges</strong>. The old core family is so elegant because related numbers create very different radio worlds."
+    baumgedanke:
+      title: "1. The Tree Idea"
+      p1: "The international Morse alphabet can be understood as a <strong>binary tree</strong>."
+      choices:
+        - label: Dot
+          symbol: "."
+        - label: Dash
+          symbol: "-"
+      p2: "At each step there are exactly two choices. You start at the root and then move one level deeper for every additional symbol."
+      rootIntro: "Very close to the root are very short signs:"
+      rootExamples:
+        - letter: E
+          code: "."
+        - letter: T
+          code: "-"
+      levelIntro: "One level lower, for example, you find:"
+      levelExamples:
+        - letter: I
+          code: ".."
+        - letter: A
+          code: ".-"
+        - letter: N
+          code: "-."
+        - letter: M
+          code: "--"
+      p3: "That already gives the first mathematical idea:"
+      lead1: A Morse character is a path in a binary tree.
+      p4: "Frequent letters usually get short paths, rarer ones longer paths. That is the same basic idea that later appears in many methods of information theory:"
+      lead2: Frequent short, rare long.
+    tiefe:
+      title: "2. But Depth Alone Is Not Enough"
+      p1: "One might think:"
+      lead: The closer a letter is to the root, the faster it is.
+      p2: "That is <strong>only approximately</strong> true, because in Morse the two branches do not cost the same:"
+      costs:
+        - label: a dot lasts
+          value: 1 time unit
+        - label: a dash lasts
+          value: 3 time units
+        - label: between two symbols inside one letter there is also a pause of
+          value: 1 time unit
+      p3: "So mathematically, what matters is not just the <strong>depth in the tree</strong>, but the <strong>total transmission time</strong>."
+    zeitformel:
+      title: "3. The Time Formula"
+      p1: "If a letter has"
+      parts:
+        - symbol: d
+          text: dots
+        - symbol: s
+          text: dashes
+        - symbol: k = d+s
+          text: elements in total
+      p2: "then its duration inside the letter is:"
+      p3: "Because:"
+      reasons:
+        - each dot costs 1
+        - each dash costs 3
+        - between the k elements there are k-1 internal pauses
+    beispiele:
+      title: "4. Examples"
       cards:
-        - title: a) Easy to remember
-          text: 3.5 → 7 → 14 → 28 almost sounds musical. Once you know the pattern, the band names make immediate sense.
-        - title: b) Different propagation
-          text: Low bands behave differently from high ones. That gives you different tools for day, night, local work, and long distance.
-        - title: c) Practical for antennas
-          text: As wavelength changes, the size of useful antennas changes too. That makes the differences not only audible, but literally measurable.
-    weitereBaender:
-      title: "5. And why were more bands added later?"
-      p1: "Because the old family is elegant, but it does not fill every gap. Some later bands act like bridges or side lanes:"
+        - key: e
+          title: E
+          code: "."
+          facts:
+            - "Dots: d=1"
+            - "Dashes: s=0"
+            - "Elements: k=1"
+        - key: t
+          title: T
+          code: "-"
+          facts:
+            - "Dots: d=0"
+            - "Dashes: s=1"
+            - "Elements: k=1"
+        - key: i
+          title: I
+          code: ".."
+          facts:
+            - "Dots: d=2"
+            - "Dashes: s=0"
+            - "Elements: k=2"
+        - key: a
+          title: A
+          code: ".-"
+          facts:
+            - "Dots: d=1"
+            - "Dashes: s=1"
+            - "Elements: k=2"
+        - key: s
+          title: S
+          code: "..."
+          facts:
+            - "Dots: d=3"
+            - "Dashes: s=0"
+            - "Elements: k=3"
+    ueberraschung:
+      title: "5. What Is Surprising About This"
+      p1: "Now you can see immediately:"
       items:
-        - label: 30 m
-          text: It sits between 40 m and 20 m and therefore really is an intermediate band.
-        - label: 17 m
-          text: It often serves as a quieter counterpart to the heavily used 20 m band.
-        - label: 12 m
-          text: It complements 15 m and 10 m in a range that can be especially interesting during the day.
-      p2: These later additions do not destroy the old system. They simply make it finer and more useful in everyday practice.
-    schluss:
-      title: conclusion
-      quote: At first I thought operators were just giving their bands names. Then I saw the pattern. Not chaos. Not habit. Almost a family of numbers. And suddenly the invisible felt as if someone had sorted it neatly.
+        - "<code>T</code> sits very close to the root, but with duration 3 it is <strong>not faster</strong> than <code>I</code>."
+        - "<code>S</code> lies deeper in the tree than <code>A</code>, but takes <strong>exactly the same time</strong>."
+      p2: "So the real lesson is:"
+      lead1: The depth of the node alone does not describe Morse well enough.
+      p3: "The mathematically fitting quantity is:"
+      lead2: weighted path length in time
+    optimierung:
+      title: "6. The Actual Optimization Idea"
+      p1: "Now it becomes truly mathematical. Suppose a letter <span class=\"mono\">i</span> occurs with probability <span class=\"mono\">p_i</span>."
+      p2: "Then the average transmission time of an alphabet is:"
+      p3: "That is an <strong>expected value</strong>."
+      goals:
+        - frequent letters should cost little time
+        - rare letters may take longer
+      p4: "This is exactly the same logic that later appears in <strong>optimal codes</strong> in information theory."
+    huffman:
+      title: "7. Close to Huffman Codes"
+      p1: "Morse strongly resembles a <strong>Huffman code</strong>:"
+      similarities:
+        - frequent symbols get short codes
+        - rare symbols get longer ones
+      p2: "But there is an important difference. In Morse, for example, <code>.</code> is already a full letter and at the same time the beginning of longer signs:"
+      prefixExamples:
+        - letter: E
+          code: "."
+        - letter: I
+          code: ".."
+        - letter: A
+          code: ".-"
+      cards:
+        huffman:
+          title: Huffman code
+          text: "A Huffman code is a <strong>prefix code</strong>. No codeword may be the beginning of another."
+        morse:
+          title: Morse
+          text: "The Morse alphabet works differently. A short code can already be complete and still continue into longer characters."
+      p3: "That is why Morse only works because the <strong>pauses</strong> also carry information."
+      lead: You do not read only dots and dashes, but also the separation between letters.
+    menschenCode:
+      title: "8. Why Morse Still Works So Well"
+      p1: "Morse is not a strictly perfect mathematical code, but a very clever <strong>human code</strong>."
+      strengths:
+        - rhythmically easy to hear
+        - easy to send by hand
+        - often still recognizable under interference
+        - quite economical for frequent letters
+      p2: "So the Morse alphabet is not a pure optimum on paper, but a compromise between:"
+      compromises:
+        - mathematical efficiency
+        - audibility
+        - memorability
+        - practical radio experience
+    pointe:
+      title: "9. The Beautiful Mathematical Point"
+      p1: "What makes it fascinating is:"
+      lead1: Morse looks like language, sounds like rhythm, and at the same time can be described with tree structures, weights, and expected values.
+      p2: "Or even shorter:"
+      lead2: The Morse alphabet is a historical code in which a lot of later information theory is already hiding.
+    eddie:
+      title: "10. Eddie's Conclusion"
+      subtitle: What Eddie suddenly sees
+      p1: "Once I understand it, I suddenly no longer see only dots and dashes."
+      p2: "I see a tree. At the very top are the letters you need all the time. Further down the rare ones are hidden."
+      p3: "But what matters is not only <strong>how deep</strong> a letter lies, but also <strong>how expensive the path to it is in time</strong>."
+      p4: "That is the really beautiful part of it: Morse is not just a radio language. It is a small piece of mathematics that you can hear."
 encoder:
   editorTitle: Natural language
   editorHint: Click phrase snippets into the editor or write your own statements. Separate multiple statements with |.

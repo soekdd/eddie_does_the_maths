@@ -147,7 +147,8 @@ function splitPrefixedLine( line ) {
 }
 
 function isCommentLine( content ) {
-	return String( content ?? "" ).trimStart().startsWith( "#" );
+	return String( content ?? "" ).trimStart()
+		.startsWith( "#" );
 }
 
 const audioSupported = computed( () => typeof window !== "undefined" &&

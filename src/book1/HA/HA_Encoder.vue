@@ -468,10 +468,8 @@ function createTextEditorExtensions() {
 	];
 }
 
-function createTextEditorAttributes(
-	className,
-	autocapitalize = "off"
-) {
+function createTextEditorAttributes( className,
+	autocapitalize = "off" ) {
 	return {
 		autocapitalize,
 		autocomplete: "off",
@@ -482,14 +480,12 @@ function createTextEditorAttributes(
 }
 
 const editor = useEditor( {
-	content:    createDocFromText( props.modelValue ),
-	extensions: createTextEditorExtensions(),
+	content:     createDocFromText( props.modelValue ),
+	extensions:  createTextEditorExtensions(),
 	editorProps: {
 		decorations: ( state ) => buildCommentDecorationSet( state.doc ),
-		attributes: createTextEditorAttributes(
-			"haEncoderTextEditor haEncoderEditor",
-			"sentences"
-		)
+		attributes:  createTextEditorAttributes( "haEncoderTextEditor haEncoderEditor",
+			"sentences" )
 	},
 	onCreate: ( { editor: instance } ) => {
 		plainText.value = extractPlainText( instance );
@@ -523,7 +519,8 @@ function splitPrefixedLine( line ) {
 }
 
 function isCommentLine( content ) {
-	return String( content ?? "" ).trimStart().startsWith( "#" );
+	return String( content ?? "" ).trimStart()
+		.startsWith( "#" );
 }
 
 function escapeRegExp( value ) {
@@ -568,12 +565,10 @@ function isNumberWithUnit( token ) {
 }
 
 function isKnownCodeToken( token ) {
-	return Boolean(
-		qCodeEntries.value?.[ token ] ||
+	return Boolean( qCodeEntries.value?.[ token ] ||
 		cwCodeEntries.value?.[ token ] ||
 		HA_SPECIAL_TOKEN_SET.has( token ) ||
-		token === "RST"
-	);
+		token === "RST" );
 }
 
 function buildSpecialSymbolMatch( phrase ) {
@@ -593,7 +588,8 @@ function buildSpecialSymbolMatch( phrase ) {
 }
 
 function looksLikeEncodedLine( value ) {
-	const tokens = normalizeCodeValue( value ).split( " " ).filter( Boolean );
+	const tokens = normalizeCodeValue( value ).split( " " )
+		.filter( Boolean );
 
 	if ( !tokens.length ) {
 		return false;
@@ -605,11 +601,11 @@ function looksLikeEncodedLine( value ) {
 
 		if (
 			isKnownCodeToken( token ) ||
-			( previousToken === "RST" && /^\d{2,3}$/.test( token ) ) ||
-			( previousToken === "CQ" && isCQTargetPrefix( token ) ) ||
+			 previousToken === "RST" && /^\d{2,3}$/.test( token ) ||
+			 previousToken === "CQ" && isCQTargetPrefix( token ) ||
 			isCallsign( token ) ||
 			isNumberWithUnit( token ) ||
-			( CONTEXTUAL_CODE_TOKENS.has( previousToken ) && !isKnownCodeToken( token ) )
+			 CONTEXTUAL_CODE_TOKENS.has( previousToken ) && !isKnownCodeToken( token )
 		) {
 			continue;
 		}
@@ -1057,9 +1053,9 @@ const encoded = computed( () => plainText.value.trim() ?
 const encodedDisplayText = computed( () => encoded.value.codeText || "—" );
 
 const encodedOutputEditor = useEditor( {
-	content:    createDocFromText( encodedDisplayText.value ),
-	editable:   false,
-	extensions: createTextEditorExtensions(),
+	content:     createDocFromText( encodedDisplayText.value ),
+	editable:    false,
+	extensions:  createTextEditorExtensions(),
 	editorProps: {
 		decorations: ( state ) => buildCommentDecorationSet( state.doc ),
 		attributes:  createTextEditorAttributes( "haEncoderTextEditor haReadonlyEditor haEncoderOutputEditor" )

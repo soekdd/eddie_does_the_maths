@@ -1,113 +1,205 @@
 title: "Amatörradio – kodare och avkodare"
 imageTitle: "Eddie radioar hem igen"
+imageAlt: "Eddie sitter vid radion och sänder hem"
 
 subChapter:
   einleitung: "Kungsholmen, 24 oktober 1985"
-  frequenzen-baender: "Frekvenser och band"
-  bandnamen: "Bandnamn"
-  zahlenfamilie: "Talfamilj"
-  banduebersicht: "Bandöversikt"
-  bandlogik: "Varför just dessa band"
-  weitere-baender: "Fler band"
+  baumgedanke: "Trädidén"
+  tiefe: "Djup och tid"
+  zeitformel: "Tidsformeln"
+  beispiele: "Exempel"
+  ueberraschung: "Överraskningar"
+  optimierung: "Optimering"
+  huffman: "Huffman"
+  menschen-code: "Människokod"
+  pointe: "Poäng"
   eddies-schluss: "Eddies slutsats"
   encoder: "Kodare"
   decoder: "Avkodare"
-
 bookPart:
   introText: "Det här avsnittet saknas fortfarande i boken. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
-
 description:
-  formulas:
-    example7Value: "42.9"
-    example14Value: "21.4"
-    band40Label: "40-metersbandet"
-    band20Label: "20-metersbandet"
+  figureTitle: Morseträd
+  tree:
+    ariaLabel: Morseträd med tidsbaserad vertikal skala
+    timeAxis: Tid
+    rootLabel: Start
+    legendTitle: Legend
+    legendEdge: Förbindelse
+    legendTerminal: Nod med tecken
+    legendIntermediate: Mellannod
+    tooltipCode: Morsekod
+    tooltipDuration: Längd
+    durationSingle: "{count} tidsenhet"
+    durationPlural: "{count} tidsenheter"
+    letterTitle: "Bokstav {value}"
+    intermediateTitle: Mellannod
   sections:
-    frequenzen:
-      title: "Frekvenser, band och talfamiljer"
-      p1: "När jag först såg siffrorna på radion verkade de slumpmässiga: 3.5&nbsp;MHz. 7&nbsp;MHz. 14&nbsp;MHz. 21&nbsp;MHz. 28&nbsp;MHz. Men sedan blev det tydligt: det här är inte en lös samling. Det är nästan en familj."
-      lead: "Grundidén är enkel. Frekvens och våglängd beskriver samma sak, bara på två olika språk."
-      p2: "Eftersom elektromagnetiska vågor färdas nästan med ljusets hastighet kan radioamatörer använda en praktisk approximation:"
-      p3: "<strong>Våglängden i meter</strong> är ungefär <strong>300 dividerat med frekvensen i megahertz</strong>."
-    bandnamen:
-      title: "1. Varför heter banden så?"
-      p1: "Ett bandnamn är vanligtvis bara den <strong>avrundade våglängden</strong>. Därför kallas 7 MHz-bandet för ”40-metersbandet”, även om beräkningen mer exakt ger ungefär 42.9 meter."
-      p2: "Därför talar amatörer ibland i <strong>MHz</strong> och ibland i <strong>meter</strong>. Det är samma band, bara sett ur två olika vinklar."
-    zahlenfamilie:
-      title: "2. Den klassiska talfamiljen"
-      p1: "Den klassiska kortvågsfamiljen ser nästan ut som en fördubblingsserie:"
-      chips:
-        - "3.5 MHz → 80 m"
-        - "7 MHz → 40 m"
-        - "14 MHz → 20 m"
-        - "21 MHz → 15 m"
-        - "28 MHz → 10 m"
-      p2: "Fördubblar man frekvensen halveras våglängden. Det är precis därför 80&nbsp;m, 40&nbsp;m, 20&nbsp;m och 10&nbsp;m känns besläktade. 15&nbsp;m passar inte perfekt in i det gamla fördubblingsmönstret, men kompletterar familjen mycket väl."
-    banduebersicht:
-      title: "3. De viktigaste banden i överblick"
-      table:
-        band: "Band"
-        frequency: "Typisk mittfrekvens"
-        lambda: "Beräknad våglängd"
-        note: "Huvudidé"
-      bands:
-        - name: "80 m"
-          frequency: "3.5 MHz"
-          lambda: "≈ 85.7 m"
-          note: "Låg kortvåg, klassiskt natt- och regionband"
-        - name: "40 m"
-          frequency: "7 MHz"
-          lambda: "≈ 42.9 m"
-          note: "Mycket mångsidigt, en bra brygga mellan nära och långt"
-        - name: "30 m"
-          frequency: "10.1 MHz"
-          lambda: "≈ 29.7 m"
-          note: "En brygga mellan 40 m och 20 m"
-        - name: "20 m"
-          frequency: "14 MHz"
-          lambda: "≈ 21.4 m"
-          note: "Det klassiska internationella DX-bandet"
-        - name: "17 m"
-          frequency: "18.068 MHz"
-          lambda: "≈ 16.6 m"
-          note: "Ett lugnare alternativ till 20 m"
-        - name: "15 m"
-          frequency: "21 MHz"
-          lambda: "≈ 14.3 m"
-          note: "Starkt i dagsljus och vid god solaktivitet"
-        - name: "12 m"
-          frequency: "24.89 MHz"
-          lambda: "≈ 12.1 m"
-          note: "Kompletterar de högre kortvågsbanden"
-        - name: "10 m"
-          frequency: "28 MHz"
-          lambda: "≈ 10.7 m"
-          note: "Hög kortvåg, spännande vid starka öppningar"
-    bandlogik:
-      title: "4. Varför valdes banden så här?"
-      p1: "Historiskt ville man inte bara ha några godtyckliga öar i spektrumet. Man ville ha <strong>användbara, minnesvänliga och tekniskt tydligt olika områden</strong>. Den gamla kärnfamiljen är så elegant därför att besläktade tal skapar mycket olika radiovärldar."
+    baumgedanke:
+      title: "1. Trädidén"
+      p1: "Det internationella Morsealfabetet kan man tänka sig som ett <strong>binärt träd</strong>."
+      choices:
+        - label: Punkt
+          symbol: "."
+        - label: Streck
+          symbol: "-"
+      p2: "Vid varje steg finns exakt två möjligheter. Man börjar vid roten och går sedan ett steg djupare för varje nytt tecken."
+      rootIntro: "Mycket nära roten finns mycket korta tecken:"
+      rootExamples:
+        - letter: E
+          code: "."
+        - letter: T
+          code: "-"
+      levelIntro: "En nivå längre ned ligger till exempel:"
+      levelExamples:
+        - letter: I
+          code: ".."
+        - letter: A
+          code: ".-"
+        - letter: N
+          code: "-."
+        - letter: M
+          code: "--"
+      p3: "Det är redan den första matematiska idén:"
+      lead1: Ett Morsetecken är en väg i ett binärt träd.
+      p4: "Vanliga bokstäver får oftast korta vägar, ovanliga längre. Det är samma grundidé som senare dyker upp i många delar av informationsteorin:"
+      lead2: Vanligt kort, sällsynt långt.
+    tiefe:
+      title: "2. Men det är inte bara djupet som räknas"
+      p1: "Man skulle kunna tro:"
+      lead: Ju närmare roten en bokstav ligger, desto snabbare är den.
+      p2: "Det stämmer <strong>bara ungefär</strong>, eftersom de två grenarna i Morse inte kostar lika mycket:"
+      costs:
+        - label: en punkt varar
+          value: 1 tidsenhet
+        - label: ett streck varar
+          value: 3 tidsenheter
+        - label: mellan två symboler inne i en bokstav finns också en paus på
+          value: 1 tidsenhet
+      p3: "Därför räknar man matematiskt inte bara <strong>djupet i trädet</strong>, utan den <strong>totala sändningstiden</strong>."
+    zeitformel:
+      title: "3. Tidsformeln"
+      p1: "Om en bokstav har"
+      parts:
+        - symbol: d
+          text: punkter
+        - symbol: s
+          text: streck
+        - symbol: k = d+s
+          text: element totalt
+      p2: "så är dess längd inne i bokstaven:"
+      p3: "För att:"
+      reasons:
+        - varje punkt kostar 1
+        - varje streck kostar 3
+        - mellan de k elementen finns k-1 inre pauser
+    beispiele:
+      title: "4. Exempel"
       cards:
-        - title: "a) Lätta att minnas"
-          text: "3.5 → 7 → 14 → 28 låter nästan musikaliskt. När man väl känner igen mönstret blir bandnamnen genast begripliga."
-        - title: "b) Olika konditioner"
-          text: "Låga band beter sig annorlunda än höga. Det ger olika verktyg för dag, natt, lokala kontakter och långdistans."
-        - title: "c) Praktiskt för antenner"
-          text: "När våglängden förändras ändras också storleken på användbara antenner. Därför är skillnaderna inte bara hörbara, utan bokstavligen mätbara."
-    weitereBaender:
-      title: "5. Och varför lades fler band till senare?"
-      p1: "Därför att den gamla familjen är elegant, men inte fyller varje lucka. Några senare band fungerar som bryggor eller sidospår:"
+        - key: e
+          title: E
+          code: "."
+          facts:
+            - "Punkter: d=1"
+            - "Streck: s=0"
+            - "Element: k=1"
+        - key: t
+          title: T
+          code: "-"
+          facts:
+            - "Punkter: d=0"
+            - "Streck: s=1"
+            - "Element: k=1"
+        - key: i
+          title: I
+          code: ".."
+          facts:
+            - "Punkter: d=2"
+            - "Streck: s=0"
+            - "Element: k=2"
+        - key: a
+          title: A
+          code: ".-"
+          facts:
+            - "Punkter: d=1"
+            - "Streck: s=1"
+            - "Element: k=2"
+        - key: s
+          title: S
+          code: "..."
+          facts:
+            - "Punkter: d=3"
+            - "Streck: s=0"
+            - "Element: k=3"
+    ueberraschung:
+      title: "5. Det överraskande"
+      p1: "Nu ser man direkt:"
       items:
-        - label: "30 m"
-          text: "Det ligger mellan 40 m och 20 m och är därför verkligen ett mellanband."
-        - label: "17 m"
-          text: "Det fungerar ofta som en lugnare motsvarighet till det hårt använda 20 m-bandet."
-        - label: "12 m"
-          text: "Det kompletterar 15 m och 10 m i ett område som kan vara särskilt intressant under dagen."
-      p2: "Dessa senare tillägg förstör inte det gamla systemet. De gör det bara finare och mer användbart i praktiken."
-    schluss:
-      title: "Slutsats"
-      quote: "Först trodde jag att radioamatörerna bara gav sina band namn. Sedan såg jag mönstret. Inte kaos. Inte vana. Nästan en familj av tal. Och plötsligt kändes det osynliga som om någon hade sorterat det prydligt."
-
+        - "<code>T</code> ligger mycket nära roten men är med längd 3 <strong>inte snabbare</strong> än <code>I</code>."
+        - "<code>S</code> ligger djupare i trädet än <code>A</code>, men tar <strong>lika lång tid</strong>."
+      p2: "Alltså gäller:"
+      lead1: Nodens djup ensamt beskriver inte Morse tillräckligt bra.
+      p3: "Den matematiskt passande storheten är:"
+      lead2: viktad väglängd i tid
+    optimierung:
+      title: "6. Den egentliga optimeringsidén"
+      p1: "Nu blir det riktigt matematiskt. Anta att en bokstav <span class=\"mono\">i</span> förekommer med sannolikheten <span class=\"mono\">p_i</span>."
+      p2: "Då är alfabetets genomsnittliga sändningstid:"
+      p3: "Detta är ett <strong>förväntningsvärde</strong>."
+      goals:
+        - vanliga bokstäver bör kosta lite tid
+        - ovanliga får vara längre
+      p4: "Här finns exakt samma logik som senare återkommer i <strong>optimala koder</strong> inom informationsteorin."
+    huffman:
+      title: "7. Närhet till Huffman-koder"
+      p1: "Morse påminner starkt om en <strong>Huffman-kod</strong>:"
+      similarities:
+        - vanliga tecken får korta koder
+        - ovanliga tecken längre
+      p2: "Men det finns en viktig skillnad. I Morse är till exempel <code>.</code> redan en hel bokstav och samtidigt början på längre tecken:"
+      prefixExamples:
+        - letter: E
+          code: "."
+        - letter: I
+          code: ".."
+        - letter: A
+          code: ".-"
+      cards:
+        huffman:
+          title: Huffman-kod
+          text: "En Huffman-kod är en <strong>prefixkod</strong>. Inget kodord får vara början på ett annat."
+        morse:
+          title: Morse
+          text: "Morsealfabetet fungerar annorlunda. En kort kod kan redan vara fullständig och ändå fortsätta i längre tecken."
+      p3: "Därför fungerar Morse bara eftersom <strong>pauserna</strong> också bär information."
+      lead: Man läser inte bara punkter och streck utan också skillnaden mellan bokstäver.
+    menschenCode:
+      title: "8. Varför Morse ändå fungerar så bra"
+      p1: "Morse är inte en strikt matematiskt perfekt kod utan en mycket klok <strong>människokod</strong>."
+      strengths:
+        - rytmiskt lätt att höra
+        - lätt att sända för hand
+        - ofta fortfarande igenkännlig under störningar
+        - ganska sparsam för vanliga bokstäver
+      p2: "Morsealfabetet är alltså ingen ren optimal lösning på papper, utan en kompromiss mellan:"
+      compromises:
+        - matematisk effektivitet
+        - hörbarhet
+        - minnesvänlighet
+        - praktisk radioerfarenhet
+    pointe:
+      title: "9. Den vackra matematiska poängen"
+      p1: "Det fascinerande är:"
+      lead1: Morse ser ut som språk, låter som rytm och kan samtidigt beskrivas med trädstrukturer, vikter och förväntningsvärden.
+      p2: "Eller ännu kortare:"
+      lead2: Morsealfabetet är en historisk kod där mycket av den senare informationsteorin redan finns gömd.
+    eddie:
+      title: "10. Eddies slutsats"
+      subtitle: Vad Eddie plötsligt ser
+      p1: "När jag förstår det ser jag plötsligt inte längre bara punkter och streck."
+      p2: "Jag ser ett träd. Högst upp finns bokstäverna man behöver hela tiden. Längre ned gömmer sig de sällsynta."
+      p3: "Men det avgörande är inte bara <strong>hur djupt</strong> en bokstav ligger, utan också <strong>hur dyr vägen dit är i tid</strong>."
+      p4: "Det är det vackra med det här: Morse är inte bara ett radiospråk. Det är en liten bit matematik som man kan höra."
 encoder:
   editorTitle: "Klarspråk"
   editorHint: "Klicka in fraser i editorn eller skriv egna formuleringar. Separera flera delar med |."

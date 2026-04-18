@@ -16,109 +16,212 @@
 			{{ t( "bookPart.introText" ) }}
 		</div>
 	</template>
+
 	<template #descriptionPart>
-		<h2 id="frequenzen-baender">{{ t( "description.sections.frequenzen.title" ) }}</h2>
+		<figure class="exampleFigure">
+			<ImageZoomer :title="t( 'description.figureTitle' )">
+				<HATree />
+			</ImageZoomer>
+		</figure>
+
+		<h2 id="baumgedanke">{{ t( "description.sections.baumgedanke.title" ) }}</h2>
 		<div class="eddie">
-			<p v-html="t( 'description.sections.frequenzen.p1' )" />
-
-			<div class="haLeadBox">
-				{{ t( "description.sections.frequenzen.lead" ) }}
-			</div>
-
-			<div class="kbox formulaStack">
-				<Katex :tex="tex.cEqualsLambdaF" />
-				<Katex :tex="tex.lambdaEqualsCOverF" />
-				<Katex :tex="tex.lambdaWithUnits" />
-				<Katex :tex="tex.lambdaApprox" />
-			</div>
-
-			<p v-html="t( 'description.sections.frequenzen.p2' )" />
-			<p v-html="t( 'description.sections.frequenzen.p3' )" />
-		</div>
-
-		<h2 id="bandnamen" class="mt-8">{{ t( "description.sections.bandnamen.title" ) }}</h2>
-		<div class="eddie">
-			<p v-html="t( 'description.sections.bandnamen.p1' )" />
-
-			<div class="kbox formulaStack">
-				<Katex :tex="tex.example7MHz" />
-				<Katex :tex="tex.example14MHz" />
-			</div>
-
-			<p v-html="t( 'description.sections.bandnamen.p2' )" />
-		</div>
-
-		<h2 id="zahlenfamilie" class="mt-8">{{ t( "description.sections.zahlenfamilie.title" ) }}</h2>
-		<div class="eddie">
-			<p>{{ t( "description.sections.zahlenfamilie.p1" ) }}</p>
-
-			<div class="chipWrap">
-				<v-chip
-					v-for="chip in familyChips"
-					:key="chip"
-					color="primary"
-					variant="tonal"
-				>
-					{{ chip }}
-				</v-chip>
-			</div>
-
-			<p v-html="t( 'description.sections.zahlenfamilie.p2' )" />
-		</div>
-
-		<h2 id="banduebersicht" class="mt-8">{{ t( "description.sections.banduebersicht.title" ) }}</h2>
-		<div class="eddie">
-			<div class="tableWrap">
-				<table class="bandTable">
-					<thead>
-						<tr>
-							<th>{{ t( "description.sections.banduebersicht.table.band" ) }}</th>
-							<th>{{ t( "description.sections.banduebersicht.table.frequency" ) }}</th>
-							<th>{{ t( "description.sections.banduebersicht.table.lambda" ) }}</th>
-							<th>{{ t( "description.sections.banduebersicht.table.note" ) }}</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr v-for="band in bands" :key="band.name">
-							<td>{{ band.name }}</td>
-							<td>{{ band.frequency }}</td>
-							<td>{{ band.lambda }}</td>
-							<td>{{ band.note }}</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-		</div>
-
-		<h2 id="bandlogik" class="mt-8">{{ t( "description.sections.bandlogik.title" ) }}</h2>
-		<div class="eddie">
-			<p v-html="t( 'description.sections.bandlogik.p1' )" />
-
-			<div class="bandGrid">
-				<div v-for="card in bandLogicCards" :key="card.title" class="bandCard">
-					<h3>{{ card.title }}</h3>
-					<p>{{ card.text }}</p>
-				</div>
-			</div>
-		</div>
-
-		<h2 id="weitere-baender" class="mt-8">{{ t( "description.sections.weitereBaender.title" ) }}</h2>
-		<div class="eddie">
-			<p>{{ t( "description.sections.weitereBaender.p1" ) }}</p>
-
-			<ul class="bandList">
-				<li v-for="item in extraBands" :key="item.label">
-					<b>{{ item.label }}:</b> {{ item.text }}
+			<p v-html="t( 'description.sections.baumgedanke.p1' )" />
+			<ul class="haCodeList">
+				<li v-for="choice in symbolChoices" :key="choice.symbol">
+					<strong>{{ choice.label }}</strong> <code>{{ choice.symbol }}</code>
 				</li>
 			</ul>
-
-			<p>{{ t( "description.sections.weitereBaender.p2" ) }}</p>
+			<p v-html="t( 'description.sections.baumgedanke.p2' )" />
+			<p v-html="t( 'description.sections.baumgedanke.rootIntro' )" />
+			<ul class="haCodeList">
+				<li v-for="example in rootExamples" :key="example.letter">
+					<code>{{ example.letter }} = {{ example.code }}</code>
+				</li>
+			</ul>
+			<p v-html="t( 'description.sections.baumgedanke.levelIntro' )" />
+			<ul class="haCodeList">
+				<li v-for="example in levelExamples" :key="example.letter">
+					<code>{{ example.letter }} = {{ example.code }}</code>
+				</li>
+			</ul>
+			<p v-html="t( 'description.sections.baumgedanke.p3' )" />
+			<div class="haLeadBox">
+				<strong>{{ t( "description.sections.baumgedanke.lead1" ) }}</strong>
+			</div>
+			<p v-html="t( 'description.sections.baumgedanke.p4' )" />
+			<div class="haLeadBox">
+				<strong>{{ t( "description.sections.baumgedanke.lead2" ) }}</strong>
+			</div>
 		</div>
 
-		<EddieComment :subtitle="t( 'description.sections.schluss.title' )">
-			{{ t( "description.sections.schluss.quote" ) }}
+		<h2 id="tiefe" class="mt-8">{{ t( "description.sections.tiefe.title" ) }}</h2>
+		<div class="eddie">
+			<p v-html="t( 'description.sections.tiefe.p1' )" />
+			<div class="haLeadBox">
+				{{ t( "description.sections.tiefe.lead" ) }}
+			</div>
+			<p v-html="t( 'description.sections.tiefe.p2' )" />
+			<ul>
+				<li v-for="cost in timingCosts" :key="cost.label">
+					<strong>{{ cost.label }}</strong> <span class="mono">{{ cost.value }}</span>
+				</li>
+			</ul>
+			<p v-html="t( 'description.sections.tiefe.p3' )" />
+		</div>
+
+		<h2 id="zeitformel" class="mt-8">{{ t( "description.sections.zeitformel.title" ) }}</h2>
+		<div class="eddie">
+			<p v-html="t( 'description.sections.zeitformel.p1' )" />
+			<ul>
+				<li v-for="part in formulaParts" :key="part.symbol">
+					<Katex :tex="part.symbol" />: {{ part.text }}
+				</li>
+			</ul>
+			<p v-html="t( 'description.sections.zeitformel.p2' )" />
+			<div class="kbox">
+				<Katex as="div" display :tex="tex.durationFormula" />
+			</div>
+			<p v-html="t( 'description.sections.zeitformel.p3' )" />
+			<ul>
+				<li v-for="reason in formulaReasons" :key="reason">
+					{{ reason }}
+				</li>
+			</ul>
+		</div>
+
+		<h2 id="beispiele" class="mt-8">{{ t( "description.sections.beispiele.title" ) }}</h2>
+		<v-row dense>
+			<v-col
+				v-for="example in exampleCards"
+				:key="example.key"
+				cols="12"
+				md="6"
+			>
+				<v-card class="haExampleCard pa-4 fill-height" variant="outlined">
+					<h3>{{ example.title }}</h3>
+					<p class="haCodeLine">
+						<code>{{ example.title }} = {{ example.code }}</code>
+					</p>
+					<ul class="haFactList">
+						<li v-for="fact in example.facts" :key="fact">
+							{{ fact }}
+						</li>
+					</ul>
+					<div class="kbox mb-0">
+						<Katex as="div" display :tex="example.tex" />
+					</div>
+				</v-card>
+			</v-col>
+		</v-row>
+
+		<h2 id="ueberraschung" class="mt-8">{{ t( "description.sections.ueberraschung.title" ) }}</h2>
+		<div class="eddie">
+			<p v-html="t( 'description.sections.ueberraschung.p1' )" />
+			<ul>
+				<li v-for="item in surpriseItems" :key="item" v-html="item"></li>
+			</ul>
+			<p v-html="t( 'description.sections.ueberraschung.p2' )" />
+			<div class="haLeadBox">
+				<strong>{{ t( "description.sections.ueberraschung.lead1" ) }}</strong>
+			</div>
+			<p v-html="t( 'description.sections.ueberraschung.p3' )" />
+			<div class="haLeadBox">
+				<strong>{{ t( "description.sections.ueberraschung.lead2" ) }}</strong>
+			</div>
+		</div>
+
+		<h2 id="optimierung" class="mt-8">{{ t( "description.sections.optimierung.title" ) }}</h2>
+		<div class="eddie">
+			<p v-html="t( 'description.sections.optimierung.p1' )" />
+			<p v-html="t( 'description.sections.optimierung.p2' )" />
+			<div class="kbox">
+				<Katex as="div" display :tex="tex.expectationFormula" />
+			</div>
+			<p v-html="t( 'description.sections.optimierung.p3' )" />
+			<ul>
+				<li v-for="goal in optimizationGoals" :key="goal">
+					{{ goal }}
+				</li>
+			</ul>
+			<p v-html="t( 'description.sections.optimierung.p4' )" />
+		</div>
+
+		<h2 id="huffman" class="mt-8">{{ t( "description.sections.huffman.title" ) }}</h2>
+		<div class="eddie">
+			<p v-html="t( 'description.sections.huffman.p1' )" />
+			<ul>
+				<li v-for="item in huffmanSimilarities" :key="item">
+					{{ item }}
+				</li>
+			</ul>
+			<p v-html="t( 'description.sections.huffman.p2' )" />
+			<ul class="haCodeList">
+				<li v-for="example in prefixExamples" :key="example.letter">
+					<code>{{ example.letter }} = {{ example.code }}</code>
+				</li>
+			</ul>
+		</div>
+
+		<v-row dense>
+			<v-col cols="12" md="6">
+				<v-card class="haInfoCard pa-4 fill-height" variant="outlined">
+					<h3>{{ t( "description.sections.huffman.cards.huffman.title" ) }}</h3>
+					<p v-html="t( 'description.sections.huffman.cards.huffman.text' )" />
+				</v-card>
+			</v-col>
+			<v-col cols="12" md="6">
+				<v-card class="haInfoCard pa-4 fill-height" variant="outlined">
+					<h3>{{ t( "description.sections.huffman.cards.morse.title" ) }}</h3>
+					<p v-html="t( 'description.sections.huffman.cards.morse.text' )" />
+				</v-card>
+			</v-col>
+		</v-row>
+
+		<div class="eddie">
+			<p v-html="t( 'description.sections.huffman.p3' )" />
+			<div class="haLeadBox">
+				<strong>{{ t( "description.sections.huffman.lead" ) }}</strong>
+			</div>
+		</div>
+
+		<h2 id="menschen-code" class="mt-8">{{ t( "description.sections.menschenCode.title" ) }}</h2>
+		<div class="eddie">
+			<p v-html="t( 'description.sections.menschenCode.p1' )" />
+			<ul>
+				<li v-for="strength in strengths" :key="strength">
+					{{ strength }}
+				</li>
+			</ul>
+			<p v-html="t( 'description.sections.menschenCode.p2' )" />
+			<ul>
+				<li v-for="point in compromisePoints" :key="point">
+					{{ point }}
+				</li>
+			</ul>
+		</div>
+
+		<h2 id="pointe" class="mt-8">{{ t( "description.sections.pointe.title" ) }}</h2>
+		<div class="eddie">
+			<p v-html="t( 'description.sections.pointe.p1' )" />
+			<div class="haLeadBox">
+				{{ t( "description.sections.pointe.lead1" ) }}
+			</div>
+			<p v-html="t( 'description.sections.pointe.p2' )" />
+			<div class="haLeadBox">
+				<strong>{{ t( "description.sections.pointe.lead2" ) }}</strong>
+			</div>
+		</div>
+
+		<h2 id="eddies-schluss" class="mt-8">{{ t( "description.sections.eddie.title" ) }}</h2>
+		<EddieComment :subtitle="t( 'description.sections.eddie.subtitle' )">
+			<p v-html="t( 'description.sections.eddie.p1' )" />
+			<p v-html="t( 'description.sections.eddie.p2' )" />
+			<p v-html="t( 'description.sections.eddie.p3' )" />
+			<p v-html="t( 'description.sections.eddie.p4' )" />
 		</EddieComment>
 	</template>
+
 	<template #summaryPart>
 		<v-sheet border class="mb-6 pa-3" rounded="xl">
 			<div class="d-flex flex-wrap align-center justify-space-between ga-3">
@@ -161,8 +264,9 @@
 <script setup>
 import { computed, ref } from "vue";
 import { useI18n } from "@/utils/i18n.mjs";
-import HAEncoder from "./HA_Encoder.vue";
 import HADecoder from "./HA_Decoder.vue";
+import HAEncoder from "./HA_Encoder.vue";
+import HATree from "./HA_Tree.vue";
 import titleImg from "./HA.webp";
 
 const { t, tm } = useI18n( "book1.HA" );
@@ -170,6 +274,18 @@ const { t, tm } = useI18n( "book1.HA" );
 const visibleMode = ref( "decoder" );
 const encoderInput = ref( "" );
 const decoderInput = ref( "" );
+
+const tex = {
+	durationFormula:    String.raw`\tau = d + 3s + (k-1)`,
+	expectationFormula: String.raw`\sum_i p_i \tau_i`,
+	exampleFormulas:    {
+		e: String.raw`\tau(E)=1+0+(1-1)=1`,
+		t: String.raw`\tau(T)=0+3+(1-1)=3`,
+		i: String.raw`\tau(I)=2+0+(2-1)=3`,
+		a: String.raw`\tau(A)=1+3+(2-1)=5`,
+		s: String.raw`\tau(S)=3+0+(3-1)=5`
+	}
+};
 
 function handleEncodedOutput( nextValue ) {
 	decoderInput.value = String( nextValue ?? "" );
@@ -183,32 +299,41 @@ const subChapter = computed( () => {
 	const labels = tm( "subChapter" ) ?? {};
 
 	return {
-		"frequenzen-baender":  labels[ "frequenzen-baender" ],
-		bandnamen:             labels.bandnamen,
-		zahlenfamilie:         labels.zahlenfamilie,
-		banduebersicht:        labels.banduebersicht,
-		bandlogik:             labels.bandlogik,
-		"weitere-baender":     labels[ "weitere-baender" ],
+		baumgedanke:           labels.baumgedanke,
+		tiefe:                 labels.tiefe,
+		zeitformel:            labels.zeitformel,
+		beispiele:             labels.beispiele,
+		ueberraschung:         labels.ueberraschung,
+		optimierung:           labels.optimierung,
+		huffman:               labels.huffman,
+		"menschen-code":       labels[ "menschen-code" ],
+		pointe:                labels.pointe,
+		"eddies-schluss":      labels[ "eddies-schluss" ],
 		[ visibleMode.value ]: labels[ visibleMode.value ]
 	};
 } );
 
-const tex = computed( () => ( {
-	cEqualsLambdaF:     String.raw`c = \lambda \cdot f`,
-	lambdaEqualsCOverF: String.raw`\lambda = \frac{c}{f}`,
-	lambdaWithUnits:    String.raw`\lambda[\mathrm{m}] = \frac{299\,792\,458\ \mathrm{m/s}}` +
-			String.raw`{f[\mathrm{MHz}] \cdot 10^6\ \mathrm{s}^{-1}} \approx \frac{299.792458}{f[\mathrm{MHz}]}`,
-	lambdaApprox: String.raw`\lambda[\mathrm{m}] \approx \frac{300}{f[\mathrm{MHz}]}`,
-	example7MHz:  String.raw`\lambda \approx \frac{300}{7} \approx ${t( "description.formulas.example7Value" )}` +
-			String.raw`\ \mathrm{m} \;\Rightarrow\; \text{${t( "description.formulas.band40Label" )}}`,
-	example14MHz: String.raw`\lambda \approx \frac{300}{14} \approx ${t( "description.formulas.example14Value" )}` +
-			String.raw`\ \mathrm{m} \;\Rightarrow\; \text{${t( "description.formulas.band20Label" )}}`
-} ) );
+const symbolChoices = computed( () => tm( "description.sections.baumgedanke.choices" ) ?? [] );
+const rootExamples = computed( () => tm( "description.sections.baumgedanke.rootExamples" ) ?? [] );
+const levelExamples = computed( () => tm( "description.sections.baumgedanke.levelExamples" ) ?? [] );
+const timingCosts = computed( () => tm( "description.sections.tiefe.costs" ) ?? [] );
+const formulaParts = computed( () => tm( "description.sections.zeitformel.parts" ) ?? [] );
+const formulaReasons = computed( () => tm( "description.sections.zeitformel.reasons" ) ?? [] );
+const surpriseItems = computed( () => tm( "description.sections.ueberraschung.items" ) ?? [] );
+const optimizationGoals = computed( () => tm( "description.sections.optimierung.goals" ) ?? [] );
+const huffmanSimilarities = computed( () => tm( "description.sections.huffman.similarities" ) ?? [] );
+const prefixExamples = computed( () => tm( "description.sections.huffman.prefixExamples" ) ?? [] );
+const strengths = computed( () => tm( "description.sections.menschenCode.strengths" ) ?? [] );
+const compromisePoints = computed( () => tm( "description.sections.menschenCode.compromises" ) ?? [] );
 
-const familyChips = computed( () => tm( "description.sections.zahlenfamilie.chips" ) ?? [] );
-const bands = computed( () => tm( "description.sections.banduebersicht.bands" ) ?? [] );
-const bandLogicCards = computed( () => tm( "description.sections.bandlogik.cards" ) ?? [] );
-const extraBands = computed( () => tm( "description.sections.weitereBaender.items" ) ?? [] );
+const exampleCards = computed( () => {
+	const cards = tm( "description.sections.beispiele.cards" ) ?? [];
+
+	return cards.map( ( card ) => ( {
+		...card,
+		tex: tex.exampleFormulas[ card.key ] ?? ""
+	} ) );
+} );
 </script>
 
 <style scoped>
@@ -220,77 +345,42 @@ const extraBands = computed( () => tm( "description.sections.weitereBaender.item
 	background: rgba(var(--v-theme-primary), 0.08);
 }
 
-.formulaStack {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	gap: 0.75rem;
-}
-
-.chipWrap {
+.haCodeList {
 	display: flex;
 	flex-wrap: wrap;
-	gap: 0.5rem;
-	margin: 1rem 0 1.25rem;
-}
-
-.tableWrap {
-	overflow-x: auto;
-	margin: 1rem 0;
-}
-
-.bandTable {
-	width: 100%;
-	border-collapse: collapse;
-}
-
-.bandTable th,
-.bandTable td {
-	padding: 0.75rem 0.85rem;
-	border-bottom: 1px solid rgba(0, 0, 0, 0.12);
-	text-align: left;
-	vertical-align: top;
-}
-
-.bandTable th {
-	font-weight: 700;
-}
-
-.bandGrid {
-	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-	gap: 1rem;
-	margin-top: 1rem;
-}
-
-.bandCard {
-	padding: 1rem;
-	border: 1px solid rgba(0, 0, 0, 0.12);
-	border-radius: 14px;
-	background: rgba(var(--v-theme-primary), 0.05);
-}
-
-.bandCard h3 {
-	margin-bottom: 0.5rem;
-}
-
-.bandCard p {
-	margin-bottom: 0;
-}
-
-.bandList {
+	gap: 0.5rem 1.25rem;
 	padding-left: 1.25rem;
 }
 
-.bandList li + li {
-	margin-top: 0.5rem;
+.haCodeLine {
+	margin-bottom: 0.9rem;
 }
 
-.eddie-quote {
-  margin: 0;
-  padding-left: 1rem;
-  border-left: 4px solid rgba(var(--v-theme-primary), 0.55);
-  font-style: italic;
-  line-height: 1.7;
+.haExampleCard,
+.haInfoCard {
+	border-color: rgba(0, 0, 0, 0.12);
+}
+
+.haExampleCard h3,
+.haInfoCard h3 {
+	margin-bottom: 0.65rem;
+}
+
+.haExampleCard p,
+.haInfoCard p {
+	margin-bottom: 0;
+}
+
+.haFactList {
+	margin-bottom: 1rem;
+	padding-left: 1.25rem;
+}
+
+.haFactList li + li {
+	margin-top: 0.35rem;
+}
+
+code {
+	font-family: var(--mono);
 }
 </style>

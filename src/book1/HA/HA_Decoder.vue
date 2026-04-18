@@ -368,12 +368,12 @@ const PAYLOAD_BLACKLIST = new Set( [
 
 const EMPTY_RESULT = Object.freeze( {
 	hasPayloadTrigger: false,
-	normalized:      "",
-	naturalLines:    [],
-	naturalSegments: [],
-	tokens:          [],
-	naturalText:     "",
-	payloadText:     ""
+	normalized:        "",
+	naturalLines:      [],
+	naturalSegments:   [],
+	tokens:            [],
+	naturalText:       "",
+	payloadText:       ""
 } );
 
 const { t, tm } = useI18n( "book1.HA" );
@@ -704,9 +704,11 @@ function isPayloadToken( token ) {
 	return Boolean( token ) && !PAYLOAD_BLACKLIST.has( token );
 }
 
-function buildUnknownSegmentDecorations( doc,
+function buildUnknownSegmentDecorations(
+	doc,
 	naturalLines,
-	highlightUnknownSegments = false ) {
+	highlightUnknownSegments = false
+) {
 	if ( !highlightUnknownSegments ) {
 		return [];
 	}
@@ -825,7 +827,8 @@ function decodeSequence( text ) {
 			return false;
 		}
 
-		return normalize( content ).split( " " ).includes( "QER" );
+		return normalize( content ).split( " " )
+			.includes( "QER" );
 	} );
 	const decodedLines = lines.map( ( line ) => {
 		const sourceLine = String( line ?? "" );
@@ -911,9 +914,11 @@ const naturalOutputEditor = useEditor( {
 	extensions:  createTextEditorExtensions(),
 	editorProps: {
 		decorations: ( state ) => buildCommentDecorationSet( state.doc,
-			buildUnknownSegmentDecorations( state.doc,
+			buildUnknownSegmentDecorations(
+				state.doc,
 				decoded.value.naturalLines,
-				decoded.value.hasPayloadTrigger ) ),
+				decoded.value.hasPayloadTrigger
+			) ),
 		attributes: createTextEditorAttributes( "haDecoderTextEditor haReadonlyEditor haDecoderOutputEditor" )
 	}
 } );
