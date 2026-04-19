@@ -664,6 +664,18 @@ export const contentRoutes = [
 		}
 	},
 	{
+		path:      "/MH",
+		name:      "MH",
+		component: CatchAll,
+		meta:      {
+			difficulty: 2,
+			index:      true,
+			book:       2,
+			order:      10,
+			wip
+		}
+	},
+	{
 		path:      "/ZR",
 		name:      "ZR",
 		component: CatchAll,
