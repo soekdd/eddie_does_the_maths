@@ -25,27 +25,30 @@
 			<p v-html="t( 'fs.sections.task.p2' )"/>
 			<ol>
 				<li>
-					{{ t( "fs.sections.task.r1" ) }}
+					<span v-html="t( 'fs.sections.task.r1' )" />
 				</li>
 				<li>
-					{{ t( "fs.sections.task.r2" ) }}
+					<span v-html="t( 'fs.sections.task.r2' )" />
 					<div class="kbox">
-						<Katex as="div" display tex="s(N_t)=\frac{1}{1+cN_t}" />
+						<Katex as="div" display tex="s(N_{t})=\frac{1}{1+cN_{t}}" />
 					</div>
-					{{ t( "fs.sections.task.r2b" ) }}
+					<span v-html="t( 'fs.sections.task.r2b' )" />
 				</li>
 				<li>
-					{{ t( "fs.sections.task.r3" ) }}
+					<span v-html="t( 'fs.sections.task.r3' )" />
 				</li>
 				<li>
-					{{ t( "fs.sections.task.r4" ) }}
+					<span v-html="t( 'fs.sections.task.r4' )" />
+				</li>
+				<li>
+					<span v-html="t( 'fs.sections.task.r5' )" />
 				</li>
 			</ol>
 			<p v-html="t( 'fs.sections.task.p3' )"/>
 			<ul>
-				<li><b>a)</b> {{ t( "fs.sections.task.q1" ) }}</li>
-				<li><b>b)</b> {{ t( "fs.sections.task.q2" ) }}</li>
-				<li><b>c)</b> {{ t( "fs.sections.task.q3" ) }}</li>
+				<li><b>a)</b> <span v-html="t( 'fs.sections.task.q1' )" /></li>
+				<li><b>b)</b> <span v-html="t( 'fs.sections.task.q2' )" /></li>
+				<li><b>c)</b> <span v-html="t( 'fs.sections.task.q3' )" /></li>
 			</ul>
 		</div>
 
@@ -54,11 +57,11 @@
 			<h3>{{ t( "fs.sections.solution.step21" ) }}</h3>
 			<p v-html="t( 'fs.sections.solution.p21' )"/>
 			<div class="kbox">
-				<Katex as="div" display tex="N_{t+1}=bN_t\cdot\frac{1}{1+cN_t}=\frac{bN_t}{1+cN_t}" />
+				<Katex as="div" display tex="N_{t+1}=bN_{t}\cdot\frac{1}{1+cN_{t}}=\frac{bN_{t}}{1+cN_{t}}" />
 			</div>
 			<p v-html="t( 'fs.sections.solution.p22' )"/>
 			<div class="kbox">
-				<Katex as="div" display tex="\boxed{N_{t+1}=\frac{bN_t}{1+cN_t}}" />
+				<Katex as="div" display tex="\boxed{N_{t+1}=\frac{bN_{t}}{1+cN_{t}}}" />
 			</div>
 		</div>
 
@@ -66,20 +69,20 @@
 			<h3>{{ t( "fs.sections.solution.step22" ) }}</h3>
 			<p v-html="t( 'fs.sections.solution.p23' )"/>
 			<div class="kbox">
-				<Katex as="div" display tex="N^*=\frac{bN^*}{1+cN^*}" />
+				<Katex as="div" display tex="N^{*}=\frac{bN^{*}}{1+cN^{*}}" />
 			</div>
 
 			<h4>{{ t( "fs.sections.solution.extinctionTitle" ) }}</h4>
 			<div class="kbox">
-				<Katex as="div" display tex="N^*=0" />
+				<Katex as="div" display tex="N^{*}=0" />
 			</div>
 			<p v-html="t( 'fs.sections.solution.p24' )"/>
 
 			<h4>{{ t( "fs.sections.solution.positiveTitle" ) }}</h4>
 			<p v-html="t( 'fs.sections.solution.p25' )"/>
 			<div class="kbox">
-				<Katex as="div" display tex="1=\frac{b}{1+cN^*}" />
-				<Katex as="div" display tex="1+cN^*=b\Rightarrow N^*=\frac{b-1}{c}" />
+				<Katex as="div" display tex="1=\frac{b}{1+cN^{*}}" />
+				<Katex as="div" display tex="1+cN^{*}=b\Rightarrow N^{*}=\frac{b-1}{c}" />
 			</div>
 			<p v-html="t( 'fs.sections.solution.p26' )"/>
 		</div>
@@ -88,17 +91,17 @@
 			<h3>{{ t( "fs.sections.solution.step23" ) }}</h3>
 			<p><b>{{ t( "fs.sections.solution.case1" ) }}</b> <Katex tex="b\le 1" /></p>
 			<ul>
-				<li>{{ t( "fs.sections.solution.case1a" ) }}</li>
-				<li>{{ t( "fs.sections.solution.case1b" ) }}</li>
-				<li>{{ t( "fs.sections.solution.case1c" ) }}</li>
-				<li>{{ t( "fs.sections.solution.case1d" ) }}</li>
+				<li v-html="t( 'fs.sections.solution.case1a' )" />
+				<li v-html="t( 'fs.sections.solution.case1b' )" />
+				<li v-html="t( 'fs.sections.solution.case1c' )" />
+				<li v-html="t( 'fs.sections.solution.case1d' )" />
 			</ul>
 
 			<p><b>{{ t( "fs.sections.solution.case2" ) }}</b> <Katex tex="b>1" /></p>
 			<ul>
-				<li>{{ t( "fs.sections.solution.case2a" ) }}</li>
-				<li>{{ t( "fs.sections.solution.case2b" ) }}</li>
-				<li>{{ t( "fs.sections.solution.case2c" ) }}</li>
+				<li v-html="t( 'fs.sections.solution.case2a' )" />
+				<li v-html="t( 'fs.sections.solution.case2b' )" />
+				<li v-html="t( 'fs.sections.solution.case2c' )" />
 			</ul>
 			<p v-html="t( 'fs.sections.solution.p27' )"/>
 		</div>
@@ -106,9 +109,9 @@
 		<h2 id="zusammenfassung" class="mt-8">{{ t( "fs.sections.summary.title" ) }}</h2>
 		<div class="eddie">
 			<ul>
-				<li>{{ t( "fs.sections.summary.s1" ) }}</li>
-				<li>{{ t( "fs.sections.summary.s2" ) }}</li>
-				<li>{{ t( "fs.sections.summary.s3" ) }}</li>
+				<li v-html="t( 'fs.sections.summary.s1' )" />
+				<li v-html="t( 'fs.sections.summary.s2' )" />
+				<li v-html="t( 'fs.sections.summary.s3' )" />
 			</ul>
 			<p v-html="t( 'fs.sections.summary.p1' )"/>
 		</div>
@@ -170,9 +173,9 @@
 
 		<div class="kbox mt-4">
 			<div class="mono"><Katex aligned
-				:tex="`N_{t+1} &=\\frac{bN_t}{1+cN_t} \\\\
-N_0 &=${fmtTex( graphN0, 0 )},\ b=${fmtTex( graphB, 3 )},\ c=${fmtTex( graphC, 4 )}` +
-					(graphHasPositiveEquilibrium ? `\\\\ N^*&=\\frac{b-1}{c}=${fmtTex( graphEquilibrium, 3 )}`
+				:tex="`N_{t+1} &=\\frac{bN_{t}}{1+cN_{t}} \\\\
+N_{0} &=${fmtTex( graphN0, 0 )},\ b=${fmtTex( graphB, 3 )},\ c=${fmtTex( graphC, 4 )}` +
+					(graphHasPositiveEquilibrium ? `\\\\ N^{*}&=\\frac{b-1}{c}=${fmtTex( graphEquilibrium, 3 )}`
 						: `\\\\ ${t( 'fs.interactive.extinctionTex' )}`)"
 			/>		</div>
 			<div class="mono">
@@ -198,14 +201,14 @@ N_0 &=${fmtTex( graphN0, 0 )},\ b=${fmtTex( graphB, 3 )},\ c=${fmtTex( graphC, 4
 				<Katex aligned
 					as="div"
 					display
-					:tex="`N_1 &=${fmtTex( n1, 3 )} \\\\ N_2 &=${fmtTex( n2, 3 )} \\\\ N_3 &=${fmtTex( n3, 3 )}`"
+					:tex="`N_{1} &=${fmtTex( n1, 3 )} \\\\ N_{2} &=${fmtTex( n2, 3 )} \\\\ N_{3} &=${fmtTex( n3, 3 )}`"
 				/>
 			</div>
 			<div class="kbox">
 				<Katex aligned
 					as="div"
 					display
-					:tex="`N_${graphHorizon}&=${fmtTex( nT, 3 )} \\\\ |N_${graphHorizon}-N^*| &=${fmtTex( deltaToEquilibrium, 3 )}`"
+					:tex="`N_{${graphHorizon}}&=${fmtTex( nT, 3 )} \\\\ |N_{${graphHorizon}}-N^{*}| &=${fmtTex( deltaToEquilibrium, 3 )}`"
 				/>
 			</div>
 			<p class="muted">
@@ -246,8 +249,8 @@ const subChapter = computed( () => ( {
 	simulation:      t( "fs.subChapter.simulation" )
 } ) );
 
-const graphN0Input = ref( 4 );
-const graphBInput = ref( 2.2 );
+const graphN0Input = ref( 100 );
+const graphBInput = ref( 2.0 );
 const graphCInput = ref( 0.02 );
 const graphYearsInput = ref( 12 );
 
@@ -280,7 +283,7 @@ const equilibrium = computed( () => graphEquilibrium.value );
 const deltaToEquilibrium = computed( () => Math.abs( nT.value - equilibrium.value ) );
 
 const texScenario = computed( () => [
-	`N_0 &=${fmtTex( graphN0.value, 0 )},`,
+	`N_{0} &=${fmtTex( graphN0.value, 0 )},`,
 	`\\\\ b &=${fmtTex( graphB.value, 2 )},`,
 	`\\\\ c &=${fmtTex( graphC.value, 3 )},`,
 	`\\\\ t &=${graphHorizon.value}`
@@ -291,7 +294,7 @@ const texEquilibrium = computed( () => {
 	}
 
 	return [
-		`N^* &=\\frac{b-1}{c}=\\frac{${fmtTex( graphB.value, 2 )}-1}{${fmtTex( graphC.value, 3 )}}`,
+		`N^{*} &=\\frac{b-1}{c}=\\frac{${fmtTex( graphB.value, 2 )}-1}{${fmtTex( graphC.value, 3 )}}`,
 		`\\\\ &=${fmtTex( equilibrium.value, 3 )}`
 	].join( " " );
 } );

@@ -109,10 +109,10 @@ const {
 } = useI18n( "book1.FS" );
 
 const props = defineProps( {
-	n0:      { type: Number, default: 40 },
+	n0:      { type: Number, default: 100 },
 	b:       { type: Number, default: 2.2 },
 	c:       { type: Number, default: 0.02 },
-	horizon: { type: Number, default: 20 }
+	horizon: { type: Number, default: 12 }
 } );
 
 const CHART = {

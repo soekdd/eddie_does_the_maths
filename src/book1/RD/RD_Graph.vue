@@ -1,15 +1,15 @@
 <!-- i18n-ally-scope: useI18n("book1.RD") -->
-<!-- JeepProblemDiagram.vue
+<!-- ReindeerDepotDiagram.vue
      Vue 3 + Vuetify 3, Single-File-Component
 
      Visualisiert (idealisiert / kontinuierliches Depot-Modell) die Varianten:
-     1) One-way (maximale Reichweite)
-     2) Hin & zurück (max. Entfernung, wenn am Ende wieder Start erreicht werden soll)
-     3) Lieferung (Wie viel Starttreibstoff braucht man, um am Ziel noch Q zu haben?)
+     1) Durchqueren (maximale Reichweite ohne Rückkehr)
+     2) Erforschen (max. Entfernung, wenn am Ende wieder Start erreicht werden soll)
+     3) Lieferung (Wie viel Startvorrat braucht man, um am Ziel noch Q zu haben?)
 
      Diagramm:
      X = Entfernung ab Start (km)
-     Y = Zeit (h), wächst nach unten (Sequenzdiagramm-Style)
+     Y = Zeit (Tage), wächst nach unten (Sequenzdiagramm-Style)
      Pfad = Zick-Zack-Linien (Pendelfahrten pro Phase)
 -->
 <template>
@@ -163,10 +163,10 @@
 							<span v-if="variant === 'roundtrip'"> {{ t( "graphInteractive.andBack" ) }}</span>
 						</div>
 						<div v-else>
-							<b>{{ t( "graphInteractive.requiredStartFuel" ) }}</b> {{ fmtL(result.requiredStartFuelL) }}
+							<b>{{ t( "graphInteractive.requiredStartFuel" ) }}</b> {{ fmtRations(result.requiredStartFuelL) }}
 						</div>
 						<div>
-							<b>{{ t( "graphInteractive.totalTime" ) }}</b> {{ fmtH(result.totalTimeH) }}
+							<b>{{ t( "graphInteractive.totalTime" ) }}</b> {{ fmtDays(result.totalTimeH) }}
 							&nbsp;·&nbsp;
 							<b>{{ t( "graphInteractive.totalDistance" ) }}</b> {{ fmtKm(result.totalTravelKm) }}
 						</div>
@@ -342,18 +342,18 @@ import { useI18n } from "@/utils/i18n.mjs";
 type Variant = "oneway" | "roundtrip" | "deliver";
 
 type Phase = {
-  k: number; // "aktive Tankladungen" (idealisiert)
-  f0: number; // Start-Fuel (in Tank-Einheiten)
-  f1: number; // End-Fuel   (in Tank-Einheiten)
+  k: number; // "aktive volle Ladungen" (idealisiert)
+  f0: number; // Startvorrat (in Ladungs-Einheiten)
+  f1: number; // Endvorrat   (in Ladungs-Einheiten)
   rate: number; // Verbrauchsfaktor pro Distanz (idealisiert)
-  lengthNorm: number; // Distanz (normiert, Tank=1, Verbrauch=1)
+  lengthNorm: number; // Distanz (normiert, volle Ladung=1, Verbrauch=1)
 };
 
 type PathPoint = { xKm: number; tH: number };
 
 const { t } = useI18n( "book1.RD" );
 
-const variant = ref<Variant>( "oneway" );
+const variant = ref<Variant>( "roundtrip" );
 const variantItems = computed( () => [
 	{ title: t( "graphInteractive.variantItems.oneway" ), value: "oneway" },
 	{ title: t( "graphInteractive.variantItems.roundtrip" ), value: "roundtrip" },
@@ -361,14 +361,14 @@ const variantItems = computed( () => [
 ] );
 
 // Eingaben
-const tankCapacityL = ref( 60 );
-const consumptionLperKm = ref( 0.12 );
-const speedKmH = ref( 50 );
+const tankCapacityL = ref( 3 );
+const consumptionLperKm = ref( 0.05 );
+const speedKmH = ref( 20 );
 
-const startFuelL = ref( 300 );
+const startFuelL = ref( 15 );
 
-const targetDistanceKm = ref( 300 );
-const deliveredFuelL = ref( 60 );
+const targetDistanceKm = ref( 60 );
+const deliveredFuelL = ref( 3 );
 
 // Visual
 const showGrid = ref( true );
@@ -416,29 +416,29 @@ function fmtKm( km: number ) {
 	return `${Math.round( km * 10 ) / 10} km`;
 }
 
-function fmtH( h: number ) {
-	if ( !Number.isFinite( h ) ) {
+function fmtDays( days: number ) {
+	if ( !Number.isFinite( days ) ) {
 		return "—";
 	}
 
-	if ( h >= 10 ) {
-		return `${round1( h )} h`;
+	if ( days >= 10 ) {
+		return `${round1( days )} d`;
 	}
 
-	return `${Math.round( h * 60 )} min`;
+	return `${round1( days )} d`;
 }
 
-function fmtL( l: number ) {
-	if ( !Number.isFinite( l ) ) {
+function fmtRations( rations: number ) {
+	if ( !Number.isFinite( rations ) ) {
 		return "—";
 	}
 
-	return `${Math.round( l )} L`;
+	return `${round1( rations )} ${t( "graphInteractive.rationUnit" )}`;
 }
 
 /**
  * Normiertes Phasenmodell:
- *  - Tankkapazität = 1
+ *  - Tragkapazität = 1
  *  - Verbrauch = 1 pro Distanz
  *
  * one-way: rate = (2k-1)
@@ -487,7 +487,7 @@ function distNormFor(
 }
 
 /**
- * Liefervariante: finde minimalen Startfuel (in Tank-Einheiten),
+ * Liefervariante: finde minimalen Startvorrat (in Ladungs-Einheiten),
  * so dass DistanzNorm(start -> end=q) = targetDistNorm.
  * Monoton -> Binärsuche.
  */
@@ -529,7 +529,7 @@ function solveStartFuelUnitsForDelivery( targetDistNorm: number, endFuelUnits: n
 
 /**
  * Erzeuge den “Zick-Zack”-Pfad:
- * Pro Phase pendelt der Jeep (2k-1) mal zwischen x und x+L (L = Phasenlänge),
+ * Pro Phase pendelt die Wanderin (2k-1) mal zwischen x und x+L (L = Phasenlänge),
  * endet vorne -> nächste Phase beginnt dort.
  *
  * Für roundtrip: am Ende wird ein “finaler Rückweg” (ein Segment) ergänzt,
@@ -609,7 +609,7 @@ const result = computed( () => {
 	const r = consumptionLperKm.value;
 	const v = speedKmH.value;
 
-	const kmPerTank = C / r; // wie weit komme ich mit einem vollen Tank (ohne Depot-Tricks)
+	const kmPerTank = C / r; // wie weit reicht eine volle Rentierladung ohne Depot-Tricks?
 	const safeKmPerTank = Number.isFinite( kmPerTank ) && kmPerTank > 0 ? kmPerTank : 0;
 
 	if ( warning.value ) {

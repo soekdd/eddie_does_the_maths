@@ -20,245 +20,96 @@
 	</template>
 
 	<template #descriptionPart>
-		<h2>{{ t( "sections.part1.title" ) }}</h2>
+		<h2 id="problemstellung">{{ t( "sections.part1.title" ) }}</h2>
 		<div class="eddie">
 			<p v-html="t( 'sections.part1.p1' )" />
+			<p v-html="t( 'sections.part1.p2' )" />
+			<p v-html="t( 'sections.part1.p3' )" />
 		</div>
 
-		<h2 id="vorstufe-plus-klassisches-mehrdepot-modell" class="mt-8">{{ t( "sections.part2.title" ) }}</h2>
+		<h2 id="unbegrenzter-vorrat" class="mt-8">{{ t( "sections.part2.title" ) }}</h2>
 		<div class="eddie">
 			<p v-html="t( 'sections.part2.p1' )"/>
-			<p class="muted">{{ t( "sections.part2.p2" ) }}</p>
+			<p v-html="t( 'sections.part2.p2' )"/>
+			<div class="kbox">
+				<Katex
+					aligned
+					as="div"
+					display
+					tex="N_k&=3^k\quad(C=3,\;c=1) \\ D_{k+1}&\ge D_k+v=D_k+20\,\text{km}"
+				/>
+			</div>
+			<p class="muted">{{ t( "sections.part2.p3" ) }}</p>
 		</div>
 
-		<h2 id="depot-strategie" class="mt-8">{{ t( "sections.part3.title" ) }}</h2>
+		<h2 id="endlicher-vorrat" class="mt-8">{{ t( "sections.part3.title" ) }}</h2>
 		<div class="eddie">
 			<p v-html="t( 'sections.part3.p1' )"/>
+			<p v-html="t( 'sections.part3.p2' )"/>
 
 			<div class="kbox">
 				<Katex
 					aligned
 					as="div"
 					display
-					tex="\Delta x_j&=\frac{vC}{2c}\cdot\frac{1}{2j-1} \\ D_m=\sum_{j=1}^{m}\Delta x_j&=\frac{vC}{2c}\sum_{j=1}^{m}\frac{1}{2j-1}"
+					tex="\Delta x_j^{\leftrightarrow}&=\frac{vC}{2cj},&
+D_n^{\leftrightarrow}&=\frac{vC}{2c}\sum_{j=1}^{n}\frac{1}{j} \\
+\Delta x_j^{\rightarrow}&=\frac{vC}{c(2j-1)},&
+D_n^{\rightarrow}&=\frac{vC}{c}\sum_{j=1}^{n}\frac{1}{2j-1}"
 				/>
 			</div>
 
-			<p v-html="t( 'sections.part3.p2' )"/>
+			<p v-html="t( 'sections.part3.p3' )"/>
+			<div class="kbox">
+				<Katex
+					aligned
+					as="div"
+					display
+					tex="D_2^{\leftrightarrow}&=30\left(1+\frac12\right)=45\,\text{km} \\
+D_5^{\leftrightarrow}&=30\left(1+\frac12+\frac13+\frac14+\frac15\right)=68{,}5\,\text{km}"
+				/>
+			</div>
+			<p v-html="t( 'sections.part3.p4' )"/>
 		</div>
 
-		<h2 class="mt-8">{{ t( "sections.part4.title" ) }}</h2>
+		<h2 id="ein-depot-bilanz" class="mt-8">{{ t( "sections.part4.title" ) }}</h2>
 		<div class="eddie">
 			<p v-html="t( 'sections.part4.p1' )"/>
+			<p v-html="t( 'sections.part4.p2' )"/>
+			<p v-html="t( 'sections.part4.p3' )"/>
 
 			<div class="kbox">
-				<Katex as="div" display tex="d + 2c\frac{x}{v} \le C" />
-				<Katex as="div" display tex="D_{\max}=x+\frac{v}{2c}\left(kd + C - c\frac{x}{v}\right)" />
+				<Katex
+					aligned
+					as="div"
+					display
+					tex="S&=kd+C-c\frac{x}{v} \\
+d+2c\frac{x}{v}&\le C \\
+D_{\text{zurueck zum Depot}}&=x+\frac{v}{2c}S \\
+D_{\text{zurueck zum Start}}&=x+\frac{v}{2c}\left(S-c\frac{x}{v}\right)=x+\frac{v}{2c}\left(kd+C-2c\frac{x}{v}\right) \\
+D_{\text{einweg}}&=x+\frac{v}{c}S"
+				/>
 			</div>
+			<p v-html="t( 'sections.part4.p4' )"/>
+			<p class="muted">{{ t( "sections.part4.p5" ) }}</p>
 		</div>
 	</template>
 
 	<template #summaryPart>
 		<h2>{{ t( "sections.summary.title" ) }}</h2>
-		<RDGraph mode="classic" :rows="classicCalc.rows" />
+		<p class="muted">{{ t( "sections.summary.p1" ) }}</p>
+		<RDGraph />
 	</template>
 </AppFrame>
 </template>
 
 <script setup>
-import { computed, ref } from "vue";
+import { computed } from "vue";
 import { useI18n } from "@/utils/i18n.mjs";
 import titleImg from "./RD.webp";
 import RDGraph from "./RD_Graph.vue";
 
-const {
-	t, tm, parseLocalizedNumber
-} = useI18n( "book1.RD" );
+const { t, tm } = useI18n( "book1.RD" );
 
-const mode = ref( "classic" );
-const modeItems = [
-	{ title: "Klassisch (Mehrdepot, Reihe)", value: "classic" },
-	{ title: "Vorstufe (ein Depot)", value: "light" }
-];
-
-const CInput = ref( 3 );
-const cInput = ref( 1 );
-const vInput = ref( 20 );
-const xInput = ref( 20 );
-const dInput = ref( 1 );
-const kInput = ref( 3 );
-
-const classicCInput = ref( 3 );
-const classiccInput = ref( 1 );
-const classicVInput = ref( 20 );
-const mInput = ref( 6 );
 const subChapter = computed( () => tm( "subChapter" ) ?? {} );
-
-function parseMaybeFloat( v ) {
-	return parseLocalizedNumber( v );
-}
-
-function parseMaybeInt( v ) {
-	const n = parseMaybeFloat( v );
-
-	if ( n === null || !Number.isInteger( n ) ) {
-		return null;
-	}
-
-	return n;
-}
-
-const lightCalc = computed( () => {
-	const C = parseMaybeFloat( CInput.value );
-	const c = parseMaybeFloat( cInput.value );
-	const speed = parseMaybeFloat( vInput.value );
-	const x = parseMaybeFloat( xInput.value );
-	const d = parseMaybeFloat( dInput.value );
-	const k = parseMaybeInt( kInput.value );
-
-	if ( C === null || c === null || speed === null || x === null || d === null || k === null ) {
-		return { error: t( "calculator.errors.fillAll" ) };
-	}
-
-	if ( C <= 0 || c <= 0 || speed <= 0 ) {
-		return { error: t( "calculator.errors.positive" ) };
-	}
-
-	if ( x < 0 || d < 0 || k < 0 ) {
-		return { error: t( "calculator.errors.nonNegative" ) };
-	}
-
-	const shuttleRoundUse = 2 * c * x / speed;
-	const finalToDepotUse = c * x / speed;
-	const shuttleFeasible = d + shuttleRoundUse <= C + 1e-12;
-	const finalReachFeasible = finalToDepotUse <= C + 1e-12;
-
-	const L = k * d;
-	const D0 = speed * C / ( 2 * c );
-	const Dmax = x + speed / ( 2 * c ) * ( L + C - finalToDepotUse );
-	const gain = Dmax - D0;
-
-	let ok = true;
-	let warning = "";
-
-	if ( !finalReachFeasible ) {
-		ok = false;
-		warning = t( "calculator.warnings.tooFar" );
-	} else if ( !shuttleFeasible ) {
-		ok = false;
-		warning = t( "calculator.warnings.shuttle" );
-	}
-
-	const rows = [];
-
-	for ( let kk = 0; kk <= 8; kk++ ) {
-		const Lk = kk * d;
-		const Dk = x + speed / ( 2 * c ) * ( Lk + C - finalToDepotUse );
-		rows.push( {
-			k:    kk,
-			L:    Lk,
-			D:    Dk,
-			gain: Dk - D0
-		} );
-	}
-
-	return {
-		error: "",
-		ok,
-		warning,
-		L,
-		D0,
-		Dmax,
-		gain,
-		rows
-	};
-} );
-
-const classicCalc = computed( () => {
-	const C = parseMaybeFloat( classicCInput.value );
-	const c = parseMaybeFloat( classiccInput.value );
-	const speed = parseMaybeFloat( classicVInput.value );
-	const m = parseMaybeInt( mInput.value );
-
-	if ( C === null || c === null || speed === null || m === null ) {
-		return { error: t( "calculator.errors.fillAllM" ) };
-	}
-
-	if ( C <= 0 || c <= 0 || speed <= 0 ) {
-		return { error: t( "calculator.errors.positive" ) };
-	}
-
-	if ( m <= 0 ) {
-		return { error: t( "calculator.errors.mMin" ) };
-	}
-
-	const D0 = speed * C / ( 2 * c );
-	let Hodd = 0;
-	let Dm = 0;
-	let lastGain = 0;
-	const rows = [];
-
-	for ( let j = 1; j <= m; j++ ) {
-		const term = 1 / ( 2 * j - 1 );
-		const delta = D0 * term;
-		Hodd += term;
-		Dm += delta;
-		lastGain = delta;
-		rows.push( {
-			j,
-			term,
-			delta,
-			cum: Dm
-		} );
-	}
-
-	return {
-		error: "",
-		D0,
-		Hodd,
-		Dm,
-		lastGain,
-		rows
-	};
-} );
-
-function applyLapplandPreset() {
-	CInput.value = 3;
-	cInput.value = 1;
-	vInput.value = 20;
-	xInput.value = 20;
-	dInput.value = 1;
-	kInput.value = 3;
-}
-
-function applyClassicPreset() {
-	classicCInput.value = 3;
-	classiccInput.value = 1;
-	classicVInput.value = 20;
-	mInput.value = 6;
-}
-
-function setMaxFeasibleX() {
-	const C = parseMaybeFloat( CInput.value );
-	const c = parseMaybeFloat( cInput.value );
-	const speed = parseMaybeFloat( vInput.value );
-	const d = parseMaybeFloat( dInput.value );
-
-	if ( C === null || c === null || speed === null || d === null || C <= 0 || c <= 0 || speed <= 0 || d < 0 ) {
-		return;
-	}
-
-	const xByShuttle = speed / ( 2 * c ) * ( C - d );
-	const xByReach = speed / c * C;
-	const xMax = Math.max( 0, Math.min( xByShuttle, xByReach ) );
-	xInput.value = xMax;
-}
-
-function fmt( n, digits = 3 ) {
-	if ( !Number.isFinite( n ) ) {
-		return "-";
-	}
-
-	return n.toFixed( digits ).replace( ".", "," );
-}
 </script>
