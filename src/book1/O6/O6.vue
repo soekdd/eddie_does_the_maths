@@ -173,6 +173,30 @@
 		<EddieComment :subtitle="t( 'sections.part4.commentTitle' )">
 			<p v-html="t( 'sections.part4.commentText' )"/>
 		</EddieComment>
+
+		<h2 id="rueckwaerts" class="mt-8">{{ t( "sections.backward.title" ) }}</h2>
+		<div class="eddie">
+			<p v-html="t( 'sections.backward.p1' )"/>
+			<div class="kbox">
+				<Katex as="div" display tex="x_{n+1}=x_n\left(x_n+\frac1n\right)" />
+			</div>
+			<p v-html="t( 'sections.backward.p2' )"/>
+			<div class="kbox">
+				<Katex as="div" display tex="x_n=\frac{\sqrt{1+4n^2x_{n+1}}-1}{2n}=:g_n(x_{n+1})." />
+			</div>
+			<p v-html="t( 'sections.backward.p3' )"/>
+			<div class="kbox">
+				<Katex as="div"
+					display
+					tex="J_N=\left[1-\frac1N,\,1\right]\quad\Longrightarrow\quad I_1^{(N)}=g_1\circ g_2\circ\dots\circ g_{N-1}(J_N)."
+				/>
+			</div>
+			<p v-html="t( 'sections.backward.p4' )"/>
+			<div class="kbox">
+				<Katex as="div" display tex="\Delta_n=\frac{2n\,\Delta_{n+1}}{\sqrt{1+4n^2b_{n+1}}+\sqrt{1+4n^2a_{n+1}}}" />
+			</div>
+			<p v-html="t( 'sections.backward.p5' )"/>
+		</div>
 	</template>
 
 	<template #interactivePart>
@@ -185,7 +209,7 @@
 					v-model="nInput"
 					hide-details="auto"
 					:label="t( 'sections.interactive.nLabel' )"
-					max="120"
+					max="328"
 					min="2"
 					style="max-width: 180px"
 					type="number"
@@ -210,6 +234,12 @@
 					<div>
 						<Katex :tex="`A_N=${fmt(result.AN, 10)}`" />,<br>
 						<Katex :tex="`B_N=${fmt(result.BN, 10)}`" />
+					</div>
+					<div>
+						{{ t( "sections.interactive.highPrecision" ) }}:
+						<code>{{ result.xApprox }}</code><br>
+						{{ t( "sections.interactive.radius" ) }}:
+						<code>{{ result.dxApprox }}</code>
 					</div>
 					<div>
 						{{ t( "sections.interactive.width" ) }}:
@@ -296,8 +326,12 @@
 
 	<template #footer>
 		<p class="muted">
-			{{ t( "footer.label" ) }}
-			<a href="https://prase.cz/kalva/imo/isoln/isoln856.html">{{ t( "footer.link" ) }}</a>
+			{{ t( "footer.label1" ) }}
+			<a href="https://prase.cz/kalva/imo/isoln/isoln856.html">{{ t( "footer.link1" ) }}</a>
+		</p>
+		<p class="muted">
+			{{ t( "footer.label2" ) }}
+			<a href="https://matheplanet.com/matheplanet/nuke/html/viewtopic.php?topic=267213&start=40&lps=1953586#naechster3">{{ t( "footer.link2" ) }}</a>
 		</p>
 	</template>
 </AppFrame>
@@ -316,10 +350,12 @@ const t = ( key,
 	params = {} ) => rawT( `${key}`, params );
 const tm = ( key = "" ) => rawTm( key ? `${key}` : "o6" );
 
-const EPS = 1e-13;
+const HP_DECIMALS = 140;
+const HP_DISPLAY_DECIMALS = 120;
+const HP_SCALE = 10n ** BigInt( HP_DECIMALS );
 
-const nInput = ref( "25" );
-const x1Input = ref( "0.57" );
+const nInput = ref( "45" );
+const x1Input = ref( "0.44653491726422947" );
 
 const error = ref( "" );
 const result = ref( null );
@@ -341,58 +377,51 @@ function parseNumber( v, label ) {
 	return x;
 }
 
-function recurrenceStep( x, n ) {
-	return x * ( x + 1 / n );
+function parseScaledDecimal( v, label ) {
+	const normalized = String( v ?? "" ).trim()
+		.replace( ",", "." );
+
+	if ( !normalized ) {
+		throw new Error( t( "sections.interactive.errors.empty", { label } ) );
+	}
+
+	const match = normalized.match( /^([+-])?(\d*)(?:\.(\d*))?$/ );
+
+	if ( !match || !match[ 2 ] && !match[ 3 ] ) {
+		throw new Error( t( "sections.interactive.errors.invalid", { label } ) );
+	}
+
+	const sign = match[ 1 ] === "-" ? -1n : 1n;
+	const whole = BigInt( match[ 2 ] || "0" );
+	const fraction = ( match[ 3 ] || "" ).padEnd( HP_DECIMALS, "0" ).slice( 0, HP_DECIMALS );
+
+	return sign * ( whole * HP_SCALE + BigInt( fraction ) );
 }
 
-function Sn( x, n ) {
-	let y = x;
-
-	for ( let k = 1; k <= n; k++ ) {
-		y = recurrenceStep( y, k );
-	}
-
-	return y;
+function inverseStep( y, n ) {
+	return ( Math.sqrt( 1 + 4 * n * n * y ) - 1 ) / ( 2 * n );
 }
 
-function bisectionForSn( n, target ) {
-	let lo = 0;
-	let hi = 1;
-	let flo = Sn( lo, n ) - target;
-	const fhi = Sn( hi, n ) - target;
-
-	if ( Math.abs( flo ) < EPS ) {
-		return lo;
+function backwardBoundsForIndex( n ) {
+	if ( n <= 1 ) {
+		return {
+			a: 0,
+			b: 1
+		};
 	}
 
-	if ( Math.abs( fhi ) < EPS ) {
-		return hi;
+	let a = 1 - 1 / n;
+	let b = 1;
+
+	for ( let k = n - 1; k >= 1; k-- ) {
+		a = inverseStep( a, k );
+		b = inverseStep( b, k );
 	}
 
-	if ( flo * fhi > 0 ) {
-		throw new Error( t( "sections.interactive.errors.bisection", {
-			n,
-			target
-		} ) );
-	}
-
-	for ( let iter = 0; iter < 120; iter++ ) {
-		const mid = 0.5 * ( lo + hi );
-		const fm = Sn( mid, n ) - target;
-
-		if ( Math.abs( fm ) < EPS || hi - lo < 1e-14 ) {
-			return mid;
-		}
-
-		if ( flo * fm <= 0 ) {
-			hi = mid;
-		} else {
-			lo = mid;
-			flo = fm;
-		}
-	}
-
-	return 0.5 * ( lo + hi );
+	return {
+		a,
+		b
+	};
 }
 
 function computeBounds( N ) {
@@ -401,8 +430,7 @@ function computeBounds( N ) {
 	let BN = Infinity;
 
 	for ( let n = 1; n <= N; n++ ) {
-		const a = bisectionForSn( n, 1 - 1 / n );
-		const b = bisectionForSn( n, 1 );
+		const { a, b } = backwardBoundsForIndex( n );
 		const w = b - a;
 		AN = Math.max( AN, a );
 		BN = Math.min( BN, b );
@@ -419,29 +447,132 @@ function computeBounds( N ) {
 	};
 }
 
-function computeSequenceRows( x1, N ) {
-	const x = [ 0, x1 ];
-
-	for ( let n = 1; n <= N; n++ ) {
-		x[ n + 1 ] = recurrenceStep( x[ n ], n );
+function integerSqrt( value ) {
+	if ( value < 0n ) {
+		throw new Error( "square root of a negative BigInt" );
 	}
 
+	if ( value < 2n ) {
+		return value;
+	}
+
+	let x0 = 1n << BigInt( Math.ceil( value.toString( 2 ).length / 2 ) );
+	let x1 = x0 + value / x0 >> 1n;
+
+	while ( x1 < x0 ) {
+		x0 = x1;
+		x1 = x0 + value / x0 >> 1n;
+	}
+
+	return x0;
+}
+
+function inverseStepScaled( y, n ) {
+	const k = BigInt( n );
+	const radicand = ( HP_SCALE + 4n * k * k * y ) * HP_SCALE;
+	const root = integerSqrt( radicand );
+
+	return ( root - HP_SCALE ) / ( 2n * k );
+}
+
+function backwardBoundsScaled( N ) {
+	if ( N <= 1 ) {
+		return {
+			a: 0n,
+			b: HP_SCALE
+		};
+	}
+
+	let a = BigInt( N - 1 ) * HP_SCALE / BigInt( N );
+	let b = HP_SCALE;
+
+	for ( let k = N - 1; k >= 1; k-- ) {
+		a = inverseStepScaled( a, k );
+		b = inverseStepScaled( b, k );
+	}
+
+	return {
+		a,
+		b
+	};
+}
+
+function formatScaled( value, decimals = HP_DISPLAY_DECIMALS ) {
+	const sign = value < 0n ? "-" : "";
+	const v = value < 0n ? -value : value;
+	const whole = v / HP_SCALE;
+	const frac = ( v % HP_SCALE ).toString().padStart( HP_DECIMALS, "0" );
+
+	return `${sign}${whole}.${frac.slice( 0, decimals )}`;
+}
+
+function scaledToDisplayNumber( value ) {
+	const sign = value < 0n ? "-" : "";
+	const v = value < 0n ? -value : value;
+	const whole = v / HP_SCALE;
+	const frac = ( v % HP_SCALE ).toString().padStart( HP_DECIMALS, "0" );
+
+	return Number( `${sign}${whole}.${frac.slice( 0, 17 )}` );
+}
+
+function formatScientificScaled( value, sigDigits = 3 ) {
+	if ( value === 0n ) {
+		return "0";
+	}
+
+	const s = value.toString();
+	const exponent = s.length - HP_DECIMALS - 1;
+	const mantissa = sigDigits > 1 ?
+		`${s[ 0 ]}.${s.slice( 1, sigDigits ).padEnd( sigDigits - 1, "0" )}` :
+		s[ 0 ];
+
+	return `${mantissa}e${exponent}`;
+}
+
+function computeHighPrecisionApproximation( N ) {
+	const { a, b } = backwardBoundsScaled( N );
+	const mid = ( a + b ) / 2n;
+	const radius = ( b - a ) / 2n;
+
+	return {
+		x:      formatScaled( mid ),
+		radius: formatScientificScaled( radius )
+	};
+}
+
+function scaledToNumber( value ) {
+	return Number( value ) / Number( HP_SCALE );
+}
+
+function recurrenceStepScaled( x, n ) {
+	return x * x / HP_SCALE + x / BigInt( n );
+}
+
+function computeSequenceRows( x1Scaled, N ) {
 	const rows = [];
 	let fail = null;
+	let x = x1Scaled;
 
 	for ( let n = 1; n <= N; n++ ) {
-		const xn = x[ n ];
-		const xn1 = x[ n + 1 ];
-		const ok = xn > 0 && xn < xn1 && xn1 < 1;
+		const xn = x;
+		const xn1 = recurrenceStepScaled( xn, n );
+		const ok = xn > 0n && xn < xn1 && xn1 < HP_SCALE;
 		rows.push( {
-			n, xn, xn1, ok
+			n,
+			xn:  scaledToNumber( xn ),
+			xn1: scaledToNumber( xn1 ),
+			ok
 		} );
 
 		if ( !ok && fail === null ) {
 			fail = {
-				n, xn, xn1
+				n,
+				xn:  scaledToNumber( xn ),
+				xn1: scaledToNumber( xn1 )
 			};
 		}
+
+		x = xn1;
 	}
 
 	return {
@@ -456,18 +587,20 @@ function runCheck() {
 
 	try {
 		const N = parseNumber( nInput.value, "N" );
-		const x1 = parseNumber( x1Input.value, "x1" );
+		const x1Scaled = parseScaledDecimal( x1Input.value, "x1" );
+		const x1 = scaledToDisplayNumber( x1Scaled );
 
 		if ( !Number.isInteger( N ) ) {
 			throw new Error( t( "sections.interactive.errors.integerN" ) );
 		}
 
-		if ( N < 2 || N > 120 ) {
+		if ( N < 2 || N > 328 ) {
 			throw new Error( t( "sections.interactive.errors.rangeN" ) );
 		}
 
 		const bounds = computeBounds( N );
-		const seq = computeSequenceRows( x1, N );
+		const seq = computeSequenceRows( x1Scaled, N );
+		const highPrecision = computeHighPrecisionApproximation( N );
 
 		result.value = {
 			N,
@@ -475,6 +608,8 @@ function runCheck() {
 			AN:         bounds.AN,
 			BN:         bounds.BN,
 			width:      bounds.width,
+			xApprox:    highPrecision.x,
+			dxApprox:   highPrecision.radius,
 			boundsRows: bounds.rows,
 			seqRows:    seq.rows,
 			okAll:      seq.fail === null,
@@ -497,7 +632,7 @@ function setMidpoint() {
 	}
 
 	const m = 0.5 * ( result.value.AN + result.value.BN );
-	x1Input.value = String( m );
+	x1Input.value = result.value.xApprox || String( m );
 	runCheck();
 }
 

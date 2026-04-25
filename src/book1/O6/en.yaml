@@ -7,6 +7,7 @@ subChapter:
   rekursion: "Recursion"
   monotonie: "Monotonicity"
   existenz-eindeutigkeit: "Existence & Uniqueness"
+  rueckwaerts: "Backward Computation"
 book:
   p1: "Joutsa, second day of competition. It feels as if someone stuffed cotton into my head. I read the text twice and notice: I understand it and at the same time I am slipping away. As if my brain were standing on a wet pier."
   p2: "This one is about a sequence of numbers. You start with one value, and then you generate the next one from the previous one, always by the same rule. Like a machine: you feed it the current value and it spits out the next one."
@@ -77,6 +78,13 @@ sections:
     p10: "Since this holds for all <katex tex=\"n\\ge2\" />, we get <katex tex=\"|x_1-y_1|=0\" />, hence <katex tex=\"x_1=y_1\" />."
     commentTitle: "Grinning Conclusion"
     commentText: "In the end it is almost cheekily beautiful: try infinitely many starting values, but only one lands exactly on the track between \"too small\" and \"too large\". If you hit it, the sequence marches upward obediently and still stays below 1. A mathematically precise launch."
+  backward:
+    title: "Part 5 — Computing the Starting Value Backward"
+    p1: "The existence proof does not require a formula for the starting value. But if we want to compute the value numerically, forward trial and error is unnecessarily expensive."
+    p2: "On the positive range the recursion is invertible. Solving the quadratic equation for <katex tex=\"x_n\" /> gives:"
+    p3: "For a large <katex tex=\"N\" /> we know an admissible final interval for <katex tex=\"x_N\" />. We then carry this interval step by step back to <katex tex=\"x_1\" /> with the inverse functions:"
+    p4: "The width shrinks very quickly. For an interval <katex tex=\"[a_{n+1},b_{n+1}]\" /> and its preimage <katex tex=\"[a_n,b_n]\" />, rationalizing gives:"
+    p5: "The denominator is roughly <katex tex=\"4n\" />, so each backward step approximately halves the width. With <katex tex=\"N=328\" /> one already gets more than 100 reliable decimal places."
   interactive:
     title: "Playground: Approximation of the Unique Starting Value"
     intro: "For a chosen <katex tex=\"N\" />, we compute the numerical bounds <katex tex=\"A_N=\\max_{1\\le n\\le N}a_n\" /> and <katex tex=\"B_N=\\min_{1\\le n\\le N}b_n\" />. The interval <katex tex=\"[A_N,B_N]\" /> contains the unique starting value."
@@ -85,6 +93,8 @@ sections:
     check: "Compute"
     midpoint: "x1 = (A_N+B_N)/2"
     randomNear: "Random near interval"
+    highPrecision: "Backward approximation"
+    radius: "Error radius"
     width: "Width"
     comparison: "Comparison"
     okPrefix: "For"
@@ -96,7 +106,7 @@ sections:
       invalid: "{label}: invalid number."
       bisection: "Bisection failed for n={n}, target={target}."
       integerN: "N must be an integer."
-      rangeN: "Please choose N between 2 and 120."
+      rangeN: "Please choose N between 2 and 328."
   calculation:
     title: "Tables"
     boundsTitle: "Bound Sequences"
@@ -105,5 +115,7 @@ sections:
     ok: "ok"
     fail: "fail"
 footer:
-  label: "Source of the problem statement / solution sketch:"
-  link: "IMO 1985 B3 (ISL solutions, prase.cz)"
+  label1: "Source of the problem statement / solution sketch:"
+  link1: "IMO 1985 B3 (ISL solutions, prase.cz)"
+  label2: "Optimal numerical calculation of the initial value"
+  link2: "Thanks to MontyPythagoras"

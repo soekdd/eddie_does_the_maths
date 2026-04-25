@@ -7,6 +7,7 @@ subChapter:
   rekursion: "Rekursion"
   monotonie: "Monotonie"
   existenz-eindeutigkeit: "Existenz & Eindeutigkeit"
+  rueckwaerts: "Rückwärtsrechnung"
 book:
   p1: "Joutsa, zweiter Wettkampftag. Mir ist, als hätte jemand Watte in meinen Kopf gestopft. Ich lese den Text zweimal und merke: Ich verstehe ihn und gleichzeitig rutsche ich weg. Als würde mein Gehirn auf einem nassen Bootssteg stehen."
   p2: "Hier geht es um eine Zahlenfolge. Du startest mit einer Zahl, und dann erzeugst du die nächste aus der vorherigen, immer nach derselben Vorschrift. Wie ein Automat: du fütterst ihn mit dem aktuellen Wert und bekommst den nächsten ausgespuckt."
@@ -77,6 +78,13 @@ sections:
     p10: "Da dies für alle <katex tex=\"n\\ge2\" /> gilt, folgt <katex tex=\"|x_1-y_1|=0\" />, also <katex tex=\"x_1=y_1\" />."
     commentTitle: "Fazit mit Grinsen"
     commentText: "Am Ende ist es fast schon frech schön: unendlich viele Startwerte probieren, aber nur einer trifft exakt die Spur zwischen „zu klein“ und „zu groß“. Wenn der sitzt, marschiert die Folge brav aufwärts und bleibt trotzdem unter 1. Ein mathematischer Präzisionsstart."
+  backward:
+    title: "Teil 5 — Den Startwert rückwärts berechnen"
+    p1: "Der Existenzbeweis verlangt keine Formel für den Startwert. Wenn wir den Wert aber numerisch berechnen wollen, ist Vorwärtsprobieren unnötig teuer."
+    p2: "Die Rekursion ist auf dem positiven Bereich umkehrbar. Aus der quadratischen Gleichung für <katex tex=\"x_n\" /> folgt direkt:"
+    p3: "Für ein großes <katex tex=\"N\" /> kennen wir ein erlaubtes Endintervall für <katex tex=\"x_N\" />. Dieses Intervall wird dann Schritt für Schritt mit den Umkehrfunktionen zurück nach <katex tex=\"x_1\" /> getragen:"
+    p4: "Dabei schrumpft die Breite sehr schnell. Für ein Intervall <katex tex=\"[a_{n+1},b_{n+1}]\" /> und sein Urbild <katex tex=\"[a_n,b_n]\" /> ergibt Rationalisieren:"
+    p5: "Der Nenner ist ungefähr <katex tex=\"4n\" />, also wird die Breite in jedem Rückwärtsschritt ungefähr halbiert. Mit <katex tex=\"N=328\" /> bekommt man bereits mehr als 100 sichere Nachkommastellen."
   interactive:
     title: "Spielplatz: Näherung für den eindeutigen Startwert"
     intro: "Wir berechnen für ein gewähltes <katex tex=\"N\" /> die numerischen Schranken <katex tex=\"A_N=\\max_{1\\le n\\le N}a_n\" /> und <katex tex=\"B_N=\\min_{1\\le n\\le N}b_n\" />. Das Intervall <katex tex=\"[A_N,B_N]\" /> enthält den eindeutigen Startwert."
@@ -85,6 +93,8 @@ sections:
     check: "Berechnen"
     midpoint: "x1 = (A_N+B_N)/2"
     randomNear: "Zufall nahe Intervall"
+    highPrecision: "Rückwärts-Näherung"
+    radius: "Fehlerradius"
     width: "Breite"
     comparison: "Vergleich"
     okPrefix: "Für"
@@ -96,7 +106,7 @@ sections:
       invalid: "{label}: ungültige Zahl."
       bisection: "Bisection fehlgeschlagen für n={n}, target={target}."
       integerN: "N muss ganzzahlig sein."
-      rangeN: "N bitte zwischen 2 und 120 wählen."
+      rangeN: "N bitte zwischen 2 und 328 wählen."
   calculation:
     title: "Tabellen"
     boundsTitle: "Schrankenfolgen"
@@ -105,5 +115,7 @@ sections:
     ok: "ok"
     fail: "fail"
 footer:
-  label: "Quelle der Aufgabenstellung/Lösungsskizze:"
-  link: "IMO 1985 B3 (ISL solutions, prase.cz)"
+  label1: "Quelle der Aufgabenstellung/Lösungsskizze:"
+  link1: "IMO 1985 B3 (ISL solutions, prase.cz)"
+  label2: "Optimale numerische Berechnung des Startwertes"
+  link2: "Danke an MontyPythagoras"
