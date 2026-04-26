@@ -98,6 +98,7 @@ game:
   result: "Ergebnis"
 cards:
   figureAlt: "Bildkarte {rank}{suit}"
+  mathAce: "Matheass"
   suits:
     spades: "Pik"
     hearts: "Herz"
@@ -108,6 +109,11 @@ cards:
     queen: "Dame"
     king: "König"
     ace: "Ass"
+  rankLetters:
+    J: "B"
+    Q: "D"
+    K: "K"
+    A: "A"
 solver:
   wheel: "Strasse, Wheel"
   names:

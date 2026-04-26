@@ -29,7 +29,9 @@
 				class="centerFigure"
 				:src="centerFigureSrc"
 			/>
-			<div v-else-if="centerPipRows.length" class="centerPips">
+			<div v-if="isAce" class="aceLabel">{{ t( "cards.mathAce" ) }}</div>
+			<div v-if="isAce" class="aceLabel aceLabelBottom">{{ t( "cards.mathAce" ) }}</div>
+			<div v-if="!centerFigureSrc && centerPipRows.length" class="centerPips">
 				<div
 					v-for="( rowCount, rowIndex ) in centerPipRows"
 					:key="`pip-row-${rowIndex}`"
@@ -43,7 +45,7 @@
 					>{{ suitIcon }}</span>
 				</div>
 			</div>
-			<span v-else class="centerSuit">{{ suitIcon }}</span>
+			<span v-if="!centerFigureSrc && !centerPipRows.length" class="centerSuit">{{ suitIcon }}</span>
 		</div>
 
 		<!-- Ecke unten rechts (um 180° gedreht) -->
@@ -128,7 +130,7 @@ const suitAssetCode = computed( () => {
 	}
 } );
 
-const rankText = computed( () => {
+const rankCode = computed( () => {
 	const r = props.rank;
 
 	if ( typeof r === "number" ) {
@@ -138,37 +140,19 @@ const rankText = computed( () => {
 	const s = ( r ?? "" ).toString().trim()
 		.toLowerCase();
 
-	// Deutsch
-	if ( [ "bube" ].includes( s ) ) {
-		return "B";
+	if ( [ "bube", "jack", "j" ].includes( s ) ) {
+		return "J";
 	}
 
-	if ( [ "dame" ].includes( s ) ) {
-		return "D";
+	if ( [ "dame", "queen", "q" ].includes( s ) ) {
+		return "Q";
 	}
 
-	if ( [ "könig", "koenig" ].includes( s ) ) {
+	if ( [ "könig", "koenig", "king", "k" ].includes( s ) ) {
 		return "K";
 	}
 
-	if ( [ "ass" ].includes( s ) ) {
-		return "A";
-	}
-
-	// International / Kurzformen
-	if ( [ "j" ].includes( s ) ) {
-		return "B";
-	}
-
-	if ( [ "q" ].includes( s ) ) {
-		return "D";
-	}
-
-	if ( [ "k" ].includes( s ) ) {
-		return "K";
-	}
-
-	if ( [ "a" ].includes( s ) ) {
+	if ( [ "ass", "ace", "a" ].includes( s ) ) {
 		return "A";
 	}
 
@@ -176,18 +160,30 @@ const rankText = computed( () => {
 	return ( r ?? "" ).toString();
 } );
 
+const rankText = computed( () => {
+	if ( [ "J", "Q", "K", "A" ].includes( rankCode.value ) ) {
+		return t( `cards.rankLetters.${rankCode.value}` );
+	}
+
+	return rankCode.value;
+} );
+
 const figureRankAssetCode = computed( () => {
-	switch ( rankText.value ) {
-		case "B":
+	switch ( rankCode.value ) {
+		case "J":
 			return "B";
-		case "D":
+		case "Q":
 			return "Q";
 		case "K":
 			return "K";
+		case "A":
+			return "A";
 		default:
 			return "";
 	}
 } );
+
+const isAce = computed( () => rankCode.value === "A" );
 
 const figureImages = import.meta.glob( "./PG_Card_*.webp",
 	{
@@ -211,7 +207,7 @@ const centerFigureAlt = computed( () => t( "cards.figureAlt", {
 } ) );
 
 const numberRank = computed( () => {
-	const parsedRank = Number( rankText.value );
+	const parsedRank = Number( rankCode.value );
 
 	return Number.isInteger( parsedRank ) ? parsedRank : null;
 } );
@@ -371,9 +367,30 @@ const cardStyle = computed( () => ( { transform: `rotate(${props.rotation ?? 0}d
 }
 
 .centerFigure {
-  width: 110%;
-  height: auto;
+  width: auto;
+  height: 80%;
   object-fit: contain;
+  object-position: center;
+}
+
+.aceLabel {
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: 64px;
+  font-size: 10px;
+  font-weight: 800;
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+  color: inherit;
+}
+
+.aceLabelBottom {
+  top: auto;
+  bottom: 8px;
+  transform: translateX(-50%) rotate(180deg);
 }
 
 .centerPips {
