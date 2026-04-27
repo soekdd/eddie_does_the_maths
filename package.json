@@ -8,6 +8,7 @@
     "dev": "vite",
     "build": "VITE_PUBLIC_BASE=${VITE_PUBLIC_BASE:-/math/} VITE_BUILD_DATE=${VITE_BUILD_DATE:-$(date -u +%Y-%m-%dT%H:%M:%SZ)} vite-ssg build",
     "build:debug": "VITE_PUBLIC_BASE=${VITE_PUBLIC_BASE:-/math/} VITE_BUILD_DATE=${VITE_BUILD_DATE:-$(date -u +%Y-%m-%dT%H:%M:%SZ)} VITE_DEBUG_NO_MINIFY=1 vite-ssg build",
+    "pdf:pg-cards": "node scripts/generate-pg-cards-pdf.mjs",
     "preview": "vite preview",
     "http": "npx serve ./dist -l 4173"
   },
