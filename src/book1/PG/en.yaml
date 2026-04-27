@@ -98,7 +98,7 @@ game:
   result: "Result"
 cards:
   figureAlt: "Face card {rank}{suit}"
-  mathAce: "Maths whizz"
+  mathAce: "ace of maths"
   suits:
     spades: "Spades"
     hearts: "Hearts"

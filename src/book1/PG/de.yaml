@@ -110,8 +110,8 @@ cards:
     king: "König"
     ace: "Ass"
   rankLetters:
-    J: "B"
-    Q: "D"
+    J: "J"
+    Q: "Q"
     K: "K"
     A: "A"
 solver:
