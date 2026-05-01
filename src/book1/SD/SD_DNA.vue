@@ -146,9 +146,7 @@
 		</div>
 	</div>
 
-	<p class="muted">
-		{{ legendSummary }}
-	</p>
+	<p class="muted" v-html="legendSummary"/>
 </div>
 </template>
 

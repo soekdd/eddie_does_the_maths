@@ -109,7 +109,7 @@
 			</v-alert>
 
 			<v-alert v-else type="success" variant="tonal">
-				{{ successMessage }}
+				<span v-html="successMessage" />
 			</v-alert>
 
 			<div v-if="canEncode" class="kbox">
