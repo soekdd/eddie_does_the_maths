@@ -18,7 +18,7 @@
 		<!-- Ecke oben links -->
 		<div class="corner tl">
 			<div class="rank">{{ rankText }}</div>
-			<span class="suit">{{ suitIcon }}</span>
+			<span v-if="!props.hideSuit" class="suit">{{ suitIcon }}</span>
 		</div>
 
 		<!-- Mitte -->
@@ -51,7 +51,7 @@
 		<!-- Ecke unten rechts (um 180° gedreht) -->
 		<div class="corner br">
 			<div class="rank">{{ rankText }}</div>
-			<span class="suit">{{ suitIcon }}</span>
+			<span v-if="!props.hideSuit" class="suit">{{ suitIcon }}</span>
 		</div>
 	</template>
 </v-card>
@@ -74,10 +74,12 @@ const props = withDefaults( defineProps<{
     rotation?: number;
     /** Mini-Karte: nur Wertung + Symbol nebeneinander */
     mini?: boolean;
+	hideSuit?: boolean;
   }>(),
 {
 	rotation: 0,
-	mini:     false
+	mini:     false,
+	hideSuit: false
 } );
 
 const normSuit = computed( () => {

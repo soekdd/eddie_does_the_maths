@@ -13,6 +13,7 @@
 			<PokerCard
 				v-if="!card.blank"
 				class="printCard"
+				:hide-suit="card.rank > 3 || Number.isNaN(parseInt(card.rank))"
 				:rank="card.rank"
 				:suit="card.suit"
 			/>
@@ -148,6 +149,7 @@ onMounted( async() => {
 	height: 83mm !important;
 	aspect-ratio: auto !important;
 	border-radius: 4mm;
+	border:none!important;
 	box-shadow: none !important;
 }
 
@@ -155,8 +157,8 @@ onMounted( async() => {
 	width: 51mm;
 	height: 83mm;
 	background: #fff;
-	border: 1px solid rgba(0, 0, 0, 0.12);
-	border-radius: 4mm;
+	/*border: 1px solid rgba(0, 0, 0, 0.12);
+	border-radius: 4mm;*/
 }
 
 :deep(.printCard .corner.tl) {
