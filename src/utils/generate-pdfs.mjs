@@ -38,6 +38,19 @@ const cacheDir = path.join(
 );
 const navigationTimeoutMs = Number.parseInt( process.env.PDF_NAV_TIMEOUT_MS || "120000", 10 );
 const supportedLocales = [ "de", "en", "se", "fi" ];
+const pdfSourceDependencyExts = new Set( [
+	".css",
+	".jpeg",
+	".jpg",
+	".json",
+	".png",
+	".svg",
+	".ts",
+	".vue",
+	".webp",
+	".yaml",
+	".yml"
+] );
 
 function parseLocalizedRoute( route ) {
 	const segments = String( route || "/" )
@@ -62,6 +75,29 @@ function pdfFileNameFromRouteAndLocale( route,
 	return `${routeSlugFromRoute( route )}_${locale}.pdf`;
 }
 
+function collectPdfSourceDependencyPaths( sourceDirectories ) {
+	const dependencyPaths = [];
+
+	for ( const sourceDirectory of sourceDirectories ) {
+		const files = fg.sync( "**/*", {
+			cwd:       sourceDirectory,
+			absolute:  true,
+			onlyFiles: true
+		} );
+
+		for ( const filePath of files ) {
+			const ext = path.extname( filePath )
+				.toLowerCase();
+
+			if ( pdfSourceDependencyExts.has( ext ) ) {
+				dependencyPaths.push( filePath );
+			}
+		}
+	}
+
+	return Array.from( new Set( dependencyPaths ) );
+}
+
 function resolvePdfSourcePaths( route,
 	locale ) {
 	const slug = routeSlugFromRoute( route );
@@ -75,22 +111,16 @@ function resolvePdfSourcePaths( route,
 		absolute:        true,
 		onlyDirectories: true
 	} );
-	const vueSourceDir = sourceDirectories.find( ( dirPath ) => fs.existsSync( path.join(
-		dirPath, `${slug}.vue`
-	) ) );
-	const localeSourceDir = sourceDirectories.find( ( dirPath ) => fs.existsSync( path.join(
-		dirPath, `${locale}.yaml`
-	) ) );
+	const vueSourceDir = sourceDirectories.find( ( dirPath ) => fs.existsSync( path.join( dirPath, `${slug}.vue` ) ) );
+	const localeSourceDir = sourceDirectories.find( ( dirPath ) => fs.existsSync( path.join( dirPath, `${locale}.yaml` ) ) );
 
-	const sourceVuePath = vueSourceDir ? path.join(
-		vueSourceDir, `${slug}.vue`
-	) : null;
-	const sourceLocaleYamlPath = localeSourceDir ? path.join(
-		localeSourceDir, `${locale}.yaml`
-	) : null;
+	const sourceVuePath = vueSourceDir ? path.join( vueSourceDir, `${slug}.vue` ) : null;
+	const sourceLocaleYamlPath = localeSourceDir ? path.join( localeSourceDir, `${locale}.yaml` ) : null;
+	const dependencyPaths = collectPdfSourceDependencyPaths( sourceDirectories );
 
 	return {
-		localeSupported:      Boolean( sourceLocaleYamlPath ),
+		dependencyPaths,
+		localeSupported: Boolean( sourceLocaleYamlPath ),
 		sourceLocaleYamlPath,
 		sourceVuePath
 	};
@@ -129,11 +159,9 @@ async function shouldGeneratePdf(
 		return { shouldGenerate: false, reason: "locale yaml missing" };
 	}
 
-	const candidateSourcePaths = [ sourcePaths.sourceVuePath ];
-
-	if ( sourcePaths.sourceLocaleYamlPath ) {
-		candidateSourcePaths.push( sourcePaths.sourceLocaleYamlPath );
-	}
+	const candidateSourcePaths = sourcePaths.dependencyPaths?.length ?
+		sourcePaths.dependencyPaths :
+		[ sourcePaths.sourceVuePath ];
 
 	let newestSourcePath = null;
 	let newestSourceMtimeMs = Number.NEGATIVE_INFINITY;
@@ -219,6 +247,71 @@ function buildPdfUrl( baseUrl,
 	route ) {
 	const routeUrl = new URL( routeToBasePath( route ), baseUrl );
 	return routeUrl.toString();
+}
+
+async function waitForRenderableAssets( page,
+	route ) {
+	await page.evaluate( () => {
+		for ( const image of Array.from( document.images ) ) {
+			image.loading = "eager";
+			image.setAttribute( "loading", "eager" );
+		}
+	} );
+
+	try {
+		await page.waitForFunction( () => Array.from( document.images )
+			.every( ( image ) => image.complete ),
+		{ timeout: 30000 } );
+	} catch {
+		console.warn( `PDF WARN: timed out waiting for images on ${route}` );
+	}
+
+	await page.evaluate( async() => {
+		if ( document.fonts?.ready ) {
+			await document.fonts.ready;
+		}
+
+		await Promise.all( Array.from( document.images )
+			.map( async( image ) => {
+				if ( typeof image.decode === "function" ) {
+					await image.decode()
+						.catch( () => {} );
+				}
+			} ) );
+	} );
+
+	const brokenImages = await page.evaluate( () => Array.from( document.images )
+		.filter( ( image ) => image.complete && image.naturalWidth === 0 )
+		.map( ( image ) => image.currentSrc || image.src || image.getAttribute( "src" ) || "" )
+		.filter( Boolean ) );
+	const brokenSvgImages = await page.evaluate( async() => {
+		const hrefs = Array.from( document.querySelectorAll( "svg image" ) )
+			.map( ( image ) => image.href?.baseVal || image.getAttribute( "href" ) || image.getAttribute( "xlink:href" ) || "" )
+			.filter( ( href ) => href && !href.startsWith( "data:" ) );
+		const broken = [];
+
+		await Promise.all( hrefs.map( async( href ) => {
+			try {
+				const response = await fetch( href );
+
+				if ( !response.ok ) {
+					broken.push( href );
+				}
+			} catch {
+				broken.push( href );
+			}
+		} ) );
+
+		return broken;
+	} );
+	const allBrokenImages = Array.from( new Set( [
+		...brokenImages,
+		...brokenSvgImages
+	] ) );
+
+	if ( allBrokenImages.length ) {
+		console.warn( `PDF WARN: broken image references on ${route}: ${allBrokenImages.join( ", " )}` );
+	}
 }
 
 // Optional: rewrite /foo -> /foo.html or /foo/index.html (hilft, wenn du dirStyle=flat nutzt)
@@ -332,6 +425,7 @@ export async function generatePdfs() {
 
 			// CSS media type auf print (zulässige Werte: screen/print/null). :contentReference[oaicite:2]{index=2}
 			await page.emulateMediaType( "print" );
+			await waitForRenderableAssets( page, route );
 
 			// preferCSSPageSize + printBackground sind die beiden wichtigsten Optionen. :contentReference[oaicite:3]{index=3}
 			await fsp.mkdir( path.dirname( filePath ), { recursive: true } );
