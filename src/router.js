@@ -14,6 +14,7 @@ import O5 from "@/book1/O5/O5.vue";
 import O6 from "@/book1/O6/O6.vue";
 import FI from "@/book1/FI/FI.vue";
 import PG from "@/book1/PG/PG.vue";
+import IP from "@/book1/IP/IP.vue";
 import GZ from "@/book1/GZ/GZ.vue";
 import AL from "@/book1/AL/AL.vue";
 import BA from "@/book1/BA/BA.vue";
@@ -618,6 +619,17 @@ export const contentRoutes = [
 			index:      true,
 			book:       1,
 			order:      230
+		}
+	},
+	{
+		path:      "/IP",
+		name:      "IP",
+		component: IP,
+		meta:      {
+			difficulty: 3,
+			index:      true,
+			book:       1,
+			order:      235
 		}
 	},
 	{
