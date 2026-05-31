@@ -116,36 +116,16 @@
 				y1="15"
 				y2="29"
 			/>
-			<line :x1="-wheelBase / 2 - 24"
-				:x2="-wheelBase / 2 + 24"
-				y1="29"
-				y2="29"
-			/>
-			<line :x1="wheelBase / 2 - 24"
-				:x2="wheelBase / 2 + 24"
-				y1="29"
-				y2="29"
-			/>
 		</g>
 
 		<!-- wheels -->
 		<circle class="wheel"
-			:cx="-wheelBase / 2 - 23"
+			:cx="-wheelBase / 2"
 			cy="35"
 			:r="wheelRadius"
 		/>
 		<circle class="wheel"
-			:cx="-wheelBase / 2 + 23"
-			cy="35"
-			:r="wheelRadius"
-		/>
-		<circle class="wheel"
-			:cx="wheelBase / 2 - 23"
-			cy="35"
-			:r="wheelRadius"
-		/>
-		<circle class="wheel"
-			:cx="wheelBase / 2 + 23"
+			:cx="wheelBase / 2"
 			cy="35"
 			:r="wheelRadius"
 		/>
@@ -198,7 +178,11 @@
 			:y1="pivot.y"
 			:y2="pivot.y - rodLengthPx"
 		/>
-		<path class="angle-arc" :d="angleArcPath" marker-end="url(#arrow-head)" />
+		<path v-if="Math.abs(forceU)>0.1"
+			class="angle-arc"
+			:d="angleArcPath"
+			marker-end="url(#arrow-head)"
+		/>
 		<text class="angle-label" :x="angleLabel.x" :y="angleLabel.y">
 			θ = {{ formatDeg(theta) }}°
 		</text>
@@ -206,7 +190,7 @@
 
 	<!-- Force vector -->
 	<g v-if="showForce" class="force-layer" :class="{ 'is-limited': forceLimited }">
-		<line
+		<line v-if="Math.abs(forceU)>0.1"
 			class="force-arrow"
 			:marker-end="forceMarkerEnd"
 			:x1="cartCx"
