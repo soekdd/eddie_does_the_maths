@@ -159,15 +159,12 @@ const displayTheta = computed( () => clamp(
 	state.theta, -1.35, 1.35
 ) );
 const displayForce = computed( () => state.force );
-const instabilityRatio = computed( () => Math.max(
-	Math.abs( state.theta ) / FALL_ANGLE_RAD,
-	Math.abs( state.x ) / FALL_POSITION_M
-) );
+const instabilityRatio = computed( () => Math.max( Math.abs( state.theta ) / FALL_ANGLE_RAD,
+	Math.abs( state.x ) / FALL_POSITION_M ) );
 const isStablePose = computed( () =>
 	Math.abs( state.theta ) < 0.025 &&
 	Math.abs( state.thetaDot ) < 0.05 &&
-	Math.abs( state.x ) < 0.06
-);
+	Math.abs( state.x ) < 0.06 );
 const graphEmotion = computed( () => {
 	if ( fallen.value ) {
 		return "pain";
