@@ -14,6 +14,7 @@
 		<IPGraph
 			:aria-label="t( 'control.graphAria' )"
 			:cart-mass="MODEL.cartMass"
+			:emotion="graphEmotion"
 			:force-limited="saturated"
 			:force-u="displayForce"
 			:gravity="MODEL.gravity"
@@ -23,7 +24,6 @@
 			:position-x="displayX"
 			:show-parameter-panel="false"
 			:theta="displayTheta"
-			:unstable="fallen"
 			:width="860"
 			:x-scale="76"
 		/>
@@ -159,6 +159,30 @@ const displayTheta = computed( () => clamp(
 	state.theta, -1.35, 1.35
 ) );
 const displayForce = computed( () => state.force );
+const instabilityRatio = computed( () => Math.max(
+	Math.abs( state.theta ) / FALL_ANGLE_RAD,
+	Math.abs( state.x ) / FALL_POSITION_M
+) );
+const isStablePose = computed( () =>
+	Math.abs( state.theta ) < 0.025 &&
+	Math.abs( state.thetaDot ) < 0.05 &&
+	Math.abs( state.x ) < 0.06
+);
+const graphEmotion = computed( () => {
+	if ( fallen.value ) {
+		return "pain";
+	}
+
+	if ( isStablePose.value ) {
+		return "happy";
+	}
+
+	if ( instabilityRatio.value >= 0.75 ) {
+		return "tense";
+	}
+
+	return "neutral";
+} );
 const status = computed( () => {
 	if ( fallen.value ) {
 		return {
@@ -174,7 +198,7 @@ const status = computed( () => {
 		};
 	}
 
-	if ( Math.abs( state.theta ) < 0.025 && Math.abs( state.thetaDot ) < 0.05 && Math.abs( state.x ) < 0.06 ) {
+	if ( isStablePose.value ) {
 		return {
 			color: "success",
 			text:  t( "control.status.stable" )
