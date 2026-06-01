@@ -198,7 +198,11 @@ p_{\text{ges}} &= P(S\cup N) \\
 					</p>
 
 					<div class="calculationFormula">
-						<Katex aligned as="div" display :tex="calculationTex" />
+						<Katex aligned
+							as="div"
+							display
+							:tex="calculationTex"
+						/>
 					</div>
 
 					<div class="tableScroller">
@@ -290,10 +294,10 @@ function escapeTexText( value ) {
 	const replacements = {
 		"\\": "\\textbackslash{}",
 		"#":  "\\#",
-		"$":  "\\$",
+		$:    "\\$",
 		"%":  "\\%",
 		"&":  "\\&",
-		"_":  "\\_",
+		_:    "\\_",
 		"{":  "\\{",
 		"}":  "\\}",
 		"~":  "\\textasciitilde{}",
@@ -389,12 +393,24 @@ const calc = computed( () => {
 	const pFailureTex = probabilityTex( "results.labels.failure" );
 	const pRejectTex = probabilityTex( "results.labels.reject" );
 	const breakdown = [
-		{ id: "p", tex: `p=\\frac{f\\cdot t}{60}`, v: pp },
-		{ id: "bus", tex: `${pBusTex}=1-(1-p)^2`, v: pBus },
-		{ id: "none", tex: `${pNoneTex}=(1-p)^2`, v: pNone },
-		{ id: "reject", tex: `${pRejectTex}=${pBusTex}\\cdot(1-a)`, v: reject },
-		{ id: "freedom", tex: `${pFreedomTex}=${pBusTex}\\cdot a\\cdot(1-r)`, v: freedom },
-		{ id: "failure", tex: `${pFailureTex}=1-${pFreedomTex}`, v: failure }
+		{
+			id: "p", tex: "p=\\frac{f\\cdot t}{60}", v: pp
+		},
+		{
+			id: "bus", tex: `${pBusTex}=1-(1-p)^2`, v: pBus
+		},
+		{
+			id: "none", tex: `${pNoneTex}=(1-p)^2`, v: pNone
+		},
+		{
+			id: "reject", tex: `${pRejectTex}=${pBusTex}\\cdot(1-a)`, v: reject
+		},
+		{
+			id: "freedom", tex: `${pFreedomTex}=${pBusTex}\\cdot a\\cdot(1-r)`, v: freedom
+		},
+		{
+			id: "failure", tex: `${pFailureTex}=1-${pFreedomTex}`, v: failure
+		}
 	];
 
 	return {
@@ -446,7 +462,8 @@ const calculationTex = computed( () => {
 		`p&=\\frac{f\\cdot t}{60}=${fmtTexDec( calc.value.pp, 3 )}=${fmtTexPct( calc.value.pp )}`,
 		`${pBusTex}&=1-(1-p)^2=${fmtTexDec( calc.value.pBus, 3 )}=${fmtTexPct( calc.value.pBus )}`,
 		`${pNoneTex}&=(1-p)^2=${fmtTexDec( calc.value.pNone, 3 )}=${fmtTexPct( calc.value.pNone )}`,
-		`${pFreedomTex}&=${pBusTex}\\cdot a\\cdot(1-r)=${fmtTexDec( calc.value.freedom, 3 )}=${fmtTexPct( calc.value.freedom )}`,
+		`${pFreedomTex}&=${pBusTex}\\cdot a\\cdot(1-r)=${fmtTexDec( calc.value.freedom, 3 )}=` +
+		`${fmtTexPct( calc.value.freedom )}`,
 		`${pFailureTex}&=1-${pFreedomTex}=${fmtTexDec( calc.value.failure, 3 )}=${fmtTexPct( calc.value.failure )}`
 	].join( "\\\\" );
 } );
