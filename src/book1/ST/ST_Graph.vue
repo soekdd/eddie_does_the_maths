@@ -348,8 +348,15 @@ const props = defineProps( {
 	r:            { type: [ Number, String ], required: true }
 } );
 
-function parseMaybeFloat( v ) {
-	return parseLocalizedNumber( v );
+const parseFallback = {
+	busPerHour:   1,
+	standMinutes: 5,
+	a:            0.8,
+	r:            0.2
+};
+
+function parseMaybeFloat( v, fallback ) {
+	return parseLocalizedNumber( v, { fallback } );
 }
 
 function in01( n ) {
@@ -380,10 +387,10 @@ function formatPercentLabel( value ) {
 }
 
 const model = computed( () => {
-	const frequency = parseMaybeFloat( props.busPerHour );
-	const dwellMinutes = parseMaybeFloat( props.standMinutes );
-	const acceptance = parseMaybeFloat( props.a );
-	const risk = parseMaybeFloat( props.r );
+	const frequency = parseMaybeFloat( props.busPerHour, parseFallback.busPerHour );
+	const dwellMinutes = parseMaybeFloat( props.standMinutes, parseFallback.standMinutes );
+	const acceptance = parseMaybeFloat( props.a, parseFallback.a );
+	const risk = parseMaybeFloat( props.r, parseFallback.r );
 
 	// p per direction (Sued/Nord) from f (buses/h per direction) and t (stand minutes).
 	const dd = frequency === null || dwellMinutes === null ? null : frequency * dwellMinutes;

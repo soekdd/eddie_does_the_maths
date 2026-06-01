@@ -453,17 +453,11 @@ function randInt( min, max ) {
 }
 
 function randomExample() {
-	const aa = randInt( -30, 30 ) || 14;
-	const bb = randInt( -30, 30 ) || 21;
-	const g = gcd( aa, bb ) || 1;
-	const makeSolvable = Math.random() < 0.75;
-	let cc = randInt( -60, 60 );
-
-	if ( makeSolvable ) {
-		cc = cc - cc % g;
-	} else if ( g !== 0 && cc % g === 0 ) {
-		cc += 1;
-	}
+	const aa = randInt( 2, 30 );
+	const bb = randInt( 2, 30 );
+	const x = randInt( 1, 12 );
+	const y = randInt( 1, 18 );
+	const cc = aa * x + bb * y;
 
 	return {
 		a: aa, b: bb, c: cc

@@ -102,7 +102,7 @@ p_{\text{ges}} &= P(S\cup N) \\
 				<li><Katex tex="a" />: {{ t( "sections.part4.list.a" ) }}</li>
 				<li><Katex tex="r" />: {{ t( "sections.part4.list.r" ) }}</li>
 			</ul>
-			<p>{{ t( "sections.part4.p3a" ) }} <Katex :tex="`P(\\text{${t('graph.labels.noBus')}})=(1-p)^2`" /> {{ t( "sections.part4.p3b" ) }} <Katex :tex="`P(\\text{${t('graph.labels.oneBus')}})=1-(1-p)^2=2p-p^2`" />.</p>
+			<p>{{ t( "sections.part4.p3a" ) }} <Katex :tex="`${probabilityTex( 'results.labels.noBus' )}=(1-p)^2`" /> {{ t( "sections.part4.p3b" ) }} <Katex :tex="`${probabilityTex( 'results.labels.bus' )}=1-(1-p)^2=2p-p^2`" />.</p>
 			<p class="muted">{{ t( "sections.part4.p4a" ) }} <Katex tex="p" /> {{ t( "sections.part4.p4b" ) }} <Katex tex="p^2" /> {{ t( "sections.part4.p4c" ) }} <Katex tex="p_{\text{ges}}\approx p_S+p_N" /> {{ t( "sections.part4.p4d" ) }} <Katex tex="p_{\text{ges}}\approx 2p" />.</p>
 		</div>
 
@@ -110,9 +110,9 @@ p_{\text{ges}} &= P(S\cup N) \\
 		<div class="eddie">
 			<p v-html="t( 'sections.part5.p1' )"/>
 			<div class="kbox">
-				<Katex as="div" display :tex="`P(\\text{${t('graph.labels.freedom')}}) = \\bigl(1-(1-p)^2\\bigr)\\cdot a\\cdot (1-r) = (2p-p^2)\\,a\\,(1-r).`" />
+				<Katex as="div" display :tex="`${probabilityTex( 'results.labels.freedom' )} = \\bigl(1-(1-p)^2\\bigr)\\cdot a\\cdot (1-r) = (2p-p^2)\\,a\\,(1-r).`" />
 			</div>
-			<p class="muted">{{ t( "sections.part5.p2" ) }} <Katex :tex="`P(\\text{${t('graph.labels.failure')}})=1-P(\\text{${t('graph.labels.freedom')}})`" />.</p>
+			<p class="muted">{{ t( "sections.part5.p2" ) }} <Katex :tex="`${probabilityTex( 'results.labels.failure' )}=1-${probabilityTex( 'results.labels.freedom' )}`" />.</p>
 		</div>
 
 		<h2 class="mt-8">{{ t( "sections.part6.title" ) }}</h2>
@@ -157,7 +157,7 @@ p_{\text{ges}} &= P(S\cup N) \\
 				<br />
 				<span class="muted">{{ t( "calculator.note1a" ) }} <code class="mono">a</code> {{ t( "calculator.note1b" ) }} <code class="mono">r</code> {{ t( "calculator.note1c" ) }} <code class="mono">0</code> {{ t( "calculator.note1d" ) }} <code class="mono">1</code>. {{ t( "calculator.note1e" ) }} <code class="mono">0,65</code>.</span>
 				<br />
-				<span class="muted">{{ t( "calculator.note2a" ) }} <Katex tex="P(\text{Bus})=1-(1-p)^2" /> {{ t( "calculator.note2b" ) }} <Katex tex="p" /> {{ t( "calculator.note2c" ) }} <Katex tex="P(\text{Bus})\approx 2p" />).</span>
+				<span class="muted">{{ t( "calculator.note2a" ) }} <Katex :tex="`${probabilityTex( 'results.labels.bus' )}=1-(1-p)^2`" /> {{ t( "calculator.note2b" ) }} <Katex tex="p" /> {{ t( "calculator.note2c" ) }} <Katex :tex="`${probabilityTex( 'results.labels.bus' )}\\approx 2p`" />).</span>
 			</p>
 		</v-card>
 
@@ -185,9 +185,7 @@ p_{\text{ges}} &= P(S\cup N) \\
 					{{ status.text }}
 				</v-chip>
 				<div class="equation">
-					<span class="mono">{{ t( "results.freedomEq" ) }}</span>
-					<span v-if="calc.ok" class="mono">{{ fmtPct( calc.freedom ) }}</span>
-					<span v-else class="mono">…</span>
+					<Katex :tex="resultHeaderTex" />
 				</div>
 			</div>
 
@@ -199,15 +197,8 @@ p_{\text{ges}} &= P(S\cup N) \\
 						{{ calc.issues.join( " · " ) }}
 					</p>
 
-					<div class="kbox">
-						<div class="mono">{{ t( "results.rowF" ) }} {{ fmtDec( calc.f, 2 ) }}</div>
-						<div class="mono">{{ t( "results.rowT" ) }} {{ fmtDec( calc.t, 1 ) }}</div>
-						<div class="mono">{{ t( "results.rowP" ) }} {{ fmtDec( calc.pp, 3 ) }} ({{ fmtPct( calc.pp ) }})</div>
-						<div class="mono">{{ t( "results.rowBus" ) }} {{ fmtDec( calc.pBus, 3 ) }} ({{ fmtPct( calc.pBus ) }})</div>
-						<div class="mono">{{ t( "results.rowNone" ) }} {{ fmtDec( calc.pNone, 3 ) }} ({{ fmtPct( calc.pNone ) }})</div>
-						<div class="mono">{{ t( "results.rowFreedomFormula" ) }}</div>
-						<div class="mono">{{ t( "results.rowFreedom" ) }} {{ fmtDec( calc.freedom, 3 ) }} ({{ fmtPct( calc.freedom ) }})</div>
-						<div class="mono">{{ t( "results.rowFailure" ) }} {{ fmtDec( calc.failure, 3 ) }} ({{ fmtPct( calc.failure ) }})</div>
+					<div class="calculationFormula">
+						<Katex aligned as="div" display :tex="calculationTex" />
 					</div>
 
 					<div class="tableScroller">
@@ -220,10 +211,10 @@ p_{\text{ges}} &= P(S\cup N) \\
 								</tr>
 							</thead>
 							<tbody>
-								<tr v-for="row in calc.breakdown" :key="row.k">
-									<td class="mono">{{ row.k }}</td>
-									<td class="mono text-right">{{ fmtDec( row.v, 3 ) }}</td>
-									<td class="mono text-right">{{ fmtPct( row.v ) }}</td>
+								<tr v-for="row in calc.breakdown" :key="row.id">
+									<td><Katex :tex="row.tex" /></td>
+									<td class="text-right"><Katex :tex="fmtTexDec( row.v, 3 )" /></td>
+									<td class="text-right"><Katex :tex="fmtTexPct( row.v )" /></td>
 								</tr>
 							</tbody>
 						</v-table>
@@ -264,8 +255,8 @@ const exampleOut = { p: example.busPerHour * example.standMinutes / 60 };
 exampleOut.pBus = 1 - ( 1 - exampleOut.p ) ** 2;
 exampleOut.freedom = exampleOut.pBus * example.a * ( 1 - example.r );
 
-function parseMaybeFloat( v ) {
-	return parseLocalizedNumber( v );
+function parseMaybeFloat( v, fallback ) {
+	return parseLocalizedNumber( v, { fallback } );
 }
 
 function in01( n ) {
@@ -295,6 +286,39 @@ function fmtDec( n, digits = 3 ) {
 	} ).format( n );
 }
 
+function escapeTexText( value ) {
+	const replacements = {
+		"\\": "\\textbackslash{}",
+		"#":  "\\#",
+		"$":  "\\$",
+		"%":  "\\%",
+		"&":  "\\&",
+		"_":  "\\_",
+		"{":  "\\{",
+		"}":  "\\}",
+		"~":  "\\textasciitilde{}",
+		"^":  "\\textasciicircum{}"
+	};
+
+	return String( value ?? "" ).replace( /[\\#$%&_{}~^]/g, ( char ) => replacements[ char ] );
+}
+
+function textTex( value ) {
+	return `\\text{${escapeTexText( value )}}`;
+}
+
+function probabilityTex( key ) {
+	return `P_{${textTex( t( key ) )}}`;
+}
+
+function fmtTexDec( n, digits = 3 ) {
+	return fmtDec( n, digits ).replace( /[\s\u00A0\u202F]/g, "\\," );
+}
+
+function fmtTexPct( n, digits = 1 ) {
+	return `${fmtTexDec( n * 100, digits )}\\%`;
+}
+
 function reset() {
 	busPerHour.value = String( example.busPerHour );
 	standMinutes.value = String( example.standMinutes );
@@ -316,10 +340,10 @@ function randomize() {
 }
 
 const calc = computed( () => {
-	const frequency = parseMaybeFloat( busPerHour.value );
-	const dwellMinutes = parseMaybeFloat( standMinutes.value );
-	const acceptance = parseMaybeFloat( a.value );
-	const risk = parseMaybeFloat( r.value );
+	const frequency = parseMaybeFloat( busPerHour.value, example.busPerHour );
+	const dwellMinutes = parseMaybeFloat( standMinutes.value, example.standMinutes );
+	const acceptance = parseMaybeFloat( a.value, example.a );
+	const risk = parseMaybeFloat( r.value, example.r );
 
 	if ( [
 		frequency,
@@ -359,13 +383,18 @@ const calc = computed( () => {
 	const reject = pBus * ( 1 - acceptance );
 	const failure = 1 - freedom;
 
+	const pBusTex = probabilityTex( "results.labels.bus" );
+	const pNoneTex = probabilityTex( "results.labels.noBus" );
+	const pFreedomTex = probabilityTex( "results.labels.freedom" );
+	const pFailureTex = probabilityTex( "results.labels.failure" );
+	const pRejectTex = probabilityTex( "results.labels.reject" );
 	const breakdown = [
-		{ k: t( "results.breakdown.p" ), v: pp },
-		{ k: t( "results.breakdown.bus" ), v: pBus },
-		{ k: t( "results.breakdown.none" ), v: pNone },
-		{ k: t( "results.breakdown.reject" ), v: reject },
-		{ k: t( "results.breakdown.freedom" ), v: freedom },
-		{ k: t( "results.breakdown.failure" ), v: failure }
+		{ id: "p", tex: `p=\\frac{f\\cdot t}{60}`, v: pp },
+		{ id: "bus", tex: `${pBusTex}=1-(1-p)^2`, v: pBus },
+		{ id: "none", tex: `${pNoneTex}=(1-p)^2`, v: pNone },
+		{ id: "reject", tex: `${pRejectTex}=${pBusTex}\\cdot(1-a)`, v: reject },
+		{ id: "freedom", tex: `${pFreedomTex}=${pBusTex}\\cdot a\\cdot(1-r)`, v: freedom },
+		{ id: "failure", tex: `${pFailureTex}=1-${pFreedomTex}`, v: failure }
 	];
 
 	return {
@@ -397,5 +426,37 @@ const status = computed( () => {
 	return { kind: "ok", text: t( "status.ok" ) };
 } );
 
+const resultHeaderTex = computed( () => calc.value.ok ?
+	`${probabilityTex( "results.labels.freedom" )}=${fmtTexPct( calc.value.freedom )}` :
+	`${probabilityTex( "results.labels.freedom" )}=\\cdots` );
+
+const calculationTex = computed( () => {
+	if ( !calc.value.ok ) {
+		return "";
+	}
+
+	const pBusTex = probabilityTex( "results.labels.bus" );
+	const pNoneTex = probabilityTex( "results.labels.noBus" );
+	const pFreedomTex = probabilityTex( "results.labels.freedom" );
+	const pFailureTex = probabilityTex( "results.labels.failure" );
+
+	return [
+		`f&=${fmtTexDec( calc.value.f, 2 )}`,
+		`t&=${fmtTexDec( calc.value.t, 1 )}`,
+		`p&=\\frac{f\\cdot t}{60}=${fmtTexDec( calc.value.pp, 3 )}=${fmtTexPct( calc.value.pp )}`,
+		`${pBusTex}&=1-(1-p)^2=${fmtTexDec( calc.value.pBus, 3 )}=${fmtTexPct( calc.value.pBus )}`,
+		`${pNoneTex}&=(1-p)^2=${fmtTexDec( calc.value.pNone, 3 )}=${fmtTexPct( calc.value.pNone )}`,
+		`${pFreedomTex}&=${pBusTex}\\cdot a\\cdot(1-r)=${fmtTexDec( calc.value.freedom, 3 )}=${fmtTexPct( calc.value.freedom )}`,
+		`${pFailureTex}&=1-${pFreedomTex}=${fmtTexDec( calc.value.failure, 3 )}=${fmtTexPct( calc.value.failure )}`
+	].join( "\\\\" );
+} );
+
 const graphTitle = computed( () => t( "calculator.graphTitle" ) );
 </script>
+
+<style scoped>
+.calculationFormula {
+	overflow-x: auto;
+	padding: 0.75rem 0;
+}
+</style>
