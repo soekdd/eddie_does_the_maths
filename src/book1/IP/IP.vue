@@ -47,6 +47,62 @@
 			</p>
 		</div>
 
+		<h2 id="regleranteile" class="mt-8">{{ t( "sections.terms.title" ) }}</h2>
+		<div class="eddie">
+			<p>{{ t( "sections.terms.p1" ) }}</p>
+			<div class="tableScroller mt-3">
+				<v-table density="compact">
+					<thead>
+						<tr>
+							<th>{{ t( "tables.term" ) }}</th>
+							<th>{{ t( "tables.meaning" ) }}</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr v-for="row in controllerRows" :key="row.id">
+							<td><Katex :tex="row.term" /></td>
+							<td>{{ row.meaning }}</td>
+						</tr>
+					</tbody>
+				</v-table>
+			</div>
+			<p class="mt-3">{{ t( "sections.terms.p2" ) }}</p>
+			<div class="kbox">
+				<Katex
+					aligned
+					as="div"
+					display
+					tex="u&=-k_1x-k_2\dot{x}-k_3\theta-k_4\dot{\theta}"
+				/>
+			</div>
+			<p>{{ t( "sections.terms.p3" ) }}</p>
+			<div class="kbox">
+				<Katex
+					aligned
+					as="div"
+					display
+					tex="-k_3\theta \\ -k_4\dot{\theta}"
+				/>
+			</div>
+			<ol>
+				<li>{{ t( "sections.terms.items.angle" ) }}</li>
+				<li>{{ t( "sections.terms.items.angularVelocity" ) }}</li>
+			</ol>
+			<figure class="exampleFigure">
+				<ImageZoomer :title="t( 'sections.controller.loopFigureTitle' )">
+					<IPControlloop />
+				</ImageZoomer>
+			</figure>
+			<p>
+				{{ t( "sections.controller.loopP1Before" ) }}
+				<Katex tex="z=0" />
+				{{ t( "sections.controller.loopP1Middle" ) }}
+				<Katex tex="u=-Kz" />
+				{{ t( "sections.controller.loopP1After" ) }}
+			</p>
+			<p>{{ t( "sections.terms.p4" ) }}</p>
+		</div>
+
 		<h2 id="nichtlineares-modell" class="mt-8">{{ t( "sections.nonlinear.title" ) }}</h2>
 		<div class="eddie">
 			<p v-html="t( 'sections.nonlinear.p1' )" />
@@ -155,56 +211,28 @@
 			</div>
 			<p>{{ t( "sections.controller.p2" ) }}</p>
 			<div class="kbox">
-				<Katex as="div" display tex="u=-k_1x-k_2\dot{x}-k_3\theta-k_4\dot{\theta}" />
+				<Katex as="div" display tex="K=\begin{pmatrix}k_1&k_2&k_3&k_4\end{pmatrix}" />
 			</div>
 			<p>{{ t( "sections.controller.p3" ) }}</p>
 			<div class="kbox">
-				<Katex as="div" display tex="K=\begin{pmatrix}k_1&k_2&k_3&k_4\end{pmatrix}" />
+				<Katex as="div" display tex="u=-k_1x-k_2\dot{x}-k_3\theta-k_4\dot{\theta}" />
 			</div>
 			<p>{{ t( "sections.controller.p4" ) }}</p>
 			<div class="kbox">
 				<Katex as="div" display tex="\dot{z}=(A-BK)z" />
 			</div>
 			<p>
+				{{ t( "sections.controller.loopP2Before" ) }}
+				<Katex tex="\dot z = Az + Bu" />
+				{{ t( "sections.controller.loopP2Middle" ) }}
+				<Katex tex="\dot z=(A-BK)z" />
+				{{ t( "sections.controller.loopP2After" ) }}
+			</p>
+			<p>
 				{{ t( "sections.controller.p5Before" ) }}
 				<Katex tex="A-BK" />
 				{{ t( "sections.controller.p5After" ) }}
 			</p>
-		</div>
-
-		<h2 id="regleranteile" class="mt-8">{{ t( "sections.terms.title" ) }}</h2>
-		<div class="eddie">
-			<p>{{ t( "sections.terms.p1" ) }}</p>
-			<div class="tableScroller mt-3">
-				<v-table density="compact">
-					<thead>
-						<tr>
-							<th>{{ t( "tables.term" ) }}</th>
-							<th>{{ t( "tables.meaning" ) }}</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr v-for="row in controllerRows" :key="row.id">
-							<td><Katex :tex="row.term" /></td>
-							<td>{{ row.meaning }}</td>
-						</tr>
-					</tbody>
-				</v-table>
-			</div>
-			<p class="mt-3">{{ t( "sections.terms.p2" ) }}</p>
-			<div class="kbox">
-				<Katex
-					aligned
-					as="div"
-					display
-					tex="-k_3\theta \\ -k_4\dot{\theta}"
-				/>
-			</div>
-			<ol>
-				<li>{{ t( "sections.terms.items.angle" ) }}</li>
-				<li>{{ t( "sections.terms.items.angularVelocity" ) }}</li>
-			</ol>
-			<p>{{ t( "sections.terms.p3" ) }}</p>
 		</div>
 	</template>
 
@@ -220,6 +248,7 @@
 import titleImg from "./IP.webp";
 import { computed } from "vue";
 import { useI18n } from "@/utils/i18n.mjs";
+import IPControlloop from "./IP_Controlloop.vue";
 import IPControl from "./IP_Control.vue";
 
 const { t, tm } = useI18n( "book1.IP" );

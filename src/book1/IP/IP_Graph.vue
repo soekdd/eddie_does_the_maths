@@ -133,7 +133,7 @@
 		<!-- pivot -->
 		<circle class="pivot"
 			cx="0"
-			cy="-deckHeight / 2"
+			:cy="-deckHeight / 2"
 			r="7"
 		/>
 	</g>
@@ -423,7 +423,7 @@ function formatDeg( rad: number ): string {
 
 <style scoped>
 .pendulum-image {
-	opacity: 0.7;
+	opacity: 0.55;
 }
 .inverse-pendulum-skateboard {
   max-width: 100%;
