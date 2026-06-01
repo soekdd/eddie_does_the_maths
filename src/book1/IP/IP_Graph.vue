@@ -165,7 +165,7 @@
 			:cy="pivot.y"
 			r="5"
 		/>
-		<text class="local-label" :x="massCenter.x + 14" :y="massCenter.y + 4">
+		<text class="local-label" :x="massCenter.x + 28" :y="massCenter.y + 4">
 			m = {{ format(mass) }} kg
 		</text>
 	</g>
@@ -178,19 +178,19 @@
 			:y1="pivot.y"
 			:y2="pivot.y - rodLengthPx"
 		/>
-		<path v-if="Math.abs(forceU)>0.1"
+		<path v-if="Math.abs(forceU)>1"
 			class="angle-arc"
 			:d="angleArcPath"
 			marker-end="url(#arrow-head)"
 		/>
-		<text class="angle-label" :x="angleLabel.x" :y="angleLabel.y">
+		<text class="angle-label" :x="angleLabel.x + 28" :y="angleLabel.y">
 			θ = {{ formatDeg(theta) }}°
 		</text>
 	</g>
 
 	<!-- Force vector -->
 	<g v-if="showForce" class="force-layer" :class="{ 'is-limited': forceLimited }">
-		<line v-if="Math.abs(forceU)>0.1"
+		<line v-if="Math.abs(forceU)>1"
 			class="force-arrow"
 			:marker-end="forceMarkerEnd"
 			:x1="cartCx"
@@ -201,7 +201,7 @@
 		<text
 			class="force-label"
 			text-anchor="middle"
-			:x="cartCx + forceVectorLength / 2"
+			:x="cartCx + (Math.abs(forceU)<1 ? 58 : forceVectorLength / 2)"
 			:y="cartY - 66"
 		>
 			u = {{ format(forceU) }} N
@@ -219,8 +219,8 @@
 		/>
 		<text
 			class="length-label"
-			:x="(pivot.x + massCenter.x) / 2 + 28"
-			:y="(pivot.y + massCenter.y) / 2"
+			:x="(pivot.x + massCenter.x) / 2 + 38"
+			:y="(pivot.y + massCenter.y) / 2 - 20"
 		>
 			l = {{ format(lengthL) }} m
 		</text>
@@ -289,7 +289,7 @@ const props = withDefaults( defineProps<{
 	height:             520,
 	cartMass:           4,
 	mass:               55,
-	lengthL:            1.1,
+	lengthL:            0.95,
 	gravity:            9.81,
 	positionX:          0,
 	theta:              0.22,
@@ -308,9 +308,9 @@ const props = withDefaults( defineProps<{
 
 const padding = 48;
 const viewBoxX = 0;
-const viewBoxY = -50;
+const viewBoxY = -10;
 const viewBoxWidth = 860;
-const viewBoxHeight = 480;
+const viewBoxHeight = 450;
 const viewBox = `${viewBoxX} ${viewBoxY} ${viewBoxWidth} ${viewBoxHeight}`;
 const groundY = computed( () => props.height - 76 );
 const originX = computed( () => props.width / 2 );

@@ -121,7 +121,7 @@ import IPGraph from "./IP_Graph.vue";
 const MODEL = Object.freeze( {
 	cartMass:     8,
 	pendulumMass: 55,
-	length:       1.1,
+	length:       0.95,
 	gravity:      9.81,
 	maxForce:     220
 } );
