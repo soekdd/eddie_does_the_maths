@@ -36,10 +36,10 @@ contentIndex:
   emptyAll: "No content registered yet."
   books:
     one:
-      title: "Eddie and the Diophantine Equation"
+      title: "Eddie - The Diophantine Equation"
       short: "Eddie &#9312;"
     two:
-      title: "Eddie and the Monty Hall Problem"
+      title: "Eddie - The Monty Hall Problem"
       short: "Eddie &#9313;"
   difficulty:
     easy: "Difficulty: easy"
