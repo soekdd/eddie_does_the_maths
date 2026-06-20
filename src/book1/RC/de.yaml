@@ -1,0 +1,9 @@
+title: "Zauberwürfel"
+controls:
+  beginnerMethodSolver: "BeginnerMethodSolver"
+  cfopMethodSolver: "CFOP / Fridrich Method"
+  moveCount: "Züge: {count}"
+  rouxMethodSolver: "Roux Method"
+  scramble: "Unordnung"
+  GodsSolver: "God’s Algorithm"
+  thistlethwaiteSolver: "Thistlethwaite (max. 52 Züge)"

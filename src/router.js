@@ -33,6 +33,7 @@ import VA from "@/book1/VA/VA.vue";
 import QH from "@/book1/QH/QH.vue";
 import FS from "@/book1/FS/FS.vue";
 import LT from "@/book1/LT/LT.vue";
+import RC from "@/book1/RC/RC.vue";
 import WO from "@/book1/WO/WO.vue";
 import CatchAll from "@/components/CatchAll.vue";
 import Welcome from "@/components/Welcome.vue";
@@ -662,6 +663,17 @@ export const contentRoutes = [
 			index:      true,
 			book:       1,
 			order:      251
+		}
+	},
+	{
+		path:      "/RC",
+		name:      "RC",
+		component: RC,
+		meta:      {
+			difficulty: 1,
+			index:      true,
+			book:       1,
+			order:      255
 		}
 	},
 	{

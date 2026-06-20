@@ -1,0 +1,9 @@
+title: "Rubik's Cube"
+controls:
+  beginnerMethodSolver: "BeginnerMethodSolver"
+  cfopMethodSolver: "CFOP / Fridrich Method"
+  moveCount: "Moves: {count}"
+  rouxMethodSolver: "Roux Method"
+  scramble: "Scramble"
+  GodsSolver: "God’s Algorithm"
+  thistlethwaiteSolver: "Thistlethwaite (max. 52 moves)"
