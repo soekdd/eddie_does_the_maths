@@ -1,7 +1,7 @@
 <template>
 <div
 	ref="rubikCubeElement"
-	aria-label="Interactive 3D Rubik's Cube"
+	:aria-label="t( 'controls.cubeAria' )"
 	class="rubikCube"
 	role="application"
 	@pointercancel="endDrag"
@@ -87,56 +87,6 @@
 		</TresGroup>
 	</TresCanvas>
 
-	<div ref="cubeActionsElement" class="cubeActions" @pointerdown.stop>
-		<button
-			class="cubeActionButton"
-			:disabled="controlsDisabled"
-			type="button"
-			@click.stop="scrambleCube"
-		>
-			{{ t( "controls.scramble" ) }}
-		</button>
-		<button
-			class="cubeActionButton"
-			:disabled="solveDisabled"
-			type="button"
-			@click.stop="solveCube"
-		>
-			{{ t( "controls.GodsSolver" ) }}
-		</button>
-		<button
-			class="cubeActionButton"
-			:disabled="methodSolveDisabled"
-			type="button"
-			@click.stop="solveWithBeginnerMethod"
-		>
-			{{ t( "controls.beginnerMethodSolver" ) }}
-		</button>
-		<button
-			class="cubeActionButton"
-			:disabled="methodSolveDisabled"
-			type="button"
-			@click.stop="solveWithCFOPMethod"
-		>
-			{{ t( "controls.cfopMethodSolver" ) }}
-		</button>
-		<button
-			class="cubeActionButton"
-			:disabled="methodSolveDisabled"
-			type="button"
-			@click.stop="solveWithRouxMethod"
-		>
-			{{ t( "controls.rouxMethodSolver" ) }}
-		</button>
-		<button
-			class="cubeActionButton"
-			:disabled="methodSolveDisabled"
-			type="button"
-			@click.stop="solveWithThistlethwaite"
-		>
-			{{ t( "controls.thistlethwaiteSolver" ) }}
-		</button>
-	</div>
 	<div
 		ref="solutionCounterElement"
 		:aria-hidden="solutionMoveCount === null"
@@ -148,6 +98,7 @@
 
 	<div
 		v-for="face in FACE_MOVES"
+		v-show="!controlsDisabled"
 		:key="face.name"
 		class="faceControl"
 		:style="faceControlStyles[ face.name ]"
@@ -155,20 +106,20 @@
 	>
 		<span class="faceControlLabel">{{ face.name }}</span>
 		<button
-			:aria-label="`${face.name} counterclockwise`"
+			:aria-label="t( 'controls.faceCounterclockwise', { face: face.name } )"
 			class="turnButton"
 			:disabled="controlsDisabled"
-			:title="`${face.name} counterclockwise`"
+			:title="t( 'controls.faceCounterclockwise', { face: face.name } )"
 			type="button"
 			@click.stop="turnFace( face, false )"
 		>
 			&#8634;
 		</button>
 		<button
-			:aria-label="`${face.name} clockwise`"
+			:aria-label="t( 'controls.faceClockwise', { face: face.name } )"
 			class="turnButton"
 			:disabled="controlsDisabled"
-			:title="`${face.name} clockwise`"
+			:title="t( 'controls.faceClockwise', { face: face.name } )"
 			type="button"
 			@click.stop="turnFace( face, true )"
 		>
@@ -197,6 +148,7 @@ const CONTROL_HALF_WIDTH = 46;
 const CONTROL_EDGE_PADDING = 48;
 const CONTROL_RADIUS = 4;
 const SCRAMBLE_MOVE_COUNT = 20;
+const SCRAMBLE_TURN_DURATION_MS = 60;
 const SOLUTION_ROTATION_SPEED = Math.PI / 10;
 const STICKER_OFFSET = 0.476;
 const TURN_DURATION_MS = 220;
@@ -286,9 +238,8 @@ const cubies = ref( createCubies() );
 const activeMove = ref( null );
 const animatedAngle = ref( 0 );
 const cubeRotation = ref( [ 0, 0, 0 ] );
-const cubeActionsElement = ref( null );
 const dragState = ref( null );
-const isSolving = ref( false );
+const isRunningSequence = ref( false );
 const moveHistory = ref( [] );
 const rubikCubeElement = ref( null );
 const solutionCounterElement = ref( null );
@@ -297,12 +248,6 @@ const solutionRotationZ = ref( 0 );
 const viewportSize = ref( {
 	height: 660,
 	width:  860
-} );
-const actionBounds = ref( {
-	bottom: 0,
-	left:   0,
-	right:  0,
-	top:    0
 } );
 const counterBounds = ref( {
 	bottom: 0,
@@ -339,7 +284,7 @@ const displayCubeRotation = computed( () => [
 	cubeRotation.value[ 1 ],
 	cubeRotation.value[ 2 ] + solutionRotationZ.value
 ] );
-const controlsDisabled = computed( () => Boolean( activeMove.value ) || isSolving.value );
+const controlsDisabled = computed( () => Boolean( activeMove.value ) || isRunningSequence.value );
 const solveDisabled = computed( () => controlsDisabled.value || moveHistory.value.length === 0 );
 const methodSolveDisabled = computed( () => controlsDisabled.value || isCubeSolved( cubies.value ) );
 const faceControlStyles = computed( () => {
@@ -369,16 +314,6 @@ const faceControlStyles = computed( () => {
 			CONTROL_EDGE_PADDING / 2,
 			height - CONTROL_EDGE_PADDING / 2
 		);
-		const actions = actionBounds.value;
-		const overlapsActions = x + CONTROL_HALF_WIDTH >= actions.left &&
-			x - CONTROL_HALF_WIDTH <= actions.right &&
-			y + CONTROL_HALF_HEIGHT >= actions.top &&
-			y - CONTROL_HALF_HEIGHT <= actions.bottom;
-
-		if ( overlapsActions ) {
-			y = actions.bottom + CONTROL_HALF_HEIGHT + 8;
-		}
-
 		const counter = counterBounds.value;
 		const overlapsCounter = solutionMoveCount.value !== null &&
 			x + CONTROL_HALF_WIDTH >= counter.left &&
@@ -551,61 +486,47 @@ function createScrambleMoves() {
 	return moves;
 }
 
-function scrambleCube() {
+async function scrambleCube() {
 	if ( controlsDisabled.value ) {
-		return;
+		return false;
 	}
 
 	const scrambleMoves = createScrambleMoves();
 
 	solutionMoveCount.value = null;
 	cubies.value = createCubies();
+	moveHistory.value = [];
+	isRunningSequence.value = true;
 
-	for ( const move of scrambleMoves ) {
-		applyMove( move );
+	try {
+		for ( const move of scrambleMoves ) {
+			const completed = await animateMove( {
+				...move,
+				duration: SCRAMBLE_TURN_DURATION_MS
+			} );
+
+			if ( !completed ) {
+				return false;
+			}
+
+			moveHistory.value.push( move );
+		}
+	} finally {
+		isRunningSequence.value = false;
 	}
 
-	moveHistory.value = scrambleMoves;
+	return true;
 }
 
-async function solveCube() {
-	if ( solveDisabled.value ) {
-		return;
+async function solveWithMethod( solverId ) {
+	const disabled = solverId === "history" ? solveDisabled.value : methodSolveDisabled.value;
+
+	if ( disabled ) {
+		return false;
 	}
 
-	await runSolver( "history" );
-}
-
-async function solveWithBeginnerMethod() {
-	if ( methodSolveDisabled.value ) {
-		return;
-	}
-
-	await runSolver( "beginner" );
-}
-
-async function solveWithCFOPMethod() {
-	if ( methodSolveDisabled.value ) {
-		return;
-	}
-
-	await runSolver( "cfop" );
-}
-
-async function solveWithRouxMethod() {
-	if ( methodSolveDisabled.value ) {
-		return;
-	}
-
-	await runSolver( "roux" );
-}
-
-async function solveWithThistlethwaite() {
-	if ( methodSolveDisabled.value ) {
-		return;
-	}
-
-	await runSolver( "thistlethwaite" );
+	await runSolver( solverId );
+	return true;
 }
 
 async function runSolver( solverId ) {
@@ -616,7 +537,7 @@ async function runSolver( solverId ) {
 	} );
 	const solution = plan.phases.flatMap( ( phase ) => phase.moves );
 
-	isSolving.value = true;
+	isRunningSequence.value = true;
 	moveHistory.value = [];
 	solutionMoveCount.value = 0;
 	startSolutionRotation();
@@ -633,7 +554,7 @@ async function runSolver( solverId ) {
 		}
 	} finally {
 		stopSolutionRotation();
-		isSolving.value = false;
+		isRunningSequence.value = false;
 	}
 }
 
@@ -714,7 +635,6 @@ function endDrag( event ) {
 
 function updateViewportSize() {
 	const element = rubikCubeElement.value;
-	const actions = cubeActionsElement.value;
 	const counter = solutionCounterElement.value;
 
 	if ( !element ) {
@@ -725,18 +645,6 @@ function updateViewportSize() {
 		height: element.clientHeight,
 		width:  element.clientWidth
 	};
-
-	if ( actions ) {
-		const elementRect = element.getBoundingClientRect();
-		const actionsRect = actions.getBoundingClientRect();
-
-		actionBounds.value = {
-			bottom: actionsRect.bottom - elementRect.top,
-			left:   actionsRect.left - elementRect.left,
-			right:  actionsRect.right - elementRect.left,
-			top:    actionsRect.top - elementRect.top
-		};
-	}
 
 	if ( counter ) {
 		const elementRect = element.getBoundingClientRect();
@@ -757,9 +665,16 @@ onMounted( () => {
 	if ( globalThis.ResizeObserver ) {
 		resizeObserver = new globalThis.ResizeObserver( updateViewportSize );
 		resizeObserver.observe( rubikCubeElement.value );
-		resizeObserver.observe( cubeActionsElement.value );
 		resizeObserver.observe( solutionCounterElement.value );
 	}
+} );
+
+defineExpose( {
+	controlsDisabled,
+	methodSolveDisabled,
+	scramble: scrambleCube,
+	solve:    solveWithMethod,
+	solveDisabled
 } );
 
 onBeforeUnmount( () => {
@@ -796,40 +711,6 @@ onBeforeUnmount( () => {
 .rubikCubeCanvas {
 	height: 100% !important;
 	width: 100% !important;
-}
-
-.cubeActions {
-	display: flex;
-	flex-wrap: wrap;
-	gap: 8px;
-	left: 14px;
-	position: absolute;
-	top: 14px;
-	z-index: 2;
-}
-
-.cubeActionButton {
-	background: rgba(12, 18, 29, 0.84);
-	border: 1px solid rgba(255, 255, 255, 0.3);
-	border-radius: 8px;
-	color: #fff;
-	cursor: pointer;
-	font: 600 0.875rem/1 system-ui, sans-serif;
-	min-height: 34px;
-	padding: 8px 12px;
-	transition: background 120ms ease, border-color 120ms ease;
-}
-
-.cubeActionButton:hover:not(:disabled),
-.cubeActionButton:focus-visible {
-	background: rgba(94, 160, 255, 0.62);
-	border-color: rgba(255, 255, 255, 0.82);
-	outline: 2px solid rgba(255, 255, 255, 0.85);
-}
-
-.cubeActionButton:disabled {
-	cursor: wait;
-	opacity: 0.45;
 }
 
 .solutionCounter {
