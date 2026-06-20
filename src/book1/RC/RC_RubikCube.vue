@@ -3,6 +3,7 @@
 	ref="rubikCubeElement"
 	:aria-label="t( 'controls.cubeAria' )"
 	class="rubikCube"
+	:class="isDarkTheme ? 'rubikCube--dark' : 'rubikCube--light'"
 	role="application"
 	@pointercancel="endDrag"
 	@pointerdown="startDrag"
@@ -134,6 +135,7 @@ import {
 	computed, onBeforeUnmount, onMounted, ref
 } from "vue";
 import { TresCanvas } from "@tresjs/core";
+import { useTheme } from "vuetify";
 import { useI18n } from "@/utils/i18n.mjs";
 import { createCubeSolver, isCubeSolved } from "./RC_solvers.mjs";
 import {
@@ -264,6 +266,8 @@ projectionCamera.lookAt(
 );
 projectionCamera.updateMatrixWorld();
 const { t } = useI18n( "book1.RC" );
+const theme = useTheme();
+const isDarkTheme = computed( () => theme.global.current.value.dark );
 let animationFrame = 0;
 let animationResolve = null;
 let resizeObserver = null;
@@ -690,10 +694,7 @@ onBeforeUnmount( () => {
 
 <style scoped>
 .rubikCube {
-	background:
-		radial-gradient(circle at 50% 42%, rgba(78, 119, 178, 0.2), transparent 42%),
-		linear-gradient(145deg, rgba(8, 13, 24, 0.92), rgba(24, 34, 52, 0.88));
-	border: 1px solid rgba(142, 171, 213, 0.3);
+	border: 1px solid;
 	border-radius: 18px;
 	cursor: grab;
 	height: clamp(430px, 64vw, 660px);
@@ -702,6 +703,20 @@ onBeforeUnmount( () => {
 	touch-action: none;
 	user-select: none;
 	width: 100%;
+}
+
+.rubikCube--dark {
+	background:
+		radial-gradient(circle at 50% 42%, rgba(78, 119, 178, 0.2), transparent 42%),
+		linear-gradient(145deg, rgba(8, 13, 24, 0.92), rgba(24, 34, 52, 0.88));
+	border-color: rgba(142, 171, 213, 0.3);
+}
+
+.rubikCube--light {
+	background:
+		radial-gradient(circle at 50% 42%, rgba(90, 139, 204, 0.16), transparent 44%),
+		linear-gradient(145deg, rgba(250, 252, 255, 0.98), rgba(218, 229, 244, 0.94));
+	border-color: rgba(75, 101, 139, 0.28);
 }
 
 .rubikCube:active {

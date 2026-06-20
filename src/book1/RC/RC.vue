@@ -144,6 +144,20 @@
 			</ul>
 			<p class="muted" v-html="t( 'sections.part7.p3' )" />
 		</div>
+		<v-alert type="info" variant="tonal">
+			<div class="text-subtitle-1 font-weight-medium mb-2">
+				{{ t( "sections.godsNumber.title" ) }}
+			</div>
+			<p>
+				{{ t( "sections.godsNumber.p1Before" ) }}
+				<Katex inline tex="D=20" />.
+				{{ t( "sections.godsNumber.p1After" ) }}
+			</p>
+			<p class="mb-0">
+				{{ t( "sections.godsNumber.p2Before" ) }}
+				<Katex inline tex="18\le D\le 52" />.
+			</p>
+		</v-alert>
 	</template>
 
 	<template #interactivePart>
@@ -187,23 +201,6 @@
 	<template #calculationPart>
 		<h2 id="wuerfel">{{ t( "sections.cube.title" ) }}</h2>
 		<RCRubikCube ref="rubikCube" />
-	</template>
-
-	<template #summaryPart>
-		<v-alert type="info" variant="tonal">
-			<div class="text-subtitle-1 font-weight-medium mb-2">
-				{{ t( "sections.godsNumber.title" ) }}
-			</div>
-			<p>
-				{{ t( "sections.godsNumber.p1Before" ) }}
-				<Katex inline tex="D=20" />.
-				{{ t( "sections.godsNumber.p1After" ) }}
-			</p>
-			<p class="mb-0">
-				{{ t( "sections.godsNumber.p2Before" ) }}
-				<Katex inline tex="18\le D\le 52" />.
-			</p>
-		</v-alert>
 	</template>
 
 	<template #footer>
