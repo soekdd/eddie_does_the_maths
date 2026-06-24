@@ -44,7 +44,10 @@
 					<div>
 						<h1 v-if="titleText" class="titleRow">
 							<span class="titleTextWrap">
-								<span>{{ t( "welcome.title" ) }}:</span>
+								<router-link
+									:aria-label="t( 'app.home' )"
+									:to="homeLinkTarget"
+								>{{ t( "welcome.title" ) }}:</router-link>
 								<span class="titleTextValue">{{ titleText }}
 									<template v-if="difficultyIcon">
 										<v-tooltip
