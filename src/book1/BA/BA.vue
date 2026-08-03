@@ -373,7 +373,7 @@ const emulatorKey = ref( 0 );
 const emulatorRef = ref( null );
 const emulatorReady = ref( false );
 const emulatorRunning = ref( false );
-const encodedHAMMessage = "OJUTXTLJNNFJNXAGHTWN";
+const encodedHAMMessage = "OJUCOWGNQQEJAXZGMIKN";
 const subChapter = computed( () => ( {
 	einleitung:     t( "ba.subChapter.einleitung" ),
 	casar:          t( "ba.subChapter.casar" ),

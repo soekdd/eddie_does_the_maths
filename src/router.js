@@ -807,6 +807,18 @@ export const contentRoutes = [
 		}
 	},
 	{
+		path:      "/DD",
+		name:      "DD",
+		component: CatchAll,
+		meta:      {
+			difficulty: 2,
+			index:      true,
+			book:       2,
+			order:      20,
+			wip
+		}
+	},
+	{
 		path:      "/:pathMatch(.*)*",
 		name:      "CatchAll",
 		component: CatchAll,
