@@ -150,7 +150,7 @@
 						:to="previousChapter.to"
 						variant="outlined"
 					>
-						&lt;&lt;
+						&larr;
 					</v-btn>
 				</div>
 				<div class="chapterPagerSlot chapterPagerSlot--end">
@@ -163,7 +163,7 @@
 						:to="nextChapter.to"
 						variant="outlined"
 					>
-						&gt;&gt;
+						&rarr;
 					</v-btn>
 				</div>
 			</nav>
@@ -231,7 +231,7 @@
 						:to="previousChapter.to"
 						variant="outlined"
 					>
-						&lt;&lt;
+						&larr;
 					</v-btn>
 				</div>
 				<div class="chapterPagerSlot chapterPagerSlot--end">
@@ -244,7 +244,7 @@
 						:to="nextChapter.to"
 						variant="outlined"
 					>
-						&gt;&gt;
+						&rarr;
 					</v-btn>
 				</div>
 			</nav>
