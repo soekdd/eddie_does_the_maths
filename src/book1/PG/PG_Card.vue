@@ -60,6 +60,8 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { useI18n } from "@/utils/i18n.mjs";
+// @ts-ignore
+import { thumbnailByOriginal } from "virtual:eddie-image-thumbnails";
 
 const { t } = useI18n( "book1.PG" );
 
@@ -200,7 +202,9 @@ const centerFigureSrc = computed( () => {
 
 	const imagePath = `./PG_Card_${suitAssetCode.value}${figureRankAssetCode.value}.webp`;
 
-	return figureImages[ imagePath ] ?? "";
+	const originalImageUrl = figureImages[ imagePath ] ?? "";
+
+	return thumbnailByOriginal[ originalImageUrl ] ?? originalImageUrl;
 } );
 
 const centerFigureAlt = computed( () => t( "cards.figureAlt", {

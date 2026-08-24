@@ -138,5 +138,8 @@ dist
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 
+# Build-generated image thumbnails
+public/thumbnails/
+
 package-lock.json
 .DS_Store

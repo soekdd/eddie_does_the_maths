@@ -9,7 +9,7 @@
 		@click="openDialog"
 		@keydown="onKeydown"
 	>
-		<slot :alt="effectiveImgAlt" />
+		<ThumbnailSlot />
 		<span v-if="title.length>0" class="zoomerHint">{{ title }}</span>
 	</div>
 
@@ -69,10 +69,11 @@
 
 <script setup>
 import {
-	computed, nextTick, onBeforeUnmount, onMounted, ref, watch
+	cloneVNode, computed, isVNode, nextTick, onBeforeUnmount, onMounted, ref, useSlots, watch
 } from "vue";
 import { useDisplay } from "vuetify";
 import { useI18n } from "@/utils/i18n.mjs";
+import { thumbnailByOriginal } from "virtual:eddie-image-thumbnails";
 
 const props = defineProps( {
 	title:    { type: String, default: "" },
@@ -84,6 +85,7 @@ const props = defineProps( {
 } );
 
 const { t } = useI18n( "components.lang" );
+const slots = useSlots();
 const open = ref( false );
 const { smAndDown } = useDisplay();
 const hasMounted = ref( false );
@@ -98,6 +100,37 @@ const fitBoxRef = ref( null );
 const activatorRef = ref( null );
 const fitStyle = ref( {} );
 const effectiveImgAlt = computed( () => props.imgAlt || props.title || "" );
+
+function replaceImageSourcesWithThumbnails( vnode ) {
+	if ( !isVNode( vnode ) ) {
+		return vnode;
+	}
+
+	const isImage = vnode.type === "img";
+	const originalSource = vnode.props?.src;
+	const thumbnailSource = isImage && typeof originalSource === "string" ?
+		thumbnailByOriginal[ originalSource ] : null;
+	const children = Array.isArray( vnode.children ) ?
+		vnode.children.map( replaceImageSourcesWithThumbnails ) : vnode.children;
+
+	if ( thumbnailSource ) {
+		return cloneVNode(
+			vnode, { src: thumbnailSource }, children
+		);
+	}
+
+	return children === vnode.children ? vnode : cloneVNode(
+		vnode, null, children
+	);
+}
+
+const ThumbnailSlot = {
+	name: "ThumbnailSlot",
+	setup() {
+		return () => ( slots.default?.( { alt: effectiveImgAlt.value } ) ?? [] )
+			.map( replaceImageSourcesWithThumbnails );
+	}
+};
 
 let ro = null;
 
@@ -343,7 +376,7 @@ onBeforeUnmount( () => stopObservers() );
 
 .zoomerTitleText {
   font-weight: 900;
-  overflow: scroll;
+  overflow: visible;
 }
 
 .zoomerCloseGlyph {

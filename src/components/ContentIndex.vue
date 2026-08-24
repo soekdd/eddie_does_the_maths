@@ -97,6 +97,7 @@ import {
 import { useRoute } from "vue-router";
 import PocketBase from "pocketbase";
 import { useI18n } from "@/utils/i18n.mjs";
+import { thumbnailByOriginal } from "virtual:eddie-image-thumbnails";
 import {
 	contentRoutes as appRoutes, localizePath, resolveRouteMetaTitle
 } from "@/router.js";
@@ -140,7 +141,9 @@ const imageByRouteName = Object.entries( imageModules ).reduce( ( acc, [ path, u
 		?.toUpperCase();
 
 	if ( file ) {
-		acc[ file ] = String( url );
+		const originalUrl = String( url );
+
+		acc[ file ] = thumbnailByOriginal[ originalUrl ] ?? originalUrl;
 	}
 
 	return acc;

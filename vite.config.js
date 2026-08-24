@@ -1,12 +1,23 @@
 import { fileURLToPath, URL } from "node:url";
+import path from "node:path";
 
 import vue from "@vitejs/plugin-vue";
+import fg from "fast-glob";
+import sharp from "sharp";
 import { defineConfig } from "vite";
 import vuetify from "vite-plugin-vuetify";
 import { localizedExplicitDynamicRoutes } from "./src/utils/ssg-routes.js";
 import fs from "node:fs";
 
 const buildDate = String( process.env.VITE_BULD_DATE || "" ).trim();
+const projectRoot = fileURLToPath( new URL( ".", import.meta.url ) );
+const thumbnailVirtualModuleId = "virtual:eddie-image-thumbnails";
+const resolvedThumbnailVirtualModuleId = `\0${thumbnailVirtualModuleId}`;
+const sourceImagesDirectory = path.join( projectRoot, "src" );
+const thumbnailPublicDirectory = path.join(
+	projectRoot, "public", "thumbnails"
+);
+const THUMBNAIL_WIDTH_PX = 360;
 
 // vite.config.js
 
@@ -68,6 +79,76 @@ function sfcMtimePlugin( opts = {} ) {
 	};
 }
 
+function toPosixPath( value ) {
+	return value.split( path.sep ).join( "/" );
+}
+
+async function thumbnailNeedsUpdate( sourcePath, thumbnailPath ) {
+	try {
+		const [ sourceStat, thumbnailStat ] = await Promise.all( [
+			fs.promises.stat( sourcePath ),
+			fs.promises.stat( thumbnailPath )
+		] );
+
+		return sourceStat.mtimeMs > thumbnailStat.mtimeMs;
+	} catch {
+		return true;
+	}
+}
+
+function imageThumbnailPlugin() {
+	let sourceImages = [];
+
+	return {
+		name: "eddie-image-thumbnails",
+		async buildStart() {
+			sourceImages = await fg( "src/**/*.webp", {
+				absolute:  true,
+				cwd:       projectRoot,
+				onlyFiles: true
+			} );
+
+			await Promise.all( sourceImages.map( async( sourcePath ) => {
+				const relativePath = toPosixPath( path.relative( sourceImagesDirectory, sourcePath ) );
+				const thumbnailPath = path.join( thumbnailPublicDirectory, relativePath );
+
+				if ( ! await thumbnailNeedsUpdate( sourcePath, thumbnailPath ) ) {
+					return;
+				}
+
+				await fs.promises.mkdir( path.dirname( thumbnailPath ), { recursive: true } );
+				await sharp( sourcePath )
+					.rotate()
+					.resize( { width: THUMBNAIL_WIDTH_PX, withoutEnlargement: true } )
+					.webp( { quality: 82 } )
+					.toFile( thumbnailPath );
+			} ) );
+		},
+		resolveId( id ) {
+			return id === thumbnailVirtualModuleId ? resolvedThumbnailVirtualModuleId : null;
+		},
+		load( id ) {
+			if ( id !== resolvedThumbnailVirtualModuleId ) {
+				return null;
+			}
+
+			const imports = sourceImages.map( ( sourcePath, index ) =>
+				`import image${index} from ${JSON.stringify( sourcePath )};` );
+			const entries = sourceImages.map( ( sourcePath, index ) => {
+				const relativePath = toPosixPath( path.relative( sourceImagesDirectory, sourcePath ) );
+
+				return `[ image${index} ]: thumbnailBasePath + ${JSON.stringify( relativePath )}`;
+			} );
+
+			return [
+				...imports,
+				"const thumbnailBasePath = import.meta.env.BASE_URL + \"thumbnails/\";",
+				`export const thumbnailByOriginal = Object.freeze( { ${entries.join( ", " )} } );`
+			].join( "\n" );
+		}
+	};
+}
+
 function normalizeBasePath( basePath ) {
 	const asString = String( basePath || "/" ).trim();
 
@@ -123,7 +204,7 @@ export default defineConfig( {
 		"import.meta.env.VITE_BUILD_DATE":       JSON.stringify( buildDate ),
 		__VUE_PROD_HYDRATION_MISMATCH_DETAILS__: true
 	},
-	plugins:    [ sfcMtimePlugin(), vue(), vuetify( { autoImport: true } ) ],
+	plugins:    [ imageThumbnailPlugin(), sfcMtimePlugin(), vue(), vuetify( { autoImport: true } ) ],
 	resolve:    { alias: { "@": fileURLToPath( new URL( "./src", import.meta.url ) ) } },
 	ssr:        { noExternal: [ "vuetify" ] },
 	ssgOptions: {
