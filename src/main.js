@@ -16,6 +16,7 @@ import {
 } from "@/router.js";
 import { vuetify } from "@/utils/vuetify";
 import "@/eddie.css";
+import { installMatomoTracking } from "@/utils/matomo.mjs";
 
 function rewriteLegacyShortcuts() {
 	const loc = globalThis.location;
@@ -236,6 +237,7 @@ export const createApp = ViteSSG(
 		if ( isClient ) {
 			rewriteLegacyShortcuts();
 			installScrollReset( router );
+			installMatomoTracking( router );
 		}
 	},
 	{
