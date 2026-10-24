@@ -8,6 +8,7 @@ app:
   pdf: "PDF"
   lastUpdate: "Senast uppdaterad"
   correctedCredit: "Vänligt granskad och korrigerad av {name}"
+  aiAssistanceNotice: "den här webbplatsen har skapats med hjälp av AI"
   github: "GitHub"
   reportError: "Rapportera fel"
   impressum: "Impressum"

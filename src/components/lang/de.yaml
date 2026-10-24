@@ -8,6 +8,7 @@ app:
   pdf: "PDF"
   lastUpdate: "letzte Änderung"
   correctedCredit: "freundlicher Weise geprüft und korrigiert von {name}"
+  aiAssistanceNotice: "diese Webseite wurde mit KI-Unterstützung erstellt"
   github: "GitHub"
   reportError: "Fehler melden"
   impressum: "Impressum"

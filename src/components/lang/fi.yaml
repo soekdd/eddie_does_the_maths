@@ -8,6 +8,7 @@ app:
   pdf: PDF
   lastUpdate: Päivitetty viimeksi
   correctedCredit: '{name} on ystävällisesti tarkistanut ja korjannut'
+  aiAssistanceNotice: tämä verkkosivusto on luotu tekoälyn avustuksella
   github: GitHub
   reportError: Ilmoita virheestä
   impressum: Julkaisijatiedot

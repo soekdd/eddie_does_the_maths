@@ -8,6 +8,7 @@ app:
   pdf: "PDF"
   lastUpdate: "Last updated"
   correctedCredit: "Kindly reviewed and corrected by {name}"
+  aiAssistanceNotice: "this website was created with AI assistance"
   github: "GitHub"
   reportError: "Report error"
   impressum: "Imprint"

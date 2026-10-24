@@ -260,6 +260,8 @@
 					{{ t( "app.correctedCredit", { name: correctedName } ) }}
 				</div>
 				<div class="legalRow">
+					<span class="legalNotice">{{ t( "app.aiAssistanceNotice" ) }}</span>
+					<span class="legalSep">·</span>
 					<a class="legalLink" href="https://github.com/soekdd/eddie_does_the_maths">{{ t( "app.github" ) }}</a>
 					<span class="legalSep">·</span>
 					<button
@@ -1078,6 +1080,7 @@ onMounted( () => {
 .legalRow {
   margin-top: 12px;
   display: flex;
+  flex-wrap: wrap;
   justify-content: flex-end;
   align-items: center;
   gap: 10px;
