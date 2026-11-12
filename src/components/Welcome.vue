@@ -9,7 +9,7 @@
 	<template #descriptionPart>
 		<figure class="exampleFigure">
 			<ImageZoomer is-ai :title="t( 'welcome.imageTitle' )">
-				<img loading="lazy" :src="welcomeImg" />
+				<AniImage :alt="t( 'welcome.imageTitle' )" has-animation :src="welcomeImg" />
 			</ImageZoomer>
 		</figure>
 		<h2 id="willkommen">{{ t( "welcome.heading" ) }}</h2>

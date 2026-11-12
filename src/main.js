@@ -5,6 +5,7 @@ import { RouterView } from "vue-router";
 import { ViteSSG } from "vite-ssg";
 import { VApp } from "vuetify/components";
 import AppFrame from "@/components/App.vue";
+import AniImage from "@/components/AniImage.vue";
 import ImageZoomer from "@/components/ImageZoomer.vue";
 import Katex from "@/components/Katex.vue";
 import RouteSeoHead from "@/components/RouteSeoHead.vue";
@@ -231,6 +232,7 @@ export const createApp = ViteSSG(
 		// eslint-disable-next-line vue/multi-word-component-names
 		app.component( "Katex", Katex );
 		app.component( "EddieComment", EddieComment );
+		app.component( "AniImage", AniImage );
 		app.component( "ImageZoomer", ImageZoomer );
 		app.provide( "pbUrl", pbUrl );
 
