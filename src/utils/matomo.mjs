@@ -3,6 +3,10 @@ const languageDimension = Number( import.meta.env.VITE_MATOMO_LANGUAGE_DIMENSION
 const chapterDimension = Number( import.meta.env.VITE_MATOMO_CHAPTER_DIMENSION_ID || 2 );
 
 export function installMatomoTracking( router ) {
+	if ( [ "localhost", "127.0.0.1" ].includes( window.location.hostname ) ) {
+		return;
+	}
+
 	let previousPath;
 	let previousUrl;
 
