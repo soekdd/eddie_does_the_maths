@@ -8,7 +8,7 @@
 	<template #bookPart>
 		<figure class="exampleFigure">
 			<ImageZoomer is-ai :title="t( 'fs.imageTitle' )">
-				<img :alt="t( 'fs.imageAlt' )" loading="lazy" :src="titleImg" />
+				<AniImage :alt="t( 'fs.imageAlt' )" :src="titleImg" />
 			</ImageZoomer>
 		</figure>
 		<h3 id="einleitung">{{ t( "fs.introDate" ) }}</h3>

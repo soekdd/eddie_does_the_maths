@@ -73,6 +73,7 @@ import {
 } from "vue";
 import { useDisplay } from "vuetify";
 import { useI18n } from "@/utils/i18n.mjs";
+import AniImage from "@/components/AniImage.vue";
 import { thumbnailByOriginal } from "virtual:eddie-image-thumbnails";
 
 const props = defineProps( {
@@ -104,6 +105,10 @@ const effectiveImgAlt = computed( () => props.imgAlt || props.title || "" );
 function replaceImageSourcesWithThumbnails( vnode ) {
 	if ( !isVNode( vnode ) ) {
 		return vnode;
+	}
+
+	if ( vnode.type === AniImage ) {
+		return cloneVNode( vnode, { thumbnail: true } );
 	}
 
 	const isImage = vnode.type === "img";

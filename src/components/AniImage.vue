@@ -1,6 +1,6 @@
 <template>
 <span class="aniImage">
-	<img :alt :loading :src />
+	<img :alt :loading :src="imageSource" />
 	<video
 		v-if="videoUrl"
 		ref="videoRef"
@@ -23,11 +23,13 @@
 
 <script setup>
 import {
-	onBeforeUnmount, onMounted, ref, watch
+	computed, onBeforeUnmount, onMounted, ref, watch
 } from "vue";
+import { thumbnailByOriginal } from "virtual:eddie-image-thumbnails";
 
 const props = defineProps( {
 	src:          { type: String, required: true },
+	thumbnail:    { type: Boolean, default: false },
 	hasAnimation: { type: Boolean, default: false },
 	alt:          { type: String, default: "" },
 	loading:      { type: String, default: "lazy" }
@@ -38,6 +40,7 @@ const animations = import.meta.glob( "../**/*.mp4", { eager: true, import: "defa
 const animationByImage = Object.fromEntries( Object.entries( images )
 	.map( ( [ path, imageUrl ] ) => [ imageUrl, animations[ path.replace( /\.webp$/, ".mp4" ) ] ] )
 	.filter( ( [ , animationUrl ] ) => animationUrl ) );
+const imageSource = computed( () => props.thumbnail ? thumbnailByOriginal[ props.src ] || props.src : props.src );
 
 const mounted = ref( false );
 const videoRef = ref( null );

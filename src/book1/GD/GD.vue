@@ -9,7 +9,7 @@
 	<template #bookPart>
 		<figure class="exampleFigure">
 			<ImageZoomer is-ai :title="t( 'gd.imageTitle' )">
-				<img :alt="t( 'gd.imageAlt' )" loading="lazy" :src="titleImg" />
+				<AniImage :alt="t( 'gd.imageAlt' )" :src="titleImg" />
 			</ImageZoomer>
 		</figure>
 		<h3 id="einleitung">{{ t( "gd.introDate" ) }}</h3>
