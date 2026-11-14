@@ -213,6 +213,11 @@ h3 {
 }
 
 @media (max-width: 860px) {
+  /* Avoid fixed-background repaint/compositing glitches on mobile browsers. */
+  .v-application {
+    background-attachment: scroll;
+  }
+
   .mainWrap {
     padding: 0;
     width: 100%;
