@@ -30,7 +30,8 @@
     "vite-ssg": "^28.3.0",
     "vue": "^3.4.0",
     "vue-router": "^4.2.0",
-    "vuetify": "^3.6.0"
+    "vuetify": "^3.6.0",
+    "yaml": "^2.9.1"
   },
   "devDependencies": {
     "@stylistic/eslint-plugin": "5.9.0",
