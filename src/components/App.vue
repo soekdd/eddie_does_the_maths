@@ -1225,6 +1225,12 @@ onMounted( () => {
 	#forum {
 		scroll-margin-top: 132px;
 	}
+
+	/* Avoid blur/compositing artifacts when scrolling on mobile. */
+	.glassSection {
+		backdrop-filter: none;
+		-webkit-backdrop-filter: none;
+	}
 }
 
 @media print {
