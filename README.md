@@ -29,6 +29,14 @@ npm run build
 
 Output landet standardmäßig in `@/dist/math/` (abhängig von `VITE_PUBLIC_BASE`).
 
+## Deployment per GitHub Actions
+
+Der Workflow `Build and deploy math` startet ausschließlich über **Actions → Build and deploy math → Run workflow**. Er baut `dist/math/` und überträgt nur diesen Ordner nach `soek.de:/var/www/soek.de/eddie/math/`.
+
+Für das Repository werden die Secrets `DEPLOY_SSH_KEY`, `DEPLOY_KNOWN_HOSTS` und `DEPLOY_USER` benötigt. Optional kann die Variable `DEPLOY_PORT` gesetzt werden (Standard: `22`). Der Deploy-Job nutzt die Umgebung `production`.
+
+PDFs (`dist/.pdf-cache/math`) und Thumbnails (`public/thumbnails`) werden mit einem Schlüssel aus den Build-Eingaben zwischengespeichert. Ein erneuter manueller Lauf mit unveränderten Eingaben verwendet denselben Cache.
+
 ## Neue Themen hinzufügen (Checkliste)
 
 1. Neues Thema unter `eddie_does_the_maths/src/book<n>/` anlegen.

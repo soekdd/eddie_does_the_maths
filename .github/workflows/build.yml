@@ -1,0 +1,116 @@
+name: Build and deploy math
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-math-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Build math site and PDFs
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+          package-manager-cache: false
+
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+
+      # GitHub caches are immutable. An exact source hash reuses the same cache
+      # across manual runs; changed inputs create a new cache once.
+      - name: Restore rendered PDF and thumbnail cache
+        id: render-cache
+        uses: actions/cache/restore@v6
+        with:
+          path: |
+            dist/.pdf-cache/math
+            public/thumbnails
+          key: math-render-v1-${{ runner.os }}-${{ hashFiles('src/**', 'public/**', 'scripts/**', 'cover.jpg', 'index.html', 'vite.config.js', 'jsconfig.json', 'tsconfig.json', 'package.json', 'package-lock.json') }}
+
+      # The generators compare mtimes. A content-identical cache is safe to
+      # mark newer than the freshly checked-out sources.
+      - name: Refresh restored cache timestamps
+        if: steps.render-cache.outputs.cache-hit == 'true'
+        run: |
+          for cache_dir in dist/.pdf-cache/math public/thumbnails; do
+            if [ -d "$cache_dir" ]; then
+              find "$cache_dir" -type f -exec touch {} +
+            fi
+          done
+
+      - name: Build site and PDFs
+        run: npm run build
+
+      - name: Save rendered PDF and thumbnail cache
+        if: steps.render-cache.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v6
+        with:
+          path: |
+            dist/.pdf-cache/math
+            public/thumbnails
+          key: ${{ steps.render-cache.outputs.cache-primary-key }}
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: eddie-math-${{ github.sha }}
+          path: dist/math/
+          if-no-files-found: error
+          retention-days: 1
+
+  deploy:
+    name: Deploy math to soek.de
+    needs: build
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    environment: production
+    steps:
+      - name: Download build artifact
+        uses: actions/download-artifact@v8
+        with:
+          name: eddie-math-${{ github.sha }}
+          path: dist/math
+
+      - name: Configure SSH
+        env:
+          DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+          DEPLOY_KNOWN_HOSTS: ${{ secrets.DEPLOY_KNOWN_HOSTS }}
+        run: |
+          install -d -m 700 ~/.ssh
+          printf '%s\n' "$DEPLOY_SSH_KEY" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          printf '%s\n' "$DEPLOY_KNOWN_HOSTS" > ~/.ssh/known_hosts
+          chmod 600 ~/.ssh/known_hosts
+
+      - name: Ensure deployment directory exists
+        env:
+          DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
+          DEPLOY_PORT: ${{ vars.DEPLOY_PORT || '22' }}
+        run: >-
+          ssh -i ~/.ssh/deploy_key -p "$DEPLOY_PORT"
+          -o BatchMode=yes -o StrictHostKeyChecking=yes
+          "$DEPLOY_USER@soek.de"
+          'mkdir -p /var/www/soek.de/eddie/math'
+
+      - name: Add and update deployed files
+        env:
+          DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
+          DEPLOY_PORT: ${{ vars.DEPLOY_PORT || '22' }}
+        run: >-
+          rsync -rlptvz
+          --checksum
+          -e "ssh -i ~/.ssh/deploy_key -p $DEPLOY_PORT -o BatchMode=yes -o StrictHostKeyChecking=yes"
+          dist/math/
+          "$DEPLOY_USER@soek.de:/var/www/soek.de/eddie/math/"
