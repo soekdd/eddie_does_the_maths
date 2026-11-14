@@ -372,9 +372,8 @@ export async function generatePdfs() {
 	const baseUrl = `http://127.0.0.1:${port}`;
 
 	const browser = await puppeteer.launch( {
-		headless: "new"
-		// Falls CI/Linux zickt:
-		// args: ['--no-sandbox', '--disable-setuid-sandbox'],
+		headless: "new",
+		args:    process.env.PDF_CHROME_NO_SANDBOX === "1" ? [ "--no-sandbox" ] : []
 	} );
 
 	try {

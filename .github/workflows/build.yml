@@ -51,6 +51,8 @@ jobs:
           done
 
       - name: Build site and PDFs
+        env:
+          PDF_CHROME_NO_SANDBOX: '1'
         run: npm run build
 
       - name: Save rendered PDF and thumbnail cache
