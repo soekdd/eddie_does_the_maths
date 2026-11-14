@@ -8,35 +8,35 @@
 >
 	<template #bookPart>
 		<figure class="exampleFigure">
-			<ImageZoomer is-ai :title="t( 'bs.imageTitle' )">
-				<AniImage :src="titleImg" />
+			<ImageZoomer is-ai :title="t( 'imageTitle' )">
+				<AniImage :alt="t( 'imageTitle' )" :src="titleImg" />
 			</ImageZoomer>
 		</figure>
-		<h3 id="einleitung">{{ t( "bs.introDate" ) }}</h3>
+		<h3 id="einleitung">{{ t( "introDate" ) }}</h3>
 		<div class="eddie">
-			<p v-html="t( 'bs.book.p1' )" />
-			<p v-html="t( 'bs.book.p2' )" />
-			<p v-html="t( 'bs.book.p3' )" />
-			<p v-html="t( 'bs.book.p4' )" />
+			<p v-html="t( 'book.p1' )" />
+			<p v-html="t( 'book.p2' )" />
+			<p v-html="t( 'book.p3' )" />
+			<p v-html="t( 'book.p4' )" />
 		</div>
 	</template>
 
 	<template #descriptionPart>
 
-		<h2 id="ziel">{{ t( "bs.sections.part1.title" ) }}</h2>
+		<h2 id="ziel">{{ t( "sections.part1.title" ) }}</h2>
 		<div class="eddie">
-			<p v-html="t( 'bs.sections.part1.p1' )" />
-			<p v-html="t( 'bs.sections.part1.p2' )"/>
+			<p v-html="t( 'sections.part1.p1' )" />
+			<p v-html="t( 'sections.part1.p2' )"/>
 		</div>
 
-		<h2 id="steiner" class="mt-8">{{ t( "bs.sections.part2.title" ) }}</h2>
+		<h2 id="steiner" class="mt-8">{{ t( "sections.part2.title" ) }}</h2>
 		<div class="eddie">
-			<p v-html="t( 'bs.sections.part2.p1' )" />
+			<p v-html="t( 'sections.part2.p1' )" />
 			<div class="kbox">
 				<Katex as="div" display tex="I_x = I_{x,S} + A\cdot d^2" />
 			</div>
 			<figure class="exampleFigure">
-				<ImageZoomer :title="t( 'bs.sections.part2.graphTitle' )">
+				<ImageZoomer :title="t( 'sections.part2.graphTitle' )">
 					<BSGraph
 						:bf="100"
 						:h="200"
@@ -48,17 +48,17 @@
 					/>
 				</ImageZoomer>
 			</figure>
-			<p v-html="t( 'bs.sections.part2.p2' )" />
-			<p v-html="t( 'bs.sections.part2.p3' )"/>
+			<p v-html="t( 'sections.part2.p2' )" />
+			<p v-html="t( 'sections.part2.p3' )"/>
 			<ol>
-				<li v-html="t( 'bs.sections.part2.step1' )" />
-				<li v-html="t( 'bs.sections.part2.step2' )" />
-				<li v-html="t( 'bs.sections.part2.step3' )" />
-				<li v-html="t( 'bs.sections.part2.step4' )" />
+				<li v-html="t( 'sections.part2.step1' )" />
+				<li v-html="t( 'sections.part2.step2' )" />
+				<li v-html="t( 'sections.part2.step3' )" />
+				<li v-html="t( 'sections.part2.step4' )" />
 			</ol>
-			<p v-html="t( 'bs.sections.part2.p4' )" />
-			<p v-html="t( 'bs.sections.part2.p5' )" />
-			<p v-html="t( 'bs.sections.part2.p6' )"/>
+			<p v-html="t( 'sections.part2.p4' )" />
+			<p v-html="t( 'sections.part2.p5' )" />
+			<p v-html="t( 'sections.part2.p6' )"/>
 			<div class="kbox">
 				<Katex aligned
 					as="div"
@@ -69,23 +69,23 @@
 			<div class="kbox">
 				<Katex as="div" display tex="I_x = 2\left(\frac{b_f t_f^3}{12}+b_f t_f\left(\frac{h}{2}-\frac{t_f}{2}\right)^2\right)+\frac{t_w(h-2t_f)^3}{12}" />
 			</div>
-			<p v-html="t( 'bs.sections.part2.p7' )" />
+			<p v-html="t( 'sections.part2.p7' )" />
 		</div>
 
-		<h2 id="fallen" class="mt-8">{{ t( "bs.sections.part3.title" ) }}</h2>
+		<h2 id="fallen" class="mt-8">{{ t( "sections.part3.title" ) }}</h2>
 		<div class="eddie">
 			<ul>
-				<li v-html="t( 'bs.sections.part3.trap1' )" />
-				<li v-html="t( 'bs.sections.part3.trap2' )" />
-				<li v-html="t( 'bs.sections.part3.trap3' )" />
+				<li v-html="t( 'sections.part3.trap1' )" />
+				<li v-html="t( 'sections.part3.trap2' )" />
+				<li v-html="t( 'sections.part3.trap3' )" />
 			</ul>
 		</div>
 	</template>
 
 	<template #interactivePart>
-		<h2>{{ t( "bs.interactive.title" ) }}</h2>
+		<h2>{{ t( "interactive.title" ) }}</h2>
 		<div class="eddie interactive">
-			<p v-html="t( 'bs.interactive.intro' )"/>
+			<p v-html="t( 'interactive.intro' )"/>
 			<v-row class="mt-1" dense>
 				<v-col cols="12" md="4">
 					<v-select
@@ -93,7 +93,7 @@
 						density="compact"
 						hide-details="auto"
 						:items="seriesItems"
-						:label="t( 'bs.interactive.series' )"
+						:label="t( 'interactive.series' )"
 						variant="outlined"
 					/>
 				</v-col>
@@ -103,14 +103,14 @@
 						density="compact"
 						hide-details="auto"
 						:items="profileItems"
-						:label="t( 'bs.interactive.realBeam' )"
+						:label="t( 'interactive.realBeam' )"
 						variant="outlined"
 					/>
 				</v-col>
 			</v-row>
 			<v-card class="px-3 pa-2" variant="tonal">
 				<div class="sliderHeader">
-					<span><Katex inline tex="h" /> {{ t( "bs.interactive.totalHeight" ) }}</span>
+					<span><Katex inline tex="h" /> {{ t( "interactive.totalHeight" ) }}</span>
 					<v-chip color="primary" size="small" variant="flat">
 						{{ formatMm( h ) }}
 					</v-chip>
@@ -126,7 +126,7 @@
 					<template #thumb-label>{{ formatMm( h ) }}</template>
 				</v-slider>
 				<div class="sliderHeader">
-					<span><Katex inline tex="b_f" /> {{ t( "bs.interactive.flangeWidth" ) }}</span>
+					<span><Katex inline tex="b_f" /> {{ t( "interactive.flangeWidth" ) }}</span>
 					<v-chip color="primary" size="small" variant="flat">
 						{{ formatMm( bf ) }}
 					</v-chip>
@@ -142,7 +142,7 @@
 					<template #thumb-label>{{ formatMm( bf ) }}</template>
 				</v-slider>
 				<div class="sliderHeader">
-					<span><Katex inline tex="t_f" /> {{ t( "bs.interactive.flangeThickness" ) }}</span>
+					<span><Katex inline tex="t_f" /> {{ t( "interactive.flangeThickness" ) }}</span>
 					<v-chip color="primary" size="small" variant="flat">
 						{{ formatMm( tf ) }}
 					</v-chip>
@@ -158,7 +158,7 @@
 					<template #thumb-label>{{ formatMm( tf ) }}</template>
 				</v-slider>
 				<div class="sliderHeader">
-					<span><Katex inline tex="t_w" /> {{ t( "bs.interactive.webThickness" ) }}</span>
+					<span><Katex inline tex="t_w" /> {{ t( "interactive.webThickness" ) }}</span>
 					<v-chip color="primary" size="small" variant="flat">
 						{{ formatMm( tw ) }}
 					</v-chip>
@@ -187,7 +187,7 @@
 				type="success"
 				variant="tonal"
 			>
-				{{ t( "bs.interactive.matching" ) }} <b>{{ matchingProfilesLabel }}</b>
+				{{ t( "interactive.matching" ) }} <b>{{ matchingProfilesLabel }}</b>
 			</v-alert>
 			<v-alert v-else
 				class="mt-3"
@@ -195,7 +195,7 @@
 				type="info"
 				variant="tonal"
 			>
-				{{ t( "bs.interactive.noMatch" ) }}
+				{{ t( "interactive.noMatch" ) }}
 			</v-alert>
 
 			<v-alert
@@ -205,13 +205,13 @@
 				type="warning"
 				variant="tonal"
 			>
-				<span v-html="t( 'bs.interactive.invalidGeometry' )" />
+				<span v-html="t( 'interactive.invalidGeometry' )" />
 			</v-alert>
 		</div>
 	</template>
 
 	<template #calculationPart>
-		<h3 id="beispiel" class="mt-2">{{ t( "bs.calc.exampleTitle" ) }}</h3>
+		<h3 id="beispiel" class="mt-2">{{ t( "calc.exampleTitle" ) }}</h3>
 		<div class="eddie">
 			<ul>
 				<li><Katex aligned inline :tex="`h=${kFmt(h,0)}\\,\\text{mm}`" /></li>
@@ -228,9 +228,9 @@
 			</div>
 		</div>
 
-		<h3 id="rechnung" class="mt-8">{{ t( "bs.calc.calcTitle" ) }}</h3>
+		<h3 id="rechnung" class="mt-8">{{ t( "calc.calcTitle" ) }}</h3>
 		<div class="eddie">
-			<h4>{{ t( "bs.calc.flangeTitle" ) }}</h4>
+			<h4>{{ t( "calc.flangeTitle" ) }}</h4>
 			<div class="kbox">
 				<Katex aligned
 					as="div"
@@ -239,14 +239,14 @@
 				/>
 			</div>
 
-			<h4>{{ t( "bs.calc.webTitle" ) }}</h4>
-			<p v-html="t( 'bs.calc.webText' )" />
+			<h4>{{ t( "calc.webTitle" ) }}</h4>
+			<p v-html="t( 'calc.webText' )" />
 			<div class="kbox">
 				<Katex as="div" display :tex="texIw" />
 			</div>
 		</div>
 
-		<h3 id="ergebnis" class="mt-8">{{ t( "bs.calc.resultTitle" ) }}</h3>
+		<h3 id="ergebnis" class="mt-8">{{ t( "calc.resultTitle" ) }}</h3>
 		<div class="eddie">
 			<div class="kbox">
 				<Katex aligned
@@ -257,7 +257,7 @@
 			</div>
 		</div>
 
-		<h3 id="bonus" class="mt-8">{{ t( "bs.calc.bonusTitle" ) }}</h3>
+		<h3 id="bonus" class="mt-8">{{ t( "calc.bonusTitle" ) }}</h3>
 		<div class="eddie">
 			<div class="kbox">
 				<Katex aligned
@@ -282,14 +282,14 @@ import BSGraph from "./BS_Graph.vue";
 const { t } = useI18n( "book1.BS" );
 
 const subChapter = computed( () => ( {
-	einleitung: t( "bs.subChapter.einleitung" ),
-	ziel:       t( "bs.subChapter.ziel" ),
-	steiner:    t( "bs.subChapter.steiner" ),
-	fallen:     t( "bs.subChapter.fallen" ),
-	beispiel:   t( "bs.subChapter.beispiel" ),
-	rechnung:   t( "bs.subChapter.rechnung" ),
-	ergebnis:   t( "bs.subChapter.ergebnis" ),
-	bonus:      t( "bs.subChapter.bonus" )
+	einleitung: t( "subChapter.einleitung" ),
+	ziel:       t( "subChapter.ziel" ),
+	steiner:    t( "subChapter.steiner" ),
+	fallen:     t( "subChapter.fallen" ),
+	beispiel:   t( "subChapter.beispiel" ),
+	rechnung:   t( "subChapter.rechnung" ),
+	ergebnis:   t( "subChapter.ergebnis" ),
+	bonus:      t( "subChapter.bonus" )
 } ) );
 
 const allProfiles = Object.values( BS.series ).flat();

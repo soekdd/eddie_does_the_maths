@@ -158,7 +158,7 @@ onBeforeUnmount( () => {
 .pageInner :deep(.exampleFigure) {
 	background: #f5f7fb12!important;
 }
-@media (max-width: 860px) {
+@media (max-width: 660px) {
 	.pageCard {
 		padding: 1em 1.5em 1.5em 2em;
 	}

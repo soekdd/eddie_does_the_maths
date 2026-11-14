@@ -1,6 +1,5 @@
 title: "Five Card Draw - 7 statis\u00ADtische Aufgaben"
 imageTitle: "Eddie zockt die Jungs ab"
-imageAlt: "Eddie zockt die Jungs ab"
 introDate: "Joutsenlampi, 4. Juli 1985"
 subChapter:
   einleitung: "Einleitung"
@@ -54,7 +53,6 @@ sections:
     p2: "Auch hier gilt beim 1-Karten-Draw: <katex tex=\"52-5=47\" /> ziehbare Karten."
   task5:
     imageTitle: "Eddie Pokerqueen"
-    imageAlt: "Eddie Pokerqueen"
     title: "Aufgabe 5: Bayes aus Ziehzahl - Gegner zieht 1 Karte"
     p1: "Modellannahme (vereinfacht):"
     l1: "Wer Two Pair hat, zieht genau 1 Karte (auf Full House)."

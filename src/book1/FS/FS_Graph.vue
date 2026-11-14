@@ -2,7 +2,7 @@
 <template>
 <div class="fsGraph">
 	<svg
-		:aria-label="t( 'fs.graph.aria' )"
+		:aria-label="t( 'graph.aria' )"
 		class="chart"
 		role="img"
 		:viewBox="`0 0 ${CHART.width} ${CHART.height}`"
@@ -85,16 +85,16 @@
 		</text>
 
 		<text class="axisTitle" :x="CHART.width / 2" :y="CHART.height - 6">
-			{{ t( "fs.graph.xTitle" ) }}
+			{{ t( "graph.xTitle" ) }}
 		</text>
 		<text class="axisTitle axisTitleY" x="14" :y="CHART.height / 2">
-			{{ t( "fs.graph.yTitle" ) }}
+			{{ t( "graph.yTitle" ) }}
 		</text>
 	</svg>
 
 	<div class="legend">
-		<div class="legendItem"><span class="swatch swatchCurve"></span><span>{{ t( "fs.graph.curve" ) }}</span></div>
-		<div class="legendItem"><span class="swatch swatchEq"></span><span>{{ t( "fs.graph.eq" ) }}</span></div>
+		<div class="legendItem"><span class="swatch swatchCurve"></span><span>{{ t( "graph.curve" ) }}</span></div>
+		<div class="legendItem"><span class="swatch swatchEq"></span><span>{{ t( "graph.eq" ) }}</span></div>
 	</div>
 </div>
 </template>

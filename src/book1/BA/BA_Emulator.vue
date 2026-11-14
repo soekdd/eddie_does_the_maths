@@ -4,7 +4,7 @@
 	<div class="c64-wrap">
 		<div class="c64-frame">
 			<div class="c64-border">
-				<div :aria-label="t( 'ba.emulator.screenAria' )" class="c64-screen" role="img">
+				<div :aria-label="t( 'emulator.screenAria' )" class="c64-screen" role="img">
 					<pre class="c64-text">{{ screenText }}</pre>
 
 					<!-- Cursor-Overlay -->
@@ -25,7 +25,7 @@
 				v-model="inputLine"
 				density="compact"
 				hide-details
-				:label="t( 'ba.emulator.inputLine' )"
+				:label="t( 'emulator.inputLine' )"
 				@keydown.enter.prevent="sendInput"
 			/>
 		</v-col>
@@ -35,14 +35,14 @@
 				variant="tonal"
 				@click="sendInput"
 			>
-				{{ t( "ba.emulator.send" ) }}
+				{{ t( "emulator.send" ) }}
 			</v-btn>
 			<v-btn
 				:disabled="stdinQueue.length === 0"
 				variant="text"
 				@click="clearStdinQueue"
 			>
-				{{ t( "ba.emulator.clearQueue" ) }}
+				{{ t( "emulator.clearQueue" ) }}
 			</v-btn>
 		</v-col>
 	</v-row>
@@ -53,7 +53,7 @@
 		density="compact"
 		type="warning"
 	>
-		{{ t( "ba.emulator.awaitingInput" ) }}
+		{{ t( "emulator.awaitingInput" ) }}
 	</v-alert>
 
 	<v-alert

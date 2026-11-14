@@ -1,6 +1,5 @@
 title: "Five Card Draw - 7 Statistical Problems"
 imageTitle: "Eddie takes the boys to the cleaners"
-imageAlt: "Eddie takes the boys to the cleaners"
 introDate: "Joutsenlampi, July 4, 1985"
 subChapter:
   einleitung: "Introduction"
@@ -54,7 +53,6 @@ sections:
     p2: "Again, for a 1-card draw we have <katex tex=\"52-5=47\" /> drawable cards."
   task5:
     imageTitle: "Eddie, poker queen"
-    imageAlt: "Eddie, poker queen"
     title: "Problem 5: Bayes from draw count - Opponent draws 1 card"
     p1: "Simplified model assumption:"
     l1: "Whoever has two pair draws exactly 1 card, aiming for a full house."

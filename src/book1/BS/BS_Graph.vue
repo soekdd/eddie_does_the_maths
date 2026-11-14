@@ -2,7 +2,7 @@
 <template>
 <div class="graphWrap">
 	<svg
-		:aria-label="t( 'bs.graph.aria' )"
+		:aria-label="t( 'graph.aria' )"
 		class="graphSvg"
 		preserveAspectRatio="xMidYMid meet"
 		role="img"

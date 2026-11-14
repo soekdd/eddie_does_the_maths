@@ -2,7 +2,7 @@
 <template>
 <div class="bdGraphWrap">
 	<svg
-		:aria-label="t( 'bd.graph.aria' )"
+		:aria-label="t( 'graph.aria' )"
 		class="bdGraphSvg"
 		role="img"
 		:viewBox="graphViewBox"

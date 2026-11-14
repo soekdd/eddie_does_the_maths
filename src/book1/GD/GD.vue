@@ -8,53 +8,53 @@
 >
 	<template #bookPart>
 		<figure class="exampleFigure">
-			<ImageZoomer is-ai :title="t( 'gd.imageTitle' )">
-				<AniImage :alt="t( 'gd.imageAlt' )" :src="titleImg" />
+			<ImageZoomer is-ai :title="t( 'imageTitle' )">
+				<AniImage :alt="t( 'imageTitle' )" :src="titleImg" />
 			</ImageZoomer>
 		</figure>
-		<h3 id="einleitung">{{ t( "gd.introDate" ) }}</h3>
+		<h3 id="einleitung">{{ t( "introDate" ) }}</h3>
 		<div class="eddie">
-			<p v-html="t( 'gd.book.p1' )"/>
-			<p v-html="t( 'gd.book.p2' )"/>
-			<p v-html="t( 'gd.book.p3' )"/>
+			<p v-html="t( 'book.p1' )"/>
+			<p v-html="t( 'book.p2' )"/>
+			<p v-html="t( 'book.p3' )"/>
 		</div>
 	</template>
 
 	<template #descriptionPart>
-		<h2 id="diophantos-raetsel">{{ t( "gd.sections.part1.title" ) }}</h2>
+		<h2 id="diophantos-raetsel">{{ t( "sections.part1.title" ) }}</h2>
 		<div class="eddie">
-			<p v-html="t( 'gd.sections.part1.p1' )"/>
+			<p v-html="t( 'sections.part1.p1' )"/>
 			<div class="cContainer">
 				<blockquote class="storyQuote">
 					<div class="plateHeader">
-						<div class="plateLead">{{ t( "gd.sections.part1.plateLead" ) }}</div>
-						<div class="plateLeadSub">{{ t( "gd.sections.part1.plateLeadSub" ) }}</div>
+						<div class="plateLead">{{ t( "sections.part1.plateLead" ) }}</div>
+						<div class="plateLeadSub">{{ t( "sections.part1.plateLeadSub" ) }}</div>
 					</div>
-					<div v-html="t( 'gd.sections.part1.epitaph' )" />
+					<div v-html="t( 'sections.part1.epitaph' )" />
 				</blockquote>
 			</div>
-			<p v-html="t( 'gd.sections.part1.p2' )"/>
+			<p v-html="t( 'sections.part1.p2' )"/>
 			<ul>
-				<li>{{ t( "gd.sections.part1.s1" ) }}</li>
-				<li>{{ t( "gd.sections.part1.s2" ) }}</li>
-				<li>{{ t( "gd.sections.part1.s3" ) }}</li>
-				<li>{{ t( "gd.sections.part1.s4" ) }}</li>
-				<li>{{ t( "gd.sections.part1.s5" ) }}</li>
-				<li>{{ t( "gd.sections.part1.s6" ) }}</li>
+				<li>{{ t( "sections.part1.s1" ) }}</li>
+				<li>{{ t( "sections.part1.s2" ) }}</li>
+				<li>{{ t( "sections.part1.s3" ) }}</li>
+				<li>{{ t( "sections.part1.s4" ) }}</li>
+				<li>{{ t( "sections.part1.s5" ) }}</li>
+				<li>{{ t( "sections.part1.s6" ) }}</li>
 			</ul>
 		</div>
 
-		<h2 id="in-formeln" class="mt-8">{{ t( "gd.sections.part2.title" ) }}</h2>
+		<h2 id="in-formeln" class="mt-8">{{ t( "sections.part2.title" ) }}</h2>
 		<div class="eddie">
-			<p v-html="t( 'gd.sections.part2.p1' )"/>
+			<p v-html="t( 'sections.part2.p1' )"/>
 			<div class="kbox">
 				<Katex as="div" display tex="\frac16x+\frac1{12}x+\frac17x+5+\frac12x+4=x" />
 			</div>
 		</div>
 
-		<h2 id="loesen" class="mt-8">{{ t( "gd.sections.part3.title" ) }}</h2>
+		<h2 id="loesen" class="mt-8">{{ t( "sections.part3.title" ) }}</h2>
 		<div class="eddie">
-			<p v-html="t( 'gd.sections.part3.p1' )"/>
+			<p v-html="t( 'sections.part3.p1' )"/>
 			<div class="kbox">
 				<Katex
 					as="div"
@@ -70,33 +70,33 @@
 					tex="\left(\frac{14+7+12+42}{84}\right)x+9 &= x \\ \frac{75}{84}x+9 &= x \\ x-\frac{75}{84}x &= 9 \\ \frac9{84}x &= 9 \\ x &= 9\cdot\frac{84}{9}=84"
 				/>
 			</div>
-			<p><b>{{ t( "gd.sections.part3.p2" ) }}</b></p>
+			<p><b>{{ t( "sections.part3.p2" ) }}</b></p>
 		</div>
 
-		<h2 id="stationen" class="mt-8">{{ t( "gd.sections.part4.title" ) }}</h2>
+		<h2 id="stationen" class="mt-8">{{ t( "sections.part4.title" ) }}</h2>
 		<div class="eddie">
 			<ul>
-				<li>{{ t( "gd.sections.part4.s1" ) }} <Katex tex="\frac16x=14" /></li>
-				<li>{{ t( "gd.sections.part4.s2" ) }} <Katex tex="\left(\frac16+\frac1{12}\right)x=14+7=21" /></li>
-				<li>{{ t( "gd.sections.part4.s3" ) }} <Katex tex="\left(\frac16+\frac1{12}+\frac17\right)x=14+7+12=33" /></li>
-				<li>{{ t( "gd.sections.part4.s4" ) }} <Katex tex="33+5=38" /></li>
-				<li>{{ t( "gd.sections.part4.s5" ) }} <Katex tex="\frac12x=42" /> {{ t( "gd.sections.part4.s5b" ) }} <Katex tex="38+42=80" /> {{ t( "gd.sections.part4.s5c" ) }}</li>
-				<li>{{ t( "gd.sections.part4.s6" ) }} <Katex tex="80+4=84" /></li>
+				<li>{{ t( "sections.part4.s1" ) }} <Katex tex="\frac16x=14" /></li>
+				<li>{{ t( "sections.part4.s2" ) }} <Katex tex="\left(\frac16+\frac1{12}\right)x=14+7=21" /></li>
+				<li>{{ t( "sections.part4.s3" ) }} <Katex tex="\left(\frac16+\frac1{12}+\frac17\right)x=14+7+12=33" /></li>
+				<li>{{ t( "sections.part4.s4" ) }} <Katex tex="33+5=38" /></li>
+				<li>{{ t( "sections.part4.s5" ) }} <Katex tex="\frac12x=42" /> {{ t( "sections.part4.s5b" ) }} <Katex tex="38+42=80" /> {{ t( "sections.part4.s5c" ) }}</li>
+				<li>{{ t( "sections.part4.s6" ) }} <Katex tex="80+4=84" /></li>
 			</ul>
 		</div>
 
-		<h2 id="eddies-rechnung" class="mt-8">{{ t( "gd.sections.part5.title" ) }}</h2>
+		<h2 id="eddies-rechnung" class="mt-8">{{ t( "sections.part5.title" ) }}</h2>
 		<div class="eddie">
 			<div class="cContainer">
 				<blockquote class="storyQuote">
 					<div class="plateHeader">
-						<div class="plateLead">{{ t( "gd.sections.part5.plateLead" ) }}</div>
-						<div class="plateLeadSub">{{ t( "gd.sections.part5.plateLeadSub" ) }}</div>
+						<div class="plateLead">{{ t( "sections.part5.plateLead" ) }}</div>
+						<div class="plateLeadSub">{{ t( "sections.part5.plateLeadSub" ) }}</div>
 					</div>
-					<div v-html="t( 'gd.sections.part5.poem' )" />
+					<div v-html="t( 'sections.part5.poem' )" />
 				</blockquote>
 			</div>
-			<p v-html="t( 'gd.sections.part5.p1' )"/>
+			<p v-html="t( 'sections.part5.p1' )"/>
 			<div class="kbox">
 				<Katex
 					aligned
@@ -105,8 +105,8 @@
 					tex="T_{\text{klein}} &= \frac13T \\ T_{\text{schule}} &= \frac49T \\ T_{\text{zahlen}} &= \frac16T \\ T_{\text{Edmilla}} &= \frac23\cdot T_{\text{zahlen}}=\frac23\cdot\frac16T=\frac19T \\ T_{\text{frei}} &= \frac{2}{12}=\frac16\;\text{Jahr}"
 				/>
 			</div>
-			<p v-html="t( 'gd.sections.part5.p2' )"/>
-			<p v-html="t( 'gd.sections.part5.p3' )"/>
+			<p v-html="t( 'sections.part5.p2' )"/>
+			<p v-html="t( 'sections.part5.p3' )"/>
 			<div class="kbox">
 				<Katex
 					aligned
@@ -115,12 +115,12 @@
 					tex="T_{\text{Flucht}} &= T-\left(\frac13T+\frac49T+\frac16T+\frac16\right) \\ \frac13T+\frac49T+\frac16T &= \frac{6}{18}T+\frac{8}{18}T+\frac{3}{18}T=\frac{17}{18}T \\ T_{\text{Flucht}} &= T-\left(\frac{17}{18}T+\frac16\right)=\frac1{18}T-\frac16"
 				/>
 			</div>
-			<p v-html="t( 'gd.sections.part5.p4' )"/>
+			<p v-html="t( 'sections.part5.p4' )"/>
 		</div>
 
-		<h2 id="mit-t18" class="mt-8">{{ t( "gd.sections.part6.title" ) }}</h2>
+		<h2 id="mit-t18" class="mt-8">{{ t( "sections.part6.title" ) }}</h2>
 		<div class="eddie">
-			<p v-html="t( 'gd.sections.part6.p1' )"/>
+			<p v-html="t( 'sections.part6.p1' )"/>
 			<div class="kbox">
 				<Katex
 					aligned
@@ -129,14 +129,14 @@
 					tex="T_{\text{Flucht}} &= \frac1{18}\cdot 18-\frac16 \\ &= 1-\frac16=\frac56 \\ &= \frac56\approx 0{,}83\text{ Jahre}=10\text{ Monate}"
 				/>
 			</div>
-			{{ t( "gd.sections.part6.p2" ) }}
+			{{ t( "sections.part6.p2" ) }}
 		</div>
 	</template>
 
 	<template #interactivePart>
-		<h2 id="deine-grabplatte">{{ t( "gd.interactive.title" ) }}</h2>
+		<h2 id="deine-grabplatte">{{ t( "interactive.title" ) }}</h2>
 		<div class="eddie">
-			<p v-html="t( 'gd.interactive.p1' )"/>
+			<p v-html="t( 'interactive.p1' )"/>
 		</div>
 		<GDPlate />
 	</template>
@@ -152,14 +152,14 @@ import GDPlate from "./GD_Plate.vue";
 const { t } = useI18n( "book1.GD" );
 
 const subChapter = computed( () => Object.fromEntries( [
-	[ "einleitung", t( "gd.subChapter.einleitung" ) ],
-	[ "diophantos-raetsel", t( "gd.subChapter.diophantosRaetsel" ) ],
-	[ "in-formeln", t( "gd.subChapter.inFormeln" ) ],
-	[ "loesen", t( "gd.subChapter.loesen" ) ],
-	[ "stationen", t( "gd.subChapter.stationen" ) ],
-	[ "eddies-rechnung", t( "gd.subChapter.eddiesRechnung" ) ],
-	[ "mit-t18", t( "gd.subChapter.mitT18" ) ],
-	[ "deine-grabplatte", t( "gd.subChapter.deineGrabplatte" ) ]
+	[ "einleitung", t( "subChapter.einleitung" ) ],
+	[ "diophantos-raetsel", t( "subChapter.diophantosRaetsel" ) ],
+	[ "in-formeln", t( "subChapter.inFormeln" ) ],
+	[ "loesen", t( "subChapter.loesen" ) ],
+	[ "stationen", t( "subChapter.stationen" ) ],
+	[ "eddies-rechnung", t( "subChapter.eddiesRechnung" ) ],
+	[ "mit-t18", t( "subChapter.mitT18" ) ],
+	[ "deine-grabplatte", t( "subChapter.deineGrabplatte" ) ]
 ] ) );
 </script>
 

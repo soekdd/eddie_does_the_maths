@@ -7,31 +7,31 @@
 >
 	<template #bookPart>
 		<figure class="exampleFigure">
-			<ImageZoomer is-ai :title="t( 'ba.imageTitle' )">
-				<AniImage :src="titleImg" />
+			<ImageZoomer is-ai :title="t( 'imageTitle' )">
+				<AniImage :alt="t( 'imageTitle' )" :src="titleImg" />
 			</ImageZoomer>
 		</figure>
-		<h3 id="einleitung">{{ t( "ba.introDate" ) }}</h3>
+		<h3 id="einleitung">{{ t( "introDate" ) }}</h3>
 		<div class="eddie">
-			<p v-html="t( 'ba.book.p1' )" />
-			<p v-html="t( 'ba.book.p2' )" />
-			<p v-html="t( 'ba.book.p3' )" />
+			<p v-html="t( 'book.p1' )" />
+			<p v-html="t( 'book.p2' )" />
+			<p v-html="t( 'book.p3' )" />
 		</div>
 	</template>
 
 	<template #descriptionPart>
 
-		<h2>{{ t( "ba.sections.part1.title" ) }}</h2>
+		<h2>{{ t( "sections.part1.title" ) }}</h2>
 		<div class="eddie">
-			<p class="text-body-2 text-medium-emphasis">{{ t( "ba.sections.part1.lead" ) }}</p>
+			<p class="text-body-2 text-medium-emphasis">{{ t( "sections.part1.lead" ) }}</p>
 		</div>
 
-		<h2 class="mt-8">{{ t( "ba.sections.part2.title" ) }}</h2>
+		<h2 class="mt-8">{{ t( "sections.part2.title" ) }}</h2>
 		<div class="eddie">
-			<p class="mb-3" v-html="t( 'ba.sections.part2.p1' )" />
+			<p class="mb-3" v-html="t( 'sections.part2.p1' )" />
 
 			<div class="kbox">
-				<div class="text-subtitle-2 mb-2">{{ t( "ba.sections.part2.mapping" ) }}</div>
+				<div class="text-subtitle-2 mb-2">{{ t( "sections.part2.mapping" ) }}</div>
 				<div class="d-flex flex-wrap ga-2">
 					<v-chip size="small" variant="tonal">A → 0</v-chip>
 					<v-chip size="small" variant="tonal">B → 1</v-chip>
@@ -41,41 +41,41 @@
 			</div>
 
 			<div class="kbox">
-				<div class="text-subtitle-2 mb-2">{{ t( "ba.sections.part2.circle" ) }}</div>
-				<div class="text-body-2" v-html="t( 'ba.sections.part2.circleText' )" />
+				<div class="text-subtitle-2 mb-2">{{ t( "sections.part2.circle" ) }}</div>
+				<div class="text-body-2" v-html="t( 'sections.part2.circleText' )" />
 				<div class="mt-2">
 					<Katex
 						as="div"
 						display
-						:tex="t( 'ba.sections.part2.circleExampleBox' )"
+						:tex="t( 'sections.part2.circleExampleBox' )"
 					/>
 				</div>
 			</div>
 
 			<v-divider class="my-4" />
 
-			<p class="mb-0" v-html="t( 'ba.sections.part2.cleanup' )" />
+			<p class="mb-0" v-html="t( 'sections.part2.cleanup' )" />
 		</div>
 
-		<h2 id="casar" class="mt-8">{{ t( "ba.sections.part3.title" ) }}</h2>
+		<h2 id="casar" class="mt-8">{{ t( "sections.part3.title" ) }}</h2>
 		<div class="eddie">
-			<p class="mb-3" v-html="t( 'ba.sections.part3.p1' )" />
+			<p class="mb-3" v-html="t( 'sections.part3.p1' )" />
 
 			<div class="kbox">
 				<Katex
 					as="div"
 					display
-					:tex="t( 'ba.sections.part3.formulaBox' )"
+					:tex="t( 'sections.part3.formulaBox' )"
 				/>
 			</div>
 
 			<v-row>
 				<v-col cols="12" md="6">
 					<div class="kbox">
-						<div class="text-subtitle-2 mb-2">{{ t( "ba.sections.part3.example" ) }}</div>
+						<div class="text-subtitle-2 mb-2">{{ t( "sections.part3.example" ) }}</div>
 						<div
 							class="text-body-2 mb-2"
-							v-html="t( 'ba.sections.part3.plainShift', {
+							v-html="t( 'sections.part3.plainShift', {
 								plain: caesarExample.plain,
 								k:     caesarExample.k
 							} )"
@@ -84,10 +84,10 @@
 						<v-table density="compact">
 							<thead>
 								<tr>
-									<th class="text-left">{{ t( "ba.sections.part3.table.letter" ) }}</th>
-									<th class="text-left">{{ t( "ba.sections.part3.table.number" ) }}</th>
-									<th class="text-left">{{ t( "ba.sections.part3.table.shift" ) }}</th>
-									<th class="text-left">{{ t( "ba.sections.part3.table.cipher" ) }}</th>
+									<th class="text-left">{{ t( "sections.part3.table.letter" ) }}</th>
+									<th class="text-left">{{ t( "sections.part3.table.number" ) }}</th>
+									<th class="text-left">{{ t( "sections.part3.table.shift" ) }}</th>
+									<th class="text-left">{{ t( "sections.part3.table.cipher" ) }}</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -100,42 +100,42 @@
 							</tbody>
 						</v-table>
 
-						<div class="mt-3 text-body-2" v-html="t( 'ba.sections.part3.result', { cipher: caesarExample.cipher } )" />
+						<div class="mt-3 text-body-2" v-html="t( 'sections.part3.result', { cipher: caesarExample.cipher } )" />
 					</div>
 				</v-col>
 
 				<v-col cols="12" md="6">
 					<div class="kbox">
-						<div class="text-subtitle-2 mb-2">{{ t( "ba.sections.part3.whyTitle" ) }}</div>
+						<div class="text-subtitle-2 mb-2">{{ t( "sections.part3.whyTitle" ) }}</div>
 						<ul class="text-body-2 mb-0">
-							<li v-html="t( 'ba.sections.part3.why1' )" />
-							<li v-html="t( 'ba.sections.part3.why2' )" />
-							<li v-html="t( 'ba.sections.part3.why3' )" />
+							<li v-html="t( 'sections.part3.why1' )" />
+							<li v-html="t( 'sections.part3.why2' )" />
+							<li v-html="t( 'sections.part3.why3' )" />
 						</ul>
 					</div>
 				</v-col>
 			</v-row>
 		</div>
 
-		<h2 id="vigenere" class="mt-8">{{ t( "ba.sections.part4.title" ) }}</h2>
+		<h2 id="vigenere" class="mt-8">{{ t( "sections.part4.title" ) }}</h2>
 		<div class="eddie">
-			<p class="mb-3" v-html="t( 'ba.sections.part4.p1' )" />
+			<p class="mb-3" v-html="t( 'sections.part4.p1' )" />
 
 			<div class="kbox">
 				<Katex
 					as="div"
 					display
-					:tex="t( 'ba.sections.part4.formulaBox' )"
+					:tex="t( 'sections.part4.formulaBox' )"
 				/>
 			</div>
 
 			<v-row>
 				<v-col cols="12" md="6">
 					<div class="kbox">
-						<div class="text-subtitle-2 mb-2">{{ t( "ba.sections.part4.classicTitle" ) }}</div>
+						<div class="text-subtitle-2 mb-2">{{ t( "sections.part4.classicTitle" ) }}</div>
 						<div
 							class="text-body-2 mb-2"
-							v-html="t( 'ba.sections.part4.classicText', {
+							v-html="t( 'sections.part4.classicText', {
 								plain: vigWordExample.plain,
 								key:   vigWordExample.key
 							} )"
@@ -144,10 +144,10 @@
 						<v-table density="compact">
 							<thead>
 								<tr>
-									<th class="text-left">{{ t( "ba.sections.part4.table.pos" ) }}</th>
-									<th class="text-left">{{ t( "ba.sections.part4.table.p" ) }}</th>
-									<th class="text-left">{{ t( "ba.sections.part4.table.k" ) }}</th>
-									<th class="text-left">{{ t( "ba.sections.part4.table.c" ) }}</th>
+									<th class="text-left">{{ t( "sections.part4.table.pos" ) }}</th>
+									<th class="text-left">{{ t( "sections.part4.table.p" ) }}</th>
+									<th class="text-left">{{ t( "sections.part4.table.k" ) }}</th>
+									<th class="text-left">{{ t( "sections.part4.table.c" ) }}</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -160,22 +160,22 @@
 							</tbody>
 						</v-table>
 
-						<div class="mt-3 text-body-2" v-html="t( 'ba.sections.part4.classicResult', { cipher: vigWordExample.cipher } )" />
+						<div class="mt-3 text-body-2" v-html="t( 'sections.part4.classicResult', { cipher: vigWordExample.cipher } )" />
 					</div>
 				</v-col>
 
 				<v-col cols="12" md="6">
 					<div class="kbox">
-						<div class="text-subtitle-2 mb-2">{{ t( "ba.sections.part4.numericTitle" ) }}</div>
-						<div class="text-body-2 mb-2" v-html="t( 'ba.sections.part4.numericText', { key: vigNumExample.key.join( ',' ) } )" />
+						<div class="text-subtitle-2 mb-2">{{ t( "sections.part4.numericTitle" ) }}</div>
+						<div class="text-body-2 mb-2" v-html="t( 'sections.part4.numericText', { key: vigNumExample.key.join( ',' ) } )" />
 
 						<v-table density="compact">
 							<thead>
 								<tr>
-									<th class="text-left">{{ t( "ba.sections.part4.table.pos" ) }}</th>
-									<th class="text-left">{{ t( "ba.sections.part4.table.p" ) }}</th>
-									<th class="text-left">{{ t( "ba.sections.part4.table.shift" ) }}</th>
-									<th class="text-left">{{ t( "ba.sections.part4.table.c" ) }}</th>
+									<th class="text-left">{{ t( "sections.part4.table.pos" ) }}</th>
+									<th class="text-left">{{ t( "sections.part4.table.p" ) }}</th>
+									<th class="text-left">{{ t( "sections.part4.table.shift" ) }}</th>
+									<th class="text-left">{{ t( "sections.part4.table.c" ) }}</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -190,7 +190,7 @@
 
 						<div
 							class="mt-3 text-body-2"
-							v-html="t( 'ba.sections.part4.numericResult', {
+							v-html="t( 'sections.part4.numericResult', {
 								plain:  vigNumExample.plain,
 								cipher: vigNumExample.cipher
 							} )"
@@ -204,18 +204,18 @@
 			<v-row>
 				<v-col cols="12" md="6">
 					<div class="kbox">
-						<div class="text-subtitle-2 mb-2">{{ t( "ba.sections.part4.whyTitle" ) }}</div>
+						<div class="text-subtitle-2 mb-2">{{ t( "sections.part4.whyTitle" ) }}</div>
 						<ul class="text-body-2 mb-0">
-							<li v-html="t( 'ba.sections.part4.why1' )" />
-							<li v-html="t( 'ba.sections.part4.why2' )" />
-							<li v-html="t( 'ba.sections.part4.why3' )" />
+							<li v-html="t( 'sections.part4.why1' )" />
+							<li v-html="t( 'sections.part4.why2' )" />
+							<li v-html="t( 'sections.part4.why3' )" />
 						</ul>
 					</div>
 				</v-col>
 				<v-col cols="12" md="6">
 					<div class="kbox">
-						<div class="text-subtitle-2 mb-2">{{ t( "ba.sections.part4.tipTitle" ) }}</div>
-						<div class="text-body-2">{{ t( "ba.sections.part4.tipText" ) }}</div>
+						<div class="text-subtitle-2 mb-2">{{ t( "sections.part4.tipTitle" ) }}</div>
+						<div class="text-body-2">{{ t( "sections.part4.tipText" ) }}</div>
 						<div class="mt-2">
 							<Katex
 								as="div"
@@ -238,24 +238,24 @@
 			</v-row>
 		</div>
 
-		<h2 class="mt-8">{{ t( "ba.sections.part5.title" ) }}</h2>
+		<h2 class="mt-8">{{ t( "sections.part5.title" ) }}</h2>
 		<div class="eddie">
 			<v-row>
 				<v-col cols="12" md="6">
 					<div class="kbox">
-						<div class="text-subtitle-2 mb-2">{{ t( "ba.sections.part5.caesar" ) }}</div>
+						<div class="text-subtitle-2 mb-2">{{ t( "sections.part5.caesar" ) }}</div>
 						<ul class="text-body-2 mb-0">
-							<li>{{ t( "ba.sections.part5.caesar1" ) }}</li>
-							<li>{{ t( "ba.sections.part5.caesar2" ) }}</li>
+							<li>{{ t( "sections.part5.caesar1" ) }}</li>
+							<li>{{ t( "sections.part5.caesar2" ) }}</li>
 						</ul>
 					</div>
 				</v-col>
 				<v-col cols="12" md="6">
 					<div class="kbox">
-						<div class="text-subtitle-2 mb-2">{{ t( "ba.sections.part5.vigenere" ) }}</div>
+						<div class="text-subtitle-2 mb-2">{{ t( "sections.part5.vigenere" ) }}</div>
 						<ul class="text-body-2 mb-0">
-							<li>{{ t( "ba.sections.part5.vigenere1" ) }}</li>
-							<li>{{ t( "ba.sections.part5.vigenere2" ) }}</li>
+							<li>{{ t( "sections.part5.vigenere1" ) }}</li>
+							<li>{{ t( "sections.part5.vigenere2" ) }}</li>
 						</ul>
 					</div>
 				</v-col>
@@ -264,7 +264,7 @@
 	</template>
 
 	<template #interactivePart>
-		<h2 id="c64-emulator">{{ t( "ba.interactive.title" ) }}</h2>
+		<h2 id="c64-emulator">{{ t( "interactive.title" ) }}</h2>
 		<div class="eddie d-flex flex-column ga-3">
 			<div class="kbox">
 				<v-row align="center" dense>
@@ -274,7 +274,7 @@
 							density="compact"
 							hide-details
 							:items="programItems"
-							:label="t( 'ba.interactive.programLabel' )"
+							:label="t( 'interactive.programLabel' )"
 						/>
 					</v-col>
 				</v-row>
@@ -285,7 +285,7 @@
 							:disabled="!emulatorReady || emulatorRunning"
 							@click="runSelectedProgram"
 						>
-							{{ t( "ba.interactive.run" ) }}
+							{{ t( "interactive.run" ) }}
 						</v-btn>
 
 						<v-btn
@@ -293,7 +293,7 @@
 							variant="tonal"
 							@click="clearProgramScreen"
 						>
-							{{ t( "ba.interactive.clear" ) }}
+							{{ t( "interactive.clear" ) }}
 						</v-btn>
 
 						<v-btn
@@ -301,7 +301,7 @@
 							variant="tonal"
 							@click="resetProgramRuntime"
 						>
-							{{ t( "ba.interactive.reset" ) }}
+							{{ t( "interactive.reset" ) }}
 						</v-btn>
 
 						<v-spacer />
@@ -311,14 +311,14 @@
 							size="small"
 							variant="tonal"
 						>
-							{{ t( "ba.interactive.ready" ) }}
+							{{ t( "interactive.ready" ) }}
 						</v-chip>
 						<v-chip v-else
 							color="grey"
 							size="small"
 							variant="tonal"
 						>
-							{{ t( "ba.interactive.loading" ) }}
+							{{ t( "interactive.loading" ) }}
 						</v-chip>
 					</v-col>
 				</v-row>
@@ -330,7 +330,7 @@
 					auto-grow
 					class="basic-source-editor"
 					:disabled="emulatorRunning"
-					:label="t( 'ba.interactive.source' )"
+					:label="t( 'interactive.source' )"
 					rows="12"
 					spellcheck="false"
 				/>
@@ -339,7 +339,7 @@
 	</template>
 
 	<template #calculationPart>
-		<h2>{{ t( "ba.interactive.output" ) }}</h2>
+		<h2>{{ t( "interactive.output" ) }}</h2>
 		<div class="eddie">
 			<BAEmulator
 				:key="emulatorKey"
@@ -353,7 +353,7 @@
 
 	<template #footer>
 		<p class="muted">
-			<a href="https://github.com/mist64/cbmbasic/">{{ t( "ba.interactive.footer" ) }}</a>
+			<a href="https://github.com/mist64/cbmbasic/">{{ t( "interactive.footer" ) }}</a>
 		</p>
 	</template>
 </AppFrame>
@@ -375,10 +375,10 @@ const emulatorReady = ref( false );
 const emulatorRunning = ref( false );
 const encodedHAMMessage = "OJUCOWGNQQEJAXZGMIKN";
 const subChapter = computed( () => ( {
-	einleitung:     t( "ba.subChapter.einleitung" ),
-	casar:          t( "ba.subChapter.casar" ),
-	vigenere:       t( "ba.subChapter.vigenere" ),
-	"c64-emulator": t( "ba.subChapter.c64-emulator" )
+	einleitung:     t( "subChapter.einleitung" ),
+	casar:          t( "subChapter.casar" ),
+	vigenere:       t( "subChapter.vigenere" ),
+	"c64-emulator": t( "subChapter.c64-emulator" )
 } ) );
 const programs = [
 	{

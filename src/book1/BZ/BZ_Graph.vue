@@ -2,7 +2,7 @@
 <template>
 <div class="bzGraphWrap">
 	<svg
-		:aria-label="t( 'bz.graph.aria' )"
+		:aria-label="t( 'graph.aria' )"
 		class="bzGraphSvg"
 		preserveAspectRatio="xMidYMid meet"
 		role="img"
@@ -126,21 +126,21 @@
 		>
 			<div class="kLabel resultLabel" xmlns="http://www.w3.org/1999/xhtml">
 				<template v-if="inBalance">
-					<span>{{ t( "bz.graph.balanceStart" ) }} </span>
+					<span>{{ t( "graph.balanceStart" ) }} </span>
 					<Katex inline tex="F_{d,M}" />
-					<span> {{ t( "bz.graph.balanceAnd" ) }} </span>
+					<span> {{ t( "graph.balanceAnd" ) }} </span>
 					<Katex inline tex="F_{d,K}" />
-					<span> {{ t( "bz.graph.balanceEnd" ) }}</span>
+					<span> {{ t( "graph.balanceEnd" ) }}</span>
 				</template>
 				<template v-else-if="tiltDeg < 0">
-					<span>{{ t( "bz.graph.left" ) }} </span>
+					<span>{{ t( "graph.left" ) }} </span>
 					<Katex inline tex="F_{d,M}" />
-					<span> {{ t( "bz.graph.leftEnd" ) }}</span>
+					<span> {{ t( "graph.leftEnd" ) }}</span>
 				</template>
 				<template v-else>
-					<span>{{ t( "bz.graph.right" ) }} </span>
+					<span>{{ t( "graph.right" ) }} </span>
 					<Katex inline tex="F_{d,K}" />
-					<span> {{ t( "bz.graph.rightEnd" ) }}</span>
+					<span> {{ t( "graph.rightEnd" ) }}</span>
 				</template>
 			</div>
 		</foreignObject>

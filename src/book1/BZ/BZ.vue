@@ -8,25 +8,25 @@
 >
 	<template #bookPart>
 		<figure class="exampleFigure">
-			<ImageZoomer is-ai :title="t( 'bz.imageTitle' )">
-				<AniImage :alt="t( 'bz.imageAlt' )" :src="titleImg" />
+			<ImageZoomer is-ai :title="t( 'imageTitle' )">
+				<AniImage :alt="t( 'imageTitle' )" :src="titleImg" />
 			</ImageZoomer>
 		</figure>
-		<h3 id="einleitung">{{ t( "bz.introDate" ) }}</h3>
+		<h3 id="einleitung">{{ t( "introDate" ) }}</h3>
 		<div class="eddie">
-			<p v-html="t( 'bz.book.p1' )" />
-			<p v-html="t( 'bz.book.p2' )" />
-			<p v-html="t( 'bz.book.p3' )" />
-			<p v-html="t( 'bz.book.p4' )" />
+			<p v-html="t( 'book.p1' )" />
+			<p v-html="t( 'book.p2' )" />
+			<p v-html="t( 'book.p3' )" />
+			<p v-html="t( 'book.p4' )" />
 
 		</div>
 	</template>
 
 	<template #descriptionPart>
 
-		<h2 id="impuls">{{ t( "bz.sections.part1.title" ) }}</h2>
+		<h2 id="impuls">{{ t( "sections.part1.title" ) }}</h2>
 		<div class="eddie">
-			<p v-html="t( 'bz.sections.part1.p1' )"/>
+			<p v-html="t( 'sections.part1.p1' )"/>
 			<div class="kbox">
 				<Katex
 					aligned
@@ -35,31 +35,31 @@
 					:tex="texImpulseBlock"
 				/>
 			</div>
-			<p v-html="t( 'bz.sections.part1.p2' )" />
-			<p v-html="t( 'bz.sections.part1.p3' )"/>
+			<p v-html="t( 'sections.part1.p2' )" />
+			<p v-html="t( 'sections.part1.p3' )"/>
 			<div class="kbox">
 				<Katex as="div" display tex="F_d=k\,F_k,\qquad F_k=m g" />
 			</div>
-			<p v-html="t( 'bz.sections.part1.p4' )" />
+			<p v-html="t( 'sections.part1.p4' )" />
 		</div>
 
-		<h2 id="idee" class="mt-8">{{ t( "bz.sections.part2.title" ) }}</h2>
+		<h2 id="idee" class="mt-8">{{ t( "sections.part2.title" ) }}</h2>
 		<div class="eddie">
-			<h3>{{ t( "bz.sections.part2.imageIdea" ) }}</h3>
+			<h3>{{ t( "sections.part2.imageIdea" ) }}</h3>
 			<ul>
-				<li v-html="t( 'bz.sections.part2.slow' )" />
-				<li v-html="t( 'bz.sections.part2.fast' )" />
+				<li v-html="t( 'sections.part2.slow' )" />
+				<li v-html="t( 'sections.part2.fast' )" />
 			</ul>
-			<p v-html="t( 'bz.sections.part2.p1' )"/>
+			<p v-html="t( 'sections.part2.p1' )"/>
 			<ul>
-				<li v-html="t( 'bz.sections.part2.baseLoad' )" />
-				<li v-html="t( 'bz.sections.part2.surcharge' )" />
-				<li v-html="t( 'bz.sections.part2.designLoad' )" />
+				<li v-html="t( 'sections.part2.baseLoad' )" />
+				<li v-html="t( 'sections.part2.surcharge' )" />
+				<li v-html="t( 'sections.part2.designLoad' )" />
 			</ul>
-			<p class="muted">{{ t( "bz.sections.part2.note" ) }}</p>
+			<p class="muted">{{ t( "sections.part2.note" ) }}</p>
 		</div>
 
-		<h2 id="rechenweg" class="mt-8">{{ t( "bz.sections.part3.title" ) }}</h2>
+		<h2 id="rechenweg" class="mt-8">{{ t( "sections.part3.title" ) }}</h2>
 		<div class="eddie">
 			<ul>
 				<li><Katex :tex="`m_M=${kFmt( inputs.mMkg, 0 )}\\,\\mathrm{kg}`" /></li>
@@ -69,26 +69,26 @@
 					<Katex :tex="`${texKCalm}=${kFmt( inputs.kRuhig, 1 )},\\quad ${texKBang}=${kFmt( inputs.kKnall, 1 )},\\quad ${texKDin}=${kFmt( inputs.kDIN, 1 )}`" />
 				</li>
 			</ul>
-			<h3 id="beispiel" class="mt-4">{{ t( "bz.sections.part3.step31" ) }}</h3>
+			<h3 id="beispiel" class="mt-4">{{ t( "sections.part3.step31" ) }}</h3>
 
 			<v-row class="mb-2" dense>
 				<v-col cols="12" md="4">
 					<v-card class="columnHeader pa-3" variant="outlined">
-						<h4 class="columnTitle">{{ t( "bz.sections.part3.col1" ) }}</h4>
+						<h4 class="columnTitle">{{ t( "sections.part3.col1" ) }}</h4>
 					</v-card>
 				</v-col>
 				<v-col cols="12" md="4">
 					<v-card class="columnHeader pa-3" variant="outlined">
-						<h4 class="columnTitle">{{ t( "bz.sections.part3.col2" ) }}</h4>
+						<h4 class="columnTitle">{{ t( "sections.part3.col2" ) }}</h4>
 					</v-card>
 				</v-col>
 				<v-col cols="12" md="4">
 					<v-card class="columnHeader pa-3" variant="outlined">
-						<h4 class="columnTitle">{{ t( "bz.sections.part3.col3" ) }}</h4>
+						<h4 class="columnTitle">{{ t( "sections.part3.col3" ) }}</h4>
 					</v-card>
 				</v-col>
 			</v-row>
-			<p class="stepTitle">{{ t( "bz.sections.part3.step1" ) }}</p>
+			<p class="stepTitle">{{ t( "sections.part3.step1" ) }}</p>
 			<v-row dense>
 				<v-col cols="12" md="4">
 					<v-card class="compareCard pa-4" variant="outlined">
@@ -116,7 +116,7 @@
 					<v-card class="compareCard pa-4" variant="outlined">
 
 						<Katex as="div" display tex="F_k=m\cdot g" />
-						<p class="cellNote">{{ t( "bz.sections.part3.cell1Note" ) }}</p>
+						<p class="cellNote">{{ t( "sections.part3.cell1Note" ) }}</p>
 						<Katex
 							aligned
 							as="div"
@@ -126,28 +126,28 @@
 					</v-card>
 				</v-col>
 			</v-row>
-			<p class="stepTitle">{{ t( "bz.sections.part3.step2" ) }}</p>
+			<p class="stepTitle">{{ t( "sections.part3.step2" ) }}</p>
 			<v-row dense>
 				<v-col cols="12" md="4">
 					<v-card class="compareCard pa-4" variant="outlined">
 						<Katex as="div" display :tex="`${texKCalm}=${kFmt( inputs.kRuhig, 1 )}`" />
-						<p class="cellNote">{{ t( "bz.sections.part3.cell2Left" ) }}</p>
+						<p class="cellNote">{{ t( "sections.part3.cell2Left" ) }}</p>
 					</v-card>
 				</v-col>
 				<v-col cols="12" md="4">
 					<v-card class="compareCard pa-4" variant="outlined">
 						<Katex as="div" display :tex="`${texKBang}=${kFmt( inputs.kKnall, 1 )}`" />
-						<p class="cellNote">{{ t( "bz.sections.part3.cell2Mid" ) }}</p>
+						<p class="cellNote">{{ t( "sections.part3.cell2Mid" ) }}</p>
 					</v-card>
 				</v-col>
 				<v-col cols="12" md="4">
 					<v-card class="compareCard pa-4" variant="outlined">
 						<Katex as="div" display :tex="`k_{\\text{DIN}}=${kFmt( inputs.kDIN, 1 )}`" />
-						<p class="cellNote">{{ t( "bz.sections.part3.cell2Right" ) }}</p>
+						<p class="cellNote">{{ t( "sections.part3.cell2Right" ) }}</p>
 					</v-card>
 				</v-col>
 			</v-row>
-			<p class="stepTitle">{{ t( "bz.sections.part3.step3" ) }}</p>
+			<p class="stepTitle">{{ t( "sections.part3.step3" ) }}</p>
 			<v-row dense>
 				<v-col cols="12" md="4">
 					<v-card class="compareCard pa-4" variant="outlined">
@@ -180,49 +180,49 @@
 					</v-card>
 				</v-col>
 			</v-row>
-			<p class="stepTitle">{{ t( "bz.sections.part3.step4" ) }}</p>
+			<p class="stepTitle">{{ t( "sections.part3.step4" ) }}</p>
 			<v-row dense>
 				<v-col cols="12" md="4">
 					<v-card class="compareCard pa-4" variant="outlined">
-						<p v-html="t( 'bz.sections.part3.max1' )"/>
+						<p v-html="t( 'sections.part3.max1' )"/>
 					</v-card>
 				</v-col>
 				<v-col cols="12" md="4">
 					<v-card class="compareCard pa-4" variant="outlined">
-						<p v-html="t( 'bz.sections.part3.max2' )"/>
+						<p v-html="t( 'sections.part3.max2' )"/>
 					</v-card>
 				</v-col>
 				<v-col cols="12" md="4">
 					<v-card class="compareCard pa-4" variant="outlined">
-						<p v-html="t( 'bz.sections.part3.max3' )"/>
+						<p v-html="t( 'sections.part3.max3' )"/>
 					</v-card>
 				</v-col>
 			</v-row>
 
-			<p v-html="t( 'bz.sections.part3.summaryLead' )"/>
+			<p v-html="t( 'sections.part3.summaryLead' )"/>
 			<ul>
-				<li>{{ t( "bz.sections.part3.summary1" ) }}</li>
-				<li>{{ t( "bz.sections.part3.summary2" ) }}</li>
+				<li>{{ t( "sections.part3.summary1" ) }}</li>
+				<li>{{ t( "sections.part3.summary2" ) }}</li>
 			</ul>
 		</div>
 
-		<h2 id="fazit" class="mt-8">{{ t( "bz.sections.part4.title" ) }}</h2>
+		<h2 id="fazit" class="mt-8">{{ t( "sections.part4.title" ) }}</h2>
 		<div class="eddie">
 			<ul>
-				<li v-html="t( 'bz.sections.part4.f1' )" />
-				<li v-html="t( 'bz.sections.part4.f2' )" />
+				<li v-html="t( 'sections.part4.f1' )" />
+				<li v-html="t( 'sections.part4.f2' )" />
 			</ul>
-			<p v-html="t( 'bz.sections.part4.p1' )" />
+			<p v-html="t( 'sections.part4.p1' )" />
 		</div>
 	</template>
 	<template #interactivePart>
-		<h2>{{ t( "bz.interactive.title" ) }}</h2>
+		<h2>{{ t( "interactive.title" ) }}</h2>
 		<div class="eddie interactive">
 			<v-card class="pa-3" variant="tonal">
 				<v-row dense>
 					<v-col cols="12" md="6">
 						<div class="sliderHeader">
-							<span><Katex inline tex="m_M" /> {{ t( "bz.interactive.massMan" ) }}</span>
+							<span><Katex inline tex="m_M" /> {{ t( "interactive.massMan" ) }}</span>
 							<v-chip color="primary" size="small" variant="flat">
 								{{ `${uiFmt( inputs.mMkg, 0 )} kg` }}
 							</v-chip>
@@ -241,7 +241,7 @@
 
 					<v-col cols="12" md="6">
 						<div class="sliderHeader">
-							<span><Katex inline tex="m_K" /> {{ t( "bz.interactive.massChild" ) }}</span>
+							<span><Katex inline tex="m_K" /> {{ t( "interactive.massChild" ) }}</span>
 							<v-chip color="primary" size="small" variant="flat">
 								{{ `${uiFmt( inputs.mKkg, 0 )} kg` }}
 							</v-chip>
@@ -260,7 +260,7 @@
 
 					<v-col cols="12" md="6">
 						<div class="sliderHeader">
-							<span><Katex inline :tex="texKCalm" /> {{ t( "bz.interactive.surchargeCalm" ) }}</span>
+							<span><Katex inline :tex="texKCalm" /> {{ t( "interactive.surchargeCalm" ) }}</span>
 							<v-chip color="primary" size="small" variant="flat">
 								{{ uiFmt( inputs.kRuhig, 2 ) }}
 							</v-chip>
@@ -279,7 +279,7 @@
 
 					<v-col cols="12" md="6">
 						<div class="sliderHeader">
-							<span><Katex inline :tex="texKBang" /> {{ t( "bz.interactive.surchargeBang" ) }}</span>
+							<span><Katex inline :tex="texKBang" /> {{ t( "interactive.surchargeBang" ) }}</span>
 							<v-chip color="primary" size="small" variant="flat">
 								{{ uiFmt( inputs.kKnall, 2 ) }}
 							</v-chip>
@@ -317,20 +317,20 @@ import BZGraph from "./BZ_Graph.vue";
 const { t } = useI18n( "book1.BZ" );
 
 const subChapter = computed( () => ( {
-	einleitung: t( "bz.subChapter.einleitung" ),
-	impuls:     t( "bz.subChapter.impuls" ),
-	idee:       t( "bz.subChapter.idee" ),
-	rechenweg:  t( "bz.subChapter.rechenweg" ),
-	beispiel:   t( "bz.subChapter.beispiel" ),
-	fazit:      t( "bz.subChapter.fazit" )
+	einleitung: t( "subChapter.einleitung" ),
+	impuls:     t( "subChapter.impuls" ),
+	idee:       t( "subChapter.idee" ),
+	rechenweg:  t( "subChapter.rechenweg" ),
+	beispiel:   t( "subChapter.beispiel" ),
+	fazit:      t( "subChapter.fazit" )
 } ) );
 
-const texKCalm = computed( () => `k_{\\text{${t( "bz.katex.calm" )}}}` );
-const texKBang = computed( () => `k_{\\text{${t( "bz.katex.bang" )}}}` );
+const texKCalm = computed( () => `k_{\\text{${t( "katex.calm" )}}}` );
+const texKBang = computed( () => `k_{\\text{${t( "katex.bang" )}}}` );
 const texKDin = "k_{\\text{DIN}}";
 const texImpulseBlock = computed( () => `J &= \\int_{t_0}^{t_1}F(t)\\,\\mathrm{d}t=\\Delta p=m(v_1-v_0) \\\\
 \\int_{t_0}^{t_1}\\big(F_K(t)-m g\\big)\\,\\mathrm{d}t &= m(v_1-v_0) \\\\
-F_{K,\\mathrm{${t( "bz.katex.mean" )}}} &= m g+\\frac{m(v_1-v_0)}{\\Delta t}` );
+F_{K,\\mathrm{${t( "katex.mean" )}}} &= m g+\\frac{m(v_1-v_0)}{\\Delta t}` );
 
 const inputs = reactive( {
 	mMkg:   120,

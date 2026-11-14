@@ -8,73 +8,73 @@
 
 	<template #bookPart>
 		<figure class="exampleFigure">
-			<ImageZoomer is-ai :title="t( 'fx.imageTitle' )">
-				<AniImage :alt="t( 'fx.imageAlt' )" :src="titleImg" />
+			<ImageZoomer is-ai :title="t( 'imageTitle' )">
+				<AniImage :alt="t( 'imageTitle' )" :src="titleImg" />
 			</ImageZoomer>
 		</figure>
-		<h3 id="einleitung">{{ t( "fx.introDate" ) }}</h3>
+		<h3 id="einleitung">{{ t( "introDate" ) }}</h3>
 		<div class="eddie">
-			<p v-html="t( 'fx.book.p1' )"/>
-			<p v-html="t( 'fx.book.p2' )" />
-			<p v-html="t( 'fx.book.p3' )"/>
-			<p v-html="t( 'fx.book.p4' )"/>
+			<p v-html="t( 'book.p1' )"/>
+			<p v-html="t( 'book.p2' )" />
+			<p v-html="t( 'book.p3' )"/>
+			<p v-html="t( 'book.p4' )"/>
 		</div>
 	</template>
 
 	<template #descriptionPart>
 
-		<h2 id="geschichte">{{ t( "fx.sections.part1.title" ) }}</h2>
+		<h2 id="geschichte">{{ t( "sections.part1.title" ) }}</h2>
 		<div class="eddie">
-			<p v-html="t( 'fx.sections.part1.p1' )" />
-			<p v-html="t( 'fx.sections.part1.p2' )" />
-			<p v-html="t( 'fx.sections.part1.p3' )" />
+			<p v-html="t( 'sections.part1.p1' )" />
+			<p v-html="t( 'sections.part1.p2' )" />
+			<p v-html="t( 'sections.part1.p3' )" />
 		</div>
 
-		<h2 id="basic-denke" class="mt-8">{{ t( "fx.sections.part2.title" ) }}</h2>
+		<h2 id="basic-denke" class="mt-8">{{ t( "sections.part2.title" ) }}</h2>
 		<div class="eddie">
-			<p v-html="t( 'fx.sections.part2.p1' )"/>
+			<p v-html="t( 'sections.part2.p1' )"/>
 			<ol>
-				<li><b>{{ t( "fx.sections.part2.s1Title" ) }}</b>: {{ t( "fx.sections.part2.s1" ) }}</li>
-				<li><b>{{ t( "fx.sections.part2.s2Title" ) }}</b>: {{ t( "fx.sections.part2.s2" ) }}</li>
-				<li><b>{{ t( "fx.sections.part2.s3Title" ) }}</b>: {{ t( "fx.sections.part2.s3" ) }}</li>
-				<li><b>{{ t( "fx.sections.part2.s4Title" ) }}</b>: {{ t( "fx.sections.part2.s4" ) }}</li>
+				<li><b>{{ t( "sections.part2.s1Title" ) }}</b>: {{ t( "sections.part2.s1" ) }}</li>
+				<li><b>{{ t( "sections.part2.s2Title" ) }}</b>: {{ t( "sections.part2.s2" ) }}</li>
+				<li><b>{{ t( "sections.part2.s3Title" ) }}</b>: {{ t( "sections.part2.s3" ) }}</li>
+				<li><b>{{ t( "sections.part2.s4Title" ) }}</b>: {{ t( "sections.part2.s4" ) }}</li>
 			</ol>
 			<p class="muted">
-				{{ t( "fx.sections.part2.note" ) }}
+				{{ t( "sections.part2.note" ) }}
 			</p>
 		</div>
 
-		<h2 class="mt-8">{{ t( "fx.sections.part3.title" ) }}</h2>
+		<h2 class="mt-8">{{ t( "sections.part3.title" ) }}</h2>
 		<div class="eddie">
-			<p v-html="t( 'fx.sections.part3.p1' )"/>
+			<p v-html="t( 'sections.part3.p1' )"/>
 			<div class="kbox">
 				<div v-for="(line, idx) in miniProgram" :key="idx" class="mono">{{ line }}</div>
 			</div>
 			<p class="muted">
-				{{ t( "fx.sections.part3.note" ) }}
+				{{ t( "sections.part3.note" ) }}
 			</p>
 		</div>
 
-		<h2>{{ t( "fx.sections.part4.title" ) }}</h2>
+		<h2>{{ t( "sections.part4.title" ) }}</h2>
 		<div class="eddie d-flex flex-column ga-3">
 			<v-sheet border class="pa-3" rounded="lg">
-				<div class="text-subtitle-1 font-weight-medium mb-2">{{ t( "fx.sections.part4.quickStart" ) }}</div>
+				<div class="text-subtitle-1 font-weight-medium mb-2">{{ t( "sections.part4.quickStart" ) }}</div>
 				<ol class="mb-0">
-					<li>{{ t( "fx.sections.part4.q1" ) }}</li>
-					<li>{{ t( "fx.sections.part4.q2" ) }}</li>
-					<li>{{ t( "fx.sections.part4.q3" ) }}</li>
-					<li>{{ t( "fx.sections.part4.q4" ) }}</li>
+					<li>{{ t( "sections.part4.q1" ) }}</li>
+					<li>{{ t( "sections.part4.q2" ) }}</li>
+					<li>{{ t( "sections.part4.q3" ) }}</li>
+					<li>{{ t( "sections.part4.q4" ) }}</li>
 				</ol>
 			</v-sheet>
 
 			<v-sheet border class="pa-3" rounded="lg">
-				<div class="text-subtitle-1 font-weight-medium mb-2">{{ t( "fx.sections.part4.patterns" ) }}</div>
+				<div class="text-subtitle-1 font-weight-medium mb-2">{{ t( "sections.part4.patterns" ) }}</div>
 				<v-table density="compact">
 					<thead>
 						<tr>
-							<th>{{ t( "fx.sections.part4.table.pattern" ) }}</th>
-							<th>{{ t( "fx.sections.part4.table.logic" ) }}</th>
-							<th>{{ t( "fx.sections.part4.table.note" ) }}</th>
+							<th>{{ t( "sections.part4.table.pattern" ) }}</th>
+							<th>{{ t( "sections.part4.table.logic" ) }}</th>
+							<th>{{ t( "sections.part4.table.note" ) }}</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -90,11 +90,11 @@
 	</template>
 
 	<template #interactivePart>
-		<h2 id="interaktiver-rechner">{{ t( "fx.interactive.title" ) }}</h2>
+		<h2 id="interaktiver-rechner">{{ t( "interactive.title" ) }}</h2>
 		<div class="eddie d-flex flex-column ga-3">
-			<p v-html="t( 'fx.interactive.p1' )"/>
+			<p v-html="t( 'interactive.p1' )"/>
 			<v-alert type="info" variant="tonal">
-				{{ t( "fx.interactive.tip" ) }}
+				{{ t( "interactive.tip" ) }}
 			</v-alert>
 		</div>
 		<FX7000G />
@@ -102,7 +102,7 @@
 
 	<template #footer>
 		<p class="muted">
-			<a href="https://github.com/Krevo/CasioBasicInterpreter">{{ t( "fx.footer" ) }}</a>
+			<a href="https://github.com/Krevo/CasioBasicInterpreter">{{ t( "footer" ) }}</a>
 		</p>
 	</template>
 </AppFrame>
@@ -118,15 +118,15 @@ import titleImg from "./FX.webp";
 const { t } = useI18n( "book1.FX" );
 
 const subChapter = computed( () => ( {
-	einleitung:             t( "fx.subChapter.einleitung" ),
-	geschichte:             t( "fx.subChapter.geschichte" ),
-	"basic-denke":          t( "fx.subChapter.basicDenke" ),
-	"interaktiver-rechner": t( "fx.subChapter.interaktiverRechner" )
+	einleitung:             t( "subChapter.einleitung" ),
+	geschichte:             t( "subChapter.geschichte" ),
+	"basic-denke":          t( "subChapter.basicDenke" ),
+	"interaktiver-rechner": t( "subChapter.interaktiverRechner" )
 } ) );
 
 const miniProgram = computed( () => [
 	"Cls",
-	t( "fx.demo.line1" ),
+	t( "demo.line1" ),
 	"?->A",
 	"Locate 1,3,\"A^2=\"",
 	"Locate 6,3,A^2",
@@ -136,24 +136,24 @@ const miniProgram = computed( () => [
 
 const patterns = computed( () => [
 	{
-		title: t( "fx.patterns.p1.title" ),
-		logic: t( "fx.patterns.p1.logic" ),
-		note:  t( "fx.patterns.p1.note" )
+		title: t( "patterns.p1.title" ),
+		logic: t( "patterns.p1.logic" ),
+		note:  t( "patterns.p1.note" )
 	},
 	{
-		title: t( "fx.patterns.p2.title" ),
-		logic: t( "fx.patterns.p2.logic" ),
-		note:  t( "fx.patterns.p2.note" )
+		title: t( "patterns.p2.title" ),
+		logic: t( "patterns.p2.logic" ),
+		note:  t( "patterns.p2.note" )
 	},
 	{
-		title: t( "fx.patterns.p3.title" ),
-		logic: t( "fx.patterns.p3.logic" ),
-		note:  t( "fx.patterns.p3.note" )
+		title: t( "patterns.p3.title" ),
+		logic: t( "patterns.p3.logic" ),
+		note:  t( "patterns.p3.note" )
 	},
 	{
-		title: t( "fx.patterns.p4.title" ),
-		logic: t( "fx.patterns.p4.logic" ),
-		note:  t( "fx.patterns.p4.note" )
+		title: t( "patterns.p4.title" ),
+		logic: t( "patterns.p4.logic" ),
+		note:  t( "patterns.p4.note" )
 	}
 ] );
 </script>
