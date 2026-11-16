@@ -8,15 +8,15 @@ subChapter:
   interaktiverRechner: "Interactive Calculator"
 book:
   p1: "I am still sitting at the table with my heart pounding, as if I had just triggered an alarm. First he yells at me that I want to steal the calculator, and the next moment he stares at his numbers as if he had only just noticed them. I simply point to the place where he calculated twice. A few seconds of key clatter, then that look: cold, heavy, caught."
-  p2: "And then he slides it over to me. Just like that. <b>Casio fx-7000G</b>. Almost new. A gift. A small miracle that fits into a jacket pocket. I can feel the tingling all the way to my fingertips, as if my brain is finally getting something to chew on. Matrix display, keys like tiny promises, and <em>programmable</em>: BASIC, like Kari's home computer, only now in the palm of my hand."
+  p2: "And then he slides it over to me. Just like that. <b>Casio fx-7000G</b>. Almost new. A gift. A small miracle that fits into a jacket pocket. I can feel the tingling all the way to my fingertips, as if my brain is finally getting something to chew on. Matrix display, keys like tiny promises, and <em>programmable</em> like Kari's home computer, only now in the palm of my hand."
   p3: "Before I can start thinking again about escape, fear, and gray men, I hold on to this thing like treasure. And right here we switch briefly: away from the scene, toward the tool."
   p4: "Below I show you what the fx-7000G can really do, especially when it comes to programming. There is even a simulation where you can type, test, and experiment yourself."
 sections:
   part1:
     title: "Part 1 - Why the fx-7000G Is Exciting"
     p1: "Imagine 1985: you are a child in East Germany, and computers are something distant, something from stories, perhaps from a magazine. And then suddenly you are holding something in your hand that you can <b>program</b>: the <b>Casio fx-7000G</b>."
-    p2: "Even in the West this was a milestone: an early pocket calculator with graphics capability, bringing together BASIC and graphics. Not just calculating, but thinking in steps: <b>break down a problem</b>, set variables, test, improve."
-    p3: "Its specs were strong for the time: a <b>96x64 pixel</b> matrix display, <b>78 numeric memories</b>, and <b>422 characters of program memory</b>. And its price of around <b>300 DM</b>&nbsp;(roughly 330 euros in today's purchasing power) was surprisingly low for that feature set."
+    p2: "Even in the West this was a milestone: an early pocket calculator combining graphics with its own BASIC-like programming language. Not just calculating, but thinking in steps: <b>break down a problem</b>, set variables, test, improve."
+    p3: "Its specs were strong for the time: a <b>96 × 64 pixel</b> matrix display and up to <b>422 program steps</b>. A precise Swedish retail price for 1985 has not yet been documented."
   part2:
     title: "Part 2 - Eddie's Calculator Workflow"
     p1: "When I work with the fx-7000G, I always use the same sequence:"
@@ -25,19 +25,19 @@ sections:
     s2Title: "Set the data"
     s2: "Store values in variables."
     s3Title: "Build the rule"
-    s3: "Define formulas or small BASIC loops."
+    s3: "Define formulas or small program loops."
     s4Title: "Test"
     s4: "Start with simple numbers, then vary them."
     note: "That turns random trial and error into a reproducible calculation path."
   part3:
-    title: "Part 3 - BASIC in 6 Lines"
+    title: "Part 3 - Programming in 6 Lines"
     p1: "This is a tiny pattern: read input, output the square and square root. Exactly this scheme appears in many school and olympiad helper programs."
-    note: "Rule of thumb: start with small, reliable building blocks. Only then write larger programs."
+    note: "This example uses a simplified, more recent Casio BASIC syntax; it is not an original program for the 1985 fx-7000G."
   part4:
     title: "Part 4 - Eddie's Cheat Sheet"
     quickStart: "Quick Start"
     q1: "Use RUN for direct calculations."
-    q2: "Switch to BASIC when there are several steps."
+    q2: "Switch to program mode when there are several steps."
     q3: "Test with small values first, then use the real data."
     q4: "If things get messy: Reset, then rebuild cleanly."
     patterns: "Thinking Patterns"

@@ -8,15 +8,15 @@ subChapter:
   interaktiverRechner: "Interaktiver Rechner"
 book:
   p1: "Ich sitze noch mit Herzklopfen am Tisch, als hätte ich gerade einen Alarm ausgelöst. Erst schreit er mich an, ich wolle den Rechner klauen und im nächsten Moment starrt er auf seine Zahlen, als wären sie ihm eben erst aufgefallen. Ich zeige nur auf die Stelle, wo er sich doppelt verrechnet. Ein paar Sekunden Tastenklappern, dann dieser Blick: kalt, schwer, erwischt."
-  p2: "Und dann schiebt er ihn mir rüber. Einfach so. <b>Casio fx-7000G</b>. Wie neu. Als Geschenk. Ein kleines Wunder, das in eine Jackentasche passt. Ich spüre das Kribbeln bis in die Fingerspitzen, als würde mein Gehirn endlich was zu beißen bekommen. Matrixdisplay, Tasten wie kleine Versprechen, und <em>programmierbar</em>: Basic, wie Karis Heimcomputer, nur eben auf Handflächengröße."
+  p2: "Und dann schiebt er ihn mir rüber. Einfach so. <b>Casio fx-7000G</b>. Wie neu. Als Geschenk. Ein kleines Wunder, das in eine Jackentasche passt. Ich spüre das Kribbeln bis in die Fingerspitzen, als würde mein Gehirn endlich was zu beißen bekommen. Matrixdisplay, Tasten wie kleine Versprechen, und <em>programmierbar</em> wie Karis Heimcomputer, nur eben auf Handflächengröße."
   p3: "Bevor ich wieder an Flucht, Angst und graue Männer denken kann, halte ich dieses Ding fest wie einen Schatz. Und genau hier schalten wir kurz um: Weg von der Szene, hin zum Werkzeug."
   p4: "Unten zeige ich dir, was der fx-7000G wirklich kann, vor allem beim Programmieren. Es gibt sogar eine Simulation, in der du selbst tippen, testen und rumspinnen kannst."
 sections:
   part1:
     title: "Teil 1 - Warum der fx-7000G spannend ist"
     p1: "Stell dir 1985 vor: Du bist ein Kind in der DDR, Computer kennst du nur aus der Ferne, aus Erzaehlungen, vielleicht aus einer Zeitschrift. Und plötzlich liegt da etwas in der Hand, das man <b>programmieren</b> kann: der <b>Casio fx-7000G</b>."
-    p2: "Auch im Westen war das ein Meilenstein: ein früher grafikfähiger Rechner für die Tasche, der BASIC und Grafik zusammenbrachte. Nicht nur rechnen, sondern denken in Schritten: <b>Problem zerlegen</b>, Variablen setzen, prüfen, verbessern."
-    p3: "Die Daten waren für die Zeit stark: Matrix-Display mit <b>96x64 Pixel</b>, <b>78 Zahlenspeicher</b>, <b>422 Zeichen Programmspeicher</b>. Und der Preis von etwa <b>300 DM</b>&nbsp;(kaufkraftbereinigt, heute etwa 330 €) war für diese Funktionsfülle erstaunlich niedrig."
+    p2: "Auch im Westen war das ein Meilenstein: ein früher grafikfähiger Rechner für die Tasche, der Grafik und eine eigene, BASIC-artige Programmiersprache verband. Nicht nur rechnen, sondern denken in Schritten: <b>Problem zerlegen</b>, Variablen setzen, prüfen, verbessern."
+    p3: "Die Daten waren für die Zeit stark: Matrix-Display mit <b>96 × 64 Pixeln</b> und bis zu <b>422 Programmschritten</b>. Ein genauer schwedischer Verkaufspreis für 1985 ist bislang nicht belegt."
   part2:
     title: "Teil 2 - Eddie-Workflow auf dem Rechner"
     p1: "Wenn ich mit dem fx-7000G arbeite, nutze ich immer denselben Ablauf:"
@@ -25,19 +25,19 @@ sections:
     s2Title: "Daten setzen"
     s2: "Werte in Variablen speichern."
     s3Title: "Regel bauen"
-    s3: "Formeln oder kleine BASIC-Schleifen definieren."
+    s3: "Formeln oder kleine Programmschleifen definieren."
     s4Title: "Testen"
     s4: "Mit einfachen Zahlen starten, dann variieren."
     note: "So wird aus „rumprobieren“ ein reproduzierbarer Rechenweg."
   part3:
-    title: "Teil 3 - BASIC in 6 Zeilen"
+    title: "Teil 3 - Programmieren in 6 Zeilen"
     p1: "Das hier ist ein Mini-Muster: Eingabe lesen, Quadrat und Wurzel ausgeben. Genau dieses Schema steckt in vielen Schul- und Olympia-Helfern."
-    note: "Merksatz: Erst kleine, sichere Bausteine. Dann erst große Programme."
+    note: "Das Beispiel nutzt eine vereinfachte, modernere Casio-BASIC-Syntax und ist kein Originalprogramm des fx-7000G von 1985."
   part4:
     title: "Teil 4 - Eddie-Spickzettel"
     quickStart: "Schneller Start"
     q1: "RUN für direkte Rechnungen nutzen."
-    q2: "Bei mehreren Schritten in BASIC wechseln."
+    q2: "Bei mehreren Schritten in den Programmmodus wechseln."
     q3: "Mit kleinen Testwerten prüfen, dann erst „echte“ Daten einsetzen."
     q4: "Bei Chaos: Reset, dann sauber neu aufsetzen."
     patterns: "Denkmuster"
