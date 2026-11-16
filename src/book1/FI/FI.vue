@@ -5,12 +5,10 @@
 	:title="t( 'title' )"
 	:vue-date="__VITE_SFC_MTIME_MS__"
 >
-
-
 	<template #bookPart>
 		<figure class="exampleFigure">
 			<ImageZoomer is-ai :title="t( 'imageTitle' )">
-				<AniImage :alt="t( 'imageTitle' )" :src="titleImg" />
+				<AniImage :alt="t( 'imageTitle' )" has-animation :src="titleImg" />
 			</ImageZoomer>
 		</figure>
 		<h3 id="einleitung">{{ t( "introDate" ) }}</h3>
