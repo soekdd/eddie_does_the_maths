@@ -52,5 +52,13 @@
     "vite": "^5.4.21",
     "vite-plugin-vuetify": "^2.0.0",
     "vue-eslint-parser": "10.4.0"
+  },
+  "allowScripts": {
+    "@parcel/watcher": true,
+    "esbuild": true,
+    "fsevents": true,
+    "puppeteer": true,
+    "sharp": true,
+    "unrs-resolver": true
   }
 }
